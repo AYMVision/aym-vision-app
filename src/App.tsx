@@ -12,8 +12,8 @@ const App = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Welcome />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/courses/:id" element={<ChatCourse />} />
+        <Route path="/stories" element={<Courses />} />
+        <Route path="/stories/:courseId" element={<ChatCourse />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

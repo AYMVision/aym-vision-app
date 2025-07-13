@@ -1,1 +1,157 @@
 @import "tailwindcss";
+
+@theme {
+    --color-anthracite-50: #f6f6f6;
+    --color-anthracite-100: #e7e7e7;
+    --color-anthracite-200: #d1d1d1;
+    --color-anthracite-300: #b0b0b0;
+    --color-anthracite-400: #888888;
+    --color-anthracite-500: #6d6d6d;
+    --color-anthracite-600: #5d5d5d;
+    --color-anthracite-700: #4f4f4f;
+    --color-anthracite-800: #454545;
+    --color-anthracite-900: #3d3d3d;
+    --color-anthracite-950: #222222;
+
+    --color-gold-50: #ffffea;
+    --color-gold-100: #fffbc5;
+    --color-gold-200: #fff885;
+    --color-gold-300: #ffee46;
+    --color-gold-400: #ffdf1b;
+    --color-gold-500: #ffc000;
+    --color-gold-600: #e29400;
+    --color-gold-700: #bb6902;
+    --color-gold-800: #985108;
+    --color-gold-900: #7c420b;
+    --color-gold-950: #482200;
+
+    --color-blue-50: #effaff;
+    --color-blue-100: #def4ff;
+    --color-blue-200: #b6ecff;
+    --color-blue-300: #75e0ff;
+    --color-blue-400: #2cd1ff;
+    --color-blue-500: #00c2ff;
+    --color-blue-600: #0097d4;
+    --color-blue-700: #0078ab;
+    --color-blue-800: #00658d;
+    --color-blue-900: #065474;
+    --color-blue-950: #04354d;
+}
+
+.chat-background-modern {
+    background-color: #f0f2f5;
+    background-image:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 40% 40%, rgba(64, 224, 208, 0.05) 0%, transparent 40%);
+}
+
+@keyframes bounce {
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+    }
+
+    30% {
+        transform: translateY(-10px);
+    } 
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes blob {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: translate(20px, -50px) scale(1.1);
+    }
+
+    50% {
+        transform: translate(-20px, 20px) scale(1);
+    }
+
+    75% {
+        transform: translate(50px, 10px) scale(0.9);
+    }
+}
+    
+.animate-fade-in {
+    animation: fade-in 0.6s ease-out;
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out;
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-blob {
+    animation: blob 10s ease-in-out infinite;
+}
+
+.animation-delay-200 {
+    animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+    animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+    animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+    animation-delay: 500ms;
+}
+
+.animation-delay-600 {
+    animation-delay: 600ms;
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+    animation-delay: 4s;     
+}

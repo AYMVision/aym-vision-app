@@ -3,12 +3,14 @@ import { getProgress } from '../common/utils';
 interface Props {
   title: string;
   description: string;
+  image: string;
   progressKey: string;
   onClick: () => void;
 }
 export default function CourseCard({
   title,
   description,
+  image,
   progressKey,
   onClick,
 }: Props) {
@@ -17,21 +19,25 @@ export default function CourseCard({
     progress && progress.finished
       ? { label: 'Abgeschlossen', color: 'bg-green-200 text-green-700' }
       : progress
-      ? { label: 'Läuft...', color: 'bg-yellow-100 text-yellow-700' }
-      : { label: 'Neu', color: 'bg-blue-100 text-blue-700' };
+      ? { label: 'Läuft...', color: 'bg-yellow-100 text-gold-700' }
+      : { label: 'Neu', color: 'bg-gold-100 text-gold-700' };
 
   return (
     <button
       onClick={onClick}
-      className="w-full text-left rounded-xl border-2 border-blue-50 hover:border-[#0084ff] shadow-md bg-white transition p-6 flex flex-col gap-2 focus:outline-none scale-100 hover:scale-105"
+      className="w-full text-left rounded-xl border-2 border-blue-50 hover:border-anthracite-950 shadow-md bg-white transition p-6 flex flex-col gap-2 focus:outline-none scale-100 hover:scale-105"
     >
-      <div className="flex items-center gap-4">
+      <div className="w-full h-32 rounded-lg overflow-hidden bg-white">
+        <img src={image} alt={title} className="w-full h-full object-contain" />
+      </div>
+
+      <div className="flex justify-center items-center gap-4">
+        <span className="text-lg font-bold text-black">{title}</span>
         <span
           className={`px-3 py-1 rounded-full text-xs font-semibold ${state.color}`}
         >
           {state.label}
         </span>
-        <span className="text-lg font-bold text-black">{title}</span>
       </div>
       <div className="text-gray-700 mt-2">{description}</div>
     </button>

@@ -1,53 +1,95 @@
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
+import amy from '../assets/amy_lg.png';
+import Phone from '../components/Phone';
+import ChatMessage from '../components/ChatMessage';
+import TypingIndicator from '../components/TypingIndicator';
+import course from '../data/klassensprecher';
 
 const Welcome = () => {
   return (
     <Layout>
-      <section className="w-full max-w-6xl flex flex-row items-center gap-12 px-4 py-16">
-        <div className="flex-1 min-w-[300px]">
-          <h1 className="text-5xl font-bold mb-4 text-[#0084ff] tracking-tight">
-            Willkommen bei AYM Vision
-          </h1>
-          <p className="text-xl text-gray-800 mb-8 max-w-md">
-            Interaktives Lernen für die digitale Zukunft. <br />
-            Mit unseren Chat-basierten Kursen baust du spielerisch
-            Medien-Kompetenzen & sichere Internet-Skills auf!
-          </p>
-          <Link
-            to="/courses"
-            className="inline-block bg-[#0084ff] text-white text-lg font-semibold px-8 py-3 rounded-full shadow-md hover:bg-blue-700 transition"
-          >
-            Kurse entdecken
-          </Link>
-        </div>
-        <div className="flex-1 hidden md:flex items-center justify-center">
-          <div className="bg-white rounded-[2rem] drop-shadow-xl w-[360px] h-[640px] flex flex-col overflow-hidden border-4 border-blue-50">
-            <div className="bg-[#0084ff] h-[54px] flex items-center px-4 text-white font-bold">
-              <span className="mx-auto">AYM Vision Chat</span>
+      <section className="w-full max-w-6xl flex p-4 mt-8">
+        <div className="flex flex-col items-start justify-start w-2/3">
+          <div className="flex flex-row items-center justify-center">
+            <div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold animate-fade-in-up">
+                <span className="text-anthracite-950">Hey there!</span>
+                <br />
+                <span className="bg-gradient-to-r from-white/80 to-white bg-clip-text text-transparent">
+                  Ich bin Amy
+                </span>
+              </h1>
             </div>
-            <div className="bg-[#e5ddd5] px-3 py-2 flex-1 flex flex-col gap-2 overflow-y-auto">
-              <div className="max-w-[80%] self-end bg-[#C7F2D8] rounded-xl px-5 py-3 text-gray-900 shadow-md">
-                Grüße aus dem Urlaub! #Bester Tag ever
-              </div>
-              <div className="max-w-[80%] self-start bg-white rounded-xl px-5 py-3 text-gray-900 shadow-md">
-                ☀️ Mega! Und richtig cool deine neue Designer-Sonnenbrille 😎
-              </div>
-              <div className="max-w-[80%] self-end bg-[#C7F2D8] rounded-xl px-5 py-3 text-gray-900 shadow-md">
-                Danke Leute! ❤️
-              </div>
-              <div className="max-w-[80%] self-start bg-white rounded-xl px-5 py-3 text-gray-900 shadow-md">
-                Wie hättest du reagiert? 🤔
-              </div>
-            </div>
-            <div className="p-3 bg-white border-t">
-              <input
-                className="w-full py-2 px-4 rounded-full border bg-gray-50 outline-none"
-                placeholder="Deine Antwort…"
-                disabled
-              />
+            <div>
+              <img className="ms-4 max-w-[280px]" src={amy} />
             </div>
           </div>
+
+          <p className="text-xl sm:text-2xl text-anthracite-800 font-medium mb-4">
+            Willkommen bei AYM Vision!
+          </p>
+
+          <p className="text-base sm:text-lg text-anthracite-600 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            Hier lernst du, wie du dich sicher und clever im Internet bewegst.
+            Mit unseren Chat-basierten Stories baust du spielerisch
+            <span className="font-semibold text-anthracite-800">
+              {' '}
+              Medien-Kompetenzen
+            </span>{' '}
+            &
+            <span className="font-semibold text-anthracite-800">
+              {' '}
+              sichere Internet-Skills
+            </span>{' '}
+            auf!
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <Link
+              to="/courses"
+              className="group relative inline-flex items-center justify-center px-8 py-4 text-anthracite-950 font-semibold rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105"
+            >
+              <span className="absolute inset-0 bg-white"></span>
+              <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <span className="relative flex items-center gap-2">
+                Stories entdecken
+                <svg
+                  className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </span>
+            </Link>
+
+            <Link
+              to="/about"
+              className="inline-flex items-center justify-center px-8 py-4 text-gold-950 font-semibold rounded-full border-2 border-anthracite-950 hover:border-gold-900 hover:text-gold-900 hover:bg-gold-100 transition-all duration-300"
+            >
+              Mehr erfahren
+            </Link>
+          </div>
+        </div>
+
+        <div className="w-1/3 p-8">
+          <Phone inputPlaceholder="Deine Antwort…">
+            {course.script[0].messages.map((message, index) => {
+              if (message.type === 'user') {
+                return null;
+              } else {
+                return <ChatMessage key={index} message={message} />;
+              }
+            })}
+            <TypingIndicator />
+          </Phone>
         </div>
       </section>
     </Layout>
