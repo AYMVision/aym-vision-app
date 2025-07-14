@@ -8,7 +8,7 @@ const NotFound = () => {
       <section className="w-full max-w-6xl flex flex-col items-center justify-center p-4 mt-16">
         <div className="flex flex-col items-center text-center">
           <div className="flex flex-row items-center justify-center mb-8">
-            <div>
+            <div className="flex w-1/2 flex-col items-start">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold animate-fade-in-up">
                 <span className="text-anthracite-950">Ups!</span>
                 <br />
@@ -17,12 +17,8 @@ const NotFound = () => {
                 </span>
               </h1>
             </div>
-            <div>
-              <img
-                className="ms-4 max-w-[280px] opacity-75"
-                src={amy}
-                alt="Amy"
-              />
+            <div className="flex w-1/2 flex-col items-end">
+              <img className="ms-4 w-full max-w-[280px]" src={amy} />
             </div>
           </div>
 

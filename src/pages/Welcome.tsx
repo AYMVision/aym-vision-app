@@ -9,11 +9,11 @@ import course from '../data/klassensprecher';
 const Welcome = () => {
   return (
     <Layout>
-      <section className="w-full max-w-6xl flex p-4 mt-8">
-        <div className="flex flex-col items-start justify-start w-2/3">
+      <section className="w-full max-w-6xl flex flex-col lg:flex-row items-center lg:items-start p-4 mt-8">
+        <div className="flex flex-col items-center w-5/6 lg:w-2/3">
           <div className="flex flex-row items-center justify-center">
-            <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold animate-fade-in-up">
+            <div className="flex w-1/2 flex-col items-center">
+              <h1 className="text-3xl sm:text-5xl font-bold animate-fade-in-up">
                 <span className="text-anthracite-950">Hey there!</span>
                 <br />
                 <span className="bg-gradient-to-r from-white/80 to-white bg-clip-text text-transparent">
@@ -21,8 +21,8 @@ const Welcome = () => {
                 </span>
               </h1>
             </div>
-            <div>
-              <img className="ms-4 max-w-[280px]" src={amy} />
+            <div className="flex w-1/4 lg:w-1/2 flex-col items-end">
+              <img className="ms-4 w-full max-w-[280px]" src={amy} />
             </div>
           </div>
 
@@ -47,7 +47,7 @@ const Welcome = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <Link
-              to="/courses"
+              to="/stories"
               className="group relative inline-flex items-center justify-center px-8 py-4 text-anthracite-950 font-semibold rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105"
             >
               <span className="absolute inset-0 bg-white"></span>
@@ -79,7 +79,7 @@ const Welcome = () => {
           </div>
         </div>
 
-        <div className="w-1/3 p-8">
+        <div className="flex justify-center mt-8 lg:mt-0 w-5/6 lg:w-1/3 p-8">
           <Phone inputPlaceholder="Deine Antwort…">
             {course.script[0].messages.map((message, index) => {
               if (message.type === 'user') {
