@@ -62,7 +62,7 @@ const NotFound = () => {
             </Link>
 
             <Link
-              to="/courses"
+              to="/stories"
               className="inline-flex items-center justify-center px-8 py-4 text-gold-950 font-semibold rounded-full border-2 border-anthracite-950 hover:border-gold-900 hover:text-gold-900 hover:bg-gold-100 transition-all duration-300"
             >
               Stories entdecken

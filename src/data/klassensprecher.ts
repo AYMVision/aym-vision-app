@@ -112,7 +112,7 @@ const course: Course = {
           timestamp: '16:28',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.lukas,
           content: 'Was genau erwartet ihr eigentlich von mir? Also wirklich.',
           timestamp: '16:28',
@@ -165,7 +165,7 @@ const course: Course = {
           timestamp: '16:37',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.lukas,
           content:
             'Interessant, was ihr euch alles vorstellt. Ich glaub, ich muss erstmal sortieren.',
@@ -258,7 +258,7 @@ const course: Course = {
           timestamp: '07:53',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.lukas,
           content:
             'War mehr „Ich weiß nicht" als „Ich steh drüber". Aber ja – ich bin da.',
@@ -272,7 +272,7 @@ const course: Course = {
           timestamp: '07:54',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.lukas,
           content:
             'Boah, ehrlich? Keine Ahnung. Ich hör grad zu, ja – aber irgendwann erwartet ihr doch, dass ich was sage. Oder was mache. Oder was lösche 😅',
@@ -286,7 +286,7 @@ const course: Course = {
           timestamp: '07:55',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.lukas,
           content:
             'True. Aber wenn ich jetzt irgendwas poste, nur um „was zu machen" – ist das dann echt? Oder einfach laut?',

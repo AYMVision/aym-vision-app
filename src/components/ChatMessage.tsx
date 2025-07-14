@@ -80,28 +80,30 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
   }
 
   return (
-    <div className="flex flex-col max-w-[75%] self-start">
+    <div
+      className={`flex flex-col max-w-[75%] self-${
+        isMainCharacter ? 'end' : 'start'
+      }`}
+    >
       <div className="flex items-end gap-[2%]">
-        {typeof message.speaker?.avatar === 'undefined' ? (
-          <div
-            className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-xs font-semibold ${
-              isMainCharacter
-                ? 'bg-gradient-to-br from-blue-500 to-blue-700'
-                : message.speaker?.color ||
-                  'bg-gradient-to-br from-gold-400 to-gold-600'
-            }`}
-          >
-            {message.speaker?.name?.charAt(0) || 'U'}
-          </div>
-        ) : (
-          <img
-            src={message.speaker.avatar}
-            alt={message.speaker.name}
-            className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex-shrink-0 object-contain`}
-            style={{ backgroundColor: '#ffffef' }}
-          />
-        )}
-
+        {!isMainCharacter &&
+          (typeof message.speaker?.avatar === 'undefined' ? (
+            <div
+              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-xs font-semibold ${
+                message.speaker?.color ||
+                'bg-gradient-to-br from-gold-400 to-gold-600'
+              }}`}
+            >
+              {message.speaker?.name?.charAt(0) || 'U'}
+            </div>
+          ) : (
+            <img
+              src={message.speaker.avatar}
+              alt={message.speaker.name}
+              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex-shrink-0 object-contain`}
+              style={{ backgroundColor: '#ffffef' }}
+            />
+          ))}
         <div
           className={`rounded-2xl rounded-bl-md p-2 shadow-sm ${
             isMainCharacter ? 'bg-blue-50 border border-blue-200' : 'bg-white'
@@ -136,6 +138,23 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             </span>
           </div>
         </div>
+        {isMainCharacter &&
+          (typeof message.speaker?.avatar === 'undefined' ? (
+            <div
+              className={
+                'w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-xs font-semibold bg-gradient-to-br from-blue-500 to-blue-700'
+              }
+            >
+              {message.speaker?.name?.charAt(0) || 'U'}
+            </div>
+          ) : (
+            <img
+              src={message.speaker.avatar}
+              alt={message.speaker.name}
+              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex-shrink-0 object-contain`}
+              style={{ backgroundColor: '#ffffef' }}
+            />
+          ))}
       </div>
 
       {message.reactions && message.reactions.length > 0 && (

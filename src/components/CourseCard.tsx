@@ -25,7 +25,7 @@ export default function CourseCard({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left rounded-xl border-2 border-blue-50 hover:border-anthracite-950 shadow-md bg-white transition p-6 flex flex-col gap-2 focus:outline-none scale-100 hover:scale-105"
+      className="w-full cursor-pointer text-left rounded-xl border-2 border-blue-50 hover:border-anthracite-950 shadow-md bg-white transition p-6 flex flex-col gap-2 focus:outline-none scale-100 hover:scale-105"
     >
       <div className="w-full h-32 rounded-lg overflow-hidden bg-white">
         <img src={image} alt={title} className="w-full h-full object-contain" />
