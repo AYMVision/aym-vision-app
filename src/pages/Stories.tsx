@@ -3,10 +3,10 @@ import courses from '../data/index';
 import CourseCard from '../components/CourseCard';
 import { useNavigate } from 'react-router-dom';
 
-const Courses = () => {
+const Stories = () => {
   const navigate = useNavigate();
   return (
-    <Layout>
+    <Layout backPath="/">
       <div className="w-full max-w-4xl px-4 py-12">
         <h2 className="text-3xl font-bold mb-8 text-anthracite-950">
           Unsere Kurse
@@ -28,4 +28,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default Stories;

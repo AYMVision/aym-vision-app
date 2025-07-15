@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import amy from '../assets/amy_lg.png';
-import Phone from '../components/Phone';
 import ChatMessage from '../components/ChatMessage';
 import TypingIndicator from '../components/TypingIndicator';
 import course from '../data/klassensprecher';
+import PhonePreview from '../components/PhonePreview';
 
 const Welcome = () => {
   return (
     <Layout>
-      <section className="w-full max-w-6xl flex flex-col lg:flex-row items-center lg:items-start p-4 mt-8">
-        <div className="flex flex-col items-center w-5/6 lg:w-2/3">
-          <div className="flex flex-row items-center justify-center">
-            <div className="flex w-1/2 flex-col items-center">
-              <h1 className="text-3xl sm:text-5xl font-bold animate-fade-in-up">
+      <section className="w-full max-w-6xl flex flex-col lg:flex-row items-center lg:items-start p-4 mt-8 justify-center">
+        <div className="flex flex-col items-center lg:items-start">
+          <div className="flex items-center justify-center">
+            <div className="flex w-1/2 flex-col items-center lg:items-start">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold animate-fade-in-up">
                 <span className="text-anthracite-950">Hey there!</span>
                 <br />
                 <span className="bg-gradient-to-r from-white/80 to-white bg-clip-text text-transparent">
@@ -80,7 +80,7 @@ const Welcome = () => {
         </div>
 
         <div className="flex justify-center mt-8 lg:mt-0 w-5/6 lg:w-1/3 p-8">
-          <Phone inputPlaceholder="Deine Antwort…">
+          <PhonePreview inputPlaceholder="Deine Antwort…">
             {course.script[0].messages.map((message, index) => {
               if (message.type === 'user') {
                 return null;
@@ -89,7 +89,7 @@ const Welcome = () => {
               }
             })}
             <TypingIndicator />
-          </Phone>
+          </PhonePreview>
         </div>
       </section>
     </Layout>

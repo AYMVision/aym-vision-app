@@ -6,7 +6,7 @@ import courses from '../data/index';
 import type { Message } from '../common/types';
 import ChatMessage from '../components/ChatMessage';
 
-const ChatCourse = () => {
+const Story = () => {
   const { courseId } = useParams();
   const [displayedMessages, setDisplayedMessages] = useState<Message[]>([]);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
@@ -30,10 +30,6 @@ const ChatCourse = () => {
     if (!course || allMessages.length === 0) return;
     if (currentMessageIndex >= allMessages.length) return;
 
-    console.log(
-      `Chapter: ${chapter}, Current Message Index: ${currentMessageIndex}`
-    );
-
     const timer = setTimeout(
       () => {
         const message = allMessages[currentMessageIndex];
@@ -48,7 +44,7 @@ const ChatCourse = () => {
 
   if (!course) {
     return (
-      <Layout>
+      <Layout backPath="/stories">
         <div className="w-full max-w-4xl px-4 py-12">
           <h2 className="text-3xl font-bold mb-8 text-[#0084ff]">
             Kurs nicht gefunden
@@ -60,8 +56,8 @@ const ChatCourse = () => {
   }
 
   return (
-    <Layout>
-      <div className="flex items-center justify-center w-80 h-full p-4">
+    <Layout backPath="/stories">
+      <div className="flex flex-col grow h-full w-full sm:items-center sm:justify-center sm:w-80 sm:p-4">
         <Phone
           inputPlaceholder="Deine Antwort…"
           onSubmitMessage={(message) => {
@@ -94,4 +90,4 @@ const ChatCourse = () => {
   );
 };
 
-export default ChatCourse;
+export default Story;
