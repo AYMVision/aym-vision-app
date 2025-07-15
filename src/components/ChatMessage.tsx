@@ -29,11 +29,9 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
               className="w-full rounded-lg mb-2 max-h-64 object-cover"
             />
           )}
-          {message.content && (
-            <p className="text-xs sm:text-sm">{message.content}</p>
-          )}
+          {message.content && <p className="text-md">{message.content}</p>}
           {message.timestamp && (
-            <span className="text-[0.6rem] sm:text-xs text-gray-400 mt-1 block">
+            <span className="text-sm text-gray-400 mt-1 block">
               {message.timestamp}
             </span>
           )}
@@ -53,15 +51,9 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
               className="w-full rounded-lg mb-2 max-h-64 object-cover"
             />
           )}
-          {message.content && (
-            <p className="text-xs sm:text-sm md:text-[15px]">
-              {message.content}
-            </p>
-          )}
+          {message.content && <p className="text-md">{message.content}</p>}
           <div className="flex items-center justify-end gap-1 mt-1">
-            <span className="text-[0.65rem] sm:text-xs text-blue-100">
-              {message.timestamp}
-            </span>
+            <span className="text-sm text-blue-100">{message.timestamp}</span>
             <svg
               className="w-3 h-3 sm:w-4 sm:h-4 text-blue-100"
               fill="currentColor"
@@ -89,7 +81,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         {!isMainCharacter &&
           (typeof message.speaker?.avatar === 'undefined' ? (
             <div
-              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-xs font-semibold ${
+              className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-xs font-semibold ${
                 message.speaker?.color ||
                 'bg-gradient-to-br from-gold-400 to-gold-600'
               }}`}
@@ -100,7 +92,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             <img
               src={message.speaker.avatar}
               alt={message.speaker.name}
-              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex-shrink-0 object-contain`}
+              className={`w-8 h-8 rounded-full flex-shrink-0 object-contain`}
               style={{ backgroundColor: '#ffffef' }}
             />
           ))}
@@ -110,7 +102,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           }`}
         >
           {message.speaker && !isMainCharacter && (
-            <p className="text-[0.65rem] sm:text-xs font-semibold text-anthracite-600 mb-1">
+            <p className="text-sm font-semibold text-anthracite-600 mb-1">
               {message.speaker.name}
             </p>
           )}
@@ -124,7 +116,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           )}
           {message.content && (
             <p
-              className={`text-xs sm:text-sm md:text-[15px] min-w-24 ${
+              className={`text-md min-w-24 ${
                 isMainCharacter ? 'text-blue-900' : 'text-anthracite-800'
               }`}
             >
@@ -133,7 +125,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           )}
 
           <div className="flex items-center justify-between mt-1">
-            <span className="text-[0.65rem] sm:text-xs text-anthracite-400">
+            <span className="text-sm text-anthracite-400">
               {message.timestamp}
             </span>
           </div>
@@ -142,7 +134,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           (typeof message.speaker?.avatar === 'undefined' ? (
             <div
               className={
-                'w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-xs font-semibold bg-gradient-to-br from-blue-500 to-blue-700'
+                'w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-sm font-semibold bg-gradient-to-br from-blue-500 to-blue-700'
               }
             >
               {message.speaker?.name?.charAt(0) || 'U'}
@@ -151,7 +143,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             <img
               src={message.speaker.avatar}
               alt={message.speaker.name}
-              className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex-shrink-0 object-contain`}
+              className={`w-8 h-8 rounded-full flex-shrink-0 object-contain`}
               style={{ backgroundColor: '#ffffef' }}
             />
           ))}
@@ -162,7 +154,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           {message.reactions.map((reaction, index) => (
             <span
               key={index}
-              className="bg-white border border-gray-200 rounded-full px-2 py-1 text-xs shadow-sm"
+              className="bg-white border border-gray-200 rounded-full px-2 py-1 text-sm shadow-sm"
             >
               {reaction}
             </span>

@@ -63,15 +63,17 @@ export default function Layout({
 
             <div className="flex items-center space-x-2">
               <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                <img src={logo} alt="Logo" className="w-8 h-8" />
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className="w-8 h-8 object-cover object-cover object-center scale-175"
+                />
               </div>
               <div>
-                <div className="font-semibold text-anthracite-900 text-xs sm:text-sm">
-                  AYM Vision Chat
+                <div className="font-semibold text-anthracite-900 text-sm">
+                  AYM Vision
                 </div>
-                <div className="text-[0.65rem] sm:text-xs text-anthracite-500">
-                  Online
-                </div>
+                <div className="text-xs text-anthracite-500">Online</div>
               </div>
             </div>
 
@@ -126,28 +128,34 @@ export default function Layout({
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
-        <div className="flex items-center justify-end p-4 bg-gold-500 h-16 sm:h-20">
+        <div className="flex items-center justify-end p-4 bg-gold-500 shadow-sm h-16 sm:h-20">
           <div className="flex-1" />
 
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
-              <img src={logo} alt="Logo" className="w-8 h-8" />
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+              <img
+                src={logo}
+                alt="Logo"
+                className="w-8 h-8 object-cover object-cover object-center scale-175"
+              />
             </div>
             <div>
-              <div className="font-semibold text-white text-lg">AYM Vision</div>
+              <div className="font-semibold text-white text-lg text-shadow-sm">
+                AYM Vision
+              </div>
             </div>
           </div>
 
           <div className="flex-1" />
           <button
             onClick={() => setIsMenuOpen(false)}
-            className="p-2 text-white hover:text-anthracite-700"
+            className="p-2 text-white hover:text-anthracite-700 text-shadow-sm"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth={1.5}
+              strokeWidth={2}
               stroke="currentColor"
               className="w-6 h-6"
             >
@@ -166,7 +174,7 @@ export default function Layout({
               key={link.to}
               to={link.to}
               className={cn(
-                'block px-4 py-2 text-sm font-medium transition-all duration-200',
+                'block px-4 py-2 text-md font-medium transition-all duration-200',
                 location.pathname === link.to
                   ? 'text-gold-600'
                   : 'text-anthracite-700 hover:text-gold-600'
