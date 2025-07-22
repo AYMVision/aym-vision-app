@@ -7,7 +7,7 @@ const links = [
   { to: '/', label: 'Home' },
   { to: '/stories', label: 'Stories' },
   { to: '/about', label: 'AYM Vision' },
-  { to: '/about#cooperations', label: 'Cooperations' },
+  { to: '/about#call-for-action', label: 'Cooperations' },
 ];
 
 export default function Layout({
