@@ -2,13 +2,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '../common/utils';
 import logo from '../assets/logo.png';
 import { useEffect, useState } from 'react';
-
-const links = [
-  { to: '/', label: 'Home' },
-  { to: '/stories', label: 'Stories' },
-  { to: '/about', label: 'AYM Vision' },
-  { to: '/about#call-for-action', label: 'Cooperations' },
-];
+import { LanguageSelector } from './LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 export default function Layout({
   children,
@@ -18,8 +13,16 @@ export default function Layout({
   backPath?: string; // Optional prop for the back button
 }) {
   const location = useLocation();
+  const { t } = useTranslation('navigation');
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const links = [
+    { to: '/', label: t('home') },
+    { to: '/stories', label: t('stories') },
+    { to: '/about', label: t('about') },
+    { to: '/about#call-for-action', label: t('cooperations') },
+  ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -119,6 +122,7 @@ export default function Layout({
 
           <div className="hidden md:flex flex-1 justify-end">
             <img src={logo} className="h-24" alt="Logo" />
+            <LanguageSelector />
           </div>
         </div>
       </header>
@@ -184,6 +188,7 @@ export default function Layout({
               {link.label}
             </Link>
           ))}
+          <LanguageSelector className="px-4 py-2" />
         </nav>
       </div>
 

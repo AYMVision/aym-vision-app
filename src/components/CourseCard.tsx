@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { getProgress } from '../common/utils';
 
 interface Props {
@@ -15,12 +16,13 @@ export default function CourseCard({
   onClick,
 }: Props) {
   const progress = getProgress(progressKey);
+  const { t } = useTranslation('courses');
   const state =
     progress && progress.finished
-      ? { label: 'Abgeschlossen', color: 'bg-green-200 text-green-700' }
+      ? { label: t('done'), color: 'bg-green-200 text-green-700' }
       : progress
-      ? { label: 'Läuft...', color: 'bg-yellow-100 text-gold-700' }
-      : { label: 'Neu', color: 'bg-gold-100 text-gold-700' };
+      ? { label: t('inProgress'), color: 'bg-yellow-100 text-gold-700' }
+      : { label: t('new'), color: 'bg-gold-100 text-gold-700' };
 
   return (
     <button

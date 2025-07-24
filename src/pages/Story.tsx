@@ -5,6 +5,7 @@ import Phone from '../components/Phone';
 import courses from '../data/index';
 import type { Message } from '../common/types';
 import ChatMessage from '../components/ChatMessage';
+import { useTranslation } from 'react-i18next';
 
 const Story = () => {
   const { courseId } = useParams();
@@ -12,7 +13,12 @@ const Story = () => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [chapter, setChapter] = useState(0);
 
-  const course = courses.find((c) => c.id === courseId);
+  const { i18n } = useTranslation();
+  const courseLanguage = i18n.language.split('-')[0];
+
+  const course = courses[courseLanguage as 'de' | 'en'].find(
+    (c) => c.id === courseId
+  );
 
   const allMessages = useMemo(
     () => course?.script[chapter].messages || [],

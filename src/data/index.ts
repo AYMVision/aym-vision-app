@@ -1,4 +1,14 @@
-import klassensprecher from './klassensprecher';
+import type { Course } from '../common/types';
+import klassensprecherDe from './klassensprecher.de';
+import klassensprecherEn from './klassensprecher.en';
 
-const courses = [klassensprecher];
+type Courses = {
+  en: Course[];
+  de: Course[];
+};
+
+const courses: Courses = {
+  en: [klassensprecherEn],
+  de: [klassensprecherDe],
+};
 export default courses;

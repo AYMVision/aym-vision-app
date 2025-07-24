@@ -1,6 +1,6 @@
-/*  src/pages/About.jsx  */
+/*  src/pages/About.tsx  */
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout';
 import vision from '../assets/about/vision.png';
 import sample from '../assets/about/sample.png';
@@ -10,11 +10,6 @@ import motivation from '../assets/about/motivation.jpg';
 import amy from '../assets/about/amy.png';
 import digital from '../assets/about/digital.png';
 import logo from '../assets/about/logo.png';
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
 
 type Copy = string | string[];
 interface SplitSectionProps {
@@ -36,16 +31,12 @@ function SplitSection({
   imgAlt,
   invert = false,
   bg = '',
-  imgStyle = 'rounded-xl shadow-lg ring-1 ring-anthracite-200/50',
+  imgStyle = 'w-full h-full object-cover',
 }: SplitSectionProps) {
   return (
     <section id={id} className={`scroll-mt-24 ${bg} py-12 sm:py-20`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-80px' }}
+        <div
           className={`grid gap-10 lg:grid-cols-2 lg:items-center ${
             invert ? 'lg:direction-rtl' : ''
           }`}
@@ -66,31 +57,33 @@ function SplitSection({
             )}
           </div>
 
-          <div className="mx-auto w-full max-w-md">
+          <div className="mx-auto w-92 h-92 rounded-full overflow-hidden">
             <img src={imgSrc} alt={imgAlt} className={imgStyle} />
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
 export default function About() {
+  const { t } = useTranslation('about');
+
   return (
     <Layout>
       <main>
         <SplitSection
           id="our-vision"
-          title="Our Vision"
-          copy="Alle Kinder und Jugendlichen sind auf die Herausforderungen der digitalen Welt vorbereitet. Sie sollen sich selbstbewusst, neugierig und verantwortungsvoll in der digitalen Welt bewegen können. Wir sind überzeugt, dass junge Menschen in einer komplexen digitalen Gesellschaft nicht allein gelassen werden dürfen. Daher schaffen wir mit AYM Vision Lernräume, die stärken, orientieren und zum Mitdenken anregen."
+          title={t('ourVision.title')}
+          copy={t('ourVision.copy')}
           imgSrc={vision}
           imgAlt="Our vision sketch-style illustration"
         />
 
         <SplitSection
           id="our-motivation"
-          title="Our Motivation"
-          copy="Zwei Schwestern, eine gemeinsame Vision: AYM Vision ist das Herzensprojekt von Ann-Sofie Höbrink und Melina Wiegers. Was mit einem persönlichen Gespräch über ihre Kinder, das Internet und Bildung begann, entwickelte sich rasch zu einer klaren Vision und dem festen Entschluss, einen eigenen Beitrag für eine zukunftsfähige digitale Bildung zu leisten. Während Ann-Sofie in Niedersachsen als Projektmanagerin, HR-Site-Managerin und Coach arbeitete, vertiefte Melina in der Schweiz und den USA ihre Expertise in Sprache, Resilienzförderung und Nachhaltigkeit. Was sie verbindet: die Überzeugung, dass Kinder in der digitalen Welt nicht nur begleitet, sondern gestärkt werden müssen. Kinder und Jugendliche brauchen Selbstvertrauen und Kompetenzen, damit sie in der digitalen Welt eigenständig, sicher und neugierig unterwegs sein können."
+          title={t('ourMotivation.title')}
+          copy={t('ourMotivation.copy')}
           imgSrc={motivation}
           imgAlt="Motivation for our project showing the two sisters in a garden with a child"
           invert
@@ -99,11 +92,11 @@ export default function About() {
 
         <SplitSection
           id="our-educational-approach"
-          title="Our Educational Approach"
+          title={t('ourEducationalApproach.title')}
           copy={[
-            'regelmäßige Impulse, die reale Situationen aufgreifen und altersgerecht erklären',
-            'aktive Auseinandersetzung mit den Chancen und Risiken digitaler Medien',
-            'reflektierende Fragen, die Kinder ermutigen, ihr eigenes Verhalten zu hinterfragen und weiterzuentwickeln',
+            t('ourEducationalApproach.copy1'),
+            t('ourEducationalApproach.copy2'),
+            t('ourEducationalApproach.copy3'),
           ]}
           imgSrc={beat}
           imgStyle=""
@@ -112,74 +105,49 @@ export default function About() {
 
         <SplitSection
           id="our-method"
-          title="Our Method"
-          copy="Unsere Stories entwickeln eine Dynamik, die Spaß macht, zum Mitdenken anregt und langfristig wirkt. Sympathische Charaktere erleben in diesen Storys im Chat-Format Herausforderungen der Medienwelt – unterhaltsam und auf den Punkt gebracht. Begleitet werden die Geschichten durch unsere kluge Eule Amy. Am Ende jeder Episode stellt sie dem Leser eine Reflexionsfrage – so sind die jungen Nutzer nicht bloß Konsumenten, sondern denken aktiv über das Gelesene nach und übertragen es in ihren Alltag. Die Antworten werden automatisch von KI auf Logik überprüft – es gibt dabei kein Richtig und Falsch! Nach jeder Geschichte werden die Bemühungen des Users mit einem Badge belohnt und ohne persönliche Informationen sicher gespeichert. Nach einer festgelegten Anzahl an Storys wird das fälschungssichere Zertifikat verliehen. Es wird automatisch über die Cardano-Blockchain erstellt und den Kindern verliehen."
+          title={t('ourMethod.title')}
+          copy={t('ourMethod.copy')}
           imgSrc={sample}
-          imgStyle="rounded-xl shadow-lg ring-1 ring-anthracite-200/50"
+          imgStyle="rounded-lg shadow-lg w-[50%] w-full h-full object-cover"
           imgAlt="A sample of our application showing a chat interface"
           invert
-          bg="bg-gold-50"
+          bg="bg-white"
         />
 
         <section id="our-team" className="py-16 bg-white scroll-mt-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <motion.h2
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '-80px' }}
-              className="mb-12 text-center text-3xl font-bold text-anthracite-950"
-            >
-              Unser Team
-            </motion.h2>
+            <h2 className="mb-12 text-center text-3xl font-bold text-anthracite-950">
+              {t('ourTeam.title')}
+            </h2>
 
-            <motion.img
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
+            <img
               className="mx-auto mb-14 w-full max-w-lg rounded-xl shadow-lg"
               src={teamPic}
               alt="Selbst gezeichnete Illustration von Melina und Ann-Sofie"
             />
 
             <div className="grid gap-12 sm:grid-cols-2">
-              {[
-                {
-                  name: 'Melina Wiegers',
-                  role: 'Co-Founderin | Leitung Inhalte & Didaktik',
-                  bio: 'Melina bringt ihre Leidenschaft für Sprache, Geschichten und Bildungsprozesse in das Projekt ein. Nach ihrem Studium der Kulturwissenschaften (Magistra Artium) absolvierte sie Weiterbildungen u. a. in Kinder- und Jugendliteratur, Science of Happiness (University of California, Berkeley) und Foundations of Sustainability (University of Arizona).',
-                },
-                {
-                  name: 'Ann-Sofie Höbrink',
-                  role: 'Co-Founderin | Leitung Technologie & Strategie',
-                  bio: 'Ann-Sofie vereint technisches Verständnis mit psychologischem Fingerspitzengefühl. Nach ihrem Studium des Wirtschaftsingenieurwesens (B.Sc.) und der Wirtschaftspsychologie (M.Sc.) sammelte sie über zehn Jahre Erfahrung in der Unternehmensberatung – unter anderem als Projektmanagerin, HR-Site-Managerin und zertifizierter Business Coach.',
-                },
-              ].map(({ name, role, bio }) => (
-                <motion.div
-                  key={name}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: '-80px' }}
-                  className="text-center"
-                >
-                  <h3 className="text-2xl font-semibold text-anthracite-950">
-                    {name}
-                  </h3>
-                  <p className="mb-2 text-sm italic text-anthracite-600">
-                    {role}
-                  </p>
-                  <p className="text-anthracite-600">{bio}</p>
-                </motion.div>
-              ))}
+              {t('ourTeam.members', { returnObjects: true }).map(
+                (member: any) => (
+                  <div key={member.name} className="text-center">
+                    <h3 className="text-2xl font-semibold text-anthracite-950">
+                      {member.name}
+                    </h3>
+                    <p className="mb-2 text-sm italic text-anthracite-600">
+                      {member.role}
+                    </p>
+                    <p className="text-anthracite-600">{member.bio}</p>
+                  </div>
+                )
+              )}
             </div>
           </div>
         </section>
 
         <SplitSection
           id="amplify-your-mind"
-          title="Amplify Your Mind (AYM)"
-          copy="AYM steht für Amplify Your Mind – und bringt zum Ausdruck, was wir mit AYM Vision ermöglichen wollen: jungen Menschen den Raum geben, ihre eigene Sicht auf die Welt zu entwickeln und zu entfalten. „Amplify“ bedeutet: verstärken, hörbar machen, größer denken. Wir glauben, dass Kinder bereits mit Kreativität, Neugier und Urteilsvermögen in die digitale Welt starten – AYM Vision hilft ihnen dabei, genau diese Fähigkeiten weiterzuentwickeln. Wir möchten sie dabei unterstützen, selbstständig zu denken, reflektiert zu handeln und ihre Potenziale zu erkennen. Amplify Your Mind heißt für uns: Verstärkung des eigenen Denkens – nicht auswendig lernen, sondern durchblicken und mitgestalten."
+          title={t('amplifyYourMind.title')}
+          copy={t('amplifyYourMind.copy')}
           imgSrc={logo}
           imgStyle=""
           imgAlt="Amplify Your Mind logo showing a heartbeat"
@@ -187,67 +155,40 @@ export default function About() {
 
         <SplitSection
           id="why-amy"
-          title="Warum Amy?"
-          copy="AMY ist unsere freundliche, schlaue Eule – und das Gesicht von AYM Vision. Sie begleitet Kinder und Jugendliche auf Augenhöhe durch digitale Themen, erklärt komplexe Inhalte verständlich und regt zum Mitdenken an. Mit klugen Fragen, Geschichten und spielerischen Impulsen wird sie zur nahbaren Verbündeten im Lernprozess. AMY verkörpert, was wir vermitteln wollen: Neugier, Reflexion und Mut zur eigenen Perspektive. Als Figur, Name und Haltung macht sie unsere Idee erlebbar – für Bildung mit Charakter und Kinder, die wachsen wollen."
+          title={t('whyAmy.title')}
+          copy={t('whyAmy.copy')}
           imgSrc={amy}
           imgStyle=""
           imgAlt="Why Amy"
           invert
-          bg="bg-gold-50"
+          bg="bg-white"
         />
 
         <section
           id="call-for-action"
-          className="relative isolate overflow-hidden bg-gradient-to-br from-gold-100 via-gold-50 to-white py-20"
+          className="relative isolate overflow-hidden bg-white py-20"
         >
           <div className="mx-auto max-w-4xl px-4 text-center">
-            <motion.h2
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="mb-6 text-3xl font-bold text-anthracite-950"
-            >
-              Call&nbsp;4&nbsp;Action
-            </motion.h2>
+            <h2 className="mb-6 text-3xl font-bold text-anthracite-950">
+              {t('callForAction.title')}
+            </h2>
 
-            <motion.p
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              transition={{ delay: 0.15 }}
-              className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-anthracite-600"
-            >
-              Gemeinsam mit Partnern möchten wir einen sicheren,
-              verantwortungsvollen Umgang mit digitalen Medien etablieren.
-              Schritt für Schritt. Episode für Episode. Story für Story. Machen
-              Sie mit! Werden Sie Teil der Vision und unterstützen Sie AYM
-              Vision dabei, demokratische Werte zu leben, Diskriminierung zu
-              bekämpfen und alle Kinder digital zu stärken – ganz gleich, woher
-              sie kommen.
-            </motion.p>
+            <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-anthracite-600">
+              {t('callForAction.copy')}
+            </p>
 
-            <motion.img
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              transition={{ delay: 0.3 }}
+            <img
               src={digital}
               alt="An illustration of digital brain"
               className="mx-auto mb-10 w-full max-w-xs"
             />
 
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              transition={{ delay: 0.45 }}
-            >
+            <div>
               <Link
                 to="/contact"
                 className="relative inline-flex items-center gap-2 rounded-full bg-anthracite-950 px-8 py-4 text-white shadow-lg ring-1 ring-anthracite-700/40 transition hover:bg-anthracite-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"
               >
-                Mitmachen
+                {t('callForAction.button')}
                 <svg
                   className="h-5 w-5 transition-transform group-hover:translate-x-1"
                   fill="none"
@@ -262,7 +203,7 @@ export default function About() {
                   />
                 </svg>
               </Link>
-            </motion.div>
+            </div>
           </div>
         </section>
       </main>

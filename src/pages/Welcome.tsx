@@ -3,10 +3,19 @@ import Layout from '../components/Layout';
 import amy from '../assets/amy_lg.png';
 import ChatMessage from '../components/ChatMessage';
 import TypingIndicator from '../components/TypingIndicator';
-import course from '../data/klassensprecher';
+import courseDe from '../data/klassensprecher.de';
+import courseEn from '../data/klassensprecher.en';
 import PhonePreview from '../components/PhonePreview';
+import { useTranslation, Trans } from 'react-i18next';
 
 const Welcome = () => {
+  const { t } = useTranslation('welcome');
+
+  const { i18n } = useTranslation();
+  const courseLanguage = i18n.language.split('-')[0];
+
+  const course = courseLanguage === 'de' ? courseDe : courseEn;
+
   return (
     <Layout>
       <section className="w-full max-w-6xl flex flex-col lg:flex-row items-center lg:items-start p-4 mt-8 justify-center">
@@ -14,10 +23,10 @@ const Welcome = () => {
           <div className="flex items-center justify-center">
             <div className="flex w-1/2 flex-col items-center lg:items-start">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold animate-fade-in-up">
-                <span className="text-anthracite-950">Hey there!</span>
+                <span className="text-anthracite-950">{t('title')}</span>
                 <br />
                 <span className="bg-gradient-to-r from-white/80 to-white bg-clip-text text-transparent">
-                  Ich bin Amy
+                  {t('subtitle')}
                 </span>
               </h1>
             </div>
@@ -27,22 +36,18 @@ const Welcome = () => {
           </div>
 
           <p className="text-xl sm:text-2xl text-anthracite-800 font-medium mb-4">
-            Willkommen bei AYM Vision!
+            {t('welcome')}
           </p>
 
           <p className="text-base sm:text-lg text-anthracite-600 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-            Hier lernst du, wie du dich sicher und clever im Internet bewegst.
-            Mit unseren Chat-basierten Stories baust du spielerisch
-            <span className="font-semibold text-anthracite-800">
-              {' '}
-              Medien-Kompetenzen
-            </span>{' '}
-            &
-            <span className="font-semibold text-anthracite-800">
-              {' '}
-              sichere Internet-Skills
-            </span>{' '}
-            auf!
+            <Trans
+              i18nKey="intro"
+              ns="welcome"
+              components={[
+                <span key={1} className="font-semibold text-anthracite-800" />,
+                <span key={2} className="font-semibold text-anthracite-800" />,
+              ]}
+            />
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -53,7 +58,7 @@ const Welcome = () => {
               <span className="absolute inset-0 bg-white"></span>
               <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               <span className="relative flex items-center gap-2">
-                Stories entdecken
+                {t('discover')}
                 <svg
                   className="w-5 h-5 group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -74,7 +79,7 @@ const Welcome = () => {
               to="/about"
               className="inline-flex items-center justify-center px-8 py-4 text-gold-950 font-semibold rounded-full border-2 border-anthracite-950 hover:border-gold-900 hover:text-gold-900 hover:bg-gold-100 transition-all duration-300"
             >
-              Mehr erfahren
+              {t('more')}
             </Link>
           </div>
         </div>
