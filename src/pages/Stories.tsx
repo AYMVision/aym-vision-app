@@ -10,13 +10,14 @@ const Stories = () => {
   const { i18n } = useTranslation('courses');
   const courseLanguage = i18n.language.split('-')[0];
 
+  const { t } = useTranslation('courses');
   const stories = courses[courseLanguage as 'de' | 'en'];
 
   return (
     <Layout backPath="/">
       <div className="w-full max-w-4xl px-4 py-12">
         <h2 className="text-3xl font-bold mb-8 text-anthracite-950">
-          {i18n.t('headline')}
+          {t('headline')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {stories.map((story) => (
