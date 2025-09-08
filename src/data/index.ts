@@ -1,6 +1,8 @@
 import type { Course } from '../common/types';
 import klassensprecherDe from './klassensprecher.de';
 import klassensprecherEn from './klassensprecher.en';
+import shadowFoxDe from './shadowfox.de';
+import shadowFoxEn from './shadowfox.de';
 
 type Courses = {
   en: Course[];
@@ -8,7 +10,7 @@ type Courses = {
 };
 
 const courses: Courses = {
-  en: [klassensprecherEn],
-  de: [klassensprecherDe],
+  en: [klassensprecherEn, shadowFoxEn],
+  de: [klassensprecherDe, shadowFoxDe],
 };
 export default courses;

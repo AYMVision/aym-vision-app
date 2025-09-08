@@ -36,14 +36,36 @@ const Story = () => {
     if (!course || allMessages.length === 0) return;
     if (currentMessageIndex >= allMessages.length) return;
 
-    const timer = setTimeout(
-      () => {
-        const message = allMessages[currentMessageIndex];
-        setDisplayedMessages((prev) => [...prev, message]);
-        setCurrentMessageIndex((prev) => prev + 1);
-      },
-      currentMessageIndex === 0 ? 0 : Math.random() * 2000 + 1000
-    );
+    const nextMsg = allMessages[currentMessageIndex];
+
+    const getDelayForMessage = (msg: any, index: number) => {
+      if (index === 0) return 0;
+
+      const minDelayMs = 800;
+      const maxDelayMs = 8000;
+      const charsPerSecond = 14;
+      const baseOverheadMs = 300;
+      const imageExtraMs = msg.image ? 600 : 0;
+      const jitter = 0.85 + Math.random() * 0.6;
+
+      const content = typeof msg.content === 'string' ? msg.content : '';
+      const contentLen = content.length;
+
+      const readingMs =
+        contentLen > 0 ? (contentLen / charsPerSecond) * 1000 : 900;
+
+      const raw = baseOverheadMs + readingMs + imageExtraMs;
+      const clamped = Math.min(maxDelayMs, Math.max(minDelayMs, raw));
+
+      return clamped * jitter;
+    };
+
+    const delay = getDelayForMessage(nextMsg, currentMessageIndex);
+
+    const timer = setTimeout(() => {
+      setDisplayedMessages((prev) => [...prev, nextMsg]);
+      setCurrentMessageIndex((prev) => prev + 1);
+    }, delay);
 
     return () => clearTimeout(timer);
   }, [currentMessageIndex, allMessages, course]);
