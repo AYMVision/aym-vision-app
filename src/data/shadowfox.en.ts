@@ -43,7 +43,7 @@ const characters: { [key: string]: Character } = {
 
 const course: Course = {
   id: 'im-netz-von-shadowfox',
-  title: 'In the Web of ShadowFox',
+  title: 'ShadowFox',
   image: titleImage,
   description:
     'A multi-part chat thriller about identity, privacy, and safety online—and what you can do.',

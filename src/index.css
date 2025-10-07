@@ -1,41 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&display=swap');
 @import "tailwindcss";
 
 @theme {
-    --color-anthracite-50: #f6f6f6;
-    --color-anthracite-100: #e7e7e7;
-    --color-anthracite-200: #d1d1d1;
-    --color-anthracite-300: #b0b0b0;
-    --color-anthracite-400: #888888;
-    --color-anthracite-500: #6d6d6d;
-    --color-anthracite-600: #5d5d5d;
-    --color-anthracite-700: #4f4f4f;
-    --color-anthracite-800: #454545;
-    --color-anthracite-900: #3d3d3d;
-    --color-anthracite-950: #222222;
+    --font-sans: "Baloo Bhaijaan 2", sans-serif;
 
-    --color-gold-50: #ffffea;
-    --color-gold-100: #fffbc5;
-    --color-gold-200: #fff885;
-    --color-gold-300: #ffee46;
-    --color-gold-400: #ffdf1b;
-    --color-gold-500: #ffc000;
-    --color-gold-600: #e29400;
-    --color-gold-700: #bb6902;
-    --color-gold-800: #985108;
-    --color-gold-900: #7c420b;
-    --color-gold-950: #482200;
-
-    --color-blue-50: #effaff;
-    --color-blue-100: #def4ff;
-    --color-blue-200: #b6ecff;
-    --color-blue-300: #75e0ff;
-    --color-blue-400: #2cd1ff;
-    --color-blue-500: #00c2ff;
-    --color-blue-600: #0097d4;
-    --color-blue-700: #0078ab;
-    --color-blue-800: #00658d;
-    --color-blue-900: #065474;
-    --color-blue-950: #04354d;
+    --color-teal-200: #00DBDB;
+    --color-teal-300: #00DCD8;
+    --color-teal-400: #22A8A6;
+    --color-teal-500: #2F7574;
+    --color-teal-800: #284242;
+    --color-teal-900: #293333;
 }
 
 .chat-background-modern {

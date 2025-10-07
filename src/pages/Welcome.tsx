@@ -22,11 +22,9 @@ const Welcome = () => {
         <div className="flex flex-col items-center lg:items-start">
           <div className="flex items-center justify-center">
             <div className="flex w-1/2 flex-col items-center lg:items-start">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold animate-fade-in-up">
-                <span className="text-anthracite-950">{t('title')}</span>
-                <br />
-                <span className="bg-gradient-to-r from-white/80 to-white bg-clip-text text-transparent">
-                  {t('subtitle')}
+              <h1 className="text-2xl mb-8 sm:text-3xl md:text-4xl font-bold animate-fade-in-up">
+                <span className="text-[var(--color-teal-900)]">
+                  {t('title')}
                 </span>
               </h1>
             </div>
@@ -35,17 +33,23 @@ const Welcome = () => {
             </div>
           </div>
 
-          <p className="text-xl sm:text-2xl text-anthracite-800 font-medium mb-4">
+          <p className="mt-8 text-xl sm:text-2xl text-[var(--color-teal-800)] font-medium mb-4">
             {t('welcome')}
           </p>
 
-          <p className="text-base sm:text-lg text-anthracite-600 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+          <p className="text-base sm:text-lg text-[var(--color-teal-500)] mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
             <Trans
               i18nKey="intro"
               ns="welcome"
               components={[
-                <span key={1} className="font-semibold text-anthracite-800" />,
-                <span key={2} className="font-semibold text-anthracite-800" />,
+                <span
+                  key={1}
+                  className="font-semibold text-[var(--color-teal-800)]"
+                />,
+                <span
+                  key={2}
+                  className="font-semibold text-[var(--color-teal-800)]"
+                />,
               ]}
             />
           </p>
@@ -53,7 +57,7 @@ const Welcome = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <Link
               to="/stories"
-              className="group relative inline-flex items-center justify-center px-8 py-4 text-anthracite-950 font-semibold rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105"
+              className="group relative inline-flex items-center justify-center px-8 py-4 text-[var(--color-teal-900)] font-semibold rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105"
             >
               <span className="absolute inset-0 bg-white"></span>
               <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -77,7 +81,7 @@ const Welcome = () => {
 
             <Link
               to="/about"
-              className="inline-flex items-center justify-center px-8 py-4 text-gold-950 font-semibold rounded-full border-2 border-anthracite-950 hover:border-gold-900 hover:text-gold-900 hover:bg-gold-100 transition-all duration-300"
+              className="inline-flex items-center justify-center px-8 py-4 text-[var(--color-teal-900)] font-semibold rounded-full border-2 border-[var(--color-teal-900)] hover:border-[var(--color-teal-500)] hover:text-[var(--color-teal-500)] hover:bg-[var(--color-teal-200)]/10 transition-all duration-300"
             >
               {t('more')}
             </Link>

@@ -7,9 +7,9 @@ import sample from '../assets/about/sample.png';
 import teamPic from '../assets/about/team.jpg';
 import beat from '../assets/about/beat.png';
 import motivation from '../assets/about/motivation.jpg';
-import amy from '../assets/about/amy.png';
+import amy from '../assets/amy_lg.png';
 import digital from '../assets/about/digital.png';
-import logo from '../assets/about/logo.png';
+import logo from '../assets/amy_lg.png';
 
 type Copy = string | string[];
 interface SplitSectionProps {
@@ -20,7 +20,6 @@ interface SplitSectionProps {
   imgAlt: string;
   invert?: boolean;
   bg?: string;
-  imgStyle?: string;
 }
 
 function SplitSection({
@@ -30,35 +29,46 @@ function SplitSection({
   imgSrc,
   imgAlt,
   invert = false,
-  bg = '',
-  imgStyle = 'w-full h-full object-cover',
+  bg = 'bg-white',
 }: SplitSectionProps) {
   return (
-    <section id={id} className={`scroll-mt-24 ${bg} py-12 sm:py-20`}>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id={id} className={`scroll-mt-24 ${bg} py-16 md:py-24`}>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div
-          className={`grid gap-10 lg:grid-cols-2 lg:items-center ${
-            invert ? 'lg:direction-rtl' : ''
-          }`}
+          className={`flex flex-col gap-12 lg:gap-16 ${
+            invert ? 'lg:flex-row-reverse' : 'lg:flex-row'
+          } items-center`}
         >
-          <div className="space-y-6 lg:direction-ltr">
-            <h2 className="text-3xl font-bold text-anthracite-950">{title}</h2>
+          <div className="flex-1 space-y-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight">
+              {title}
+            </h2>
 
             {Array.isArray(copy) ? (
-              <ul className="list-disc pl-5 space-y-1 text-base leading-relaxed text-anthracite-600">
-                {copy.map((line) => (
-                  <li key={line}>{line}</li>
+              <ul className="space-y-4 text-lg leading-relaxed text-gray-700">
+                {copy.map((line, idx) => (
+                  <li key={idx} className="flex gap-3">
+                    <span className="text-teal-600 font-bold">•</span>
+                    <span>{line}</span>
+                  </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-base leading-relaxed text-anthracite-600">
-                {copy}
-              </p>
+              <p className="text-lg leading-relaxed text-gray-700">{copy}</p>
             )}
           </div>
 
-          <div className="mx-auto w-92 h-92 rounded-full overflow-hidden">
-            <img src={imgSrc} alt={imgAlt} className={imgStyle} />
+          <div className="flex-1 w-full">
+            <div className="relative group">
+              <div className="absolute rounded-2xl opacity-20 group-hover:opacity-30 transition-opacity blur"></div>
+              <div className="relative bg-white rounded-2xl overflow-hidden">
+                <img
+                  src={imgSrc}
+                  alt={imgAlt}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -71,13 +81,14 @@ export default function About() {
 
   return (
     <Layout>
-      <main>
+      <main className="bg-white">
         <SplitSection
           id="our-vision"
           title={t('ourVision.title')}
           copy={t('ourVision.copy')}
           imgSrc={vision}
           imgAlt="Our vision sketch-style illustration"
+          bg="bg-white"
         />
 
         <SplitSection
@@ -87,7 +98,7 @@ export default function About() {
           imgSrc={motivation}
           imgAlt="Motivation for our project showing the two sisters in a garden with a child"
           invert
-          bg="bg-white"
+          bg="bg-teal-50"
         />
 
         <SplitSection
@@ -99,8 +110,8 @@ export default function About() {
             t('ourEducationalApproach.copy3'),
           ]}
           imgSrc={beat}
-          imgStyle=""
           imgAlt="A picture of a heartbeat showing the rhythm of learning"
+          bg="bg-white"
         />
 
         <SplitSection
@@ -108,35 +119,50 @@ export default function About() {
           title={t('ourMethod.title')}
           copy={t('ourMethod.copy')}
           imgSrc={sample}
-          imgStyle="rounded-lg shadow-lg w-[50%] w-full h-full object-cover"
           imgAlt="A sample of our application showing a chat interface"
           invert
-          bg="bg-white"
+          bg="bg-teal-50"
         />
 
-        <section id="our-team" className="py-16 bg-white scroll-mt-24">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-12 text-center text-3xl font-bold text-anthracite-950">
-              {t('ourTeam.title')}
-            </h2>
+        {/* Team Section */}
+        <section id="our-team" className="py-20 md:py-32 bg-white scroll-mt-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
+                {t('ourTeam.title')}
+              </h2>
+              <div className="w-20 h-1 bg-teal-600 mx-auto"></div>
+            </div>
 
-            <img
-              className="mx-auto mb-14 w-full max-w-lg rounded-xl shadow-lg"
-              src={teamPic}
-              alt="Selbst gezeichnete Illustration von Melina und Ann-Sofie"
-            />
+            <div className="mb-16">
+              <div className="relative group max-w-3xl mx-auto">
+                <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-teal-600 rounded-3xl opacity-20 group-hover:opacity-30 transition-opacity blur"></div>
+                <div className="relative">
+                  <img
+                    className="rounded-3xl shadow-2xl w-full"
+                    src={teamPic}
+                    alt="Selbst gezeichnete Illustration von Melina und Ann-Sofie"
+                  />
+                </div>
+              </div>
+            </div>
 
-            <div className="grid gap-12 sm:grid-cols-2">
+            <div className="grid gap-10 md:grid-cols-2 max-w-5xl mx-auto">
               {t('ourTeam.members', { returnObjects: true }).map(
                 (member: any) => (
-                  <div key={member.name} className="text-center">
-                    <h3 className="text-2xl font-semibold text-anthracite-950">
+                  <div
+                    key={member.name}
+                    className="bg-teal-50 rounded-2xl p-8 hover:shadow-lg transition-shadow"
+                  >
+                    <h3 className="text-2xl font-bold text-black mb-2">
                       {member.name}
                     </h3>
-                    <p className="mb-2 text-sm italic text-anthracite-600">
+                    <p className="text-teal-600 font-semibold mb-4">
                       {member.role}
                     </p>
-                    <p className="text-anthracite-600">{member.bio}</p>
+                    <p className="text-gray-700 leading-relaxed">
+                      {member.bio}
+                    </p>
                   </div>
                 )
               )}
@@ -149,8 +175,8 @@ export default function About() {
           title={t('amplifyYourMind.title')}
           copy={t('amplifyYourMind.copy')}
           imgSrc={logo}
-          imgStyle=""
           imgAlt="Amplify Your Mind logo showing a heartbeat"
+          bg="bg-teal-50"
         />
 
         <SplitSection
@@ -158,52 +184,44 @@ export default function About() {
           title={t('whyAmy.title')}
           copy={t('whyAmy.copy')}
           imgSrc={amy}
-          imgStyle=""
           imgAlt="Why Amy"
           invert
           bg="bg-white"
         />
 
+        {/* Call to Action */}
         <section
           id="call-for-action"
-          className="relative isolate overflow-hidden bg-white py-20"
+          className="relative bg-teal-50 py-20 md:py-32"
         >
-          <div className="mx-auto max-w-4xl px-4 text-center">
-            <h2 className="mb-6 text-3xl font-bold text-anthracite-950">
+          <div className="mx-auto max-w-4xl px-6 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-teal-900 mb-6">
               {t('callForAction.title')}
             </h2>
 
-            <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-anthracite-600">
+            <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-gray-500">
               {t('callForAction.copy')}
             </p>
 
-            <img
-              src={digital}
-              alt="An illustration of digital brain"
-              className="mx-auto mb-10 w-full max-w-xs"
-            />
-
-            <div>
-              <Link
-                to="/contact"
-                className="relative inline-flex items-center gap-2 rounded-full bg-anthracite-950 px-8 py-4 text-white shadow-lg ring-1 ring-anthracite-700/40 transition hover:bg-anthracite-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-3 rounded-full bg-teal-300 px-10 py-5 text-lg font-semibold text-white shadow-xl hover:bg-teal-400 hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-200"
+            >
+              {t('callForAction.button')}
+              <svg
+                className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                {t('callForAction.button')}
-                <svg
-                  className="h-5 w-5 transition-transform group-hover:translate-x-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                  />
-                </svg>
-              </Link>
-            </div>
+                <path
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                />
+              </svg>
+            </Link>
           </div>
         </section>
       </main>

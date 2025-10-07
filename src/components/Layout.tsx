@@ -10,7 +10,7 @@ export default function Layout({
   backPath,
 }: {
   children: React.ReactNode | React.ReactNode[];
-  backPath?: string; // Optional prop for the back button
+  backPath?: string;
 }) {
   const location = useLocation();
   const { t } = useTranslation('navigation');
@@ -24,26 +24,33 @@ export default function Layout({
     { to: '/about#call-for-action', label: t('cooperations') },
   ];
 
+  // Helper to detect active link (supports hash)
+  const isActive = (to: string) => {
+    const current = location.pathname + (location.hash || '');
+    return current === to;
+  };
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
-        setIsMenuOpen(false); // Close the drawer if screen size grows
+        setIsMenuOpen(false);
       }
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
-    <div className="min-h-screen bg-gold-500 flex flex-col">
+    <div className="min-h-screen bg-[var(--color-teal-300)] flex flex-col">
       <header className="w-full sticky top-0 z-50 bg-white shadow-md">
         <div className="flex items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20">
+          {/* Mobile header */}
           <div className="flex md:hidden w-full items-center justify-between">
             {backPath && (
               <button
                 onClick={() => navigate(backPath)}
-                className="p-2 text-anthracite-700 hover:text-gold-600"
+                className="p-2 text-[var(--color-teal-900)] hover:text-[var(--color-teal-400)]"
+                aria-label="Back"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -65,18 +72,20 @@ export default function Layout({
             <div className="flex-1" />
 
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
                 <img
                   src={logo}
                   alt="Logo"
-                  className="w-8 h-8 object-cover object-cover object-center scale-175"
+                  className="w-8 h-8 object-cover object-center"
                 />
               </div>
               <div>
-                <div className="font-semibold text-anthracite-900 text-sm">
+                <div className="font-semibold text-[var(--color-teal-900)] text-sm">
                   AYM Vision
                 </div>
-                <div className="text-xs text-anthracite-500">Online</div>
+                <div className="text-xs text-[var(--color-teal-500)]">
+                  Online
+                </div>
               </div>
             </div>
 
@@ -84,7 +93,8 @@ export default function Layout({
 
             <button
               onClick={() => setIsMenuOpen(true)}
-              className="p-2 text-anthracite-700 hover:text-gold-600"
+              className="p-2 text-[var(--color-teal-900)] hover:text-[var(--color-teal-400)]"
+              aria-label="Open menu"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -103,16 +113,17 @@ export default function Layout({
             </button>
           </div>
 
+          {/* Desktop nav */}
           <nav className="hidden md:flex items-center space-x-1">
             {links.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 className={cn(
-                  'px-4 py-2 text-sm font-medium transition-all duration-200',
-                  location.pathname === link.to
-                    ? 'text-gold-600'
-                    : 'text-anthracite-700 hover:text-gold-600'
+                  'px-4 py-2 text font-medium transition-colors duration-200',
+                  isActive(link.to)
+                    ? 'text-[var(--color-teal-400)]'
+                    : 'text-[var(--color-teal-900)] hover:text-[var(--color-teal-300)]'
                 )}
               >
                 {link.label}
@@ -120,19 +131,23 @@ export default function Layout({
             ))}
           </nav>
 
-          <div className="hidden md:flex flex-1 justify-end">
-            <img src={logo} className="h-24" alt="Logo" />
+          <div className="hidden md:flex flex-1 justify-end items-center gap-4">
+            <img src={logo} className="h-24 w-auto" alt="Logo" />
             <LanguageSelector />
           </div>
         </div>
       </header>
+
+      {/* Mobile drawer */}
       <div
         className={cn(
           'fixed top-0 right-0 h-full w-full bg-white shadow-lg z-50 transform transition-transform duration-300',
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
+        role="dialog"
+        aria-modal="true"
       >
-        <div className="flex items-center justify-end p-4 bg-gold-500 shadow-sm h-16 sm:h-20">
+        <div className="flex items-center justify-end p-4 bg-[var(--color-teal-500)] shadow-sm h-16 sm:h-20">
           <div className="flex-1" />
 
           <div className="flex items-center space-x-2">
@@ -140,20 +155,19 @@ export default function Layout({
               <img
                 src={logo}
                 alt="Logo"
-                className="w-8 h-8 object-cover object-cover object-center scale-175"
+                className="w-8 h-8 object-cover object-center"
               />
             </div>
             <div>
-              <div className="font-semibold text-white text-lg text-shadow-sm">
-                AYM Vision
-              </div>
+              <div className="font-semibold text-white text-lg">AYM Vision</div>
             </div>
           </div>
 
           <div className="flex-1" />
           <button
             onClick={() => setIsMenuOpen(false)}
-            className="p-2 text-white hover:text-anthracite-700 text-shadow-sm"
+            className="p-2 text-white hover:text-gray-100"
+            aria-label="Close menu"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -178,10 +192,10 @@ export default function Layout({
               key={link.to}
               to={link.to}
               className={cn(
-                'block px-4 py-2 text-md font-medium transition-all duration-200',
-                location.pathname === link.to
-                  ? 'text-gold-600'
-                  : 'text-anthracite-700 hover:text-gold-600'
+                'block px-4 py-2 text-md font-medium transition-colors duration-200',
+                isActive(link.to)
+                  ? 'text-[var(--color-teal-300)]'
+                  : 'text-[var(--color-teal-900)] hover:text-[var(--color-teal-400)]'
               )}
               onClick={() => setIsMenuOpen(false)}
             >

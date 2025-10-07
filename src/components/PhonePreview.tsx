@@ -26,15 +26,15 @@ const PhonePreview = ({
     <div className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[440px]">
       <div className="absolute inset-0 bg-black/20 rounded-[2.5rem] blur-xl sm:blur-2xl transform translate-y-4 sm:translate-y-8 mb-8"></div>
 
-      <div className="relative bg-anthracite-950 rounded-[2.5rem] p-[0.5rem] shadow-2xl">
+      <div className="relative bg-gray-950 rounded-[2.5rem] p-[0.5rem] shadow-2xl">
         <div className="bg-gray-50 rounded-[2.2rem] w-full aspect-[9/19.5] flex flex-col overflow-hidden relative">
-          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[35%] h-[3.5%] bg-anthracite-950 rounded-b-2xl z-10"></div>
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[35%] h-[3.5%] bg-gray-950 rounded-b-2xl z-10"></div>
 
-          <div className="h-[6%] pointer-events-none flex items-end px-[6%] pb-[0.5%] text-[0.6rem] sm:text-xs font-medium text-anthracite-800">
+          <div className="h-[6%] pointer-events-none flex items-end px-[6%] pb-[0.5%] text-[0.6rem] sm:text-xs font-medium text-gray-800">
             <span>9:41</span>
             <div className="ml-auto flex items-center gap-[2%]">
-              <div className="w-5 h-2.5 sm:w-6 sm:h-3 border border-anthracite-800 rounded-sm">
-                <div className="w-full h-full bg-anthracite-800 rounded-sm scale-x-[0.7] origin-left"></div>
+              <div className="w-5 h-2.5 sm:w-6 sm:h-3 border border-gray-800 rounded-sm">
+                <div className="w-full h-full bg-gray-800 rounded-sm scale-x-[0.7] origin-left"></div>
               </div>
             </div>
           </div>
@@ -56,21 +56,21 @@ const PhonePreview = ({
               </svg>
             </button>
             <div className="ml-[3%] flex items-center gap-[3%] pointer-events-none">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-anthracite-950 font-semibold text-[0.7rem] sm:text-xs md:text-sm">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-gray-950 font-semibold text-[0.7rem] sm:text-xs md:text-sm">
                 AV
               </div>
               <div>
-                <div className="font-semibold text-anthracite-900 text-xs sm:text-sm">
+                <div className="font-semibold text-gray-900 text-xs sm:text-sm">
                   AYM Vision Chat
                 </div>
-                <div className="text-[0.65rem] sm:text-xs text-anthracite-500">
+                <div className="text-[0.65rem] sm:text-xs text-gray-500">
                   Online
                 </div>
               </div>
             </div>
             <button className="ml-auto p-[2%] -mr-[2%]">
               <svg
-                className="w-4 h-4 sm:w-5 sm:h-5 text-anthracite-600"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -96,7 +96,7 @@ const PhonePreview = ({
 
           <div className="bg-white border-t border-gold-200/50 px-[4%] py-[3%]">
             <div className="flex items-center gap-[3%]">
-              <button className="p-[2%] text-anthracite-500 hover:text-anthracite-700 transition-colors">
+              <button className="p-[2%] text-gray-500 hover:text-gray-700 transition-colors">
                 <svg
                   className="w-5 h-5 sm:w-6 sm:h-6"
                   fill="none"
@@ -112,10 +112,10 @@ const PhonePreview = ({
                 </svg>
               </button>
               <div className="flex-1 relative">
-                <div className="w-full py-[6%] px-[5%] pr-[12%] rounded-full bg-gold-50 text-anthracite-800 placeholder-anthracite-500 outline-none text-xs sm:text-sm pointer-events-none">
+                <div className="w-full py-[6%] px-[5%] pr-[12%] rounded-full bg-gold-50 text-gray-800 placeholder-gray-500 outline-none text-xs sm:text-sm pointer-events-none">
                   {inputPlaceholder}
                 </div>
-                <button className="absolute right-[2%] top-1/2 transform -translate-y-1/2 p-[2%] text-anthracite-500 hover:text-anthracite-700 transition-colors">
+                <button className="absolute right-[2%] top-1/2 transform -translate-y-1/2 p-[2%] text-gray-500 hover:text-gray-700 transition-colors">
                   <svg
                     className="w-4 h-4 sm:w-5 sm:h-5"
                     fill="none"
@@ -150,7 +150,7 @@ const PhonePreview = ({
           </div>
 
           <div className="h-[4%] flex items-center justify-center pb-[1%]">
-            <div className="w-[35%] h-[0.5%] min-h-[3px] bg-anthracite-800 rounded-full"></div>
+            <div className="w-[35%] h-[0.5%] min-h-[3px] bg-gray-800 rounded-full"></div>
           </div>
         </div>
       </div>
