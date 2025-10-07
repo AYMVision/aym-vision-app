@@ -8,7 +8,6 @@ import teamPic from '../assets/about/team.jpg';
 import beat from '../assets/about/beat.png';
 import motivation from '../assets/about/motivation.jpg';
 import amy from '../assets/amy_lg.png';
-import digital from '../assets/about/digital.png';
 import logo from '../assets/amy_lg.png';
 
 type Copy = string | string[];
