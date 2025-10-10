@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import vision from '../assets/about/vision.png';
 import sample from '../assets/about/sample.png';
 import teamPic from '../assets/about/team.jpg';
-import beat from '../assets/about/beat.jpg';
+import beat from '../assets/about/beat.png';
 import motivation from '../assets/about/motivation.jpg';
 import amy from '../assets/amy.png';
 import logo from '../assets/logo.png';

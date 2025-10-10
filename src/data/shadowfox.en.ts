@@ -46,7 +46,7 @@ const course: Course = {
   title: 'ShadowFox',
   image: titleImage,
   description:
-    'A multi-part chat thriller about identity, privacy, and safety online—and what you can do.',
+    'ShadowFox hijacks Class 7b’s group chat and knows all their embarrassing secrets. Can Tom, Mia & the others unmask the fox before it’s too late?',
   script: [
     {
       chapter: 1,

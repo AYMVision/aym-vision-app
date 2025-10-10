@@ -46,7 +46,7 @@ const course: Course = {
   title: 'ShadowFox',
   image: titleImage,
   description:
-    'Ein mehrteiliger Chat-Thriller über Identität, Privatsphäre und Sicherheit online – und was du tun kannst.',
+    'ShadowFox kapert den Klassenchat der 7b und kennt peinliche Details. Schaffen Tom, Mia & Co., den Fuchs rechtzeitig zu enttarnen? (Geeignet für Kinder zwischen 9 und 12 Jahre)',
   script: [
     {
       chapter: 1,
