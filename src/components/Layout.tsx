@@ -81,10 +81,10 @@ export default function Layout({
               </div>
               <div>
                 <div className="font-semibold text-[var(--color-teal-900)] text-sm">
-                  AYM Vision
+                  Amic
                 </div>
                 <div className="text-xs text-[var(--color-teal-500)]">
-                  Online
+                  Chat Story
                 </div>
               </div>
             </div>

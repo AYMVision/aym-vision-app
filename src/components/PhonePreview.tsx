@@ -2,12 +2,14 @@ import { useLayoutEffect, useRef, type PropsWithChildren } from 'react';
 
 interface PhoneProps extends PropsWithChildren {
   inputPlaceholder?: string;
+  logo?: string;
   onSubmitMessage?: (message: string) => void;
 }
 
 const PhonePreview = ({
   children,
   inputPlaceholder = 'Deine Antwort…',
+  logo = '',
 }: PhoneProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -56,15 +58,23 @@ const PhonePreview = ({
               </svg>
             </button>
             <div className="ml-[3%] flex items-center gap-[3%] pointer-events-none">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-gray-950 font-semibold text-[0.7rem] sm:text-xs md:text-sm">
-                AV
-              </div>
+              {logo !== '' ? (
+                <img
+                  src={logo}
+                  className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center"
+                  alt="Logo"
+                />
+              ) : (
+                <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-gray-950 font-semibold text-[0.7rem] sm:text-xs md:text-sm">
+                  AV
+                </div>
+              )}
               <div>
                 <div className="font-semibold text-gray-900 text-xs sm:text-sm">
-                  AYM Vision Chat
+                  Amic
                 </div>
                 <div className="text-[0.65rem] sm:text-xs text-gray-500">
-                  Online
+                  Chat Story
                 </div>
               </div>
             </div>

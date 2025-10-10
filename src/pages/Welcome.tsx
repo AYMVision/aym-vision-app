@@ -3,8 +3,8 @@ import Layout from '../components/Layout';
 import amy from '../assets/amy_lg.png';
 import ChatMessage from '../components/ChatMessage';
 import TypingIndicator from '../components/TypingIndicator';
-import courseDe from '../data/klassensprecher.de';
-import courseEn from '../data/klassensprecher.en';
+import courseDe from '../data/shadowfox.de';
+import courseEn from '../data/shadowfox.en';
 import PhonePreview from '../components/PhonePreview';
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -89,7 +89,7 @@ const Welcome = () => {
         </div>
 
         <div className="flex justify-center mt-8 lg:mt-0 w-5/6 lg:w-1/3 p-8">
-          <PhonePreview inputPlaceholder="Deine Antwort…">
+          <PhonePreview logo={course.image} inputPlaceholder="Deine Antwort…">
             {course.script[0].messages.map((message, index) => {
               if (message.type === 'user') {
                 return null;

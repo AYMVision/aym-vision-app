@@ -82,10 +82,10 @@ const Phone = ({
               </div>
               <div>
                 <div className="font-semibold text-gray-900 text-xs sm:text-sm">
-                  AYM Vision Chat
+                  Amic
                 </div>
                 <div className="text-[0.65rem] sm:text-xs text-gray-500">
-                  Online
+                  Chat Story
                 </div>
               </div>
             </div>
