@@ -5,10 +5,10 @@ import Layout from '../components/Layout';
 import vision from '../assets/about/vision.png';
 import sample from '../assets/about/sample.png';
 import teamPic from '../assets/about/team.jpg';
-import beat from '../assets/about/beat.png';
+import beat from '../assets/about/beat.jpg';
 import motivation from '../assets/about/motivation.jpg';
-import amy from '../assets/amy_lg.png';
-import logo from '../assets/amy_lg.png';
+import amy from '../assets/amy.png';
+import logo from '../assets/logo.png';
 
 type Copy = string | string[];
 interface SplitSectionProps {

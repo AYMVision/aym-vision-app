@@ -71,10 +71,10 @@ const PhonePreview = ({
               )}
               <div>
                 <div className="font-semibold text-gray-900 text-xs sm:text-sm">
-                  Amic
+                  "ShadowFox"
                 </div>
                 <div className="text-[0.65rem] sm:text-xs text-gray-500">
-                  Chat Story
+                  Amic
                 </div>
               </div>
             </div>
