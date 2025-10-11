@@ -7,15 +7,16 @@ import courseDe from '../data/shadowfox.de';
 import courseEn from '../data/shadowfox.en';
 import PhonePreview from '../components/PhonePreview';
 import { useTranslation, Trans } from 'react-i18next';
+import type { Message } from '../common/types';
 
 const Welcome = () => {
   const { t, i18n } = useTranslation('welcome');
   const courseLanguage = (i18n.language || 'de').split('-')[0];
   const course = courseLanguage === 'de' ? courseDe : courseEn;
 
-  const messages = Array.isArray(course?.script?.[0]?.messages)
-    ? course!.script[0].messages
-    : [];
+  // Lint-/TypeScript-freundlich ohne Non-Null-Assertion
+  const messages: Message[] = (course?.script?.[0]?.messages ??
+    []) as Message[];
 
   return (
     <Layout>
@@ -38,8 +39,16 @@ const Welcome = () => {
               <div className="mt-6 flex items-start gap-6">
                 <div className="flex-1">
                   <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
-                    <span className="block text-[var(--color-teal-900)]">
+                    {/* Titel + mobile Amy (nur bis lg sichtbar) */}
+                    <span className="inline-flex items-center gap-3 text-[var(--color-teal-900)]">
                       {t('title')}
+                      <img
+                        src={amy}
+                        alt="Amy"
+                        className="h-8 sm:h-10 w-auto drop-shadow lg:hidden"
+                        loading="eager"
+                        decoding="async"
+                      />
                     </span>
                     {/* Optional zweite Zeile:
                     <span className="block bg-gradient-to-r from-[var(--color-teal-900)] via-[var(--color-teal-800)] to-[var(--color-teal-500)] bg-clip-text text-transparent">
@@ -93,9 +102,62 @@ const Welcome = () => {
                       </span>
                     </Link>
                   </div>
+
+                  {/* Social Follow */}
+                  <div className="mt-6">
+                    <p className="text-sm sm:text-base text-[var(--color-teal-700,#205e5b)] font-medium">
+                      Werde schon jetzt Teil der Mission! Folge uns auf Facebook
+                      &amp; LinkedIn und sei von Anfang an dabei.
+                    </p>
+                    <div className="mt-3 flex flex-wrap items-center gap-3">
+                      {/* Facebook */}
+                      <a
+                        href="https://teams.live.com/l/message/19:d7Y_cEi84HRcRlxaz_EbogslDdch4Z8dg6DfnSq8zvU1@thread.v2/1759138965229?context=%7B%22contextType%22%3A%22chat%22%7D"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Folge uns auf Facebook"
+                        className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-[var(--color-teal-900)]
+                                   hover:shadow-md hover:ring-1 hover:ring-black/10 transition"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M22 12.06C22 6.48 17.52 2 11.94 2S2 6.48 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.76-1.61 1.54v1.85h2.74l-.44 2.91h-2.3V22c4.78-.79 8.44-4.94 8.44-9.94z"
+                          />
+                        </svg>
+                        Facebook
+                      </a>
+
+                      {/* LinkedIn */}
+                      <a
+                        href="https://teams.live.com/l/message/19:d7Y_cEi84HRcRlxaz_EbogslDdch4Z8dg6DfnSq8zvU1@thread.v2/1759137722500?context=%7B%22contextType%22%3A%22chat%22%7D"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Folge uns auf LinkedIn"
+                        className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-[var(--color-teal-900)]
+                                   hover:shadow-md hover:ring-1 hover:ring-black/10 transition"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M19 3A2.94 2.94 0 0 1 22 6v12a2.94 2.94 0 0 1-3 3H6a2.94 2.94 0 0 1-3-3V6a2.94 2.94 0 0 1 3-3h13M8.34 18.34V9.75H6V18.3h2.34m-1.17-9.69c.76 0 1.38-.62 1.38-1.38 0-.76-.62-1.38-1.38-1.38-.76 0-1.38.62-1.38 1.38 0 .76.62 1.38 1.38 1.38M20 18.34v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.06.79-2.41 1.35v-1.16H12v8.14h2.34v-4.52c0-1.19.23-2.34 1.7-2.34 1.45 0 1.47 1.35 1.47 2.41v4.45H20z"
+                          />
+                        </svg>
+                        LinkedIn
+                      </a>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Amy-Bild (optional) */}
+                {/* Amy-Bild für Desktop (ab lg sichtbar) */}
                 <div className="hidden lg:block shrink-0">
                   <img
                     src={amy}
@@ -108,10 +170,9 @@ const Welcome = () => {
               </div>
             </div>
 
-            {/* Phone Preview — kompakt wie auf aymvision.org (kein Glass, kein Rahmen) */}
+            {/* Phone Preview — kompakt rechts, ohne Rahmen */}
             <div className="lg:col-span-5">
               <div className="mx-auto md:mx-0 flex justify-center lg:justify-end">
-                {/* Feste, angenehme Breiten je Breakpoint */}
                 <div className="w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] xl:w-[360px]">
                   <PhonePreview inputPlaceholder="Deine Antwort…">
                     {messages
@@ -130,8 +191,8 @@ const Welcome = () => {
           <div className="px-0 pb-6 sm:pb-8 mt-6">
             <p className="text-center text-sm text-[var(--color-teal-700,#205e5b)]/80">
               {courseLanguage === 'de'
-                ? 'Tipp: Wechsle oben rechts die Sprache, um die englische Version zu sehen.'
-                : 'Tip: Switch language (top right) to view the German version.'}
+                ? 'Tip: Switch the language in the top right to view the English version.'
+                : 'Tipp: Wechsle oben rechts die Sprache, um die deutsche Version zu sehen.'}
             </p>
           </div>
         </div>
