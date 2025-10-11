@@ -94,7 +94,7 @@ const course: Course = {
           type: 'other',
           speaker: characters.mia,
           content:
-            'Or Mia’s cousin, or something? There are way too many people here!',
+            'Or Mia’s cousin or something? There are way too many people here!',
           timestamp: '19:26',
         },
         {

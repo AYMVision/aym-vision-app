@@ -26,37 +26,32 @@ const Welcome = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Textspalte */}
             <div className="lg:col-span-7">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-1 text-xs sm:text-sm text-[var(--color-teal-700,#205e5b)] shadow-sm">
-                <span
-                  className="inline-block h-2 w-2 rounded-full"
-                  style={{ background: 'var(--color-teal-400,#4fd1c5)' }}
-                />
-                {t('welcome')}
-              </div>
-
               {/* Headline */}
-              <div className="mt-6 flex items-start gap-6">
+              <div className="mt-0 flex items-start gap-6">
                 <div className="flex-1">
                   <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
-                    {/* Titel + mobile Amy (nur bis lg sichtbar) */}
-                    <span className="inline-flex items-center gap-3 text-[var(--color-teal-900)]">
+                    <span className="block text-[var(--color-teal-900)]">
                       {t('title')}
-                      <img
-                        src={amy}
-                        alt="Amy"
-                        className="h-8 sm:h-10 w-auto drop-shadow lg:hidden"
-                        loading="eager"
-                        decoding="async"
-                      />
                     </span>
-                    {/* Optional zweite Zeile:
-                    <span className="block bg-gradient-to-r from-[var(--color-teal-900)] via-[var(--color-teal-800)] to-[var(--color-teal-500)] bg-clip-text text-transparent">
-                      {t('subtitle')}
-                    </span>
-                    */}
                   </h1>
 
+                  {/* NEU: Subheadline – statt Badge-Button */}
+                  <p className="mt-3 text-base sm:text-lg text-[var(--color-teal-700,#205e5b)] font-semibold">
+                    {t('welcome')}
+                  </p>
+
+                  {/* Mobile: große Amy ÜBER dem Infotext */}
+                  <div className="lg:hidden mt-4">
+                    <img
+                      src={amy}
+                      alt="Amy – deine freundliche Begleitung"
+                      className="w-40 h-auto drop-shadow select-none mx-auto"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  </div>
+
+                  {/* Intro */}
                   <p className="mt-5 text-base sm:text-lg text-[var(--color-teal-600,#317b78)] leading-relaxed max-w-2xl">
                     <Trans
                       i18nKey="intro"
@@ -106,18 +101,19 @@ const Welcome = () => {
                   {/* Social Follow */}
                   <div className="mt-6">
                     <p className="text-sm sm:text-base text-[var(--color-teal-700,#205e5b)] font-medium">
+                      <span className="mr-2">Bald als App!</span>
                       Werde schon jetzt Teil der Mission! Folge uns auf Facebook
                       &amp; LinkedIn und sei von Anfang an dabei.
                     </p>
                     <div className="mt-3 flex flex-wrap items-center gap-3">
-                      {/* Facebook */}
+                      {/* Facebook (dunkel-türkis, weißer Text) */}
                       <a
-                        href="https://teams.live.com/l/message/19:d7Y_cEi84HRcRlxaz_EbogslDdch4Z8dg6DfnSq8zvU1@thread.v2/1759138965229?context=%7B%22contextType%22%3A%22chat%22%7D"
+                        href="https://www.facebook.com/profile.php?id=61581575849501&sk=about"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Folge uns auf Facebook"
-                        className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-[var(--color-teal-900)]
-                                   hover:shadow-md hover:ring-1 hover:ring-black/10 transition"
+                        className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold
+                                   bg-[var(--color-teal-900)] text-white hover:opacity-95 transition"
                       >
                         <svg
                           viewBox="0 0 24 24"
@@ -132,14 +128,14 @@ const Welcome = () => {
                         Facebook
                       </a>
 
-                      {/* LinkedIn */}
+                      {/* LinkedIn (dunkel-türkis, weißer Text) */}
                       <a
-                        href="https://teams.live.com/l/message/19:d7Y_cEi84HRcRlxaz_EbogslDdch4Z8dg6DfnSq8zvU1@thread.v2/1759137722500?context=%7B%22contextType%22%3A%22chat%22%7D"
+                        href="https://www.linkedin.com/company/aymquest/?viewAsMember=true"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Folge uns auf LinkedIn"
-                        className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-[var(--color-teal-900)]
-                                   hover:shadow-md hover:ring-1 hover:ring-black/10 transition"
+                        className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold
+                                   bg-[var(--color-teal-900)] text-white hover:opacity-95 transition"
                       >
                         <svg
                           viewBox="0 0 24 24"
@@ -187,11 +183,11 @@ const Welcome = () => {
             </div>
           </div>
 
-          {/* kleiner Fußnoten-Hinweis */}
+          {/* Footer-Tipp (SPRACHEN INVERTIERT, wie gewünscht) */}
           <div className="px-0 pb-6 sm:pb-8 mt-6">
             <p className="text-center text-sm text-[var(--color-teal-700,#205e5b)]/80">
               {courseLanguage === 'de'
-                ? 'Tip: Switch the language in the top right to view the English version.'
+                ? 'Tip: Switch language (top right) to view the English version.'
                 : 'Tipp: Wechsle oben rechts die Sprache, um die deutsche Version zu sehen.'}
             </p>
           </div>
