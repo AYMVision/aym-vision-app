@@ -26,7 +26,7 @@ import shadowfox11 from '../assets/stories/shadowfox/shadowfox11.png';
 import shadowfox12 from '../assets/stories/shadowfox/shadowfox12.png';
 import shadowfox13 from '../assets/stories/shadowfox/shadowfox13.png';
 import shadowfox14 from '../assets/stories/shadowfox/shadowfox14.png';
-import shadowfoxEnd from '../assets/stories/shadowfox/end.png';
+import shadowfox15 from '../assets/stories/shadowfox/shadowfox15.png';
 
 const characters: { [key: string]: Character } = {
   amy: { name: 'Amy', avatar: amyAvatar },
@@ -42,51 +42,49 @@ const characters: { [key: string]: Character } = {
 };
 
 const course: Course = {
-  id: 'im-netz-von-shadowfox',
+  id: 'shadowfox-network',
   title: 'ShadowFox',
   image: titleImage,
   description:
-    'ShadowFox hijacks Class 7b’s group chat and knows all their embarrassing secrets. Can Tom, Mia & the others unmask the fox before it’s too late?',
+    'ShadowFox hacks into class 7b’s group chat and knows some embarrassing secrets. Can Tom, Mia & Co. unmask the fox in time? (Recommended for ages 9–12)',
   script: [
     {
       chapter: 1,
       messages: [
         {
-          type: 'other',
+          type: 'main',
+          speaker: characters.amy,
+          image: shadowfox1,
+          timestamp: '07:01',
+        },
+        {
+          type: 'main',
           speaker: characters.shadowfox,
           content: 'Hello 7b… 😎',
           timestamp: '19:24',
         },
         {
           type: 'other',
-          speaker: characters.shadowfox,
-          image: shadowfox1,
-          timestamp: '19:24',
-          reactions: ['🫵'],
-        },
-        {
-          type: 'other',
           speaker: characters.finn,
           content: 'Hi 😊! Who are you?!',
           timestamp: '19:24',
-          reactions: ['😊'],
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'You get 3 guesses 🕵️‍♀️🔎🧩❓',
+          content: 'You can guess three times 🕵️‍♀️🔎🧩❓',
           timestamp: '19:25',
         },
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'Hm, no idea.',
+          content: 'Hmm, no idea.',
           timestamp: '19:25',
         },
         {
           type: 'other',
           speaker: characters.chioma,
-          content: 'Probably another gaming buddy of someone from Roblox?',
+          content: 'Probably some gaming buddy from Roblox again?',
           timestamp: '19:25',
           reactions: ['🧐'],
         },
@@ -94,13 +92,13 @@ const course: Course = {
           type: 'other',
           speaker: characters.mia,
           content:
-            'Or Mia’s cousin or something? There are way too many people here!',
+            "Or someone's cousin or something? There are way too many people here! 🙄",
           timestamp: '19:26',
         },
         {
           type: 'other',
           speaker: characters.finn,
-          content: 'Are you new or have you always been in the group?',
+          content: 'Are you new here or have you always been in the group?',
           timestamp: '19:27',
         },
         {
@@ -112,20 +110,23 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'Certainly not me!',
+          content: 'Definitely not me!',
           timestamp: '19:28',
         },
         {
           type: 'other',
           speaker: characters.chioma,
+          replyTo: {
+            speakerName: characters.shadowfox.name,
+            text: 'Hello 7b… 😎',
+          },
           content: 'Come on, who are you?',
           timestamp: '19:35',
-          reactions: ['😳'],
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'Maybe you will get to know me… better than you would like.',
+          content: 'Maybe you’ll get to know me soon… better than you’d like.',
           timestamp: '19:36',
         },
         {
@@ -137,21 +138,21 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.tom,
-          content: '😳',
+          content: '?😳',
           timestamp: '19:36',
         },
         {
           type: 'main',
           speaker: characters.amy,
           content:
-            'What could you do if someone suddenly seems unfamiliar in the chat?',
+            'What could you do if someone in a chat suddenly seems strange to you?',
           timestamp: '19:37',
         },
         {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Regularly check who is in your chats before you post private messages.',
+            'Regularly check who’s in your chats before you share private messages.',
           timestamp: '19:37',
         },
       ],
@@ -160,11 +161,10 @@ const course: Course = {
       chapter: 2,
       messages: [
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'Good luck today, Mia 😉—do not get nervous.',
+          content: 'Good luck today, Mia 😉 – don’t get nervous.',
           timestamp: '07:06',
-          reactions: ['😉'],
         },
         {
           type: 'other',
@@ -173,45 +173,45 @@ const course: Course = {
           timestamp: '07:08',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'For the make-up exam in English. You will be fine.',
+          content: 'Well, for your English test. You’ll do fine.',
           timestamp: '07:08',
         },
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'What make-up exam?',
+          content: 'What test? 🤨',
           timestamp: '07:12',
         },
         {
           type: 'other',
           speaker: characters.dominik,
-          content: 'Seriously? Mia has a make-up exam 🤣.',
+          content: 'Seriously? Mia has a make-up test 🤣.',
           timestamp: '07:13',
           reactions: ['😂'],
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'Oh man, that is embarrassing…',
+          content: 'Oh man, that’s embarrassing…',
           timestamp: '07:14',
           reactions: ['🙈'],
         },
         {
-          type: 'other',
-          speaker: characters.shadowfox,
+          type: 'main',
+          speaker: characters.amy,
           image: shadowfox2,
           timestamp: '07:14',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'How do YOU know that?!',
+          content: 'How do YOU even know that?!',
           timestamp: '07:14',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
           content: '🦊😈 I have my sources…',
           timestamp: '07:15',
@@ -219,32 +219,31 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.chioma,
-          content: 'How creepy.',
+          content: 'Creepy.',
           timestamp: '07:16',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'He is spying on us!',
+          content: 'He’s spying on us!',
           timestamp: '07:16',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: '👀',
+          content: '... 👀',
           timestamp: '07:17',
         },
         {
           type: 'main',
           speaker: characters.amy,
-          content: 'What does “private matter” on the internet mean to you?',
+          content: 'What does “private” mean to you on the internet?',
           timestamp: '07:18',
         },
         {
           type: 'main',
           speaker: characters.amy,
-          content:
-            'If something gives you a strange feeling, say “Stop!” or leave the group.',
+          content: 'If something feels weird, say “Stop!” or leave the group.',
           timestamp: '07:18',
         },
       ],
@@ -253,23 +252,22 @@ const course: Course = {
       chapter: 3,
       messages: [
         {
-          type: 'other',
-          speaker: characters.shadowfox,
+          type: 'main',
+          speaker: characters.amy,
           image: shadowfox3,
-          timestamp: '07:39',
+          timestamp: '07:40',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content:
-            'We should kick ShadowFox out again; we do not even know him.',
+          content: 'We should kick ShadowFox out; we don’t even know him.',
           timestamp: '07:40',
         },
         {
           type: 'other',
           speaker: characters.carlos,
           content:
-            'Maybe we do know him after all. It could also be that someone in the group just changed their profile name. In WhatsApp you can do that at any time—then suddenly there is a new name.',
+            'Maybe we do know him. It could be someone who just changed their profile name. In WhatsApp you can do that anytime – suddenly there’s a new name.',
           timestamp: '07:41',
         },
         {
@@ -281,7 +279,7 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'No matter why he is here—the guy has to go!',
+          content: 'Doesn’t matter why he’s here – he needs to go!',
           timestamp: '07:42',
           reactions: ['👍🏻'],
         },
@@ -289,33 +287,32 @@ const course: Course = {
           type: 'other',
           speaker: characters.tom,
           content:
-            'I agree with Mia: It was funny, but the fun is over!! Who are you??',
+            'I agree with Mia: It was funny at first, but now it’s over!! Who are you??',
           timestamp: '07:44',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'If you do not say it now, you are out!',
+          content: 'If you don’t tell us now, you’re out!',
           timestamp: '07:44',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'You will not get rid of me that easily. 🦊😈',
+          content: 'You won’t get rid of me that easily. 🦊😈',
           timestamp: '07:45',
         },
         {
           type: 'main',
           speaker: characters.amy,
-          content:
-            'What rules should there be in a chat so that everyone feels comfortable?',
+          content: 'What kind of chat rules make everyone feel comfortable?',
           timestamp: '07:46',
         },
         {
           type: 'main',
           speaker: characters.amy,
           content:
-            'The same applies in the chat as on the Playground: only those who behave fairly may play along. Your freedom ends where that of others begins.',
+            'The same rules apply online as on the playground: Only those who act fair can join in.',
           timestamp: '07:46',
         },
       ],
@@ -326,84 +323,86 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'Okay, the fox is out now!',
+          content: 'Okay, the fox is out!',
           timestamp: '16:12',
         },
         {
           type: 'other',
           speaker: characters.dominik,
-          content: 'Did not think you were such a wimp 😆',
+          content: 'Didn’t think you were such a scaredy-cat 😆',
           timestamp: '16:12',
           reactions: ['😂'],
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content:
-            'Reply to: “Did not think…” — Leave Tom alone. This is really creepy! Tom, kick him out!',
+          replyTo: {
+            speakerName: characters.dominik.name,
+            text: 'Didn’t think you were such a scaredy-cat 😆',
+          },
+          content: 'Leave Tom alone. That’s super creepy! Tom, kick him out!',
           timestamp: '16:13',
         },
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'I cannot remove him...',
+          content: 'I can’t delete him...',
           timestamp: '16:15',
           reactions: ['😱'],
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'Huh?!?!',
+          content: 'What?!?!',
           timestamp: '16:15',
         },
         {
           type: 'other',
           speaker: characters.carlos,
-          content: 'Wait… maybe you are not an admin.',
+          content: 'Wait… maybe you’re not admin.',
           timestamp: '16:16',
         },
         {
           type: 'other',
           speaker: characters.carlos,
-          content: 'I will try.',
+          content: 'I’ll try.',
           timestamp: '16:16',
         },
         {
           type: 'other',
           speaker: characters.dominik,
-          content: 'You really are a bunch of losers!',
+          content: 'You’re such losers!',
           timestamp: '16:16',
           reactions: ['👎'],
         },
         {
           type: 'other',
           speaker: characters.carlos,
-          content:
-            'Does not work either. I am not an admin either. Admin is...',
+          content: 'Nope, doesn’t work. I’m not admin either. The admin is...',
           timestamp: '16:17',
         },
         {
           type: 'other',
           speaker: characters.carlos,
-          content: 'Oh... you will not believe this...',
+          content: 'Oh… you won’t believe this…',
           timestamp: '16:18',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'Come on, say it!',
+          content: 'Come on, tell us!',
           timestamp: '16:18',
         },
         {
           type: 'other',
           speaker: characters.carlos,
-          content: 'It is... ShadowFox.',
+          content: 'It’s… ShadowFox.',
           timestamp: '16:19',
           reactions: ['😳'],
         },
         {
-          type: 'other',
-          speaker: characters.shadowfox,
+          type: 'main',
+          speaker: characters.amy,
           image: shadowfox4,
           timestamp: '16:19',
         },
@@ -417,7 +416,7 @@ const course: Course = {
           type: 'main',
           speaker: characters.amy,
           content:
-            'For important groups (e.g., class chat) there should be multiple admins so that not one person alone decides everything.',
+            'Important groups (like a class chat) should have several admins, so one person doesn’t control everything.',
           timestamp: '16:20',
         },
       ],
@@ -426,7 +425,7 @@ const course: Course = {
       chapter: 5,
       messages: [
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
           image: shadowfox5,
           content: 'How he gives her a kiss at last year’s class party.',
@@ -435,41 +434,38 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.dominik,
-          content: 'Oooooh!',
+          content: 'Oooooh! 😏',
           timestamp: '19:54',
-          reactions: ['😏'],
         },
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'How cute!',
+          content: 'So cute! ❤️',
           timestamp: '19:54',
-          reactions: ['❤️'],
         },
         {
           type: 'other',
           speaker: characters.dominik,
-          content: 'Hahaha, embarrassing! 🤣',
+          content: 'Haha, embarrassing! 🤣',
           timestamp: '19:54',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'Are you crazy?! Delete that immediately!',
+          content: 'Are you crazy?! Delete that right now!',
           timestamp: '19:56',
-          reactions: ['🫷'],
         },
         {
           type: 'other',
           speaker: characters.finn,
-          content: 'That is not funny. That does not belong here! Cut it out.',
+          content: 'That’s not funny. This doesn’t belong here! Stop it.',
           timestamp: '19:56',
           reactions: ['👍🏻'],
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'Well… it seems the others are having the fun 😂😈.',
+          content: 'Well… looks like others are enjoying it 😂😈.',
           timestamp: '19:57',
         },
         {
@@ -488,33 +484,27 @@ const course: Course = {
           type: 'other',
           speaker: characters.carlos,
           content:
-            'Once something has been in the chat or someone saved it, it can reappear at any time. Even if it was deleted long ago.',
+            'Once it’s in a chat or someone saved it, it can pop up anytime — even if you deleted it.',
           timestamp: '20:02',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'Some memories you do not forget… 😈',
+          content: 'Some memories never fade… 😈',
           timestamp: '20:02',
-        },
-        {
-          type: 'other',
-          speaker: characters.dominik,
-          content: '😘🤣',
-          timestamp: '20:03',
         },
         {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Imagine someone posts an old photo of you today that embarrasses you—how would you react and what would you wish from the others?',
+            'Imagine someone posts an old picture of you that’s embarrassing — how would you react, and what would you hope others would do?',
           timestamp: '20:04',
         },
         {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Always ask first before you share a photo of someone—and be careful what you send of yourself.',
+            'Always ask before sharing someone’s photo – and be careful what you send yourself.',
           timestamp: '20:04',
         },
       ],
@@ -523,60 +513,53 @@ const course: Course = {
       chapter: 6,
       messages: [
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          image: shadowfox6,
-          timestamp: '06:24',
-        },
-        {
-          type: 'other',
-          speaker: characters.shadowfox,
-          content:
-            'So, Mia… how is that presentation going that you keep putting off?',
+          content: 'Hey Mia… how’s that presentation you keep putting off?',
           timestamp: '06:25',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'How do you know about THAT again?!',
+          content: 'How do you know ABOUT THAT again?!',
           timestamp: '07:02',
           reactions: ['😱'],
         },
         {
           type: 'other',
           speaker: characters.finn,
-          content: 'What presentation? Is that written somewhere?',
+          content: 'What presentation? Is that posted somewhere?',
           timestamp: '07:05',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'You just have to know where to listen. 🦊',
+          content: 'You just have to know where to listen… 🦊',
           timestamp: '07:05',
         },
         {
           type: 'other',
           speaker: characters.chioma,
-          content: 'What are you trying to say—you stalker?',
+          content: 'What do you mean – you stalker?',
           timestamp: '07:06',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
           content:
-            'That I do not only read here. Some of you speak louder than you think.',
+            'I don’t just read here. Some of you talk louder than you think.',
           timestamp: '07:06',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'And Finn… how was last night in Tower of Hell? 😉',
+          content: 'And Finn… how was Tower of Hell last night? 😉',
           timestamp: '07:08',
         },
         {
           type: 'other',
           speaker: characters.finn,
-          content: '? How do you know...?',
+          content: '? How do you…?',
           timestamp: '07:08',
         },
         {
@@ -589,21 +572,26 @@ const course: Course = {
           type: 'other',
           speaker: characters.tom,
           content:
-            'Finn, did you play with that guy yesterday? Do you actually know ShadowFox after all?? Spit it out!',
+            'Finn, did you play with that guy yesterday? Do you actually know ShadowFox?? Tell us!',
+          timestamp: '07:09',
+        },
+        {
+          type: 'main',
+          speaker: characters.amy,
+          image: shadowfox6,
           timestamp: '07:09',
         },
         {
           type: 'other',
           speaker: characters.finn,
-          content: 'I do not think so. Maybe he was simply in the same game…',
+          content: 'I don’t think so. Maybe he was just in the same game…',
           timestamp: '07:10',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'Maybe I am closer to you than you think.',
+          content: 'Maybe I’m closer than you think.',
           timestamp: '07:10',
-          reactions: ['🥱'],
         },
         {
           type: 'system',
@@ -619,14 +607,14 @@ const course: Course = {
           type: 'main',
           speaker: characters.amy,
           content:
-            'What would you do if you noticed that someone has more information about you than you are comfortable with?',
+            'What would you do if someone knew more about you than you’d like?',
           timestamp: '07:12',
         },
         {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Be aware that through all the different channels you use, you reveal lots of little puzzle pieces about yourself.',
+            'Be aware that through all your channels you share little puzzle pieces about yourself.',
           timestamp: '07:12',
         },
       ],
@@ -635,40 +623,35 @@ const course: Course = {
       chapter: 7,
       messages: [
         {
-          type: 'system',
-          content: 'Ping!',
-          timestamp: '07:35',
-        },
-        {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'I think it is time to show you my ace up the sleeve…',
+          content: '🧨🧨🧨 I think it’s time to show you my ace up my sleeve…',
           timestamp: '07:35',
         },
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'What is that supposed to mean?',
+          content: 'What’s that supposed to mean?',
           timestamp: '07:35',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
           content:
-            'Let us put it this way… I have something your teacher would find very interesting.',
+            'Let’s just say… I’ve got something your teacher will find very interesting.',
           timestamp: '07:35',
         },
         {
           type: 'other',
           speaker: characters.chioma,
-          content: 'Stop the nonsense. Nobody believes you.',
+          content: 'Cut it out. Nobody believes you.',
           timestamp: '07:35',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
           content:
-            'Oh no? Then maybe you will believe me when she sets your project grade to 6. 🦊😈',
+            'Oh really? Maybe she will when she gives you all an F for your project. 🦊😈',
           timestamp: '07:35',
           reactions: ['👎'],
         },
@@ -679,10 +662,16 @@ const course: Course = {
           timestamp: '07:36',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
           content:
-            'Because I know how your sustainability project really came about—with AI.',
+            'Because I know how your sustainability project was really made — with AI.',
+          timestamp: '07:37',
+        },
+        {
+          type: 'main',
+          speaker: characters.shadowfox,
+          image: shadowfox15,
           timestamp: '07:37',
         },
         {
@@ -694,23 +683,23 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.mia,
-          content: '😱',
+          content: 'What 😱',
           timestamp: '07:37',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'I have proof—and Ms. Schubert will not like it.',
+          content: 'I’ve got the proof — and Mrs Schubert won’t like it.',
           timestamp: '07:38',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'Then the lady is getting a little surprise now… 📤',
+          content: 'Time for a little surprise for her… 📤',
           timestamp: '07:40',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
           image: shadowfox7,
           timestamp: '07:40',
@@ -719,14 +708,14 @@ const course: Course = {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Whom would you ask for help if someone threatens you online?',
+            'Who would you ask for help if someone threatened you online?',
           timestamp: '07:41',
         },
         {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Never react blindly in panic—seek help first. Then together you can check what is behind the threat.',
+            'Never panic and react blindly – get help first. Then you can figure out together what’s really behind the threat.',
           timestamp: '07:41',
         },
       ],
@@ -735,19 +724,17 @@ const course: Course = {
       chapter: 8,
       messages: [
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
           image: shadowfox8,
-          content:
-            'So, Finn… how long do you think you will stay in first place? 😏',
+          content: 'Hey Finn… how long will you stay number 1? 😏',
           timestamp: '17:41',
         },
         {
           type: 'other',
           speaker: characters.finn,
-          content: 'What?! That is my account!',
+          content: 'What?! That’s my account!',
           timestamp: '17:41',
-          reactions: ['😱'],
         },
         {
           type: 'other',
@@ -758,18 +745,18 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'That is completely insane…',
+          content: 'That’s insane…',
           timestamp: '17:42',
         },
         {
           type: 'other',
           speaker: characters.mia,
           content:
-            'What do you want from us? What do we have to do so you do not tell on us and leave Finn’s account alone??',
+            'What do you want from us? What should we do so you leave Finn’s account alone??',
           timestamp: '17:42',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
           content: 'Maybe I just want you to finally take me seriously.',
           timestamp: '17:45',
@@ -777,13 +764,13 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.chioma,
-          content: 'Have we not? What did we supposedly do to you?',
+          content: 'Didn’t we? What do you think we did to you?',
           timestamp: '17:45',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: 'You have no idea what it is like to simply be forgotten.',
+          content: 'You have no idea what it’s like to be forgotten.',
           timestamp: '17:47',
           reactions: ['🥱'],
         },
@@ -812,83 +799,80 @@ const course: Course = {
           timestamp: '17:47',
         },
         {
-          type: 'other',
-          speaker: characters.shadowfox,
-          image: shadowfox9,
-          timestamp: '17:47',
-        },
-        {
           type: 'system',
           content: '— Private chat between Tom, Mia, Finn, Chioma, Carlos —',
           timestamp: '17:47',
         },
         {
+          type: 'main',
+          speaker: characters.amy,
+          image: shadowfox9,
+          timestamp: '17:47',
+        },
+        {
           type: 'other',
           speaker: characters.tom,
-          content: 'Honestly... why should we not use AI to research.',
+          content: 'Honestly… why shouldn’t we use AI to research things?',
           timestamp: '17:47',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'Well, we should have said so.',
+          content: 'Well, we should’ve told her.',
           timestamp: '17:48',
         },
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'But we even checked the sources.',
+          content: 'But we checked the sources!',
           timestamp: '17:48',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'I know, but will Ms. Schubert see it that relaxed?',
+          content: 'Yeah, but do you think Mrs Schubert sees it that way?',
           timestamp: '17:49',
         },
         {
           type: 'other',
           speaker: characters.tom,
           content:
-            'It is best if we bring it up to her ourselves. If we handle it transparently, she will probably react cool.',
+            'We should talk to her ourselves. If we’re honest, she’ll probably handle it well.',
           timestamp: '17:49',
           reactions: ['🤞'],
         },
         {
           type: 'other',
           speaker: characters.finn,
-          content:
-            'Hey, folks, that is nice for you! But what do I do about my account??',
+          content: 'Hey guys, that’s nice and all! But what about my account??',
           timestamp: '17:50',
         },
         {
           type: 'other',
           speaker: characters.carlos,
           content:
-            'Calm down, man. Log in and set a new password—you should have done that long ago anyway.',
+            'Calm down. Log in and set a new password – you should’ve done that ages ago.',
           timestamp: '17:50',
-          reactions: ['🫷'],
         },
         {
           type: 'other',
           speaker: characters.finn,
           content:
-            'Uh, right. Where exactly is he in there? I will zoom into the photo…',
+            'Uh, right. Where exactly is he logged in? Let me zoom in on the photo…',
           timestamp: '17:51',
         },
         {
           type: 'other',
           speaker: characters.finn,
           content:
-            '...Wait. Do you see that? On the right edge of the monitor there is a... mirror.',
+            '…Wait. Do you see that? On the right edge of the monitor there’s a… mirror.',
           timestamp: '17:51',
           reactions: ['🧐'],
         },
         {
           type: 'main',
           speaker: characters.amy,
-          content:
-            'What is your opinion about using AI for a project assignment?',
+          content: 'What’s your opinion on using AI for a school project?',
           timestamp: '17:52',
         },
         {
@@ -896,13 +880,6 @@ const course: Course = {
           speaker: characters.amy,
           content:
             'Always be transparent when you use AI. If you have to hide it, it was probably not allowed.',
-          timestamp: '17:52',
-        },
-        {
-          type: 'main',
-          speaker: characters.amy,
-          content:
-            'Change your passwords regularly and inform an adult immediately if someone gains access to your accounts.',
           timestamp: '17:52',
         },
       ],
@@ -917,20 +894,20 @@ const course: Course = {
         },
         {
           type: 'other',
-          speaker: characters.tom,
+          speaker: characters.finn,
           image: shadowfox10,
           timestamp: '17:51',
         },
         {
           type: 'other',
           speaker: characters.chioma,
-          content: 'Yes… and there is a piece of his face!',
+          content: 'Yeah… and there’s part of his face!',
           timestamp: '17:51',
         },
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'Wait… I think I recognize him…',
+          content: 'Wait… I think I know him…',
           timestamp: '17:52',
         },
         {
@@ -942,7 +919,7 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'It is Miro, definitely!',
+          content: 'It’s Miro, definitely!',
           timestamp: '17:52',
           reactions: ['😳'],
         },
@@ -956,20 +933,19 @@ const course: Course = {
           type: 'other',
           speaker: characters.tom,
           content:
-            'Miro. Do you not remember? He used to be in the class but never said anything. A real loner. Since he moved away, I have not heard anything from him.',
+            'Miro. Don’t you remember? He used to be in our class but never said a word. A total loner. Haven’t heard from him since he moved away.',
           timestamp: '17:53',
         },
         {
           type: 'other',
           speaker: characters.tom,
-          content:
-            'But wait... let us first discuss what we should do before we report him.',
+          content: 'But wait... let’s decide what to do before we report him.',
           timestamp: '17:53',
         },
         {
           type: 'other',
           speaker: characters.finn,
-          content: 'Why? He has been harassing us for days!',
+          content: 'Why? He’s been bothering us for days!',
           timestamp: '17:54',
         },
         {
@@ -983,7 +959,7 @@ const course: Course = {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Always take a breath and stay calm so you can make the best decisions.',
+            'Take a breath and stay calm so you can make the best decision.',
           timestamp: '17:54',
         },
       ],
@@ -994,14 +970,14 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.carlos,
-          content: 'Yes, but maybe we can solve it without a huge fight.',
+          content: 'Yeah, but maybe we can solve this without a big fight.',
           timestamp: '17:54',
         },
         {
           type: 'other',
           speaker: characters.mia,
           content:
-            'Exactly. What if we get him to explain his tricks? Then we all learn something.',
+            'Exactly. What if we get him to explain his tricks? Then we can all learn something.',
           timestamp: '17:55',
         },
         {
@@ -1014,49 +990,54 @@ const course: Course = {
           type: 'other',
           speaker: characters.chioma,
           content:
-            'It might work. Maybe he is only like this because he feels excluded—if he joins in, he gets recognition instead of trouble—and uses his skills so we can make something good out of it together.',
+            'It might work. Maybe he acts like this because he feels left out – if he joins in, he’ll get appreciation instead of trouble and use his skills for something good.',
           timestamp: '17:56',
         },
         {
           type: 'other',
           speaker: characters.tom,
           content:
-            'Okay, so: we write to him that we have recognized him—and that he should explain everything he did. But only if he is honest.',
+            'Okay, let’s message him that we know who he is – and he should explain everything he did.',
           timestamp: '17:57',
           reactions: ['👍🏻'],
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'I will write to him privately.',
+          content: 'I’ll text him privately.',
           timestamp: '17:57',
         },
         {
           type: 'system',
-          content: 'Group chat 7b — Added: Miro',
+          content: 'Added: ShadowFox',
           timestamp: '18:05',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
-          content: '…Are you serious? I did not want to snitch on myself??',
+          content: '…Are you serious? I thought you’d just expose me??',
           timestamp: '18:05',
         },
         {
           type: 'other',
           speaker: characters.tom,
-          content: 'Yes. But only if you are really honest.',
+          content: 'Yes. But only if you’re honest.',
           timestamp: '18:05',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.shadowfox,
           content:
-            'Okay… I am Miro. And you have no idea how many mistakes you make online.',
+            'Okay… I’m Miro. And you have no idea how many mistakes you all make online.',
           timestamp: '18:06',
         },
         {
-          type: 'other',
+          type: 'system',
+          content: 'ShadowFox changed his name to Miro.',
+          timestamp: '18:06',
+        },
+        {
+          type: 'main',
           speaker: characters.miro,
           image: shadowfox11,
           timestamp: '18:06',
@@ -1065,13 +1046,13 @@ const course: Course = {
           type: 'main',
           speaker: characters.amy,
           content:
-            'What does it feel like to be excluded, and how does it feel when others show interest in you?',
+            'How does it feel to be excluded, and how does it feel when others show interest in you?',
           timestamp: '18:07',
         },
         {
           type: 'main',
           speaker: characters.amy,
-          content: 'Use your skills to help others, not to harm them.',
+          content: 'Use your skills to help others, not to hurt them.',
           timestamp: '18:07',
         },
       ],
@@ -1081,29 +1062,34 @@ const course: Course = {
       messages: [
         {
           type: 'system',
-          image: shadowfox12,
           content: 'Class chat of 7b',
           timestamp: '06:55',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
           content:
-            'Hey everyone… I wanted to apologize to all of you again. I did not want to take revenge on you—well, maybe a little 😉. BUT: I also wrote down everything I noticed. So we can all learn from it. 😇',
+            'Hey everyone… I just wanted to apologize. I didn’t mean to get revenge — well, maybe a little 😉. BUT: I also noted everything I noticed, so we can all learn from it. 😇',
           timestamp: '06:56',
+        },
+        {
+          type: 'main',
+          speaker: characters.amy,
+          image: shadowfox12,
+          timestamp: '17:47',
         },
         {
           type: 'other',
           speaker: characters.chioma,
-          content: 'I am curious! 🤞',
+          content: 'Can’t wait to hear it! 🤞',
           timestamp: '06:57',
           reactions: ['🤞'],
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
           content:
-            'Finn, you simply used your date of birth as the password; that was of course easy to crack.',
+            'Finn, you used your birthday as a password — easy to guess. 💥',
           timestamp: '06:58',
         },
         {
@@ -1113,39 +1099,37 @@ const course: Course = {
           timestamp: '06:58',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
           content:
-            'Mia— I discovered your exam date because the link to the school folder popped up once in the class chat. It is not protected and is still open to anyone with the link. The exam calendar is there too. The date has already been changed a few times...',
+            'Mia – I found out about your exam because the link to the school folder 🗂️ once appeared in the class chat. It’s still open to anyone with the link. The exam schedule is there too 📆. The date has already been changed a few times...',
           timestamp: '06:59',
         },
         {
           type: 'other',
           speaker: characters.carlos,
-          content:
-            'Wow… I did not know that anyone can open something like that.',
+          content: 'Wow… I didn’t know anyone could open that.',
           timestamp: '06:59',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
           content:
-            'Links are like keys—if you give out the link, anyone can get in.',
+            'Links are like keys 🔑 – if you share the link, anyone can enter.',
           timestamp: '07:00',
           reactions: ['🧐'],
         },
         {
           type: 'main',
           speaker: characters.amy,
-          content:
-            'What can you do to better protect your info on the internet?',
+          content: 'What can you do to protect your information better online?',
           timestamp: '07:01',
         },
         {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Passwords protect you, links are digital keys, and open folders need encryption—otherwise your data is accessible to anyone.',
+            'Passwords protect you, links are digital keys, and open folders need encryption – otherwise your data is open to everyone.',
           timestamp: '07:01',
         },
       ],
@@ -1154,43 +1138,43 @@ const course: Course = {
       chapter: 13,
       messages: [
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
           content:
-            'And your English retake, Mia… I read about that on your mother’s Facebook page.',
+            'And your English exam, Mia… I read about it on your mom’s Facebook page.',
           timestamp: '07:04',
         },
         {
           type: 'other',
           speaker: characters.mia,
           content:
-            'Oops. How embarrassing! I need to tell her she should not post things like that publicly.',
+            'Oops. So embarrassing! I have to tell her not to post stuff like that publicly.',
           timestamp: '07:04',
           reactions: ['🙈'],
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
           content:
-            'Yes—even family can accidentally reveal info. It was only meant nicely: “Everyone keep your fingers crossed for Mia’s English retake tomorrow.”',
+            'Yeah – even family can accidentally share information. She meant well: “Everyone keep your fingers crossed for Mia’s English test tomorrow.”',
           timestamp: '07:06',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'Wow. But thank you, Miro. 🙏',
+          content: 'Wow. Thanks, Miro. 🙏',
           timestamp: '07:06',
           reactions: ['❤️'],
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
           content:
-            'It is really nice to belong now. I also made a poster for your class. You can hang it up at school so everyone can learn something from it.',
+            'It’s really nice to be part of the group again. I also made a poster for your class so everyone can learn from this.',
           timestamp: '07:07',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
           image: shadowfox13,
           timestamp: '07:07',
@@ -1198,14 +1182,14 @@ const course: Course = {
         {
           type: 'main',
           speaker: characters.amy,
-          content: 'Which of these tips can you put into practice today?',
+          content: 'Which of these tips could you put into practice today?',
           timestamp: '07:08',
         },
         {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Write down what you have learned. Share it with your friends if it could be interesting for them too.',
+            'Write down what you’ve learned. Share it with your friends if it could help them too.',
           timestamp: '07:08',
         },
       ],
@@ -1217,73 +1201,70 @@ const course: Course = {
           type: 'other',
           speaker: characters.chioma,
           content:
-            'Thank you, Miro. The poster is already hanging in the classroom. Ms. Schubert was very pleased and says hi 👋🏾. But what I still do not get: how do you know that we used AI for the project work?',
+            'Thanks, Miro. The poster’s already hanging in the classroom. Mrs Schubert loved it and says hi 👋🏾. But one thing I still don’t get: how did you know we used AI for the project?',
           timestamp: '16:35',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
           content:
-            'In your presentation it was particularly easy. You shared a link that had a little suffix at the end — …/xyz-chatgpt. That means the content came from an AI. You did not see the suffix, but I did.',
+            'That one was easy. In your presentation link, there was a tiny extra bit at the end – …/xyz-chatgpt. That means the content came from AI. You might not have noticed, but I did.',
           timestamp: '16:36',
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
-          image: shadowfox14,
+          image: shadowfox15,
           timestamp: '16:36',
         },
         {
           type: 'other',
           speaker: characters.carlos,
-          content: 'Crazy—I did not pay attention to that at all!',
+          content: 'Crazy – I never noticed that!',
           timestamp: '16:37',
           reactions: ['😳'],
         },
         {
-          type: 'other',
+          type: 'main',
           speaker: characters.miro,
           content:
-            'Links are like footprints—they often reveal more than you think.',
+            'Links are like footprints – they reveal more than you think.',
           timestamp: '16:38',
         },
         {
           type: 'other',
           speaker: characters.mia,
-          content: 'Thank you, Miro. And welcome back.',
+          content: 'Thanks, Miro. And welcome back.',
           timestamp: '16:38',
           reactions: ['❤️'],
         },
         {
           type: 'other',
           speaker: characters.dominik,
-          content: 'Although, I almost miss ShadowFox a little 🤣',
+          content: 'Though I kinda miss ShadowFox 🤣',
           timestamp: '16:38',
           reactions: ['😂'],
         },
         {
-          type: 'system',
-          image: shadowfoxEnd,
-          content: 'Group photo: All is well that ends well.',
-          timestamp: '16:39',
+          type: 'main',
+          speaker: characters.amy,
+          image: shadowfox14,
+          timestamp: '16:38',
         },
         {
           type: 'main',
           speaker: characters.amy,
-          content:
-            'To whom could you kindly say what mistake he or she is making?',
+          content: 'Who could you give kind feedback to?',
           timestamp: '16:40',
         },
         {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Write down what you have learned. Share it with your friends if it helps them.',
+            '🦊 Do the ShadowFox Challenge: see who can stay offline the longest while hanging out together outdoors!',
           timestamp: '16:40',
         },
       ],
     },
   ],
 };
-
-export default course;

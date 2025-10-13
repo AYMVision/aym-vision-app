@@ -14,7 +14,6 @@ const Welcome = () => {
   const courseLanguage = (i18n.language || 'de').split('-')[0];
   const course = courseLanguage === 'de' ? courseDe : courseEn;
 
-  // Lint-/TypeScript-freundlich ohne Non-Null-Assertion
   const messages: Message[] = (course?.script?.[0]?.messages ??
     []) as Message[];
 
@@ -35,8 +34,8 @@ const Welcome = () => {
                     </span>
                   </h1>
 
-                  {/* NEU: Subheadline – statt Badge-Button */}
-                  <p className="mt-3 text-base sm:text-lg text-[var(--color-teal-700,#205e5b)] font-semibold">
+                  {/* Subheadline – jetzt #284242 */}
+                  <p className="mt-3 text-base sm:text-lg text-[#284242] font-semibold">
                     {t('welcome')}
                   </p>
 
@@ -51,8 +50,8 @@ const Welcome = () => {
                     />
                   </div>
 
-                  {/* Intro */}
-                  <p className="mt-5 text-base sm:text-lg text-[var(--color-teal-600,#317b78)] leading-relaxed max-w-2xl">
+                  {/* Intro – jetzt #284242 */}
+                  <p className="mt-5 text-base sm:text-lg text-[#284242] leading-relaxed max-w-2xl">
                     <Trans
                       i18nKey="intro"
                       ns="welcome"
@@ -98,9 +97,9 @@ const Welcome = () => {
                     </Link>
                   </div>
 
-                  {/* Social Follow */}
+                  {/* Social Follow – Teasertext jetzt #284242 */}
                   <div className="mt-6">
-                    <p className="text-sm sm:text-base text-[var(--color-teal-700,#205e5b)] font-medium">
+                    <p className="text-sm sm:text-base text-[#284242] font-medium">
                       <span className="mr-2">Bald als App!</span>
                       Werde schon jetzt Teil der Mission! Folge uns auf Facebook
                       &amp; LinkedIn und sei von Anfang an dabei.
@@ -183,7 +182,7 @@ const Welcome = () => {
             </div>
           </div>
 
-          {/* Footer-Tipp (SPRACHEN INVERTIERT, wie gewünscht) */}
+          {/* Footer-Tipp (Sprachen invertiert) */}
           <div className="px-0 pb-6 sm:pb-8 mt-6">
             <p className="text-center text-sm text-[var(--color-teal-700,#205e5b)]/80">
               {courseLanguage === 'de'

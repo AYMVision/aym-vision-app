@@ -23,6 +23,11 @@ export type Message = {
   image?: string;
   timestamp?: string;
   reactions?: string[];
+  // NEU: Reply/Quote
+  replyTo?: {
+    text: string; // kurzer Vorschauteil der Original-Nachricht
+    speakerName?: string; // optional: Name des ursprünglichen Senders
+  };
 };
 
 export type Course = {
