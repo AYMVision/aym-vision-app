@@ -26,7 +26,7 @@ import shadowfox11 from '../assets/stories/shadowfox/shadowfox11.png';
 import shadowfox12 from '../assets/stories/shadowfox/shadowfox12.png';
 import shadowfox13 from '../assets/stories/shadowfox/shadowfox13.png';
 import shadowfox14 from '../assets/stories/shadowfox/shadowfox14.png';
-import shadowfox15 from '../assets/stories/shadowfox/shadowfox15.png';
+import shadowfox7b from '../assets/stories/shadowfox/shadowfox7b.png';
 
 const characters: { [key: string]: Character } = {
   amy: { name: 'Amy', avatar: amyAvatar },
@@ -683,7 +683,7 @@ const course: Course = {
         {
           type: 'main',
           speaker: characters.shadowfox,
-          image: shadowfox15,
+          image: shadowfox7b,
           timestamp: '07:37',
         },
         {
@@ -1236,7 +1236,7 @@ const course: Course = {
         {
           type: 'main',
           speaker: characters.miro,
-          image: shadowfox15,
+          image: shadowfox7b,
           timestamp: '16:36',
         },
         {
