@@ -42,7 +42,8 @@ const characters: { [key: string]: Character } = {
 };
 
 const course: Course = {
-  id: 'shadowfox-network',
+  // Behalte die originale ID bei, damit nichts anderes bricht:
+  id: 'im-netz-von-shadowfox',
   title: 'ShadowFox',
   image: titleImage,
   description:
@@ -1268,3 +1269,5 @@ const course: Course = {
     },
   ],
 };
+
+export default course;
