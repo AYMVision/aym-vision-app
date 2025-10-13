@@ -1,3 +1,10 @@
+// Optionales Theme für Main-Sprechblasen
+export type BubbleTheme = {
+  bg: string; // z. B. 'bg-rose-50'
+  border: string; // z. B. 'border-rose-200'
+  text: string; // z. B. 'text-rose-900'
+};
+
 export type Bubble = {
   type: 'main' | 'user' | 'other';
   speaker: string;
@@ -14,6 +21,8 @@ export type Bubble = {
 export type Character = {
   name: string;
   avatar: string;
+  // ▼ Neu: Theme, das NUR für 'main'-Bubbles dieses Characters verwendet wird (optional)
+  mainTheme?: BubbleTheme;
 };
 
 export type Message = {

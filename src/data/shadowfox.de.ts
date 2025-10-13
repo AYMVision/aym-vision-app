@@ -29,7 +29,15 @@ import shadowfox14 from '../assets/stories/shadowfox/shadowfox14.png';
 import shadowfox7b from '../assets/stories/shadowfox/shadowfox7b.png';
 
 const characters: { [key: string]: Character } = {
-  amy: { name: 'Amy', avatar: amyAvatar },
+  amy: {
+    name: 'Amy',
+    avatar: amyAvatar,
+    mainTheme: {
+      bg: 'bg-rose-50',
+      border: 'border-rose-200',
+      text: 'text-rose-900',
+    },
+  },
   chioma: { name: 'Chioma', avatar: chiomaAvatar },
   mia: { name: 'Mia', avatar: miaAvatar },
   dominik: { name: 'Dominik', avatar: dominikAvatar },
@@ -38,9 +46,16 @@ const characters: { [key: string]: Character } = {
   carlos: { name: 'Carlos', avatar: carlosAvatar },
   jonas: { name: 'Jonas', avatar: jonasAvatar },
   miro: { name: 'Miro', avatar: miroAvatar },
-  shadowfox: { name: 'ShadowFox', avatar: shadowfoxAvatar },
+  shadowfox: {
+    name: 'ShadowFox',
+    avatar: shadowfoxAvatar,
+    mainTheme: {
+      bg: 'bg-indigo-50',
+      border: 'border-indigo-200',
+      text: 'text-indigo-900',
+    },
+  },
 };
-
 const course: Course = {
   id: 'im-netz-von-shadowfox',
   title: 'ShadowFox',
@@ -141,7 +156,7 @@ const course: Course = {
         {
           type: 'other',
           speaker: characters.tom,
-          content: '?😳',
+          content: '😳',
           timestamp: '19:36',
         },
         {
@@ -435,8 +450,7 @@ const course: Course = {
           type: 'main',
           speaker: characters.shadowfox,
           image: shadowfox5,
-          content:
-            'Wie er ihr bei der Klassenfeier im letzten Jahr einen Kuss gibt.',
+          content: 'Wer erinnert sich noch an die alte Klassenfeier...?',
           timestamp: '19:54',
         },
         {
@@ -787,7 +801,6 @@ const course: Course = {
           content:
             'Ihr habt ja keine Ahnung, wie’s ist, wenn man einfach vergessen wird.',
           timestamp: '17:47',
-          reactions: ['🥱'],
         },
         {
           type: 'main',
@@ -1035,7 +1048,7 @@ const course: Course = {
         {
           type: 'main',
           speaker: characters.shadowfox,
-          content: '…Meint ihr das ernst? Ich wollt mich nicht verpfeifen??',
+          content: '…Meint ihr das ernst? Ihr wollt mich nicht verpfeifen??',
           timestamp: '18:05',
         },
         {
@@ -1128,7 +1141,7 @@ const course: Course = {
         },
         {
           type: 'other',
-          speaker: characters.carlos,
+          speaker: characters.mia,
           content: 'Oha… ich wusste nicht, dass sowas jeder öffnen kann.',
           timestamp: '06:59',
         },
@@ -1236,7 +1249,7 @@ const course: Course = {
         {
           type: 'main',
           speaker: characters.miro,
-          image: shadowfox7b,
+          image: shadowfox7,
           timestamp: '16:36',
         },
         {

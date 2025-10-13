@@ -6,7 +6,7 @@ import vision from '../assets/about/vision.png';
 import sample from '../assets/about/sample.png';
 import teamPic from '../assets/about/team.png';
 import beat from '../assets/about/beat.png';
-import motivation from '../assets/about/motivation.jpg';
+import motivation from '../assets/about/motivation.png';
 import amy from '../assets/amy.png';
 import logo from '../assets/about/logo.png';
 

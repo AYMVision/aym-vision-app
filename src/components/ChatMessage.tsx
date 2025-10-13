@@ -4,7 +4,7 @@ interface ChatMessageProps {
     speaker?: {
       name: string;
       avatar?: string;
-      color?: string;
+      color?: string; // optional, falls du es extern steuern willst
     };
     content?: string;
     image?: string;
@@ -16,6 +16,27 @@ interface ChatMessageProps {
     };
   };
 }
+
+// ✅ Pro-Character Theme nur für MAIN-Bubbles
+const MAIN_THEME_BY_SPEAKER: Record<
+  string,
+  { bg: string; border: string; text: string }
+> = {
+  // Passe die Keys exakt an speaker.name an
+  Amy: { bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-900' },
+  ShadowFox: {
+    bg: 'bg-indigo-50',
+    border: 'border-indigo-200',
+    text: 'text-indigo-900',
+  },
+};
+
+// Fallback-Theme, wenn kein Eintrag vorhanden
+const DEFAULT_MAIN_THEME = {
+  bg: 'bg-blue-50',
+  border: 'border-blue-200',
+  text: 'text-blue-900',
+};
 
 const ReplyPreview = ({
   text,
@@ -56,6 +77,12 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
   const isMainCharacter = message.type === 'main';
   const isSystemMessage = message.type === 'system';
   const hasReactions = !!(message.reactions && message.reactions.length > 0);
+
+  // Theme je nach main-Sprecher bestimmen
+  const mainTheme =
+    isMainCharacter && message.speaker?.name
+      ? MAIN_THEME_BY_SPEAKER[message.speaker.name] ?? DEFAULT_MAIN_THEME
+      : DEFAULT_MAIN_THEME;
 
   // Kleineres, dynamisches Bottom-Padding: reicht meist völlig
   const bubbleBottomPad = hasReactions ? 'pb-2' : '';
@@ -144,7 +171,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
               className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-xs font-semibold ${
                 message.speaker?.color ||
                 'bg-gradient-to-br from-gold-400 to-gold-600'
-              }}`}
+              }`}
             >
               {message.speaker?.name?.charAt(0) || 'U'}
             </div>
@@ -159,11 +186,12 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
 
         <div
           className={`relative rounded-2xl rounded-bl-md p-2 shadow-sm ${
-            isMainCharacter ? 'bg-blue-50 border border-blue-200' : 'bg-white'
+            isMainCharacter ? `${mainTheme.bg} ${mainTheme.border}` : 'bg-white'
           } ${bubbleBottomPad}`}
         >
-          {message.speaker && !isMainCharacter && (
-            <p className="text-sm font-semibold text-anthracite-600 mb-1">
+          {/* Name IMMER linksbündig in der Blase */}
+          {message.speaker && (
+            <p className="text-sm font-semibold text-anthracite-600 mb-1 text-left">
               {message.speaker.name}
             </p>
           )}
@@ -185,7 +213,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
           {message.content && (
             <p
               className={`text-md min-w-24 ${
-                isMainCharacter ? 'text-blue-900' : 'text-anthracite-800'
+                isMainCharacter ? mainTheme.text : 'text-anthracite-800'
               }`}
             >
               {message.content}
