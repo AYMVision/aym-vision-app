@@ -1,8 +1,10 @@
+// src/pages/Stories.tsx
 import Layout from '../components/Layout';
 import courses from '../data/index';
 import CourseCard from '../components/CourseCard';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { getProgress } from '../common/utils';
 
 const Stories = () => {
   const navigate = useNavigate();
@@ -12,6 +14,18 @@ const Stories = () => {
 
   const { t } = useTranslation('courses');
   const stories = courses[courseLanguage as 'de' | 'en'];
+
+  const progressById = stories.reduce<Record<string, number>>((acc, story) => {
+    const p = getProgress(story.id);
+    if (!p) return acc;
+
+    const totalChapters = story.script.length || 1;
+    const finishedPct = p.finished
+      ? 100
+      : Math.floor((p.unlockedEpisode / totalChapters) * 100);
+    acc[story.id] = Math.max(0, Math.min(100, finishedPct));
+    return acc;
+  }, {});
 
   return (
     <Layout backPath="/">
@@ -26,7 +40,7 @@ const Stories = () => {
               image={story.image}
               title={story.title}
               description={story.description}
-              progressKey={story.id}
+              progressPercent={progressById[story.id]}
               onClick={() => navigate(`/stories/${story.id}`)}
             />
           ))}
