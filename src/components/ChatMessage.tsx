@@ -168,7 +168,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         {!isMainCharacter &&
           (typeof message.speaker?.avatar === 'undefined' ? (
             <div
-              className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-xs font-semibold ${
+              className={`w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-xs font-semibold ${
                 message.speaker?.color ||
                 'bg-gradient-to-br from-gold-400 to-gold-600'
               }`}
@@ -179,7 +179,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             <img
               src={message.speaker.avatar}
               alt={message.speaker.name}
-              className="w-8 h-8 rounded-full flex-shrink-0 object-contain"
+              className="w-12 h-12 rounded-full flex-shrink-0 object-contain"
               style={{ backgroundColor: '#ffffef' }}
             />
           ))}
@@ -231,14 +231,14 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
 
         {isMainCharacter &&
           (typeof message.speaker?.avatar === 'undefined' ? (
-            <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-sm font-semibold bg-gradient-to-br from-blue-500 to-blue-700">
+            <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-white text-[0.6rem] sm:text-sm font-semibold bg-gradient-to-br from-blue-500 to-blue-700">
               {message.speaker?.name?.charAt(0) || 'U'}
             </div>
           ) : (
             <img
               src={message.speaker.avatar}
               alt={message.speaker.name}
-              className="w-8 h-8 rounded-full flex-shrink-0 object-contain"
+              className="w-12 h-12 rounded-full flex-shrink-0 object-contain"
               style={{ backgroundColor: '#ffffef' }}
             />
           ))}

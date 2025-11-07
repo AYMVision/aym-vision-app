@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
-import amy from '../assets/amy_lg.png';
+// import amy from '../assets/amy_lg.png'; // entfernt: kein Logo/Amy-Bild mehr im Hero
+import bannerHero from '../assets/banner-hero.png'; // dein Bannerbild
 import ChatMessage from '../components/ChatMessage';
 import TypingIndicator from '../components/TypingIndicator';
 import courseDe from '../data/shadowfox.de';
@@ -19,38 +20,38 @@ const Welcome = () => {
 
   return (
     <Layout>
-      {/* Hero (ohne Glass/ohne Rahmen) */}
+      {/* --- FIXES BANNER-BILD unter der Navigation, ohne Zuschnitt --- */}
+      <div className="relative w-full">
+        <img
+          src={bannerHero}
+          alt="AYM Vision – Amy Surfwing: Entdecke die Chat-Story"
+          className="block w-full h-auto object-contain select-none"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      {/* Hero-Section (gleich geblieben, nur Headline/Subheadline jetzt weiß) */}
       <section className="w-full px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Textspalte */}
             <div className="lg:col-span-7">
-              {/* Headline */}
               <div className="mt-0 flex items-start gap-6">
                 <div className="flex-1">
                   <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
-                    <span className="block text-[var(--color-teal-900)]">
-                      {t('title')}
-                    </span>
+                    {/* Titel in Weiß */}
+                    <span className="block text-white">{t('title')}</span>
                   </h1>
 
-                  {/* Subheadline – jetzt #284242 */}
-                  <p className="mt-3 text-base sm:text-lg text-[#284242] font-semibold">
+                  {/* Subheadline in Weiß */}
+                  <p className="mt-3 text-base sm:text-lg text-white font-semibold">
                     {t('welcome')}
                   </p>
 
-                  {/* Mobile: große Amy ÜBER dem Infotext */}
-                  <div className="lg:hidden mt-4">
-                    <img
-                      src={amy}
-                      alt="Amy – deine freundliche Begleitung"
-                      className="w-40 h-auto drop-shadow select-none mx-auto"
-                      loading="eager"
-                      decoding="async"
-                    />
-                  </div>
+                  {/* (MOBIL) Amy-Bild entfernt */}
 
-                  {/* Intro – jetzt #284242 */}
+                  {/* Intro (unverändert in deiner ursprünglichen Farbe) */}
                   <p className="mt-5 text-base sm:text-lg text-[#284242] leading-relaxed max-w-2xl">
                     <Trans
                       i18nKey="intro"
@@ -97,7 +98,7 @@ const Welcome = () => {
                     </Link>
                   </div>
 
-                  {/* Social Follow – Teasertext jetzt #284242 */}
+                  {/* Social Follow */}
                   <div className="mt-6">
                     <p className="text-sm sm:text-base text-[#284242] font-medium">
                       <span className="mr-2">Bald als App!</span>
@@ -105,7 +106,6 @@ const Welcome = () => {
                       &amp; LinkedIn und sei von Anfang an dabei.
                     </p>
                     <div className="mt-3 flex flex-wrap items-center gap-3">
-                      {/* Facebook (dunkel-türkis, weißer Text) */}
                       <a
                         href="https://www.facebook.com/profile.php?id=61581575849501&sk=about"
                         target="_blank"
@@ -127,7 +127,6 @@ const Welcome = () => {
                         Facebook
                       </a>
 
-                      {/* LinkedIn (dunkel-türkis, weißer Text) */}
                       <a
                         href="https://www.linkedin.com/company/aymquest/?viewAsMember=true"
                         target="_blank"
@@ -152,20 +151,11 @@ const Welcome = () => {
                   </div>
                 </div>
 
-                {/* Amy-Bild für Desktop (ab lg sichtbar) */}
-                <div className="hidden lg:block shrink-0">
-                  <img
-                    src={amy}
-                    alt="Amy – deine freundliche Begleitung"
-                    className="w-48 h-auto drop-shadow-lg select-none"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </div>
+                {/* (DESKTOP) Amy-Bild entfernt */}
               </div>
             </div>
 
-            {/* Phone Preview — kompakt rechts, ohne Rahmen */}
+            {/* Phone Preview */}
             <div className="lg:col-span-5">
               <div className="mx-auto md:mx-0 flex justify-center lg:justify-end">
                 <div className="w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] xl:w-[360px]">
@@ -182,7 +172,7 @@ const Welcome = () => {
             </div>
           </div>
 
-          {/* Footer-Tipp (Sprachen invertiert) */}
+          {/* Footer-Tipp */}
           <div className="px-0 pb-6 sm:pb-8 mt-6">
             <p className="text-center text-sm text-[var(--color-teal-700,#205e5b)]/80">
               {courseLanguage === 'de'

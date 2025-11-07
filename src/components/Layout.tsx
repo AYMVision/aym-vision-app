@@ -76,15 +76,15 @@ export default function Layout({
                 <img
                   src={logo}
                   alt="Logo"
-                  className="w-8 h-8 object-cover object-center"
+                  className="w-10 h-10 object-cover object-center"
                 />
               </div>
               <div>
                 <div className="font-semibold text-[var(--color-teal-900)] text-sm">
-                  AYMquest
+                  Amy Surfwing
                 </div>
                 <div className="text-xs text-[var(--color-teal-500)]">
-                  Fit im Netz
+                  Surf smart
                 </div>
               </div>
             </div>
@@ -132,7 +132,7 @@ export default function Layout({
           </nav>
 
           <div className="hidden md:flex flex-1 justify-end items-center gap-4">
-            <img src={logo} className="h-24 w-auto" alt="Logo" />
+            <img src={logo} className="h-18 w-auto" alt="Logo" />
             <LanguageSelector />
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function Layout({
               <img
                 src={logo}
                 alt="Logo"
-                className="w-8 h-8 object-cover object-center"
+                className="w-10 h-10 object-cover object-center"
               />
             </div>
             <div>

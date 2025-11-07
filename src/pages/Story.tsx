@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Phone from '../components/Phone';
@@ -54,6 +54,10 @@ const Story = () => {
     return -1;
   }, [allMessages]);
 
+  // REFS for container & end-anchor (for optional scroll-to-bottom)
+  const shellRef = useRef<HTMLDivElement | null>(null);
+  const endRef = useRef<HTMLDivElement | null>(null);
+
   // On story mount, check progress and offer resume
   useEffect(() => {
     if (!course || !courseId) return;
@@ -67,11 +71,11 @@ const Story = () => {
       if (pct >= 100) {
         setResumeMode('complete');
         setShowResumeDialog(true);
-        setIsPaused(true); // NEW: pause while choosing
+        setIsPaused(true); // pause while choosing
       } else if (pct > 0) {
         setResumeMode('partial');
         setShowResumeDialog(true);
-        setIsPaused(true); // NEW: pause while choosing
+        setIsPaused(true); // pause while choosing
       } else {
         resetToStart();
       }
@@ -86,7 +90,7 @@ const Story = () => {
     setCurrentMessageIndex(0);
     setChapter(0);
     setAwaitingUserAnswer(false);
-    setIsPaused(false); // ensure not paused for fresh run
+    setIsPaused(false);
   }
 
   // Emoji helpers
@@ -111,7 +115,7 @@ const Story = () => {
 
   // Message ticker
   useEffect(() => {
-    if (isPaused) return; // NEW: do nothing while paused (dialog open)
+    if (isPaused) return;
     if (!course || allMessages.length === 0) return;
     if (currentMessageIndex >= allMessages.length) return;
 
@@ -175,6 +179,19 @@ const Story = () => {
     return () => clearTimeout(timer);
   }, [isPaused, currentMessageIndex, allMessages, course, lastMainIndex]);
 
+  // OPTIONAL: scroll to bottom when messages change or when we await answer
+  useEffect(() => {
+    if (awaitingUserAnswer && endRef.current) {
+      endRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [awaitingUserAnswer]);
+
+  useEffect(() => {
+    if (endRef.current) {
+      endRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [displayedMessages.length]);
+
   if (!course) {
     return (
       <Layout backPath="/stories">
@@ -188,19 +205,18 @@ const Story = () => {
     );
   }
 
-  // NEW: Reconstruct transcript including user answers up to a resume point
+  // Rebuild transcript for resume
   function buildTranscriptUpTo({
     targetChapter,
     includeFinishedChapters,
     answers,
   }: {
     targetChapter: number;
-    includeFinishedChapters: boolean; // include tip and user message for finished chapters
+    includeFinishedChapters: boolean;
     answers: { chapter: number; text: string; timestamp?: string }[];
   }): { messages: Message[]; chapterStartIndex: number } {
     const msgs: Message[] = [];
 
-    // Go through each chapter up to targetChapter - 1 (fully finished)
     for (let ch = 0; ch < targetChapter; ch++) {
       const chMsgs = course!.script[ch]?.messages ?? [];
       const lastMainIdx = (() => {
@@ -210,14 +226,11 @@ const Story = () => {
         return -1;
       })();
 
-      // Play all messages except stopping rule; historical transcript had:
-      // ... all messages up to lastMainIdx-1, user answer, then lastMain (tip)
-      const until = lastMainIdx > -1 ? lastMainIdx : chMsgs.length; // messages before tip
+      const until = lastMainIdx > -1 ? lastMainIdx : chMsgs.length;
       for (let i = 0; i < until; i++) {
         msgs.push(chMsgs[i]);
       }
 
-      // Insert any recorded user answers for this chapter in order
       const answersForChapter = answers.filter((a) => a.chapter === ch);
       answersForChapter.forEach((a) => {
         msgs.push({
@@ -229,13 +242,11 @@ const Story = () => {
         });
       });
 
-      // Include the tip (last MAIN) if it existed
       if (lastMainIdx > -1 && includeFinishedChapters) {
         msgs.push(chMsgs[lastMainIdx]);
       }
     }
 
-    // For current chapter (targetChapter), we rebuild up to the stopping point
     const chMsgs = course!.script[targetChapter]?.messages ?? [];
     const lastMainIdx = (() => {
       for (let i = chMsgs.length - 1; i >= 0; i--) {
@@ -245,14 +256,11 @@ const Story = () => {
     })();
 
     if (targetChapter < course!.script.length) {
-      // Replay up to just before lastMain (so the app can pause for input)
       const until = lastMainIdx > -1 ? lastMainIdx : chMsgs.length;
       for (let i = 0; i < until; i++) {
         msgs.push(chMsgs[i]);
       }
 
-      // If we already have a stored user answer for this current chapter (rare if mid-chapter),
-      // show it as well and then push the tip if it existed (meaning chapter finished earlier).
       const answersForCurrent = answers.filter(
         (a) => a.chapter === targetChapter
       );
@@ -267,7 +275,6 @@ const Story = () => {
       });
 
       if (answersForCurrent.length > 0 && lastMainIdx > -1) {
-        // If an answer existed, the chapter had concluded previously; include the tip
         msgs.push(chMsgs[lastMainIdx]);
       }
     }
@@ -294,74 +301,46 @@ const Story = () => {
       return;
     }
 
-    // Determine target chapter:
-    // - If finished => start at last chapter ended but show full transcript
-    // - If partial => resume from unlockedEpisode (which is "next to play")
     const total = course.script.length;
     const isFinished = p.finished;
     const targetChapter = Math.min(
-      Math.max(0, isFinished ? total - 1 : p.unlockedEpisode), // if finished, point to last chapter to show; else next-to-play
+      Math.max(0, isFinished ? total - 1 : p.unlockedEpisode),
       Math.max(0, total - 1)
     );
 
-    // Rebuild transcript up to target point, including all user answers recorded
     const { messages } = buildTranscriptUpTo({
       targetChapter,
-      includeFinishedChapters: true, // include tips for finished chapters
+      includeFinishedChapters: true,
       answers: p.answers || [],
     });
 
     setDisplayedMessages(messages);
 
-    // If finished: we won’t auto-advance — user can rewatch.
-    // If partial and we stopped before last MAIN in targetChapter: set up to pause for input.
     if (!isFinished) {
       setChapter(targetChapter);
-      // Determine where we are in the current chapter message flow:
-      // If we already inserted an answer for targetChapter, then we had finished it previously.
-      const hadAnswerForCurrent = (p.answers || []).some(
-        (a) => a.chapter === targetChapter
-      );
-      if (hadAnswerForCurrent) {
-        // Chapter completed previously — advance to next if exists, else stay
-        if (typeof course.script[targetChapter + 1] !== 'undefined') {
-          setChapter(targetChapter + 1);
-          setCurrentMessageIndex(0);
-          setAwaitingUserAnswer(false);
-        } else {
-          setCurrentMessageIndex(course.script[targetChapter].messages.length);
-          setAwaitingUserAnswer(false);
+      const lastMainIdxCurrent = (() => {
+        const m = course.script[targetChapter]?.messages ?? [];
+        for (let i = m.length - 1; i >= 0; i--) {
+          if (m[i].type === 'main') return i;
         }
-      } else {
-        // We’re at the point before lastMain => ticker will pause at awaitingUserAnswer
-        // Find the index we should start from (we replayed messages up to lastMain)
-        const lastMainIdxCurrent = (() => {
-          const m = course.script[targetChapter]?.messages ?? [];
-          for (let i = m.length - 1; i >= 0; i--) {
-            if (m[i].type === 'main') return i;
-          }
-          return -1;
-        })();
-        const startIdx =
-          lastMainIdxCurrent > -1
-            ? lastMainIdxCurrent
-            : course.script[targetChapter]?.messages?.length ?? 0;
-        setCurrentMessageIndex(startIdx);
-        setAwaitingUserAnswer(true);
-      }
+        return -1;
+      })();
+      const startIdx =
+        lastMainIdxCurrent > -1
+          ? lastMainIdxCurrent
+          : course.script[targetChapter]?.messages?.length ?? 0;
+      setCurrentMessageIndex(startIdx);
+      setAwaitingUserAnswer(true);
     } else {
-      // Finished: no auto-advance
       setChapter(total - 1);
       setCurrentMessageIndex(course.script[total - 1].messages.length);
       setAwaitingUserAnswer(false);
     }
 
-    // Unpause after state is ready
     setIsPaused(false);
   };
 
   const rewatchFinishedChat = () => {
-    // For rewatch, show full transcript from the beginning (messages + user answers + tips)
     if (!courseId || !course) return;
     const p = getProgress(courseId);
     setShowResumeDialog(false);
@@ -369,7 +348,6 @@ const Story = () => {
 
     const answers = p?.answers || [];
 
-    // Build a full transcript of ALL chapters
     const full: Message[] = [];
     for (let ch = 0; ch < course.script.length; ch++) {
       const chMsgs = course.script[ch]?.messages ?? [];
@@ -450,8 +428,26 @@ const Story = () => {
 
   return (
     <Layout backPath="/stories">
+      {/* Scoped CSS to kill iOS auto-zoom on inputs (min 16px) */}
+      <style>{`
+        .ios-anti-zoom {
+          -webkit-text-size-adjust: 100%;
+        }
+        .ios-anti-zoom input,
+        .ios-anti-zoom textarea,
+        .ios-anti-zoom select,
+        .ios-anti-zoom button {
+          font-size: 16px !important; /* prevents iOS zoom on focus */
+          line-height: 1.4;
+        }
+      `}</style>
+
       {renderResumeDialog()}
-      <div className="flex flex-col grow h-full w-full sm:items-center sm:justify-center sm:w-80 sm:p-4">
+
+      <div
+        ref={shellRef}
+        className="ios-anti-zoom flex flex-col grow h-full w-full sm:items-center sm:justify-center sm:w-80 sm:p-4"
+      >
         <Phone
           inputPlaceholder="Deine Antwort…"
           onSubmitMessage={(message) => {
@@ -495,7 +491,6 @@ const Story = () => {
                   setChapter((prev) => prev + 1);
                   setCurrentMessageIndex(0);
                 } else {
-                  // End, stop ticker naturally
                   setCurrentMessageIndex(allMessages.length);
                 }
               }, 1000);
@@ -505,6 +500,7 @@ const Story = () => {
           {displayedMessages.map((message, index) => (
             <ChatMessage key={index} message={message} />
           ))}
+          <div ref={endRef} />
         </Phone>
       </div>
     </Layout>
