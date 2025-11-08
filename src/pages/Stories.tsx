@@ -5,38 +5,30 @@ import CourseCard from '../components/CourseCard';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getProgress } from '../common/utils';
-import type { Course } from '../common/types'; // <— falls der Typ woanders liegt, bitte anpassen
+import type { Course } from '../common/types';
+import surveyImage from '../assets/survey.png';
 
 type CoursesByLang = Record<'de' | 'en', Course[]>;
-
-// Optional: Wenn dein default-Export schon strikt ist, kannst du das Casting weglassen.
 const courses = coursesRaw as unknown as CoursesByLang;
 
 const Stories = () => {
   const navigate = useNavigate();
 
-  // zwei Namespaces: 'courses' (Überschrift), 'stories' (How-to)
   const { i18n, t: tCourses } = useTranslation('courses');
   const { t: tStories } = useTranslation('stories');
 
-  // Sprache auf 'de' | 'en' normieren
   const lang = (i18n.language || 'de').split('-')[0] as 'de' | 'en';
 
-  // Fallback: wenn es z. B. nur 'de' gibt und 'en' fehlt
   const stories: Course[] =
     Array.isArray(courses[lang]) && courses[lang].length > 0
       ? courses[lang]
       : courses.de ?? [];
-
-  // (Debug – bei Bedarf entfernen)
-  // console.log('i18n.language=', i18n.language, 'lang=', lang, 'stories.length=', stories?.length);
 
   const progressById = (stories ?? []).reduce<Record<string, number>>(
     (acc, story) => {
       const p = getProgress(story.id);
       if (!p) return acc;
 
-      // defensiv: script kann fehlen/leer sein
       const totalChapters = Array.isArray((story as any).script)
         ? (story as any).script.length || 1
         : 1;
@@ -119,6 +111,22 @@ const Stories = () => {
               onClick={() => navigate(`/stories/${story.id}`)}
             />
           ))}
+
+          {/* Umfrage-Karte immer zuletzt */}
+          <CourseCard
+            key="survey-card"
+            image={surveyImage}
+            title="📝 Umfrage: Deine Meinung zählt!"
+            description="Sag uns, wie dir die Story gefallen hat – die UMFRAGE ist anonym und dauert nur wenige Minuten."
+            progressPercent={0}
+            onClick={() =>
+              window.open(
+                'https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__tVBf5hUMUNFRjhWUzdDMTBBWVlJMVJIRE80M0sxTy4u',
+                '_blank',
+                'noopener,noreferrer'
+              )
+            }
+          />
         </div>
       </div>
     </Layout>

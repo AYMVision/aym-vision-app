@@ -57,14 +57,15 @@ function SplitSection({
             )}
           </div>
 
-          <div className="flex-1 w-full">
+          {/* Bildbereich – verkleinert und ohne weißen Hintergrund */}
+          <div className="flex-1 w-full flex justify-center">
             <div className="relative group">
-              <div className="absolute rounded-2xl opacity-20 group-hover:opacity-30 transition-opacity blur"></div>
-              <div className="relative bg-white rounded-2xl overflow-hidden">
+              <div className="absolute rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity blur-sm"></div>
+              <div className="relative bg-transparent rounded-2xl overflow-hidden">
                 <img
                   src={imgSrc}
                   alt={imgAlt}
-                  className="w-full h-auto object-cover"
+                  className="w-3/4 md:w-2/3 h-auto object-contain rounded-xl shadow-none bg-transparent mx-auto transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             </div>
@@ -135,10 +136,10 @@ export default function About() {
 
             <div className="mb-16">
               <div className="relative group max-w-3xl mx-auto">
-                <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-teal-600 rounded-3xl opacity-20 group-hover:opacity-30 transition-opacity blur"></div>
-                <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-teal-600 rounded-3xl opacity-10 group-hover:opacity-20 transition-opacity blur-sm"></div>
+                <div className="relative bg-transparent rounded-3xl">
                   <img
-                    className="rounded-3xl shadow-2xl w-full"
+                    className="rounded-3xl shadow-none w-3/4 md:w-2/3 mx-auto object-contain bg-transparent"
                     src={teamPic}
                     alt="Selbst gezeichnete Illustration von Melina und Ann-Sofie"
                   />
