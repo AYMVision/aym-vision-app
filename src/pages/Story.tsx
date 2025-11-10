@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Phone from '../components/Phone';
 import courses from '../data/index';
@@ -19,6 +19,24 @@ import ConfirmDialog from '../components/ConfirmDialog';
 
 const Story = () => {
   const { courseId } = useParams();
+  const location = useLocation();
+
+  // ---------- Lesetempo – empfehlene Defaults ----------
+  // URL-Override: ?speed=1.8 (größer = langsamer, kleiner = schneller)
+  const urlSpeed = Number(new URLSearchParams(location.search).get('speed'));
+  const SPEED_MULTIPLIER =
+    Number.isFinite(urlSpeed) && urlSpeed > 0 ? urlSpeed : 1.4;
+
+  // Feinabstimmung (langsamer, lesefreundlich)
+  const MIN_DELAY_MS = 1100;
+  const MAX_DELAY_MS = 9000;
+  const CHARS_PER_SECOND = 12;
+  const BASE_OVERHEAD_MS = 350;
+  const IMAGE_EXTRA_MS = 700;
+  const JITTER_MIN = 0.9;
+  const JITTER_MAX = 1.3;
+  // -----------------------------------------------------
+
   const [displayedMessages, setDisplayedMessages] = useState<Message[]>([]);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [chapter, setChapter] = useState(0);
@@ -113,7 +131,7 @@ const Story = () => {
     return emojiOnly;
   };
 
-  // Message ticker
+  // Message ticker (Tempo gesteuert über obige Konstanten)
   useEffect(() => {
     if (isPaused) return;
     if (!course || allMessages.length === 0) return;
@@ -129,20 +147,17 @@ const Story = () => {
 
     const getDelayForMessage = (msg: any, index: number) => {
       if (index === 0) return 0;
-      const minDelayMs = 800;
-      const maxDelayMs = 8000;
-      const charsPerSecond = 14;
-      const baseOverheadMs = 300;
-      const imageExtraMs = msg.image ? 600 : 0;
-      const jitter = 0.85 + Math.random() * 0.6;
+      const jitter = JITTER_MIN + Math.random() * (JITTER_MAX - JITTER_MIN);
 
       const content = typeof msg.content === 'string' ? msg.content : '';
       const readingMs =
-        content.length > 0 ? (content.length / charsPerSecond) * 1000 : 900;
+        content.length > 0 ? (content.length / CHARS_PER_SECOND) * 1000 : 950;
 
-      const raw = baseOverheadMs + readingMs + imageExtraMs;
-      const clamped = Math.min(maxDelayMs, Math.max(minDelayMs, raw));
-      return clamped * jitter;
+      const raw =
+        BASE_OVERHEAD_MS + readingMs + (msg.image ? IMAGE_EXTRA_MS : 0);
+
+      const clamped = Math.min(MAX_DELAY_MS, Math.max(MIN_DELAY_MS, raw));
+      return clamped * jitter * SPEED_MULTIPLIER;
     };
 
     const delay = getDelayForMessage(nextMsg, currentMessageIndex);
@@ -177,7 +192,15 @@ const Story = () => {
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [isPaused, currentMessageIndex, allMessages, course, lastMainIndex]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    isPaused,
+    currentMessageIndex,
+    allMessages,
+    course,
+    lastMainIndex,
+    SPEED_MULTIPLIER,
+  ]);
 
   // OPTIONAL: scroll to bottom when messages change or when we await answer
   useEffect(() => {
