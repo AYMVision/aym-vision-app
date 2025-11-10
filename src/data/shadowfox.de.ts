@@ -61,7 +61,7 @@ const course: Course = {
   title: 'ShadowFox',
   image: titleImage,
   description:
-    'ShadowFox kapert den Klassenchat der 7b und kennt peinliche Details. Schaffen Tom, Mia & Co., den Fuchs rechtzeitig zu enttarnen? (Geeignet für Kinder zwischen 9 und 12 Jahre)',
+    'ShadowFox kapert den Klassenchat der 7b und kennt peinliche Details. Schaffen Tom, Mia & Co., den Fuchs rechtzeitig zu enttarnen? (Geeignet für Kinder zwischen 9 und 13 Jahre)',
   script: [
     {
       chapter: 1,
