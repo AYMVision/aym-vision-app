@@ -44,7 +44,7 @@ const Stories = () => {
   );
 
   return (
-    <Layout backPath="/">
+    <Layout backPath="/" hideFooter>
       <div className="w-full max-w-4xl px-4 py-12">
         <h2 className="text-3xl font-bold mb-6 text-anthracite-950">
           {tCourses('headline')}

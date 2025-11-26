@@ -1,22 +1,33 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '../common/utils';
 import logo from '../assets/logo.png';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { LanguageSelector } from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
 import Footer from './Footer';
 
+type LayoutProps = {
+  children: ReactNode;
+  backPath?: string;
+  hideFooter?: boolean;
+};
+
 export default function Layout({
   children,
   backPath,
-}: {
-  children: React.ReactNode | React.ReactNode[];
-  backPath?: string;
-}) {
+  hideFooter,
+}: LayoutProps) {
   const location = useLocation();
   const { t } = useTranslation('navigation');
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Stories-Bereich (Übersicht + einzelne Story)
+  const isStoryRoute = location.pathname.startsWith('/stories');
+  // Footer ausblenden, wenn:
+  // - explizit hideFooter gesetzt wurde ODER
+  // - wir auf einer /stories-Route sind
+  const shouldHideFooter = hideFooter || isStoryRoute;
 
   const links = [
     { to: '/', label: t('home') },
@@ -25,7 +36,6 @@ export default function Layout({
     { to: '/about#call-for-action', label: t('cooperations') },
   ];
 
-  // Helper to detect active link (supports hash)
   const isActive = (to: string) => {
     const current = location.pathname + (location.hash || '');
     return current === to;
@@ -211,8 +221,7 @@ export default function Layout({
         {children}
       </main>
 
-      {/* Footer immer sichtbar */}
-      <Footer />
+      {!shouldHideFooter && <Footer />}
     </div>
   );
 }
