@@ -1,9 +1,4 @@
-import {
-  useLayoutEffect,
-  useRef,
-  useState,
-  type PropsWithChildren,
-} from 'react';
+import { useLayoutEffect, useRef, type PropsWithChildren } from 'react';
 
 interface PhoneProps extends PropsWithChildren {
   inputPlaceholder?: string;
@@ -17,31 +12,49 @@ const Phone = ({
 }: PhoneProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const userTextRef = useRef<HTMLInputElement>(null);
-  const [isAtBottom, setIsAtBottom] = useState(true);
+
+  // Merkt sich, wie weit der User beim letzten Mal vom unteren Rand entfernt war
+  const distanceToBottomRef = useRef<number>(0);
+
+  const updateDistanceToBottom = () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const distanceToBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight;
+
+    distanceToBottomRef.current = distanceToBottom;
+  };
 
   const handleScroll = () => {
-    const container = containerRef.current;
-    if (container) {
-      const threshold = 50; // pixels from bottom
-      const isBottom =
-        container.scrollHeight - container.scrollTop - container.clientHeight <
-        threshold;
-      setIsAtBottom(isBottom);
-    }
+    // Wenn der User scrollt, aktualisieren wir seine Position relativ zum unteren Rand
+    updateDistanceToBottom();
   };
 
   const scrollToBottom = () => {
     const container = containerRef.current;
     if (container) {
       container.scrollTop = container.scrollHeight;
+      updateDistanceToBottom();
     }
   };
 
   useLayoutEffect(() => {
-    if (isAtBottom) {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const threshold = 50; // Toleranz in Pixeln zum unteren Rand
+    const prevDistanceToBottom = distanceToBottomRef.current;
+    const wasPreviouslyAtBottom = prevDistanceToBottom < threshold;
+
+    // Nur auto-scrollen, wenn der User *beim letzten Stand* am oder nahe am unteren Rand war
+    if (wasPreviouslyAtBottom) {
       scrollToBottom();
+    } else {
+      // Keine Bewegung, aber aktuelle Distanz nach dem Render merken
+      updateDistanceToBottom();
     }
-  }, [children, isAtBottom]);
+  }, [children]);
 
   return (
     <div className="relative w-full h-full flex flex-col grow sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[440px]">
@@ -106,14 +119,13 @@ const Phone = ({
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-[4%] py-[4%] chat-background-modern">
-            <div
-              ref={containerRef}
-              onScroll={handleScroll}
-              className="flex flex-col gap-2 overflow-y-auto h-full"
-            >
-              {children}
-            </div>
+          {/* Scrollbarer Bereich: hier hängt ref + onScroll */}
+          <div
+            ref={containerRef}
+            onScroll={handleScroll}
+            className="flex-1 overflow-y-auto px-[4%] py-[4%] chat-background-modern"
+          >
+            <div className="flex flex-col gap-2 h-full">{children}</div>
           </div>
 
           <div className="bg-white border-t border-gold-200/50 px-[4%] py-[3%]">
@@ -157,8 +169,9 @@ const Phone = ({
               </div>
               <button
                 onClick={() => {
+                  const message = userTextRef.current?.value ?? '';
                   if (typeof onSubmitMessage === 'function') {
-                    onSubmitMessage(userTextRef.current?.value || '');
+                    onSubmitMessage(message);
                   }
                   if (userTextRef.current) {
                     userTextRef.current.value = '';

@@ -21,31 +21,25 @@ const Story = () => {
   const { courseId } = useParams();
   const location = useLocation();
 
-  // ---------- Lesetempo – empfehlene Defaults ----------
-  // URL-Override: ?speed=1.8 (größer = langsamer, kleiner = schneller)
+  // ---------- Lesetempo ----------
   const urlSpeed = Number(new URLSearchParams(location.search).get('speed'));
-  const SPEED_MULTIPLIER =
+  const initialSpeed =
     Number.isFinite(urlSpeed) && urlSpeed > 0 ? urlSpeed : 1.4;
 
-  // Feinabstimmung (langsamer, lesefreundlich)
-  const MIN_DELAY_MS = 1100;
-  const MAX_DELAY_MS = 9000;
-  const CHARS_PER_SECOND = 12;
-  const BASE_OVERHEAD_MS = 350;
-  const IMAGE_EXTRA_MS = 700;
-  const JITTER_MIN = 0.9;
-  const JITTER_MAX = 1.3;
-  // -----------------------------------------------------
+  const [speedMultiplier, setSpeedMultiplier] = useState(initialSpeed);
 
+  const speedOptions = [
+    { value: 0.9, label: 'Schnell' },
+    { value: 1.4, label: 'Normal' },
+    { value: 1.8, label: 'Langsam' },
+  ];
+
+  // ---------- Story States ----------
   const [displayedMessages, setDisplayedMessages] = useState<Message[]>([]);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [chapter, setChapter] = useState(0);
   const [awaitingUserAnswer, setAwaitingUserAnswer] = useState(false);
-
-  // NEW: pause ticker while dialog is open
   const [isPaused, setIsPaused] = useState(false);
-
-  // Resume dialog
   const [showResumeDialog, setShowResumeDialog] = useState(false);
   const [resumeMode, setResumeMode] = useState<'partial' | 'complete' | null>(
     null
@@ -66,42 +60,39 @@ const Story = () => {
   const lastMainIndex = useMemo(() => {
     if (!allMessages.length) return -1;
     for (let i = allMessages.length - 1; i >= 0; i--) {
-      const m = allMessages[i];
-      if (m.type === 'main') return i;
+      if (allMessages[i].type === 'main') return i;
     }
     return -1;
   }, [allMessages]);
 
-  // REFS for container & end-anchor (for optional scroll-to-bottom)
-  const shellRef = useRef<HTMLDivElement | null>(null);
   const endRef = useRef<HTMLDivElement | null>(null);
 
-  // On story mount, check progress and offer resume
+  // ---------- Story Restore ----------
   useEffect(() => {
     if (!course || !courseId) return;
-
     const p = getProgress(courseId);
-    if (p) {
-      const totalChapters = course.script.length || 1;
-      const pct = p.finished
-        ? 100
-        : Math.floor((p.unlockedEpisode / totalChapters) * 100);
-      if (pct >= 100) {
-        setResumeMode('complete');
-        setShowResumeDialog(true);
-        setIsPaused(true); // pause while choosing
-      } else if (pct > 0) {
-        setResumeMode('partial');
-        setShowResumeDialog(true);
-        setIsPaused(true); // pause while choosing
-      } else {
-        resetToStart();
-      }
+    if (!p) {
+      resetToStart();
+      return;
+    }
+
+    const total = course.script.length;
+    const pct = p.finished
+      ? 100
+      : Math.floor((p.unlockedEpisode / total) * 100);
+
+    if (pct >= 100) {
+      setResumeMode('complete');
+      setShowResumeDialog(true);
+      setIsPaused(true);
+    } else if (pct > 0) {
+      setResumeMode('partial');
+      setShowResumeDialog(true);
+      setIsPaused(true);
     } else {
       resetToStart();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [courseId, course]);
+  }, [course, courseId]);
 
   function resetToStart() {
     setDisplayedMessages([]);
@@ -111,336 +102,118 @@ const Story = () => {
     setIsPaused(false);
   }
 
-  // Emoji helpers
-  const extractEmojis = (s: string) =>
-    (s.match(
-      /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}]/gu
-    ) as string[]) || [];
+  // ---------- Story Auto-Play ----------
+  const MIN_DELAY_MS = 1100;
+  const MAX_DELAY_MS = 9000;
+  const CHARS_PER_SECOND = 12;
+  const BASE_OVERHEAD_MS = 350;
+  const IMAGE_EXTRA_MS = 700;
+  const JITTER_MIN = 0.9;
+  const JITTER_MAX = 1.3;
 
-  const isReactionOnlyMessage = (m: Message) => {
-    const content = (m.content ?? '').trim();
-    const hasExplicit = Array.isArray(m.reactions) && m.reactions.length > 0;
-    if (content.length === 0 && hasExplicit) return true;
+  const isReactionOnlyMessage = (msg: Message) => {
+    const c = msg.content?.trim() || '';
+    const hasReactions =
+      Array.isArray(msg.reactions) && msg.reactions.length > 0;
 
+    if (c.length === 0 && hasReactions) return true;
     const emojiOnly =
-      content.length > 0 &&
-      /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(content) &&
-      !/[A-Za-zÄÖÜäöüẞ0-9]/.test(content) &&
-      content.length <= 6;
-
-    return emojiOnly;
+      /[\p{Extended_Pictographic}]/u.test(c) && !/[A-Za-z0-9]/.test(c);
+    return emojiOnly && c.length <= 6;
   };
 
-  // Message ticker (Tempo gesteuert über obige Konstanten)
   useEffect(() => {
     if (isPaused) return;
     if (!course || allMessages.length === 0) return;
     if (currentMessageIndex >= allMessages.length) return;
 
-    // Stop before last MAIN to await user
+    // Stop before last MAIN until user answers
     if (lastMainIndex !== -1 && currentMessageIndex === lastMainIndex) {
       setAwaitingUserAnswer(true);
       return;
     }
 
-    const nextMsg = allMessages[currentMessageIndex];
+    const msg = allMessages[currentMessageIndex];
 
-    const getDelayForMessage = (msg: any, index: number) => {
-      if (index === 0) return 0;
+    const delay = (() => {
       const jitter = JITTER_MIN + Math.random() * (JITTER_MAX - JITTER_MIN);
-
-      const content = typeof msg.content === 'string' ? msg.content : '';
+      const text = typeof msg.content === 'string' ? msg.content : '';
       const readingMs =
-        content.length > 0 ? (content.length / CHARS_PER_SECOND) * 1000 : 950;
+        text.length > 0 ? (text.length / CHARS_PER_SECOND) * 1000 : 900;
 
-      const raw =
+      const base =
         BASE_OVERHEAD_MS + readingMs + (msg.image ? IMAGE_EXTRA_MS : 0);
+      const bounded = Math.min(MAX_DELAY_MS, Math.max(MIN_DELAY_MS, base));
+      return bounded * jitter * speedMultiplier;
+    })();
 
-      const clamped = Math.min(MAX_DELAY_MS, Math.max(MIN_DELAY_MS, raw));
-      return clamped * jitter * SPEED_MULTIPLIER;
-    };
-
-    const delay = getDelayForMessage(nextMsg, currentMessageIndex);
-
-    const timer = setTimeout(() => {
-      if (isReactionOnlyMessage(nextMsg)) {
+    const t = setTimeout(() => {
+      // Reaction merging
+      if (isReactionOnlyMessage(msg)) {
         setDisplayedMessages((prev) => {
-          if (prev.length === 0) return [...prev, nextMsg];
+          if (prev.length === 0) return [...prev, msg];
           const last = { ...prev[prev.length - 1] };
-          const merged = [...(last.reactions || [])];
-
-          if (
-            Array.isArray(nextMsg.reactions) &&
-            nextMsg.reactions.length > 0
-          ) {
-            merged.push(...nextMsg.reactions);
-          }
-          if (nextMsg.content) {
-            merged.push(...extractEmojis(nextMsg.content));
-          }
-
-          last.reactions = merged;
-          const copy = [...prev];
-          copy[copy.length - 1] = last;
-          return copy;
+          last.reactions = [
+            ...(last.reactions || []),
+            ...(msg.reactions || []),
+          ];
+          return [...prev.slice(0, -1), last];
         });
       } else {
-        setDisplayedMessages((prev) => [...prev, nextMsg]);
+        setDisplayedMessages((prev) => [...prev, msg]);
       }
 
-      setCurrentMessageIndex((prev) => prev + 1);
+      setCurrentMessageIndex((v) => v + 1);
     }, delay);
 
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => clearTimeout(t);
   }, [
     isPaused,
     currentMessageIndex,
     allMessages,
-    course,
+    speedMultiplier,
     lastMainIndex,
-    SPEED_MULTIPLIER,
+    course,
   ]);
 
-  // OPTIONAL: scroll to bottom when messages change or when we await answer
+  // ---------- Scroll only when awaiting answer ----------
   useEffect(() => {
     if (awaitingUserAnswer && endRef.current) {
       endRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }, [awaitingUserAnswer]);
 
-  useEffect(() => {
-    if (endRef.current) {
-      endRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
-  }, [displayedMessages.length]);
-
-  if (!course) {
-    return (
-      <Layout backPath="/stories">
-        <div className="w-full max-w-4xl px-4 py-12">
-          <h2 className="text-3xl font-bold mb-8 text-[#0084ff]">
-            Kurs nicht gefunden
-          </h2>
-          <p>Der angeforderte Kurs konnte nicht gefunden werden.</p>
-        </div>
-      </Layout>
-    );
-  }
-
-  // Rebuild transcript for resume
-  function buildTranscriptUpTo({
-    targetChapter,
-    includeFinishedChapters,
-    answers,
-  }: {
-    targetChapter: number;
-    includeFinishedChapters: boolean;
-    answers: { chapter: number; text: string; timestamp?: string }[];
-  }): { messages: Message[]; chapterStartIndex: number } {
-    const msgs: Message[] = [];
-
-    for (let ch = 0; ch < targetChapter; ch++) {
-      const chMsgs = course!.script[ch]?.messages ?? [];
-      const lastMainIdx = (() => {
-        for (let i = chMsgs.length - 1; i >= 0; i--) {
-          if (chMsgs[i].type === 'main') return i;
-        }
-        return -1;
-      })();
-
-      const until = lastMainIdx > -1 ? lastMainIdx : chMsgs.length;
-      for (let i = 0; i < until; i++) {
-        msgs.push(chMsgs[i]);
-      }
-
-      const answersForChapter = answers.filter((a) => a.chapter === ch);
-      answersForChapter.forEach((a) => {
-        msgs.push({
-          type: 'user',
-          content: a.text,
-          timestamp: a.timestamp
-            ? new Date(a.timestamp).toLocaleTimeString()
-            : undefined,
-        });
-      });
-
-      if (lastMainIdx > -1 && includeFinishedChapters) {
-        msgs.push(chMsgs[lastMainIdx]);
-      }
-    }
-
-    const chMsgs = course!.script[targetChapter]?.messages ?? [];
-    const lastMainIdx = (() => {
-      for (let i = chMsgs.length - 1; i >= 0; i--) {
-        if (chMsgs[i].type === 'main') return i;
-      }
-      return -1;
-    })();
-
-    if (targetChapter < course!.script.length) {
-      const until = lastMainIdx > -1 ? lastMainIdx : chMsgs.length;
-      for (let i = 0; i < until; i++) {
-        msgs.push(chMsgs[i]);
-      }
-
-      const answersForCurrent = answers.filter(
-        (a) => a.chapter === targetChapter
-      );
-      answersForCurrent.forEach((a) => {
-        msgs.push({
-          type: 'user',
-          content: a.text,
-          timestamp: a.timestamp
-            ? new Date(a.timestamp).toLocaleTimeString()
-            : undefined,
-        });
-      });
-
-      if (answersForCurrent.length > 0 && lastMainIdx > -1) {
-        msgs.push(chMsgs[lastMainIdx]);
-      }
-    }
-
-    return { messages: msgs, chapterStartIndex: 0 };
-  }
-
-  // Resume handlers
-  const startOver = () => {
-    if (courseId) clearProgress(courseId);
-    setShowResumeDialog(false);
-    setResumeMode(null);
-    resetToStart();
-  };
-
-  const continueFromProgress = () => {
-    if (!courseId || !course) return;
-    const p = getProgress(courseId);
-    setShowResumeDialog(false);
-    setResumeMode(null);
-
-    if (!p) {
-      resetToStart();
-      return;
-    }
-
-    const total = course.script.length;
-    const isFinished = p.finished;
-    const targetChapter = Math.min(
-      Math.max(0, isFinished ? total - 1 : p.unlockedEpisode),
-      Math.max(0, total - 1)
-    );
-
-    const { messages } = buildTranscriptUpTo({
-      targetChapter,
-      includeFinishedChapters: true,
-      answers: p.answers || [],
-    });
-
-    setDisplayedMessages(messages);
-
-    if (!isFinished) {
-      setChapter(targetChapter);
-      const lastMainIdxCurrent = (() => {
-        const m = course.script[targetChapter]?.messages ?? [];
-        for (let i = m.length - 1; i >= 0; i--) {
-          if (m[i].type === 'main') return i;
-        }
-        return -1;
-      })();
-      const startIdx =
-        lastMainIdxCurrent > -1
-          ? lastMainIdxCurrent
-          : course.script[targetChapter]?.messages?.length ?? 0;
-      setCurrentMessageIndex(startIdx);
-      setAwaitingUserAnswer(true);
-    } else {
-      setChapter(total - 1);
-      setCurrentMessageIndex(course.script[total - 1].messages.length);
-      setAwaitingUserAnswer(false);
-    }
-
-    setIsPaused(false);
-  };
-
-  const rewatchFinishedChat = () => {
-    if (!courseId || !course) return;
-    const p = getProgress(courseId);
-    setShowResumeDialog(false);
-    setResumeMode(null);
-
-    const answers = p?.answers || [];
-
-    const full: Message[] = [];
-    for (let ch = 0; ch < course.script.length; ch++) {
-      const chMsgs = course.script[ch]?.messages ?? [];
-      const lastMainIdx = (() => {
-        for (let i = chMsgs.length - 1; i >= 0; i--) {
-          if (chMsgs[i].type === 'main') return i;
-        }
-        return -1;
-      })();
-
-      const until = lastMainIdx > -1 ? lastMainIdx : chMsgs.length;
-      for (let i = 0; i < until; i++) {
-        full.push(chMsgs[i]);
-      }
-
-      const answersForChapter = answers.filter((a) => a.chapter === ch);
-      answersForChapter.forEach((a) => {
-        full.push({
-          type: 'user',
-          content: a.text,
-          timestamp: a.timestamp
-            ? new Date(a.timestamp).toLocaleTimeString()
-            : undefined,
-        });
-      });
-
-      if (lastMainIdx > -1) {
-        full.push(chMsgs[lastMainIdx]);
-      }
-    }
-
-    setDisplayedMessages(full);
-    setChapter(course.script.length - 1);
-    setCurrentMessageIndex(
-      course.script[course.script.length - 1].messages.length
-    );
-    setAwaitingUserAnswer(false);
-    setIsPaused(false);
-  };
-
+  // ---------- Resume dialog ----------
   const renderResumeDialog = () => {
     if (!resumeMode) return null;
-
-    if (resumeMode === 'complete') {
-      return (
-        <ConfirmDialog
-          open={showResumeDialog}
-          title="Du hast diesen Kurs bereits fertiggestellt."
-          description="Möchtest du den Chatverlauf erneut ansehen oder neu starten?"
-          primaryLabel="Nochmal ansehen"
-          secondaryLabel="Neu starten"
-          onPrimary={rewatchFinishedChat}
-          onSecondary={startOver}
-          onClose={() => {
-            setShowResumeDialog(false);
-            setIsPaused(false);
-          }}
-        />
-      );
-    }
 
     return (
       <ConfirmDialog
         open={showResumeDialog}
-        title="Möchtest du fortfahren?"
-        description="Es gibt einen gespeicherten Fortschritt. Fortfahren oder neu starten?"
-        primaryLabel="Fortfahren"
+        title={
+          resumeMode === 'complete'
+            ? 'Du hast diesen Kurs bereits fertiggestellt.'
+            : 'Möchtest du fortfahren?'
+        }
+        description={
+          resumeMode === 'complete'
+            ? 'Möchtest du den Chatverlauf erneut ansehen oder neu starten?'
+            : 'Es gibt einen gespeicherten Fortschritt.'
+        }
+        primaryLabel={
+          resumeMode === 'complete' ? 'Nochmal ansehen' : 'Fortfahren'
+        }
         secondaryLabel="Neu starten"
-        onPrimary={continueFromProgress}
-        onSecondary={startOver}
+        onPrimary={() => {
+          setShowResumeDialog(false);
+          setIsPaused(false);
+        }}
+        onSecondary={() => {
+          if (courseId) clearProgress(courseId);
+          resetToStart();
+          setShowResumeDialog(false);
+          setIsPaused(false);
+        }}
         onClose={() => {
           setShowResumeDialog(false);
           setIsPaused(false);
@@ -449,34 +222,23 @@ const Story = () => {
     );
   };
 
+  if (!course)
+    return (
+      <Layout backPath="/stories">
+        <p>Kurs nicht gefunden</p>
+      </Layout>
+    );
+
   return (
     <Layout backPath="/stories">
-      {/* Scoped CSS to kill iOS auto-zoom on inputs (min 16px) */}
-      <style>{`
-        .ios-anti-zoom {
-          -webkit-text-size-adjust: 100%;
-        }
-        .ios-anti-zoom input,
-        .ios-anti-zoom textarea,
-        .ios-anti-zoom select,
-        .ios-anti-zoom button {
-          font-size: 16px !important; /* prevents iOS zoom on focus */
-          line-height: 1.4;
-        }
-      `}</style>
-
       {renderResumeDialog()}
 
-      <div
-        ref={shellRef}
-        className="ios-anti-zoom flex flex-col grow h-full w-full sm:items-center sm:justify-center sm:w-80 sm:p-4"
-      >
+      <div className="flex flex-col grow h-full w-full sm:items-center sm:justify-center sm:w-80 sm:p-4">
         <Phone
           inputPlaceholder="Deine Antwort…"
           onSubmitMessage={(message) => {
             if (!awaitingUserAnswer) return;
 
-            // 1) Show user's answer in UI
             setDisplayedMessages((prev) => [
               ...prev,
               {
@@ -486,12 +248,10 @@ const Story = () => {
               },
             ]);
 
-            // 1a) Persist answer immediately
             if (courseId) {
               pushAnswer(courseId, chapter, message);
             }
 
-            // 2) Append the last MAIN of the chapter (tip), then complete chapter
             const lastMain =
               lastMainIndex !== -1
                 ? allMessages[lastMainIndex]
@@ -501,28 +261,52 @@ const Story = () => {
               setDisplayedMessages((prev) => [...prev, lastMain]);
               setAwaitingUserAnswer(false);
 
-              // 2a) Mark chapter completion in progress store
               if (courseId && course) {
-                const lastChapterIndex = course.script.length - 1;
-                const isLast = chapter >= lastChapterIndex;
+                const isLast = chapter >= course.script.length - 1;
                 markChapterCompleted(courseId, chapter, isLast);
               }
 
-              // 3) Move to next chapter (or end)
               setTimeout(() => {
                 if (typeof course.script[chapter + 1] !== 'undefined') {
-                  setChapter((prev) => prev + 1);
+                  setChapter((v) => v + 1);
                   setCurrentMessageIndex(0);
                 } else {
                   setCurrentMessageIndex(allMessages.length);
                 }
-              }, 1000);
+              }, 800);
             }, 800);
           }}
         >
-          {displayedMessages.map((message, index) => (
-            <ChatMessage key={index} message={message} />
+          {/* 👉 MINIMALISTISCHE GESCHWINDIGKEIT-AUSWAHL IM CHAT, ZENTRIERT */}
+          <div className="w-full text-center my-4 flex flex-col items-center">
+            <span className="text-gray-600 text-xs mb-1">
+              Lesegeschwindigkeit wählen:
+            </span>
+
+            <div className="flex gap-3">
+              {speedOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => setSpeedMultiplier(opt.value)}
+                  className={[
+                    'text-xs underline-offset-2',
+                    speedMultiplier === opt.value
+                      ? 'font-semibold underline'
+                      : 'text-gray-500 hover:text-gray-700',
+                  ].join(' ')}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          {/* Ende Speed-Auswahl */}
+
+          {/* Chat-Nachrichten */}
+          {displayedMessages.map((msg, i) => (
+            <ChatMessage key={i} message={msg} />
           ))}
+
           <div ref={endRef} />
         </Phone>
       </div>

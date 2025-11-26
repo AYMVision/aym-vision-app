@@ -4,6 +4,7 @@ import logo from '../assets/logo.png';
 import { useEffect, useState } from 'react';
 import { LanguageSelector } from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
+import Footer from './Footer';
 
 export default function Layout({
   children,
@@ -209,6 +210,9 @@ export default function Layout({
       <main className="flex-1 flex flex-col items-center justify-start z-0">
         {children}
       </main>
+
+      {/* Footer immer sichtbar */}
+      <Footer />
     </div>
   );
 }
