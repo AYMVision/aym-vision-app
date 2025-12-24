@@ -1,0 +1,83 @@
+{
+  "A": {
+    "intros": [
+      "Das ist ein guter Gedanke. 🦉",
+      "Danke, dass du das so klar beschreibst. 🦉",
+      "Ich merke, du hast dir dazu Gedanken gemacht. 🦉",
+      "Das klingt reflektiert und ehrlich. 🦉",
+      "Spannend, wie du das siehst. 🦉"
+    ],
+    "bridges": [
+      "Weißt du, manchmal hilft es, sich genau das bewusst zu machen.",
+      "Solche Gedanken zeigen, dass du Verantwortung übernimmst.",
+      "Das ist ein guter Ausgangspunkt, um sicher zu handeln.",
+      "Daran erkennt man, dass du die Situation ernst nimmst.",
+      "Genau solche Überlegungen helfen im Alltag."
+    ],
+    "outros": [
+      "Behalte diesen Gedanken im Kopf, er kann dir helfen.",
+      "Damit bist du auf einem guten Weg.",
+      "Das ist eine starke Haltung.",
+      "Darauf kannst du aufbauen.",
+      "So triffst du oft kluge Entscheidungen."
+    ]
+  },
+
+  "B": {
+    "intros": [
+      "Du bist schon auf der richtigen Spur. 🦉",
+      "Das geht in eine gute Richtung. 🦉",
+      "Ich sehe, was du meinst. 🦉",
+      "Das passt grundsätzlich zur Frage. 🦉",
+      "Ein guter Anfang. 🦉"
+    ],
+    "bridges": [
+      "Vielleicht kannst du das noch ein kleines bisschen genauer erklären.",
+      "Manchmal lohnt es sich, einen Gedanken noch auszupacken.",
+      "Überleg mal, warum dir das wichtig erscheint.",
+      "Was steckt für dich dahinter?",
+      "Ein Satz mehr könnte das noch klarer machen."
+    ],
+    "outros": [
+      "Aber auch so: gut mitgedacht.",
+      "Das zeigt, dass du darüber nachdenkst.",
+      "Damit liegst du nicht falsch.",
+      "Du hast das Wesentliche erfasst.",
+      "Darauf lässt sich aufbauen."
+    ]
+  },
+
+  "UNSICHER": {
+    "intros": [
+      "Es ist völlig okay, wenn man sich da unsicher fühlt. 🦉",
+      "Solche Fragen sind manchmal gar nicht so leicht. 🦉",
+      "Unsicherheit gehört zum Nachdenken dazu. 🦉",
+      "Das kennen viele – du bist damit nicht allein. 🦉",
+      "Manchmal braucht ein Gedanke noch ein bisschen Zeit. 🦉"
+    ],
+    "miniTip": [
+      "Denk zum Beispiel daran, was dir in dieser Situation ein sicheres Gefühl geben würde.",
+      "Vielleicht hilft dir die Frage: Wen könntest du um Hilfe bitten?",
+      "Überleg mal, was du an deiner Stelle als Erstes tun würdest.",
+      "Manchmal hilft es, an eine ähnliche Situation zu denken.",
+      "Frag dich: Was wäre ein ruhiger, sinnvoller erster Schritt?"
+    ],
+    "tryAgain": [
+      "Schreib es gern noch einmal in einem eigenen Satz.",
+      "Versuch’s noch einmal – ich bin gespannt auf deinen Gedanken.",
+      "Du kannst dir ruhig einen Moment Zeit nehmen und dann nochmal antworten.",
+      "Probier es noch einmal, ganz in deinem Tempo.",
+      "Ich höre dir zu – schreib gern nochmal."
+    ]
+  },
+
+  "C": {
+    "retry": [
+      "Ich glaube, das passt noch nicht richtig zur Frage. Versuch es bitte noch einmal. 🦉",
+      "Das konnte ich noch nicht gut einordnen. Schreib bitte einen passenden Satz dazu. 🦉",
+      "Das wirkt gerade etwas am Thema vorbei. Probier es bitte nochmal. 🦉",
+      "Ich glaube, da fehlt noch der Bezug zur Frage. Versuch es gern erneut. 🦉",
+      "Schreib bitte noch einmal etwas, das zur Frage passt. 🦉"
+    ]
+  }
+}
