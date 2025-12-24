@@ -3,12 +3,14 @@ import { useLayoutEffect, useRef, type PropsWithChildren } from 'react';
 interface PhoneProps extends PropsWithChildren {
   inputPlaceholder?: string;
   onSubmitMessage?: (message: string) => void;
+  autoScroll?: boolean; // ✅ NEU
 }
 
 const Phone = ({
   children,
   inputPlaceholder = 'Deine Antwort…',
   onSubmitMessage,
+  autoScroll = true,
 }: PhoneProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const userTextRef = useRef<HTMLInputElement>(null);
@@ -27,7 +29,6 @@ const Phone = ({
   };
 
   const handleScroll = () => {
-    // Wenn der User scrollt, aktualisieren wir seine Position relativ zum unteren Rand
     updateDistanceToBottom();
   };
 
@@ -43,18 +44,22 @@ const Phone = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const threshold = 50; // Toleranz in Pixeln zum unteren Rand
+    // ✅ wenn autoScroll aus ist: NICHT automatisch bewegen
+    if (!autoScroll) {
+      updateDistanceToBottom();
+      return;
+    }
+
+    const threshold = 50;
     const prevDistanceToBottom = distanceToBottomRef.current;
     const wasPreviouslyAtBottom = prevDistanceToBottom < threshold;
 
-    // Nur auto-scrollen, wenn der User *beim letzten Stand* am oder nahe am unteren Rand war
     if (wasPreviouslyAtBottom) {
       scrollToBottom();
     } else {
-      // Keine Bewegung, aber aktuelle Distanz nach dem Render merken
       updateDistanceToBottom();
     }
-  }, [children]);
+  }, [children, autoScroll]);
 
   return (
     <div className="relative w-full h-full flex flex-col grow sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[440px]">
@@ -119,7 +124,7 @@ const Phone = ({
             </button>
           </div>
 
-          {/* Scrollbarer Bereich: hier hängt ref + onScroll */}
+          {/* Scrollbarer Bereich */}
           <div
             ref={containerRef}
             onScroll={handleScroll}
@@ -170,12 +175,8 @@ const Phone = ({
               <button
                 onClick={() => {
                   const message = userTextRef.current?.value ?? '';
-                  if (typeof onSubmitMessage === 'function') {
-                    onSubmitMessage(message);
-                  }
-                  if (userTextRef.current) {
-                    userTextRef.current.value = '';
-                  }
+                  if (typeof onSubmitMessage === 'function') onSubmitMessage(message);
+                  if (userTextRef.current) userTextRef.current.value = '';
                 }}
                 className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
               >
