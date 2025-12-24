@@ -6,6 +6,14 @@ import courses from '../data/index';
 import type { Message } from '../common/types';
 import ChatMessage from '../components/ChatMessage';
 import { useTranslation } from 'react-i18next';
+import { AmyAI } from '../ai/amyAI';
+import amyAvatar from '../assets/characters/amy.png';
+
+import { buildAmyReply } from '../ai/amyReply';
+import { decideAmyFlow } from '../ai/amyDecision';
+import { detectQuestionType } from '../ai/amyQuestionType';
+import { extractKeyIdea } from '../ai/extractKeyIdea';
+import { getAnswerTipRelation } from '../ai/answerRelation';
 
 // Progress store
 import {
@@ -17,20 +25,26 @@ import {
 
 import ConfirmDialog from '../components/ConfirmDialog';
 
+// ----------------------
+// Reading Mode (Produkt-Feature)
+// ----------------------
+type ReadingMode = 'cinematic' | 'instant';
+const READING_MODE_KEY = 'aym_reading_mode';
+
 const Story = () => {
+  const AMY_SPEAKER = { name: 'Amy', avatar: amyAvatar };
+
+  // -------------------------------
+  // Routing / Course
+  // -------------------------------
   const { courseId } = useParams();
   const location = useLocation();
 
-  // ---------- Lesetempo – Defaults & URL-Override ----------
-  // URL-Override: ?speed=1.8 (größer = langsamer, kleiner = schneller)
+  // ---------- Lesetempo ----------
   const urlSpeed = Number(new URLSearchParams(location.search).get('speed'));
   const initialSpeedMultiplier =
     Number.isFinite(urlSpeed) && urlSpeed > 0 ? urlSpeed : 1.4;
-
-  // Lesegeschwindigkeit als State (statt fixem Const)
-  const [speedMultiplier, setSpeedMultiplier] = useState(
-    initialSpeedMultiplier
-  );
+  const [speedMultiplier, setSpeedMultiplier] = useState(initialSpeedMultiplier);
 
   const speedOptions = [
     { value: 0.9, label: 'Schnell' },
@@ -38,7 +52,19 @@ const Story = () => {
     { value: 1.8, label: 'Langsam' },
   ];
 
-  // Feinabstimmung (langsamer, lesefreundlich)
+  // ---------- Reading Mode ----------
+  const [readingMode, setReadingMode] = useState<ReadingMode>(() => {
+    const saved = localStorage.getItem(READING_MODE_KEY);
+    return saved === 'instant' || saved === 'cinematic' ? saved : 'cinematic';
+  });
+
+  useEffect(() => {
+    localStorage.setItem(READING_MODE_KEY, readingMode);
+  }, [readingMode]);
+
+  const isInstant = readingMode === 'instant';
+
+  // Timing-Konstanten
   const MIN_DELAY_MS = 1100;
   const MAX_DELAY_MS = 9000;
   const CHARS_PER_SECOND = 12;
@@ -46,28 +72,40 @@ const Story = () => {
   const IMAGE_EXTRA_MS = 700;
   const JITTER_MIN = 0.9;
   const JITTER_MAX = 1.3;
-  // -----------------------------------------------------
 
+  const calcDelayForText = (text: string, hasImage = false) => {
+    if (isInstant) return 0; // ✅ Sofort-Modus: keine Delays
+
+    const readingMs =
+      BASE_OVERHEAD_MS +
+      (text.length / CHARS_PER_SECOND) * 1000 +
+      (hasImage ? IMAGE_EXTRA_MS : 0);
+
+    const clamped = Math.min(MAX_DELAY_MS, Math.max(MIN_DELAY_MS, readingMs));
+    return clamped * speedMultiplier;
+  };
+
+  // -------------------------------
+  // State
+  // -------------------------------
   const [displayedMessages, setDisplayedMessages] = useState<Message[]>([]);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [chapter, setChapter] = useState(0);
   const [awaitingUserAnswer, setAwaitingUserAnswer] = useState(false);
 
-  // NEW: pause ticker while dialog is open
+  // ✅ attemptCount pro Frage (Startwert 1)
+  const [attemptByQuestion, setAttemptByQuestion] = useState<Record<string, number>>({});
+
+  // ✅ blockiert Story-Ticker & user send während Amy “spricht”
+  const [amyIsSpeaking, setAmyIsSpeaking] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Resume dialog
   const [showResumeDialog, setShowResumeDialog] = useState(false);
-  const [resumeMode, setResumeMode] = useState<'partial' | 'complete' | null>(
-    null
-  );
+  const [resumeMode, setResumeMode] = useState<'partial' | 'complete' | null>(null);
 
   const { i18n } = useTranslation();
   const courseLanguage = i18n.language.split('-')[0];
-
-  const course = courses[courseLanguage as 'de' | 'en'].find(
-    (c) => c.id === courseId
-  );
+  const course = courses[courseLanguage as 'de' | 'en'].find((c) => c.id === courseId);
 
   const allMessages = useMemo(
     () => course?.script[chapter]?.messages || [],
@@ -77,56 +115,89 @@ const Story = () => {
   const lastMainIndex = useMemo(() => {
     if (!allMessages.length) return -1;
     for (let i = allMessages.length - 1; i >= 0; i--) {
-      const m = allMessages[i];
-      if (m.type === 'main') return i;
+      if (allMessages[i].type === 'main') return i;
     }
     return -1;
   }, [allMessages]);
 
-  // REFS for container & end-anchor (for optional scroll-to-bottom)
+  const amyAI = useMemo(() => new AmyAI(), []);
+
   const shellRef = useRef<HTMLDivElement | null>(null);
   const endRef = useRef<HTMLDivElement | null>(null);
 
-  // On story mount, check progress and offer resume
-  useEffect(() => {
-    if (!course || !courseId) return;
+  // -------------------------------
+  // attempt helpers
+  // -------------------------------
+  function makeQuestionKey(cId: string | undefined, ch: number, lm: number) {
+    return `${cId ?? 'no-course'}::ch${ch}::q${lm}`;
+  }
+  function getAttempt(questionKey: string) {
+    return attemptByQuestion[questionKey] ?? 1; // ✅ Startwert 1
+  }
+  function incAttempt(questionKey: string) {
+    setAttemptByQuestion((prev) => ({
+      ...prev,
+      [questionKey]: (prev[questionKey] ?? 1) + 1,
+    }));
+  }
+  function resetAttempt(questionKey: string) {
+    setAttemptByQuestion((prev) => {
+      if (!(questionKey in prev)) return prev;
+      const copy = { ...prev };
+      delete copy[questionKey];
+      return copy;
+    });
+  }
 
-    const p = getProgress(courseId);
-    if (p) {
-      const totalChapters = course.script.length || 1;
-      const pct = p.finished
-        ? 100
-        : Math.floor((p.unlockedEpisode / totalChapters) * 100);
-      if (pct >= 100) {
-        setResumeMode('complete');
-        setShowResumeDialog(true);
-        setIsPaused(true); // pause while choosing
-      } else if (pct > 0) {
-        setResumeMode('partial');
-        setShowResumeDialog(true);
-        setIsPaused(true); // pause while choosing
-      } else {
-        resetToStart();
-      }
-    } else {
-      resetToStart();
+  // -------------------------------
+  // Helper: Frage & Tipp sauber trennen
+  // -------------------------------
+  function normalizeText(v: unknown): string {
+    return String(v ?? '').trim();
+  }
+
+  function looksLikeQuestion(text: string): boolean {
+    const t = text.trim();
+    if (!t) return false;
+    if (t.includes('?')) return true;
+
+    const starters = [
+      'was','warum','wie','wieso','wann','wer','wo','welche','welcher','welches',
+      'würdest du','wie würdest du','was würdest du','was machst du','wie reagierst du',
+      'stell dir vor','denk mal','meinst du',
+    ];
+    const low = t.toLowerCase();
+    return starters.some((s) => low.startsWith(s));
+  }
+
+  function getTipText(msgs: any[], lm: number): string {
+    if (!msgs?.length) return '';
+    if (lm < 0) return '';
+    return normalizeText(msgs[lm]?.content);
+  }
+
+  function getQuestionText(msgs: any[], lm: number): string {
+    if (!msgs?.length) return '';
+    const start = lm > 0 ? lm - 1 : msgs.length - 1;
+
+    for (let i = start; i >= 0; i--) {
+      const m = msgs[i];
+      if (m?.type !== 'main') continue;
+      const text = normalizeText(m?.content);
+      if (looksLikeQuestion(text)) return text;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [courseId, course]);
-
-  function resetToStart() {
-    setDisplayedMessages([]);
-    setCurrentMessageIndex(0);
-    setChapter(0);
-    setAwaitingUserAnswer(false);
-    setIsPaused(false);
+    for (let i = start; i >= 0; i--) {
+      const m = msgs[i];
+      if (m?.type !== 'main') continue;
+      const text = normalizeText(m?.content);
+      if (text) return text;
+    }
+    return '';
   }
 
   // Emoji helpers
   const extractEmojis = (s: string) =>
-    (s.match(
-      /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}]/gu
-    ) as string[]) || [];
+    (s.match(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}]/gu) as string[]) || [];
 
   const isReactionOnlyMessage = (m: Message) => {
     const content = (m.content ?? '').trim();
@@ -142,9 +213,73 @@ const Story = () => {
     return emojiOnly;
   };
 
-  // Message ticker (Tempo gesteuert über Konstanten + speedMultiplier)
+  // -------------------------------
+  // Resume / Reset
+  // -------------------------------
   useEffect(() => {
-    if (isPaused) return;
+    if (!course || !courseId) return;
+
+    const p = getProgress(courseId);
+    if (p) {
+      const totalChapters = course.script.length || 1;
+      const pct = p.finished ? 100 : Math.floor((p.unlockedEpisode / totalChapters) * 100);
+
+      if (pct >= 100) {
+        setResumeMode('complete');
+        setShowResumeDialog(true);
+        setIsPaused(true);
+      } else if (pct > 0) {
+        setResumeMode('partial');
+        setShowResumeDialog(true);
+        setIsPaused(true);
+      } else {
+        resetToStart();
+      }
+    } else {
+      resetToStart();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [courseId, course]);
+
+  function resetToStart() {
+    setDisplayedMessages([]);
+    setCurrentMessageIndex(0);
+    setChapter(0);
+    setAwaitingUserAnswer(false);
+    setIsPaused(false);
+    setAmyIsSpeaking(false);
+    setAttemptByQuestion({});
+    appendedChaptersRef.current = {};
+  }
+
+  // -------------------------------
+  // ✅ Sofort-Modus: Kapitelblock anhängen (niemals überschreiben!)
+  // -------------------------------
+  const appendedChaptersRef = useRef<Record<number, boolean>>({});
+
+  useEffect(() => {
+    if (!isInstant) return;
+    if (isPaused || amyIsSpeaking) return;
+    if (!course || allMessages.length === 0) return;
+
+    if (appendedChaptersRef.current[chapter]) return;
+
+    const stopIndex = lastMainIndex !== -1 ? lastMainIndex : allMessages.length;
+    const chunk = allMessages.slice(0, stopIndex) as Message[];
+
+    setDisplayedMessages((prev) => (prev.length === 0 ? chunk : [...prev, ...chunk]));
+    setCurrentMessageIndex(stopIndex);
+    setAwaitingUserAnswer(true);
+
+    appendedChaptersRef.current[chapter] = true;
+  }, [isInstant, chapter, course, allMessages, lastMainIndex, isPaused, amyIsSpeaking]);
+
+  // -------------------------------
+  // Cinematic ticker (nur wenn NICHT instant)
+  // -------------------------------
+  useEffect(() => {
+    if (isInstant) return;
+    if (isPaused || amyIsSpeaking) return;
     if (!course || allMessages.length === 0) return;
     if (currentMessageIndex >= allMessages.length) return;
 
@@ -161,14 +296,8 @@ const Story = () => {
       const jitter = JITTER_MIN + Math.random() * (JITTER_MAX - JITTER_MIN);
 
       const content = typeof msg.content === 'string' ? msg.content : '';
-      const readingMs =
-        content.length > 0 ? (content.length / CHARS_PER_SECOND) * 1000 : 950;
-
-      const raw =
-        BASE_OVERHEAD_MS + readingMs + (msg.image ? IMAGE_EXTRA_MS : 0);
-
-      const clamped = Math.min(MAX_DELAY_MS, Math.max(MIN_DELAY_MS, raw));
-      return clamped * jitter * speedMultiplier;
+      const base = calcDelayForText(content, !!msg.image);
+      return base * jitter;
     };
 
     const delay = getDelayForMessage(nextMsg, currentMessageIndex);
@@ -180,10 +309,7 @@ const Story = () => {
           const last = { ...prev[prev.length - 1] };
           const merged = [...(last.reactions || [])];
 
-          if (
-            Array.isArray(nextMsg.reactions) &&
-            nextMsg.reactions.length > 0
-          ) {
+          if (Array.isArray(nextMsg.reactions) && nextMsg.reactions.length > 0) {
             merged.push(...nextMsg.reactions);
           }
           if (nextMsg.content) {
@@ -203,37 +329,39 @@ const Story = () => {
     }, delay);
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    isInstant,
     isPaused,
+    amyIsSpeaking,
     currentMessageIndex,
     allMessages,
     course,
     lastMainIndex,
-    speedMultiplier, // <- wichtig, UI-Änderung wirkt aufs Timing
+    speedMultiplier,
   ]);
 
-  // OPTIONAL: scroll to bottom when we first await an answer
+  // ✅ Auto-scroll zum Ende nur im cinematic Modus
   useEffect(() => {
+    if (isInstant) return;
     if (awaitingUserAnswer && endRef.current) {
       endRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
-  }, [awaitingUserAnswer]);
+  }, [awaitingUserAnswer, isInstant]);
 
   if (!course) {
     return (
       <Layout backPath="/stories" hideFooter>
         <div className="w-full max-w-4xl px-4 py-12">
-          <h2 className="text-3xl font-bold mb-8 text-[#0084ff]">
-            Kurs nicht gefunden
-          </h2>
+          <h2 className="text-3xl font-bold mb-8 text-[#0084ff]">Kurs nicht gefunden</h2>
           <p>Der angeforderte Kurs konnte nicht gefunden werden.</p>
         </div>
       </Layout>
     );
   }
 
-  // Rebuild transcript for resume
+  // -------------------------------
+  // Transcript for resume (unverändert)
+  // -------------------------------
   function buildTranscriptUpTo({
     targetChapter,
     includeFinishedChapters,
@@ -255,18 +383,14 @@ const Story = () => {
       })();
 
       const until = lastMainIdx > -1 ? lastMainIdx : chMsgs.length;
-      for (let i = 0; i < until; i++) {
-        msgs.push(chMsgs[i]);
-      }
+      for (let i = 0; i < until; i++) msgs.push(chMsgs[i]);
 
       const answersForChapter = answers.filter((a) => a.chapter === ch);
       answersForChapter.forEach((a) => {
         msgs.push({
           type: 'user',
           content: a.text,
-          timestamp: a.timestamp
-            ? new Date(a.timestamp).toLocaleTimeString()
-            : undefined,
+          timestamp: a.timestamp ? new Date(a.timestamp).toLocaleTimeString() : undefined,
         });
       });
 
@@ -285,20 +409,14 @@ const Story = () => {
 
     if (targetChapter < course!.script.length) {
       const until = lastMainIdx > -1 ? lastMainIdx : chMsgs.length;
-      for (let i = 0; i < until; i++) {
-        msgs.push(chMsgs[i]);
-      }
+      for (let i = 0; i < until; i++) msgs.push(chMsgs[i]);
 
-      const answersForCurrent = answers.filter(
-        (a) => a.chapter === targetChapter
-      );
+      const answersForCurrent = answers.filter((a) => a.chapter === targetChapter);
       answersForCurrent.forEach((a) => {
         msgs.push({
           type: 'user',
           content: a.text,
-          timestamp: a.timestamp
-            ? new Date(a.timestamp).toLocaleTimeString()
-            : undefined,
+          timestamp: a.timestamp ? new Date(a.timestamp).toLocaleTimeString() : undefined,
         });
       });
 
@@ -357,6 +475,7 @@ const Story = () => {
         lastMainIdxCurrent > -1
           ? lastMainIdxCurrent
           : course.script[targetChapter]?.messages?.length ?? 0;
+
       setCurrentMessageIndex(startIdx);
       setAwaitingUserAnswer(true);
     } else {
@@ -366,6 +485,7 @@ const Story = () => {
     }
 
     setIsPaused(false);
+    setAmyIsSpeaking(false);
   };
 
   const rewatchFinishedChat = () => {
@@ -375,8 +495,8 @@ const Story = () => {
     setResumeMode(null);
 
     const answers = p?.answers || [];
-
     const full: Message[] = [];
+
     for (let ch = 0; ch < course.script.length; ch++) {
       const chMsgs = course.script[ch]?.messages ?? [];
       const lastMainIdx = (() => {
@@ -387,33 +507,26 @@ const Story = () => {
       })();
 
       const until = lastMainIdx > -1 ? lastMainIdx : chMsgs.length;
-      for (let i = 0; i < until; i++) {
-        full.push(chMsgs[i]);
-      }
+      for (let i = 0; i < until; i++) full.push(chMsgs[i]);
 
       const answersForChapter = answers.filter((a) => a.chapter === ch);
       answersForChapter.forEach((a) => {
         full.push({
           type: 'user',
           content: a.text,
-          timestamp: a.timestamp
-            ? new Date(a.timestamp).toLocaleTimeString()
-            : undefined,
+          timestamp: a.timestamp ? new Date(a.timestamp).toLocaleTimeString() : undefined,
         });
       });
 
-      if (lastMainIdx > -1) {
-        full.push(chMsgs[lastMainIdx]);
-      }
+      if (lastMainIdx > -1) full.push(chMsgs[lastMainIdx]);
     }
 
     setDisplayedMessages(full);
     setChapter(course.script.length - 1);
-    setCurrentMessageIndex(
-      course.script[course.script.length - 1].messages.length
-    );
+    setCurrentMessageIndex(course.script[course.script.length - 1].messages.length);
     setAwaitingUserAnswer(false);
     setIsPaused(false);
+    setAmyIsSpeaking(false);
   };
 
   const renderResumeDialog = () => {
@@ -432,6 +545,7 @@ const Story = () => {
           onClose={() => {
             setShowResumeDialog(false);
             setIsPaused(false);
+            setAmyIsSpeaking(false);
           }}
         />
       );
@@ -449,6 +563,7 @@ const Story = () => {
         onClose={() => {
           setShowResumeDialog(false);
           setIsPaused(false);
+          setAmyIsSpeaking(false);
         }}
       />
     );
@@ -456,7 +571,6 @@ const Story = () => {
 
   return (
     <Layout backPath="/stories">
-      {/* Scoped CSS to kill iOS auto-zoom on inputs (min 16px) */}
       <style>{`
         .ios-anti-zoom {
           -webkit-text-size-adjust: 100%;
@@ -465,7 +579,7 @@ const Story = () => {
         .ios-anti-zoom textarea,
         .ios-anti-zoom select,
         .ios-anti-zoom button {
-          font-size: 16px !important; /* prevents iOS zoom on focus */
+          font-size: 16px !important;
           line-height: 1.4;
         }
       `}</style>
@@ -477,81 +591,170 @@ const Story = () => {
         className="ios-anti-zoom flex flex-col grow h-full w-full sm:items-center sm:justify-center sm:w-80 sm:p-4"
       >
         <Phone
+          // ✅ Instant: kein Auto-Scroll (bleib exakt an deiner Stelle)
+          autoScroll={!isInstant}
           inputPlaceholder="Deine Antwort…"
-          onSubmitMessage={(message) => {
-            if (!awaitingUserAnswer) return;
+  onSubmitMessage={async (message) => {
+  if (!awaitingUserAnswer || amyIsSpeaking) return;
 
-            // 1) Show user's answer in UI
-            setDisplayedMessages((prev) => [
-              ...prev,
-              {
-                type: 'user',
-                content: message,
-                timestamp: new Date().toLocaleTimeString(),
-              },
-            ]);
+  const trimmed = (message ?? '').trim();
+  if (!trimmed) return;
 
-            // 1a) Persist answer immediately
-            if (courseId) {
-              pushAnswer(courseId, chapter, message);
-            }
+  // ✅ pro Frage eindeutiger Key + attemptCount
+  const questionKey = makeQuestionKey(courseId, chapter, lastMainIndex);
+  const attemptCount = getAttempt(questionKey);
 
-            // 2) Append the last MAIN of the chapter (tip), then complete chapter
-            const lastMain =
-              lastMainIndex !== -1
-                ? allMessages[lastMainIndex]
-                : allMessages[allMessages.length - 1];
+  // ✅ Tipp & Frage zuerst bestimmen (damit questionType verfügbar ist)
+  const tipText = getTipText(allMessages as any[], lastMainIndex);
+  const questionText = getQuestionText(allMessages as any[], lastMainIndex);
 
-            setTimeout(() => {
-              setDisplayedMessages((prev) => [...prev, lastMain]);
-              setAwaitingUserAnswer(false);
+  // ✅ Frage-Typ bestimmen (vor der Klassifikation!)
+  const questionType = detectQuestionType({
+    questionText,
+    tipText,
+  });
 
-              // 2a) Mark chapter completion in progress store
-              if (courseId && course) {
-                const lastChapterIndex = course.script.length - 1;
-                const isLast = chapter >= lastChapterIndex;
-                markChapterCompleted(courseId, chapter, isLast);
-              }
+  // ✅ Relation Antwort ↔ Tipp
+  const relation = getAnswerTipRelation(trimmed, tipText);
 
-              // 3) Move to next chapter (or end)
-              setTimeout(() => {
-                if (typeof course.script[chapter + 1] !== 'undefined') {
-                  setChapter((prev) => prev + 1);
-                  setCurrentMessageIndex(0);
-                } else {
-                  setCurrentMessageIndex(allMessages.length);
-                }
-              }, 1000);
-            }, 800);
-          }}
+  // 1) Klassifikation (jetzt mit Kontext)
+  let label: 'A' | 'B' | 'C' | 'UNSICHER' = 'C';
+  try {
+    label = await amyAI.classifyAnswer(trimmed, { questionType });
+  } catch (e) {
+    console.error('AmyAI classify failed', e);
+  }
+
+  // 2) User-Nachricht anzeigen (IMMER sichtbar lassen)
+  setDisplayedMessages((prev) => [
+    ...prev,
+    {
+      type: 'user',
+      content: trimmed,
+      timestamp: new Date().toLocaleTimeString(),
+    },
+  ]);
+
+  // 3) Entscheidung
+  const decision = decideAmyFlow({
+    label,
+    attemptCount,
+    questionType,
+  });
+
+  // 4) Kernaussage extrahieren (lokal/offline)
+  const keyIdea = await extractKeyIdea(tipText, { useML: true });
+
+  // 5) Amy-Antwort bauen
+  const amyText = buildAmyReply(decision, tipText, keyIdea, relation);
+
+  setAmyIsSpeaking(true);
+
+  setDisplayedMessages((prev) => [
+    ...prev,
+    {
+      type: 'main',
+      speaker: AMY_SPEAKER,
+      content: amyText,
+      timestamp: new Date().toLocaleTimeString(),
+    },
+  ]);
+
+  const amyDelay = calcDelayForText(amyText);
+
+  // 6) Nach Amy-Antwort entscheiden
+  setTimeout(() => {
+    setAmyIsSpeaking(false);
+
+    if (decision.action === 'RETRY') {
+      incAttempt(questionKey);
+      return;
+    }
+
+    // ✅ UNLOCK
+    resetAttempt(questionKey);
+
+    if (courseId) {
+      pushAnswer(courseId, chapter, trimmed);
+    }
+
+    const lastMain =
+      lastMainIndex !== -1
+        ? allMessages[lastMainIndex]
+        : allMessages[allMessages.length - 1];
+
+    setDisplayedMessages((prev) => [...prev, lastMain]);
+    setAwaitingUserAnswer(false);
+
+    if (courseId && course) {
+      const lastChapterIndex = course.script.length - 1;
+      markChapterCompleted(courseId, chapter, chapter >= lastChapterIndex);
+    }
+
+    setTimeout(() => {
+      if (typeof course.script[chapter + 1] !== 'undefined') {
+        setChapter((prev) => prev + 1);
+        setCurrentMessageIndex(0);
+      } else {
+        setCurrentMessageIndex(allMessages.length);
+      }
+    }, 600);
+  }, amyDelay);
+}}
+
         >
-          {/* Lesegeschwindigkeit direkt im Chat, mittig, ohne Hintergrund */}
-          <div className="w-full text-center my-4 flex flex-col items-center">
-            <span className="text-gray-600 text-xs mb-1">
-              Lesegeschwindigkeit wählen:
-            </span>
-
-            <div className="flex gap-3">
-              {speedOptions.map((opt) => (
-                <button
-                  key={opt.value}
-                  onClick={() => setSpeedMultiplier(opt.value)}
-                  className={[
-                    'text-xs underline-offset-2',
-                    speedMultiplier === opt.value
-                      ? 'font-semibold underline'
-                      : 'text-gray-500 hover:text-gray-700',
-                  ].join(' ')}
-                >
-                  {opt.label}
-                </button>
-              ))}
+          {/* Anzeige-Modus (Produkt-Feature) */}
+          <div className="w-full text-center my-2 flex flex-col items-center gap-2">
+            <div className="text-xs text-gray-600">Anzeige-Modus:</div>
+            <div className="flex gap-4 items-center">
+              <label className="text-xs text-gray-700 flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="readingMode"
+                  checked={readingMode === 'cinematic'}
+                  onChange={() => setReadingMode('cinematic')}
+                />
+                Live-Chat
+              </label>
+              <label className="text-xs text-gray-700 flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="readingMode"
+                  checked={readingMode === 'instant'}
+                  onChange={() => setReadingMode('instant')}
+                />
+                Sofort anzeigen
+              </label>
             </div>
           </div>
 
-          {displayedMessages.map((message, index) => (
-            <ChatMessage key={index} message={message} />
+          {/* Lesegeschwindigkeit (nur sinnvoll im Live-Chat) */}
+          {readingMode === 'cinematic' && (
+            <div className="w-full text-center my-4 flex flex-col items-center">
+              <span className="text-gray-600 text-xs mb-1">Lesegeschwindigkeit wählen:</span>
+              <div className="flex gap-3">
+                {speedOptions.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setSpeedMultiplier(opt.value)}
+                    className={[
+                      'text-xs underline-offset-2',
+                      speedMultiplier === opt.value
+                        ? 'font-semibold underline'
+                        : 'text-gray-500 hover:text-gray-700',
+                    ].join(' ')}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {displayedMessages.map((m, idx) => (
+            <ChatMessage key={idx} message={m} />
           ))}
+
           <div ref={endRef} />
         </Phone>
       </div>
