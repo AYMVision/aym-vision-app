@@ -1,0 +1,314 @@
+{
+  "hero": {
+    "kicker": "Amy Surfwing",
+      "ctaParents": "Für Eltern →",
+    "title": "Check was online wirklich abgeht ✨",
+    "lead": "Entdecke die Geheimnisse von Yasmin, Carlos & Co. Mit Amy Surfwing meisterst du Challenges. Die Online Abenteuer warten auf dich.",
+    "imageAlt": "Story-Welt: Mia, Finn und Freunde",
+    "badges": {
+      "0": "10 bis 12 Jahre",
+      "1": "Chat-Story & mehr",
+      "2": "Tricks & Trends",
+      "3": "5 min täglich & 5 mal die Woche"
+    },
+    "ctaPrimary": "Zu den Amics →",
+    "ctaSecondary": "Zur Startseite"
+  },
+  "progress": {
+  "label": "Fortschritt"
+},
+"loading": {
+  "story": "Lade Story…"
+},
+"ui": {
+  "readingModeInstant": "Sofort anzeigen",
+  "readingMode": "Anzeige-Modus:",
+  "readingModeLive": "Live-Chat",
+  "speedLabel": "Lesegeschwindigkeit wählen:",
+  "speed": {
+    "fast": "Schnell",
+    "normal": "Normal",
+    "slow": "Langsam"
+  },
+  "header": {
+    "online": "online"
+  }
+},
+
+  "helpHint": {
+  "title": "",
+  "body": "Wenn dich ein Chat, ein Bild oder ein Beitrag belastet. Sprich mit einer erwachsenen Person, der du vertraust."
+},
+
+  "comingSoon": {
+    "kicker": "Bald geht’s los",
+    "title": "Neue Stories kommen bald ✨",
+    "text": "Im Moment ist noch keine Story freigeschaltet. Schau bald wieder vorbei!"
+  },
+
+  "continue": {
+    "kicker": "Weiterlesen",
+    "title": "Mach da weiter, wo du aufgehört hast",
+    "label": "Aktuell",
+    "progress": "Fortschritt",
+    "cta": "Weiterlesen →",
+    "imageAlt": "Aktuelle Story"
+  },
+
+  "start": {
+    "kicker": "Jetzt starten",
+    "title": "Eine Woche kostenfrei",
+    "label": "Neu für dich",
+    "hint": "Keine Anmeldung nötig – einfach loslegen.",
+    "cta": "Jetzt starten →"
+  },
+
+  "howto": {
+    "kicker": "Kurz erklärt",
+    "title": "So funktioniert ein Tag mit Amy Surfwing",
+    "flow": {
+      "steps": {
+        "1": {
+          "title": "🎬 Starte Amy Surfwing",
+          "text": "Ein Klick und du bist mitten im Abenteuer. Lies was Yasmin, Carlos & Co online erleben."
+        },
+        "2": {
+          "title": "✍️ Schreibe deine Gedanken",
+          "text": "Antworte auf Amy´s Frage. Schreib, was du denkst – und auch warum. Erst dann kann es am nächsten Tag weitergehen."
+        },
+        "3": {
+          "title": "🦉 Amy reagiert",
+          "text": "Manchmal fragt Amy nach. Und zum Abschluss des Tages bekommst du einen Tipp."
+        },
+        "4": {
+          "title": "🔎 Entdecke Amy´s Welt",
+          "text": "Jetzt kannst du Schritt für Schritt tiefer in Amy´s Welt eintauchen - mit viel Bonus rund um digitale Themen."
+        }
+      }
+    },
+    "progress": {
+  "label": "Fortschritt"
+},
+
+    "info": {
+      "kicker": "Gut zu wissen",
+
+      "title_optionA": "Damit du dich gut zurechtfindest / Noch ein paar Erklärungen...",
+      "title_optionB": "Damit du dich gut zurechtfindest",
+
+      "title": "Damit du dich gut zurechtfindest",
+
+      "tiles": {
+        "order": {
+          "title": "Schritt für Schritt ➡️",
+          "text": "Du machst die Amics der Reihe nach - in einer Woche können bis zu fünf freigeschaltet werden. Jeden Tag kannst du ein Amic inkl. Bonus lesen. Du musst eine Frage beantworten - erst dann geht's weiter."
+        },
+         "reflection": {
+          "title": "Denkraum ◎",
+          "text": "Du formulierst deine eigene Antwort – in deinen Worten. Es geht nicht um richtig oder falsch, sondern darum, dir Gedanken zu machen."
+},
+
+        "retryLock": {
+          "title": "Amy fragt nach 🔁",
+          "text": "Ist deine Antwort zu kurz oder Amy versteht nicht, was gemeint ist, dann fragt sie nochmal nach. Nach drei versuchen macht Amy eine kurze Pause. Dann schau am besten mit jemanden gemeinsam drauf. Sobald deine Antwort passt, geht's weiter."
+        },
+        "safe": {
+          "title": "Fair & sicher ✅",
+          "text": "Beleidigungen, Mobbing oder gefährliche Inhalte erlaubt Amy nicht - dann stoppt sie. Und auch deine Sicherheit geht vor. Es gilt immer: Sobald es eine passende Antwort gibt, geht's weiter."
+        },
+        "backup": {
+          "title": "Speichern & Backup 💾",
+          "text": "Dein Fortschritt wird auf deinem Gerät gespeichert. Wenn du möchtest, kannst du ihn zusätzlich sichern – damit nichts verloren geht."
+        }
+      }
+    },
+
+    "cta": "Viel Spaß mit Amy Surfwing! 💬🦉"
+  },
+
+  "list": {
+    "kicker": "Amy Surfwing",
+    "title": "Starte dein Amic",
+    "lead": "Ein Klick und du bist mitten im Abenteuer.",
+    "searchPlaceholder": "Story suchen…"
+  },
+
+  "trust": {
+    "kicker": "Denkraum",
+    "title": "Ein sicherer Raum für deine Gedanken",
+    "body": "In Amy Surfwing liest du nicht nur – du denkst mit. Niemand sieht, was du schreibst. Es gibt keine Likes, kein Ranking und keinen Vergleich. Dein Fortschritt bleibt auf deinem Gerät. Hier kannst du in Ruhe überlegen, was du richtig findest – und Schritt für Schritt lernen, selbst gute Entscheidungen zu treffen.",
+    "chips": {
+      "0": "Privat 🔒",
+      "1": "Ohne Ranking 🚫",
+      "2": "Lokal gespeichert 💾",
+      "3": "Unterstützende KI 🤝"
+    },
+    "ctaConcept": "Pädagogisches Konzept →",
+    "ctaParents": "Für Eltern →"
+  },
+
+  "aym": {
+    "kicker": "Amy Surfwing",
+    "title": "So sieht’s aus – und das kannst du damit machen",
+    "tags": {
+      "experience": "Amic",
+      "bonus": "Bonus"
+    }
+  },
+
+  "experience": {
+    "cards": {
+      "0": {
+        "title": "Story",
+        "text": "Du tauchst in die Welt von Yasmin, Igor & Co ein.",
+        "imageAlt": "Illustration: Charaktere in einer digitalen Story-Szene"
+      },
+      "1": {
+        "title": "Weiterdenken",
+        "text": "Beim Lesen bleibst du nicht nur Zuschauer: Was triggert dich? Was findest du unfair?",
+        "imageAlt": "Illustration: Nachdenklicher Moment in der Story"
+      },
+      "2": {
+        "title": "Tipp",
+        "text": "Passend zu deiner Antwort gibt dir Amy einen Tipp. ",
+        "imageAlt": "Illustration: Eigene Antwort im Story-Verlauf"
+      }
+    }
+  },
+
+  "bonus": {
+    "cards": {
+      "avatar": {
+        "title": "Avatare",
+        "text": "Gestalte deinen eigenen Avatar und verdiene dir neue Looks.",
+        "imageAlt": "Bild: Avatar-Ansicht"
+      },
+      "sticker": {
+        "title": "Sticker",
+        "text": "Für jede abgeschlossene Episode gibt es einen Sticker.",
+        "imageAlt": "Bild: Sticker-Album"
+      },
+      "newspaper": {
+        "title": "Schülerzeitung",
+        "text": "Hier findest du leicht erklärte Themen, Hörbeiträge und Wissen zum Nachschlagen.",
+        "imageAlt": "Bild: Schülerzeitung-Bereich"
+      },
+      "coins": {
+        "title": "Coins",
+        "text": "Für jeden Amic sammelst du Coins. Bleibst du regelmäßig dran, gibt’s sogar noch mehr dazu.",
+        "imageAlt": "Bild: Coins-Übersicht"
+      },
+      "diary": {
+        "title": "Tagebuch",
+        "text": "Was denken Mia, Yasmin & Jonas? Auch du kannst dein eigenes Tagebuch schreiben.",
+        "imageAlt": "Bild: Tagebuch-Ansicht"
+      },
+      "collectibles": {
+        "title": "Sammelkarten",
+        "text": "Mit den Sammelkarten lernst du die Figuren besser kennen.",
+        "imageAlt": "Bild: Sammelkarten-Übersicht"
+      }
+    }
+  },
+
+  "survey": {
+    "kicker": "Feedback",
+    "title_optionA": "📝 Kurze Umfrage",
+    "description_optionA": "Sag uns, wie dir die Story gefallen hat – anonym und in wenigen Minuten.",
+    "noticeTitle": "Hinweis",
+    "noticeBody": "Du wirst zu einem externen Formular (Microsoft Forms) weitergeleitet. Es gelten die Datenschutzbestimmungen des Anbieters.",
+    "cta": "Zur Umfrage →",
+
+    "title_optionB": "📝 Umfrage: Deine Meinung zählt!",
+    "description_optionB": "Sag uns, wie dir die Story gefallen hat – die Umfrage ist anonym und dauert nur wenige Minuten.",
+
+    "title": "📝 Kurze Umfrage",
+    "description": "Sag uns, wie dir die Story gefallen hat – anonym und in wenigen Minuten."
+  },
+
+  "episodes": {
+    "s1e01": {
+      "title": "Wirbel am Wasserfall",
+      "description": "Ein ruhiger Ferien-Samstag eskaliert: Likes, FOMO, KI, ein Wasserfall - und plötzlich zählt jede Entscheidung."
+    },
+    "s1e02": {
+      "title": "Alarm im Klassenchat",
+      "description": "Ein Streit im Klassenchat: Drohungen und Fake-News fliegen - doch dann eine unerwartete Wendung."
+    },
+    "s1e03": {
+      "title": "Der Tunnel ins verderben",
+      "description": "Der Chat schläft nie. Einer kommt nicht mehr hinterher. Wer bestimmt eigentlich, wann Schluss ist – das Handy oder wir?"
+    },
+    "s1e04": {
+      "title": "S1 E04",
+      "description": "..."
+    },
+    "s1e05": {
+      "title": "S1 E05",
+      "description": "..."
+    },
+    "s1e06": {
+      "title": "S1 E06",
+      "description": "..."
+    },
+    "s1e07": {
+      "title": "S1 E07",
+      "description": "..."
+    },
+    "s1e08": {
+      "title": "S1 E08",
+      "description": "..."
+    },
+    "s1e09": {
+      "title": "S1 E09",
+      "description": "..."
+    },
+    "s1e10": {
+      "title": "S1 E10",
+      "description": "..."
+    }
+  },
+
+  "chatSwitch": {
+    "participants": "Teilnehmer:",
+    "private": "Privatchat",
+    "class": "Klassenchat",
+    "newsroom": "Schülerzeitung"
+  },
+
+  "album": {
+    "title": "Sticker-Album",
+    "subtitle": "Sammle Sticker & Badges – dein Fortschritt bleibt auf deinem Gerät.",
+    "back": "Zurück",
+    "backAria": "Zurück",
+    "progressTitle": "Sammler-Fortschritt in dieser Staffel:",
+    "episodes": "Sticker",
+    "seasons": "Badges",
+    "nextDrop": "Nächster Sticker",
+    "tabEpisodes": "Folgen",
+    "tabSeasons": "Staffeln",
+    "locked": "Gesperrt",
+    "new": "Neu",
+    "badge": "Badge"
+  },
+
+  "cards": {
+    "newUnlockedTitle": "Neue Sammelkarte!",
+    "newUnlockedSub": "Tippe, um sie anzusehen."
+  },
+
+  "adultHint": {
+    "title": "Sprich kurz mit einer erwachsenen Person",
+    "body": "Manche Dinge besprichst du am besten offline mit einer erwachsenen Person, der du vertraust (z. B. Eltern, Lehrkraft, Schulsozialarbeit)."
+  },
+
+  "safety": {
+    "selfHarmShort": "Es klingt, als wäre das gerade sehr belastend für dich. Dafür gibt es Hilfe – bitte hol dir jetzt Unterstützung."
+  },
+  "gate": {
+  "nextTomorrowTitle": "Für heute bist du fertig ✨",
+  "nextTomorrowBody": "Der nächste Amic wartet morgen auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.",
+  "nextMondayBody": "Diese Woche hast du alle Amics gelesen. Der nächste Amic wartet Montag wieder auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.",
+    "toNewspaper": "Zur Schülerzeitung →"
+}
+}

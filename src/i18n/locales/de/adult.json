@@ -1,0 +1,213 @@
+{
+  "parent": {
+    "titleSetup": "Erwachsenen-Einstellungen einrichten",
+    "bodySetup": "Lege einen Passcode fest. Damit können Erwachsene später Einstellungen ändern.",
+    "titleUnlock": "Erwachsenenbereich",
+    "bodyUnlock": "Gib den Passcode ein, um Einstellungen zu öffnen.",
+    "passLabel": "Passcode",
+    "passPlaceholder": "mind. 6 Zeichen",
+    "passLabel2": "Passcode wiederholen",
+    "passPlaceholder2": "nochmal eingeben",
+    "cancel": "Abbrechen",
+    "setup": "Einrichten",
+    "unlock": "Öffnen",
+    "errorTooShort": "Bitte mindestens 6 Zeichen.",
+    "errorMismatch": "Die Passcodes stimmen nicht überein.",
+    "errorWrong": "Passcode stimmt nicht.",
+    "hiddenAria": "Erwachsenenbereich öffnen",
+    "hiddenVersion": "Version {{version}}",
+    "footerHint": "Für Erwachsene: gedrückt halten",
+    "title": "Nur für Erwachsene",
+    "body": "Bitte lass kurz eine erwachsene Person übernehmen. Zur Sicherheit brauchst du eine kurze Bestätigung.",
+    "promptLabel": "Bitte lösen:",
+    "promptHint": "Zum Beispiel: 7 + 5",
+    "inputPlaceholder": "Antwort eingeben",
+    "ctaUnlock": "Weiter",
+    "error": "Das stimmt leider nicht. Bitte nochmal.",
+    "descriptionSetup": "Bitte lass kurz eine erwachsene Person übernehmen. Zur Sicherheit brauchst du eine kurze Bestätigung.",
+    "labelSetup": "Bitte lösen:",
+    "placeholderSetup": "Antwort eingeben",
+    "ctaSetup": "Weiter",
+    "ctaCancel": "Abbrechen",
+    "errorSetup": "Das stimmt leider nicht. Bitte nochmal."
+  },
+  "adult": {
+    "title": "Erwachsenen-Einstellungen",
+    "subtitle": "Hier kannst du Einstellungen für Erwachsene verwalten.",
+    "locked": "Dieser Bereich ist geschützt. Bitte entsperre ihn im Profil.",
+    "lockNow": "Jetzt sperren"
+  },
+  "ai": {
+    "title": "KI-Einstellungen",
+    "moreInfo": "Mehr Infos für Eltern →",
+    "note": "Änderungen werden automatisch gespeichert.",
+    "modeIntro": "Den KI-Modus finden Sie in den Erwachsenen-Einstellungen.",
+    "owlMode": {
+      "help": "Lege fest, wie Amy in der App arbeiten soll.",
+      "label": "Amy-Modus",
+      "on": "Immer mit KI",
+      "auto": "Automatisch",
+      "off": "Ohne KI"
+    },
+    "modes": {
+      "on": {
+        "title": "On",
+        "text": "Die KI ist aktiv und begleitet Reflexionsmomente in der Story. Sie reagiert kontextbezogen – nicht dauerhaft, sondern dort, wo es pädagogisch sinnvoll ist. Auf älteren oder schwächeren Geräten kann sie langsamer reagieren."
+      },
+      "auto": {
+        "title": "Auto",
+        "text": "Die KI unterstützt nur, wenn es sinnvoll und technisch stabil ist. Dies ist für die meisten Geräte die empfohlene Einstellung."
+      },
+      "off": {
+        "title": "Off",
+        "text": "Die KI ist ausgeschaltet. Die Story funktioniert weiterhin vollständig und pädagogisch fundiert – nur ohne KI-Reflexionsimpulse."
+      }
+    },
+    "changeHint": "Sie können den Modus jederzeit ändern.",
+    "performanceHint": "Wenn die App verzögert reagiert oder länger lädt, empfehlen wir „Auto“ oder „Off“."
+  },
+  "hint": {
+    "title": "Kurz mit Erwachsenen sprechen",
+    "body": "Bitte sprich kurz mit einer erwachsenen Person, der du vertraust, und versucht es dann nochmal."
+  },
+  "unlock": {
+    "title": "Freischaltcode",
+    "description": "Wenn du einen Freischaltcode erhalten hast, kannst du ihn hier eingeben.",
+    "inputPlaceholder": "Code eingeben",
+    "apply": "Code anwenden",
+    "statusTitle": "Aktive Freischaltungen",
+    "none": "Keine aktiven Freischaltungen.",
+    "allUnlocked": "Alle Inhalte freigeschaltet",
+    "until": "Freigabe bis {{date}}",
+    "episodes": "Episoden: {{episodes}}",
+    "messages": {
+      "enterCode": "Bitte gib einen Code ein.",
+      "invalidCode": "Dieser Code ist ungültig.",
+      "codeApplied": "Code wurde angewendet.",
+      "resetDone": "Freischaltungen wurden entfernt."
+    }
+  },
+  "testMode": {
+    "toggleClosed": "Testmodus",
+    "toggleOpen": "Schließen",
+    "title": "Testmodus",
+    "description": "Für Entwicklung, interne Tests und Pilotphasen.",
+    "global": {
+      "title": "Globale Freischaltung",
+      "description": "Hebt Tages- und Wochenlimits sowie Kapitel-Sperren auf.",
+      "label": "Alle Inhalte freischalten",
+      "enabled": "Alle Inhalte wurden freigeschaltet.",
+      "disabled": "Die globale Freischaltung wurde deaktiviert."
+    },
+    "until": {
+      "title": "Freischaltung bis Datum",
+      "description": "Beispiel: 2026-03-30",
+      "placeholder": "YYYY-MM-DD",
+      "apply": "Anwenden",
+      "set": "Freischaltung bis {{date}} gesetzt.",
+      "removed": "Datumsfreigabe wurde entfernt."
+    },
+    "episode": {
+      "title": "Episode freischalten",
+      "description": "Beispiel: s1e01",
+      "placeholder": "s1e01",
+      "unlock": "Freischalten",
+      "remove": "Entfernen",
+      "missing": "Bitte gib eine Episode ein.",
+      "unlocked": "Episode {{episode}} wurde freigeschaltet.",
+      "removed": "Episode {{episode}} wurde entfernt."
+    },
+    "reset": {
+      "title": "Zurücksetzen",
+      "description": "Hilfreich, wenn du einen Testlauf sauber neu starten möchtest.",
+      "entitlements": "Testfreischaltungen entfernen",
+      "session": "Sitzung zurücksetzen",
+      "entitlementsDone": "Alle Freischaltungen wurden entfernt.",
+      "sessionDone": "Die aktuelle Sitzung wurde zurückgesetzt."
+    }
+  },
+  "sections": {
+  "ai": {
+    "modeTitle": "So arbeitet Amy",
+    "modes": {
+      "on": {
+        "title": "On",
+        "text": "Die KI ist aktiv und begleitet Reflexionsmomente in der Story. Sie reagiert kontextbezogen – nicht dauerhaft, sondern dort, wo es pädagogisch sinnvoll ist. Auf älteren oder schwächeren Geräten kann sie langsamer reagieren."
+      },
+      "auto": {
+        "title": "Auto",
+        "text": "Die KI unterstützt nur, wenn es sinnvoll und technisch stabil ist. Dies ist für die meisten Geräte die empfohlene Einstellung."
+      },
+      "off": {
+        "title": "Off",
+        "text": "Die KI ist ausgeschaltet. Die Story funktioniert weiterhin vollständig und pädagogisch fundiert – nur ohne KI-Reflexionsimpulse."
+      }
+    },
+    "changeHint": "Sie können den Modus jederzeit ändern.",
+    "performanceHint": "Wenn die App verzögert reagiert oder länger lädt, empfehlen wir „Auto“ oder „Off“."
+  }
+},
+
+  "testMode": {
+    "title": "Testmodus",
+    "description": "Für Entwicklung, interne Tests und Pilotphasen.",
+    "global": {
+      "title": "Globale Freischaltung",
+      "description": "Hebt Tages- und Wochenlimits sowie Kapitel-Sperren auf.",
+      "label": "Alle Inhalte freischalten",
+      "enabled": "Alle Inhalte wurden freigeschaltet.",
+      "disabled": "Die globale Freischaltung wurde deaktiviert."
+    },
+    "until": {
+      "title": "Freischaltung bis Datum",
+      "description": "Beispiel: 2026-03-30",
+      "placeholder": "YYYY-MM-DD",
+      "apply": "Anwenden",
+      "set": "Freischaltung bis {{date}} gesetzt.",
+      "removed": "Datumsfreigabe wurde entfernt."
+    },
+    "episode": {
+      "title": "Episode freischalten",
+      "description": "Beispiel: s1e01",
+      "placeholder": "s1e01",
+      "unlock": "Freischalten",
+      "remove": "Entfernen",
+      "missing": "Bitte gib eine Episode ein.",
+      "unlocked": "Episode {{episode}} wurde freigeschaltet.",
+      "removed": "Episode {{episode}} wurde entfernt."
+    },
+    "reset": {
+      "title": "Zurücksetzen",
+      "description": "Hilfreich, wenn du einen Testlauf sauber neu starten möchtest.",
+      "entitlements": "Testfreischaltungen entfernen",
+      "session": "Sitzung zurücksetzen",
+      "entitlementsDone": "Alle Freischaltungen wurden entfernt.",
+      "sessionDone": "Die aktuelle Sitzung wurde zurückgesetzt."
+    }
+  },
+  "themes": {
+    "titleParent": "Bisher sichtbare Themenfelder",
+    "emptyParent": "Hier siehst du, welche Themen in den bisher gespielten Kapiteln vorkamen.",
+    "infoCheck": {
+      "parent": "Quellen bewerten und Fake News erkennen"
+    },
+    "talkAct": {
+      "parent": "Respektvoll digital kommunizieren und zusammenarbeiten"
+    },
+    "creative": {
+      "parent": "Medien kreativ nutzen und gestalten"
+    },
+    "safeOnline": {
+      "parent": "Sich im Netz schützen"
+    },
+    "problemSolving": {
+      "parent": "Probleme mit digitalen Werkzeugen lösen"
+    },
+    "reflectUnderstand": {
+      "parent": "Medien kritisch verstehen und reflektieren"
+    },
+    "fairness": {
+      "parent": "Werte leben und Respekt entwickeln"
+    }
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "hero": {
+    "kicker": "About us",
+    "title": "Strengthening digital maturity",
+    "lead": "Children are growing up in a digital world that brings both opportunities and challenges. We want to create a space that fosters orientation, reflection, and digital maturity.",
+    "leadEmphasis": "",
+    "badges": {
+      "0": "Supporting parents",
+      "1": "Empowering children",
+      "2": "Everyday relevance",
+      "3": "Reflection-driven"
+    },
+    "ctaStories": "Explore stories →",
+    "ctaParents": "For parents →",
+    "ctaCoop": "Contact & collaboration →",
+    "imageAlt": "The founders of Amy Surfwing"
+  },
+
+  "statement": {
+    "kicker": "Our drive",
+    "text": "Warnings alone are not enough. Children need orientation, language, and safe spaces to think in order to truly understand digital situations."
+  },
+
+  "vision": {
+    "kicker": "Our vision",
+    "title": "Kids surf smart.",
+    "copy": "We envision a society in which young people can assess digital information, weigh perspectives, and make their own decisions. For us, digital empowerment means more than safety. It begins where children understand connections, take responsibility, and learn to deal with complexity."
+  },
+
+  "mission": {
+    "kicker": "Our mission",
+    "title": "Empowering children in the digital world",
+    "copy": "We support children in not just experiencing digital situations, but understanding them consciously. Amy Surfwing creates a narrative space for reflection where perspectives become visible, thoughts grow, and independent decisions can emerge."
+  },
+
+  "motivation": {
+    "kicker": "Our motivation",
+    "title": "How it all began",
+    "copy": "AYM VISION emerged from many conversations between two sisters about children, the internet, and education. It quickly became clear to us: it is not enough to simply name digital risks. Children need an approach that takes them seriously, sparks curiosity, and strengthens them step by step. This led to the idea of a story world where digital situations are not explained abstractly, but can be explored in a concrete and thoughtful way."
+  },
+
+  "positioning": {
+    "cards": {
+      "0": {
+        "kicker": "Why now",
+        "title": "Digital life is already part of children’s everyday reality",
+        "body": "Children engage in digital spaces from an early age. What they need there are not just restrictions, but language, orientation, and safe spaces for thinking."
+      },
+      "1": {
+        "kicker": "Our contribution",
+        "title": "Media education that takes children seriously",
+        "body": "Amy Surfwing combines story, reflection, and everyday situations into a format that is understandable, motivating, and responsibly designed."
+      }
+    }
+  },
+
+  "guidingThoughts": {
+    "kicker": "Our approach",
+    "title": "What guides our development",
+    "items": {
+      "0": "Taking children seriously means shaping the future responsibly.",
+      "1": "Self-reflection and small impulses can create a big impact.",
+      "2": "Every question is allowed – and every answer is a starting point for further thinking.",
+      "3": "We combine empathy, innovation, and a joy of learning."
+    }
+  },
+
+  "method": {
+    "kicker": "How we work",
+    "title": "Narrative instead of rulebooks",
+    "copy1": "Digital topics are not taught as theory, but made tangible through storytelling. Short chat-based scenes lead into concrete decision-making moments.",
+    "copy2": "Amy guides children with targeted reflection questions. The focus is on reasoning, perspectives, and weighing consequences – not on right or wrong answers."
+  },
+
+  "values": {
+    "kicker": "Our values",
+    "title": "What we stand for",
+    "intro": "Our values shape our content, tone, and design – and how we think about children, learning, and digital education.",
+    "items": {
+      "0": {
+        "title": "Understanding",
+        "body": "Empathy is the foundation of meaningful interaction."
+      },
+      "1": {
+        "title": "Impact",
+        "body": "Small impulses can trigger major change."
+      },
+      "2": {
+        "title": "Self-determination",
+        "body": "True strength comes from freedom and personal conviction."
+      },
+      "3": {
+        "title": "Diversity of ideas",
+        "body": "Every thought matters, and new perspectives enrich us."
+      },
+      "4": {
+        "title": "Openness",
+        "body": "Mistakes are part of learning."
+      },
+      "5": {
+        "title": "Curiosity",
+        "body": "Questions are the beginning of everything."
+      }
+    }
+  },
+
+  "glimpses": {
+    "kicker": "Insights",
+    "title": "Three small moments from our world",
+    "copy": "Between idea, everyday life, and implementation, a product is gradually taking shape that aims to empower children.",
+    "items": {
+      "0": {
+        "title": "Idea",
+        "body": "It all started with the question of how children can not only consume digital content, but truly think it through.",
+        "alt": "Insight: creative moment"
+      },
+      "1": {
+        "title": "Everyday life",
+        "body": "Our content is based on real situations from children’s digital lives.",
+        "alt": "Insight: everyday life and childhood"
+      },
+      "2": {
+        "title": "Implementation",
+        "body": "Step by step, Amy Surfwing is created from mindset, storytelling, and product thinking.",
+        "alt": "Insight: team and implementation"
+      }
+    }
+  },
+
+  "brand": {
+    "title": "What AYM stands for",
+    "aria": "Open section: What AYM stands for",
+    "copy1": "AYM stands for “Amplify Your Mind”: giving young people the space to develop and unfold their own perspective on the world.",
+    "copy2": "“Amplify” means to strengthen, make heard, and think bigger. We believe children start with creativity, curiosity, and judgment – AYM VISION helps to further develop exactly these abilities."
+  },
+
+  "whyAmy": {
+    "title": "Why our owl Amy",
+    "aria": "Open section: Why our owl Amy",
+    "copy": "Amy is our friendly, wise owl – and the face of AYM VISION. She meets children at eye level, explains things clearly, and encourages them to think along. Amy stands for curiosity, reflection, and the courage to form one’s own perspective."
+  },
+
+  "team": {
+    "kicker": "Team",
+    "title": "Who is behind it",
+    "lead": "We combine product thinking, storytelling, and educational perspectives – with the goal of designing responsibly and in a child-centered way.",
+    "people": {
+      "0": {
+        "name": "Melina Wiegers",
+        "role": "Co-founder | Content & Didactics",
+        "bio": "Melina brings her passion for language, storytelling, and educational processes – with international experience and a clear focus on resilience and sustainability.",
+        "imageAlt": "Melina Wiegers"
+      },
+      "1": {
+        "name": "Ann-Sofie Höbrink",
+        "role": "Co-founder | Technology & Strategy",
+        "bio": "Ann-Sofie combines technical expertise with psychological sensitivity – with a background in industrial engineering, business psychology, and years of experience in projects and coaching.",
+        "imageAlt": "Ann-Sofie Höbrink"
+      }
+    }
+  },
+
+  "cta": {
+    "kicker": "Contact & collaboration",
+    "title": "Would you like to get to know AYM VISION or work with us?",
+    "copy": "We welcome exchange with schools, media educators, sponsors, and partners who want to empower young people in digital topics.",
+    "primary": "Get in touch",
+    "secondary": "Explore the educational concept →",
+    "note": "hello@AymVision.de",
+    "mailtoHref": "mailto:hello@aymvision.example?subject=AYM%20VISION%20-%20Contact"
+  },
+
+  "right": {
+    "quick": {
+      "kicker": "At a glance",
+      "whatTitle": "What is AYM VISION?",
+      "whatBody": "An interactive chat-based story world with AI guidance – for reflection, perspective-taking, and digital literacy.",
+      "forWhoTitle": "Who is it for?",
+      "forWhoBody": "Grades 5–7 • Parents • Schools and partnerships (future)",
+      "nonGoalsTitle": "What we are not",
+      "nonGoalsItems": {
+        "0": "Not a social network",
+        "1": "Not an emergency tool",
+        "2": "Not a diagnostic system"
+      },
+      "ctaConcept": "Educational concept →",
+      "ctaPrivacy": "Privacy policy (PDF)",
+      "privacyPdfHref": "datenschutz-web.pdf"
+    },
+    "note": {
+      "kicker": "Why this matters",
+      "title": "Digital education needs more than warnings",
+      "body": "Children need orientation, language, and safe spaces to think. That’s exactly where Amy Surfwing comes in."
+    }
+  }
+}

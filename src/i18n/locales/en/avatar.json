@@ -1,0 +1,20 @@
+{
+  "title": "Choose your avatar",
+  "backCta": "Profile",
+  "backAria": "Back",
+
+  "hint": "Tap an image. You’ll see a preview below.",
+
+  "avatar": {
+    "selectAria": "Select {{label}}",
+    "selectedAria": "{{label}} (selected)",
+    "selectTitle": "Click to select",
+    "selectedTitle": "Selected"
+  },
+
+  "preview": {
+    "title": "This is how you look",
+    "alt": "Preview",
+    "note": "You can find items in your profile."
+  }
+}

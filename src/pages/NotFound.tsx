@@ -1,73 +1,62 @@
-import { Link } from 'react-router-dom';
+// src/pages/NotFound.tsx
+// 404 page (AYM-Vision Aufräum-Leitfaden):
+// - i18n: keine hardcodierten Texte (nur defaultValue sparsam)
+// - Assets: aus /public via assetUrl(...), keine Runtime-Imports aus public
+// - UI: ruhig, freundlich, klare Rückführung
+
+import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 import Layout from '../components/Layout';
-import amy from '../assets/amy_lg.png';
+import { assetUrl } from '../common/assetUrl';
 
-const NotFound = () => {
-  return (
-    <Layout>
-      <section className="w-full max-w-6xl flex flex-col items-center justify-center p-4 mt-16">
-        <div className="flex flex-col items-center text-center">
-          <div className="flex flex-row items-center justify-center mb-8">
-            <div className="flex w-1/2 flex-col items-start">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold animate-fade-in-up">
-                <span className="text-anthracite-950">Ups!</span>
-                <br />
-                <span className="bg-gradient-to-r from-white/80 to-white bg-clip-text text-transparent">
-                  Hier ist nichts
-                </span>
-              </h1>
-            </div>
-            <div className="flex w-1/2 flex-col items-end">
-              <img className="ms-4 w-full max-w-[280px]" src={amy} />
-            </div>
-          </div>
-
-          <p className="text-xl sm:text-2xl text-anthracite-800 font-medium mb-4">
-            Diese Seite ist noch im Aufbau!
-          </p>
-
-          <p className="text-base sm:text-lg text-anthracite-600 mb-8 max-w-xl leading-relaxed">
-            Die Seite, die du suchst, gibt es noch nicht oder wurde verschoben.
-            Aber keine Sorge – es gibt schon viele andere spannende Stories zu
-            entdecken!
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/"
-              className="group relative inline-flex items-center justify-center px-8 py-4 text-anthracite-950 font-semibold rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105"
-            >
-              <span className="absolute inset-0 bg-white"></span>
-              <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span className="relative flex items-center gap-2">
-                <svg
-                  className="w-5 h-5 group-hover:-translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  />
-                </svg>
-                Zur Startseite
-              </span>
-            </Link>
-
-            <Link
-              to="/stories"
-              className="inline-flex items-center justify-center px-8 py-4 text-gold-950 font-semibold rounded-full border-2 border-anthracite-950 hover:border-gold-900 hover:text-gold-900 hover:bg-gold-100 transition-all duration-300"
-            >
-              Stories entdecken
-            </Link>
-          </div>
-        </div>
-      </section>
-    </Layout>
-  );
+type NotFoundLocationState = {
+  backTo?: string;
 };
 
-export default NotFound;
+export default function NotFound() {
+  const { t } = useTranslation('notFound');
+
+  // ✅ optional: falls jemand von einer internen Seite kommt, zurück dorthin
+  const location = useLocation();
+  const state = (location.state ?? null) as NotFoundLocationState | null;
+  const backTo = state?.backTo ?? '/';
+
+  // ✅ Bild aus /public via assetUrl (deploy-sicher)
+  // Tipp: besser als webp/avif ausliefern, wenn vorhanden (z.B. amy-512.webp)
+  const amyImage = assetUrl('media/ui/notfound/amy_lg.png');
+
+  return (
+    <Layout>
+      <main className="flex flex-col items-center justify-center px-6 py-16 text-center">
+        <img
+          src={amyImage}
+          alt={t('imageAlt', { defaultValue: 'Amy hilft dir weiter' })}
+          className="w-48 sm:w-56 md:w-64 mb-8 select-none"
+          draggable={false}
+          loading="lazy"
+        />
+
+        <h1 className="text-3xl sm:text-4xl font-bold text-[var(--color-teal-900)] mb-4">
+          {t('title', { defaultValue: 'Ups… hier ist etwas schiefgelaufen' })}
+        </h1>
+
+        <p className="max-w-md text-base text-[var(--color-teal-700)] mb-8">
+          {t('description', {
+            defaultValue:
+              'Diese Seite gibt es leider nicht (mehr). Aber keine Sorge – Amy bringt dich zurück.',
+          })}
+        </p>
+
+        <Link
+          to={backTo}
+          className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-[var(--color-teal-900)]
+                     ring-1 ring-black/5 hover:shadow-md hover:ring-black/10 transition"
+          aria-label={t('backHomeAria', { defaultValue: 'Zurück zur App' })}
+        >
+          ← {t('backHome', { defaultValue: 'Zur Startseite' })}
+        </Link>
+      </main>
+    </Layout>
+  );
+}

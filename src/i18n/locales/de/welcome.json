@@ -1,0 +1,53 @@
+{
+  "hero": {
+    "kicker": "Willkommen bei Amy Surfwing",
+    "title": "Zwischen Klassenchat, Fake News & KI",
+    "lead": "Die Lern-App für Medienreife im digitalen Alltag",
+    "leadEmphasis":"Kinder begegnen online jeden Tag neuen Situationen: Gruppendruck, Fake News, Trends, Datenschutz oder Cybermobbing.",
+    "leadEmphasis2":"Amy Surfwing hilft ihnen, diese Welt besser zu verstehen und sich selbst zu schützen.",
+    "ctaPrimary": "Zu den Stories →",
+    "ctaSecondary": "Für Eltern →",
+    "bannerAlt": "Einblick in die Story-Welt von Amy Surfwing"
+  },
+
+  "about": {
+    "whatTitle": "Was ist Amy Surfwing?",
+    "whatBody": "Die Lern-App für Medienreife. Eine interaktive Story-Welt, in der Kids digitale Situationen durchdenken.",
+    "uspTitle": "Was Amy Surfwing besonders macht:",
+    "principles": {
+      "0": "📖 Story statt Unterricht",
+      "1": "⏱️ 5 Minuten statt endloser Bildschirmzeit",
+      "2": "🤔 Reflexion statt Konsum",
+      "3": "🌐 Training für die digitale Realität",
+      "4": "🌱 Altersgerecht statt überfordernd",
+      "5": "🛡️ Sicherer Raum statt soziales Netzwerk"
+    },
+    "ctaParents": "Für Eltern →"
+  },
+
+  "entries": {
+    "kicker": "Einstieg",
+    "title": "Wo möchtest du beginnen?",
+    "body": "Amy Surfwing kannst du aus verschiedenen Perspektiven entdecken.",
+    "cards": {
+      "0": {
+        "kicker": "Für Eltern",
+        "title": "Was Kinder hier lernen",
+        "body": "Erfahren Sie, wie Amy Surfwing Kinder im digitalen Alltag stärkt.",
+        "cta": "Zur Eltern-Seite →"
+      },
+      "1": {
+        "kicker": "Zum Konzept",
+        "title": "Pädagogischer Ansatz",
+        "body": "Hier erklären wir Lernprinzip, Wirkung und Sicherheit.",
+        "cta": "Zum Konzept →"
+      },
+      "2": {
+        "kicker": "Für Kinder",
+        "title": "Die Story-Welt",
+        "body": "Hier beginnt das Abenteuer mit Yasmin und ihrer Klasse.",
+        "cta": "Zu den Stories →"
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "title": "Profil",
+
+  "back": "Zurück",
+  "backAria": "Zurück zur vorherigen Seite",
+
+
+  "avatar": {
+    "alt": "Dein Avatar",
+    "change": "Avatar ändern"
+  },
+
+  "wallet": {
+    "coinsLabel": "Coins"
+  },
+
+  "album": {
+    "title": "Sticker-Album",
+    "subtitle": "Sammle Sticker für jede abgeschlossene Folge",
+    "cta": "Öffnen →",
+    "aria": "Sticker-Album öffnen"
+  },
+
+  "bonus": {
+    "title": "Bonusmaterial",
+    "subtitle": "Extras, Tipps & Überraschungen",
+    "cta": "Entdecken →",
+    "aria": "Bonusmaterial entdecken"
+  },
+
+  "look": {
+    "title": "Dein Look",
+    "hint": "Tippe unten auf ein Item, um es anzuziehen oder auszuziehen."
+  },
+
+  "wardrobe": {
+    "title": "Deine Items",
+
+    "itemLabel": "Item",
+
+    "head": "Kopf",
+    "face": "Gesicht",
+    "top": "Oberteil",
+    "bottom": "Unterteil",
+    "feet": "Schuhe",
+    "background": "Hintergrund",
+    "effect": "Effekt",
+
+    "wearingLabel": "Angezogen:",
+    "notWearing": "Nicht angezogen",
+    "noneOwned": "Noch keine Items freigeschaltet",
+
+    "equipTitle": "Klicken zum Anziehen",
+    "unequipTitle": "Klicken zum Ausziehen",
+
+    "equipAria": "{{id}} anziehen",
+    "unequipAria": "{{id}} ausziehen",
+
+    "accessories": {
+      "title": "Accessoires",
+      "soon": "Noch nicht verfügbar"
+    },
+
+    "effects": {
+      "title": "Effekte",
+      "soon": "Noch nicht verfügbar"
+    },
+
+  
+  "adult": {
+    "hiddenAria": "Erwachsenenbereich öffnen",
+    "hiddenVersion": "Version {{version}}",
+    "footerHint": "Für Erwachsene: lange drücken"
+  }
+
+  }
+}

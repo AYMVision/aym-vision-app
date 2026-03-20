@@ -1,0 +1,20 @@
+{
+  "home": "Home",
+  "stories": "Amy Surfwing",
+  "about": "About us",
+  "cooperations": "Partners",
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu",
+  "openProfile": "Open profile",
+  "profile": "Profile",
+  "kids": "For kids",
+  "parents": "For parents",
+  "concept": "Concept",
+  "privacy": "Privacy",
+  "faq": "FAQ",
+
+  "profileMeta": {
+    "openAria": "Open profile",
+    "avatarAlt": "Profile"
+  }
+}

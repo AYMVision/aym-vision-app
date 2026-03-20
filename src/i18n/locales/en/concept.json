@@ -1,0 +1,145 @@
+{
+  "hero": {
+    "kicker": "Educational Concept",
+    "title": "How children develop digital literacy with Amy Surfwing",
+    "lead": "This page explains the educational model behind Amy Surfwing: how children develop digital literacy step by step through story, reflection, and real-life digital situations.",
+    "badges": {
+      "0": "Story-based",
+      "1": "Reflection-driven",
+      "2": "Everyday relevance",
+      "3": "For children aged 10 to 12"
+    },
+    "ctaPrimary": "For parents →",
+    "ctaSecondary": "Explore stories →"
+  },
+  "goal": {
+    "kicker": "Goal",
+    "title": "Children develop digital literacy with Amy Surfwing",
+    "body": "With Amy Surfwing, we pursue a clear goal: children make independent and responsible decisions online."
+  },
+  "learningModel": {
+    "kicker": "How digital literacy develops step by step",
+    "title": "The Amy Surfwing learning model",
+    "intro": "Amy Surfwing is the first learning app to combine storytelling and gamification with child-friendly self-reflection. This helps children develop key skills and apply them more consciously in their digital lives over time.",
+    "logicLabel": "In short:",
+    "logic": "Digital life → Story and reflection → Digital skills → Core dimensions → Digital literacy",
+    "detailsKicker": "In depth",
+    "detailsTitle": "The five steps at a glance",
+    "steps": {
+      "0": {
+        "number": "1",
+        "title": "Digital life",
+        "summary": "Children encounter real situations from their digital everyday lives.",
+        "details": "Amy Surfwing addresses topics such as class chats, cyberbullying, self-presentation, AI, gaming, and digital balance. Children learn through situations that are directly relevant to their lives, not abstract theory."
+      },
+      "1": {
+        "number": "2",
+        "title": "Story and reflection",
+        "summary": "Situations are experienced through characters and reflected on with Amy.",
+        "details": "Children experience digital situations within an ongoing story world. Reflection questions encourage them to consider different perspectives, express their own thoughts, and question the characters’ behavior."
+      },
+      "2": {
+        "number": "3",
+        "title": "Digital skills",
+        "summary": "Key skills are practiced and applied during the learning process.",
+        "details": "Children learn to evaluate information, recognize fake news, communicate respectfully, protect themselves online, and understand media critically."
+      },
+      "3": {
+        "number": "4",
+        "title": "Learning spiral",
+        "summary": "Children gradually develop deeper understanding and confidence in their actions.",
+        "details": ""
+      },
+      "4": {
+        "number": "5",
+        "title": "Inner development",
+        "summary": "Children develop perspective-taking, judgment, responsibility, and self-efficacy.",
+        "details": "Through repeated learning, children strengthen perspective-taking, judgment, responsibility, self-efficacy, and appropriate decision-making."
+      },
+      "5": {
+        "number": "6",
+        "title": "Digital literacy",
+        "summary": "Children act increasingly independently and responsibly.",
+        "details": "Digital literacy is shown when children better understand digital situations, reflect on them, and act more consciously and responsibly in everyday life."
+      }
+    },
+    "resultTitle": "Didactic implementation",
+    "resultBody": "Amy Surfwing translates educational principles into a format that is understandable, motivating, and relevant for children. Digital education becomes something children actively experience, not just something that is explained."
+  },
+  "model": {
+    "kicker": "Core model",
+    "title": "How does digital literacy develop?",
+    "intro": "Digital literacy develops when children build key digital skills and apply them reflectively in realistic digital situations.",
+    "logic": "Real-life digital situations are the starting point. Children practice essential skills, reflect on them, and gradually develop core inner abilities that lead to digital literacy."
+  },
+  "fields": {
+    "kicker": "Digital life",
+    "title": "Real-life digital situations",
+    "intro": "Children need digital literacy not in theory, but in real-life situations.",
+    "items": {
+      "0": "Digital balance and well-being",
+      "1": "Self-presentation and social media",
+      "2": "Artificial intelligence",
+      "3": "Class chats",
+      "4": "Digital games and gaming",
+      "5": "Cyberbullying",
+      "6": "Opportunities of the digital world"
+    }
+  },
+  "skills": {
+    "kicker": "Skills",
+    "title": "Key digital competencies",
+    "intro": "These competencies are based on DigComp (EU), MIL (UNESCO), and the Media Competence Framework NRW, adapted in language for our model. They are practiced and applied throughout the learning process.",
+    "items": {
+      "0": "Evaluate sources and recognize fake news",
+      "1": "Communicate and collaborate respectfully online",
+      "2": "Use and create media creatively",
+      "3": "Protect yourself online",
+      "4": "Solve problems using digital tools",
+      "5": "Understand and reflect on media critically",
+      "6": "Live values and develop respect"
+    }
+  },
+  "dimensions": {
+    "kicker": "Inner development",
+    "title": "Core inner abilities of digital literacy",
+    "intro": "When children apply key skills in realistic situations and reflect on their own behavior, they gradually develop the inner abilities that define digital literacy.",
+    "items": {
+      "0": {
+        "title": "Perspective-taking",
+        "body": "Children learn to understand different viewpoints and see situations from multiple perspectives."
+      },
+      "1": {
+        "title": "Judgment",
+        "body": "Children learn to evaluate situations, weigh information, and form their own opinions."
+      },
+      "2": {
+        "title": "Responsibility",
+        "body": "Children learn to consider the consequences of their actions and act responsibly online."
+      },
+      "3": {
+        "title": "Self-efficacy",
+        "body": "Children learn that their actions matter and that they can influence situations through their own decisions."
+      }
+    }
+  },
+  "principles": {
+    "kicker": "Learning principles",
+    "title": "Educational foundation",
+    "intro": "Amy Surfwing is based on a combination of established learning principles that shape how children understand, reflect on, and learn from digital situations.",
+    "items": {
+      "0": "Narrative learning",
+      "1": "Situational learning",
+      "2": "Reflective learning",
+      "3": "Active learning",
+      "4": "Microlearning"
+    }
+  },
+  "target": {
+    "kicker": "Target group",
+    "title": "Focus on children aged 10 to 12",
+    "body": "The current focus is on children aged 10 to 12. At this stage, many begin to navigate the digital world independently: first experiences, more responsibility, uncertainties, and new dynamics in class chats, gaming, social media, and trends.",
+    "body2": "Amy Surfwing supports children exactly in this transition phase: preparing, guiding, and staying close to everyday life.",
+    "note": "Additional age groups are planned for the future."
+  }
+}

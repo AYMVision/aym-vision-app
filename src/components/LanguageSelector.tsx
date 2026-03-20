@@ -9,16 +9,22 @@ interface LanguageSelectorProps {
   className?: string;
 }
 
+function normalizeLang(lng: string): 'de' | 'en' {
+  const base = (lng || 'de').split('-')[0].toLowerCase();
+  return base === 'en' ? 'en' : 'de';
+}
+
 export function LanguageSelector({ className }: LanguageSelectorProps) {
   const { i18n } = useTranslation();
 
+  const current = normalizeLang(i18n.resolvedLanguage ?? i18n.language);
+
   return (
-    <div className={`relative flex items-center ${className}`}>
+    <div className={`relative flex items-center ${className ?? ''}`}>
       <select
-        value={i18n.language}
-        onChange={(e) => i18n.changeLanguage(e.target.value)}
+        value={current}
+        onChange={(e) => i18n.changeLanguage(normalizeLang(e.target.value))}
         className="appearance-none px-4 py-1 rounded border border-gold-600 text-gold-600 bg-white hover:bg-gold-50 transition focus:outline-none"
-        style={{ backgroundPosition: 'left 0.5rem center' }}
         aria-label="Sprache wählen / Select language"
       >
         {languages.map((lang) => (

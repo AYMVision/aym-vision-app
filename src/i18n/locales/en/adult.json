@@ -1,0 +1,187 @@
+{
+  "parent": {
+    "titleSetup": "Set up adult settings",
+    "bodySetup": "Create a passcode. Adults can use it later to change settings.",
+    "titleUnlock": "Adult area",
+    "bodyUnlock": "Enter the passcode to open settings.",
+    "passLabel": "Passcode",
+    "passPlaceholder": "at least 6 characters",
+    "passLabel2": "Repeat passcode",
+    "passPlaceholder2": "enter again",
+    "cancel": "Cancel",
+    "setup": "Set up",
+    "unlock": "Unlock",
+    "errorTooShort": "Please use at least 6 characters.",
+    "errorMismatch": "The passcodes do not match.",
+    "errorWrong": "Incorrect passcode.",
+    "hiddenAria": "Open adult area",
+    "hiddenVersion": "Version {{version}}",
+    "footerHint": "For adults: press and hold",
+    "title": "Adults only",
+    "body": "Please ask an adult to take over for a moment. For safety, a quick confirmation is required.",
+    "promptLabel": "Please solve:",
+    "promptHint": "For example: 7 + 5",
+    "inputPlaceholder": "Enter answer",
+    "ctaUnlock": "Continue",
+    "error": "That’s not correct. Please try again.",
+    "descriptionSetup": "Please ask an adult to take over for a moment. For safety, a quick confirmation is required.",
+    "labelSetup": "Please solve:",
+    "placeholderSetup": "Enter answer",
+    "ctaSetup": "Continue",
+    "ctaCancel": "Cancel",
+    "errorSetup": "That’s not correct. Please try again."
+  },
+  "adult": {
+    "title": "Adult settings",
+    "subtitle": "Manage adult settings here.",
+    "locked": "This section is protected. Please unlock it in your profile.",
+    "lockNow": "Lock now"
+  },
+  "ai": {
+    "title": "AI settings",
+    "moreInfo": "More info for parents →",
+    "note": "Changes are saved automatically.",
+    "modeIntro": "You can find the AI mode in the adult settings.",
+    "owlMode": {
+      "help": "Define how Amy should work in the app.",
+      "label": "Amy mode",
+      "on": "Always with AI",
+      "auto": "Automatic",
+      "off": "Without AI"
+    },
+    "modes": {
+      "on": {
+        "title": "On",
+        "text": "The AI is active and supports reflection moments in the story. It responds contextually – not constantly, but where it is pedagogically meaningful. On older or less powerful devices, it may respond more slowly."
+      },
+      "auto": {
+        "title": "Auto",
+        "text": "The AI supports only when it is useful and technically stable. This is the recommended setting for most devices."
+      },
+      "off": {
+        "title": "Off",
+        "text": "The AI is turned off. The story still works fully and remains pedagogically sound – just without AI reflection prompts."
+      }
+    },
+    "changeHint": "You can change the mode at any time.",
+    "performanceHint": "If the app responds slowly or takes longer to load, we recommend “Auto” or “Off”."
+  },
+  "hint": {
+    "title": "Talk to an adult briefly",
+    "body": "Please talk to a trusted adult for a moment and then try again."
+  },
+  "unlock": {
+    "title": "Unlock code",
+    "description": "If you have received an unlock code, you can enter it here.",
+    "inputPlaceholder": "Enter code",
+    "apply": "Apply code",
+    "statusTitle": "Active unlocks",
+    "none": "No active unlocks.",
+    "allUnlocked": "All content unlocked",
+    "until": "Unlocked until {{date}}",
+    "episodes": "Episodes: {{episodes}}",
+    "messages": {
+      "enterCode": "Please enter a code.",
+      "invalidCode": "This code is invalid.",
+      "codeApplied": "Code applied.",
+      "resetDone": "Unlocks have been removed."
+    }
+  },
+  "testMode": {
+    "toggleClosed": "Test mode",
+    "toggleOpen": "Close",
+    "title": "Test mode",
+    "description": "For development, internal testing, and pilot phases.",
+    "global": {
+      "title": "Global unlock",
+      "description": "Removes daily and weekly limits as well as chapter locks.",
+      "label": "Unlock all content",
+      "enabled": "All content has been unlocked.",
+      "disabled": "Global unlock has been disabled."
+    },
+    "until": {
+      "title": "Unlock until date",
+      "description": "Example: 2026-03-30",
+      "placeholder": "YYYY-MM-DD",
+      "apply": "Apply",
+      "set": "Unlocked until {{date}}.",
+      "removed": "Date-based unlock has been removed."
+    },
+    "episode": {
+      "title": "Unlock episode",
+      "description": "Example: s1e01",
+      "placeholder": "s1e01",
+      "unlock": "Unlock",
+      "remove": "Remove",
+      "missing": "Please enter an episode.",
+      "unlocked": "Episode {{episode}} has been unlocked.",
+      "removed": "Episode {{episode}} has been removed."
+    },
+    "reset": {
+      "title": "Reset",
+      "description": "Helpful if you want to restart a test run cleanly.",
+      "entitlements": "Remove test unlocks",
+      "session": "Reset session",
+      "entitlementsDone": "All unlocks have been removed.",
+      "sessionDone": "The current session has been reset."
+    }
+  },
+  "sections": {
+    "ai": {
+      "modeTitle": "How Amy works",
+      "modes": {
+        "on": {
+          "title": "On",
+          "text": "The AI is active and supports reflection moments in the story. It responds contextually – not constantly, but where it is pedagogically meaningful. On older or less powerful devices, it may respond more slowly."
+        },
+        "auto": {
+          "title": "Auto",
+          "text": "The AI supports only when it is useful and technically stable. This is the recommended setting for most devices."
+        },
+        "off": {
+          "title": "Off",
+          "text": "The AI is turned off. The story still works fully and remains pedagogically sound – just without AI reflection prompts."
+        }
+      },
+      "changeHint": "You can change the mode at any time.",
+      "performanceHint": "If the app responds slowly or takes longer to load, we recommend “Auto” or “Off”."
+    }
+  },
+  "testMode": {
+    "title": "Test mode",
+    "description": "For development, internal testing, and pilot phases.",
+    "global": {
+      "title": "Global unlock",
+      "description": "Removes daily and weekly limits as well as chapter locks.",
+      "label": "Unlock all content",
+      "enabled": "All content has been unlocked.",
+      "disabled": "Global unlock has been disabled."
+    },
+    "until": {
+      "title": "Unlock until date",
+      "description": "Example: 2026-03-30",
+      "placeholder": "YYYY-MM-DD",
+      "apply": "Apply",
+      "set": "Unlocked until {{date}}.",
+      "removed": "Date-based unlock has been removed."
+    },
+    "episode": {
+      "title": "Unlock episode",
+      "description": "Example: s1e01",
+      "placeholder": "s1e01",
+      "unlock": "Unlock",
+      "remove": "Remove",
+      "missing": "Please enter an episode.",
+      "unlocked": "Episode {{episode}} has been unlocked.",
+      "removed": "Episode {{episode}} has been removed."
+    },
+    "reset": {
+      "title": "Reset",
+      "description": "Helpful if you want to restart a test run cleanly.",
+      "entitlements": "Remove test unlocks",
+      "session": "Reset session",
+      "entitlementsDone": "All unlocks have been removed.",
+      "sessionDone": "The current session has been reset."
+    }
+  }
+}

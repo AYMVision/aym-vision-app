@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+.DS_Store
+
+public/models/Xenova/flan-t5-small/_backup_20260220-101622/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

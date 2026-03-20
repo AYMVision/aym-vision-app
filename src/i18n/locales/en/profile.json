@@ -1,0 +1,74 @@
+{
+  "title": "Profile",
+
+  "back": "Back",
+  "backAria": "Back to previous page",
+
+  "avatar": {
+    "alt": "Your avatar",
+    "change": "Change avatar"
+  },
+
+  "wallet": {
+    "coinsLabel": "Coins"
+  },
+
+  "album": {
+    "title": "Sticker Album",
+    "subtitle": "Collect stickers for every completed episode",
+    "cta": "Open →",
+    "aria": "Open sticker album"
+  },
+
+  "bonus": {
+    "title": "Bonus content",
+    "subtitle": "Extras, tips & surprises",
+    "cta": "Explore →",
+    "aria": "Explore bonus content"
+  },
+
+  "look": {
+    "title": "Your look",
+    "hint": "Tap an item below to put it on or take it off."
+  },
+
+  "wardrobe": {
+    "title": "Your items",
+
+    "itemLabel": "Item",
+
+    "head": "Head",
+    "face": "Face",
+    "top": "Top",
+    "bottom": "Bottom",
+    "feet": "Shoes",
+    "background": "Background",
+    "effect": "Effect",
+
+    "wearingLabel": "Wearing:",
+    "notWearing": "Not wearing",
+    "noneOwned": "No items unlocked yet",
+
+    "equipTitle": "Click to equip",
+    "unequipTitle": "Click to remove",
+
+    "equipAria": "Equip {{id}}",
+    "unequipAria": "Remove {{id}}",
+
+    "accessories": {
+      "title": "Accessories",
+      "soon": "Coming soon"
+    },
+
+    "effects": {
+      "title": "Effects",
+      "soon": "Coming soon"
+    },
+
+    "adult": {
+      "hiddenAria": "Open adult area",
+      "hiddenVersion": "Version {{version}}",
+      "footerHint": "For adults: press and hold"
+    }
+  }
+}

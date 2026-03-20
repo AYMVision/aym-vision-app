@@ -1,189 +1,367 @@
-import { Link } from 'react-router-dom';
+// src/pages/Welcome.tsx
+import React, { useMemo } from 'react';
 import Layout from '../components/Layout';
-// import amy from '../assets/amy_lg.png'; // entfernt: kein Logo/Amy-Bild mehr im Hero
-import bannerHero from '../assets/banner-hero.png'; // dein Bannerbild
-import ChatMessage from '../components/ChatMessage';
-import TypingIndicator from '../components/TypingIndicator';
-import courseDe from '../data/shadowfox.de';
-import courseEn from '../data/shadowfox.en';
-import PhonePreview from '../components/PhonePreview';
-import { useTranslation, Trans } from 'react-i18next';
-import type { Message } from '../common/types';
+import SmartImage from '../components/SmartImage';
+import { assetUrl } from '../common/assetUrl';
+import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { getProgress, getCompletedChapterCount } from '../progress/storyProgress';
+import { getStoryCards } from '../content/contentIndex';
+import { getPlayableEpisode } from '../content/getPlayableEpisode';
+import { useProfile } from '../profile/useProfile';
+import { shouldBypassAll } from '../gating/entitlements';
 
-const Welcome = () => {
-  const { t, i18n } = useTranslation('welcome');
-  const courseLanguage = (i18n.language || 'de').split('-')[0];
-  const course = courseLanguage === 'de' ? courseDe : courseEn;
+function Panel({
+  title,
+  kicker,
+  children,
+}: {
+  title: string;
+  kicker?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="bg-white rounded-2xl shadow-md border border-slate-100 p-5 sm:p-6">
+      {kicker ? (
+        <div className="text-xs font-semibold text-[var(--color-teal-600)]">{kicker}</div>
+      ) : null}
+      <h2 className="mt-1 text-base sm:text-lg font-semibold text-[var(--color-teal-900)]">
+        {title}
+      </h2>
+      <div className="mt-3 text-sm sm:text-base leading-relaxed text-slate-700">{children}</div>
+    </section>
+  );
+}
 
-  const messages: Message[] = (course?.script?.[0]?.messages ??
-    []) as Message[];
+function EntryCard({
+  kicker,
+  title,
+  body,
+  cta,
+  to,
+}: {
+  kicker: string;
+  title: string;
+  body: string;
+  cta: string;
+  to: string;
+}) {
+  return (
+    <Link
+      to={to}
+      className="block rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow"
+    >
+      <div className="text-xs font-semibold text-[var(--color-teal-600)]">{kicker}</div>
+      <div className="mt-2 text-lg font-bold text-slate-900 leading-snug">{title}</div>
+      <p className="mt-3 text-sm text-slate-700 leading-relaxed">{body}</p>
+      <div className="mt-5 font-semibold text-[var(--color-teal-700)]">{cta}</div>
+    </Link>
+  );
+}
+
+export default function Welcome() {
+  const navigate = useNavigate();
+const { t, i18n } = useTranslation(['welcome', 'stories']);
+const { t: tStories } = useTranslation('stories');
+  const lang = (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
+  const { profile } = useProfile();
+
+  const cardsInOrder = useMemo(() => getStoryCards(), []);
+  const cardsForUI = cardsInOrder;
+
+  const playableById = useMemo(() => {
+    const m: Record<string, boolean> = {};
+    for (const c of cardsForUI) {
+      m[c.id] = Boolean(getPlayableEpisode(c.id, lang));
+    }
+    return m;
+  }, [cardsForUI, lang]);
+
+const progressById = cardsForUI.reduce<Record<string, number>>((acc, card) => {
+  const p = getProgress(card.id);
+  if (!p) {
+    acc[card.id] = 0;
+    return acc;
+  }
+
+  const totalChapters = Math.max(1, card.chaptersTotal ?? 1);
+  const completedCount = getCompletedChapterCount(card.id);
+
+  const finishedPct = p.finished ? 100 : Math.floor((completedCount / totalChapters) * 100);
+  acc[card.id] = Math.max(0, Math.min(100, finishedPct));
+  return acc;
+}, {});
+
+function isCourseFinished(courseId: string, chaptersTotal?: number) {
+  const p = getProgress(courseId);
+  if (!p) return false;
+  if (p.finished) return true;
+
+  const total = Math.max(1, chaptersTotal ?? 1);
+  const completedCount = getCompletedChapterCount(courseId);
+  return completedCount >= total;
+}
+
+function isUnlockedByChain(
+  orderedCards: { id: string; chaptersTotal?: number }[],
+  courseId: string
+) {
+  if (shouldBypassAll(courseId)) return true;
+
+  const idx = orderedCards.findIndex((c) => c.id === courseId);
+  if (idx <= 0) return true;
+  const prev = orderedCards[idx - 1];
+  return isCourseFinished(prev.id, prev.chaptersTotal);
+}
+
+  const availableCards = cardsForUI.filter((c) => {
+    const playable = playableById[c.id] ?? false;
+    const unlocked = isUnlockedByChain(cardsInOrder, c.id);
+    return c.released && playable && unlocked;
+  });
+
+  const currentCourseId = profile?.progress?.current?.courseId as string | undefined;
+
+  const currentFromProfile =
+    currentCourseId ? availableCards.find((c) => c.id === currentCourseId) : undefined;
+
+  const currentCard =
+    currentFromProfile ??
+    availableCards.find((c) => {
+      const pct = progressById[c.id] ?? 0;
+      return pct > 0 && pct < 100;
+    }) ??
+    availableCards.find((c) => (progressById[c.id] ?? 0) === 0) ??
+    availableCards[0];
+
+  const currentPct = currentCard ? (progressById[currentCard.id] ?? 0) : 0;
+  const hasStarted = currentPct > 0;
+  const noAvailableStories = availableCards.length === 0;
 
   return (
     <Layout>
-      {/* --- FIXES BANNER-BILD unter der Navigation, ohne Zuschnitt --- */}
-      <div className="relative w-full">
-        <img
-          src={bannerHero}
-          alt="AYM Vision – Amy Surfwing: Entdecke die Chat-Story"
-          className="block w-full h-auto object-contain select-none"
-          loading="eager"
-          decoding="async"
-        />
+      <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        {/* HERO */}
+{/* HERO */}
+<section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg">
+  <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-[var(--color-teal-50)]" />
+  <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-[var(--color-teal-200)]/30 blur-2xl" />
+  <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-[var(--color-teal-300)]/20 blur-2xl" />
+
+  <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch">
+    {/* TEXT */}
+    <div className="lg:col-span-6 p-6 sm:p-10 lg:pr-6 flex flex-col justify-center">
+      <div className="text-xs sm:text-sm font-semibold text-[var(--color-teal-700)]">
+        {t('hero.kicker')}
       </div>
 
-      {/* Hero-Section (gleich geblieben, nur Headline/Subheadline jetzt weiß) */}
-      <section className="w-full px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Textspalte */}
-            <div className="lg:col-span-7">
-              <div className="mt-0 flex items-start gap-6">
-                <div className="flex-1">
-                  <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
-                    {/* Titel in Weiß */}
-                    <span className="block text-white">{t('title')}</span>
-                  </h1>
+      <h1 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
+        {t('hero.title')}
+      </h1>
 
-                  {/* Subheadline in Weiß */}
-                  <p className="mt-3 text-base sm:text-lg text-white font-semibold">
-                    {t('welcome')}
-                  </p>
+      <p className="mt-5 text-sm sm:text-base text-slate-800 leading-relaxed">
+        {t('hero.lead')}
+      </p>
 
-                  {/* (MOBIL) Amy-Bild entfernt */}
+      <p className="mt-4 text-sm sm:text-base font-semibold text-slate-900 leading-relaxed">
+        {t('hero.leadEmphasis')}
+      </p>
 
-                  {/* Intro (unverändert in deiner ursprünglichen Farbe) */}
-                  <p className="mt-5 text-base sm:text-lg text-[#284242] leading-relaxed max-w-2xl">
-                    <Trans
-                      i18nKey="intro"
-                      ns="welcome"
-                      components={[
-                        <span
-                          key={1}
-                          className="font-semibold text-[var(--color-teal-900)]"
-                        />,
-                        <span
-                          key={2}
-                          className="font-semibold text-[var(--color-teal-900)]"
-                        />,
-                      ]}
-                    />
-                  </p>
+      <p className="mt-5 text-sm sm:text-base text-slate-800 leading-relaxed">
+        {t('hero.leadEmphasis2')}
+      </p>
 
-                  {/* Primär-CTA */}
-                  <div className="mt-8">
-                    <Link
-                      to="/stories"
-                      className="group relative inline-flex items-center justify-center px-8 py-4 font-semibold rounded-full overflow-hidden transition-all duration-300
-                                 text-[var(--color-teal-900)] ring-1 ring-black/5 bg-white hover:shadow-lg hover:ring-black/10
-                                 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-teal-500)]"
-                    >
-                      <span className="absolute inset-0 bg-gradient-to-r from-white to-gray-50 opacity-100" />
-                      <span className="relative z-[1] flex items-center gap-2">
-                        {t('discover')}
-                        <svg
-                          className="w-5 h-5 translate-x-0 group-hover:translate-x-1 transition-transform"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M13 7l5 5m0 0l-5 5m5-5H6"
-                          />
-                        </svg>
-                      </span>
-                    </Link>
-                  </div>
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Link
+          to="/stories"
+          className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+        >
+          {t('hero.ctaPrimary')}
+        </Link>
 
-                  {/* Social Follow */}
-                  <div className="mt-6">
-                    <p className="text-sm sm:text-base text-[#284242] font-medium">
-                      <span className="mr-2">Bald als App!</span>
-                      Werde schon jetzt Teil der Mission! Folge uns auf Facebook
-                      &amp; LinkedIn und sei von Anfang an dabei.
-                    </p>
-                    <div className="mt-3 flex flex-wrap items-center gap-3">
-                      <a
-                        href="https://www.facebook.com/profile.php?id=61581575849501&sk=about"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Folge uns auf Facebook"
-                        className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold
-                                   bg-[var(--color-teal-900)] text-white hover:opacity-95 transition"
-                      >
-                        <svg
-                          viewBox="0 0 24 24"
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="M22 12.06C22 6.48 17.52 2 11.94 2S2 6.48 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.76-1.61 1.54v1.85h2.74l-.44 2.91h-2.3V22c4.78-.79 8.44-4.94 8.44-9.94z"
-                          />
-                        </svg>
-                        Facebook
-                      </a>
+        <Link
+          to="/concept"
+          className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
+        >
+          {t('hero.ctaSecondary')}
+        </Link>
+      </div>
+    </div>
 
-                      <a
-                        href="https://www.linkedin.com/company/aymquest/?viewAsMember=true"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Folge uns auf LinkedIn"
-                        className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold
-                                   bg-[var(--color-teal-900)] text-white hover:opacity-95 transition"
-                      >
-                        <svg
-                          viewBox="0 0 24 24"
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="M19 3A2.94 2.94 0 0 1 22 6v12a2.94 2.94 0 0 1-3 3H6a2.94 2.94 0 0 1-3-3V6a2.94 2.94 0 0 1 3-3h13M8.34 18.34V9.75H6V18.3h2.34m-1.17-9.69c.76 0 1.38-.62 1.38-1.38 0-.76-.62-1.38-1.38-1.38-.76 0-1.38.62-1.38 1.38 0 .76.62 1.38 1.38 1.38M20 18.34v-4.67c0-2.5-1.33-3.66-3.11-3.66-1.43 0-2.06.79-2.41 1.35v-1.16H12v8.14h2.34v-4.52c0-1.19.23-2.34 1.7-2.34 1.45 0 1.47 1.35 1.47 2.41v4.45H20z"
-                          />
-                        </svg>
-                        LinkedIn
-                      </a>
-                    </div>
-                  </div>
-                </div>
+    {/* MEDIA */}
+    <div className="lg:col-span-6 relative min-h-[280px] sm:min-h-[340px] lg:min-h-[420px]">
+      <video
+        className="absolute inset-0 w-full h-full object-cover object-[center_40%] lg:object-center"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/media/ui/Kids_surfen_smart-poster.jpg"
+      >
+        <source src="/media/ui/Kids_surfen_smart.mp4" type="video/mp4" />
+      </video>
 
-                {/* (DESKTOP) Amy-Bild entfernt */}
-              </div>
+      <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/10 to-transparent lg:from-transparent lg:via-transparent lg:to-transparent pointer-events-none" />
+    </div>
+  </div>
+</section>
+
+        {/* WAS IST AMY SURFWING */}
+        <div className="mt-6 sm:mt-8">
+          <Panel title={t('about.whatTitle')}>
+            <p>{t('about.whatBody')}</p>
+
+            <div className="mt-5 font-semibold text-slate-900">
+              {t('about.uspTitle')}
             </div>
 
-            {/* Phone Preview */}
-            <div className="lg:col-span-5">
-              <div className="mx-auto md:mx-0 flex justify-center lg:justify-end">
-                <div className="w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] xl:w-[360px]">
-                  <PhonePreview inputPlaceholder="Deine Antwort…">
-                    {messages
-                      .filter((m: any) => m?.type !== 'user')
-                      .map((message: any, index: number) => (
-                        <ChatMessage key={index} message={message} />
-                      ))}
-                    <TypingIndicator />
-                  </PhonePreview>
-                </div>
-              </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {(['0', '1', '2', '3', '4', '5'] as const).map((k) => (
+                <span
+                  key={k}
+                  className="inline-flex items-center rounded-full px-3 py-1 text-xs sm:text-sm font-semibold bg-slate-50 border border-slate-200 text-slate-700"
+                >
+                  {t(`about.principles.${k}`)}
+                </span>
+              ))}
             </div>
-          </div>
 
-          {/* Footer-Tipp */}
-          <div className="px-0 pb-6 sm:pb-8 mt-6">
-            <p className="text-center text-sm text-[var(--color-teal-700,#205e5b)]/80">
-              {courseLanguage === 'de'
-                ? 'Tip: Switch language (top right) to view the English version.'
-                : 'Tipp: Wechsle oben rechts die Sprache, um die deutsche Version zu sehen.'}
-            </p>
-          </div>
+            <div className="mt-5">
+              <Link
+                to="/parents"
+                className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
+              >
+                {t('about.ctaParents')}
+              </Link>
+            </div>
+          </Panel>
         </div>
-      </section>
+
+        {/* CONTINUE / START */}
+        <div className="mt-6 sm:mt-8">
+          {noAvailableStories ? (
+            <Panel
+              kicker={tStories('comingSoon.kicker', { defaultValue: 'Bald geht’s los' })}
+              title={tStories('comingSoon.title', { defaultValue: 'Neue Stories kommen bald ✨' })}
+            >
+              <p className="text-sm text-slate-700">
+                {tStories('comingSoon.text', {
+                  defaultValue: 'Im Moment ist noch keine Story freigeschaltet. Schau bald wieder vorbei!',
+                })}
+              </p>
+            </Panel>
+          ) : currentCard ? (
+            <Panel
+              kicker={
+                hasStarted
+                  ? tStories('continue.kicker', { defaultValue: 'Weiterlesen' })
+                  : tStories('start.kicker', { defaultValue: 'Jetzt starten' })
+              }
+              title={
+                hasStarted
+                  ? tStories('continue.title', { defaultValue: 'Mach da weiter, wo du aufgehört hast' })
+                  : tStories('start.title', { defaultValue: 'Eine Woche kostenfrei' })
+              }
+            >
+              <div className="mt-2 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+                <div className="lg:col-span-4">
+                  <div className="aspect-[16/10] max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
+                    <img
+                      src={assetUrl(currentCard.cover?.trim() ? currentCard.cover : 'media/ui/locked-1024.webp')}
+                      alt={tStories('continue.imageAlt', { defaultValue: 'Aktuelle Story' })}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-8 flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div>
+                    <div className="text-sm font-semibold text-slate-500">
+                      {hasStarted
+                        ? tStories('continue.label', { defaultValue: 'Aktuell' })
+                        : tStories('start.label', { defaultValue: 'Neu für dich' })}
+                    </div>
+
+<div className="mt-1 text-lg font-extrabold text-slate-900 leading-snug">
+  {t(currentCard.titleKey, { ns: 'stories', defaultValue: currentCard.titleKey })}
+</div>
+
+<div className="mt-1 text-sm text-slate-600">
+  {t(currentCard.descriptionKey, { ns: 'stories', defaultValue: currentCard.descriptionKey })}
+</div>
+                  </div>
+
+                  <div className="mt-4">
+                    {hasStarted ? (
+                      <>
+                        <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1">
+                          <span>{tStories('continue.progress', { defaultValue: 'Fortschritt' })}</span>
+                          <span>{currentPct}%</span>
+                        </div>
+                        <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
+                          <div
+                            className="h-2 rounded-full bg-[#0084ff]"
+                            style={{ width: `${currentPct}%` }}
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="text-xs font-semibold text-slate-500">
+                        {tStories('start.hint', { defaultValue: 'Keine Anmeldung nötig – einfach loslegen.' })}
+                      </div>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/stories/${currentCard.id}`)}
+                      className="mt-4 w-full inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+                    >
+                      {hasStarted
+                        ? tStories('continue.cta', { defaultValue: 'Weiterlesen →' })
+                        : tStories('start.cta', { defaultValue: 'Jetzt starten →' })}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Panel>
+          ) : null}
+        </div>
+
+        {/* EINSTIEG */}
+        <div className="mt-6 sm:mt-8">
+          <Panel kicker={t('entries.kicker')} title={t('entries.title')}>
+            <p>{t('entries.body')}</p>
+
+            <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3">
+              <EntryCard
+                kicker={t('entries.cards.0.kicker')}
+                title={t('entries.cards.0.title')}
+                body={t('entries.cards.0.body')}
+                cta={t('entries.cards.0.cta')}
+                to="/parents"
+              />
+
+              <EntryCard
+                kicker={t('entries.cards.1.kicker')}
+                title={t('entries.cards.1.title')}
+                body={t('entries.cards.1.body')}
+                cta={t('entries.cards.1.cta')}
+                to="/concept"
+              />
+
+              <EntryCard
+                kicker={t('entries.cards.2.kicker')}
+                title={t('entries.cards.2.title')}
+                body={t('entries.cards.2.body')}
+                cta={t('entries.cards.2.cta')}
+                to="/stories"
+              />
+            </div>
+          </Panel>
+        </div>
+      </div>
     </Layout>
   );
-};
-
-export default Welcome;
+}

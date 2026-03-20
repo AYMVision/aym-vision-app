@@ -1,0 +1,13 @@
+{
+  "title": "Sticker Album",
+  "backLabel": "Profile",
+  "backAria": "Back to profile",
+  "lead": "Collect stickers when you complete an episode ✨",
+  "tabs": {
+    "episodes": "Episodes",
+    "seasons": "Seasons"
+  },
+  "new": "New ✨",
+  "badge": "Badge",
+  "locked": "Locked"
+}

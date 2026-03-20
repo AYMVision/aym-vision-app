@@ -1,0 +1,289 @@
+{
+  "hero": {
+    "kicker": "Amy Surfwing",
+    "ctaParents": "For parents →",
+    "title": "Check what’s really going on online ✨",
+    "lead": "Discover the secrets of Yasmin, Carlos & the others. With Amy Surfwing, you master challenges. Online adventures are waiting for you.",
+    "imageAlt": "Story world: Mia, Finn and friends",
+    "badges": {
+      "0": "10 to 12 years",
+      "1": "Chat story & more",
+      "2": "Tricks & trends",
+      "3": "5 min daily & 5 times a week"
+    },
+    "ctaPrimary": "Go to the Amics →",
+    "ctaSecondary": "Back to home"
+  },
+  "progress": {
+    "label": "Progress"
+  },
+  "loading": {
+    "story": "Loading story…"
+  },
+  "ui": {
+    "readingModeInstant": "Show instantly",
+    "readingMode": "Display mode:",
+    "readingModeLive": "Live chat",
+    "speedLabel": "Choose reading speed:",
+    "speed": {
+      "fast": "Fast",
+      "normal": "Normal",
+      "slow": "Slow"
+    },
+    "header": {
+      "online": "online"
+    }
+  },
+  "helpHint": {
+    "title": "",
+    "body": "If a chat, image, or post is upsetting you, talk to a trusted adult."
+  },
+  "comingSoon": {
+    "kicker": "Coming soon",
+    "title": "New stories are coming soon ✨",
+    "text": "No story is unlocked right now. Check back again soon!"
+  },
+  "continue": {
+    "kicker": "Continue reading",
+    "title": "Pick up where you left off",
+    "label": "Current",
+    "progress": "Progress",
+    "cta": "Continue reading →",
+    "imageAlt": "Current story"
+  },
+  "start": {
+    "kicker": "Start now",
+    "title": "One week free",
+    "label": "New for you",
+    "hint": "No sign-up needed – just get started.",
+    "cta": "Start now →"
+  },
+  "howto": {
+    "kicker": "Quick guide",
+    "title": "How a day with Amy Surfwing works",
+    "flow": {
+      "steps": {
+        "1": {
+          "title": "🎬 Start Amy Surfwing",
+          "text": "One tap and you’re right in the adventure. Read what Yasmin, Carlos & the others experience online."
+        },
+        "2": {
+          "title": "✍️ Write your thoughts",
+          "text": "Answer Amy’s question. Write what you think – and why. Only then can the story continue the next day."
+        },
+        "3": {
+          "title": "🦉 Amy responds",
+          "text": "Sometimes Amy asks a follow-up question. And at the end of the day, you get a tip."
+        },
+        "4": {
+          "title": "🔎 Discover Amy’s world",
+          "text": "Now you can dive deeper and deeper into Amy’s world – with lots of bonus content about digital topics."
+        }
+      }
+    },
+    "progress": {
+      "label": "Progress"
+    },
+    "info": {
+      "kicker": "Good to know",
+      "title_optionA": "So you can find your way easily / A few more explanations...",
+      "title_optionB": "So you can find your way easily",
+      "title": "So you can find your way easily",
+      "tiles": {
+        "order": {
+          "title": "Step by step ➡️",
+          "text": "You do the Amics in order – up to five can be unlocked in one week. Each day you can read one Amic including bonus content. You have to answer one question – only then does it continue."
+        },
+        "reflection": {
+          "title": "Thinking space ◎",
+          "text": "You write your own answer – in your own words. It’s not about right or wrong, but about taking time to think."
+        },
+        "retryLock": {
+          "title": "Amy asks again 🔁",
+          "text": "If your answer is too short or Amy doesn’t understand what you mean, she asks again. After three tries, Amy takes a short break. Then it’s best to look at it together with someone. As soon as your answer fits, it continues."
+        },
+        "safe": {
+          "title": "Fair & safe ✅",
+          "text": "Amy does not allow insults, bullying, or dangerous content – then she stops. And your safety comes first too. The rule is always: as soon as there is a suitable answer, it continues."
+        },
+        "backup": {
+          "title": "Save & backup 💾",
+          "text": "Your progress is saved on your device. If you want, you can back it up as well – so nothing gets lost."
+        }
+      }
+    },
+    "cta": "Have fun with Amy Surfwing! 💬🦉"
+  },
+  "list": {
+    "kicker": "Amy Surfwing",
+    "title": "Start your Amic",
+    "lead": "One tap and you’re right in the adventure.",
+    "searchPlaceholder": "Search story…"
+  },
+  "trust": {
+    "kicker": "Thinking space",
+    "title": "A safe space for your thoughts",
+    "body": "In Amy Surfwing, you don’t just read – you think along. No one sees what you write. There are no likes, no ranking, and no comparison. Your progress stays on your device. Here, you can calmly think about what you believe is right – and learn step by step to make good decisions on your own.",
+    "chips": {
+      "0": "Private 🔒",
+      "1": "No ranking 🚫",
+      "2": "Stored locally 💾",
+      "3": "Supportive AI 🤝"
+    },
+    "ctaConcept": "Educational concept →",
+    "ctaParents": "For parents →"
+  },
+  "aym": {
+    "kicker": "Amy Surfwing",
+    "title": "What it looks like – and what you can do with it",
+    "tags": {
+      "experience": "Amic",
+      "bonus": "Bonus"
+    }
+  },
+  "experience": {
+    "cards": {
+      "0": {
+        "title": "Story",
+        "text": "You dive into the world of Yasmin, Igor & the others.",
+        "imageAlt": "Illustration: characters in a digital story scene"
+      },
+      "1": {
+        "title": "Keep thinking",
+        "text": "While reading, you’re not just watching: What triggers you? What feels unfair to you?",
+        "imageAlt": "Illustration: thoughtful moment in the story"
+      },
+      "2": {
+        "title": "Tip",
+        "text": "Based on your answer, Amy gives you a tip.",
+        "imageAlt": "Illustration: your own answer in the story flow"
+      }
+    }
+  },
+  "bonus": {
+    "cards": {
+      "avatar": {
+        "title": "Avatars",
+        "text": "Create your own avatar and earn new looks.",
+        "imageAlt": "Image: avatar view"
+      },
+      "sticker": {
+        "title": "Stickers",
+        "text": "You get a sticker for every completed episode.",
+        "imageAlt": "Image: sticker album"
+      },
+      "newspaper": {
+        "title": "School Newspaper",
+        "text": "Here you’ll find easy-to-understand topics, audio posts, and knowledge to look up.",
+        "imageAlt": "Image: school newspaper section"
+      },
+      "coins": {
+        "title": "Coins",
+        "text": "You collect coins for every Amic. If you keep going regularly, you even get extra ones.",
+        "imageAlt": "Image: coins overview"
+      },
+      "diary": {
+        "title": "Diary",
+        "text": "What are Mia, Yasmin & Jonas thinking? You can write your own diary too.",
+        "imageAlt": "Image: diary view"
+      },
+      "collectibles": {
+        "title": "Collectible Cards",
+        "text": "The collectible cards help you get to know the characters better.",
+        "imageAlt": "Image: collectible cards overview"
+      }
+    }
+  },
+  "survey": {
+    "kicker": "Feedback",
+    "title_optionA": "📝 Short survey",
+    "description_optionA": "Tell us how you liked the story – anonymously and in just a few minutes.",
+    "noticeTitle": "Note",
+    "noticeBody": "You will be redirected to an external form (Microsoft Forms). The provider’s privacy policy applies.",
+    "cta": "Go to survey →",
+    "title_optionB": "📝 Survey: Your opinion matters!",
+    "description_optionB": "Tell us how you liked the story – the survey is anonymous and only takes a few minutes.",
+    "title": "📝 Short survey",
+    "description": "Tell us how you liked the story – anonymously and in just a few minutes."
+  },
+  "episodes": {
+    "s1e01": {
+      "title": "Trouble at the Waterfall",
+      "description": "A quiet holiday Saturday escalates: likes, FOMO, AI, a waterfall – and suddenly every decision matters."
+    },
+    "s1e02": {
+      "title": "Alarm in the Class Chat",
+      "description": "An argument in the class chat: threats and fake news are flying around – until an unexpected twist changes everything."
+    },
+    "s1e03": {
+      "title": "The Tunnel to Ruin",
+      "description": "The chat never sleeps. One person can’t keep up anymore. Who decides when it stops – the phone or us?"
+    },
+    "s1e04": {
+      "title": "S1 E04",
+      "description": "..."
+    },
+    "s1e05": {
+      "title": "S1 E05",
+      "description": "..."
+    },
+    "s1e06": {
+      "title": "S1 E06",
+      "description": "..."
+    },
+    "s1e07": {
+      "title": "S1 E07",
+      "description": "..."
+    },
+    "s1e08": {
+      "title": "S1 E08",
+      "description": "..."
+    },
+    "s1e09": {
+      "title": "S1 E09",
+      "description": "..."
+    },
+    "s1e10": {
+      "title": "S1 E10",
+      "description": "..."
+    }
+  },
+  "chatSwitch": {
+    "participants": "Participants:",
+    "private": "Private chat",
+    "class": "Class chat",
+    "newsroom": "School newspaper"
+  },
+  "album": {
+    "title": "Sticker Album",
+    "subtitle": "Collect stickers & badges – your progress stays on your device.",
+    "back": "Back",
+    "backAria": "Back",
+    "progressTitle": "Collector progress this season:",
+    "episodes": "Stickers",
+    "seasons": "Badges",
+    "nextDrop": "Next sticker",
+    "tabEpisodes": "Episodes",
+    "tabSeasons": "Seasons",
+    "locked": "Locked",
+    "new": "New",
+    "badge": "Badge"
+  },
+  "cards": {
+    "newUnlockedTitle": "New collectible card!",
+    "newUnlockedSub": "Tap to view it."
+  },
+  "adultHint": {
+    "title": "Talk briefly with an adult",
+    "body": "Some things are best discussed offline with a trusted adult (for example a parent, teacher, or school counselor)."
+  },
+  "safety": {
+    "selfHarmShort": "It sounds like this is feeling really overwhelming right now. There is help – please get support now."
+  },
+  "gate": {
+    "nextTomorrowTitle": "You’re done for today ✨",
+    "nextTomorrowBody": "The next Amic is waiting for you tomorrow. Until then, you can browse the school newspaper.",
+    "nextMondayBody": "You’ve read all the Amics for this week. The next Amic will be waiting for you again on Monday. Until then, you can browse the school newspaper.",
+    "toNewspaper": "Go to the school newspaper →"
+  }
+}
