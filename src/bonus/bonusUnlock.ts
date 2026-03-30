@@ -8,6 +8,9 @@ export interface BonusProgressSnapshot {
 }
 
 export function isBonusUnlocked(item: BonusItem, progress: BonusProgressSnapshot): boolean {
+    if (item.category === 'characters' && item.characterId === 'amy') {
+    return true;
+  }
   // Behalte dein bisheriges Konzept bei: released muss true sein
   if (!item.released) return false;
 

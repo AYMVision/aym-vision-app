@@ -17,6 +17,7 @@ import { isBonusUnlocked, sortBonus, type BonusProgressSnapshot } from '../bonus
 import { getCharacterCardState } from '../bonus/bonusCards';
 import { loadSeenBonusIds } from '../bonus/bonusSeen';
 
+
 type LocationState = { backTo?: string } | null;
 
 function useBonusProgressFromProfile(): BonusProgressSnapshot {
@@ -61,6 +62,7 @@ function CharacterCardTile({
 }) {
   const { t } = useTranslation('bonus');
   const state = getCharacterCardState({ item, unlocked, opened });
+  const isMyCard = item.bonusId === 'my-card';
 
 // ✅ CharacterId kommt aus BonusItem.characterId (bonusId ist z.B. "char-chioma")
 const characterId = item.characterId as keyof typeof CHARACTERS | undefined;
@@ -69,12 +71,14 @@ const character = characterId ? (CHARACTERS as any)[characterId] ?? null : null;
 
 
 
-  const isLocked = state === 'unknown';
-  const isNew = state === 'unlocked';
-  const isCollected = state === 'collected';
+const isLocked = isMyCard ? false : state === 'unknown';
+const isNew = isMyCard ? false : state === 'unlocked';
+const isCollected = isMyCard ? true : state === 'collected';
 
   // ✅ Name immer anzeigen
-  const displayName = character?.name ?? (characterId ?? item.bonusId);
+ const displayName = isMyCard
+  ? t('charactersUi.myCard.title', { defaultValue: 'Meine Karte' })
+  : character?.name ?? (characterId ?? item.bonusId);
 
 
 
@@ -148,26 +152,26 @@ const character = characterId ? (CHARACTERS as any)[characterId] ?? null : null;
             ].join(' ')}
           >
             
-{isLocked ? (
+{isMyCard ? (
+  <span className="text-2xl">🪪</span>
+) : isLocked ? (
   <span className="text-2xl">❓</span>
 ) : (
-(() => {
-  const portrait = (character as any)?.card?.portrait as string | undefined;
+  (() => {
+    const portrait = (character as any)?.card?.portrait as string | undefined;
 
-
-  return portrait ? (
-    <img
-      alt=""
-      src={assetUrl(portrait)}
-      className="w-full h-full object-cover rounded-2xl"
-      loading="lazy"
-      decoding="async"
-    />
-  ) : (
-    <span className="text-2xl">🙂</span>
-  );
-})()
-
+    return portrait ? (
+      <img
+        alt=""
+        src={assetUrl(portrait)}
+        className="w-full h-full object-cover rounded-2xl"
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <span className="text-2xl">🙂</span>
+    );
+  })()
 )}
 
 
@@ -178,19 +182,23 @@ const character = characterId ? (CHARACTERS as any)[characterId] ?? null : null;
               {displayName}
             </div>
 
-            {isLocked ? (
-              <div className="mt-1 text-xs text-slate-600/80">
-                {t('charactersUi.lockedHint', { defaultValue: 'Wird später freigeschaltet.' })}
-              </div>
-            ) : isNew ? (
-              <div className="mt-1 text-xs text-slate-700 line-clamp-2">
-                {t('charactersUi.tapToOpen', { defaultValue: 'Tippe, um die Karte zu öffnen!' })}
-              </div>
-            ) : (
-              <div className="mt-1 text-xs text-slate-700/80">
-                {t('charactersUi.viewHint', { defaultValue: 'Schon geöffnet – du kannst sie ansehen.' })}
-              </div>
-            )}
+{isMyCard ? (
+  <div className="mt-1 text-xs text-slate-700/80">
+    {t('charactersUi.myCard.hint', { defaultValue: 'Hier kannst du deine eigene Karte gestalten.' })}
+  </div>
+) : isLocked ? (
+  <div className="mt-1 text-xs text-slate-600/80">
+    {t('charactersUi.lockedHint', { defaultValue: 'Wird später freigeschaltet.' })}
+  </div>
+) : isNew ? (
+  <div className="mt-1 text-xs text-slate-700 line-clamp-2">
+    {t('charactersUi.tapToOpen', { defaultValue: 'Tippe, um die Karte zu öffnen!' })}
+  </div>
+) : (
+  <div className="mt-1 text-xs text-slate-700/80">
+    {t('charactersUi.viewHint', { defaultValue: 'Schon geöffnet – du kannst sie ansehen.' })}
+  </div>
+)}
           </div>
         </div>
 
@@ -200,13 +208,15 @@ const character = characterId ? (CHARACTERS as any)[characterId] ?? null : null;
           </div>
 
           <div className="text-[11px] font-extrabold text-slate-900">
-            {isLocked ? (
-              <span className="text-slate-500">{t('charactersUi.locked', { defaultValue: 'Gesperrt' })}</span>
-            ) : isNew ? (
-              <span>{t('charactersUi.openNow', { defaultValue: 'Öffnen →' })}</span>
-            ) : (
-              <span>{t('charactersUi.view', { defaultValue: 'Ansehen →' })}</span>
-            )}
+{isMyCard ? (
+  <span>{t('charactersUi.myCard.edit', { defaultValue: 'Bearbeiten →' })}</span>
+) : isLocked ? (
+  <span className="text-slate-500">{t('charactersUi.locked', { defaultValue: 'Gesperrt' })}</span>
+) : isNew ? (
+  <span>{t('charactersUi.openNow', { defaultValue: 'Öffnen →' })}</span>
+) : (
+  <span>{t('charactersUi.view', { defaultValue: 'Ansehen →' })}</span>
+)}
           </div>
         </div>
       </div>
@@ -217,6 +227,40 @@ const character = characterId ? (CHARACTERS as any)[characterId] ?? null : null;
         </div>
       )}
     </button>
+  );
+}
+
+function CardsHero() {
+  const { t } = useTranslation('bonus');
+
+  return (
+    <section className="relative mt-4 sm:mt-5 overflow-hidden rounded-3xl bg-gradient-to-br from-violet-200 via-rose-100 to-amber-100 px-4 py-5 shadow-md border border-white/40">
+      <div className="pointer-events-none absolute -top-10 -left-10 w-32 h-32 rounded-full bg-white/30 blur-2xl" />
+      <div className="pointer-events-none absolute top-6 right-4 w-20 h-20 rounded-full bg-yellow-300/30 blur-xl" />
+      <div className="pointer-events-none absolute bottom-0 right-10 w-24 h-24 rounded-full bg-pink-300/20 blur-xl" />
+
+      <div className="relative">
+        <div className="text-xs font-extrabold text-slate-700">
+          {t('cards.kicker', { defaultValue: 'Bonuswelt' })}
+        </div>
+
+        <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900">
+          🎴 {t('cards.title', { defaultValue: 'Sammelkarten' })}
+        </h1>
+
+        <p className="mt-1 text-sm text-slate-800 max-w-md">
+          {t('cards.subtitle', {
+            defaultValue: 'Schalte neue Karten frei und entdecke die Figuren aus der Story.',
+          })}
+        </p>
+
+        <div className="mt-3 flex flex-wrap gap-2">
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/70">🎴 Sammeln</span>
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/70">✨ Neu entdecken</span>
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/70">👀 Öffnen</span>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -248,17 +292,41 @@ function openCardModal(bonusId: string) {
   // ✅ nur lesen – Seen wird in CardDetail gesetzt
   const [seenBonusIds] = useState<string[]>(() => loadSeenBonusIds());
 
-  function openBonus(bonusId: string) {
-    navigate(`/cards/${bonusId}`, { state: { backTo: state?.backTo ?? '/cards' } });
+function openBonus(bonusId: string) {
+  if (bonusId === 'my-card') {
+    navigate('/cards/my-card', {
+      state: { backTo: state?.backTo ?? '/cards' },
+    });
+    return;
   }
 
-  const items = useMemo(() => {
-    return sortBonus(BONUS_INDEX.filter((i) => i.category === 'characters'));
-  }, []);
+  navigate(`/cards/${bonusId}`, {
+    state: { backTo: state?.backTo ?? '/cards' },
+  });
+}
+
+const items = useMemo(() => {
+  const base = sortBonus(BONUS_INDEX.filter((i) => i.category === 'characters'));
+
+  const myCardItem: BonusItem = {
+    bonusId: 'my-card',
+    category: 'characters',
+    mediaType: 'text',
+    released: true,
+    order: -999,
+    titleKey: '',
+    descriptionKey: '',
+  };
+
+  return [myCardItem, ...base];
+}, []);
 
   return (
     <Layout title={t('cards.title', { defaultValue: 'Sammelkarten' })} backPath={state?.backTo ?? '/bonus'}>
       <div className="max-w-3xl mx-auto px-4">
+  
+<CardsHero />
+
         <div className="mt-4 rounded-3xl border border-black/5 bg-gradient-to-br from-slate-50 via-white to-slate-50 p-3 shadow-sm">
           <div className="mb-2 flex items-center justify-between px-2">
             <div className="text-xs font-extrabold text-slate-700">
@@ -274,22 +342,24 @@ function openCardModal(bonusId: string) {
             <div className="pointer-events-none absolute -bottom-8 -right-8 w-28 h-28 rounded-full bg-sky-200/30" />
             <div className="pointer-events-none absolute top-8 right-10 w-16 h-16 rounded-full bg-rose-200/25" />
 
-            <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {items.map((item) => {
-                const unlocked = isBonusUnlocked(item, progress);
-                const opened = seenBonusIds.includes(item.bonusId);
+<div className="relative grid grid-cols-1 sm:grid-cols-2 gap-4">
+{items.map((item) => {
+  const unlocked =
+    item.characterId === 'amy' ? true : isBonusUnlocked(item, progress);
 
-                return (
-                  <CharacterCardTile
-                    key={item.bonusId}
-                    item={item}
-                    unlocked={unlocked}
-                    opened={opened}
-                    onOpen={openBonus}
-                  />
-                );
-              })}
-            </div>
+  const opened = seenBonusIds.includes(item.bonusId);
+
+  return (
+    <CharacterCardTile
+      key={item.bonusId}
+      item={item}
+      unlocked={unlocked}
+      opened={opened}
+      onOpen={openBonus}
+    />
+  );
+})}
+</div>
           </div>
         </div>
 

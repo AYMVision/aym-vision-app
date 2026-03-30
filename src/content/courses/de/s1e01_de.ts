@@ -393,7 +393,7 @@ const course: Course = {
         { id: 's1e01c04-0024', type: 'other', speaker: characters.yasmin, content: 'Aber zum Baden? Ungemütlich und kalt am Wasser 😰. Sieht komplett anders aus als auf den Bildern im Internet mit den badenden Leuten.', timestamp: '14:43' },
         { id: 's1e01c04-0025', type: 'other', speaker: characters.yasmin, content: 'Mega laut. Kann mein eigenes Wort nicht verstehen.', timestamp: '14:44' },
         { id: 's1e01c04-0026', type: 'other', speaker: characters.yasmin, content: 'Und der Boden ist nach dem Regen richtig rutschig. Musste mich eben sogar festhalten.', timestamp: '14:44' },
-        { id: 's1e01c04-0027', type: 'other', speaker: characters.yasmin, content: 'Was meinst du, soll ich Wasser gehen? Das war mein Plan.', timestamp: '14:45' },
+        { id: 's1e01c04-0027', type: 'other', speaker: characters.yasmin, content: 'Was meinst du, soll ich ins Wasser gehen? Das war mein Plan.', timestamp: '14:45' },
         { id: 's1e01c04-0028', type: 'other', speaker: characters.yasmin, content: 'Wenn ich nur ein Selfie vom Rand schicke, komme ich ja nicht gegen Lisas Bild an…', timestamp: '14:46' },
         { id: 's1e01c04-0029', type: 'other', speaker: characters.yasmin, content: 'Und jetzt bin ich schon mal hier… Aber… sieht gar nicht nach Badesee aus.', timestamp: '14:46' },
         { id: 's1e01c04-0030', type: 'other', speaker: characters.yasmin, content: 'Eher nach Wildwasser-Abenteuer. Was mach ich bloß?', timestamp: '14:47' },

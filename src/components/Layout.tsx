@@ -20,6 +20,7 @@ import HeaderProgressChip from './HeaderProgressChip';
 import { useProfile } from '../profile/useProfile';
 import { useRewardFx } from '../progress/rewardFx';
 import SmartImage from './SmartImage';
+import BottomNav from './BottomNav';
 
 
 type LayoutProps = {
@@ -61,8 +62,18 @@ const { t: tCommon } = useTranslation('common');
   const isStoryRoute = location.pathname.startsWith('/stories');
   const shouldHideFooter = Boolean(hideFooter) || isStoryRoute;
 
-  // Navigation Links (Desktop + Mobile)
-const links = useMemo(
+    // Mobile Bottom Nav: nur für kinderrelevante Bereiche zeigen
+  const showBottomNav =
+    !hideHeader &&
+    !location.pathname.startsWith('/parents') &&
+    !location.pathname.startsWith('/concept') &&
+    !location.pathname.startsWith('/about') &&
+    !location.pathname.startsWith('/privacy') &&
+    !location.pathname.startsWith('/faq') &&
+    !location.pathname.startsWith('/adult-settings');
+
+// Navigation Links (Desktop + Mobile)
+const desktopLinks = useMemo(
   () => [
     { to: '/', label: tNav('home') as string },
     { to: '/stories', label: tNav('stories') as string },
@@ -73,14 +84,37 @@ const links = useMemo(
   [tNav]
 );
 
+const mobilePrimaryLinks = useMemo(
+  () => [
+    { to: '/', label: tNav('home') as string },
+    { to: '/stories', label: tNav('storiesKids', { defaultValue: 'Meine Amics' }) as string },
+    { to: '/diaries', label: tNav('diaries', { defaultValue: 'Tagebuch' }) as string },
+    { to: '/newspaper', label: tNav('newspaper', { defaultValue: 'Schülerzeitung' }) as string },
+    { to: '/album', label: tNav('album', { defaultValue: 'Sticker' }) as string },
+    { to: '/profile', label: tNav('profile') as string },
+  ],
+  [tNav]
+);
 
-  // Active Link Check (inkl. Hash)
-  const isActive = (to: string) => {
-    const currentPath = location.pathname;
-const targetPath = to.split('#')[0];
-return currentPath === targetPath && (to.includes('#') ? (location.hash === '#' + to.split('#')[1]) : true);
+const mobileSecondaryLinks = useMemo(
+  () => [
+    { to: '/parents', label: tNav('parents') as string },
+    { to: '/about', label: tNav('about') as string },
+    { to: '/concept', label: tNav('concept') as string },
+  ],
+  [tNav]
+);
 
-  };
+// Active Link Check (inkl. Hash)
+const isActive = (to: string) => {
+  const currentPath = location.pathname;
+  const targetPath = to.split('#')[0];
+
+  if (targetPath === '/') return currentPath === '/';
+
+  return currentPath.startsWith(targetPath) &&
+    (to.includes('#') ? location.hash === '#' + to.split('#')[1] : true);
+};
 
   const showBack = Boolean(backPath);
 
@@ -251,23 +285,23 @@ return currentPath === targetPath && (to.includes('#') ? (location.hash === '#' 
 
           </div>
 
-          {/* ===== Desktop Nav ===== */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {links.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={cn(
-                  'px-4 py-2 text font-medium transition-colors duration-200',
-                  isActive(link.to)
-                    ? 'text-[var(--color-teal-400)]'
-                    : 'text-[var(--color-teal-900)] hover:text-[var(--color-teal-300)]'
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+{/* ===== Desktop Nav ===== */}
+<nav className="hidden md:flex items-center space-x-1">
+  {desktopLinks.map((link) => (
+    <Link
+      key={link.to}
+      to={link.to}
+      className={cn(
+        'px-4 py-2 font-medium transition-colors duration-200',
+        isActive(link.to)
+          ? 'text-[var(--color-teal-400)]'
+          : 'text-[var(--color-teal-900)] hover:text-[var(--color-teal-300)]'
+      )}
+    >
+      {link.label}
+    </Link>
+  ))}
+</nav>
 
           {/* ===== Desktop Right ===== */}
           <div className="hidden md:flex flex-1 justify-end items-center gap-4">
@@ -370,24 +404,54 @@ return currentPath === targetPath && (to.includes('#') ? (location.hash === '#' 
           </button>
         </div>
 
-        <nav className="flex flex-col space-y-1 p-4">
-          {links.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={cn(
-                'block px-4 py-2 text-base font-medium transition-colors duration-200',
-                isActive(link.to)
-                  ? 'text-[var(--color-teal-300)]'
-                  : 'text-[var(--color-teal-900)] hover:text-[var(--color-teal-400)]'
-              )}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
+        <nav className="flex flex-col p-4">
+          <div className="text-xs font-semibold text-slate-400 px-4 mb-2">
+            {tNav('kids', { defaultValue: 'Für Kinder' })}
+          </div>
 
-          <LanguageSelector className="px-4 py-2" />
+<div className="flex flex-col space-y-1">
+  {mobilePrimaryLinks.map((link) => (
+    <Link
+      key={link.to}
+      to={link.to}
+      className={cn(
+        'block px-4 py-3 text-base font-medium rounded-2xl transition-colors duration-200',
+        isActive(link.to)
+          ? 'bg-[var(--color-teal-50)] text-[var(--color-teal-600)] border border-[var(--color-teal-100)]'
+          : 'text-[var(--color-teal-900)] hover:bg-slate-50 hover:text-[var(--color-teal-400)] border border-transparent'
+      )}
+      onClick={() => setIsMenuOpen(false)}
+    >
+      {link.label}
+    </Link>
+  ))}
+</div>
+
+          <div className="mt-6 text-xs font-semibold text-slate-400 px-4 mb-2">
+            {tNav('parents', { defaultValue: 'Für Eltern' })}
+          </div>
+
+          <div className="flex flex-col space-y-1">
+            {mobileSecondaryLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={cn(
+                  'block px-4 py-3 text-base font-medium rounded-2xl transition-colors duration-200',
+                  isActive(link.to)
+                    ? 'bg-[var(--color-teal-50)] text-[var(--color-teal-600)]'
+                    : 'text-[var(--color-teal-900)] hover:bg-slate-50 hover:text-[var(--color-teal-400)]'
+                )}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-6">
+            <LanguageSelector className="px-4 py-2" />
+          </div>
         </nav>
       </div>
       )}
@@ -395,9 +459,21 @@ return currentPath === targetPath && (to.includes('#') ? (location.hash === '#' 
       {/* =========================
           MAIN
          ========================= */}
-      <main className="flex-1 flex flex-col items-center justify-start z-0">
+      <main
+        className={cn(
+          'flex-1 flex flex-col items-center justify-start z-0',
+          showBottomNav ? 'pb-24 md:pb-0' : ''
+        )}
+      >
         {children}
       </main>
+
+      {/* =========================
+          MOBILE BOTTOM NAV
+         ========================= */}
+      {showBottomNav && (
+        <BottomNav backTo={location.pathname + location.search + location.hash} />
+      )}
 
       {/* =========================
           FOOTER

@@ -79,6 +79,49 @@ function buildCandidates(src: string): { avif?: SrcCandidate[]; webp?: SrcCandid
   return { fallback: url };
 }
 
+function AlbumHero({
+  title,
+  subtitle,
+  progressText,
+}: {
+  title: string;
+  subtitle: string;
+  progressText: string;
+}) {
+  return (
+    <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-200 via-yellow-100 to-orange-100 px-4 py-5 shadow-md border border-white/40">
+      <div className="pointer-events-none absolute -top-10 -left-10 w-32 h-32 rounded-full bg-white/30 blur-2xl" />
+      <div className="pointer-events-none absolute top-6 right-4 w-20 h-20 rounded-full bg-yellow-300/30 blur-xl" />
+      <div className="pointer-events-none absolute bottom-0 right-10 w-24 h-24 rounded-full bg-orange-300/20 blur-xl" />
+
+      <div className="relative">
+        <div className="text-xs font-extrabold text-slate-700">
+          Bonuswelt
+        </div>
+
+        <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900">
+          ⭐ {title}
+        </h1>
+
+        <p className="mt-1 text-sm text-slate-800 max-w-md">
+          {subtitle}
+        </p>
+
+        <div className="mt-3 flex flex-wrap gap-2">
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/70">
+            ⭐ Sammeln
+          </span>
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/70">
+            🏆 Freischalten
+          </span>
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/70">
+            {progressText}
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function StickerAlbum() {
   const { profile } = useProfile();
@@ -205,25 +248,18 @@ const progressPct =
   return (
     <Layout hideFooter>
       <div className="w-full max-w-2xl px-4 py-8">
-        {/* Topbar */}
-        <div className="mt-2 mb-4 flex items-center justify-between gap-3">
-          <div className="min-w-0">
-            <h1 className="text-2xl font-bold text-anthracite-950">
-              {tStories('album.title', { defaultValue: 'Sticker-Album' })}
-            </h1>
-            <p className="text-sm text-slate-600">
-              {tStories('album.subtitle', { defaultValue: 'Sammle Sticker & Badges – dein Fortschritt bleibt auf deinem Gerät.' })}
-            </p>
-          </div>
 
-          <Link
-            to={backTo}
-            className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white text-sm font-semibold hover:bg-slate-50"
-            aria-label={tStories('album.backAria', { defaultValue: 'Zurück' })}
-          >
-            ← {tStories('album.back', { defaultValue: 'Zurück' })}
-          </Link>
-        </div>
+        <AlbumHero
+  title={tStories('album.title', { defaultValue: 'Sticker-Album' })}
+  subtitle={tStories('album.subtitle', {
+    defaultValue: 'Sammle Sticker & Badges – dein Fortschritt bleibt auf deinem Gerät.',
+  })}
+  progressText={`${unlockedCollectibles}/${totalCollectibles}`}
+/>
+
+{/* Topbar */}
+<div className="mt-4 mb-4 flex items-center justify-end gap-3">
+</div>
 
         {/* Gaming Header Card */}
         <div className="rounded-3xl border border-black/5 bg-white shadow-sm p-5">

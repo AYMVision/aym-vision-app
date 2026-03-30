@@ -93,8 +93,8 @@ export const BONUS_CATEGORIES: BonusCategoryMeta[] = [
 const CHARACTER_UNLOCKS_BY_CHAPTER: Record<string, CharacterId[]> = {
   // s1e01c01: (aus deiner Liste: Yasmin Lisa Mia Finn Dominik Elsa Igor Markus Chioma)
   // Aktuell existieren in CHARACTERS davon: mia, finn, dominik, chioma
-  s1e01c01: [],
-  s1e01c02: ['amy'],
+  s1e01c01: ['amy'],
+  s1e01c02: [],
   s1e01c03: [],
   s1e01c04: [],
   s1e01c05: ['lukas'],
@@ -294,6 +294,20 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     order: 54,
   },
 
+  {
+  bonusId: 'chioma-news-school-ai',
+  category: 'newspaper',
+  released: true,
+  order: 5,
+  mediaType: 'text',
+  titleKey: 'bonus:newspaper.currentNews.example.title',
+  descriptionKey: 'bonus:newspaper.currentNews.example.description',
+  coverImage: 'media/ui/welcome/feat-newspaper-1024.webp',
+  bodySrc: 'media/newspaper/articles/news/kw14_26_chioma-news-school-ai',
+  bodyKind: 'md',
+  topicTags: ['infoCheck', 'reflect'],
+},
+
 
 
 //_________________________________________________________
@@ -309,7 +323,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
   mediaType: 'text',
 titleKey: 'diaries.books.yasmin.title',
 descriptionKey: 'diaries.books.yasmin.desc',
-  coverImage: 'media/bonus/diaries/yasmin-book-512.webp',
+  coverImage: 'media/story/characters/yasmin-512.webp',
   released: true,
   unlockedBy: { type: 'chapter', id: 's1e01c01' }, // erstes Auftauchen
   order: 60,
@@ -320,7 +334,7 @@ descriptionKey: 'diaries.books.yasmin.desc',
   mediaType: 'text',
 titleKey: 'diaries.books.mia.title',
 descriptionKey: 'diaries.books.mia.desc',
-  coverImage: 'media/bonus/diaries/mia-book-512.webp',
+  coverImage: 'media/story/characters/mia-512.webp',
   released: true,
   unlockedBy: { type: 'chapter', id: 's1e03c02' },
   order: 61,
@@ -331,7 +345,7 @@ descriptionKey: 'diaries.books.mia.desc',
   mediaType: 'text',
   titleKey: 'diaries.books.jonas.title',
 descriptionKey: 'diaries.books.jonas.desc',
-  coverImage: 'media/bonus/diaries/jonas-book-512.webp',
+  coverImage: 'media/story/characters/jonas-512.webp',
   released: true,
   unlockedBy: { type: 'chapter', id: 's1e??c??' }, // wenn du weißt, wann es starten soll
   order: 62,

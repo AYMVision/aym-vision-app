@@ -8,152 +8,172 @@ topicTags: [create, teamTalk, safe]
 
 # Spuren im Bild – so liest du Fotos richtig
 
-Hier ist Carlos aus der Technik-Rubrik unserer Schülerzeitung. Ich nehme Dinge gern genauer unter die Lupe.
+Hi, ich bin Carlos aus der Technik-Rubrik unserer Schülerzeitung.
 
-Neulich war eine Freundin plötzlich in Gefahr und unerreichbar.  
-Das Einzige, was wir hatten, war ein Foto.  
-Also haben wir uns jeden Hinweis genau angeschaut.  
-👉 Ein Foto kann mehr verraten, als man denkt.
+Neulich war eine Freundin plötzlich nicht erreichbar.  
+Das Einzige, was wir hatten, war ein Foto.
+
+Also haben wir uns das Bild ganz genau angeschaut.  
+Und dabei wurde klar: Ein Foto zeigt oft mehr, als man auf den ersten Blick denkt.
+
+👉 Manchmal verrät ein Bild nicht nur, **was** zu sehen ist.  
+Es verrät auch **wo**, **wann** und **wie** es aufgenommen wurde.
 
 [[callout kind="info"]]
-🔍 Was steckt wirklich in einem Foto?
+Wenn du mit dem Handy ein Foto machst, speichert das Gerät oft extra Infos mit ab.
 
-Wenn du mit dem Handy fotografierst, werden oft automatisch Infos mitgespeichert.  
-Diese Infos heißen Metadaten.
+Diese Infos heißen **Metadaten**.
 
-Das sind zum Beispiel:
-- 📍 genauer Standort (GPS-Koordinaten)
+Zum Beispiel:
+- 📍 Standort
 - 🕒 Uhrzeit
 - 📅 Datum
 - 📱 Gerätetyp
-- 🔢 manchmal sogar eine Geräte-Seriennummer
 - 🧭 Ausrichtung der Kamera
 
-Ob diese Daten gespeichert werden sollen oder nicht, kann jeder selbst an seinem Handy einstellen.
+Zusätzlich kann man auch direkt im Bild Hinweise erkennen.  
+Diese sichtbaren Spuren nennt man oft **Geodaten** oder **Kontext-Hinweise**.
+[[/callout]]
 
-Auch ohne diese Metadaten kann man im Bild Hinweise entdecken. Diese Infos heißen Geodaten.
+## Was man in Bildern entdecken kann
 
+Manche Hinweise sind im Bild selbst zu sehen.
+
+Zum Beispiel:
 - 🏔 Landschaft
 - 🪧 Schilder
 - 🏫 Logos
 - 🌤 Schatten
 - 🪟 Spiegelungen
 
-Ein Foto ist also auch eine Sammlung von Spuren.
+Wenn man diese Spuren bewusst auswertet, nennt man das **Kontextanalyse**.
 
-Wenn man diese Spuren bewusst auswertet, nennt man das Kontextanalyse.
+Für die Suche kann man Bilder auch in eine Suchmaschine hochladen.  
+Dann findet man manchmal ähnliche Bilder im Netz.
 
-Für die Recherche kann man auch ein Bild hochladen und ähnliche Bilder suchen.  
-Das nennt man Reverse Image Search.
-[[/callout]]
+Das nennt man **Reverse Image Search**.
 
-[[img src="media/newspaper/articles/s1e01c06/geodaten1" alt="Beispielbild mit sichtbaren Hinweisen"]]
+[[img src="media/newspaper/articles/s1e01c06_geodaten1" alt="Beispielbild mit sichtbaren Hinweisen"]]
 
 [[details title="🔍 Welche Hinweise stecken im Bild?"]]
 - 📍 Standort gespeichert
 - 🪧 Straßenschild sichtbar
 - 🏫 Schul-Logo auf Kleidung
-- 🕒 Schatten zeigt Uhrzeit
+- 🕒 Schatten zeigt ungefähr die Uhrzeit
 - 🚲 auffälliger Aufkleber
-- 😊 Gesichtserkennung möglich
+- 😊 Gesicht erkennbar
 [[/details]]
 
-## 🟢 Wann das hilfreich ist
+## Wann das hilfreich sein kann
 
-[[img src="media/newspaper/articles/s1e01c06/geodaten2" alt="Beispiel für Standortanzeige"]]
+Metadaten sind nicht automatisch schlecht.
 
-- Fotos leichter wiederfinden  
-- Orte wiederfinden  
-- Dinge online suchen  
-- Personen automatisch sortieren  
+Sie können auch nützlich sein.
 
-👉 Metadaten sind wie Notizzettel im Hintergrund.
+Zum Beispiel:
+- Fotos leichter wiederfinden
+- Orte wiederfinden
+- Bilder besser sortieren
+- Erinnerungen schneller einordnen
 
----
+👉 Metadaten sind ein bisschen wie kleine Notizzettel im Hintergrund.
 
-## 🔴 Wann das riskant wird
 
-[[details title="⚠️ Was kann passieren?"]]
-- Gesicht sichtbar  
-- Ort erkennbar  
-- Zeit nachvollziehbar  
-- Muster erkennbar  
+[[img src="media/newspaper/articles/s1e01c06_geodaten2" alt="Beispiel für Standortanzeige"]]
 
-👉 Kombination macht es gefährlich
+## Wann es riskant wird
+
+Problematisch wird es, wenn zu viele Infos zusammenkommen.
+
+Dann kann man über ein Bild manchmal mehr herausfinden, als dir lieb ist.
+
+[[details title="⚠️ Was kann dadurch sichtbar werden?"]]
+- dein Gesicht
+- dein Ort
+- die Zeit
+- deine Gewohnheiten
+
+Erst die Kombination macht es oft schwierig.
 [[/details]]
 
 [[callout kind="warn"]]
-Das Problem ist nicht das Posten.  
-Sondern die Kombination aus Gesicht + Ort + Zeit + Gewohnheit.
+Nicht nur ein einzelnes Detail ist wichtig.
+
+Riskant wird es oft dann, wenn **Gesicht + Ort + Zeit + Gewohnheit** zusammenpassen.
 [[/callout]]
 
----
+## Gesichtserkennung – warum das wichtig ist
 
-## 😊 Gesichtserkennung – zwei kritische Fälle
+Gesichter sind besonders sensible Infos.
+
+Denn sie können mit anderen Daten verbunden werden.
 
 [[details title="🔎 Fall 1: Verknüpfung mit deinem Namen"]]
-Systeme können dein Gesicht mit deinem Namen verbinden.
+Systeme können Gesichter mit Namen oder Profilen verbinden.
 
-Viele Informationen können zusammengeführt werden.
+Ein einzelnes Foto ist oft noch nicht das Problem.
 
-Ein einzelnes Foto ist meist kein Problem.  
-Viele zusammen schon.
+Aber viele Bilder zusammen können ein deutlich genaueres Profil ergeben.
 [[/details]]
 
-[[img src="media/newspaper/articles/s1e01c06/geodaten3" alt="Beispiel Gesichtserkennung"]]
+[[img src="media/newspaper/articles/s1e01c06_geodaten3" alt="Beispiel Gesichtserkennung"]]
+
 
 [[details title="🎭 Fall 2: Deepfakes"]]
-Gesichter können in andere Bilder oder Videos eingesetzt werden.
+Gesichter können heute in andere Bilder oder Videos eingesetzt werden.
 
-Das kann täuschend echt wirken.
+Das kann sehr echt aussehen, obwohl es gar nicht stimmt.
 
-In Deutschland ist das ohne Zustimmung oft nicht erlaubt.
+Deshalb ist es wichtig, mit Bildern vorsichtig umzugehen.
 [[/details]]
 
-[[img src="media/newspaper/articles/s1e01c06/geodaten4" alt="Beispiel Deepfake"]]
+[[img src="media/newspaper/articles/s1e01c06_geodaten4" alt="Beispiel Deepfake"]]
 
 [[callout kind="info"]]
-Nur weil etwas technisch möglich ist, heißt das nicht, dass es erlaubt ist.
+Nur weil etwas technisch möglich ist, heißt das noch lange nicht, dass es okay oder erlaubt ist.
 [[/callout]]
 
 [[callout kind="tip"]]
-Empfehlung:
-- Fotos nur mit Bekannten teilen  
-- Standort bewusst steuern
+Ein guter Anfang ist:
+- Fotos lieber nur mit Leuten teilen, denen du vertraust
+- Standort bewusst ein- oder ausschalten
+- vor dem Posten kurz überlegen, was das Bild verrät
 [[/callout]]
 
----
+## So stellst du den Standort ein
 
-## 📱 Standort einstellen
-
-[[details title="iPhone"]]
+[[details title="📱 iPhone"]]
 Einstellungen → Datenschutz & Sicherheit → Ortungsdienste → Kamera
 [[/details]]
 
-[[details title="Android"]]
+[[details title="🤖 Android"]]
 Einstellungen → Standort → Kamera
 [[/details]]
 
----
+## So kannst du Metadaten ansehen
 
-## ⚙️ Metadaten anzeigen
+[[details title="⚙️ So findest du sie"]]
+Foto öffnen → auf „i“ tippen oder nach oben wischen
 
-[[details title="So findest du sie"]]
-Foto öffnen → „i“ oder nach oben wischen
-
-Dort:
+Dort siehst du oft:
 - Standort
 - Datum
 - Gerät
 [[/details]]
 
----
+## Mini-Check vor dem Teilen
 
-## ✅ Mini-Checkliste
+[[callout kind="tip"]]
+Frag dich vor dem Posten:
 
-- Würde ich das öffentlich zeigen?  
-- Ist der Ort sichtbar?  
-- Gibt es Muster?  
-- Muss der Standort sichtbar sein?  
+- Würde ich das auch öffentlich zeigen?
+- Ist der Ort sichtbar?
+- Ist mein Gesicht gut erkennbar?
+- Kann man daraus Gewohnheiten ableiten?
+- Muss der Standort wirklich mit dabei sein?
+[[/callout]]
 
-👉 Es geht nicht um Verbote, sondern um bewusstes Entscheiden.
+Am Ende geht es nicht um Verbote.
+
+Es geht darum, bewusst zu entscheiden,  
+welche Spuren du mit einem Bild hinterlassen willst.

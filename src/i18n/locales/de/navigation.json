@@ -7,7 +7,7 @@
   "closeMenu": "Menü schließen",
   "openProfile": "Profil öffnen",
   "profile": "Profil",
-    "kids": "Für Kinder",
+  "kids": "Für Kinder",
   "parents": "Für Eltern",
   "concept": "Konzept",
   "privacy": "Datenschutz",
@@ -16,5 +16,16 @@
   "profileMeta": {
     "openAria": "Profil öffnen",
     "avatarAlt": "Profil"
+  },
+
+  "mobileNav": {
+  "stories": "Meine Amics",
+  "diaries": "Tagebücher",
+  "newspaper": "Schülerzeitung",
+  "album": "Stickeralbum",
+    "openStories": "Stories öffnen",
+    "openDiaries": "Tagebuch öffnen",
+    "openNewspaper": "Schülerzeitung öffnen",
+    "openAlbum": "Sticker-Album öffnen"
   }
 }

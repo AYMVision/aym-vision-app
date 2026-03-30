@@ -37,7 +37,7 @@ function ArticleImage({
   const c = buildImgCandidates(src);
 
   return (
-    <figure className="rounded-3xl border border-slate-200 bg-white overflow-hidden shadow-sm">
+    <figure className="rounded-[28px] overflow-hidden border border-slate-200 bg-white shadow-sm">
       <picture>
         {c.avif1024 ? (
           <source
@@ -81,43 +81,48 @@ function Callout({
       ? {
           icon: '💡',
           title: 'Tipp',
-          box: 'border-emerald-200 bg-emerald-50',
-          badge: 'bg-emerald-200/60 text-emerald-900',
+          box: 'border-2 border-emerald-300 bg-gradient-to-br from-emerald-50 via-white to-emerald-100/60',
+          badge: 'bg-emerald-200/80 text-emerald-950',
         }
       : kind === 'warn'
       ? {
           icon: '⚠️',
           title: 'Achtung',
-          box: 'border-amber-200 bg-amber-50',
-          badge: 'bg-amber-200/60 text-amber-900',
+          box: 'border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-white to-amber-100/60',
+          badge: 'bg-amber-200/80 text-amber-950',
         }
       : {
           icon: 'ℹ️',
           title: 'Info',
-          box: 'border-sky-200 bg-sky-50',
-          badge: 'bg-sky-200/60 text-sky-900',
+          box: 'border-2 border-sky-300 bg-gradient-to-br from-sky-50 via-white to-sky-100/60',
+          badge: 'bg-sky-200/80 text-sky-950',
         };
 
   return (
-    <div className={['rounded-3xl border p-4 sm:p-5 shadow-sm', cfg.box].join(' ')}>
+    <div className={['rounded-[28px] p-4 sm:p-5 shadow-sm', cfg.box].join(' ')}>
       <div className="flex items-center gap-2">
-        <span className="text-lg">{cfg.icon}</span>
-        <span className={['text-xs font-extrabold px-2 py-1 rounded-full', cfg.badge].join(' ')}>
+        <span className="text-lg" aria-hidden="true">
+          {cfg.icon}
+        </span>
+        <span className={['text-xs font-extrabold px-2.5 py-1 rounded-full', cfg.badge].join(' ')}>
           {cfg.title}
         </span>
       </div>
+
       <div className="mt-3">{children}</div>
     </div>
   );
 }
 
-function Gallery({ images }: { images: Array<{ src: string; alt?: string; caption?: string }> }) {
+function Gallery({
+  images,
+}: {
+  images: Array<{ src: string; alt?: string; caption?: string }>;
+}) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       {images.map((im, idx) => (
-        <div key={idx} className="rounded-3xl overflow-hidden">
-          <ArticleImage src={im.src} alt={im.alt} caption={im.caption} />
-        </div>
+        <ArticleImage key={idx} src={im.src} alt={im.alt} caption={im.caption} />
       ))}
     </div>
   );
@@ -132,9 +137,9 @@ function MiniMarkdown({ text }: { text: string }) {
   function flushPara() {
     if (!para.length) return;
     out.push(
-      <div key={`p-${out.length}`} className="text-base leading-relaxed text-slate-800">
+      <p key={`p-${out.length}`} className="text-[15px] sm:text-base leading-relaxed text-slate-800">
         {para.join(' ')}
-      </div>
+      </p>
     );
     para = [];
   }
@@ -142,7 +147,7 @@ function MiniMarkdown({ text }: { text: string }) {
   function flushList() {
     if (!list.length) return;
     out.push(
-      <ul key={`ul-${out.length}`} className="list-disc pl-5 space-y-1 text-base text-slate-800">
+      <ul key={`ul-${out.length}`} className="list-disc pl-5 space-y-1.5 text-[15px] sm:text-base text-slate-800">
         {list.map((x, i) => (
           <li key={i}>{x}</li>
         ))}
@@ -157,11 +162,13 @@ function MiniMarkdown({ text }: { text: string }) {
       flushList();
       continue;
     }
+
     if (line.startsWith('- ')) {
       flushPara();
       list.push(line.replace(/^-+\s+/, ''));
       continue;
     }
+
     para.push(line);
   }
 
@@ -171,110 +178,132 @@ function MiniMarkdown({ text }: { text: string }) {
   return <div className="space-y-3">{out}</div>;
 }
 
+function ReadingParagraph({ text }: { text: string }) {
+  return (
+    <p className="text-[16px] sm:text-[17px] leading-8 text-slate-800">
+      {text}
+    </p>
+  );
+}
+
+function SectionHeading({ text }: { text: string }) {
+  return (
+    <div className="pt-2">
+      <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[var(--color-teal-900)]">
+        {text}
+      </h2>
+      <div className="mt-2 h-1 w-12 rounded-full bg-[var(--color-teal-200)]" />
+    </div>
+  );
+}
+
+function StandaloneList({ items }: { items: string[] }) {
+  return (
+    <div className="rounded-[28px] border border-slate-200 bg-white shadow-sm p-4 sm:p-5">
+      <div className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+        ✅ Merkliste
+      </div>
+
+      <ul className="mt-3 list-disc pl-5 space-y-2 text-[15px] sm:text-base text-slate-800">
+        {items.map((it, j) => (
+          <li key={j}>{it}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function QuoteBlock({ text }: { text: string }) {
+  return (
+    <div className="rounded-[28px] border border-[var(--color-teal-200)] bg-[var(--color-teal-50)] shadow-sm p-4 sm:p-5">
+      <div className="text-sm font-extrabold text-[var(--color-teal-900)] flex items-center gap-2">
+        💬 Merksatz
+      </div>
+      <div className="mt-2 text-[15px] sm:text-base text-slate-800 leading-relaxed">
+        “{text}”
+      </div>
+    </div>
+  );
+}
+
+function DetailsBlock({ title, body }: { title: string; body: string }) {
+  return (
+    <details className="rounded-[28px] border border-slate-200 bg-white shadow-sm overflow-hidden group">
+      <summary className="cursor-pointer list-none px-4 py-4 sm:px-5 sm:py-5 flex items-center justify-between gap-3">
+        <div className="text-[15px] sm:text-base font-extrabold text-[var(--color-teal-900)] flex items-center gap-2">
+          ✨ <span>{title}</span>
+        </div>
+        <div className="text-xs font-bold text-slate-500 group-open:hidden">Aufklappen</div>
+        <div className="text-xs font-bold text-slate-500 hidden group-open:block">Zuklappen</div>
+      </summary>
+
+      <div className="px-4 pb-5 sm:px-5 sm:pb-6">
+        <MiniMarkdown text={body} />
+      </div>
+    </details>
+  );
+}
+
 export function ArticleBody({ text }: { text: string }) {
   const blocks = useMemo(() => parseArticleBlocks(text), [text]);
-
-  // kleines „Cover“-Gefühl: wir ziehen den ersten H1 raus
-  const firstH1 = blocks.find((b) => b.type === 'h1') as any | undefined;
+  const firstH1 = blocks.find((b) => b.type === 'h1') as { type: 'h1'; text: string } | undefined;
 
   return (
     <div className="relative">
-      {/* weicher Hintergrund */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10"
-      >
+      {/* Hintergrund */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-teal-50)] via-white to-white" />
         <div className="absolute -top-16 -left-16 w-64 h-64 rounded-full bg-[var(--color-teal-200)]/25 blur-3xl" />
         <div className="absolute -top-10 -right-10 w-56 h-56 rounded-full bg-amber-200/20 blur-3xl" />
+        <div className="absolute top-40 right-0 w-40 h-40 rounded-full bg-sky-200/15 blur-3xl" />
       </div>
 
       {/* Titelkarte */}
       {firstH1 ? (
-        <div className="rounded-[32px] border border-white/60 bg-white/70 backdrop-blur shadow-sm p-5 sm:p-7">
-          <div className="text-xs font-bold text-[var(--color-teal-700)]">
+        <div className="rounded-[32px] bg-gradient-to-br from-white via-white to-[var(--color-teal-50)] shadow-md p-6 sm:p-8">
+          <div className="text-sm font-extrabold text-[var(--color-teal-600)]">
             📚 Mini-Artikel
           </div>
+
           <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
             {firstH1.text}
           </div>
+
           <div className="mt-3 text-sm sm:text-base text-slate-700">
             ✨ Kurz, klar und ohne Stress – lies in deinem Tempo.
           </div>
         </div>
       ) : null}
 
-      {/* Inhalte */}
-      <div className="mt-5 space-y-5">
+      {/* Inhalt */}
+      <div className="mt-6 space-y-6">
         {blocks.map((b, i) => {
           if (b.type === 'h1') {
-            // H1 wurde oben schon als Titelkarte gezeigt -> hier überspringen
             if (firstH1 && b.text === firstH1.text) return null;
+
             return (
-              <div
-                key={i}
-                className="text-2xl font-extrabold text-slate-900"
-              >
-                {b.text}
+              <div key={i} className="pt-2">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
+                  {b.text}
+                </h1>
               </div>
             );
           }
 
           if (b.type === 'h2') {
-            return (
-              <div
-                key={i}
-                className="rounded-2xl bg-white/70 border border-slate-200 shadow-sm px-4 py-3"
-              >
-                <div className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                  <span>⭐</span>
-                  <span>{b.text}</span>
-                </div>
-              </div>
-            );
+            return <SectionHeading key={i} text={b.text} />;
           }
 
           if (b.type === 'p') {
-            return (
-              <div
-                key={i}
-                className="rounded-3xl border border-slate-200 bg-white shadow-sm p-4 sm:p-5 text-base leading-relaxed text-slate-800"
-              >
-                {b.text}
-              </div>
-            );
+            return <ReadingParagraph key={i} text={b.text} />;
           }
 
           if (b.type === 'ul') {
-            return (
-              <div key={i} className="rounded-3xl border border-slate-200 bg-white shadow-sm p-4 sm:p-5">
-                <div className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                  ✅ Merkliste
-                </div>
-                <ul className="mt-3 list-disc pl-5 space-y-2 text-base text-slate-800">
-                  {b.items.map((it, j) => (
-                    <li key={j}>{it}</li>
-                  ))}
-                </ul>
-              </div>
-            );
+            return <StandaloneList key={i} items={b.items} />;
           }
 
           if (b.type === 'quote') {
-            // wie Chat-Bubble
-            return (
-              <div
-                key={i}
-                className="rounded-3xl border border-slate-200 bg-[var(--color-teal-50)] shadow-sm p-4 sm:p-5"
-              >
-                <div className="text-sm font-extrabold text-[var(--color-teal-900)]">
-                  💬 Zitat
-                </div>
-                <div className="mt-2 text-base text-slate-800 leading-relaxed">
-                  “{b.text}”
-                </div>
-              </div>
-            );
+            return <QuoteBlock key={i} text={b.text} />;
           }
 
           if (b.type === 'img') {
@@ -283,9 +312,9 @@ export function ArticleBody({ text }: { text: string }) {
 
           if (b.type === 'gallery') {
             return (
-              <div key={i} className="rounded-3xl border border-slate-200 bg-white shadow-sm p-4 sm:p-5">
+              <div key={i} className="rounded-[28px] border border-slate-200 bg-white shadow-sm p-4 sm:p-5">
                 <div className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                  🖼️ Bilder-Galerie
+                  🖼️ Bilder
                 </div>
                 <div className="mt-4">
                   <Gallery images={b.images} />
@@ -303,31 +332,16 @@ export function ArticleBody({ text }: { text: string }) {
           }
 
           if (b.type === 'details') {
-            return (
-              <details
-                key={i}
-                className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden"
-              >
-                <summary className="cursor-pointer px-4 py-4 sm:px-5 sm:py-5 flex items-center justify-between gap-3">
-                  <div className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                    ✨ <span>{b.title}</span>
-                  </div>
-                  <div className="text-xs font-bold text-slate-500">Aufklappen</div>
-                </summary>
-                <div className="px-4 pb-5 sm:px-5 sm:pb-6">
-                  <MiniMarkdown text={b.body} />
-                </div>
-              </details>
-            );
+            return <DetailsBlock key={i} title={b.title} body={b.body} />;
           }
 
           return null;
         })}
       </div>
 
-      {/* kleiner Abschluss */}
-      <div className="mt-6 rounded-3xl border border-white/60 bg-white/70 backdrop-blur shadow-sm p-4 sm:p-5 text-sm text-slate-700">
-        🎉 Fertig! Wenn du willst: Lies später nochmal – manchmal merkt man beim zweiten Mal mehr.
+      {/* Abschluss */}
+      <div className="mt-8 rounded-[28px] border border-white/60 bg-white/70 backdrop-blur shadow-sm p-4 sm:p-5 text-sm text-slate-700">
+        🎉 Fertig! Wenn du willst: Lies später nochmal – manchmal merkt man beim zweiten Mal noch mehr.
       </div>
     </div>
   );

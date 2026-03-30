@@ -1,71 +1,116 @@
-# Artikel-Baukasten – Anleitung
+# 📰 Artikel-Baukasten (einfach erklärt)
 
-So schreibe ich neue Artikel:
-
-Ich kann ganz normal Markdown schreiben:
-- Überschriften mit # oder ##
-- Listen mit -
-- Absätze einfach untereinander
+So schreibst du neue Artikel für die Schülerzeitung.
 
 ---
 
-Bilder einfügen:
+## 🧠 Grundregel
 
-[[img src="media/newspaper/articles/ARTIKEL-ID/bildname" alt="Beschreibung" caption="Optionaler Text"]]
+👉 **Normaler Text bleibt normal.**
 
-Wichtig:
-Ich schreibe nur den Basisnamen.
-Die App lädt automatisch:
-- bildname-512.webp
-- bildname-1024.webp
-(optional auch .avif)
+👉 **Nur besondere Dinge bekommen Boxen.**
 
 ---
 
-Text ausklappbar machen:
+## ✍️ Normal schreiben
 
-[[details title="Titel hier"]]
-Hier kommt der Text hinein.
-Auch Listen sind möglich:
+Du kannst ganz normales Markdown benutzen:
+
+# Überschrift
+## Unterüberschrift
+
+Ein normaler Text.
+
+- Liste
+- mit Punkten
+
+> Zitat
+
+---
+
+## 💡 Info-Box
+
+[[callout kind="info" title="Wichtig"]]
+Das ist ein Hinweis.
+[[/callout]]
+
+---
+
+## ✨ Tipp
+
+[[callout kind="tip" title="Tipp"]]
+So kannst du es besser machen.
+[[/callout]]
+
+---
+
+## ⚠️ Achtung
+
+[[callout kind="warn" title="Achtung"]]
+Das solltest du beachten.
+[[/callout]]
+
+---
+
+## ✅ Merkliste
+
+[[checklist title="Merkliste"]]
 - Punkt 1
 - Punkt 2
+- Punkt 3
+[[/checklist]]
+
+---
+
+## 🔍 Mehr erfahren (aufklappbar)
+
+[[details title="Mehr dazu"]]
+Hier steht zusätzlicher Text.
 [[/details]]
 
 ---
 
-Info-Box einfügen:
+## 🎯 Mini-Aufgabe
 
-[[callout kind="info"]]
-Neutraler Hinweis
-[[/callout]]
-
-[[callout kind="tip"]]
-💡 Tipp
-[[/callout]]
-
-[[callout kind="warn"]]
-⚠️ Warnung
-[[/callout]]
+[[task title="Probier es aus"]]
+Überlege dir ein Beispiel aus deinem Alltag.
+[[/task]]
 
 ---
 
-Bilder-Galerie:
+## 🖼️ Bild
+
+[[img src="media/newspaper/articles/ARTIKEL-ID/bildname" alt="Beschreibung" caption="Optional"]]
+
+👉 Du brauchst nur:
+- bildname-512.webp
+- bildname-1024.webp
+
+---
+
+## 🖼️ Galerie
 
 [[gallery]]
 [[img src="media/newspaper/articles/ARTIKEL-ID/bild1" alt="..."]]
 [[img src="media/newspaper/articles/ARTIKEL-ID/bild2" alt="..."]]
-[[img src="media/newspaper/articles/ARTIKEL-ID/bild3" alt="..."]]
 [[/gallery]]
 
 ---
 
-Regeln:
+## 🚫 Wichtige Regeln
 
-- Artikelbilder brauchen nur 512 und 1024 Größe.
-- 256 wird für Artikel nicht benötigt.
-- Immer saubere Ordnerstruktur pro Artikel.
-- Keine HTML-Tags verwenden.
-- Keine Sonderzeichen in Dateinamen.
+- Kein HTML verwenden
+- Keine Sonderzeichen in Dateinamen
+- Nicht jeden Absatz in eine Box packen!
+- Weniger Boxen = besserer Artikel
 
-Das System funktioniert komplett ohne Backend.
-Alles liegt nur in /public.
+---
+
+## 🧩 Ziel
+
+👉 Der Artikel soll sich lesen wie eine Geschichte  
+👉 Nicht wie viele kleine Kacheln  
+
+---
+
+✨ Fertig!

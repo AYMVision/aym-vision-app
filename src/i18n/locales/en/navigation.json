@@ -16,5 +16,17 @@
   "profileMeta": {
     "openAria": "Open profile",
     "avatarAlt": "Profile"
+  },
+
+  "mobileNav": {
+  "stories": "Amy Surfwing",
+  "storiesKids": "My Amics",
+  "diaries": "Diary",
+  "newspaper": "School News",
+  "album": "Stickers",
+    "openStories": "Open stories",
+    "openDiaries": "Open diary",
+    "openNewspaper": "Open school newspaper",
+    "openAlbum": "Open sticker album"
   }
 }

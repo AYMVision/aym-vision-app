@@ -1,4 +1,4 @@
-import type { Character, Course } from '../common/types';
+import type { Character, Course } from '../../common/types';
 
 import amyAvatar from '../assets/characters/amy.png';
 import chiomaAvatar from '../assets/characters/chioma.png';

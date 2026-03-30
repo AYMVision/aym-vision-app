@@ -184,6 +184,12 @@
       "videoTitle": "",
       "videoMissing": ""
     },
+        "myCard": {
+      "title": "Meine Karte",
+      "hint": "Hier kannst du deine eigene Karte gestalten.",
+      "edit": "Bearbeiten →",
+      "subtitle": "Schreib auf, was dich ausmacht."
+    },
 
 
     "actions": {
@@ -378,4 +384,5 @@
     "title": "Chatregeln: Chioma & Dominik",
     "description": "Kurz erklärt, warum Regeln im Klassenchat helfen."
   }
+
 }

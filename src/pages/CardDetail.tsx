@@ -16,6 +16,7 @@ import { CHARACTERS, type CharacterEx } from '../content/characters';
 import { useProfile } from '../profile/useProfile';
 
 import CharacterFriendbookCard from '../components/CharacterFriendbookCard';
+import MyCharacterCardEditor from '../components/MyCharacterCardEditor';
 
 
 type LocationState = { backTo?: string; backgroundLocation?: unknown; autoOpen?: boolean } | null;
@@ -62,6 +63,7 @@ const autoOpen = Boolean(state?.autoOpen);
 
 
   const { bonusId } = useParams<{ bonusId: string }>();
+  const isMyCard = bonusId === 'my-card';
 
   const progress = useBonusProgressFromProfile();
   const [seenBonusIds, setSeenBonusIds] = useState<string[]>(() => loadSeenBonusIds());
@@ -73,6 +75,15 @@ const autoOpen = Boolean(state?.autoOpen);
   }, [bonusId]);
 
   const backPath = (state?.backTo ?? '/cards') as string;
+  if (isMyCard) {
+  return (
+    <Layout backPath={backPath}>
+      <div className="max-w-3xl mx-auto px-4 py-6">
+        <MyCharacterCardEditor />
+      </div>
+    </Layout>
+  );
+}
 
   // ✅ Typeguard: Character-Karten sind BonusItems mit category='characters'
   // und characterId muss ein gültiger Key in CHARACTERS sein.
@@ -88,6 +99,8 @@ const autoOpen = Boolean(state?.autoOpen);
     const id = x.characterId as CharacterId | undefined;
     return Boolean(id && (id as string) in CHARACTERS);
   }
+
+  
 
   if (!isCharacterCardItem(rawItem)) {
     return (

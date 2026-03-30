@@ -59,4 +59,16 @@ export type UserProfile = {
   createdAt: number;
   updatedAt: number;
   storyTranscripts?: Record<string, StoryTranscriptSnapshot>;
+  
+  myCard?: {
+    name: string;
+    mostly: string;
+    hobbies: string[];
+    othersLike: string[];
+    annoys: string[];
+    colors: string;
+    happy: string;
+    netRule: string;
+    funFact: string;
+  };
 };

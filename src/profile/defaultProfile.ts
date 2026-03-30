@@ -9,6 +9,19 @@ export function createDefaultProfile(): UserProfile {
     avatarBaseId: 'kid_01',
     wallet: { coins: 0, totalEarned: 0, totalSpent: 0 },
 
+
+  myCard: { 
+    name: '',
+    mostly: '',
+    hobbies: [],
+    othersLike: [],
+    annoys: [],
+    colors: '',
+    happy: '',
+    netRule: '',
+    funFact: '',
+  },
+
     inventory: getStarterInventory(),
 
     equipment: {
@@ -44,7 +57,11 @@ export function createDefaultProfile(): UserProfile {
       },
     },
 
+  
+
     createdAt: now,
     updatedAt: now,
   };
+
+  
 }
