@@ -2,6 +2,9 @@
 const KEY_HASH = 'aym_parent_pass_hash_v1';
 const KEY_UNLOCK_UNTIL = 'aym_parent_unlock_until_v1';
 
+// Master-Reset-Code — dokumentiert in FAQ und auf der Website
+export const MASTER_RESET_CODE = 'AYM-RESET-2025';
+
 function bufToHex(buf: ArrayBuffer) {
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
@@ -44,5 +47,10 @@ export function isParentUnlocked(): boolean {
 }
 
 export function lockParentNow() {
+  localStorage.removeItem(KEY_UNLOCK_UNTIL);
+}
+
+export function resetParentPasscode(): void {
+  localStorage.removeItem(KEY_HASH);
   localStorage.removeItem(KEY_UNLOCK_UNTIL);
 }

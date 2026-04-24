@@ -49,7 +49,7 @@ export default function ProfileProgressCard({
               to="/stories"
               className="text-xs px-3 py-1 rounded-lg border border-slate-200 bg-white font-semibold text-slate-700 hover:bg-slate-50"
             >
-              {t('profile:progress.openStories', { defaultValue: 'Zu den Stories →' })}
+              {t('profile:progress.openStories', { defaultValue: 'Zur Story →' })}
             </Link>
           </div>
         )}
@@ -115,8 +115,8 @@ export default function ProfileProgressCard({
           alt=""
           className={
             compact
-              ? 'w-12 h-12 rounded-2xl object-cover border border-slate-200'
-              : 'w-14 h-14 rounded-2xl object-cover border border-slate-200'
+              ? 'w-30 h-30 rounded-2xl object-cover border border-slate-200'
+              : 'w-30 h-30 rounded-2xl object-cover border border-slate-200'
           }
         />
 

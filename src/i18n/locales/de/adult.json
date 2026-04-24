@@ -1,8 +1,8 @@
 {
   "parent": {
-    "titleSetup": "Erwachsenen-Einstellungen einrichten",
+    "titleSetup": "Einstellungen für Eltern einrichten",
     "bodySetup": "Lege einen Passcode fest. Damit können Erwachsene später Einstellungen ändern.",
-    "titleUnlock": "Erwachsenenbereich",
+    "titleUnlock": "Bereich für Eltern",
     "bodyUnlock": "Gib den Passcode ein, um Einstellungen zu öffnen.",
     "passLabel": "Passcode",
     "passPlaceholder": "mind. 6 Zeichen",
@@ -14,7 +14,7 @@
     "errorTooShort": "Bitte mindestens 6 Zeichen.",
     "errorMismatch": "Die Passcodes stimmen nicht überein.",
     "errorWrong": "Passcode stimmt nicht.",
-    "hiddenAria": "Erwachsenenbereich öffnen",
+    "hiddenAria": "Bereich für Eltern öffnen",
     "hiddenVersion": "Version {{version}}",
     "footerHint": "Für Erwachsene: gedrückt halten",
     "title": "Nur für Erwachsene",
@@ -29,11 +29,24 @@
     "placeholderSetup": "Antwort eingeben",
     "ctaSetup": "Weiter",
     "ctaCancel": "Abbrechen",
-    "errorSetup": "Das stimmt leider nicht. Bitte nochmal."
+    "errorSetup": "Das stimmt leider nicht. Bitte nochmal.",
+    "forgotLink": "Passcode vergessen?",
+    "resetHint": "Gib den Master-Reset-Code ein. Du findest ihn in den FAQ dieser App.",
+    "resetPlaceholder": "Reset-Code",
+    "resetConfirm": "Zurücksetzen",
+    "resetCancel": "Abbrechen",
+    "resetError": "Falscher Reset-Code.",
+    "changeTitle": "Passcode ändern",
+    "changeHint": "Gib zuerst den aktuellen Passcode ein, dann den neuen.",
+    "changeCurrent": "Aktueller Passcode",
+    "changeNew": "Neuer Passcode (mind. 6 Zeichen)",
+    "changeRepeat": "Neuer Passcode wiederholen",
+    "changeSave": "Passcode ändern",
+    "changeSuccess": "Passcode wurde erfolgreich geändert."
   },
   "adult": {
-    "title": "Erwachsenen-Einstellungen",
-    "subtitle": "Hier kannst du Einstellungen für Erwachsene verwalten.",
+    "title": "Einstellungen",
+    "subtitle": "Hier kannst du Einstellungen verwalten.",
     "locked": "Dieser Bereich ist geschützt. Bitte entsperre ihn im Profil.",
     "lockNow": "Jetzt sperren"
   },
@@ -41,7 +54,7 @@
     "title": "KI-Einstellungen",
     "moreInfo": "Mehr Infos für Eltern →",
     "note": "Änderungen werden automatisch gespeichert.",
-    "modeIntro": "Den KI-Modus finden Sie in den Erwachsenen-Einstellungen.",
+    "modeIntro": "Den KI-Modus finden Sie in den Eltern-Einstellungen.",
     "owlMode": {
       "help": "Lege fest, wie Amy in der App arbeiten soll.",
       "label": "Amy-Modus",
@@ -183,6 +196,93 @@
       "session": "Sitzung zurücksetzen",
       "entitlementsDone": "Alle Freischaltungen wurden entfernt.",
       "sessionDone": "Die aktuelle Sitzung wurde zurückgesetzt."
+    },
+    "openPage": "Zur Testseite →"
+  },
+  "mediaSkills": {
+    "title": "Themenfelder zur Medienkompetenz",
+    "subtitle": "Themenfelder*, die Ihr Kind in der Story bereits entdeckt hat."
+  },
+  "privacy": {
+    "title": "Datenschutz & gespeicherte Daten",
+    "intro": "Diese App speichert alle Daten ausschließlich lokal auf diesem Gerät. Es werden keine Daten an externe Server übertragen.",
+    "items": {
+      "profile": "Kinderprofil",
+      "profileDetail": "Name, Avatar, Alter – lokal gespeichert.",
+      "progress": "Lernfortschritt",
+      "progressDetail": "Gespielte Kapitel und Entscheidungen – lokal gespeichert.",
+      "traces": "Wirkung",
+      "tracesDetail": "Aggregierte Beobachtungen zu Medienkompetenz-Bereichen – lokal gespeichert.",
+      "passcode": "Eltern-Passcode",
+      "passcodeDetail": "Als Hash gespeichert – nicht lesbar, nicht übertragbar.",
+      "diary": "Tagebuch & Freundebuch",
+      "diaryDetail": "Alle Einträge bleiben lokal auf diesem Gerät und werden nicht ausgewertet.",
+      "settings": "App-Einstellungen",
+      "settingsDetail": "KI-Modus und andere Einstellungen – lokal gespeichert."
+    },
+    "note": "Zum Löschen aller Daten nutze die DSGVO-Löschfunktion weiter unten."
+  },
+  "reset": {
+    "profileTitle": "Kinderprofil zurücksetzen",
+    "profileBody": "Löscht das Kinderprofil, den Lernfortschritt, Sticker, Wirkung und das Tagebuch. Der Eltern-Passcode bleibt erhalten.",
+    "profileWarning": "Diese Aktion kann nicht rückgängig gemacht werden.",
+    "profileDone": "Das Kinderprofil wurde zurückgesetzt.",
+    "profileCheckbox": "Ich verstehe, dass diese Aktion nicht rückgängig gemacht werden kann.",
+    "profileButton": "Kinderprofil jetzt zurücksetzen",
+    "allTitle": "Alle lokalen Daten löschen",
+    "allBody": "Löscht alle gespeicherten Daten dieser App auf diesem Gerät – inklusive Eltern-Passcode, Einstellungen und Kinderprofil. Entspricht einer vollständigen DSGVO-Löschung.",
+    "allButton": "Alle Daten löschen …",
+    "allConfirmTitle": "Wirklich alle Daten löschen?",
+    "allConfirmBody": "Das löscht alle Daten auf diesem Gerät unwiderruflich. Auch der Eltern-Passcode wird entfernt.",
+    "allCheckbox": "Ich verstehe, dass alle Daten dauerhaft gelöscht werden.",
+    "allConfirmButton": "Jetzt alles löschen",
+    "allCancel": "Abbrechen"
+  },
+  "backup": {
+    "title": "Backup & Wiederherstellen",
+    "body": "Erstelle eine lokale Sicherungskopie aller Kinderdaten oder spiele ein früheres Backup wieder ein.",
+    "exportTitle": "Backup exportieren",
+    "exportHint": "Lädt alle Kinderdaten als JSON-Datei herunter. Passcode-Hashes sind nicht enthalten.",
+    "exportButton": "Backup herunterladen",
+    "importTitle": "Backup einspielen",
+    "importHint": "Wähle eine zuvor exportierte JSON-Datei aus. Bestehende Daten werden überschrieben.",
+    "importing": "Wird importiert …",
+    "importButton": "Backup-Datei auswählen …",
+    "importSuccess": "Backup erfolgreich eingespielt."
+  },
+  "diary": {
+    "title": "Kinder-Tagebuch",
+    "body": "Das eigene Tagebuch des Kindes kann mit einem PIN geschützt werden. Du kannst den PIN hier zurücksetzen – die Einträge bleiben erhalten.",
+    "noPin": "Kein PIN gesetzt.",
+    "resetDone": "PIN wurde zurückgesetzt.",
+    "resetWarning": "Das Kind muss danach einen neuen PIN festlegen oder ohne PIN öffnen.",
+    "resetButton": "Tagebuch-PIN zurücksetzen"
+  },
+  "learningTrace": {
+    "title": "Wirkung",
+    "whatIsThis": "Was wird hier gemessen?",
+    "explanation": "Diese App erfasst, wie Ihr Kind in der Story auf Situationen reagiert. Es gibt kein Richtig oder Falsch. Alle Daten bleiben ausschließlich lokal auf diesem Gerät gespeichert und werden nicht weitergegeben oder übertragen. ",
+    "sectionTitle": "Entwicklungsbereiche",
+    "itemCount": "Basiert auf {{count}} Entscheidungen in der Story.",
+    "disclaimer": "Diese Einschätzung ist keine psychologische Diagnose.",
+    "emptyState": "Sobald Ihr Kind die ersten Story-Abschnitte erlebt hat, erscheinen hier erste Eindrücke.",
+    "deleteButton": "Entwicklungsbereiche löschen",
+    "deleteConfirm": "Alle gespeicherten Entwicklungsbereiche wurden gelöscht.",
+    "deleteWarning": "Das Löschen entfernt alle bisher erfassten Entwicklungsbeobachtungen unwiderruflich. Der Lernfortschritt in der Story (gespielte Kapitel, Entscheidungen) bleibt erhalten – nur die Auswertung der Entwicklungsbereiche wird zurückgesetzt.",
+    "levels": {
+      "frequent": "schon häufiger sichtbar",
+      "visible": "entwickelt sich weiter",
+      "growing": "aktuell im Aufbau"
+    },
+    "levelExplanation": {
+      "toggle": "Was bedeuten diese Einstufungen?",
+      "intro": "Die Einstufungen zeigen, wie häufig Ihr Kind in der Story Verhaltensweisen gezeigt hat, die einem Entwicklungsbereich zugeordnet werden können – keine Bewertung, sondern eine Beobachtung.",
+      "items": {
+        "growing":  { "label": "Aktuell im Aufbau",          "description": "Erste Reaktionen sind sichtbar. Ihr Kind setzt sich gerade zum ersten Mal damit auseinander." },
+        "visible":  { "label": "Entwickelt sich weiter",     "description": "Das Verhalten taucht regelmäßig auf. Ihr Kind zeigt wachsendes Bewusstsein in diesem Bereich." },
+        "frequent": { "label": "Schon häufiger sichtbar",    "description": "Dieser Bereich ist gut ausgeprägt. Ihr Kind reagiert in verschiedenen Situationen konsistent." }
+      },
+      "disclaimer": "Alle Einstufungen basieren ausschließlich auf dem Verhalten in der Story und sind keine psychologische oder diagnostische Aussage."
     }
   },
   "themes": {

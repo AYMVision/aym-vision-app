@@ -1,12 +1,41 @@
 {
+  "s1e02": {
+    "c01": {
+      "input": {
+        "chiomaGossipReply": "Schreib Chioma deine Antwort …",
+        "dominikReply": "Schreib Dominik deine Antwort …"
+      }
+    },
+    "c02": {
+      "input": {
+        "yasminDiaryReply": "Schreib Yasmin deine Antwort …"
+      }
+    },
+    "c06": {
+      "input": {
+        "chiomaNervousReply": "Was würdest du Chioma antworten?",
+        "togetherBetter": "Erzähl von einer Situation, in der etwas zusammen besser geklappt hat als allein …"
+      }
+    }
+  },
+  "multiSelect": {
+    "completed": {
+      "selectedTitle": "Deine Auswahl",
+      "missedCorrectTitle": "Das passt auch 👍",
+      "incorrectLabel": "Das passt hier nicht so gut 🤔"
+    }
+  },
+
+  "chapterDivider": "Kapitel {{number}}",
+
   "hero": {
     "kicker": "Amy Surfwing",
-      "ctaParents": "Für Eltern →",
+    "ctaParents": "Für Eltern →",
     "title": "Check was online wirklich abgeht ✨",
     "lead": "Entdecke die Geheimnisse von Yasmin, Carlos & Co. Mit Amy Surfwing meisterst du Challenges. Die Online Abenteuer warten auf dich.",
     "imageAlt": "Story-Welt: Mia, Finn und Freunde",
     "badges": {
-      "0": "10 bis 12 Jahre",
+      "0": "ab 10 Jahre",
       "1": "Chat-Story & mehr",
       "2": "Tricks & Trends",
       "3": "5 min täglich & 5 mal die Woche"
@@ -15,30 +44,31 @@
     "ctaSecondary": "Zur Startseite"
   },
   "progress": {
-  "label": "Fortschritt"
-},
-"loading": {
-  "story": "Lade Story…"
-},
-"ui": {
-  "readingModeInstant": "Sofort anzeigen",
-  "readingMode": "Anzeige-Modus:",
-  "readingModeLive": "Live-Chat",
-  "speedLabel": "Lesegeschwindigkeit wählen:",
-  "speed": {
-    "fast": "Schnell",
-    "normal": "Normal",
-    "slow": "Langsam"
+    "label": "Fortschritt"
   },
-  "header": {
-    "online": "online"
-  }
-},
+
+  "loading": {
+    "story": "Lade Story…"
+  },
+  "ui": {
+    "readingModeInstant": "Sofort anzeigen",
+    "readingMode": "Anzeige-Modus:",
+    "readingModeLive": "Live-Chat",
+    "speedLabel": "Lesegeschwindigkeit wählen:",
+    "speed": {
+      "fast": "Schnell",
+      "normal": "Normal",
+      "slow": "Langsam"
+    },
+    "header": {
+      "online": "online"
+    }
+  },
 
   "helpHint": {
-  "title": "",
-  "body": "Wenn dich ein Chat, ein Bild oder ein Beitrag belastet. Sprich mit einer erwachsenen Person, der du vertraust."
-},
+    "title": "",
+    "body": "Wenn dich ein Chat, ein Bild oder ein Beitrag belastet. Sprich mit einer erwachsenen Person, der du vertraust."
+  },
 
   "comingSoon": {
     "kicker": "Bald geht’s los",
@@ -73,12 +103,12 @@
           "text": "Ein Klick und du bist mitten im Abenteuer. Lies was Yasmin, Carlos & Co online erleben."
         },
         "2": {
-          "title": "✍️ Schreibe deine Gedanken",
-          "text": "Antworte auf Amy´s Frage. Schreib, was du denkst – und auch warum. Erst dann kann es am nächsten Tag weitergehen."
+          "title": "✍️ Was denkst du?",
+          "text": "Schreibe deine Gedanken oder wähle eine Antwortmöglichkeit aus."
         },
         "3": {
-          "title": "🦉 Amy reagiert",
-          "text": "Manchmal fragt Amy nach. Und zum Abschluss des Tages bekommst du einen Tipp."
+          "title": "🦉 Amy",
+          "text": "Manchmal fragt Amy auch nach und sie gibt dir einen Tipp."
         },
         "4": {
           "title": "🔎 Entdecke Amy´s Welt",
@@ -87,38 +117,36 @@
       }
     },
     "progress": {
-  "label": "Fortschritt"
-},
+      "label": "Fortschritt"
+    },
 
     "info": {
       "kicker": "Gut zu wissen",
-
       "title_optionA": "Damit du dich gut zurechtfindest / Noch ein paar Erklärungen...",
       "title_optionB": "Damit du dich gut zurechtfindest",
-
       "title": "Damit du dich gut zurechtfindest",
 
       "tiles": {
         "order": {
           "title": "Schritt für Schritt ➡️",
-          "text": "Du machst die Amics der Reihe nach - in einer Woche können bis zu fünf freigeschaltet werden. Jeden Tag kannst du ein Amic inkl. Bonus lesen. Du musst eine Frage beantworten - erst dann geht's weiter."
+          "text": "Du machst die Geschichte der Reihe nach - in einer Woche können bis zu fünf Amics freigeschaltet werden. Jeden Tag kannst du ein Amic inkl. Bonus lesen."
         },
-         "reflection": {
+        "reflection": {
           "title": "Denkraum ◎",
-          "text": "Du formulierst deine eigene Antwort – in deinen Worten. Es geht nicht um richtig oder falsch, sondern darum, dir Gedanken zu machen."
-},
+          "text": "Es geht nicht um richtig oder falsch, sondern darum, dir Gedanken zu machen."
+        },
 
         "retryLock": {
-          "title": "Amy fragt nach 🔁",
-          "text": "Ist deine Antwort zu kurz oder Amy versteht nicht, was gemeint ist, dann fragt sie nochmal nach. Nach drei versuchen macht Amy eine kurze Pause. Dann schau am besten mit jemanden gemeinsam drauf. Sobald deine Antwort passt, geht's weiter."
+          "title": "Wenn Amy nachfragt 🔁",
+          "text": "Manchmal fragt Amy nach. Dann schau am besten mit jemanden gemeinsam drauf. Sobald deine Antwort passt, geht's weiter."
         },
         "safe": {
           "title": "Fair & sicher ✅",
-          "text": "Beleidigungen, Mobbing oder gefährliche Inhalte erlaubt Amy nicht - dann stoppt sie. Und auch deine Sicherheit geht vor. Es gilt immer: Sobald es eine passende Antwort gibt, geht's weiter."
+          "text": "Beleidigungen, Mobbing oder gefährliche Inhalte erlaubt Amy nicht - dann stoppt sie. Es gilt immer: Sobald deine Antwort passt, geht's weiter."
         },
         "backup": {
           "title": "Speichern & Backup 💾",
-          "text": "Dein Fortschritt wird auf deinem Gerät gespeichert. Wenn du möchtest, kannst du ihn zusätzlich sichern – damit nichts verloren geht."
+          "text": "Dein Fortschritt wird auf deinem Gerät gespeichert. Wenn du möchtest, kannst du ihn zusätzlich sichern, damit nichts verloren geht."
         }
       }
     },
@@ -136,7 +164,7 @@
   "trust": {
     "kicker": "Denkraum",
     "title": "Ein sicherer Raum für deine Gedanken",
-    "body": "In Amy Surfwing liest du nicht nur – du denkst mit. Niemand sieht, was du schreibst. Es gibt keine Likes, kein Ranking und keinen Vergleich. Dein Fortschritt bleibt auf deinem Gerät. Hier kannst du in Ruhe überlegen, was du richtig findest – und Schritt für Schritt lernen, selbst gute Entscheidungen zu treffen.",
+    "body": "In Amy Surfwing liest du nicht nur – du denkst mit. Es gibt keine Likes, kein Ranking und keinen Vergleich mit anderen. Dein Fortschritt bleibt auf deinem Gerät. Hier kannst du in Ruhe überlegen, was du richtig findest – und Schritt für Schritt lernen, selbst gute Entscheidungen zu treffen.",
     "chips": {
       "0": "Privat 🔒",
       "1": "Ohne Ranking 🚫",
@@ -160,7 +188,7 @@
     "cards": {
       "0": {
         "title": "Story",
-        "text": "Du tauchst in die Welt von Yasmin, Igor & Co ein.",
+        "text": "Du tauchst in die Welt von Yasmin, Finn & Co ein.",
         "imageAlt": "Illustration: Charaktere in einer digitalen Story-Szene"
       },
       "1": {
@@ -180,12 +208,12 @@
     "cards": {
       "avatar": {
         "title": "Avatare",
-        "text": "Gestalte deinen eigenen Avatar und verdiene dir neue Looks.",
+        "text": "Wähle deinen eigenen Avatar und verdiene dir persönliche Gegenstände hinzu.",
         "imageAlt": "Bild: Avatar-Ansicht"
       },
       "sticker": {
         "title": "Sticker",
-        "text": "Für jede abgeschlossene Episode gibt es einen Sticker.",
+        "text": "Wie schnell füllt sich dein Stickeralbum?",
         "imageAlt": "Bild: Sticker-Album"
       },
       "newspaper": {
@@ -204,7 +232,7 @@
         "imageAlt": "Bild: Tagebuch-Ansicht"
       },
       "collectibles": {
-        "title": "Sammelkarten",
+        "title": "Freundebuch",
         "text": "Mit den Sammelkarten lernst du die Figuren besser kennen.",
         "imageAlt": "Bild: Sammelkarten-Übersicht"
       }
@@ -281,7 +309,7 @@
     "subtitle": "Sammle Sticker & Badges – dein Fortschritt bleibt auf deinem Gerät.",
     "back": "Zurück",
     "backAria": "Zurück",
-    "progressTitle": "Sammler-Fortschritt in dieser Staffel:",
+    "progressTitle": "Sammler-Fortschritt:",
     "episodes": "Sticker",
     "seasons": "Badges",
     "nextDrop": "Nächster Sticker",
@@ -305,10 +333,43 @@
   "safety": {
     "selfHarmShort": "Es klingt, als wäre das gerade sehr belastend für dich. Dafür gibt es Hilfe – bitte hol dir jetzt Unterstützung."
   },
+
   "gate": {
-  "nextTomorrowTitle": "Für heute bist du fertig ✨",
-  "nextTomorrowBody": "Der nächste Amic wartet morgen auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.",
-  "nextMondayBody": "Diese Woche hast du alle Amics gelesen. Der nächste Amic wartet Montag wieder auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.",
+    "nextTomorrowTitle": "Für heute bist du fertig ✨",
+    "nextTomorrowBody": "Der nächste Amic wartet morgen auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.",
+    "nextMondayBody": "Diese Woche hast du alle Amics gelesen. Der nächste Amic wartet Montag wieder auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.",
     "toNewspaper": "Zur Schülerzeitung →"
-}
+  },
+
+  "common": {
+    "gotIt": "Verstanden",
+    "continue": "Weiter",
+    "send": "Senden",
+    "amyThinking": "Amy denkt nach…"
+  },
+
+  "measurement": {
+    "dimensions": {
+      "perspective": {
+        "label": "Perspektivfähigkeit",
+        "childLabel": "Andere verstehen",
+        "description": "Wie gut Ihr Kind die Sichtweisen anderer Menschen erkennt und einbezieht."
+      },
+      "judgement": {
+        "label": "Urteilsvermögen",
+        "childLabel": "Gut überlegen",
+        "description": "Wie Ihr Kind Informationen bewertet und Situationen einschätzt."
+      },
+      "selfRegulation": {
+        "label": "Selbststeuerung",
+        "childLabel": "Mich selbst kennen",
+        "description": "Wie Ihr Kind mit Impulsen umgeht und eigene Ziele verfolgt."
+      },
+      "responsibility": {
+        "label": "Verantwortungsvolles Handeln",
+        "childLabel": "Verantwortung tragen",
+        "description": "Wie Ihr Kind Verantwortung für eigene Handlungen und andere übernimmt."
+      }
+    }
+  }
 }

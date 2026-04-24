@@ -1,46 +1,9 @@
-// src/components/AvatarStage.tsx
-// Avatar stage compositing (AYM-Vision Aufräum-Leitfaden):
-// - Assets aus /public über resolver (resolveItem, AvatarFullImage)
-// - Kein Hardcode-assetUrl für Items in Komponenten
-// - Robust: 768 → 512 fallback, ansonsten Layer ausblenden (kein Ersatzbild)
-// - Alignment: Slot- und Item-spezifische Transform-Styles möglich
-
 import React from 'react';
 import type { Equipment, ItemSlot } from '../profile/types';
 import AvatarFullImage from './AvatarFullImage';
+import SmartImage from './SmartImage';
 import { resolveItem } from '../profile/itemAssets';
 import { ITEM_STYLE } from '../data/items';
-
-
-
-/**
- * 🎨 Layer-Reihenfolge (von unten nach oben)
- */
-const LAYER_ORDER: ItemSlot[] = [
-  'background',
-  'bottom',
-  'feet',
-  'top',
-  'face',
-  'head',
-  'effect',
-];
-
-/**
- * ✅ Slot-Defaults: grobe Ausrichtung je Slot.
- * Hinweis: Tailwind scale/translate funktionieren nur mit `transform`.
- */
-const SLOT_STYLE: Record<ItemSlot, string> = {
-  background: '', // object-cover
-  bottom: '',
-  feet: '',
-  top: '',
-  face: 'transform', // erstmal neutral, damit ITEM_STYLE eindeutig wirkt
-  head: 'transform',
-  effect: '',
-};
-
-
 
 type Props = {
   avatarBaseId: string;
@@ -50,7 +13,13 @@ type Props = {
   withBackdrop?: boolean;
 };
 
-type LayerFailState = 0 | 1 | 2; // 0=ok, 1=768 failed -> try 512, 2=hide
+type LayerFailState = 0 | 1 | 2;
+
+const SLOT_STYLE: Record<ItemSlot, string> = {
+  background: '',
+  featured: '',
+  effect: '',
+};
 
 export default function AvatarStage({
   avatarBaseId,
@@ -63,21 +32,17 @@ export default function AvatarStage({
 
   const getKey = (slot: ItemSlot, id: string) => `${slot}:${id}`;
 
-  const getLayerSrc = (slot: ItemSlot, id: string) => {
+  const getLayerState = (slot: ItemSlot, id: string) => {
     const key = getKey(slot, id);
-    const state = fail[key] ?? 0;
-
-    if (state === 0) return resolveItem(slot, id, 768);
-    if (state === 1) return resolveItem(slot, id, 512);
-    return null;
+    return fail[key] ?? 0;
   };
 
   const markFailed = (slot: ItemSlot, id: string) => {
     const key = getKey(slot, id);
-    setFail((m) => {
-      const current = m[key] ?? 0;
-      const next: LayerFailState = current === 0 ? 1 : 2; // 768->512->hide
-      return { ...m, [key]: next };
+    setFail((prev) => {
+      const current = prev[key] ?? 0;
+      const next: LayerFailState = current === 0 ? 1 : 2;
+      return { ...prev, [key]: next };
     });
   };
 
@@ -85,69 +50,90 @@ export default function AvatarStage({
     ? 'rounded-2xl bg-white border border-slate-200 p-3'
     : '';
 
+  const backgroundId = equipment?.background ?? null;
+  const featuredId = equipment?.featured ?? null;
+  const effectId = equipment?.effect ?? null;
+
   return (
     <div className={frameClass}>
-      <div className="relative overflow-hidden" style={{ height, width, maxWidth: '100%' }}>
-  {/* Background (unter allem) */}
-  {(() => {
-    const bgId = equipment?.background ?? null;
-    if (!bgId) return null;
+      <div
+        className="relative overflow-hidden"
+        style={{ height, width, maxWidth: '100%' }}
+      >
+        {backgroundId && getLayerState('background', backgroundId) < 2 && (
+          <SmartImage
+            alt=""
+            className={
+              'absolute inset-0 w-full h-full object-cover pointer-events-none ' +
+              (ITEM_STYLE[`background:${backgroundId}`] ?? SLOT_STYLE.background)
+            }
+            sizes={`${width}px`}
+            width={width}
+            height={height}
+            webp={[
+              { src: resolveItem('background', backgroundId, 512), w: 512 },
+              { src: resolveItem('background', backgroundId, 768), w: 768 },
+            ]}
+            fallback={resolveItem('background', backgroundId, 512)}
+            onErrorFallback=""
+            loading="lazy"
+            decoding="async"
+            onError={() => markFailed('background', backgroundId)}
+          />
+        )}
 
-    const src = getLayerSrc('background', bgId);
-    if (!src) return null;
+        <AvatarFullImage
+          id={avatarBaseId}
+          width={width}
+          height={height}
+          alt="Avatar"
+          className="absolute inset-0 w-full h-full object-contain"
+        />
 
-    const styleKey = `background:${bgId}`;
-    const overlayStyle = ITEM_STYLE[styleKey] ?? SLOT_STYLE.background ?? '';
+        {featuredId && getLayerState('featured', featuredId) < 2 && (
+          <SmartImage
+            alt=""
+            className={
+              'absolute inset-0 w-full h-full object-contain pointer-events-none ' +
+              (ITEM_STYLE[`featured:${featuredId}`] ?? SLOT_STYLE.featured)
+            }
+            sizes={`${width}px`}
+            width={width}
+            height={height}
+            webp={[
+              { src: resolveItem('featured', featuredId, 512), w: 512 },
+              { src: resolveItem('featured', featuredId, 768), w: 768 },
+            ]}
+            fallback={resolveItem('featured', featuredId, 512)}
+            onErrorFallback=""
+            loading="lazy"
+            decoding="async"
+            onError={() => markFailed('featured', featuredId)}
+          />
+        )}
 
-    return (
-      <img
-        key={styleKey}
-        src={src}
-        alt=""
-        className={'absolute inset-0 w-full h-full pointer-events-none object-cover ' + overlayStyle}
-        loading="lazy"
-        onError={() => markFailed('background', bgId)}
-        decoding="async"
-      />
-    );
-  })()}
-
-  {/* Base-Avatar (über dem Hintergrund) */}
-  <AvatarFullImage
-    id={avatarBaseId}
-    width={width}
-    alt="Avatar"
-    className="absolute inset-0 w-full h-full object-contain"
-  />
-
-  {/* Item-Layer (ohne background) */}
-  {LAYER_ORDER.filter((s) => s !== 'background').map((slot) => {
-    const id = equipment?.[slot] ?? null;
-    if (!id) return null;
-
-    const src = getLayerSrc(slot, id);
-    if (!src) return null;
-
-    const styleKey = `${slot}:${id}`;
-    const overlayStyle = ITEM_STYLE[styleKey] ?? SLOT_STYLE[slot] ?? '';
-
-    return (
-      <img
-        key={styleKey}
-        src={src}
-        alt=""
-        className={
-          'absolute inset-0 w-full h-full pointer-events-none object-contain ' +
-          overlayStyle
-        }
-        loading="lazy"
-        onError={() => markFailed(slot, id)}
-        decoding="async"
-      />
-    );
-  })}
-</div>
-
+        {effectId && getLayerState('effect', effectId) < 2 && (
+          <SmartImage
+            alt=""
+            className={
+              'absolute inset-0 w-full h-full object-contain pointer-events-none ' +
+              (ITEM_STYLE[`effect:${effectId}`] ?? SLOT_STYLE.effect)
+            }
+            sizes={`${width}px`}
+            width={width}
+            height={height}
+            webp={[
+              { src: resolveItem('effect', effectId, 512), w: 512 },
+              { src: resolveItem('effect', effectId, 768), w: 768 },
+            ]}
+            fallback={resolveItem('effect', effectId, 512)}
+            onErrorFallback=""
+            loading="lazy"
+            decoding="async"
+            onError={() => markFailed('effect', effectId)}
+          />
+        )}
+      </div>
     </div>
   );
 }

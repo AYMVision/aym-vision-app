@@ -1,0 +1,20 @@
+import { STORY_CHARACTERS as ch } from '../../../content/characters';
+import type { StoryEpisodeV02 } from '../../types/storyTypes';
+import { amyChat, m, S, C } from '../storyBuilder';
+
+const c01 = C('s1e05c01', 0, 'Amic 1', 'Coming soon', [
+  S('s1e05c01_story_placeholder', [
+    amyChat(),
+    m(ch.amy, 'This episode will be available soon.'),
+  ]),
+]);
+
+const s1e05En: StoryEpisodeV02 = {
+  id: 's1e05',
+  seasonId: 's1',
+  episodeId: 's1e05',
+  courseId: 's1e05',
+  chapters: [c01],
+};
+
+export default s1e05En;

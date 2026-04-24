@@ -2,11 +2,7 @@ import type { StoryTranscriptSnapshot } from '../common/types';
 import type { ThemeId } from '../competencies/themeMeta';
 
 export type ItemSlot =
-  | 'head'
-  | 'face'
-  | 'top'
-  | 'bottom'
-  | 'feet'
+  | 'featured'
   | 'background'
   | 'effect';
 
@@ -17,8 +13,17 @@ export type StoryPhase =
   | 'unlocked'
   | 'finished';
 
-export type Equipment = Record<ItemSlot, string | null>;
-export type Inventory = Record<ItemSlot, string[]>;
+export type Equipment = {
+  featured: string | null;
+  background: string | null;
+  effect: string | null;
+};
+
+export type Inventory = {
+  featured: string[];
+  background: string[];
+  effect: string[];
+};
 
 export type Wallet = {
   coins: number;
@@ -33,10 +38,25 @@ export type WeeklyStreakState = {
   completedWeeks: number;
 };
 
+export type ActivityProgressState = {
+  totalPlayedDays: number;
+  lastPlayedDay: string;
+};
+
+export type DiaryProgressState = {
+  usedDays: number;
+  lastUsedDay: string;
+};
+
+export type FriendbookProgressState = {
+  hasOwnEntry: boolean;
+};
+
 export type ProgressState = {
   completedChapters: Record<string, true>;
   completedEpisodes: Record<string, true>;
   earnedStickers: Record<string, true>;
+  earnedStickersAt?: Record<string, number>; // Unix-Timestamp wann verdient
   earnedBadges: Record<string, true>;
   current?: {
     seasonId: string;
@@ -47,6 +67,11 @@ export type ProgressState = {
   };
   weeklyStreak?: WeeklyStreakState;
   themePoints?: Partial<Record<ThemeId, number>>;
+
+  // NEU: für zusätzliche Milestones
+  activity?: ActivityProgressState;
+  diary?: DiaryProgressState;
+  friendbook?: FriendbookProgressState;
 };
 
 export type UserProfile = {
@@ -59,9 +84,9 @@ export type UserProfile = {
   createdAt: number;
   updatedAt: number;
   storyTranscripts?: Record<string, StoryTranscriptSnapshot>;
-  
+  chatName?: string;
+
   myCard?: {
-    name: string;
     mostly: string;
     hobbies: string[];
     othersLike: string[];

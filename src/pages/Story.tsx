@@ -1326,6 +1326,7 @@ const tKeyAfterAmy =
                 setPhase('awaiting_answer');
                 return;
               }
+              
 
               setPhase('unlocked');
               setShowAdultHint(false);

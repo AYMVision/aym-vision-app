@@ -2,16 +2,14 @@
   "hero": {
     "kicker": "Über uns",
     "title": "Medienreife stärken",
-    "lead": "Kinder wachsen heute in einer digitalen Welt auf, die Chancen und Herausforderungen zugleich mit sich bringt. Wir möchten dazu einen Raum schaffen, der Orientierung, Reflexion und Medienreife stärkt.",
+    "lead": "Kinder wachsen heute in einer digitalen Welt auf, die Chancen und Herausforderungen zugleich mit sich bringt.",
     "leadEmphasis": "",
     "badges": {
       "0": "Eltern entlasten",
-      "1": "Kinder stärken",
-      "2": "Alltagsnah",
-      "3": "Reflexionsorientiert"
+      "1": "Kinder stärken"
 
     },
-    "ctaStories": "Zu den Stories →",
+    "ctaStories": "Zur Story →",
     "ctaParents": "Für Eltern →",
     "ctaCoop": "Kontakt & Zusammenarbeit →",
     "imageAlt": "Die Gründerinnen von Amy Surfwing"
@@ -19,38 +17,36 @@
 
   "statement": {
     "kicker": "Unser Antrieb",
-    "text": "Warnungen helfen nur begrenzt. Kinder brauchen Orientierung, Sprache und sichere Denkräume, um digitale Situationen wirklich zu verstehen."
+    "text": "Kinder brauchen Orientierung. So spannend, dass sie garnicht merken, wie viel sie lernen. Spielerisch, spannend und nah an ihrer Welt."
   },
 
   "vision": {
     "kicker": "Unsere Vision",
     "title": "Kids surfen smart.",
-    "copy": "Wir wünschen uns eine Gesellschaft, in der junge Menschen digitale Informationen einordnen, Perspektiven abwägen und eigene Entscheidungen treffen können. Für uns bedeutet digitale Mündigkeit mehr als Sicherheit. Sie beginnt dort, wo Kinder Zusammenhänge verstehen, Verantwortung übernehmen und mit Komplexität umgehen lernen."
+    "copy": "Wir sehen eine Gesellschaft, in der junge Menschen Perspektiven entwickeln, Zusammenhänge verstehen und verantwortungsvoll handeln."
   },
 
   "mission": {
     "kicker": "Unsere Mission",
-    "title": "Kinder im digitalen Raum stärken",
-    "copy": "Wir unterstützen Kinder dabei, digitale Situationen nicht nur zu erleben, sondern bewusst zu verstehen. Amy Surfwing schafft dafür einen narrativen Reflexionsraum, in dem Perspektiven sichtbar werden, Gedanken wachsen und eigene Entscheidungen entstehen können."
+    "title": "Wir bringen Kids das Surfen bei.",
+    "copy": "Wir stärken Kinder für digitale Situationen im Alltag. Und zwar mit Spaß und Lust aufs Ausprobieren."
   },
 
   "motivation": {
     "kicker": "Unsere Motivation",
     "title": "Wie alles begann",
-    "copy": "AYM VISION entstand aus vielen Gesprächen zweier Schwestern über Kinder, Internet und Bildung. Uns war schnell klar: Es reicht nicht, digitale Risiken nur zu benennen. Kinder brauchen einen Zugang, der sie ernst nimmt, neugierig macht und sie Schritt für Schritt stärkt. Daraus entstand die Idee einer Story-Welt, in der digitale Situationen nicht abstrakt erklärt, sondern konkret durchdacht werden können."
+    "copy": "Amy Surfwing ist aus vielen Gesprächen zwischen uns entstanden – über unsere Kinder, das Internet und die Frage, wie sie lernen, damit umzugehen. Uns wurde schnell klar: Es reicht nicht, digitale Risiken nur zu benennen. Unsere Kinder brauchen etwas, das sie wirklich erreicht – ein Format, das neugierig macht und sie Schritt für Schritt stärkt. So entstand die Idee, digitale Situationen nicht abstrakt zu erklären, sondern erlebbar zu machen."
   },
 
   "positioning": {
     "cards": {
       "0": {
         "kicker": "Warum jetzt",
-        "title": "Digitale Lebenswelt ist längst Kinderalltag",
-        "body": "Kinder bewegen sich früh in digitalen Räumen. Dort brauchen sie keine bloßen Verbote, sondern Sprache, Orientierung und sichere Denkräume."
+        "body": "Die digitale Welt ist längst Kinderalltag"
       },
       "1": {
         "kicker": "Unser Beitrag",
-        "title": "Medienbildung, die Kinder ernst nimmt",
-        "body": "Amy Surfwing verbindet Story, Reflexion und alltagsnahe Situationen zu einem Format, das verständlich, motivierend und verantwortungsvoll gestaltet ist."
+        "body": "Medienbildung, die Kinder wirklich erreicht"
       }
     }
   },
@@ -67,16 +63,16 @@
   },
 
   "method": {
-    "kicker": "Wie wir arbeiten",
-    "title": "Narrativ statt Regelkatalog",
-    "copy1": "Digitale Themen werden nicht als Theorie vermittelt, sondern in erzählten Situationen erlebbar gemacht. Kurze Chat-Szenen führen in konkrete Entscheidungsmomente.",
-    "copy2": "Amy begleitet mit gezielten Reflexionsfragen. Im Mittelpunkt stehen Begründungen, Perspektiven und das Abwägen von Folgen – nicht richtige oder falsche Antworten."
+    "kicker": "Unser Ansatz",
+    "title": "Erleben. Verstehen. Handeln.",
+    "copy1": "Kinder erleben digitale Situationen in einer Geschichte, die nah an ihrem Alltag ist.",
+    "copy2": "Indem sie darüber nachdenken und eigene Entscheidungen treffen, entwickeln sie Schritt für Schritt Medienreife."
   },
 
   "values": {
     "kicker": "Unsere Werte",
-    "title": "Wofür wir stehen",
-    "intro": "Unsere Werte prägen Inhalte, Tonalität und Gestaltung – und die Art, wie wir über Kinder, Lernen und digitale Bildung denken.",
+    "title": "",
+    "intro": "",
     "items": {
       "0": {
         "title": "Verständnis",
@@ -87,7 +83,7 @@
         "body": "Kleine Impulse können große Veränderungen auslösen."
       },
       "2": {
-        "title": "Selbstbestimmung",
+        "title": "Selbstbestimmt",
         "body": "Wahre Stärke entsteht aus Freiheit und eigener Haltung."
       },
       "3": {
@@ -106,56 +102,66 @@
   },
 
   "glimpses": {
-    "kicker": "Einblicke",
-    "title": "Drei kleine Momente aus unserer Welt",
-    "copy": "Zwischen Idee, Alltag und Umsetzung entsteht Schritt für Schritt ein Produkt, das Kinder stärken soll.",
+    "kicker": "Hinter den Kulissen",
+    "lead": "",
     "items": {
       "0": {
-        "title": "Idee",
-        "body": "Am Anfang stand die Frage, wie Kinder digitale Themen nicht nur konsumieren, sondern wirklich durchdenken können.",
+        "label": "Idee",
+        "caption": "",
         "alt": "Einblick: kreativer Moment"
       },
       "1": {
-        "title": "Alltag",
-        "body": "Unsere Inhalte orientieren sich an realen Situationen aus der digitalen Lebenswelt von Kindern.",
-        "alt": "Einblick: Alltag und Kindheit"
+        "label": "Machen",
+        "caption": "",
+        "alt": "Einblick: Alltag und Arbeit"
       },
       "2": {
-        "title": "Umsetzung",
-        "body": "Aus Haltung, Storytelling und Produktdenken entsteht Schritt für Schritt Amy Surfwing.",
-        "alt": "Einblick: Team und Umsetzung"
+        "label": "Menschen",
+        "caption": "",
+        "alt": "Einblick: Team"
       }
     }
   },
 
   "brand": {
-    "title": "Wofür AYM steht",
+    "title": "AYM Vision",
     "aria": "Abschnitt Wofür AYM steht öffnen",
-    "copy1": "AYM steht für „Amplify Your Mind“: jungen Menschen Raum geben, ihre eigene Sicht auf die Welt zu entwickeln und zu entfalten.",
-    "copy2": "„Amplify“ bedeutet: verstärken, hörbar machen, größer denken. Wir glauben, Kinder starten mit Kreativität, Neugier und Urteilsvermögen – AYM VISION hilft dabei, genau diese Fähigkeiten weiterzuentwickeln."
+    "copy1": "Wir gründen unter AYM Vision und starten mit unserem ersten Produkt Amy Surfwing. AYM steht für „Amplify Your Mind“: jungen Menschen Raum zu geben, ihre eigene Sicht auf die Welt zu entwickeln und zu entfalten.",
+    "copy2": "„Amplify“ heißt, vorhandene Fähigkeiten wie Neugier, Kreativität und Urteilsvermögen zu stärken. „Vision“ beschreibt, wohin das führt: eine Generation, die versteht, hinterfragt und verantwortungsvoll handelt."
   },
 
   "whyAmy": {
     "title": "Warum unsere Eule Amy",
     "aria": "Abschnitt Warum unsere Eule Amy öffnen",
-    "copy": "Amy ist unsere freundliche, kluge Eule – und das Gesicht von AYM VISION. Sie begleitet Kinder auf Augenhöhe, erklärt verständlich und regt zum Mitdenken an. Amy steht für Neugier, Reflexion und den Mut zur eigenen Perspektive."
+    "copy": "Amy ist unsere kluge Eule und das Gesicht von Amy Surfwing. Sie begleitet Kinder auf Augenhöhe, erklärt verständlich und regt zum Mitdenken an. Amy steht für Neugier, Reflexion und den Mut zur eigenen Perspektive."
   },
 
   "team": {
     "kicker": "Team",
     "title": "Wer dahinter steht",
-    "lead": "Wir verbinden Produktdenken, Storytelling und pädagogische Perspektiven – mit dem Anspruch, verantwortungsvoll und kindgerecht zu gestalten.",
+    "lead": "Wir sind Schwestern und Mütter. Mit unseren vier Kindern hat alles angefangen. Wir wünschen uns, dass jedes Kind sicher in der digitalen Welt groß wird.",
+    "labels": {
+      "degree": "Studium",
+      "furtherEd": "Weiterbildung",
+      "experience": "Erfahrung"
+    },
     "people": {
       "0": {
         "name": "Melina Wiegers",
         "role": "Co-Founderin | Inhalte & Didaktik",
-        "bio": "Melina bringt ihre Leidenschaft für Sprache, Geschichten und Bildungsprozesse ein – mit internationaler Erfahrung und einem klaren Fokus auf Resilienz und Nachhaltigkeit.",
+        "degree": "M.A. Sinologie, BWL & Soziologie",
+        "furtherEd": "Grundlagen in Nachhaltigkeit, Kinder- & Jugendliteratur, The Science of Happiness, Yoga & Kinder-Yoga",
+        "experience": "Marketing, Nachhaltigkeit & Sprachen",
+        "quote": "Mir ist wichtig, dass Kinder sich in der digitalen Welt nicht verlieren, sondern lernen, sich darin sicher zu bewegen.",
         "imageAlt": "Melina Wiegers"
       },
       "1": {
         "name": "Ann-Sofie Höbrink",
         "role": "Co-Founderin | Technologie & Strategie",
-        "bio": "Ann-Sofie verbindet technisches Verständnis mit psychologischem Fingerspitzengefühl – mit Hintergrund in Wirtschaftsingenieurwesen, Wirtschaftspsychologie und langjähriger Projekt- und Coachingpraxis.",
+        "degree": "B.Eng. Wirtschaftsingenieurwesen & M. Sc. Wirtschaftspsychologie",
+        "furtherEd": "Business Coach (BZTB) & Senior LINC Personality Profiler Coach",
+        "experience": "Projektarbeit, Coaching & Personal",
+        "quote": "Ich arbeite gern an Lösungen, die nicht nur funktionieren, sondern etwas verändern.",
         "imageAlt": "Ann-Sofie Höbrink"
       }
     }
@@ -163,35 +169,11 @@
 
   "cta": {
     "kicker": "Kontakt & Zusammenarbeit",
-    "title": "Ihr möchtet AYM VISION kennenlernen oder mit uns arbeiten?",
-    "copy": "Wir freuen uns über Austausch mit Schulen, Medienpädagogik, Förderung und Partnern, die junge Menschen in digitalen Fragen stärken möchten.",
+    "title": "Ihr möchtet uns kennenlernen oder mit uns arbeiten?",
+    "copy": "Wir freuen uns über Austausch mit allen, die junge Menschen in digitalen Fragen stärken möchten.",
     "primary": "Kontakt aufnehmen",
     "secondary": "Zum pädagogischen Konzept →",
     "note": "hello@AymVision.de",
     "mailtoHref": "mailto:hello@aymvision.example?subject=AYM%20VISION%20-%20Kontakt"
-  },
-
-  "right": {
-    "quick": {
-      "kicker": "Auf einen Blick",
-      "whatTitle": "Was ist AYM VISION?",
-      "whatBody": "Eine interaktive Story-Welt im Chat-Stil mit KI-Begleitung – für Reflexion, Perspektivwechsel und Medienkompetenz.",
-      "forWhoTitle": "Für wen?",
-      "forWhoBody": "5.–7. Klasse • Eltern • perspektivisch Schule und Kooperation",
-      "nonGoalsTitle": "Was wir nicht sind",
-      "nonGoalsItems": {
-        "0": "Kein soziales Netzwerk",
-        "1": "Kein Notfall-Tool",
-        "2": "Kein Diagnose-System"
-      },
-      "ctaConcept": "Pädagogisches Konzept →",
-      "ctaPrivacy": "Datenschutz (PDF)",
-      "privacyPdfHref": "datenschutz-web.pdf"
-    },
-    "note": {
-      "kicker": "Warum das wichtig ist",
-      "title": "Digitale Bildung braucht mehr als Warnungen",
-      "body": "Kinder brauchen Orientierung, Sprache und sichere Denkräume. Genau dort setzt Amy Surfwing an."
-    }
   }
 }

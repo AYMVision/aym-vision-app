@@ -24,6 +24,8 @@ export type ChapterCompletionResult = {
   episodeBonusAwarded: boolean;
   starterStickerAwarded: boolean;
   weeklyBadgeAwarded: boolean;
+  newThemeStickerIds: string[];
+  newMilestoneStickerIds: string[];
   progressDebug?: string;
 };
 
@@ -34,6 +36,7 @@ export function completeStoryChapter<TProfile>(args: {
   episodeMeta: EpisodeMetaLike;
   updateProfile: ProfileUpdater<TProfile>;
   wasAlreadyCompletedBeforeAnswer: boolean;
+  skipCoin?: boolean;
   getProfileResult?: (nextProfile: TProfile) => void;
   enableDebug?: boolean;
 }): ChapterCompletionResult {
@@ -44,6 +47,7 @@ export function completeStoryChapter<TProfile>(args: {
     episodeMeta,
     updateProfile,
     wasAlreadyCompletedBeforeAnswer,
+    skipCoin = false,
     getProfileResult,
     enableDebug = false,
   } = args;
@@ -69,6 +73,8 @@ export function completeStoryChapter<TProfile>(args: {
   let episodeBonusAwarded = false;
   let starterStickerAwarded = false;
   let weeklyBadgeAwarded = false;
+  let newThemeStickerIds: string[] = [];
+  let newMilestoneStickerIds: string[] = [];
 
   updateProfile((prev: any) => {
     const result = applyChapterReward(prev as any, {
@@ -77,6 +83,7 @@ export function completeStoryChapter<TProfile>(args: {
       courseId,
       chapterIndex0,
       chapterCount,
+      skipCoin,
     }) as {
       profile: any;
       coinAwarded: boolean;
@@ -84,6 +91,8 @@ export function completeStoryChapter<TProfile>(args: {
       episodeBonusAwarded: boolean;
       starterStickerAwarded: boolean;
       weeklyBadgeAwarded: boolean;
+      newThemeStickerIds: string[];
+      newMilestoneStickerIds: string[];
     };
 
     coinAwarded = result.coinAwarded;
@@ -91,6 +100,8 @@ export function completeStoryChapter<TProfile>(args: {
     episodeBonusAwarded = result.episodeBonusAwarded;
     starterStickerAwarded = result.starterStickerAwarded;
     weeklyBadgeAwarded = result.weeklyBadgeAwarded;
+    newThemeStickerIds = result.newThemeStickerIds ?? [];
+    newMilestoneStickerIds = result.newMilestoneStickerIds ?? [];
 
     getProfileResult?.(result.profile);
 
@@ -116,6 +127,8 @@ export function completeStoryChapter<TProfile>(args: {
     episodeBonusAwarded,
     starterStickerAwarded,
     weeklyBadgeAwarded,
+    newThemeStickerIds,
+    newMilestoneStickerIds,
     progressDebug,
   };
 }

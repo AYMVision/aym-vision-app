@@ -5,7 +5,7 @@ export function namespacesForPath(pathname: string): I18nNamespace[] {
   const base: I18nNamespace[] = ['common', 'navigation', 'layout'];
 
   // Home
-  if (pathname === '/') return [...base, 'welcome'];
+  if (pathname === '/') return [...base, 'welcome', 'stories'];
 
   // Stories
   if (pathname.startsWith('/stories')) return [...base, 'stories', 'amy'];
@@ -29,7 +29,7 @@ export function namespacesForPath(pathname: string): I18nNamespace[] {
   if (pathname.startsWith('/newspaper')) return [...base, 'bonus'];
 
   // Adult + Parents/Kids
-  if (pathname.startsWith('/adult-settings')) return [...base, 'adult', 'themes'];
+  if (pathname.startsWith('/adult-settings')) return [...base, 'adult', 'themes', 'stories'];
   if (pathname.startsWith('/parents')) return [...base, 'parents', 'adult', 'themes'];
   if (pathname.startsWith('/kids')) return [...base, 'welcome'];
 

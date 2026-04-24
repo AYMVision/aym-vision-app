@@ -9,9 +9,10 @@ import { assetUrl } from '../common/assetUrl';
 import { useProfile } from '../profile/useProfile';
 import { BONUS_INDEX, type BonusItem } from '../bonus/bonusIndex';
 import { isBonusUnlocked, type BonusProgressSnapshot } from '../bonus/bonusUnlock';
-import { unlockBonusById } from '../bonus/unlockBonusById';
+import { markBonusSeen } from '../bonus/bonusSeen';
 import { parseFrontmatter } from '../bonus/mdFrontmatter';
 import { ArticleBody } from '../bonus/ArticleBody';
+import MiniAudioPlayer from '../components/MiniAudioPlayer';
 
 type LocationState = { backTo?: string; backgroundLocation?: unknown } | null;
 
@@ -70,7 +71,7 @@ export default function NewspaperArticle() {
 
   useEffect(() => {
     if (!item || !unlocked) return;
-    unlockBonusById(item.bonusId);
+    markBonusSeen(item.bonusId);
   }, [item, unlocked]);
 
   useEffect(() => {
@@ -141,6 +142,14 @@ export default function NewspaperArticle() {
     />
   </div>
 ) : null}
+{/* AUDIO PLAYER */}
+{unlocked && item.audioSrc ? (
+  <div className="mb-5 rounded-[28px] border border-slate-200 bg-white shadow-sm p-4">
+    <div className="text-xs font-extrabold text-slate-500 mb-3">🎧 Jetzt anhören</div>
+    <MiniAudioPlayer src={assetUrl(item.audioSrc)} />
+  </div>
+) : null}
+
 {/* ARTICLE BODY */}
 {unlocked && (
   <div className="rounded-[32px] bg-white/90 backdrop-blur shadow-sm px-4 sm:px-6 py-5 border border-black/5">
@@ -153,16 +162,6 @@ export default function NewspaperArticle() {
     )}
   </div>
 )}
-
-        {/* BACK */}
-        <div className="mt-8">
-          <Link
-            to="/newspaper"
-            className="inline-flex px-4 py-2 rounded-2xl border border-slate-200 bg-white text-sm font-bold hover:bg-slate-50"
-          >
-            ← Zurück
-          </Link>
-        </div>
 
       </div>
     </Layout>

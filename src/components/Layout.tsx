@@ -14,8 +14,7 @@ import { assetUrl } from '../common/assetUrl';
 
 import Footer from './Footer';
 import { LanguageSelector } from './LanguageSelector';
-import AvatarHeadImage from './AvatarHeadImage';
-import HeaderProgressChip from './HeaderProgressChip';
+import AvatarLookCircle from '../components/AvatarLookCircle';
 
 import { useProfile } from '../profile/useProfile';
 import { useRewardFx } from '../progress/rewardFx';
@@ -31,13 +30,14 @@ type LayoutProps = {
   backPath?: string;
   /** Wenn true: Footer verstecken (zusätzlich zu Auto-Hide auf /stories) */
   hideFooter?: boolean;
-    /** Wenn true: Header + Drawer verstecken (für Modals/Overlays) */
+  /** Wenn true: Header + Drawer verstecken (für Modals/Overlays) */
   hideHeader?: boolean;
-
+  /** Wenn true: h-[100dvh] overflow-hidden statt min-h-screen (für Story-Seiten mit internem Scroll) */
+  fullHeight?: boolean;
 };
 
 
-export default function Layout({ children, backPath, hideFooter, hideHeader }: LayoutProps) {
+export default function Layout({ children, backPath, hideFooter, hideHeader, fullHeight }: LayoutProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -58,9 +58,10 @@ const { t: tCommon } = useTranslation('common');
   // Reward FX targets (Coin-Fly Animation)
   const { walletElRef, profileElRef } = useRewardFx();
 
-  // Footer in Stories verstecken (und optional via Prop)
-  const isStoryRoute = location.pathname.startsWith('/stories');
-  const shouldHideFooter = Boolean(hideFooter) || isStoryRoute;
+  // Footer nur in Story-Spielrouten (mit ID) verstecken, nicht auf der Übersichtsseite
+  const isStoryPlayerRoute =
+    /^\/stories(-v02)?\/[^/]+/.test(location.pathname);
+  const shouldHideFooter = Boolean(hideFooter) || isStoryPlayerRoute;
 
     // Mobile Bottom Nav: nur für kinderrelevante Bereiche zeigen
   const showBottomNav =
@@ -133,7 +134,7 @@ const isActive = (to: string) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--color-teal-300)] flex flex-col">
+    <div className={cn(fullHeight ? 'h-[100dvh] overflow-hidden' : 'min-h-screen', 'bg-[var(--color-teal-300)] flex flex-col')}>
       {/* =========================
           HEADER (Sticky)
          ========================= */}
@@ -191,17 +192,13 @@ const isActive = (to: string) => {
             {/* Right spacer */}
             <div className="flex-1" />
 
-            {/* Mobile: Coins + Avatar → Profile */}
-            <Link
-              to="/profile"
-              state={{ backTo: location.pathname + location.search + location.hash }}
-              className="p-1"
-              aria-label={tNav('openProfile')}
-            >
-              <div className="flex items-center gap-2">
-                <HeaderProgressChip compact />
-
-                {/* Wallet target for Coin-Fly */}
+            {/* Mobile: Coins → Shop, Avatar → Profile */}
+            <div className="flex items-center gap-2 p-1">
+              <Link
+                to="/avatar"
+                state={{ backTo: location.pathname + location.search + location.hash, initialTab: 'shop' }}
+                aria-label="Shop öffnen"
+              >
                 <div
                   ref={walletElRef}
                   className="px-2 py-1 rounded-xl bg-amber-50 border border-amber-200 text-xs font-semibold flex items-center gap-1"
@@ -213,21 +210,27 @@ const isActive = (to: string) => {
                   />
                   <span>{coins}</span>
                 </div>
+              </Link>
 
+              <Link
+                to="/profile"
+                state={{ backTo: location.pathname + location.search + location.hash }}
+                aria-label={tNav('openProfile')}
+              >
                 <div
                   ref={profileElRef}
                   data-reward-target="profile-avatar"
                   className="w-10 h-10 rounded-full border border-slate-200 bg-white overflow-hidden"
                 >
-                  <AvatarHeadImage
-                    id={profile.avatarBaseId}
+                  <AvatarLookCircle
+                    avatarBaseId={profile.avatarBaseId}
+                    equipment={profile.equipment}
                     size={40}
-                    alt={tNav('profile')}
-                    className="border-slate-200 bg-white"
+                    className="border border-slate-200 bg-white shadow-sm"
                   />
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
 
             {/* Mobile: Menu Button */}
             <button
@@ -305,20 +308,24 @@ const isActive = (to: string) => {
 
           {/* ===== Desktop Right ===== */}
           <div className="hidden md:flex flex-1 justify-end items-center gap-4">
-            <HeaderProgressChip />
-
             {/* Wallet target for Coin-Fly */}
-            <div
-              ref={walletElRef}
-              className="px-3 py-2 rounded-xl bg-amber-50 border border-amber-200 text-sm font-semibold flex items-center gap-2"
+            <Link
+              to="/avatar"
+              state={{ backTo: location.pathname + location.search + location.hash, initialTab: 'shop' }}
+              aria-label="Shop öffnen"
             >
-              <img
-                src={assetUrl('media/story/ui/coin-128.webp')}
-                alt=""
-                className="w-5 h-5"
-              />
-              <span>{coins}</span>
-            </div>
+              <div
+                ref={walletElRef}
+                className="px-3 py-2 rounded-xl bg-amber-50 border border-amber-200 text-sm font-semibold flex items-center gap-2 hover:opacity-80 transition-opacity"
+              >
+                <img
+                  src={assetUrl('media/story/ui/coin-128.webp')}
+                  alt=""
+                  className="w-5 h-5"
+                />
+                <span>{coins}</span>
+              </div>
+            </Link>
 
             <Link
               to="/profile"
@@ -326,12 +333,12 @@ const isActive = (to: string) => {
               aria-label={tNav('openProfile')}
             >
               <div className="w-11 h-11 rounded-full border border-slate-200 bg-white overflow-hidden flex items-center justify-center">
-                <AvatarHeadImage
-                  id={profile.avatarBaseId}
-                  size={44}
-                  alt={tNav('profile')}
-                  className="w-full h-full object-contain"
-                />
+<AvatarLookCircle
+  avatarBaseId={profile.avatarBaseId}
+  equipment={profile.equipment}
+  size={44}
+  className="border border-slate-200 bg-white"
+/>
               </div>
             </Link>
 
@@ -462,6 +469,7 @@ const isActive = (to: string) => {
       <main
         className={cn(
           'flex-1 flex flex-col items-center justify-start z-0',
+          fullHeight && 'min-h-0',
           showBottomNav ? 'pb-24 md:pb-0' : ''
         )}
       >

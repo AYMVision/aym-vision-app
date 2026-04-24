@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
 
 import Welcome from './pages/Welcome.tsx';
 import NotFound from './pages/NotFound.tsx';
@@ -35,9 +35,12 @@ import ForKids from './pages/ForKids';
 import ForParents from './pages/ForParents';
 import Concept from './pages/Concept';
 import Privacy from './pages/Privacy';
+import Impressum from './pages/Impressum';
 import FAQ from './pages/FAQ';
 import RouteI18nLoader from './i18n/RouteI18nLoader';
 import TestSettings from './pages/TestSettings';
+
+import StoryV02 from './pages/StoryV02';
 
 const queryClient = new QueryClient();
 
@@ -48,6 +51,11 @@ function ScrollRestorationManual() {
     }
   }, []);
   return null;
+}
+
+function StoryV02Route() {
+  const { courseId } = useParams<{ courseId: string }>();
+  return <StoryV02 key={courseId} />;
 }
 
 function AppRoutes() {
@@ -61,6 +69,7 @@ function AppRoutes() {
         <Route path="/" element={<Welcome />} />
         <Route path="/stories" element={<Stories />} />
         <Route path="/stories/:courseId" element={<Story />} />
+        <Route path="/stories-v02/:courseId" element={<StoryV02Route />} />
         <Route path="/about" element={<About />} />
 
         <Route path="/profile" element={<Profile />} />
@@ -72,6 +81,7 @@ function AppRoutes() {
         <Route path="/parents" element={<ForParents />} />
         <Route path="/concept" element={<Concept />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/impressum" element={<Impressum />} />
         <Route path="/faq" element={<FAQ />} />
 
         <Route path="/cards" element={<Cards />} />

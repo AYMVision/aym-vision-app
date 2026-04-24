@@ -283,15 +283,14 @@ bIntroByType: {
 bOutroByType: {
   FEELING: [
     'Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
-    'Schreibe gerne bei der nächsten Frage noch einen Satz mehr.',
-    'Morgen freue ich mich auf ausführliche Gedanken von dir. 🦉',
+    'Morgen freue ich mich auf weitere Gedanken von dir. 🦉',
     'Das ist verständlich. 🦉',
 
   ],
   ACTION: [
-     'Das passt für den Moment. Schreibe gerne bei der nächsten Frage noch einen Satz mehr. 🦉',
+     'Das passt für den Moment. 🦉',
      'Das ist okay so. Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
-     'Das ist ein valider Punkt. Morgen freue ich mich auf ausführliche Gedanken von dir. 🦉',
+     'Das ist ein valider Punkt. 🦉',
      'Das ist eine passende Kurzfassung. 🦉',
      'Eine passende Kurzfassung! 🦉',
      'Damit triffst du schon einen Aspekt. 🦉',
@@ -300,18 +299,18 @@ bOutroByType: {
     
   ],
   CHALLENGE: [
-     'Das passt für den Moment. Schreibe gerne bei der nächsten Frage noch einen Satz mehr. 🦉',
+     'Das passt für den Moment. 🦉',
      'Das ist okay so. Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
-     'Das ist ein valider Punkt. Morgen freue ich mich auf ausführliche Gedanken von dir. 🦉',
+     'Das ist ein valider Punkt. 🦉',
      'Das ist eine passende Kurzfassung. 🦉',
      'Das ist verständlich. 🦉',
      'Das klingt stimmig. 🦉',
 
   ],
   PERSPECTIVE: [
-     'Das passt für den Moment. Schreibe gerne bei der nächsten Frage noch einen Satz mehr. 🦉',
+     'Das passt für den Moment. 🦉',
      'Das ist okay so. Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
-     'Das ist ein valider Punkt. Morgen freue ich mich auf ausführliche Gedanken von dir. 🦉',
+     'Das ist ein valider Punkt. 🦉',
      'Das ist eine passende Kurzfassung. 🦉',
      'Das ist verständlich. 🦉',
      'Damit triffst du schon einen Aspekt. 🦉',
@@ -321,9 +320,9 @@ bOutroByType: {
 
   ],
   KNOWLEDGE: [
-     'Das passt für den Moment. Schreibe gerne bei der nächsten Frage noch einen Satz mehr. 🦉',
+     'Das passt für den Moment. 🦉',
      'Das ist okay so. Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
-     'Das ist ein valider Punkt. Morgen freue ich mich auf ausführliche Gedanken von dir. 🦉',
+     'Das ist ein valider Punkt. 🦉',
      'Das ist eine passende Kurzfassung. 🦉',
      'Das ist verständlich. 🦉',
      'Damit triffst du schon einen Aspekt. 🦉',
@@ -334,8 +333,8 @@ bOutroByType: {
   ],
       GENERAL: [
           'Das passt für den Moment. Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
-    'Das ist okay so. Schreibe gerne bei der nächsten Frage noch einen Satz mehr.',
-    'Das ist ein valider Punkt. Morgen freue ich mich auf ausführliche Gedanken von dir. 🦉',
+    'Das ist okay so.',
+    'Das ist ein valider Punkt. 🦉',
     'Das ist verständlich. 🦉',
     ],
 },

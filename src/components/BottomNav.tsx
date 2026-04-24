@@ -1,6 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../common/utils';
+import { useProfile } from '../profile/useProfile';
+import { getEpisodeMetaByCourseId } from '../content/contentIndex';
 
 type BottomNavProps = {
   backTo?: string;
@@ -8,16 +10,21 @@ type BottomNavProps = {
 
 export default function BottomNav({ backTo }: BottomNavProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const { t } = useTranslation('navigation');
+  const { profile } = useProfile();
 
-  const items = [
-    {
-      to: '/stories',
-      label: t('storiesKids', { defaultValue: 'Meine Amics' }),
-      aria: t('mobileNav.openStories', { defaultValue: 'Stories öffnen' }),
-      emoji: '🏠',
-      match: (pathname: string) => pathname.startsWith('/stories'),
-    },
+  const currentCourseId = profile.progress?.current?.courseId;
+  const episodeMeta = currentCourseId ? getEpisodeMetaByCourseId(currentCourseId) : null;
+  const storyPath = episodeMeta
+    ? (episodeMeta.storyEngine === 'v2'
+        ? `/stories-v02/${currentCourseId}`
+        : `/stories/${currentCourseId}`)
+    : '/stories';
+
+  const hasCurrent = !!currentCourseId;
+
+  const navItems = [
     {
       to: '/diaries',
       label: t('mobileNav.diaries', { defaultValue: 'Tagebuch' }),
@@ -33,13 +40,17 @@ export default function BottomNav({ backTo }: BottomNavProps) {
       match: (pathname: string) => pathname.startsWith('/newspaper'),
     },
     {
-      to: '/album',
-      label: t('mobileNav.album', { defaultValue: 'Sticker' }),
-      aria: t('mobileNav.openAlbum', { defaultValue: 'Sticker-Album öffnen' }),
-      emoji: '✨',
-      match: (pathname: string) => pathname.startsWith('/album'),
+      to: '/profile',
+      label: t('mobileNav.profile', { defaultValue: 'Profil' }),
+      aria: t('mobileNav.openProfile', { defaultValue: 'Profil öffnen' }),
+      emoji: '👤',
+      match: (pathname: string) => pathname.startsWith('/profile'),
     },
   ];
+
+  const isOnStory =
+    location.pathname.startsWith('/stories') ||
+    location.pathname === '/';
 
   return (
     <nav
@@ -47,7 +58,32 @@ export default function BottomNav({ backTo }: BottomNavProps) {
       aria-label="Mobile navigation"
     >
       <div className="grid grid-cols-4 px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
-        {items.map((item) => {
+        {/* Start / Weiter — prominenter erster Button */}
+        <button
+          type="button"
+          onClick={() => navigate(storyPath)}
+          aria-label={hasCurrent
+            ? t('mobileNav.continueStory', { defaultValue: 'Story weitermachen' })
+            : t('mobileNav.startStory', { defaultValue: 'Story starten' })}
+          className={cn(
+            'mx-1 rounded-2xl px-2 py-2 flex flex-col items-center justify-center text-center transition',
+            isOnStory
+              ? 'bg-[var(--color-teal-50)] text-[var(--color-teal-700)]'
+              : 'bg-[var(--color-teal-700)] text-white hover:bg-[var(--color-teal-800)]'
+          )}
+        >
+          <span className="text-lg leading-none" aria-hidden="true">
+            {hasCurrent ? '▶️' : '🚀'}
+          </span>
+          <span className="mt-1 text-[11px] font-extrabold leading-none">
+            {hasCurrent
+              ? t('mobileNav.continue', { defaultValue: 'Weiter' })
+              : t('mobileNav.start', { defaultValue: 'Start' })}
+          </span>
+        </button>
+
+        {/* Restliche Nav-Items */}
+        {navItems.map((item) => {
           const active = item.match(location.pathname);
 
           return (

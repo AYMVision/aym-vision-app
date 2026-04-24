@@ -245,12 +245,12 @@ function CardsHero() {
         </div>
 
         <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-          🎴 {t('cards.title', { defaultValue: 'Sammelkarten' })}
+          🎴 {t('cards.title', { defaultValue: 'Freundebuch' })}
         </h1>
 
         <p className="mt-1 text-sm text-slate-800 max-w-md">
           {t('cards.subtitle', {
-            defaultValue: 'Schalte neue Karten frei und entdecke die Figuren aus der Story.',
+            defaultValue: 'Sammle neue Karten und entdecke die Figuren aus der Story.',
           })}
         </p>
 

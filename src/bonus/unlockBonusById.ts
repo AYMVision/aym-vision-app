@@ -1,16 +1,14 @@
 // src/bonus/unlockBonusById.ts
-import { loadSeenBonusIds, markBonusSeen } from './bonusSeen';
+import { markBonusUnlocked } from './bonusSeen';
 
 /**
- * Marks a bonusId as unlocked/seen (idempotent).
- * @returns true if it was newly unlocked, false if it already existed.
+ * Called by the story engine when a bonus-link message appears in auto-play.
+ * Writes to aym_bonus_markers_v1 (unlock state), NOT to aym_seen_bonus_v1 (read state).
+ * This keeps "newly unlocked" and "already read" as independent states so that
+ * the Newspaper "Neu freigeschaltet" section shows correctly until the user clicks through.
+ *
+ * @returns true if newly unlocked, false if already was unlocked.
  */
 export function unlockBonusById(bonusId: string): boolean {
-  if (!bonusId) return false;
-
-  const seen = new Set(loadSeenBonusIds());
-  if (seen.has(bonusId)) return false;
-
-  markBonusSeen(bonusId);
-  return true;
+  return markBonusUnlocked(bonusId);
 }

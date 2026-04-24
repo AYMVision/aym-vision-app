@@ -60,7 +60,9 @@ export type MessageKind =
   | 'chat-switch'
   | 'bonus-link'
   | 'diary-unlock'
-  | 'article-unlock';
+  | 'article-unlock'
+  | 'typing-indicator'
+  | 'chapter-divider';
 
 // -----------------------------
 // Chat-Gruppen / Szenen
@@ -111,6 +113,10 @@ export type Message = {
 
   /** Textinhalt */
   content?: string;
+  chapterMeta?: {
+  title: string;
+  subtitle?: string;
+};
 
   /**
    * Bildpfad/URL:

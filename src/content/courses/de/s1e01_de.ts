@@ -88,12 +88,11 @@ const course: Course = {
         { id: 's1e01c01-0033', type: 'other', speaker: characters.lisa, content: 'Mit mir? ☺️', timestamp: '11:24' },
         { id: 's1e01c01-0034', type: 'other', speaker: characters.lisa, content: 'Hier scheint die Sonne 😎☀️', timestamp: '11:25' },
         { id: 's1e01c01-0035', type: 'other', speaker: characters.lisa, content: 'Yasmin? Du bist heute so still 🤔', timestamp: '11:26' },
-        { id: 's1e01c01-0036', type: 'other', speaker: characters.yasmin, content: '@Lisa wieso?', timestamp: '11:26' },
         { id: 's1e01c01-0037', type: 'other', speaker: characters.yasmin, content: 'Kommst du heute zurück?', timestamp: '11:26' },
         { id: 's1e01c01-0038', type: 'other', speaker: characters.lisa, content: 'Nein, einen Tag hab ich noch. Morgen fliegen wir zurück. Puh und übermorgen geht die Schule dann schon wieder los.', timestamp: '11:27' },
         { id: 's1e01c01-0039', type: 'other', speaker: characters.carlos, content: 'Klingt richtig gut 🙂. Das Foto am Wasserfall ist stark.', timestamp: '11:28' },
         { id: 's1e01c01-0040', type: 'other', speaker: characters.carlos, content: 'Schicke gern bei Gelegenheit noch mal eins.', timestamp: '11:28' },
-        { id: 's1e01c01-0041', type: 'other', speaker: characters.carlos, content: 'Ich schau mir die Gegend gerade in Google Earth - die 3D-Ansichten sind ziemlich gut. Fühlt sich fast so an, als wär man dort 👍', timestamp: '11:29' },
+        { id: 's1e01c01-0041', type: 'other', speaker: characters.carlos, content: 'Ich schau mir die Gegend gerade in Google Earth an - die 3D-Ansichten sind ziemlich gut. Fühlt sich fast so an, als wär man dort 👍', timestamp: '11:29' },
 
         // Foto: Wasserfall (s1e01c01_2)
         { id: 's1e01c01-0042', type: 'other', speaker: characters.lisa, content: '❤️', timestamp: '11:30'},

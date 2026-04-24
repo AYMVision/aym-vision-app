@@ -1,6 +1,6 @@
 {
   "categories": {
-    "characters": "Sammelkarten",
+    "characters": "Freundebuch",
     "diaries": "Tagebücher",
     "newspaper": "Schülerzeitung"
   },
@@ -77,8 +77,11 @@
     "fallbackDesc": "Ein neuer Eintrag…",
     "open": "Öffnen →",
     "locked": "🔒 Noch geheim",
+        "my": {
+      "badgeMain": "🙋 Dein Bereich",
+      "badgePrivate": "🔒 privat"
+    },
   
-
     "unknownDiary": "Dieses Tagebuch gibt es nicht.",
     "backToList": "Zurück zur Übersicht",
     "backToStory": "Zurück zur Story",
@@ -111,6 +114,26 @@
 }
 
     },
+    "pin": {
+      "setupTitle": "Tagebuch schützen",
+      "setupBody": "Du kannst dein Tagebuch mit einem PIN schützen, damit nur du es lesen kannst.",
+      "setupButton": "PIN festlegen & Tagebuch öffnen",
+      "skipButton": "Jetzt ohne PIN öffnen",
+      "pinLabel": "Dein PIN (mind. 4 Zeichen)",
+      "pinRepeatLabel": "PIN nochmal eingeben",
+      "hintLabel": "Hinweis (optional, falls du ihn vergisst)",
+      "hintPlaceholder": "z.B. mein Lieblingstier",
+      "errorTooShort": "Bitte mindestens 4 Zeichen.",
+      "errorMismatch": "Die beiden PINs stimmen nicht überein.",
+      "errorWrong": "Falscher PIN. Versuch es nochmal.",
+      "lockedTitle": "Dein Tagebuch ist geschützt",
+      "lockedBody": "Gib deinen PIN ein, um weiterzumachen.",
+      "unlockButton": "Öffnen",
+      "forgotLink": "PIN vergessen?",
+      "hintTitle": "Dein Hinweis:",
+      "forgotHint": "Frag eine erwachsene Person, dir beim Zurücksetzen zu helfen.",
+      "parentNote": "Eltern können den PIN in den Einstellungen zurücksetzen."
+    },
 
 
   "entries": {
@@ -137,16 +160,16 @@
 
     "me": {
       "subtitle": "Dein privates Tagebuch: schreiben, Sticker kleben, später wieder lesen.",
-      "writeTitle": "Neue Seite schreiben",
+      "writeTitle": "Neuen Tagebucheintrag schreiben",
       "writeHint": "Schreib einfach drauflos. Danach kannst du Sticker draufkleben.",
       "placeholder": "Heute war…",
       "save": "Seite speichern",
-      "localOnly": "Wird nur auf diesem Gerät gespeichert.",
+      "localOnly": "🔒 Dein Tagebuch bleibt auf diesem Gerät. 👀 Andere können es sehen, wenn sie dein Handy benutzen. 💡 Schreib nichts hinein, was sehr privat ist.",
       "pagesTitle": "Deine Seiten",
       "noPages": "Noch keine Einträge. Schreib deine erste Seite oben.",
       "canvasTitle": "Sticker & Seite",
       "pickPage": "Wähle links eine Seite aus.",
-      "dragHint": "Sticker ziehen: Finger oder Maus. Doppelklick: entfernen."
+      "dragHint": "Sticker ziehen: Finger oder Maus."
     }
 
   },
@@ -156,7 +179,7 @@
 
 
   "cards": {
-    "title": "Sammelkarten",
+    "title": "Freundebuch",
     "notFoundTitle": "Karte nicht gefunden",
     "notFoundBody": "Diese Sammelkarte existiert nicht (oder ist keine Charakterkarte)."
   },
@@ -194,6 +217,7 @@
 
     "actions": {
       "tapToReveal": "Tippen zum Anzeigen",
+      "revealHint": "👆 Antippen zum Aufdecken",
       "hide": "Verbergen",
       "show": "Anzeigen"
     }

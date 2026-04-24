@@ -3,7 +3,7 @@ import type { Message, Reaction, BubbleTheme } from '../common/types';
 import { useProfile } from '../profile/useProfile';
 import { useTranslation } from 'react-i18next';
 
-import AvatarHeadImage from './AvatarHeadImage';
+import AvatarLookCircle from './AvatarLookCircle';
 import SmartImage from './SmartImage';
 import { assetUrl } from '../common/assetUrl';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -42,7 +42,11 @@ function stripKnownSizeSuffix(src: string) {
 }
 
 function buildMsgCandidates(rawSrc: string) {
-  const src = isAbsoluteish(rawSrc) ? rawSrc : assetUrl(rawSrc);
+  // Use assetUrl for all local paths (incl. those starting with /) so that
+  // production builds with base:'./' resolve correctly on subpath deployments.
+  // Only skip assetUrl for truly external URLs and data URIs.
+  const isExternal = /^(https?:\/\/|data:)/.test(rawSrc);
+  const src = isExternal ? rawSrc : assetUrl(rawSrc);
 
   const looksSized = /-\d+\.(webp|avif)$/i.test(src);
   if (!looksSized) return null;
@@ -65,7 +69,7 @@ function MessageImage({ src }: { src?: string }) {
     return (
       <SmartImage
         alt=""
-        className="w-full rounded-lg mb-1 max-h-64 object-cover"
+        className="w-full rounded-lg mb-1 max-h-96 object-contain"
         sizes="(min-width: 768px) 420px, 80vw"
         avif={cand.avif}
         webp={cand.webp}
@@ -77,13 +81,15 @@ function MessageImage({ src }: { src?: string }) {
     );
   }
 
+
   // Fallback: no candidates (e.g. png or not resized)
-  const resolved = isAbsoluteish(src) ? src : assetUrl(src);
+  const isExternal = /^(https?:\/\/|data:)/.test(src ?? '');
+  const resolved = isExternal ? (src ?? '') : assetUrl(src ?? '');
   return (
     <img
       alt=""
       src={resolved}
-      className="w-full rounded-lg mb-1 max-h-64 object-cover"
+      className="w-full rounded-lg mb-1 max-h-96 object-contain"
       loading="lazy"
       decoding="async"
     />
@@ -287,10 +293,12 @@ function MessageBody({
   message,
   isMain,
   mainTextClass,
+  chatName,
 }: {
   message: Message;
   isMain: boolean;
   mainTextClass: string;
+  chatName?: string;
 }) {
   if (message.type === 'audio') {
     if (!message.audioSrc) return null;
@@ -305,9 +313,14 @@ function MessageBody({
 
   if (!message.content) return null;
 
+  const resolvedContent = message.content.replace(
+    /\{\{chatName\}\}/g,
+    (chatName ?? '').trim() || 'du'
+  );
+
   return (
     <p className={`text-lg min-w-0 break-words leading-relaxed ${isMain ? mainTextClass : 'text-anthracite-800'}`}>
-      {message.content}
+      {resolvedContent}
     </p>
   );
 }
@@ -338,11 +351,7 @@ export default function ChatMessage({ message, onOpenBonusLink }: ChatMessagePro
   // -----------------------------
   // Image src normalisieren
   // -----------------------------
-  const imgSrc = message.image
-    ? message.image.startsWith('/')
-      ? message.image
-      : `/${message.image}`
-    : undefined;
+  const imgSrc = message.image || undefined;
 
   // -----------------------------
   // System (center)
@@ -350,6 +359,37 @@ export default function ChatMessage({ message, onOpenBonusLink }: ChatMessagePro
   if (isSystem) {
     // ✅ chat-switch wird als Mini-Header in Story.tsx gerendert → hier ausblenden
     if (message.kind === 'chat-switch' && message.scene) return null;
+
+    if (message.type === 'system' && message.image) {
+  return (
+    <div className="my-3 w-full">
+      <img
+        src={assetUrl(message.image)}
+        alt=""
+        className="block w-full h-auto object-contain"
+        loading="lazy"
+      />
+    </div>
+  );
+}
+
+if (message.kind === 'chapter-divider') {
+  return (
+    <div className="flex justify-center my-4">
+      <div className="px-4 py-2 rounded-2xl bg-white/85 border border-slate-200 text-center shadow-sm">
+        <div className="text-xs font-semibold tracking-wide text-slate-500">
+          {message.chapterMeta?.title ?? message.content}
+        </div>
+
+        {message.chapterMeta?.subtitle ? (
+          <div className="mt-1 text-[11px] text-slate-400">
+            {message.chapterMeta.subtitle}
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
 
     // ✅ NEU: bonus-link (klickbar)
     if (message.kind === 'bonus-link') {
@@ -458,9 +498,8 @@ onClick={() => {
   // -----------------------------
   if (message.kind === 'safety-self-harm') {
     return (
-      <div className="w-full flex justify-end my-1">
-        <div className="flex items-end gap-2 max-w-[75%] min-w-0">
-          <div className="relative flex-1 min-w-0 max-w-full break-words rounded-2xl rounded-br-md p-3 shadow-sm bg-red-50 border border-red-200">
+      <div className="w-full flex justify-end items-end gap-2 my-1">
+          <div className="relative min-w-0 max-w-[82%] break-words rounded-2xl rounded-br-md p-3 shadow-sm bg-red-50 border border-red-200">
             {message.speaker?.name && (
               <p className="text-sm font-semibold text-anthracite-600 mb-1 text-left">
                 {message.speaker.name}
@@ -495,7 +534,6 @@ onClick={() => {
             fallbackLetter={message.speaker?.name?.charAt(0) || 'A'}
           />
         </div>
-      </div>
     );
   }
 
@@ -505,11 +543,10 @@ onClick={() => {
   // -----------------------------
   if (isUser) {
     return (
-      <div className="w-full flex justify-end my-1">
-        <div className="flex items-end gap-2 max-w-[75%] min-w-0">
+      <div className="w-full flex justify-end items-end gap-2 my-1">
           <div
             className={[
-              'relative flex-1 min-w-0 max-w-full break-words rounded-2xl rounded-br-md p-2 shadow-md',
+              'relative min-w-0 max-w-[82%] break-words rounded-2xl rounded-br-md p-2 shadow-md',
               'bg-blue-600/60 text-white',
               bubbleBottomPad,
             ].join(' ')}
@@ -519,7 +556,12 @@ onClick={() => {
 
 <MessageImage src={imgSrc} />
 
-<MessageBody message={message} isMain={true} mainTextClass="text-white" />
+<MessageBody
+  message={message}
+  isMain={true}
+  mainTextClass="text-white"
+  chatName={profile.chatName}
+/>
 
 
 
@@ -535,67 +577,52 @@ onClick={() => {
             <ReactionPills reactions={message.reactions} />
           </div>
 
-          <AvatarHeadImage
-            id={profile.avatarBaseId}
+          <AvatarLookCircle
+            avatarBaseId={profile.avatarBaseId}
+            equipment={profile.equipment}
             size={64}
             className="rounded-full border-slate-200 bg-white flex-shrink-0 w-16 h-16"
             alt="Du"
           />
         </div>
-      </div>
     );
   }
 
   // -----------------------------
-  // Main (right) vs Other (left)
+  // Main (left) + Other (left)
   // -----------------------------
-  const alignWrapper = isMain ? 'justify-end' : 'justify-start';
-
   return (
-    <div className={`w-full flex ${alignWrapper} my-2.5`}>
-      <div className="flex items-end gap-2 max-w-[75%] min-w-0">
-        {!isMain && (
-          <CharacterAvatar
-            avatar={message.speaker?.avatar}
-            name={message.speaker?.name}
-            fallbackLetter={message.speaker?.name?.charAt(0) || 'U'}
-          />
+    <div className="w-full flex items-end gap-2 justify-start my-2.5">
+      <CharacterAvatar
+        avatar={message.speaker?.avatar}
+        name={message.speaker?.name}
+        fallbackLetter={message.speaker?.name?.charAt(0) || 'A'}
+      />
+
+      <div
+        className={[
+          'relative min-w-0 max-w-[82%] break-words rounded-2xl rounded-bl-md p-2 shadow-sm border',
+          bubbleBottomPad,
+          isMain ? `${mainTheme.bg} ${mainTheme.border}` : 'bg-white border-gray-200',
+        ].join(' ')}
+      >
+        {message.speaker?.name && (
+          <p className="text-sm font-semibold text-anthracite-600 mb-0.5 text-left">
+            {message.speaker.name}
+          </p>
         )}
 
-        <div
-          className={[
-            'relative flex-1 min-w-0 max-w-full break-words rounded-2xl p-2 shadow-sm border',
-            bubbleBottomPad,
-            isMain ? `rounded-br-md ${mainTheme.bg} ${mainTheme.border}` : 'rounded-bl-md bg-white border-gray-200',
-          ].join(' ')}
-        >
-          {message.speaker?.name && (
-            <p className="text-sm font-semibold text-anthracite-600 mb-0.5 text-left">
-              {message.speaker.name}
-            </p>
-          )}
+        <BubbleMeta msg={message} isMain={isMain} />
+        <MessageImage src={imgSrc} />
+        <MessageBody
+          message={message}
+          isMain={isMain}
+          mainTextClass={mainTheme.text}
+          chatName={profile.chatName}
+        />
 
-<BubbleMeta msg={message} isMain={isMain} />
-
-
-<MessageImage src={imgSrc} />
-
-<MessageBody message={message} isMain={isMain} mainTextClass={mainTheme.text} />
-
-
-
-          <TimeStamp value={message.timestamp} align={isMain ? 'end' : 'start'} />
-
-          <ReactionPills reactions={message.reactions} />
-        </div>
-
-        {isMain && (
-          <CharacterAvatar
-            avatar={message.speaker?.avatar}
-            name={message.speaker?.name}
-            fallbackLetter={message.speaker?.name?.charAt(0) || 'A'}
-          />
-        )}
+        <TimeStamp value={message.timestamp} align="start" />
+        <ReactionPills reactions={message.reactions} />
       </div>
     </div>
   );

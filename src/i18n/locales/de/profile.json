@@ -29,7 +29,7 @@
   },
 
   "look": {
-    "title": "Dein Look",
+    "title": "Dein Avatar",
     "hint": "Tippe unten auf ein Item, um es anzuziehen oder auszuziehen."
   },
 
@@ -68,10 +68,27 @@
 
   
   "adult": {
-    "hiddenAria": "Erwachsenenbereich öffnen",
+    "hiddenAria": "Bereich für Eltern öffnen",
     "hiddenVersion": "Version {{version}}",
     "footerHint": "Für Erwachsene: lange drücken"
   }
 
+  },
+
+  "learningTrace": {
+    "title": "Deine Stärken wachsen",
+    "subtitle": "Je mehr Stories du erlebst, desto mehr ...",
+    "levels": {
+      "frequent": "Das zeigst du schon oft ✨",
+      "visible": "Das wächst gerade 🌱",
+      "growing": "Du sammelst gerade erste Erfahrungen"
+    }
+  },
+
+  "rewards": {
+    "title": "Besondere Belohnungen",
+    "subtitle": "Deine besonderen Erfolge findest du im Album.",
+    "open": "Ansehen →",
+    "empty": "Hier erscheinen bald besondere Sticker und Badges."
   }
 }

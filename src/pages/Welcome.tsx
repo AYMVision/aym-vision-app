@@ -39,22 +39,30 @@ function EntryCard({
   body,
   cta,
   to,
+  bg = 'bg-white',
+  border = 'border-slate-200',
+  kickerColor = 'text-[var(--color-teal-600)]',
+  ctaColor = 'text-[var(--color-teal-700)]',
 }: {
   kicker: string;
   title: string;
   body: string;
   cta: string;
   to: string;
+  bg?: string;
+  border?: string;
+  kickerColor?: string;
+  ctaColor?: string;
 }) {
   return (
     <Link
       to={to}
-      className="block rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow"
+      className={`block rounded-2xl border ${border} ${bg} p-5 shadow-sm hover:shadow-md transition-shadow`}
     >
-      <div className="text-xs font-semibold text-[var(--color-teal-600)]">{kicker}</div>
+      <div className={`text-xs font-semibold ${kickerColor}`}>{kicker}</div>
       <div className="mt-2 text-lg font-bold text-slate-900 leading-snug">{title}</div>
       <p className="mt-3 text-sm text-slate-700 leading-relaxed">{body}</p>
-      <div className="mt-5 font-semibold text-[var(--color-teal-700)]">{cta}</div>
+      <div className={`mt-5 font-semibold ${ctaColor}`}>{cta}</div>
     </Link>
   );
 }
@@ -180,7 +188,7 @@ function isUnlockedByChain(
         </Link>
 
         <Link
-          to="/concept"
+          to="/parents"
           className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
         >
           {t('hero.ctaSecondary')}
@@ -202,7 +210,6 @@ function isUnlockedByChain(
         <source src="/media/ui/Kids_surfen_smart.mp4" type="video/mp4" />
       </video>
 
-      <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/10 to-transparent lg:from-transparent lg:via-transparent lg:to-transparent pointer-events-none" />
     </div>
   </div>
 </section>
@@ -210,7 +217,8 @@ function isUnlockedByChain(
         {/* WAS IST AMY SURFWING */}
         <div className="mt-6 sm:mt-8">
           <Panel title={t('about.whatTitle')}>
-            <p>{t('about.whatBody')}</p>
+            <p>{t('about.whatBody1')}</p>
+            <p className="mt-2">{t('about.whatBody2')}</p>
 
             <div className="mt-5 font-semibold text-slate-900">
               {t('about.uspTitle')}
@@ -315,7 +323,7 @@ function isUnlockedByChain(
 
                     <button
                       type="button"
-                      onClick={() => navigate(`/stories/${currentCard.id}`)}
+                      onClick={() => navigate(currentCard.storyEngine === 'v2' ? `/stories-v02/${currentCard.id}` : `/stories/${currentCard.id}`)}
                       className="mt-4 w-full inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
                     >
                       {hasStarted
@@ -335,28 +343,43 @@ function isUnlockedByChain(
             <p>{t('entries.body')}</p>
 
             <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3">
-              <EntryCard
-                kicker={t('entries.cards.0.kicker')}
-                title={t('entries.cards.0.title')}
-                body={t('entries.cards.0.body')}
-                cta={t('entries.cards.0.cta')}
-                to="/parents"
-              />
-
-              <EntryCard
-                kicker={t('entries.cards.1.kicker')}
-                title={t('entries.cards.1.title')}
-                body={t('entries.cards.1.body')}
-                cta={t('entries.cards.1.cta')}
-                to="/concept"
-              />
-
+              {/* Für Kinder – teal */}
               <EntryCard
                 kicker={t('entries.cards.2.kicker')}
                 title={t('entries.cards.2.title')}
                 body={t('entries.cards.2.body')}
                 cta={t('entries.cards.2.cta')}
                 to="/stories"
+                bg="bg-teal-50"
+                border="border-teal-200"
+                kickerColor="text-teal-700"
+                ctaColor="text-teal-700"
+              />
+
+              {/* Für Eltern – violet */}
+              <EntryCard
+                kicker={t('entries.cards.0.kicker')}
+                title={t('entries.cards.0.title')}
+                body={t('entries.cards.0.body')}
+                cta={t('entries.cards.0.cta')}
+                to="/parents"
+                bg="bg-violet-50"
+                border="border-violet-200"
+                kickerColor="text-violet-700"
+                ctaColor="text-violet-700"
+              />
+
+              {/* Zum Konzept – amber */}
+              <EntryCard
+                kicker={t('entries.cards.1.kicker')}
+                title={t('entries.cards.1.title')}
+                body={t('entries.cards.1.body')}
+                cta={t('entries.cards.1.cta')}
+                to="/concept"
+                bg="bg-amber-50"
+                border="border-amber-200"
+                kickerColor="text-amber-700"
+                ctaColor="text-amber-700"
               />
             </div>
           </Panel>

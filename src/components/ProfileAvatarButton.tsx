@@ -8,7 +8,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { useProfile } from '../profile/useProfile';
-import AvatarHeadImage from './AvatarHeadImage';
+import AvatarLookCircle from '../components/AvatarLookCircle';
 
 type Props = {
   size?: number;
@@ -25,19 +25,20 @@ export default function ProfileAvatarButton({
   const location = useLocation();
   const backTo = location.pathname + location.search + (location.hash || '');
 
-  return (
-    <Link
-      to="/profile"
-      state={{ backTo }}
-      aria-label={t('profileMeta.openAria', { defaultValue: 'Profil öffnen' })}
-      className={className}
-    >
-      <AvatarHeadImage
-        id={profile.avatarBaseId}
-        size={size}
-        alt={t('profileMeta.avatarAlt', { defaultValue: 'Profil' })}
-        className="rounded-full border border-slate-200 bg-white"
-      />
-    </Link>
-  );
+return (
+  <Link
+    to="/profile"
+    state={{ backTo }}
+    aria-label={t('profileMeta.openAria', { defaultValue: 'Profil öffnen' })}
+    className={className}
+  >
+    <AvatarLookCircle
+      avatarBaseId={profile.avatarBaseId}
+      equipment={profile.equipment}
+      size={size}
+      alt={t('profileMeta.avatarAlt', { defaultValue: 'Profil' })}
+      className="border border-slate-200 bg-white"
+    />
+  </Link>
+);
 }

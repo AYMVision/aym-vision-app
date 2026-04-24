@@ -36,12 +36,21 @@ function Panel({
 }
 
 
-function InfoTile({ title, text }: { title: string; text: string }) {
+const INFO_TILE_COLORS = [
+  { bg: 'bg-teal-50',   border: 'border-teal-200',   bar: 'bg-teal-300'   },
+  { bg: 'bg-violet-50', border: 'border-violet-200', bar: 'bg-violet-300' },
+  { bg: 'bg-amber-50',  border: 'border-amber-200',  bar: 'bg-amber-300'  },
+  { bg: 'bg-sky-50',    border: 'border-sky-200',    bar: 'bg-sky-300'    },
+  { bg: 'bg-rose-50',   border: 'border-rose-200',   bar: 'bg-rose-300'   },
+];
+
+function InfoTile({ title, text, colorIdx = 0 }: { title: string; text: string; colorIdx?: number }) {
+  const c = INFO_TILE_COLORS[colorIdx % INFO_TILE_COLORS.length];
   return (
-    <div className="h-full rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm flex flex-col">
+    <div className={`h-full rounded-2xl border ${c.border} ${c.bg} p-4 sm:p-5 shadow-sm flex flex-col`}>
       <div className="font-extrabold text-slate-900 leading-snug">{title}</div>
       <div className="mt-2 text-sm text-slate-700 leading-snug flex-1">{text}</div>
-      <div className="mt-3 h-1 w-10 rounded-full bg-slate-100" />
+      <div className={`mt-3 h-1 w-10 rounded-full ${c.bar}`} />
     </div>
   );
 }
@@ -136,6 +145,43 @@ const SURVEY_URL =
   'https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__tVBf5hUMUNFRjhWUzdDMTBBWVlJMVJIRE80M0sxTy4u';
 
 export default function Stories() {
+  const CardTile = ({
+  tag,
+  title,
+  text,
+  img,
+  alt,
+  object,
+  hClass,
+}: {
+  tag: string;
+  title: string;
+  text: string;
+  img: string;
+  alt: string;
+  object: string;
+  hClass: string;
+}) => (
+  <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden h-full flex flex-col">
+    {/* Bild oben — dominanter Header, Tag als Badge oben rechts */}
+    <div className="relative overflow-hidden flex-shrink-0">
+      <img
+        src={assetUrl(img)}
+        alt={alt}
+        className={`w-full ${hClass} ${object}`}
+        loading="lazy"
+      />
+      <div className="absolute top-2 right-2 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-600 shadow-sm">
+        {tag}
+      </div>
+    </div>
+    {/* Text unten — kompakt */}
+    <div className="px-3 py-2 sm:px-4 sm:py-3">
+      <div className="font-extrabold text-slate-900 leading-snug text-sm">{title}</div>
+      <div className="mt-0.5 text-[11px] text-slate-500 leading-snug">{text}</div>
+    </div>
+  </div>
+);
   const navigate = useNavigate();
   const { t: tStories, i18n } = useTranslation('stories');
     const { t: tCommon } = useTranslation('common'); // ✅ swipeHint stabil
@@ -229,7 +275,7 @@ function isUnlockedByChain(
   
 
   return (
-    <Layout backPath="/" hideFooter>
+    <Layout>
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-3 py-6 sm:py-10 space-y-6">
         {/* HERO – kids-first */}
       <section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg">
@@ -259,7 +305,7 @@ function isUnlockedByChain(
               <Badge>{tStories('hero.badges.0', { defaultValue: '5 min/Tag' })}</Badge>
               <Badge>{tStories('hero.badges.1', { defaultValue: '1 Amic/Tag' })}</Badge>
               <Badge>{tStories('hero.badges.2', { defaultValue: '5/Woche' })}</Badge>
-              <Badge>{tStories('hero.badges.3', { defaultValue: '10 bis 12 Jahre' })}</Badge>
+              <Badge>{tStories('hero.badges.3', { defaultValue: 'ab 10 Jahre' })}</Badge>
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -293,7 +339,6 @@ function isUnlockedByChain(
               loading="lazy"
             />
 
-            <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/10 to-transparent lg:from-transparent lg:via-transparent lg:to-transparent pointer-events-none" />
           </div>
         </div>
       </section>
@@ -377,7 +422,7 @@ function isUnlockedByChain(
 
                   <button
                     type="button"
-                    onClick={() => navigate(`/stories/${currentCard.id}`)}
+                    onClick={() => navigate(currentCard.storyEngine === 'v2' ? `/stories-v02/${currentCard.id}` : `/stories/${currentCard.id}`)}
                     className="mt-4 w-full inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
                   >
                     {hasStarted
@@ -423,72 +468,160 @@ function isUnlockedByChain(
   </div>
 </Panel>
 
-{/* GOOD TO KNOW – swipe cards */}
+{/* AYM VISION – so sieht’s aus & das kann es */}
 <Panel
-  kicker={tStories('howto.info.kicker', { defaultValue: 'Gut zu wissen' })}
-  title={tStories('howto.info.title', { defaultValue: 'Damit du dich gut zurechtfindest' })}
+  kicker={tStories('aym.kicker', { defaultValue: 'AYM VISION' })}
+  title={tStories('aym.title', { defaultValue: "So sieht’s aus – und das kannst du damit machen" })}
 >
-  <div className="mt-2">
-    <SwipeRow className="-mx-4 px-4 lg:mx-0 lg:px-0">
-            {/* 1) Order */}
-      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          title={tStories('howto.info.tiles.order.title', { defaultValue: 'Schritt für Schritt ➡️' })}
-          text={tStories('howto.info.tiles.order.text', {
-            defaultValue: 'Du machst die Kapitel der Reihe nach: erst das nächste, dann geht’s weiter.',
-          })}
-        />
+  {(() => {
+    const items = [
+      {
+        tag: tStories('aym.tags.experience', { defaultValue: 'Erlebnis' }),
+        title: tStories('experience.cards.0.title', { defaultValue: 'Story erleben' }),
+        text: tStories('experience.cards.0.text', {
+          defaultValue:
+            'Du tauchst in eine erzählte Welt ein: Mia, Igor & Co erleben Situationen aus dem digitalen Leben – mit Freundschaften, Geheimnissen und Konflikten.',
+        }),
+        img: 'media/ui/welcome/exp-story-1024.webp',
+        alt: tStories('experience.cards.0.imageAlt', {
+          defaultValue: 'Illustration: Charaktere in einer digitalen Story-Szene',
+        }),
+        object: 'object-cover object-top',
+        mobileH: 'h-56',
+        desktopH: 'h-64',
+      },
+      {
+        tag: tStories('aym.tags.experience', { defaultValue: 'Erlebnis' }),
+        title: tStories('experience.cards.1.title', { defaultValue: 'Weiterdenken' }),
+        text: tStories('experience.cards.1.text', {
+          defaultValue:
+            'Beim Lesen bleibst du nicht nur Zuschauer: Was triggert dich? Was findest du unfair? Und warum sehen andere das vielleicht ganz anders?',
+        }),
+        img: 'media/ui/welcome/exp-reflect-1024.webp',
+        alt: tStories('experience.cards.1.imageAlt', {
+          defaultValue: 'Illustration: Nachdenklicher Moment in der Story',
+        }),
+        object: 'object-cover object-top',
+        mobileH: 'h-56',
+        desktopH: 'h-64',
+      },
+      {
+        tag: tStories('aym.tags.experience', { defaultValue: 'Erlebnis' }),
+        title: tStories('experience.cards.2.title', { defaultValue: 'Deine Sicht zählt' }),
+        text: tStories('experience.cards.2.text', {
+          defaultValue:
+            'Du formulierst deine eigene Antwort – in deinen Worten. Es geht nicht um richtig oder falsch, sondern darum, deine Gedanken ernst zu nehmen.',
+        }),
+        img: 'media/ui/welcome/exp-decide-1024.webp',
+        alt: tStories('experience.cards.2.imageAlt', {
+          defaultValue: 'Illustration: Eigene Antwort im Story-Verlauf',
+        }),
+        object: 'object-cover object-top',
+        mobileH: 'h-56',
+        desktopH: 'h-64',
+      },
+
+      {
+        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
+        title: tStories('bonus.cards.avatar.title', { defaultValue: 'Avatare' }),
+        text: tStories('bonus.cards.avatar.text', {
+          defaultValue:
+            'Gestalte deinen eigenen Avatar und schalte neue Looks frei – so fühlt sich die Story-Welt noch mehr nach dir an.',
+        }),
+        img: 'media/ui/welcome/feat-avatar-1024.webp',
+        alt: tStories('bonus.cards.avatar.imageAlt', { defaultValue: 'Bild: Avatar-Ansicht' }),
+        object: 'object-cover object-top',
+        mobileH: 'h-52',
+        desktopH: 'h-60',
+      },
+      {
+        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
+        title: tStories('bonus.cards.coins.title', { defaultValue: 'Coins' }),
+        text: tStories('bonus.cards.coins.text', {
+          defaultValue: 'Verdiene Coins, wenn du aktiv bist – und nutze sie für neue Extras.',
+        }),
+        img: 'media/ui/about/sample-1024.webp',
+        alt: tStories('bonus.cards.coins.imageAlt', { defaultValue: 'Bild: Coins-Übersicht' }),
+        object: 'object-cover object-top',
+        mobileH: 'h-52',
+        desktopH: 'h-60',
+      },
+      {
+        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
+        title: tStories('bonus.cards.sticker.title', { defaultValue: 'Sticker' }),
+        text: tStories('bonus.cards.sticker.text', {
+          defaultValue:
+            'Für jedes abgeschlossene Kapitel bekommst du Sticker – kleine Zeichen dafür, dass du dranbleibst.',
+        }),
+        img: 'media/ui/welcome/feat-stickers-1024.webp',
+        alt: tStories('bonus.cards.sticker.imageAlt', { defaultValue: 'Bild: Sticker-Album' }),
+        object: 'object-cover object-top',
+        mobileH: 'h-52',
+        desktopH: 'h-60',
+      },
+      {
+        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
+        title: tStories('bonus.cards.newspaper.title', { defaultValue: 'Schülerzeitung' }),
+        text: tStories('bonus.cards.newspaper.text', {
+          defaultValue: 'Lies Bonusartikel und entdecke neue Perspektiven aus der Story-Welt.',
+        }),
+        img: 'media/ui/welcome/feat-newspaper-1024.webp',
+        alt: tStories('bonus.cards.newspaper.imageAlt', { defaultValue: 'Bild: Schülerzeitung-Bereich' }),
+        object: 'object-cover object-top',
+        mobileH: 'h-52',
+        desktopH: 'h-60',
+      },
+      {
+        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
+        title: tStories('bonus.cards.diary.title', { defaultValue: 'Tagebuch' }),
+        text: tStories('bonus.cards.diary.text', {
+          defaultValue: 'Halte deine Gedanken fest und sieh später nach, wie sich deine Sicht entwickelt hat.',
+        }),
+        img: 'media/ui/welcome/feat-tagebuch-1024.webp',
+        alt: tStories('bonus.cards.diary.imageAlt', { defaultValue: 'Bild: Tagebuch-Ansicht' }),
+        object: 'object-cover object-top',
+        mobileH: 'h-52',
+        desktopH: 'h-60',
+      },
+      {
+        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
+        title: tStories('bonus.cards.collectibles.title', { defaultValue: 'Freundebuch' }),
+        text: tStories('bonus.cards.collectibles.text', {
+          defaultValue: 'Schalte besondere Karten frei, wenn du ganze Story-Abschnitte meisterst.',
+        }),
+        img: 'media/ui/welcome/feat-sammelkarten-1024.webp',
+        alt: tStories('bonus.cards.collectibles.imageAlt', { defaultValue: 'Bild: Sammelkarten-Übersicht' }),
+        object: 'object-cover object-top',
+        mobileH: 'h-52',
+        desktopH: 'h-60',
+      },
+    ];
+
+    return (
+      <div className="mt-2">
+        <div className="lg:hidden -mx-4 px-4">
+          <SwipeRow>
+            {items.map((it, idx) => (
+              <div key={idx} className="snap-start shrink-0 w-[45%] sm:w-[32%]">
+                <CardTile {...it} hClass={it.mobileH} />
+              </div>
+            ))}
+          </SwipeRow>
+
+          <div className="mt-2 text-xs font-semibold text-slate-500">
+            {tCommon('swipeHint', { defaultValue: 'Wischen' })}
+          </div>
+        </div>
+
+        <div className="hidden lg:grid grid-cols-4 gap-4">
+          {items.map((it, idx) => (
+            <CardTile key={idx} {...it} hClass={it.desktopH} />
+          ))}
+        </div>
       </div>
-      {/* 2) Reflektion */}
-            <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          title={tStories('howto.info.tiles.reflection.title', { defaultValue: 'Deine Sicht zählt 👁' })}
-          text={tStories('howto.info.tiles.reflection.text', {
-            defaultValue:
-              'Du formulierst deine eigene Antwort – in deinen Worten. Es geht nicht um richtig oder falsch, sondern darum, deine Gedanken ernst zu nehmen.',
-          })}
-        />
-      </div>
-
-      {/* 3) Retry + Lock (combined) */}
-      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          title={tStories('howto.info.tiles.retryLock.title', { defaultValue: 'Wenn es nicht passt 🔁' })}
-          text={tStories('howto.info.tiles.retryLock.text', {
-            defaultValue:
-              'Wenn deine Antwort zu kurz ist oder nicht zur Frage passt, fragt Amy nochmal. Nach 3 Versuchen ist kurz Pause – dann am besten mit Eltern anschauen.',
-          })}
-        />
-      </div>
-
-      {/* 4) Safe */}
-      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          title={tStories('howto.info.tiles.safe.title', { defaultValue: 'Fair & safe ✅' })}
-          text={tStories('howto.info.tiles.safe.text', {
-            defaultValue: 'Beleidigungen, Mobbing oder gefährliche Inhalte gehen nicht. Dann stoppt Amy.',
-          })}
-        />
-      </div>
-
-      {/* 5) Backup */}
-      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          title={tStories('howto.info.tiles.backup.title', { defaultValue: 'Speichern & Backup 💾' })}
-          text={tStories('howto.info.tiles.backup.text', {
-            defaultValue:
-              'Dein Fortschritt bleibt auf deinem Gerät gespeichert. 💾 Wenn du möchtest, kannst du ihn zusätzlich sichern.',
-          })}
-        />
-      </div>
-
-
-    </SwipeRow>
-  </div>
-
+    );
+  })()}
 </Panel>
-
-
 
  {/* STORY CARDS */}
 <Panel
@@ -528,7 +661,7 @@ function isUnlockedByChain(
               progressPercent={locked ? 0 : (progressById[card.id] ?? 0)}
               onClick={() => {
                 if (locked) return;
-                navigate(`/stories/${card.id}`);
+                navigate(card.storyEngine === 'v2' ? `/stories-v02/${card.id}` : `/stories/${card.id}`);
               }}
             />
           </div>
@@ -538,7 +671,69 @@ function isUnlockedByChain(
   </div>
 </Panel>
 
-
+{/* GOOD TO KNOW – swipe cards */}
+<Panel
+  kicker={tStories('howto.info.kicker', { defaultValue: 'Gut zu wissen' })}
+  title={tStories('howto.info.title', { defaultValue: 'Damit du dich gut zurechtfindest' })}
+>
+  <div className="mt-2">
+    <SwipeRow className="-mx-4 px-4 lg:mx-0 lg:px-0">
+      {/* 1) Order */}
+      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
+        <InfoTile
+          colorIdx={0}
+          title={tStories('howto.info.tiles.order.title', { defaultValue: 'Schritt für Schritt ➡️' })}
+          text={tStories('howto.info.tiles.order.text', {
+            defaultValue: 'Du machst die Kapitel der Reihe nach: erst das nächste, dann geht\u2019s weiter.',
+          })}
+        />
+      </div>
+      {/* 2) Reflektion */}
+      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
+        <InfoTile
+          colorIdx={1}
+          title={tStories('howto.info.tiles.reflection.title', { defaultValue: 'Deine Sicht zählt 👁' })}
+          text={tStories('howto.info.tiles.reflection.text', {
+            defaultValue:
+              'Du formulierst deine eigene Antwort – in deinen Worten. Es geht nicht um richtig oder falsch, sondern darum, deine Gedanken ernst zu nehmen.',
+          })}
+        />
+      </div>
+      {/* 3) Retry + Lock (combined) */}
+      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
+        <InfoTile
+          colorIdx={2}
+          title={tStories('howto.info.tiles.retryLock.title', { defaultValue: 'Wenn es nicht passt 🔁' })}
+          text={tStories('howto.info.tiles.retryLock.text', {
+            defaultValue:
+              'Wenn deine Antwort zu kurz ist oder nicht zur Frage passt, fragt Amy nochmal. Nach 3 Versuchen ist kurz Pause – dann am besten mit Eltern anschauen.',
+          })}
+        />
+      </div>
+      {/* 4) Safe */}
+      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
+        <InfoTile
+          colorIdx={3}
+          title={tStories('howto.info.tiles.safe.title', { defaultValue: 'Fair & safe ✅' })}
+          text={tStories('howto.info.tiles.safe.text', {
+            defaultValue: 'Beleidigungen, Mobbing oder gefährliche Inhalte gehen nicht. Dann stoppt Amy.',
+          })}
+        />
+      </div>
+      {/* 5) Backup */}
+      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
+        <InfoTile
+          colorIdx={4}
+          title={tStories('howto.info.tiles.backup.title', { defaultValue: 'Speichern & Backup 💾' })}
+          text={tStories('howto.info.tiles.backup.text', {
+            defaultValue:
+              'Dein Fortschritt bleibt auf deinem Gerät gespeichert. 💾 Wenn du möchtest, kannst du ihn zusätzlich sichern.',
+          })}
+        />
+      </div>
+    </SwipeRow>
+  </div>
+</Panel>
 
 <Panel
   kicker={tStories('trust.kicker', { defaultValue: 'Vertrauen' })}
@@ -598,236 +793,6 @@ function isUnlockedByChain(
 
 </Panel>
 
-
-{/* AYM VISION – so sieht’s aus & das kann es */}
-<Panel
-  kicker={tStories('aym.kicker', { defaultValue: 'AYM VISION' })}
-  title={tStories('aym.title', { defaultValue: 'So sieht’s aus – und das kannst du damit machen' })}
->
-  {(() => {
-    const items = [
-      // ===== Erlebnis (3) =====
-      {
-        tag: tStories('aym.tags.experience', { defaultValue: 'Erlebnis' }),
-        title: tStories('experience.cards.0.title', { defaultValue: 'Story erleben' }),
-        text: tStories('experience.cards.0.text', {
-          defaultValue:
-            'Du tauchst in eine erzählte Welt ein: Mia, Igor & Co erleben Situationen aus dem digitalen Leben – mit Freundschaften, Geheimnissen und Konflikten.',
-        }),
-        img: 'media/ui/welcome/exp-story-1024.webp',
-        alt: tStories('experience.cards.0.imageAlt', {
-          defaultValue: 'Illustration: Charaktere in einer digitalen Story-Szene',
-        }),
-        object: 'object-top',
-        mobileH: 'h-56',
-        desktopH: 'h-72',
-      },
-      {
-        tag: tStories('aym.tags.experience', { defaultValue: 'Erlebnis' }),
-        title: tStories('experience.cards.1.title', { defaultValue: 'Weiterdenken' }),
-        text: tStories('experience.cards.1.text', {
-          defaultValue:
-            'Beim Lesen bleibst du nicht nur Zuschauer: Was triggert dich? Was findest du unfair? Und warum sehen andere das vielleicht ganz anders?',
-        }),
-        img: 'media/ui/welcome/exp-reflect-1024.webp',
-        alt: tStories('experience.cards.1.imageAlt', {
-          defaultValue: 'Illustration: Nachdenklicher Moment in der Story',
-        }),
-        object: 'object-bottom',
-        mobileH: 'h-56',
-        desktopH: 'h-72',
-      },
-      {
-        tag: tStories('aym.tags.experience', { defaultValue: 'Erlebnis' }),
-        title: tStories('experience.cards.2.title', { defaultValue: 'Deine Sicht zählt' }),
-        text: tStories('experience.cards.2.text', {
-          defaultValue:
-            'Du formulierst deine eigene Antwort – in deinen Worten. Es geht nicht um richtig oder falsch, sondern darum, deine Gedanken ernst zu nehmen.',
-        }),
-        img: 'media/ui/welcome/exp-decide-1024.webp',
-        alt: tStories('experience.cards.2.imageAlt', {
-          defaultValue: 'Illustration: Eigene Antwort im Story-Verlauf',
-        }),
-        object: 'object-cover',
-        mobileH: 'h-56',
-        desktopH: 'h-72',
-      },
-
-  // ===== Bonus (6) =====
-{
-  tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-  title: tStories('bonus.cards.avatar.title', { defaultValue: 'Avatare' }),
-  text: tStories('bonus.cards.avatar.text', {
-    defaultValue:
-      'Gestalte deinen eigenen Avatar und schalte neue Looks frei – so fühlt sich die Story-Welt noch mehr nach dir an.',
-  }),
-  img: 'media/ui/welcome/feat-avatar-1024.webp',
-  alt: tStories('bonus.cards.avatar.imageAlt', {
-    defaultValue: 'Bild: Avatar-Ansicht',
-  }),
-  object: 'object-cover',
-  mobileH: 'h-56',
-  desktopH: 'h-72',
-},
-{
-  tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-  title: tStories('bonus.cards.coins.title', { defaultValue: 'Coins' }),
-  text: tStories('bonus.cards.coins.text', {
-    defaultValue:
-      'Verdiene Coins, wenn du aktiv bist – und nutze sie für neue Extras.',
-  }),
-  img: 'media/ui/about/sample-1024.webp',
-  alt: tStories('bonus.cards.coins.imageAlt', {
-    defaultValue: 'Bild: Coins-Übersicht',
-  }),
-  object: 'object-cover',
-  mobileH: 'h-56',
-  desktopH: 'h-72',
-},
-{
-  tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-  title: tStories('bonus.cards.sticker.title', { defaultValue: 'Sticker' }),
-  text: tStories('bonus.cards.sticker.text', {
-    defaultValue:
-      'Für jedes abgeschlossene Kapitel bekommst du Sticker – kleine Zeichen dafür, dass du dranbleibst.',
-  }),
-  img: 'media/ui/welcome/feat-stickers-1024.webp',
-  alt: tStories('bonus.cards.sticker.imageAlt', {
-    defaultValue: 'Bild: Sticker-Album',
-  }),
-  object: 'object-cover',
-  mobileH: 'h-56',
-  desktopH: 'h-72',
-},
-{
-  tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-  title: tStories('bonus.cards.newspaper.title', { defaultValue: 'Schülerzeitung' }),
-  text: tStories('bonus.cards.newspaper.text', {
-    defaultValue:
-      'Lies Bonusartikel und entdecke neue Perspektiven aus der Story-Welt.',
-  }),
-  img: 'media/ui/welcome/feat-newspaper-1024.webp',
-  alt: tStories('bonus.cards.newspaper.imageAlt', {
-    defaultValue: 'Bild: Schülerzeitung-Bereich',
-  }),
-  object: 'object-cover',
-  mobileH: 'h-56',
-  desktopH: 'h-72',
-},
-{
-  tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-  title: tStories('bonus.cards.diary.title', { defaultValue: 'Tagebuch' }),
-  text: tStories('bonus.cards.diary.text', {
-    defaultValue:
-      'Halte deine Gedanken fest und sieh später nach, wie sich deine Sicht entwickelt hat.',
-  }),
-  img: 'media/ui/welcome/feat-tagebuch-1024.webp',
-  alt: tStories('bonus.cards.diary.imageAlt', {
-    defaultValue: 'Bild: Tagebuch-Ansicht',
-  }),
-  object: 'object-cover',
-  mobileH: 'h-56',
-  desktopH: 'h-72',
-},
-{
-  tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-  title: tStories('bonus.cards.collectibles.title', { defaultValue: 'Sammelkarten' }),
-  text: tStories('bonus.cards.collectibles.text', {
-    defaultValue:
-      'Schalte besondere Karten frei, wenn du ganze Story-Abschnitte meisterst.',
-  }),
-  img: 'media/ui/welcome/feat-sammelkarten-1024.webp',
-  alt: tStories('bonus.cards.collectibles.imageAlt', {
-    defaultValue: 'Bild: Sammelkarten-Übersicht',
-  }),
-  object: 'object-cover',
-  mobileH: 'h-56',
-  desktopH: 'h-72',
-},
-    ];
-
-    const CardTile = ({
-      tag,
-      title,
-      text,
-      img,
-      alt,
-      object,
-      hClass,
-    }: {
-      tag: string;
-      title: string;
-      text: string;
-      img: string;
-      alt: string;
-      object: string;
-      hClass: string;
-    }) => (
-      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden h-full">
-        <div className="p-4 sm:p-5">
-          <div className="inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold bg-slate-50 border border-slate-200 text-slate-700">
-            {tag}
-          </div>
-          <div className="mt-2 font-extrabold text-slate-900 leading-snug">{title}</div>
-          <div className="mt-1 text-sm text-slate-700 leading-snug">{text}</div>
-        </div>
-        <div className="px-4 sm:px-5 pb-4 sm:pb-5">
-          <div className="rounded-2xl overflow-hidden">
-            <img
-              src={assetUrl(img)}
-              alt={alt}
-              className={`w-full ${hClass} object-cover ${object}`}
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </div>
-    );
-
-    return (
-      <div className="mt-2">
-        {/* Mobile: EIN Swipe für alle Karten */}
-        <div className="lg:hidden -mx-4 px-4">
-          <SwipeRow>
-            {items.map((it, idx) => (
-              <div key={idx} className="snap-start shrink-0 w-[85%] sm:w-[70%]">
-                <CardTile
-                  tag={it.tag}
-                  title={it.title}
-                  text={it.text}
-                  img={it.img}
-                  alt={it.alt}
-                  object={it.object}
-                  hClass={it.mobileH}
-                />
-              </div>
-            ))}
-          </SwipeRow>
-
-          <div className="mt-2 text-xs font-semibold text-slate-500">
-            {tCommon('swipeHint', { defaultValue: 'Wischen' })}
-          </div>
-        </div>
-
-        {/* Desktop: Grid (2 Reihen) */}
-        <div className="hidden lg:grid grid-cols-3 gap-4 sm:gap-6">
-          {items.map((it, idx) => (
-            <CardTile
-              key={idx}
-              tag={it.tag}
-              title={it.title}
-              text={it.text}
-              img={it.img}
-              alt={it.alt}
-              object={it.object}
-              hClass={it.desktopH}
-            />
-          ))}
-        </div>
-      </div>
-    );
-  })()}
-</Panel>
 
 
         {/* SURVEY – separat */}

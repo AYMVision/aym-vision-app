@@ -1,7 +1,13 @@
 // src/pages/DiaryBook.tsx
-import React, { useMemo, useEffect, useRef, useState } from 'react';
+import React, { useMemo, useEffect, useRef, useState, useCallback } from 'react';
 import { useLocation, useNavigate, useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import {
+  hasDiaryPin,
+  setDiaryPin,
+  verifyDiaryPin,
+  getDiaryPinHint,
+} from '../diary/diaryPin';
 
 import Layout from '../components/Layout';
 import { BONUS_INDEX } from '../bonus/bonusIndex';
@@ -11,7 +17,6 @@ import { DIARY_ENTRIES, type DiaryId, type DiaryEntry } from '../bonus/diaryEntr
 import { isBonusSeen, markBonusSeen } from '../bonus/bonusSeen';
 import { CHARACTERS, type CharacterEx } from '../content/characters';
 import { assetUrl } from '../common/assetUrl';
-import AvatarHeadImage from '../components/AvatarHeadImage';
 
 type LocationState = { backTo?: string; backgroundLocation?: unknown } | null;
 
@@ -22,11 +27,10 @@ function useBonusProgressFromProfile(): BonusProgressSnapshot {
 }
 
 // -------------------- Stickers --------------------
-const DIARY_STICKERS = ['angry', 'broken_heart', 'crying', 'drama', 'offline', 'stars', 'thinking', 'ugh'] as const;
+const DIARY_STICKERS = ['angry', 'broken_heart', 'cloud', 'crying', 'drama', 'grin', 'laugh', 'love', 'offline', 'rainbow', 'stars', 'sun', 'thinking', 'ugh'] as const;
 type DiaryStickerId = typeof DIARY_STICKERS[number];
 
 function stickerSrc(id: DiaryStickerId, size: 256 | 512 = 256) {
-  // ✅ matches your real layout: public/media/stickers/diary/angry-512.webp
   return assetUrl(`media/stickers/diary/${id}-${size}.webp`);
 }
 
@@ -66,6 +70,14 @@ function stickerLayout(seed: string) {
   ];
 }
 
+function todayStr() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 // -------------------- Unlock helpers --------------------
 function normalizeChapterIdMaybe(id: string): string[] {
   const raw = String(id || '').trim();
@@ -82,6 +94,7 @@ function normalizeChapterIdMaybe(id: string): string[] {
   const normalized = `${season}:${episodeId}:c${chNum}`;
   return [raw, normalized];
 }
+
 
 // ✅ unlocked = chapter done OR clicked (bonusSeen)
 function isEntryUnlocked(entry: DiaryEntry, progress: BonusProgressSnapshot): boolean {
@@ -184,23 +197,62 @@ export default function DiaryBook() {
     return [...(DIARY_ENTRIES[diaryId] ?? [])].sort((a, b) => a.order - b.order);
   }, [diaryId]);
 
-  const unlockedEntries = useMemo(() => {
-    if (!diaryId || diaryId === 'diary_me') return [];
-    return entries.filter((e) => isEntryUnlocked(e, progress));
-  }, [entries, progress, diaryId]);
+const unlockedEntries = useMemo(() => {
+  if (!diaryId || diaryId === 'diary_me') return [];
+
+  return entries.filter((e) => {
+    if (e.entryId === entryParam) return true;
+    return isEntryUnlocked(e, progress);
+  });
+}, [entries, progress, diaryId, entryParam]);
 
   useEffect(() => {
     if (!entryParam) {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       return;
     }
-    const el = document.getElementById(`entry-${entryParam}`);
-    if (!el) return;
 
-    const headerOffset = isModal ? 12 : 88;
-    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
-    window.scrollTo({ top, left: 0, behavior: 'smooth' });
+    const getScrollContainer = (el: HTMLElement): HTMLElement | null => {
+      let parent = el.parentElement;
+      while (parent) {
+        const { overflow, overflowY } = getComputedStyle(parent);
+        if (/auto|scroll/.test(overflow + overflowY)) return parent;
+        parent = parent.parentElement;
+      }
+      return null;
+    };
+
+    const doScroll = () => {
+      const el = document.getElementById(`entry-${entryParam}`);
+      if (!el) return;
+      const headerOffset = isModal ? 12 : 88;
+      const container = isModal ? getScrollContainer(el) : null;
+      if (container) {
+        const top =
+          el.getBoundingClientRect().top -
+          container.getBoundingClientRect().top -
+          headerOffset +
+          container.scrollTop;
+        container.scrollTo({ top, left: 0, behavior: 'smooth' });
+      } else {
+        const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top, left: 0, behavior: 'smooth' });
+      }
+    };
+
+    // Defer one tick so the entry elements are painted before we measure.
+    const id = setTimeout(doScroll, 0);
+    return () => clearTimeout(id);
   }, [entryParam, unlockedEntries.length, isModal]);
+
+  useEffect(() => {
+  if (!diaryId || !entryParam) return;
+
+  const entry = (DIARY_ENTRIES[diaryId] ?? []).find((e) => e.entryId === entryParam);
+  if (entry?.bonusId) {
+    markBonusSeen(entry.bonusId);
+  }
+}, [diaryId, entryParam]);
 
   useEffect(() => {
     if (diaryId) markBonusSeen(diaryId);
@@ -242,7 +294,7 @@ export default function DiaryBook() {
       backPath={isModal ? undefined : (state?.backTo ?? '/diaries')}
       hideHeader={isModal}
     >
-      <div className="max-w-3xl mx-auto px-4">
+      <div className="max-w-3xl mx-auto px-4 pt-4">
         {isModal ? (
           <div className="mt-4 flex items-center justify-between">
 {backTo ? (
@@ -272,13 +324,12 @@ export default function DiaryBook() {
         {/* HERO (book cover vibe) */}
         <div className={['mt-4 rounded-3xl border bg-white shadow-sm overflow-hidden', style.border].join(' ')}>
           <div className="p-5 sm:p-6 flex items-center gap-4">
-            <div className={['w-24 h-32 rounded-2xl border bg-slate-50 overflow-hidden flex items-center justify-center', style.border].join(' ')}>
+            <div className={['w-24 h-32 rounded-2xl border bg-slate-50 overflow-hidden', style.border].join(' ')}>
               {diaryId === 'diary_me' ? (
-                <AvatarHeadImage
-                  id={profile.avatarBaseId}
-                  size={88}
+                <img
+                  src={assetUrl(`media/avatars/full/${(profile.avatarBaseId?.trim() || 'default').toLowerCase()}-384.webp`)}
                   alt={bookTitle}
-                  className="rounded-xl border border-white/70 bg-white shadow-sm"
+                  className="w-full h-full object-cover object-top"
                 />
               ) : heroImage ? (
                 <img src={assetUrl(heroImage)} alt="" className="w-full h-full object-cover" />
@@ -312,7 +363,7 @@ export default function DiaryBook() {
 
         {/* CONTENT */}
         {diaryId === 'diary_me' ? (
-          <MyDiarySection />
+          <MyDiaryWithPin />
         ) : (
           <StoryDiarySection
             diaryId={diaryId}
@@ -434,8 +485,6 @@ function DiaryEntryBlock(props: {
       ? { border: 'border-violet-200', marker: 'bg-violet-100 text-violet-900', ring: 'ring-violet-200' }
       : { border: 'border-rose-200', marker: 'bg-rose-100 text-rose-900', ring: 'ring-rose-200' };
 
-  const pos = stickerLayout(entry.entryId);
-
   return (
     <article
       id={`entry-${entry.entryId}`}
@@ -480,20 +529,300 @@ className={[
   );
 }
 
+// -------------------- Mini Canvas Preview --------------------
+function MiniEntryPreview({ entry }: { entry: MeEntry }) {
+  return (
+    <div className="shrink-0 w-[80px] h-[100px] relative overflow-hidden rounded-xl bg-[linear-gradient(180deg,rgba(255,250,240,1),rgba(255,255,255,1))] border border-slate-100">
+      <div
+        className="absolute top-0 left-0 pointer-events-none"
+        style={{ width: 320, transform: 'scale(0.25)', transformOrigin: 'top left', padding: '12px', minHeight: 400 }}
+      >
+        <div className="text-[18px] leading-8 text-slate-900 diary-hand whitespace-pre-wrap">
+          {entry.text}
+        </div>
+        {entry.stickers.map((s) => (
+          <img
+            key={s.id}
+            src={stickerSrc(s.stickerId, 256)}
+            alt=""
+            style={{
+              position: 'absolute',
+              left: s.xPx,
+              top: s.yPx,
+              width: s.size,
+              height: s.size,
+              transform: `translate(-50%, -50%) rotate(${s.rot}deg)`,
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // -------------------- MY DIARY --------------------
+// -------------------- PIN wrapper --------------------
+function MyDiaryWithPin() {
+  const { t } = useTranslation('bonus');
+
+  const [hasPin] = useState(() => hasDiaryPin());
+  const [unlocked, setUnlocked] = useState(false);
+
+  // setup
+  const [setupPin, setSetupPin] = useState('');
+  const [setupPinRepeat, setSetupPinRepeat] = useState('');
+  const [setupHint, setSetupHint] = useState('');
+  const [setupError, setSetupError] = useState('');
+  const [setupBusy, setSetupBusy] = useState(false);
+
+  // unlock
+  const [pinInput, setPinInput] = useState('');
+  const [pinError, setPinError] = useState('');
+  const [pinBusy, setPinBusy] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+  const hint = getDiaryPinHint();
+
+  const handleSetup = useCallback(async () => {
+    const p1 = setupPin.trim();
+    const p2 = setupPinRepeat.trim();
+    if (p1.length < 4) {
+      setSetupError(t('diaries.pin.errorTooShort', { defaultValue: 'Bitte mindestens 4 Zeichen.' }));
+      return;
+    }
+    if (p1 !== p2) {
+      setSetupError(t('diaries.pin.errorMismatch', { defaultValue: 'Die beiden PINs stimmen nicht überein.' }));
+      return;
+    }
+    setSetupBusy(true);
+    setSetupError('');
+    const ok = await setDiaryPin(p1, setupHint);
+    setSetupBusy(false);
+    if (ok) setUnlocked(true);
+  }, [setupPin, setupPinRepeat, setupHint, t]);
+
+  const handleUnlock = useCallback(async () => {
+    const p = pinInput.trim();
+    if (!p) return;
+    setPinBusy(true);
+    setPinError('');
+    const ok = await verifyDiaryPin(p);
+    setPinBusy(false);
+    if (ok) {
+      setUnlocked(true);
+    } else {
+      setPinError(t('diaries.pin.errorWrong', { defaultValue: 'Falscher PIN. Versuch es nochmal.' }));
+      setPinInput('');
+    }
+  }, [pinInput, t]);
+
+  if (unlocked || !hasPin) {
+    if (!hasPin && !unlocked) {
+      // First time: show PIN setup screen
+      return (
+        <div className="mt-6 rounded-[28px] border border-[var(--color-teal-200)] bg-white shadow-sm overflow-hidden">
+          <div className="p-5 sm:p-6">
+            <div className="text-base font-extrabold text-slate-900">
+              {t('diaries.pin.setupTitle', { defaultValue: '🔒 Tagebuch schützen' })}
+            </div>
+            <p className="mt-1 text-sm text-slate-600">
+              {t('diaries.pin.setupBody', {
+                defaultValue: 'Leg einen PIN fest, damit nur du dein Tagebuch lesen kannst. Wenn du ihn vergisst, können deine Eltern ihn zurücksetzen.',
+              })}
+            </p>
+
+            <div className="mt-5 space-y-3">
+              <div>
+                <label className="text-xs font-semibold text-slate-500">
+                  {t('diaries.pin.pinLabel', { defaultValue: 'Dein PIN (mind. 4 Zeichen)' })}
+                </label>
+                <input
+                  type="password"
+                  value={setupPin}
+                  onChange={(e) => setSetupPin(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSetup()}
+                  placeholder="····"
+                  className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-[var(--color-teal-400)] focus:ring-2 focus:ring-[var(--color-teal-100)]"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-slate-500">
+                  {t('diaries.pin.pinRepeatLabel', { defaultValue: 'PIN nochmal eingeben' })}
+                </label>
+                <input
+                  type="password"
+                  value={setupPinRepeat}
+                  onChange={(e) => setSetupPinRepeat(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSetup()}
+                  placeholder="····"
+                  className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-[var(--color-teal-400)] focus:ring-2 focus:ring-[var(--color-teal-100)]"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-slate-500">
+                  {t('diaries.pin.hintLabel', { defaultValue: 'Hinweis (optional, falls du ihn vergisst)' })}
+                </label>
+                <input
+                  type="text"
+                  value={setupHint}
+                  onChange={(e) => setSetupHint(e.target.value)}
+                  placeholder={t('diaries.pin.hintPlaceholder', { defaultValue: 'z.B. mein Lieblingstier' })}
+                  className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-[var(--color-teal-400)] focus:ring-2 focus:ring-[var(--color-teal-100)]"
+                />
+              </div>
+            </div>
+
+            {setupError && (
+              <div className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                {setupError}
+              </div>
+            )}
+
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <button
+                type="button"
+                onClick={handleSetup}
+                disabled={setupBusy}
+                className="rounded-xl bg-[var(--color-teal-600)] px-5 py-3 text-sm font-extrabold text-white hover:bg-[var(--color-teal-700)] disabled:opacity-60"
+              >
+                {t('diaries.pin.setupButton', { defaultValue: 'PIN festlegen & Tagebuch öffnen' })}
+              </button>
+              <button
+                type="button"
+                onClick={() => setUnlocked(true)}
+                className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              >
+                {t('diaries.pin.skipButton', { defaultValue: 'Jetzt ohne PIN öffnen' })}
+              </button>
+            </div>
+
+            <p className="mt-4 text-xs text-slate-400">
+              {t('diaries.pin.parentNote', {
+                defaultValue: 'Vergessen? Eltern können den PIN im Elternbereich zurücksetzen – deine Einträge bleiben dabei erhalten.',
+              })}
+            </p>
+          </div>
+        </div>
+      );
+    }
+    // Unlocked or no pin ever set
+    return <MyDiarySection />;
+  }
+
+  // Locked: show PIN entry
+  return (
+    <div className="mt-6 rounded-[28px] border border-[var(--color-teal-200)] bg-white shadow-sm overflow-hidden">
+      <div className="p-5 sm:p-6 max-w-sm mx-auto text-center">
+        <div className="text-4xl mb-3">🔒</div>
+        <div className="text-base font-extrabold text-slate-900">
+          {t('diaries.pin.lockedTitle', { defaultValue: 'Dein Tagebuch ist geschützt' })}
+        </div>
+        <p className="mt-1 text-sm text-slate-600">
+          {t('diaries.pin.lockedBody', { defaultValue: 'Gib deinen PIN ein, um weiterzumachen.' })}
+        </p>
+
+        <input
+          type="password"
+          value={pinInput}
+          onChange={(e) => setPinInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleUnlock()}
+          placeholder="····"
+          autoFocus
+          className="mt-5 w-full rounded-xl border border-slate-300 px-4 py-3 text-center text-lg font-bold tracking-widest outline-none focus:border-[var(--color-teal-400)] focus:ring-2 focus:ring-[var(--color-teal-100)]"
+        />
+
+        {pinError && (
+          <div className="mt-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+            {pinError}
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={handleUnlock}
+          disabled={pinBusy || !pinInput.trim()}
+          className="mt-4 w-full rounded-xl bg-[var(--color-teal-600)] px-5 py-3 text-sm font-extrabold text-white hover:bg-[var(--color-teal-700)] disabled:opacity-60"
+        >
+          {t('diaries.pin.unlockButton', { defaultValue: 'Öffnen' })}
+        </button>
+
+        <div className="mt-4">
+          {!showHint ? (
+            <button
+              type="button"
+              onClick={() => setShowHint(true)}
+              className="text-xs text-slate-400 hover:text-slate-600"
+            >
+              {t('diaries.pin.forgotLink', { defaultValue: 'PIN vergessen?' })}
+            </button>
+          ) : (
+            <div className="rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-xs text-slate-600 text-left">
+              {hint ? (
+                <>
+                  <span className="font-semibold">{t('diaries.pin.hintTitle', { defaultValue: 'Dein Hinweis:' })}</span>{' '}
+                  {hint}
+                  <br />
+                </>
+              ) : null}
+              <span className="mt-1 block">
+                {t('diaries.pin.forgotHint', {
+                  defaultValue: 'Vergessen? Bitte deine Eltern, den PIN im Elternbereich zurückzusetzen. Deine Einträge bleiben erhalten.',
+                })}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// -------------------- diary_me content --------------------
 function MyDiarySection() {
   const { t } = useTranslation('bonus');
+  const { updateProfile } = useProfile();
   const canvasRef = useRef<HTMLDivElement | null>(null);
 
-  const [entries, setEntries] = useState<MeEntry[]>(() => loadMeDiary().sort((a, b) => b.createdAt - a.createdAt));
+  const [entries, setEntries] = useState<MeEntry[]>(() =>
+    loadMeDiary().sort((a, b) => b.createdAt - a.createdAt)
+  );
   const [text, setText] = useState('');
   const [activeEntryId, setActiveEntryId] = useState<string | null>(entries[0]?.id ?? null);
+  const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
+  const [editText, setEditText] = useState('');
+  const [selectedStickerId, setSelectedStickerId] = useState<string | null>(null);
 
   const activeEntry = useMemo(() => entries.find((e) => e.id === activeEntryId) ?? null, [entries, activeEntryId]);
 
   useEffect(() => {
     saveMeDiary(entries);
   }, [entries]);
+
+    useEffect(() => {
+    const today = todayStr();
+
+    updateProfile((prev) => {
+      const currentDiary = prev.progress?.diary ?? {
+        usedDays: 0,
+        lastUsedDay: '',
+      };
+
+      if (currentDiary.lastUsedDay === today) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        progress: {
+          ...prev.progress,
+          diary: {
+            usedDays: currentDiary.usedDays + 1,
+            lastUsedDay: today,
+          },
+        },
+        updatedAt: Date.now(),
+      };
+    });
+  }, [updateProfile]);
 
   function createEntry() {
     const trimmed = text.trim();
@@ -547,6 +876,25 @@ function MyDiarySection() {
     setEntries((prev) =>
       prev.map((e) => (e.id === activeEntry.id ? { ...e, stickers: e.stickers.filter((s) => s.id !== stickerId) } : e))
     );
+  }
+
+  function startEditing(entry: MeEntry) {
+    setEditingEntryId(entry.id);
+    setEditText(entry.text);
+  }
+
+  function saveEdit() {
+    if (!editingEntryId) return;
+    const trimmed = editText.trim();
+    if (!trimmed) return;
+    setEntries((prev) => prev.map((e) => (e.id === editingEntryId ? { ...e, text: trimmed } : e)));
+    setEditingEntryId(null);
+    setEditText('');
+  }
+
+  function cancelEdit() {
+    setEditingEntryId(null);
+    setEditText('');
   }
 
   return (
@@ -605,18 +953,23 @@ function MyDiarySection() {
                       type="button"
                       onClick={() => setActiveEntryId(e.id)}
                       className={[
-                        'w-full text-left rounded-2xl border p-4 transition',
+                        'w-full text-left rounded-2xl border p-3 transition',
                         e.id === activeEntryId
                           ? 'border-[var(--color-teal-300)] bg-[var(--color-teal-50)]'
                           : 'border-slate-200 bg-white hover:bg-slate-50',
                       ].join(' ')}
                     >
-                      <div className="text-xs font-bold text-slate-500">{formatDate(e.createdAt)}</div>
-                      <div className="mt-1 text-sm font-semibold text-slate-900 line-clamp-2">
-                        {e.text}
-                      </div>
-                      <div className="mt-2 text-xs text-slate-500">
-                        {e.stickers.length} Sticker
+                      <div className="flex gap-3 items-start">
+                        <MiniEntryPreview entry={e} />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-xs font-bold text-slate-500">{formatDate(e.createdAt)}</div>
+                          <div className="mt-1 text-sm font-semibold text-slate-900 line-clamp-3 diary-hand">
+                            {e.text}
+                          </div>
+                          {e.stickers.length > 0 && (
+                            <div className="mt-2 text-xs text-slate-400">{e.stickers.length} Sticker</div>
+                          )}
+                        </div>
                       </div>
                     </button>
                   ))}
@@ -634,9 +987,20 @@ function MyDiarySection() {
                 <div className="text-sm font-extrabold text-slate-900">
                   {t('diaries.me.canvasTitle', { defaultValue: 'Sticker & Seite' })}
                 </div>
-                {activeEntry ? (
-                  <div className="text-xs font-bold text-slate-500">{formatDate(activeEntry.createdAt)}</div>
-                ) : null}
+                <div className="flex items-center gap-2">
+                  {activeEntry ? (
+                    <div className="text-xs font-bold text-slate-500">{formatDate(activeEntry.createdAt)}</div>
+                  ) : null}
+                  {activeEntry && editingEntryId !== activeEntry.id ? (
+                    <button
+                      type="button"
+                      onClick={() => startEditing(activeEntry)}
+                      className="rounded-xl border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                    >
+                      Bearbeiten
+                    </button>
+                  ) : null}
+                </div>
               </div>
 
               {!activeEntry ? (
@@ -646,47 +1010,78 @@ function MyDiarySection() {
               ) : (
                 <>
                   {/* Sticker Picker */}
-                  <div className="mt-4 flex flex-wrap gap-2">
+                  <div className="mt-4 flex flex-wrap gap-1">
                     {DIARY_STICKERS.map((sid) => (
                       <button
                         key={sid}
                         type="button"
                         onClick={() => addSticker(sid)}
-                        className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 py-2 hover:bg-slate-50"
+                        className="transition-transform hover:scale-110 active:scale-95"
+                        aria-label={sid}
                       >
-                        <img src={stickerSrc(sid, 256)} alt="" className="w-8 h-8" />
-                        <span className="text-xs font-semibold text-slate-700">{sid}</span>
+                        <img src={stickerSrc(sid, 256)} alt={sid} className="w-10 h-10" />
                       </button>
                     ))}
                   </div>
 
                   {/* Canvas */}
                   <div className="mt-4 rounded-3xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,250,240,1),rgba(255,255,255,1))] overflow-hidden">
-                    <div ref={canvasRef} className="relative p-5 sm:p-6 touch-none" style={{ minHeight: 340 }}>
+                    <div ref={canvasRef} className={['relative p-5 sm:p-6', editingEntryId === activeEntry.id ? '' : 'touch-none'].join(' ')} style={{ minHeight: 340 }}>
                       {/* Text */}
                       <div className="relative z-0">
-                        <div className="text-[18px] leading-8 text-slate-900 diary-hand whitespace-pre-wrap">
-                          {activeEntry.text}
-                        </div>
+                        {editingEntryId === activeEntry.id ? (
+                          <>
+                            <textarea
+                              value={editText}
+                              onChange={(e) => setEditText(e.target.value)}
+                              className="w-full min-h-[140px] rounded-xl border border-slate-200 bg-white p-3 text-base leading-relaxed outline-none focus:ring-2 focus:ring-[var(--color-teal-200)] resize-none"
+                            />
+                            <div className="mt-2 flex gap-2">
+                              <button
+                                type="button"
+                                onClick={saveEdit}
+                                className="rounded-xl bg-[var(--color-teal-600)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--color-teal-700)]"
+                              >
+                                Speichern
+                              </button>
+                              <button
+                                type="button"
+                                onClick={cancelEdit}
+                                className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                              >
+                                Abbrechen
+                              </button>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="text-[18px] leading-8 text-slate-900 diary-hand whitespace-pre-wrap">
+                            {activeEntry.text}
+                          </div>
+                        )}
                       </div>
 
                       {/* Stickers layer */}
-                      <div className="absolute inset-0 z-10 pointer-events-auto">
+                      <div
+                        className={['absolute inset-0 z-10', editingEntryId === activeEntry.id ? 'pointer-events-none' : 'pointer-events-auto'].join(' ')}
+                        onClick={() => setSelectedStickerId(null)}
+                      >
                         {activeEntry.stickers.map((s) => (
-<StickerDraggable
-  key={s.id}
-  sticker={s}
-  canvasRef={canvasRef}
-  onMove={(xPx, yPx) => updateSticker(s.id, { xPx, yPx })}
-  onRemove={() => removeSticker(s.id)}
-/>
+                          <StickerDraggable
+                            key={s.id}
+                            sticker={s}
+                            canvasRef={canvasRef}
+                            selected={s.id === selectedStickerId}
+                            onSelect={() => setSelectedStickerId(s.id)}
+                            onMove={(xPx, yPx) => updateSticker(s.id, { xPx, yPx })}
+                            onRemove={() => { removeSticker(s.id); setSelectedStickerId(null); }}
+                          />
                         ))}
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-3 text-xs text-slate-500">
-                    {t('diaries.me.dragHint', { defaultValue: 'Sticker ziehen: Finger/Mouse. Doppelklick: entfernen.' })}
+                    {t('diaries.me.dragHint', { defaultValue: 'Sticker antippen zum Auswählen, dann ✕ zum Entfernen.' })}
                   </div>
                 </>
               )}
@@ -701,10 +1096,13 @@ function MyDiarySection() {
 function StickerDraggable(props: {
   sticker: MeSticker;
   canvasRef: React.RefObject<HTMLDivElement | null>;
+  selected: boolean;
+  onSelect: () => void;
   onMove: (xPx: number, yPx: number) => void;
   onRemove: () => void;
 }) {
-  const { sticker, canvasRef, onMove, onRemove } = props;
+  const { sticker, canvasRef, selected, onSelect, onMove, onRemove } = props;
+  const divRef = useRef<HTMLDivElement>(null);
 
   const drag = useRef({
     down: false,
@@ -716,17 +1114,23 @@ function StickerDraggable(props: {
     raf: 0 as any,
     nextXPx: sticker.xPx,
     nextYPx: sticker.yPx,
+    hasMoved: false,
   });
 
   useEffect(() => {
-    drag.current.baseXPx = sticker.xPx;
-    drag.current.baseYPx = sticker.yPx;
+    if (!drag.current.down) {
+      drag.current.baseXPx = sticker.xPx;
+      drag.current.baseYPx = sticker.yPx;
+      drag.current.nextXPx = sticker.xPx;
+      drag.current.nextYPx = sticker.yPx;
+    }
   }, [sticker.xPx, sticker.yPx]);
 
   const clampPx = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
 
   return (
     <div
+      ref={divRef}
       className="absolute pointer-events-auto select-none"
       style={{
         left: sticker.xPx,
@@ -735,12 +1139,10 @@ function StickerDraggable(props: {
         height: sticker.size,
         transform: `translate(-50%, -50%) rotate(${sticker.rot}deg)`,
         touchAction: 'none',
+        willChange: 'left, top',
+        zIndex: selected ? 20 : undefined,
       }}
-      onDoubleClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        onRemove();
-      }}
+      onClick={(e) => e.stopPropagation()}
       onPointerDown={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -754,6 +1156,9 @@ function StickerDraggable(props: {
         drag.current.startY = e.clientY;
         drag.current.baseXPx = sticker.xPx;
         drag.current.baseYPx = sticker.yPx;
+        drag.current.nextXPx = sticker.xPx;
+        drag.current.nextYPx = sticker.yPx;
+        drag.current.hasMoved = false;
 
         (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
       }}
@@ -767,27 +1172,37 @@ function StickerDraggable(props: {
         const dx = e.clientX - drag.current.startX;
         const dy = e.clientY - drag.current.startY;
 
-        // Ziel: Pixel im Canvas-Koordinatensystem
+        if (Math.abs(dx) + Math.abs(dy) > 6) drag.current.hasMoved = true;
+
         const rawX = drag.current.baseXPx + dx;
         const rawY = drag.current.baseYPx + dy;
 
-        // Clamp: Sticker bleibt im sichtbaren Bereich
         const half = sticker.size / 2;
         const xPx = clampPx(rawX, half + 8, r.width - half - 8);
         const yPx = clampPx(rawY, half + 8, r.height - half - 8);
 
-        // ✅ rAF throttling: smooth + kein “zittern”
         drag.current.nextXPx = xPx;
         drag.current.nextYPx = yPx;
 
         if (!drag.current.raf) {
           drag.current.raf = requestAnimationFrame(() => {
             drag.current.raf = 0;
-            onMove(drag.current.nextXPx, drag.current.nextYPx);
+            const el = divRef.current;
+            if (el) {
+              el.style.left = `${drag.current.nextXPx}px`;
+              el.style.top = `${drag.current.nextYPx}px`;
+            }
           });
         }
       }}
       onPointerUp={(e) => {
+        if (drag.current.down && drag.current.pid === e.pointerId) {
+          if (drag.current.hasMoved) {
+            onMove(drag.current.nextXPx, drag.current.nextYPx);
+          } else {
+            onSelect();
+          }
+        }
         drag.current.down = false;
         drag.current.pid = -1;
         try {
@@ -797,6 +1212,9 @@ function StickerDraggable(props: {
         }
       }}
       onPointerCancel={() => {
+        if (drag.current.down) {
+          onMove(drag.current.nextXPx, drag.current.nextYPx);
+        }
         drag.current.down = false;
         drag.current.pid = -1;
       }}
@@ -804,9 +1222,22 @@ function StickerDraggable(props: {
       <img
         src={stickerSrc(sticker.stickerId, 256)}
         alt=""
-        className="w-full h-full pointer-events-none"
+        className={['w-full h-full pointer-events-none transition-[filter]', selected ? 'drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]' : ''].join(' ')}
         draggable={false}
       />
+
+      {selected && (
+        <button
+          type="button"
+          aria-label="Sticker entfernen"
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => { e.stopPropagation(); onRemove(); }}
+          className="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs shadow-md hover:bg-red-600 transition-colors"
+          style={{ transform: `rotate(${-sticker.rot}deg)` }}
+        >
+          ✕
+        </button>
+      )}
     </div>
   );
 }

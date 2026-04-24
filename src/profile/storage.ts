@@ -1,19 +1,10 @@
-// src/profile/storage.ts
-
 import type { Equipment, Inventory, ItemSlot, UserProfile } from './types';
 import { createDefaultProfile } from './defaultProfile';
+import { getStarterInventory } from '../data/items';
 
 const STORAGE_KEY = 'aym_user_profile';
 
-const ALL_SLOTS: ItemSlot[] = [
-  'head',
-  'face',
-  'top',
-  'bottom',
-  'feet',
-  'background',
-  'effect',
-];
+const ALL_SLOTS: ItemSlot[] = ['featured', 'background', 'effect'];
 
 function isObject(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === 'object' && !Array.isArray(v);
@@ -48,31 +39,60 @@ function normalizeProfile(raw: unknown): UserProfile {
   };
 
   const invRaw = isObject(p.inventory) ? p.inventory : {};
-  const inventory = Object.fromEntries(
-    ALL_SLOTS.map((slot) => {
-      const list = invRaw[slot];
-      return [
-        slot,
-        Array.isArray(list)
-          ? list.filter((x) => typeof x === 'string')
-          : base.inventory[slot],
-      ];
-    })
-  ) as Inventory;
+  const starter = getStarterInventory();
+
+  const inventory: Inventory = {
+    featured: [
+      ...new Set([
+        ...starter.featured,
+        ...(Array.isArray(invRaw.featured)
+          ? invRaw.featured.filter((x): x is string => typeof x === 'string')
+          : base.inventory.featured),
+      ]),
+    ],
+    background: [
+      ...new Set([
+        ...starter.background,
+        ...(Array.isArray(invRaw.background)
+          ? invRaw.background.filter((x): x is string => typeof x === 'string')
+          : base.inventory.background),
+      ]),
+    ],
+    effect: [
+      ...new Set([
+        ...starter.effect,
+        ...(Array.isArray(invRaw.effect)
+          ? invRaw.effect.filter((x): x is string => typeof x === 'string')
+          : base.inventory.effect),
+      ]),
+    ],
+  };
 
   const eqRaw = isObject(p.equipment) ? p.equipment : {};
-  const equipment = Object.fromEntries(
-    ALL_SLOTS.map((slot) => {
-      const v = eqRaw[slot];
-      return [slot, typeof v === 'string' ? v : null];
-    })
-  ) as Equipment;
 
-  const progRaw = isObject(p.progress) ? p.progress : {};
+  const equipment: Equipment = {
+    featured:
+      typeof eqRaw.featured === 'string'
+        ? eqRaw.featured
+        : base.equipment.featured,
+    background:
+      typeof eqRaw.background === 'string'
+        ? eqRaw.background
+        : base.equipment.background,
+    effect:
+      typeof eqRaw.effect === 'string'
+        ? eqRaw.effect
+        : base.equipment.effect,
+  };
 
-  const currentRaw = isObject(progRaw.current) ? progRaw.current : null;
-  const weeklyRaw = isObject(progRaw.weeklyStreak) ? progRaw.weeklyStreak : {};
-  const themePointsRaw = isObject(progRaw.themePoints) ? progRaw.themePoints : {};
+const progRaw = isObject(p.progress) ? p.progress : {};
+const currentRaw = isObject(progRaw.current) ? progRaw.current : null;
+const weeklyRaw = isObject(progRaw.weeklyStreak) ? progRaw.weeklyStreak : {};
+const themePointsRaw = isObject(progRaw.themePoints) ? progRaw.themePoints : {};
+const earnedStickersAtRaw = isObject(progRaw.earnedStickersAt) ? progRaw.earnedStickersAt : {};
+const activityRaw = isObject(progRaw.activity) ? progRaw.activity : {};
+const diaryRaw = isObject(progRaw.diary) ? progRaw.diary : {};
+const friendbookRaw = isObject(progRaw.friendbook) ? progRaw.friendbook : {};
 
   const progress = {
     completedChapters: isObject(progRaw.completedChapters)
@@ -86,6 +106,12 @@ function normalizeProfile(raw: unknown): UserProfile {
     earnedStickers: isObject(progRaw.earnedStickers)
       ? (progRaw.earnedStickers as Record<string, true>)
       : base.progress.earnedStickers,
+
+    earnedStickersAt: isObject(progRaw.earnedStickersAt)
+      ? Object.fromEntries(
+          Object.entries(earnedStickersAtRaw).map(([k, v]) => [k, toNumber(v, 0)])
+        )
+      : (base.progress.earnedStickersAt ?? {}),
 
     earnedBadges: isObject(progRaw.earnedBadges)
       ? (progRaw.earnedBadges as Record<string, true>)
@@ -152,6 +178,35 @@ function normalizeProfile(raw: unknown): UserProfile {
         base.progress.themePoints?.['fairness'] ?? 0
       ),
     },
+
+    activity: {
+      totalPlayedDays: toNumber(
+        activityRaw.totalPlayedDays,
+        base.progress.activity?.totalPlayedDays ?? 0
+      ),
+      lastPlayedDay:
+        typeof activityRaw.lastPlayedDay === 'string'
+          ? activityRaw.lastPlayedDay
+          : base.progress.activity?.lastPlayedDay ?? '',
+    },
+
+    diary: {
+      usedDays: toNumber(
+        diaryRaw.usedDays,
+        base.progress.diary?.usedDays ?? 0
+      ),
+      lastUsedDay:
+        typeof diaryRaw.lastUsedDay === 'string'
+          ? diaryRaw.lastUsedDay
+          : base.progress.diary?.lastUsedDay ?? '',
+    },
+
+    friendbook: {
+      hasOwnEntry:
+        typeof friendbookRaw.hasOwnEntry === 'boolean'
+          ? friendbookRaw.hasOwnEntry
+          : base.progress.friendbook?.hasOwnEntry ?? false,
+    },
   };
 
   const version = Math.max(toNumber(p.version, base.version), base.version);
@@ -170,6 +225,25 @@ function normalizeProfile(raw: unknown): UserProfile {
     storyTranscripts: isObject(p.storyTranscripts)
       ? (p.storyTranscripts as UserProfile['storyTranscripts'])
       : base.storyTranscripts,
+    chatName: (() => {
+      const current =
+        typeof p.chatName === 'string'
+          ? p.chatName
+          : typeof base.chatName === 'string'
+          ? base.chatName
+          : '';
+
+      if (current.trim().length > 0) return current;
+
+      const legacy =
+        isObject(p.myCard) && typeof p.myCard.name === 'string'
+          ? p.myCard.name
+          : '';
+
+      if (legacy.trim().length > 0) return legacy;
+
+      return current;
+    })(),
   };
 }
 

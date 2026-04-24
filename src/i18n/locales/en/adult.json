@@ -29,7 +29,20 @@
     "placeholderSetup": "Enter answer",
     "ctaSetup": "Continue",
     "ctaCancel": "Cancel",
-    "errorSetup": "That’s not correct. Please try again."
+    "errorSetup": "That’s not correct. Please try again.",
+    "forgotLink": "Forgot passcode?",
+    "resetHint": "Enter the master reset code. You can find it in the FAQ of this app.",
+    "resetPlaceholder": "Reset code",
+    "resetConfirm": "Reset",
+    "resetCancel": "Cancel",
+    "resetError": "Incorrect reset code.",
+    "changeTitle": "Change passcode",
+    "changeHint": "First enter the current passcode, then the new one.",
+    "changeCurrent": "Current passcode",
+    "changeNew": "New passcode (at least 6 characters)",
+    "changeRepeat": "Repeat new passcode",
+    "changeSave": "Change passcode",
+    "changeSuccess": "Passcode was changed successfully."
   },
   "adult": {
     "title": "Adult settings",
@@ -182,6 +195,82 @@
       "session": "Reset session",
       "entitlementsDone": "All unlocks have been removed.",
       "sessionDone": "The current session has been reset."
+    },
+    "openPage": "Go to test page →"
+  },
+  "mediaSkills": {
+    "title": "Media Skills Progress",
+    "subtitle": "Topic areas your child has already explored in the story."
+  },
+  "privacy": {
+    "title": "Privacy & Stored Data",
+    "intro": "This app stores all data exclusively on this device. No data is transferred to external servers.",
+    "items": {
+      "profile": "Child profile",
+      "profileDetail": "Name, avatar, age – stored locally.",
+      "progress": "Learning progress",
+      "progressDetail": "Played chapters and decisions – stored locally.",
+      "traces": "Learning traces",
+      "tracesDetail": "Aggregated observations about media competency areas – stored locally.",
+      "passcode": "Parent passcode",
+      "passcodeDetail": "Stored as a hash – not readable, not transferable.",
+      "diary": "Diary",
+      "diaryDetail": "All entries remain on this device.",
+      "settings": "App settings",
+      "settingsDetail": "AI mode and other settings – stored locally."
+    },
+    "note": "To delete all data, use the GDPR deletion feature below."
+  },
+  "reset": {
+    "profileTitle": "Reset child profile",
+    "profileBody": "Deletes the child profile, learning progress, stickers, learning traces, and diary. The parent passcode is preserved.",
+    "profileWarning": "This action cannot be undone.",
+    "profileDone": "The child profile has been reset.",
+    "profileCheckbox": "I understand that this action cannot be undone.",
+    "profileButton": "Reset child profile now",
+    "allTitle": "Delete all local data",
+    "allBody": "Deletes all data stored by this app on this device – including the parent passcode, settings, and child profile. This is a complete GDPR deletion.",
+    "allButton": "Delete all data …",
+    "allConfirmTitle": "Really delete all data?",
+    "allConfirmBody": "This permanently deletes all data on this device. The parent passcode will also be removed.",
+    "allCheckbox": "I understand that all data will be permanently deleted.",
+    "allConfirmButton": "Delete everything now",
+    "allCancel": "Cancel"
+  },
+  "backup": {
+    "title": "Backup & Restore",
+    "body": "Create a local backup of all child data or restore a previous backup.",
+    "exportTitle": "Export backup",
+    "exportHint": "Downloads all child data as a JSON file. Passcode hashes are not included.",
+    "exportButton": "Download backup",
+    "importTitle": "Import backup",
+    "importHint": "Select a previously exported JSON file. Existing data will be overwritten.",
+    "importing": "Importing …",
+    "importButton": "Select backup file …",
+    "importSuccess": "Backup imported successfully."
+  },
+  "diary": {
+    "title": "Child's Diary",
+    "body": "The child's personal diary can be protected with a PIN. You can reset the PIN here – diary entries are preserved.",
+    "noPin": "No PIN set.",
+    "resetDone": "PIN has been reset.",
+    "resetWarning": "The child will need to set a new PIN or open without one.",
+    "resetButton": "Reset diary PIN"
+  },
+  "learningTrace": {
+    "title": "Learning Traces",
+    "whatIsThis": "What is being measured here?",
+    "explanation": "This app observes in the background how your child responds to situations in the story. There is no right or wrong. All data remains exclusively stored locally on this device and is not shared or transferred.",
+    "sectionTitle": "Visible development areas",
+    "itemCount": "Based on {{count}} decisions in the story.",
+    "disclaimer": "This assessment is not a psychological diagnosis.",
+    "emptyState": "Once your child has experienced the first story sections, initial impressions will appear here.",
+    "deleteButton": "Delete learning traces",
+    "deleteConfirm": "All saved learning traces have been deleted.",
+    "levels": {
+      "frequent": "already frequently visible",
+      "visible": "developing further",
+      "growing": "currently building"
     }
   }
 }

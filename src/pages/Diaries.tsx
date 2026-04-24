@@ -4,13 +4,15 @@ import Layout from '../components/Layout';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+
 import { BONUS_INDEX, type BonusItem } from '../bonus/bonusIndex';
 import { useProfile } from '../profile/useProfile';
 import { isBonusUnlocked, type BonusProgressSnapshot } from '../bonus/bonusUnlock';
 import { isBonusSeen, markBonusSeen } from '../bonus/bonusSeen';
 import { assetUrl } from '../common/assetUrl';
 import { cn } from '../common/utils';
-import AvatarHeadImage from '../components/AvatarHeadImage';
+import AvatarLookCircle from '../components/AvatarLookCircle';
+import type { Equipment } from '../profile/types';
 
 type LocationState = { backTo?: string; backgroundLocation?: unknown } | null;
 
@@ -196,9 +198,13 @@ function MyDiaryCard(props: {
   desc: string;
   to: string;
   avatarId: string;
+  equipment: Equipment;
+  badgeMain: string;
+  badgePrivate: string;
+  cta: string;
   onOpen?: () => void;
 }) {
-  const { title, desc, to, avatarId, onOpen } = props;
+  const { title, desc, to, avatarId, equipment, badgeMain, badgePrivate, cta, onOpen } = props;
 
   return (
     <Link
@@ -212,12 +218,13 @@ function MyDiaryCard(props: {
         <div className="p-4 sm:p-6">
           <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4 items-center">
             <div className="flex justify-center md:justify-start">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl border border-white/70 bg-white shadow-sm flex items-center justify-center overflow-hidden">
-                <AvatarHeadImage
-                  id={avatarId}
+              <div className="rounded-3xl border border-white/70 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                <AvatarLookCircle
+                  avatarBaseId={avatarId}
+                  equipment={equipment}
                   size={120}
                   alt={title}
-                  className="rounded-2xl bg-white"
+                  className="rounded-2xl"
                 />
               </div>
             </div>
@@ -225,10 +232,10 @@ function MyDiaryCard(props: {
             <div className="min-w-0">
               <div className="flex flex-wrap gap-2">
                 <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold bg-[var(--color-teal-100)] text-[var(--color-teal-900)]">
-                  🙋 Dein Bereich
+                  {badgeMain}
                 </span>
                 <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white border border-black/5 text-slate-700">
-                  🔒 privat
+                  {badgePrivate}
                 </span>
               </div>
 
@@ -241,7 +248,7 @@ function MyDiaryCard(props: {
               </div>
 
               <div className="mt-4 inline-flex items-center rounded-2xl px-4 py-2 bg-white border border-slate-200 text-sm font-extrabold text-slate-800 group-hover:bg-slate-50">
-                Öffnen →
+                {cta}
               </div>
             </div>
           </div>
@@ -341,13 +348,17 @@ export default function Diaries() {
 />
 
         {/* Mein Tagebuch */}
-        <MyDiaryCard
-          title={myDiaryTitle}
-          desc={myDiaryDesc}
-          to={`/diaries/${myDiary.bonusId}`}
-          avatarId={profile.avatarBaseId}
-          onOpen={() => markBonusSeen(myDiary.bonusId)}
-        />
+<MyDiaryCard
+  title={myDiaryTitle}
+  desc={myDiaryDesc}
+  to={`/diaries/${myDiary.bonusId}`}
+  avatarId={profile.avatarBaseId}
+  equipment={profile.equipment}
+  badgeMain={t('diaries.my.badgeMain', { defaultValue: '🙋 Dein Bereich' })}
+  badgePrivate={t('diaries.my.badgePrivate', { defaultValue: '🔒 privat' })}
+  cta={t('diaries.open', { defaultValue: 'Öffnen →' })}
+  onOpen={() => markBonusSeen(myDiary.bonusId)}
+/>
 
         {/* Story-Tagebücher */}
         <Panel

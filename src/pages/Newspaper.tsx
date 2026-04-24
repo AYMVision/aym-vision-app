@@ -17,6 +17,7 @@ import { cn } from '../common/utils';
 import SmartImage from '../components/SmartImage';
 
 import { useProfile } from '../profile/useProfile';
+import MiniAudioPlayer from '../components/MiniAudioPlayer';
 import { BONUS_INDEX, type BonusItem } from '../bonus/bonusIndex';
 import { isBonusUnlocked, type BonusProgressSnapshot } from '../bonus/bonusUnlock';
 import { loadSeenBonusIds } from '../bonus/bonusSeen';
@@ -111,7 +112,7 @@ function chipStyle(active: boolean) {
     : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50';
 }
 
-type ArticleMetaLite = { title?: string; description?: string };
+type ArticleMetaLite = { title?: string; description?: string; date?: string };
 
 function useArticleMetaMap(items: BonusItem[], lang: 'de' | 'en') {
   const [map, setMap] = useState<Record<string, ArticleMetaLite>>({});
@@ -128,14 +129,15 @@ function useArticleMetaMap(items: BonusItem[], lang: 'de' | 'en') {
       await Promise.all(
         missing.map(async (it) => {
           try {
-            const url = `/${it.bodySrc}.${lang}.md`;
-            const res = await fetch(url);
+            let res = await fetch(`/${it.bodySrc}.${lang}.md`);
+            if (!res.ok) res = await fetch(`/${it.bodySrc}.md`);
             if (!res.ok) return;
             const text = await res.text();
             const fm = parseFrontmatter(text);
             next[it.bonusId] = {
               title: fm.meta.title,
               description: fm.meta.description,
+              date: fm.meta.date,
             };
           } catch {
             // ignore
@@ -175,6 +177,16 @@ function resolveTitleDesc(
     (item.descriptionKey ? t(item.descriptionKey, { defaultValue: '' }) : '');
 
   return { title, desc };
+}
+
+function isoWeek(dateStr: string): number | null {
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return null;
+  // Thursday of the current week determines the year → ISO 8601
+  const thu = new Date(d);
+  thu.setDate(d.getDate() + (4 - (d.getDay() || 7)));
+  const yearStart = new Date(thu.getFullYear(), 0, 1);
+  return Math.ceil(((thu.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }
 
 function isCurrentNewsItem(item: BonusItem) {
@@ -399,6 +411,7 @@ function FreshCard({
   metaById: Record<string, ArticleMetaLite>;
 }) {
   const { t } = useTranslation('bonus');
+  const location = useLocation();
   const [imgFailed, setImgFailed] = useState(false);
 
   const { title } = resolveTitleDesc(t, item, metaById);
@@ -415,7 +428,7 @@ function FreshCard({
   return (
     <Link
       to={unlocked ? `/newspaper/${item.bonusId}` : '/newspaper'}
-      state={{ backTo: '/newspaper' }}
+      state={{ backTo: '/newspaper', backgroundLocation: location }}
       className={cn(
         'block snap-start shrink-0 w-[68%] sm:w-[38%] lg:w-[220px]',
         !unlocked && 'cursor-not-allowed'
@@ -479,59 +492,78 @@ function CurrentNewsCard({
   metaById: Record<string, ArticleMetaLite>;
 }) {
   const { t } = useTranslation('bonus');
+  const location = useLocation();
   const [imgFailed, setImgFailed] = useState(false);
 
   const { title, desc } = resolveTitleDesc(t, item, metaById);
   const coverSrc = item.coverImage ? assetUrl(item.coverImage) : '';
   const fallback = pickFallbackEmoji(item);
+  const isAudio = item.mediaType === 'audio';
+  const audioHref = item.audioSrc ? assetUrl(item.audioSrc) : '';
+  const kwNum = metaById[item.bonusId]?.date ? isoWeek(metaById[item.bonusId].date!) : null;
 
   return (
-    <Link to={`/newspaper/${item.bonusId}`} state={{ backTo: '/newspaper' }} className="block">
-      <div className="rounded-2xl border border-rose-200 bg-gradient-to-br from-rose-50 via-white to-amber-50 shadow-sm overflow-hidden hover:shadow-md transition">
-        <div className="p-4">
-          <div className="flex flex-wrap gap-2 items-center">
-            <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-rose-200 bg-white text-rose-700">
-              📰 {t('newspaper.format.text', { defaultValue: 'Text' })}
+    <div className="rounded-2xl border border-rose-200 bg-gradient-to-br from-rose-50 via-white to-amber-50 shadow-sm overflow-hidden hover:shadow-md transition">
+      <Link to={`/newspaper/${item.bonusId}`} state={{ backTo: '/newspaper', backgroundLocation: location }} className="block p-4">
+        <div className="flex flex-wrap gap-2 items-center">
+          <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-rose-200 bg-white text-rose-700">
+            {isAudio ? '🎧' : '📰'} {isAudio
+              ? t('newspaper.format.audio', { defaultValue: 'Audio' })
+              : t('newspaper.format.text', { defaultValue: 'Text' })}
+          </span>
+          <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-amber-200 bg-amber-50 text-amber-900">
+            ✨ Für alle frei
+          </span>
+          <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-slate-200 bg-white text-slate-700">
+            🗞️ Chioma
+          </span>
+          {kwNum ? (
+            <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-slate-200 bg-white text-slate-500">
+              KW {kwNum}
             </span>
-            <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-amber-200 bg-amber-50 text-amber-900">
-              ✨ Für alle frei
-            </span>
-            <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-slate-200 bg-white text-slate-700">
-              🗞️ Chioma
-            </span>
+          ) : null}
+        </div>
+
+        <div className="mt-3 grid grid-cols-[92px_1fr] sm:grid-cols-[120px_1fr] gap-3 sm:gap-4 items-start">
+          <div className="rounded-2xl overflow-hidden border border-slate-200 bg-white h-[92px] sm:h-[110px] relative flex items-center justify-center">
+            {item.coverImage && !imgFailed ? (
+              <img
+                src={coverSrc}
+                alt=""
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={() => setImgFailed(true)}
+              />
+            ) : (
+              <div className="text-4xl">{fallback}</div>
+            )}
           </div>
 
-          <div className="mt-3 grid grid-cols-[92px_1fr] sm:grid-cols-[120px_1fr] gap-3 sm:gap-4 items-start">
-            <div className="rounded-2xl overflow-hidden border border-slate-200 bg-white h-[92px] sm:h-[110px] relative flex items-center justify-center">
-              {item.coverImage && !imgFailed ? (
-                <img
-                  src={coverSrc}
-                  alt=""
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  onError={() => setImgFailed(true)}
-                />
-              ) : (
-                <div className="text-4xl">{fallback}</div>
-              )}
+          <div className="min-w-0">
+            <div className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 line-clamp-2">
+              {title}
             </div>
+            {desc ? (
+              <div className="mt-1 text-xs sm:text-sm text-slate-700 line-clamp-3">{desc}</div>
+            ) : null}
 
-            <div className="min-w-0">
-              <div className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 line-clamp-2">
-                {title}
-              </div>
-              {desc ? (
-                <div className="mt-1 text-xs sm:text-sm text-slate-700 line-clamp-3">{desc}</div>
-              ) : null}
-
+            {!isAudio ? (
               <div className="mt-3 text-sm font-extrabold text-slate-900">
                 {t('newspaper.readMore', { defaultValue: 'Weiterlesen →' })}
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+
+      {isAudio && audioHref ? (
+        <div className="px-4 pb-4">
+          <div className="max-w-xs rounded-2xl border border-slate-200 bg-white p-3">
+            <MiniAudioPlayer src={audioHref} />
+          </div>
+        </div>
+      ) : null}
+    </div>
   );
 }
 
@@ -547,6 +579,7 @@ function FeedCard({
   metaById: Record<string, ArticleMetaLite>;
 }) {
   const { t } = useTranslation('bonus');
+  const location = useLocation();
   const [imgFailed, setImgFailed] = useState(false);
 
   const { title, desc } = resolveTitleDesc(t, item, metaById);
@@ -564,7 +597,7 @@ function FeedCard({
 
   const CardShell = ({ children }: { children: React.ReactNode }) =>
     unlocked ? (
-      <Link to={`/newspaper/${item.bonusId}`} state={{ backTo: '/newspaper' }} className="block">
+      <Link to={`/newspaper/${item.bonusId}`} state={{ backTo: '/newspaper', backgroundLocation: location }} className="block">
         {children}
       </Link>
     ) : (
@@ -639,21 +672,8 @@ function FeedCard({
           </div>
 
           <div className="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-3">
-            {item.mediaType === 'audio' && item.audioSrc && unlocked ? (
-              <>
-                <audio controls className="w-full">
-                  <source src={audioHref} />
-                </audio>
-                <a
-                  href={audioHref}
-                  className="mt-2 inline-flex text-sm font-extrabold text-slate-900 hover:underline"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {t('newspaper.play', { defaultValue: 'Abspielen in neuem Tab →' })}
-                </a>
-              </>
+            {item.mediaType === 'audio' && audioHref && unlocked ? (
+              <MiniAudioPlayer src={audioHref} />
             ) : unlocked ? (
               <div className="text-sm font-extrabold text-slate-900">
                 {t('newspaper.readMore', { defaultValue: 'Weiterlesen →' })}

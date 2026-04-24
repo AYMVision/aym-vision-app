@@ -14,6 +14,7 @@ export default function CoinOverlay() {
           imgSrc={r.imgSrc}
           from={r.from}
           to={r.to}
+          durationMs={r.durationMs}
           onDone={() => removeReward(r.id)}
         />
       ))}
@@ -27,6 +28,7 @@ function FlyingReward({
   imgSrc,
   from,
   to,
+  durationMs,
   onDone,
 }: {
   id: string;
@@ -34,8 +36,11 @@ function FlyingReward({
   imgSrc: string;
   from: { x: number; y: number };
   to: { x: number; y: number };
+  durationMs?: number;
   onDone: () => void;
 }) {
+  const duration = durationMs ?? (kind === 'sticker' ? 2400 : 1000);
+
   const styleStart = useMemo(
     () => ({
       left: from.x,
@@ -61,12 +66,12 @@ function FlyingReward({
 
   useEffect(() => {
     const t1 = window.setTimeout(() => setStyle(styleEnd), 16);
-    const t2 = window.setTimeout(() => onDone(), 1150);
+    const t2 = window.setTimeout(() => onDone(), duration + 200);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, [styleEnd, onDone]);
+  }, [styleEnd, onDone, duration]);
 
   const sizeClass = kind === 'sticker' ? 'w-24 h-24' : 'w-12 h-12';
   const extraClass =
@@ -81,7 +86,7 @@ function FlyingReward({
       className={`absolute ${sizeClass} ${extraClass}`}
       style={{
         ...style,
-        transition: 'all 1400ms cubic-bezier(0.2, 1, 0.2, 1)',
+        transition: `all ${duration}ms cubic-bezier(0.15, 0.9, 0.3, 1)`,
       }}
     />
   );

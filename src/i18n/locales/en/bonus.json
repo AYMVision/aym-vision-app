@@ -89,6 +89,10 @@
     "bookTag": "Diary",
     "bookTag2": "private & stored on your device",
 
+    "my": {
+      "badgeMain": "Your space",
+      "badgePrivate": "private"
+    },
     "books": {
       "mia": {
         "title": "Mia’s Diary",
@@ -106,6 +110,39 @@
         "title": "My Diary",
         "desc": "Your own thoughts – just for you."
       }
+    },
+    "me": {
+      "subtitle": "Your private diary: write, add stickers, read back later.",
+      "writeTitle": "Write a new diary entry",
+      "writeHint": "Just start writing. You can add stickers afterwards.",
+      "placeholder": "Today was…",
+      "save": "Save page",
+      "localOnly": "Your diary stays on this device. Others can see it if they use your phone. Don’t write anything too private.",
+      "pagesTitle": "Your pages",
+      "noPages": "No entries yet. Write your first page above.",
+      "canvasTitle": "Stickers & page",
+      "pickPage": "Select a page on the left.",
+      "dragHint": "Drag stickers: finger or mouse."
+    },
+    "pin": {
+      "setupTitle": "Protect your diary",
+      "setupBody": "You can protect your diary with a PIN so only you can read it.",
+      "setupButton": "Set PIN & open diary",
+      "skipButton": "Open without PIN for now",
+      "pinLabel": "Your PIN (at least 4 characters)",
+      "pinRepeatLabel": "Enter PIN again",
+      "hintLabel": "Hint (optional, in case you forget)",
+      "hintPlaceholder": "e.g. my favourite animal",
+      "errorTooShort": "Please use at least 4 characters.",
+      "errorMismatch": "The two PINs don’t match.",
+      "errorWrong": "Wrong PIN. Please try again.",
+      "lockedTitle": "Your diary is protected",
+      "lockedBody": "Enter your PIN to continue.",
+      "unlockButton": "Open",
+      "forgotLink": "Forgot PIN?",
+      "hintTitle": "Your hint:",
+      "forgotHint": "Ask a trusted adult to help you reset it.",
+      "parentNote": "Adults can reset the PIN in settings."
     }
   },
 
@@ -139,6 +176,7 @@
 
     "actions": {
       "tapToReveal": "Tap to reveal",
+      "revealHint": "👆 Tap to reveal",
       "hide": "Hide",
       "show": "Show"
     }

@@ -21,10 +21,13 @@ const RULES = [
     match: (rel) => rel.startsWith("avatars/full/") && rel.endsWith(".png"),
     sizes: [384, 768],
   },
-  {
-    match: (rel) => rel.startsWith("items/") && rel.endsWith(".png"),
-    sizes: [512],
-  },
+
+{
+  match: (rel) =>
+    rel.startsWith("items/") &&
+    (rel.endsWith(".png") || rel.endsWith(".jpg") || rel.endsWith(".jpeg")),
+  sizes: [512, 768],
+},
   {
     match: (rel) => rel.startsWith("story/characters/") && rel.endsWith(".png"),
     sizes: [256, 512],

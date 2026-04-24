@@ -28,6 +28,12 @@ export function applyDailyStreak(profile: UserProfile) {
     completedWeeks: 0,
   };
 
+  const activity = profile.progress.activity ?? {
+    totalPlayedDays: 0,
+    lastPlayedDay: '',
+  };
+
+  // Wenn heute schon gezählt wurde: nichts mehr erhöhen
   if (current.lastActiveDay === today) {
     return {
       profile,
@@ -68,6 +74,47 @@ export function applyDailyStreak(profile: UserProfile) {
     }
   }
 
+  if (newStreak >= 10 && !next.progress.earnedStickers?.['streak-10']) {
+    const now = Date.now();
+    next = {
+      ...next,
+      progress: {
+        ...next.progress,
+        earnedStickers: {
+          ...(next.progress.earnedStickers ?? {}),
+          'streak-10': true,
+        },
+        earnedStickersAt: {
+          ...(next.progress.earnedStickersAt ?? {}),
+          'streak-10': now,
+        },
+      },
+    };
+  }
+
+  if (newStreak >= 20 && !next.progress.earnedStickers?.['streak-20']) {
+    const now = Date.now();
+    next = {
+      ...next,
+      progress: {
+        ...next.progress,
+        earnedStickers: {
+          ...(next.progress.earnedStickers ?? {}),
+          'streak-20': true,
+        },
+        earnedStickersAt: {
+          ...(next.progress.earnedStickersAt ?? {}),
+          'streak-20': now,
+        },
+      },
+    };
+  }
+
+  const totalPlayedDays =
+    activity.lastPlayedDay === today
+      ? activity.totalPlayedDays
+      : activity.totalPlayedDays + 1;
+
   const finalProfile: UserProfile = {
     ...next,
     progress: {
@@ -77,6 +124,10 @@ export function applyDailyStreak(profile: UserProfile) {
         currentStreak: newStreak,
         longestStreak: Math.max(current.longestStreak, newStreak),
         completedWeeks,
+      },
+      activity: {
+        totalPlayedDays,
+        lastPlayedDay: today,
       },
     },
     updatedAt: Date.now(),

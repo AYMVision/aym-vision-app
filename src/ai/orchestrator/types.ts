@@ -25,6 +25,13 @@ export type AmyRunInput = {
 
   // feature flags
   useMLKeyIdea?: boolean;
+
+  /**
+   * Reflection mode: skips ACTION/FEELING keyword gates in AmyAI.
+   * Use when calling runAmy for open reflection questions — prevents false
+   * negatives caused by domain-specific keyword lists designed for item scoring.
+   */
+  reflectionMode?: boolean;
 };
 
 export type AmyDebugInfo = {

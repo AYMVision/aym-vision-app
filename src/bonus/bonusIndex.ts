@@ -91,27 +91,16 @@ export const BONUS_CATEGORIES: BonusCategoryMeta[] = [
 //_________________________________________________________
 
 const CHARACTER_UNLOCKS_BY_CHAPTER: Record<string, CharacterId[]> = {
-  // s1e01c01: (aus deiner Liste: Yasmin Lisa Mia Finn Dominik Elsa Igor Markus Chioma)
-  // Aktuell existieren in CHARACTERS davon: mia, finn, dominik, chioma
-  s1e01c01: ['amy'],
-  s1e01c02: [],
-  s1e01c03: [],
-  s1e01c04: [],
-  s1e01c05: ['lukas'],
-  s1e01c06: [],
-  s1e01c07: ['yasmin'],
-  s1e01c08: [],
+  // s1e01: bonusLink für Yasmin feuert in c02 → c02 noch nicht abgeschlossen beim Feuern
+  // → Marker-Fallback greift; nach Kapitelabschluss via completedChapters gesichert
+  s1e01c02: ['yasmin'],  // bonusLink in c02 (Yasmin schreibt Freundebuch)
+  s1e01c08: ['lukas'],   // bonusLink in c08 (Lukas schreibt Freundebuch)
 
-  s2e01c01: ['dominik'],
-  s2e01c02: [],
-  s2e01c03: [],
-  s2e01c04: ['alvarez'],
-  s2e01c05: ['chioma'],
-  s2e01c06: [],
-  s2e01c07: [],
-  s2e01c08: [],
-  s2e01c09: ['carlos'],
-  s2e01c10: [],
+  // s1e02
+  s1e02c01: ['dominik'], // bonusLink früh in c01 → Marker-Fallback
+  s1e02c04: ['alvarez'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
+  s1e02c06: ['chioma'],  // bonusLink in c06 (Chioma schreibt Freundebuch)
+  s1e02c09: ['carlos'],  // bonusLink in c09 (Carlos schreibt Freundebuch)
 };
 
 /**
@@ -223,6 +212,19 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     order: 40,
   },
 
+    {
+  bonusId: 'chioma-news-school-social-media',
+  category: 'newspaper',
+  released: true,
+  order: 5,
+  mediaType: 'audio',
+  coverImage: 'media/ui/welcome/feat-newspaper-1024.webp',
+  audioSrc: 'media/newspaper/audio/kw15_26_audio_chiomas-news-school-social-media.mp3',
+  bodySrc: 'media/newspaper/articles/news/kw15_26_audio_chiomas-news-school-social-media',
+  bodyKind: 'md',
+  topicTags: ['infoCheck', 'reflect'],
+},
+
 //_________________________________________________________
 // ARTIKEL HIER EINTRAGEN
 //_________________________________________________________
@@ -249,8 +251,8 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     bodySrc: 'media/newspaper/articles/tip-carlos-geodaten',
     coverImage: 'media/bonus/newspaper/tip-carlos-geodaten.webp',
     released: true,
-    // unlockedBy: { type: 'marker', id: 's1e01c06-tip-carlos-geodaten' },
-        unlockedBy: undefined,
+    unlockedBy: { type: 'marker', id: 's1e01c06-tip-carlos-geodaten' },
+        //unlockedBy: undefined,
     order: 51,
   },
 
@@ -302,7 +304,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
   mediaType: 'text',
   titleKey: 'bonus:newspaper.currentNews.example.title',
   descriptionKey: 'bonus:newspaper.currentNews.example.description',
-  coverImage: 'media/ui/welcome/feat-newspaper-1024.webp',
+  coverImage: 'media/ui/welcome/chioma-news-school-ai-1024.webp',
   bodySrc: 'media/newspaper/articles/news/kw14_26_chioma-news-school-ai',
   bodyKind: 'md',
   topicTags: ['infoCheck', 'reflect'],

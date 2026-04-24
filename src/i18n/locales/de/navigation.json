@@ -19,13 +19,16 @@
   },
 
   "mobileNav": {
-  "stories": "Meine Amics",
-  "diaries": "Tagebücher",
-  "newspaper": "Schülerzeitung",
-  "album": "Stickeralbum",
+    "stories": "Meine Amics",
+    "storiesKids": "Meine Amics",
+    "diaries": "Tagebücher",
+    "newspaper": "Schülerzeitung",
+    "album": "Stickeralbum",
+    "profile": "Profil",
     "openStories": "Stories öffnen",
     "openDiaries": "Tagebuch öffnen",
     "openNewspaper": "Schülerzeitung öffnen",
-    "openAlbum": "Sticker-Album öffnen"
+    "openAlbum": "Sticker-Album öffnen",
+    "openProfile": "Profil öffnen"
   }
 }

@@ -105,24 +105,23 @@
   },
 
   "glimpses": {
-    "kicker": "Insights",
-    "title": "Three small moments from our world",
-    "copy": "Between idea, everyday life, and implementation, a product is gradually taking shape that aims to empower children.",
+    "kicker": "Behind the scenes",
+    "lead": "We’re building Amy Surfwing with purpose — because we believe children deserve better.",
     "items": {
       "0": {
-        "title": "Idea",
-        "body": "It all started with the question of how children can not only consume digital content, but truly think it through.",
+        "label": "Idea",
+        "caption": "Everything starts with a question.",
         "alt": "Insight: creative moment"
       },
       "1": {
-        "title": "Everyday life",
-        "body": "Our content is based on real situations from children’s digital lives.",
-        "alt": "Insight: everyday life and childhood"
+        "label": "Making",
+        "caption": "Scene by scene.",
+        "alt": "Insight: everyday work"
       },
       "2": {
-        "title": "Implementation",
-        "body": "Step by step, Amy Surfwing is created from mindset, storytelling, and product thinking.",
-        "alt": "Insight: team and implementation"
+        "label": "People",
+        "caption": "For kids.",
+        "alt": "Insight: team"
       }
     }
   },
@@ -143,18 +142,29 @@
   "team": {
     "kicker": "Team",
     "title": "Who is behind it",
-    "lead": "We combine product thinking, storytelling, and educational perspectives – with the goal of designing responsibly and in a child-centered way.",
+    "lead": "We are sisters and mothers. It all started with our four children. We want every child to grow up safely in the digital world.",
+    "labels": {
+      "degree": "Studies",
+      "furtherEd": "Training",
+      "experience": "Experience"
+    },
     "people": {
       "0": {
         "name": "Melina Wiegers",
         "role": "Co-founder | Content & Didactics",
-        "bio": "Melina brings her passion for language, storytelling, and educational processes – with international experience and a clear focus on resilience and sustainability.",
+        "degree": "Sinology, Business & Sociology",
+        "furtherEd": "Children's Literature, Positive Psychology, Yoga",
+        "experience": "Marketing, Sustainability & Languages",
+        "quote": "I believe good stories can truly change children.",
         "imageAlt": "Melina Wiegers"
       },
       "1": {
         "name": "Ann-Sofie Höbrink",
         "role": "Co-founder | Technology & Strategy",
-        "bio": "Ann-Sofie combines technical expertise with psychological sensitivity – with a background in industrial engineering, business psychology, and years of experience in projects and coaching.",
+        "degree": "Industrial Engineering & Business Psychology",
+        "furtherEd": "Coaching & People Development",
+        "experience": "Project Management, Coaching & HR",
+        "quote": "I love it when technology feels like a good conversation.",
         "imageAlt": "Ann-Sofie Höbrink"
       }
     }
@@ -168,29 +178,5 @@
     "secondary": "Explore the educational concept →",
     "note": "hello@AymVision.de",
     "mailtoHref": "mailto:hello@aymvision.example?subject=AYM%20VISION%20-%20Contact"
-  },
-
-  "right": {
-    "quick": {
-      "kicker": "At a glance",
-      "whatTitle": "What is AYM VISION?",
-      "whatBody": "An interactive chat-based story world with AI guidance – for reflection, perspective-taking, and digital literacy.",
-      "forWhoTitle": "Who is it for?",
-      "forWhoBody": "Grades 5–7 • Parents • Schools and partnerships (future)",
-      "nonGoalsTitle": "What we are not",
-      "nonGoalsItems": {
-        "0": "Not a social network",
-        "1": "Not an emergency tool",
-        "2": "Not a diagnostic system"
-      },
-      "ctaConcept": "Educational concept →",
-      "ctaPrivacy": "Privacy policy (PDF)",
-      "privacyPdfHref": "datenschutz-web.pdf"
-    },
-    "note": {
-      "kicker": "Why this matters",
-      "title": "Digital education needs more than warnings",
-      "body": "Children need orientation, language, and safe spaces to think. That’s exactly where Amy Surfwing comes in."
-    }
   }
 }

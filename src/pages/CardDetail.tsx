@@ -8,7 +8,7 @@ import { assetUrl } from '../common/assetUrl';
 
 import { BONUS_INDEX, type BonusItem } from '../bonus/bonusIndex';
 import { isBonusUnlocked, type BonusProgressSnapshot } from '../bonus/bonusUnlock';
-import { loadSeenBonusIds } from '../bonus/bonusSeen';
+import { loadSeenBonusIds, markBonusSeen } from '../bonus/bonusSeen';
 import { unlockBonusById } from '../bonus/unlockBonusById';
 
 
@@ -105,7 +105,7 @@ const autoOpen = Boolean(state?.autoOpen);
   if (!isCharacterCardItem(rawItem)) {
     return (
 <Layout
-  title={isModal ? undefined : t('cards.title', { defaultValue: 'Sammelkarten' })}
+  title={isModal ? undefined : t('cards.title', { defaultValue: 'Freundebuch' })}
   backPath={isModal ? undefined : backPath}
   hideHeader={isModal}
 >
@@ -151,6 +151,7 @@ const extraImages = character?.card?.extraImages ?? [];
   function openNow() {
     if (!unlocked) return;
     unlockBonusById(item.bonusId);
+    markBonusSeen(item.bonusId);
     setSeenBonusIds(loadSeenBonusIds());
   }
 
@@ -161,6 +162,15 @@ const extraImages = character?.card?.extraImages ?? [];
   openNow();
   // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [autoOpen, unlocked, opened]);
+
+  // Amy is always unlocked and should never show the gift reveal screen
+  useEffect(() => {
+    if (characterId !== 'amy') return;
+    if (!unlocked) return;
+    if (opened) return;
+    openNow();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [characterId, unlocked, opened]);
 
 
 return (
@@ -236,15 +246,6 @@ return (
               ) : null}
 
 
-              <div className="mt-6">
-                <button
-                  type="button"
-                  onClick={() => navigate(backPath)}
-                  className="rounded-2xl px-4 py-2 font-semibold border border-slate-200 bg-white hover:bg-slate-50"
-                >
-                  ← {t('common.back', { defaultValue: '' })}
-                </button>
-              </div>
             </div>
           </div>
         </div>

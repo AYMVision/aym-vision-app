@@ -1,11 +1,10 @@
 // src/components/Phone.tsx
 // Phone UI shell used by Story view.
 // - Optional header (only when showHeader=true)
+// - Optional composer (showComposer=false for Story V02)
 // - Auto-scroll behavior that respects user's scroll position
 
-
-import React, { useLayoutEffect, useRef, type PropsWithChildren } from 'react';
-
+import { useLayoutEffect, useRef, type PropsWithChildren } from 'react';
 
 type SceneTone = 'private' | 'class' | 'newsroom';
 
@@ -15,34 +14,31 @@ const SCENE_EMOJI: Record<SceneTone, string> = {
   newsroom: '📰',
 };
 
-
 interface PhoneProps extends PropsWithChildren {
   inputPlaceholder?: string;
   onSubmitMessage?: (message: string) => void;
   autoScroll?: boolean;
+  showComposer?: boolean;
 
-  // ✅ Optional Story header
   showHeader?: boolean;
   sceneLabel?: string;
   headerTitle?: string;
-  headerSubtitle?: string; // e.g. "online"
-  headerAvatarSrc?: string; // episode cover image
-  headerAvatarTargetAttr?: string; // e.g. "header-avatar"
-    // ✅ expose scroll container to parent (Story.tsx)
+  headerSubtitle?: string;
+  headerAvatarSrc?: string;
+  headerAvatarTargetAttr?: string;
   scrollRef?: React.MutableRefObject<HTMLDivElement | null>;
 
-
-sceneTone?: SceneTone;
-sceneTitle?: string;
-sceneParticipants?: string[];
+  sceneTone?: SceneTone;
+  sceneTitle?: string;
+  sceneParticipants?: string[];
 }
-
 
 export default function Phone({
   children,
   inputPlaceholder = 'Deine Antwort…',
   onSubmitMessage,
   autoScroll = true,
+  showComposer = true,
 
   showHeader = false,
   headerTitle,
@@ -58,17 +54,12 @@ export default function Phone({
   const containerRef = useRef<HTMLDivElement>(null);
   const userTextRef = useRef<HTMLInputElement>(null);
 
-const setScrollEl = (el: HTMLDivElement | null) => {
-  containerRef.current = el;
-  if (scrollRef) scrollRef.current = el;
-};
+  const setScrollEl = (el: HTMLDivElement | null) => {
+    containerRef.current = el;
+    if (scrollRef) scrollRef.current = el;
+  };
 
-
-
-  // Remembers how far the user was from bottom on last render
   const distanceToBottomRef = useRef<number>(0);
-
-  
 
   const updateDistanceToBottom = () => {
     const container = containerRef.current;
@@ -96,7 +87,6 @@ const setScrollEl = (el: HTMLDivElement | null) => {
     const container = containerRef.current;
     if (!container) return;
 
-    // ✅ if autoScroll is off: do not move automatically
     if (!autoScroll) {
       updateDistanceToBottom();
       return;
@@ -115,7 +105,6 @@ const setScrollEl = (el: HTMLDivElement | null) => {
 
   return (
     <div className="relative w-full h-full min-h-0 flex flex-col sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[440px]">
-      <div className="hidden sm:block absolute inset-0 bg-black/20 rounded-[2.5rem] blur-xl sm:blur-2xl transform translate-y-4 sm:translate-y-8 mb-8" />
 
       <div className="flex flex-1 min-h-0 relative sm:p-[0.5rem] sm:shadow-2xl sm:bg-gray-950 sm:rounded-[2.5rem]">
         <div className="bg-gray-50 w-full h-full min-h-0 sm:h-auto sm:aspect-[9/19.5] flex flex-col overflow-hidden relative sm:rounded-[2.2rem]">
@@ -130,7 +119,6 @@ const setScrollEl = (el: HTMLDivElement | null) => {
             </div>
           </div>
 
-          {/* ✅ Header only when requested (Story view) */}
           {showHeader && (
             <div className="bg-white/80 backdrop-blur-lg border-b border-gold-200/50 px-[4%] py-[3%] flex items-center">
               <button className="p-[2%] -ml-[2%]" type="button" aria-label="Back">
@@ -153,7 +141,7 @@ const setScrollEl = (el: HTMLDivElement | null) => {
                 {headerAvatarSrc ? (
                   <img
                     src={headerAvatarSrc}
-                    data-reward-target={headerAvatarTargetAttr} 
+                    data-reward-target={headerAvatarTargetAttr}
                     alt=""
                     className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full object-cover border border-slate-200 bg-white"
                   />
@@ -162,130 +150,125 @@ const setScrollEl = (el: HTMLDivElement | null) => {
                     AV
                   </div>
                 )}
-<div className="min-w-0">
-  <div className="font-semibold text-gray-900 text-xs sm:text-sm truncate">
-    {headerTitle ?? ''}
-  </div>
 
-<div className="text-[0.65rem] sm:text-xs text-gray-500 flex items-center gap-1 min-w-0">
-  <span aria-hidden>{SCENE_EMOJI[sceneTone]}</span>
+                <div className="min-w-0">
+                  <div className="font-semibold text-gray-900 text-xs sm:text-sm truncate">
+                    {headerTitle ?? ''}
+                  </div>
 
-  <span className="truncate min-w-0">
-    {sceneTitle
-      ? sceneTitle
-      : sceneParticipants.length > 0
-      ? sceneParticipants.join(', ')
-      : (headerSubtitle ?? '')}
-  </span>
-</div>
+                  <div className="text-[0.65rem] sm:text-xs text-gray-500 flex items-center gap-1 min-w-0">
+                    <span aria-hidden>{SCENE_EMOJI[sceneTone]}</span>
 
-</div>
+                    <span className="truncate min-w-0">
+                      {sceneTitle
+                        ? sceneTitle
+                        : sceneParticipants.length > 0
+                        ? sceneParticipants.join(', ')
+                        : (headerSubtitle ?? '')}
+                    </span>
+                  </div>
+                </div>
+              </div>
 
-</div>
-
-<button className="ml-auto p-[2%] -mr-[2%]" type="button" aria-label="Menu">
-  <svg
-    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-    />
-  </svg>
-</button>
-</div>
-)}
-
-{/* Scroll area */}
-<div
-  ref={setScrollEl}
-  onScroll={handleScroll}
-  className="flex-1 min-h-0 overflow-y-auto px-[4%] py-[4%]"
->
-
-  <div className="flex flex-col gap-2 h-full">{children}</div>
-</div>
-
-
-          {/* Composer */}
-          <div className="bg-white border-t border-gold-200/50 px-[4%] py-[3%]">
-            <div className="flex items-center gap-[3%]">
-              <button
-                className="p-[2%] text-gray-500 hover:text-gray-700 transition-colors"
-                type="button"
-                aria-label="Add"
-              >
-                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              <button className="ml-auto p-[2%] -mr-[2%]" type="button" aria-label="Menu">
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                  />
                 </svg>
               </button>
+            </div>
+          )}
 
-              <div className="flex-1 relative">
- <input
-  ref={userTextRef}
-  className="w-full py-[6%] px-[5%] pr-[12%] rounded-full bg-gold-50 text-gray-800 placeholder-gray-500 outline-none focus:ring-2 focus:ring-gold-500 focus:bg-white transition-all text-xs sm:text-sm"
-  placeholder={inputPlaceholder}
-  onKeyDown={(e) => {
-    // IME composition (z.B. Autocomplete/Sprachinput) nicht abschießen
-    if ((e as any).isComposing) return;
+          <div
+            ref={setScrollEl}
+            onScroll={handleScroll}
+            className="flex-1 min-h-0 overflow-y-auto px-[4%] py-[4%]"
+          >
+            <div className="flex flex-col gap-2 h-full">{children}</div>
+          </div>
 
-    // Shift+Enter: NICHT senden (wenn du später multiline willst)
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
+          {showComposer && (
+            <div className="bg-white border-t border-gold-200/50 px-[4%] py-[3%]">
+              <div className="flex items-center gap-[3%]">
+                <button
+                  className="p-[2%] text-gray-500 hover:text-gray-700 transition-colors"
+                  type="button"
+                  aria-label="Add"
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                </button>
 
-      const message = userTextRef.current?.value ?? '';
-      const trimmed = message.trim();
-      if (!trimmed) return;
+                <div className="flex-1 relative">
+                  <input
+                    ref={userTextRef}
+                    className="w-full py-[6%] px-[5%] pr-[12%] rounded-full bg-gold-50 text-gray-800 placeholder-gray-500 outline-none focus:ring-2 focus:ring-gold-500 focus:bg-white transition-all text-xs sm:text-sm"
+                    placeholder={inputPlaceholder}
+                    onKeyDown={(e) => {
+                      if ((e as any).isComposing) return;
 
-      onSubmitMessage?.(trimmed);
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
 
-      if (userTextRef.current) userTextRef.current.value = '';
-    }
-  }}
-/>
+                        const message = userTextRef.current?.value ?? '';
+                        const trimmed = message.trim();
+                        if (!trimmed) return;
+
+                        onSubmitMessage?.(trimmed);
+
+                        if (userTextRef.current) userTextRef.current.value = '';
+                      }
+                    }}
+                  />
+
+                  <button
+                    className="absolute right-[2%] top-1/2 transform -translate-y-1/2 p-[2%] text-gray-500 hover:text-gray-700 transition-colors"
+                    type="button"
+                    aria-label="Emoji"
+                  >
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
 
                 <button
-                  className="absolute right-[2%] top-1/2 transform -translate-y-1/2 p-[2%] text-gray-500 hover:text-gray-700 transition-colors"
                   type="button"
-                  aria-label="Emoji"
+                  onClick={() => {
+                    const message = userTextRef.current?.value ?? '';
+                    if (typeof onSubmitMessage === 'function') onSubmitMessage(message);
+                    if (userTextRef.current) userTextRef.current.value = '';
+                  }}
+                  className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                  aria-label="Send"
                 >
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                     />
                   </svg>
                 </button>
               </div>
-
-              <button
-                type="button"
-                onClick={() => {
-                  const message = userTextRef.current?.value ?? '';
-                  if (typeof onSubmitMessage === 'function') onSubmitMessage(message);
-                  if (userTextRef.current) userTextRef.current.value = '';
-                }}
-                className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
-                aria-label="Send"
-              >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                  />
-                </svg>
-              </button>
             </div>
-          </div>
+          )}
 
           <div className="h-[4%] hidden sm:flex items-center justify-center pb-[1%]">
             <div className="w-[35%] h-[0.5%] min-h-[3px] bg-gray-800 rounded-full" />

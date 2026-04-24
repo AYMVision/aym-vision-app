@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
 const Footer: React.FC = () => {
   return (
     <footer className="w-full border-t mt-8 py-6 px-4 text-sm bg-white">
@@ -20,16 +21,21 @@ const Footer: React.FC = () => {
           </Link>
         </div>
 
-        {/* Right: Rechtliches (PDFs extern) */}
+        {/* Right: Rechtliches */}
         <div className="flex gap-4">
           <a
-            href="impressum.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:hello@aymvision.de"
+            className="hover:underline"
+          >
+            Kontakt
+          </a>
+
+          <Link
+            to="/impressum"
             className="hover:underline"
           >
             Impressum
-          </a>
+          </Link>
 
           <a
             href="datenschutz-web.pdf"

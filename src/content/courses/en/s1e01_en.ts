@@ -88,7 +88,6 @@ const course: Course = {
         { id: 's1e01c01-0033', type: 'other', speaker: characters.lisa, content: 'With me? ☺️', timestamp: '11:24' },
         { id: 's1e01c01-0034', type: 'other', speaker: characters.lisa, content: 'The sun is shining here 😎☀️', timestamp: '11:25' },
         { id: 's1e01c01-0035', type: 'other', speaker: characters.lisa, content: 'Yasmin? You’re so quiet today 🤔', timestamp: '11:26' },
-        { id: 's1e01c01-0036', type: 'other', speaker: characters.yasmin, content: '@Lisa why?', timestamp: '11:26' },
         { id: 's1e01c01-0037', type: 'other', speaker: characters.yasmin, content: 'Are you coming back today?', timestamp: '11:26' },
         { id: 's1e01c01-0038', type: 'other', speaker: characters.lisa, content: 'No, I still have one more day. We’re flying back tomorrow. Phew, and the day after tomorrow school starts again already.', timestamp: '11:27' },
         { id: 's1e01c01-0039', type: 'other', speaker: characters.carlos, content: 'Sounds really nice 🙂. The waterfall photo is strong.', timestamp: '11:28' },

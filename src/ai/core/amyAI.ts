@@ -160,6 +160,7 @@ function isEmojiOnlyOrGibberish(raw: string) {
 function looksMeaningfulShort(raw: string) {
   const s = normalize(raw);
   const ok = [
+    // sozial / sicher
     'respekt',
     'privat',
     'freundlich',
@@ -169,7 +170,26 @@ function looksMeaningfulShort(raw: string) {
     'eltern',
     'lehrer',
     'stop',
-    'nein'
+    'nein',
+    // wissen / erkenntnis
+    'datum',
+    'quelle',
+    'veraltet',
+    'falsch',
+    'stimmt nicht',
+    'alt',
+    'richtig',
+    'beweis',
+    'stimmt',
+    // werte / ethik (z.B. KI-Bild-Fragen, Medienmündigkeit)
+    'fair',
+    'ehrlich',
+    'kennzeich',
+    'transparent',
+    'verantwort',
+    'korrekt',
+    'offen',
+    'dazu schreib',
   ];
   return ok.some((w) => s.includes(w));
 }
@@ -254,26 +274,29 @@ function isUnsicher(raw: string) {
 export class AmyAI {
   async classifyAnswer(
     text: string,
-    ctx?: { questionType?: AmyQuestionType }
+    ctx?: { questionType?: AmyQuestionType; reflectionMode?: boolean }
   ): Promise<AmyLabel> {
     const raw = text ?? '';
     const t = normalize(raw);
     const qt = ctx?.questionType;
+    const reflectionMode = ctx?.reflectionMode ?? false;
 
-    console.log('[AmyAI.classifyAnswer]', { qt, tLen: t.length, wc: wordCount(raw), raw });
+    console.log('[AmyAI.classifyAnswer]', { qt, tLen: t.length, wc: wordCount(raw), reflectionMode, raw });
 
     if (isEmojiOnlyOrGibberish(raw)) return 'C';
 
     if (isUnsicher(raw)) return 'UNSICHER';
 
-    if (qt === 'ACTION') {
+    // ACTION and FEELING keyword gates are designed for item scoring (blocking).
+    // In reflectionMode we skip them as gates, but still use them as positive signals below.
+    if (qt === 'ACTION' && !reflectionMode) {
       const steps = countActionSteps(raw);
       if (steps === 0) return 'C';
       if (steps >= 3) return 'A';
       return 'B';
     }
 
-    if (qt === 'FEELING') {
+    if (qt === 'FEELING' && !reflectionMode) {
       if (!hasFeelingMarker(raw)) return 'C';
     }
 
@@ -282,6 +305,15 @@ export class AmyAI {
     if (C_PATTERNS.some((p) => t.includes(normalize(p)))) return 'C';
 
     if (looksCompleteAnswer(raw)) return 'A';
+
+    // In reflectionMode: keywords are positive signals, not gates.
+    // A short but keyword-rich answer is better than a long vague one.
+    if (reflectionMode) {
+      const steps = countActionSteps(raw);
+      if (steps >= 2 || (steps >= 1 && t.length >= 30)) return 'A';
+      if (steps >= 1) return 'B';
+      if (hasFeelingMarker(raw)) return 'B';
+    }
 
     if (t.length < 35 && looksMeaningfulShort(raw)) return 'B';
 

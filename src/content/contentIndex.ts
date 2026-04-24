@@ -3,6 +3,7 @@ import { assetUrl } from '../common/assetUrl';
 import type { Message } from '../common/types';
 import type { ThemeId } from '../competencies/themeMeta';
 
+
 export type Lang = 'de' | 'en';
 
 export type EpisodeTopicTag = ThemeId;
@@ -27,6 +28,9 @@ export type EpisodeMeta = {
   released?: boolean;
   comingSoon?: boolean;
   order?: number;
+
+  /** 'v2' = StoryV02 engine (/stories-v02/:courseId), default 'v1' = legacy */
+  storyEngine?: 'v1' | 'v2';
 
   previewMessages?: Record<Lang, Message[]>;
 };
@@ -55,9 +59,10 @@ export const CONTENT_INDEX: SeasonMeta[] = [
         coverImage: '/media/story/episodes/s1e01/s1e01-512.webp',
         stickerImage: '/media/stickers/episodes/s1e01-512.webp',
 
-        chapterCount: 8,
+        chapterCount: 9,
         released: true,
         order: 1,
+        storyEngine: 'v2',
 
         topicTags: [
           'info-check',
@@ -70,13 +75,13 @@ export const CONTENT_INDEX: SeasonMeta[] = [
 
 chapterTopicTags: {
   1: ['reflect-understand', 'talk-act'],
-  2: ['reflect-understand', 'safe-online'],
-  3: ['reflect-understand', 'safe-online'],
-  4: ['safe-online', 'reflect-understand'],
+  2: ['reflect-understand', 'talk-act'],
+  3: ['talk-act','reflect-understand'],
+  4: ['info-check','safe-online', 'reflect-understand'],
   5: ['safe-online', 'talk-act'],
-  6: ['info-check', 'safe-online'],
+  6: ['info-check', 'problem-solving'],
   7: ['info-check', 'reflect-understand'],
-  8: ['creative', 'fairness', 'reflect-understand'],
+  8: ['creative', 'info-check', 'fairness', 'talk-act'],
 },
       },
 
@@ -94,6 +99,7 @@ chapterTopicTags: {
         chapterCount: 10,
         released: true,
         order: 2,
+        storyEngine: 'v2',
 
         topicTags: [
           'info-check',
@@ -106,12 +112,12 @@ chapterTopicTags: {
 
 chapterTopicTags: {
   1: ['talk-act', 'fairness', 'reflect-understand'],
-  2: ['info-check', 'talk-act', 'reflect-understand'],
-  3: ['talk-act', 'reflect-understand'],
-  4: ['creative', 'talk-act'],
+  2: ['fairness', 'talk-act', 'reflect-understand'],
+  3: ['reflect-understand'],
+  4: ['creative'],
   5: ['fairness', 'talk-act', 'reflect-understand'],
   6: ['creative', 'problem-solving'],
-  7: ['creative', 'fairness', 'reflect-understand'],
+  7: ['fairness', 'talk-act', 'reflect-understand'],
   8: ['fairness', 'reflect-understand'],
   9: ['problem-solving', 'fairness'],
   10: ['talk-act', 'fairness', 'reflect-understand'],
@@ -132,6 +138,7 @@ chapterTopicTags: {
         chapterCount: 10,
         released: true,
         order: 3,
+        storyEngine: 'v2',
         topicTags: [],
         chapterTopicTags: {},
       },
@@ -150,6 +157,7 @@ chapterTopicTags: {
         chapterCount: 10,
         released: true,
         order: 4,
+        storyEngine: 'v2',
         topicTags: [],
         chapterTopicTags: {},
       },
@@ -168,6 +176,7 @@ chapterTopicTags: {
         chapterCount: 10,
         released: true,
         order: 5,
+        storyEngine: 'v2',
         topicTags: [],
         chapterTopicTags: {},
       },
@@ -186,6 +195,7 @@ chapterTopicTags: {
         chapterCount: 10,
         released: true,
         order: 6,
+        storyEngine: 'v2',
         topicTags: [],
         chapterTopicTags: {},
       },
@@ -204,6 +214,7 @@ chapterTopicTags: {
         chapterCount: 10,
         released: true,
         order: 7,
+        storyEngine: 'v2',
         topicTags: [],
         chapterTopicTags: {},
       },
@@ -222,6 +233,7 @@ chapterTopicTags: {
         chapterCount: 10,
         released: true,
         order: 8,
+        storyEngine: 'v2',
         topicTags: [],
         chapterTopicTags: {},
       },
@@ -290,6 +302,7 @@ export type StoryCardMeta = {
   seasonId: string;
   episodeId: string;
   topicTags?: EpisodeTopicTag[];
+  storyEngine?: 'v1' | 'v2';
 };
 
 export function getStoryCards(): StoryCardMeta[] {
@@ -307,5 +320,6 @@ export function getStoryCards(): StoryCardMeta[] {
     seasonId: ep.seasonId,
     episodeId: ep.episodeId,
     topicTags: ep.topicTags,
+    storyEngine: ep.storyEngine,
   }));
 }

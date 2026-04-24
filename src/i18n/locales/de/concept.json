@@ -7,10 +7,10 @@
       "0": "Storybasiert",
       "1": "Reflexionsorientiert",
       "2": "Alltagsnah",
-      "3": "Für Kinder von 10 bis 12 Jahren"
+      "3": "Für Kinder ab 10 Jahren"
     },
     "ctaPrimary": "Für Eltern →",
-    "ctaSecondary": "Zu den Stories →"
+    "ctaSecondary": "Zur Story →"
   },
   "goal": {
     "kicker": "Ziel",
@@ -19,7 +19,7 @@
   },
   "learningModel": {
     "kicker": "Wie Medienreife Schritt für Schritt entsteht",
-    "title": "Das Amy-Surfwing-Lernmodell",
+    "title": "Das Amy-Surfwing-Lernformat",
     "intro": "Amy Surfwing ist die erste Lern-App, die Storytelling und Gamification mit kindgerechter Selbstreflexion verbindet. So entwickeln Kinder zentrale Fähigkeiten und wenden sie mit der Zeit bewusster im digitalen Alltag an.",
     "logicLabel": "Kurzlogik:",
     "logic": "Digitale Lebenswelt → Story und Reflexion → Medienkompetenzen → Wirkdimensionen → Medienreife",
@@ -132,7 +132,7 @@
   "principles": {
     "kicker": "Lernprinzipien",
     "title": "Pädagogische Grundlage",
-    "intro": "Amy Surfwing basiert auf einer Kombination aus mehreren anerkannten Lernprinzipien. Diese bilden die Grundlage für das Lernmodell und bestimmen, wie Kinder digitale Situationen verstehen, reflektieren und daraus lernen.",
+    "intro": "Amy Surfwing basiert auf einer Kombination aus mehreren anerkannten Lernprinzipien. Diese bilden die Grundlage für das Lernformat und bestimmen, wie Kinder digitale Situationen verstehen, reflektieren und daraus lernen.",
     "items": {
       "0": "Narratives Lernen",
       "1": "Situatives Lernen",
@@ -151,7 +151,7 @@
 "didactics": {
   "kicker": "Didaktische Umsetzung",
   "title": "Wie Amy Surfwing Lernen konkret möglich macht",
-  "intro": "Amy Surfwing ist ein durchdachtes Lernmodell, das für Kinder verständlich, alltagsnah und motivierend ist.",
+  "intro": "Amy Surfwing ist ein durchdachtes Lernformat, das für Kinder verständlich, alltagsnah und motivierend ist.",
   "items": {
     "0": "Story-Welt mit Bezug zum Alltag",
     "1": "Reflexion und aktive Beteiligung",
@@ -169,20 +169,20 @@
   "target": {
     "kicker": "Zielgruppe",
     "title": "Fokus auf Kinder von 10 bis 12 Jahren",
-    "body": "Der aktuelle Schwerpunkt liegt auf Kindern zwischen 10 und 12 Jahren. In dieser Phase beginnt für viele die digitale selbstständige Welt: erste eigene Erfahrungen, mehr Verantwortung, erste Unsicherheiten und neue Dynamiken in Klassenchat, Gaming, sozialen Medien und digitalen Trends.",
+    "body": "Der aktuelle Schwerpunkt liegt auf Kindern zwischen 10 und 12 Jahren. In dieser Phase beginnt für viele die Selbstständigkeit in der digitalen Welt: erste eigene Erfahrungen, mehr Verantwortung, erste Unsicherheiten und neue Dynamiken in Klassenchat, Gaming, sozialen Medien und digitalen Trends.",
     "body2": "Genau in dieser Übergangsphase setzt Amy Surfwing an: vorbereitend, begleitend und alltagsnah. Perspektivisch kann das Modell erweitert werden – der derzeitige Fokus liegt jedoch bewusst auf den ersten Jahren digitaler Eigenständigkeit.",
     "note": "Weitere Altersgruppen sind perspektivisch in Planung."
   },
   "frameworks": {
     "kicker": "Transparenz",
-    "title": "Rahmenmodelle und fachliche Einordnung",
+    "title": "Fachliche Einordnung",
     "body": ""
   },
   "evidence": {
-    "title": "Fachliche Grundlage und Einordnung",
+    "title": "",
     "body1": "Amy Surfwing basiert auf anerkannten Kompetenzrahmen wie DigComp (EU), MIL (UNESCO) und dem Medienkompetenzrahmen NRW.",
     "body2": "Die Auswahl, sprachliche Anpassung und Anordnung der Fähigkeiten sowie der Begriff „Medienreife“ sind Teil unseres eigenen pädagogischen Modells.",
-    "body3": "„Medienreife“ verwenden wir dabei als Arbeitsbegriff. Die App ist darauf angelegt, Kinder bei der Entwicklung dieser Fähigkeiten im Alltag zu unterstützen. Eine eigenständige wissenschaftliche Wirksamkeitsprüfung des Gesamtmodells steht noch aus."
+    "body3": "„Medienreife“ verwenden wir dabei als Arbeitsbegriff. Die App ist darauf angelegt, Kinder bei der Entwicklung dieser Fähigkeiten im Alltag zu unterstützen. Eine eigenständige wissenschaftliche Wirksamkeitsprüfung des Gesamtmodells ist in Vorbereitung."
   },
   "sidebar": {
     "overview": {
@@ -200,7 +200,7 @@
         "frameworkValue": "Das Modell orientiert sich an DigComp (EU), MIL (UNESCO) und dem Medienkompetenzrahmen NRW."
       },
       "ctaPrimary": "Für Eltern →",
-      "ctaSecondary": "Zu den Stories →"
+      "ctaSecondary": "Zur Story →"
     },
     "transparency": {
       "kicker": "Einordnung",
@@ -209,7 +209,7 @@
     }
   },
   "navigation": {
-  "backToModel": "Zurück zum Lernmodell ↑",
+  "backToModel": "Zurück zum Lernformat ↑",
   "backToOverview": "Zur Übersicht ↑",
     "more": "Mehr dazu ↓",
       "toPrinciples": "Zur pädagogischen Grundlage ↓"

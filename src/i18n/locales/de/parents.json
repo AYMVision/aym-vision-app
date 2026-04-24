@@ -2,11 +2,11 @@
   "hero": {
     "kicker": "Willkommen bei Amy Surfwing",
     "title": "Zwischen Klassenchat, Fake News & KI",
-    "lead": "Digitale Situationen gehören heute zum Aufwachsen dazu. Online geht alles schnell. Und müssen so einiges aushalten! Kinder müssen online jeden Tag entscheiden, was sie teilen, glauben, kommentieren oder weiterleiten.",
-    "leadEmphasis": "Machst du dir auch Sorgen, was deinem Kind online begegnet – und wie es damit umgeht?",
-       "leadEmphasis2": "Mit der Lern-App Amy Surfwing entwickelt dein Kind Medienreife.",
+    "lead": "Digitale Situationen gehören heute zum Aufwachsen dazu. Ob wir wollen oder nicht.",
+    "leadEmphasis": "Machst du dir auch Sorgen, was deinem Kind online begegnet und wie es damit umgeht?",
+       "leadEmphasis2": "🦉 Amy Surfwing - Die Lern-App für Medienreife.",
     "ctaPrimary": "Story starten →",
-    "ctaSecondary": "Zum Konzept →",
+    "ctaSecondary": "Einstellungen für Eltern →",
     "bannerAlt": "Einblick in die Story-Welt von Amy Surfwing"
   },
 
@@ -20,124 +20,9 @@
       "intro2": "Sie lernen, was passieren kann und wie man damit umgeht.",
       "howTitle": "Wodurch erreicht Amy Surfwing das?",
       "items": {
-        "0": {
-          "icon": "💡",
-          "title": "Kinder lernen digitale Hintergründe kennen",
-          "intro": "Viele Risiken im Internet sind für Kinder schwer zu durchschauen.",
-          "learnTitle": "Bei Amy Surfwing lernen sie zum Beispiel:",
-          "learnPoints": [
-            "Warum Plattformen ihre Aufmerksamkeit fesseln wollen",
-            "Was hinter Likes, Trends und viralen Posts steckt",
-            "Welche Daten beim Posten oder Fotografieren mitgeschickt werden",
-            "Wie persönliche Daten verwendet werden",
-            "Wie Algorithmen die Inhalte bestimmen, die angezeigt werden",
-            "Warum manche Inhalte besonders emotional oder spannend gestaltet sind"
-          ],
-          "howIntro": "Amy Surfwing vermittelt diese Zusammenhänge nicht trocken, sondern mitten in der Geschichte.",
-          "howPoints": [
-            "Alle Inhalte sind in eine fortlaufende Story eingebettet, die diese Themen behandelt.",
-            "Das Format ist interaktiv und bietet den Kids zahlreiche Gelegenheiten, die Thematiken über unterschiedliche Formate zu entdecken, zum Beispiel Artikel und Audiobeiträge.",
-            "Durch die kindgerechte Ansprache, spannende Fragen und spielerische Elemente erhöhen wir die Aufmerksamkeit der Kids, damit die Informationen auch ankommen."
-          ]
-        },
-        "1": {
-          "icon": "🛡️",
-          "title": "Kinder lernen, sich zu schützen",
-          "intro": "Kinder sind online neugierig unterwegs. Gleichzeitig fehlt ihnen oft die Erfahrung, heikle Momente frühzeitig zu durchschauen.",
-          "learnTitle": "Bei Amy Surfwing lernen Kinder zum Beispiel:",
-          "learnPoints": [
-            "Was tun bei Cybermobbing?",
-            "Was sollte man nicht posten?",
-            "Wie erkennt man Fake-Profile?",
-            "Wann sollte man Hilfe holen?"
-          ],
-          "howIntro": "Die Geschichte und das Begleitmaterial zeigen Schritt für Schritt, wie Kinder sich schützen können.",
-          "howPoints": [
-            "Worauf Kinder achten müssen",
-            "Wie sie unangenehme Situationen vermeiden können",
-            "Wie sie im Notfall klug reagieren können"
-          ]
-        },
-        "2": {
-          "icon": "🤔",
-          "title": "Kinder lernen, über ihr eigenes Verhalten nachzudenken",
-          "intro": "Online passiert vieles schnell, öffentlich und unter sozialem Druck. Bei Amy Surfwing lernen Kinder vor allem eins: erst denken, dann klicken.",
-          "learnTitle": "Die Leser übertragen die Entscheidungsmomente der Figuren gedanklich auf ihr eigenes Leben:",
-          "learnPoints": [
-            "Wie hätten sie reagiert?",
-            "Wie könnten sich andere fühlen?",
-            "Was denken sie selbst dazu?",
-            "Warum würden sie anders entscheiden?"
-          ],
-          "howIntro": "Amy Surfwing schafft kleine, alltagstaugliche Denkimpulse statt Reizüberflutung.",
-          "howPoints": [
-            "Durch kurze offene Fragen zum Nachdenken mit direktem Feedback",
-            "Durch bewusst wenige Minuten Übungszeit: keine Reizüberflutung, sondern genau ein Impuls pro Tag",
-            "Durch praktische Tipps für den Alltag",
-            "Durch Multiple-Choice-Fragen mit Entscheidungsszenarien und motivierender Auswertung"
-          ]
-        },
-        "3": {
-          "icon": "🔄",
-          "title": "Kinder lernen, Situationen aus anderen Blickwinkeln zu betrachten",
-          "intro": "In Chats und sozialen Netzwerken bilden sich Meinungen oft sehr schnell, obwohl man gar nicht die ganze Geschichte kennt.",
-          "learnTitle": "Bei Amy Surfwing lernen Kinder:",
-          "learnPoints": [
-            "Vorschnelle Urteile zu hinterfragen",
-            "Sich bewusst zu machen, dass schnell Missverständnisse aufkommen",
-            "Empörungswellen nicht blind zu folgen",
-            "Erst nachzufragen, bevor sie urteilen oder reagieren"
-          ],
-          "howIntro": "Die Story-Welt macht soziale Dynamiken sichtbar und verständlich.",
-          "howPoints": [
-            "Die Leser begleiten eine Schulklasse mit ganz unterschiedlichen Charakteren.",
-            "Dadurch lernen sie verschiedene Sichtweisen und soziale Dynamiken kennen.",
-            "Kinder lernen nicht durch trockene Regeln, sondern durch die Interaktionen der Figuren."
-          ]
-        },
-        "4": {
-          "icon": "⚖️",
-          "title": "Kinder lernen, Folgen ihres Handelns im Netz einzuschätzen",
-          "intro": "Im Internet ist etwas schnell gepostet, kommentiert oder weitergeleitet. Doch was im Moment harmlos wirkt, kann unbedacht, peinlich oder verletzend sein und lange sichtbar bleiben.",
-          "learnTitle": "Bei Amy Surfwing lernen Kinder:",
-          "learnPoints": [
-            "Vor dem Posten kurz innezuhalten und mögliche Folgen mitzudenken",
-            "Zu verstehen, wie schnell sich Inhalte verbreiten können",
-            "Zu erkennen, wann ein Foto, Kommentar oder Screenshot anderen schaden kann",
-            "Zu bedenken, dass Inhalte oft lange im Netz bleiben",
-            "Verantwortungsvoll mit Bildern, Nachrichten und persönlichen Informationen umzugehen",
-            "Überlegte Entscheidungen zu treffen"
-          ],
-          "howIntro": "Amy Surfwing verbindet Reflexion, Alltagsbezug und konkrete Entscheidungssituationen.",
-          "howPoints": [
-            "Jeden Tag gibt es passend zur Geschichte eine offene Reflexionsfrage, für die die Leser sich in die Figuren hineinversetzen und die Situation auf ihr eigenes Leben übertragen.",
-            "Auf die Reflexionsfrage erhalten die Kinder eine Antwort von Coach Amy und einen Tipp für den Tag.",
-            "Zum ergänzenden Material gehört ein Multiple-Choice-Fragebogen, mit dem die Kinder verschiedene Szenarien durchspielen und in der Auflösung die kurz- und langfristigen Folgen erkennen."
-          ]
-        },
-        "5": {
-          "icon": "🌊",
-          "title": "Kinder lernen, Gruppendruck und Dynamiken zu erkennen",
-          "intro": "Für Kinder kann Gruppendruck zu einem drängenden Problem werden. Besonders online reagieren oft viele gleichzeitig, und plötzlich scheint eine Richtung vorgegeben.",
-          "learnTitle": "Bei Amy Surfwing lernen Kinder:",
-          "learnPoints": [
-            "Zu erkennen, wann eine Gruppe beginnt, sich gegen eine Person zu richten",
-            "Zu verstehen, wie Kommentare, Emojis und Weiterleitungen Situationen verstärken können",
-            "Gruppendruck bewusst wahrzunehmen, statt automatisch mitzugehen",
-            "Einen eigenen Standpunkt zu behalten, auch wenn viele etwas anderes tun",
-            "Situationen zu entschärfen, statt sie weiter anzufeuern"
-          ],
-          "howIntro": "Das Format macht Gruppendynamiken emotional nachvollziehbar.",
-          "howPoints": [
-            "Unsere Geschichte ist als Chat aufgebaut.",
-            "So können unsere Figuren untereinander Probleme verursachen oder entschärfen.",
-            "Durch die Tagebuch-Einträge fühlen die Leser zeitgleich die Auswirkungen auf den Betroffenen.",
-            "Artikel der Schülerzeitung zeigen anschaulich, wie man es besser macht."
-          ]
-        },
-        "6": {
-          "icon": "🎭",
-          "title": "Kinder lernen, Manipulation und Täuschung zu erkennen",
+                "0": {
+          "icon": "🕵️",
+          "title": "Quellen bewerten & Fake News und Manipulation erkennen",
           "intro": "Im Internet ist nicht alles so, wie es auf den ersten Blick aussieht. Profile, Bilder oder Nachrichten können manipuliert oder bewusst irreführend gestaltet sein.",
           "learnTitle": "Bei Amy Surfwing lernen Kinder:",
           "learnPoints": [
@@ -157,6 +42,122 @@
             "Wir widmen dem Thema Manipulation und Täuschung bewusst ganze Episoden, um Zusammenhänge und Gefahren anschaulich herausarbeiten zu können.",
             "So folgt Emma zum Beispiel Verschwörungstheorien und Igor vertraut einem Influencer zu sehr.",
             "Fake News und Deepfakes begleiten die Leser durch alle drei Staffeln."
+          ]
+        },
+                "1": {
+          "icon": "🤝",
+          "title": "Respektvoll digital kommunizieren und zusammenarbeiten",
+          "intro": "Für Kinder kann Gruppendruck zu einem drängenden Problem werden. Besonders online reagieren oft viele gleichzeitig, und plötzlich scheint eine Richtung vorgegeben.",
+          "learnTitle": "Bei Amy Surfwing lernen Kinder:",
+          "learnPoints": [
+            "Zu erkennen, wann eine Gruppe beginnt, sich gegen eine Person zu richten",
+            "Zu verstehen, wie Kommentare, Emojis und Weiterleitungen Situationen verstärken können",
+            "Gruppendruck bewusst wahrzunehmen, statt automatisch mitzugehen",
+            "Einen eigenen Standpunkt zu behalten, auch wenn viele etwas anderes tun",
+            "Situationen zu entschärfen, statt sie weiter anzufeuern"
+          ],
+          "howIntro": "Das Format macht Gruppendynamiken emotional nachvollziehbar.",
+          "howPoints": [
+            "Unsere Geschichte ist als Chat aufgebaut.",
+            "So können unsere Figuren untereinander Probleme verursachen oder entschärfen.",
+            "Durch die Tagebuch-Einträge fühlen die Leser zeitgleich die Auswirkungen auf den Betroffenen.",
+            "Artikel der Schülerzeitung zeigen anschaulich, wie man es besser macht."
+          ]
+        },
+        "2": {
+          "icon": "🛡️",
+          "title": "Sich im Netz schützen",
+          "intro": "Kinder sind online neugierig unterwegs. Gleichzeitig fehlt ihnen oft die Erfahrung, heikle Momente frühzeitig zu durchschauen.",
+          "learnTitle": "Bei Amy Surfwing lernen Kinder zum Beispiel:",
+          "learnPoints": [
+            "Was tun bei Cybermobbing?",
+            "Was sollte man nicht posten?",
+            "Wie erkennt man Fake-Profile?",
+            "Wann sollte man Hilfe holen?"
+          ],
+          "howIntro": "Die Geschichte und das Begleitmaterial zeigen Schritt für Schritt, wie Kinder sich schützen können.",
+          "howPoints": [
+            "Worauf Kinder achten müssen",
+            "Wie sie unangenehme Situationen vermeiden können",
+            "Wie sie im Notfall klug reagieren können"
+          ]
+        },
+                "3": {
+          "icon": "💡",
+          "title": "Medien kritisch verstehen und reflektieren",
+          "intro": "Viele Risiken im Internet sind für Kinder schwer zu durchschauen.",
+          "learnTitle": "Bei Amy Surfwing lernen sie zum Beispiel:",
+          "learnPoints": [
+            "Warum Plattformen ihre Aufmerksamkeit fesseln wollen",
+            "Was hinter Likes, Trends und viralen Posts steckt",
+            "Welche Daten beim Posten oder Fotografieren mitgeschickt werden",
+            "Wie persönliche Daten verwendet werden",
+            "Wie Algorithmen die Inhalte bestimmen, die angezeigt werden",
+            "Warum manche Inhalte besonders emotional oder spannend gestaltet sind"
+          ],
+          "howIntro": "Amy Surfwing vermittelt diese Zusammenhänge nicht trocken, sondern mitten in der Geschichte.",
+          "howPoints": [
+            "Alle Inhalte sind in eine fortlaufende Story eingebettet, die diese Themen behandelt.",
+            "Das Format ist interaktiv und bietet den Kids zahlreiche Gelegenheiten, die Thematiken über unterschiedliche Formate zu entdecken, zum Beispiel Artikel und Audiobeiträge.",
+            "Durch die kindgerechte Ansprache, spannende Fragen und spielerische Elemente erhöhen wir die Aufmerksamkeit der Kids, damit die Informationen auch ankommen."
+          ]
+        },
+                "4": {
+          "icon": "👁️",
+          "title": "Situationen aus anderen Blickwinkeln betrachten",
+          "intro": "In Chats und sozialen Netzwerken bilden sich Meinungen oft sehr schnell, obwohl man gar nicht die ganze Geschichte kennt.",
+          "learnTitle": "Bei Amy Surfwing lernen Kinder:",
+          "learnPoints": [
+            "Vorschnelle Urteile zu hinterfragen",
+            "Sich bewusst zu machen, dass schnell Missverständnisse aufkommen",
+            "Empörungswellen nicht blind zu folgen",
+            "Erst nachzufragen, bevor sie urteilen oder reagieren"
+          ],
+          "howIntro": "Die Story-Welt macht soziale Dynamiken sichtbar und verständlich.",
+          "howPoints": [
+            "Die Leser begleiten eine Schulklasse mit ganz unterschiedlichen Charakteren.",
+            "Dadurch lernen sie verschiedene Sichtweisen und soziale Dynamiken kennen.",
+            "Kinder lernen nicht durch trockene Regeln, sondern durch die Interaktionen der Figuren."
+          ]
+        },
+        "5": {
+          "icon": "💪",
+          "title": "Kinder lernen, über ihr eigenes Verhalten nachzudenken",
+          "intro": "Online passiert vieles schnell, öffentlich und unter sozialem Druck. Bei Amy Surfwing lernen Kinder vor allem eins: erst denken, dann klicken.",
+          "learnTitle": "Die Leser übertragen die Entscheidungsmomente der Figuren gedanklich auf ihr eigenes Leben:",
+          "learnPoints": [
+            "Wie hätten sie reagiert?",
+            "Wie könnten sich andere fühlen?",
+            "Was denken sie selbst dazu?",
+            "Warum würden sie anders entscheiden?"
+          ],
+          "howIntro": "Amy Surfwing schafft kleine, alltagstaugliche Denkimpulse statt Reizüberflutung.",
+          "howPoints": [
+            "Durch kurze offene Fragen zum Nachdenken mit direktem Feedback",
+            "Durch bewusst wenige Minuten Übungszeit: keine Reizüberflutung, sondern genau ein Impuls pro Tag",
+            "Durch praktische Tipps für den Alltag",
+            "Durch Multiple-Choice-Fragen mit Entscheidungsszenarien und motivierender Auswertung"
+          ]
+        },
+
+        "6": {
+          "icon": "🌍 ",
+          "title": "Kinder lernen, Folgen ihres Handelns im Netz einzuschätzen",
+          "intro": "Im Internet ist etwas schnell gepostet, kommentiert oder weitergeleitet. Doch was im Moment harmlos wirkt, kann unbedacht, peinlich oder verletzend sein und lange sichtbar bleiben.",
+          "learnTitle": "Bei Amy Surfwing lernen Kinder:",
+          "learnPoints": [
+            "Vor dem Posten kurz innezuhalten und mögliche Folgen mitzudenken",
+            "Zu verstehen, wie schnell sich Inhalte verbreiten können",
+            "Zu erkennen, wann ein Foto, Kommentar oder Screenshot anderen schaden kann",
+            "Zu bedenken, dass Inhalte oft lange im Netz bleiben",
+            "Verantwortungsvoll mit Bildern, Nachrichten und persönlichen Informationen umzugehen",
+            "Überlegte Entscheidungen zu treffen"
+          ],
+          "howIntro": "Amy Surfwing verbindet Reflexion, Alltagsbezug und konkrete Entscheidungssituationen.",
+          "howPoints": [
+            "Jeden Tag gibt es passend zur Geschichte eine offene Reflexionsfrage, für die die Leser sich in die Figuren hineinversetzen und die Situation auf ihr eigenes Leben übertragen.",
+            "Auf die Reflexionsfrage erhalten die Kinder eine Antwort von Coach Amy und einen Tipp für den Tag.",
+            "Zum ergänzenden Material gehört ein Multiple-Choice-Fragebogen, mit dem die Kinder verschiedene Szenarien durchspielen und in der Auflösung die kurz- und langfristigen Folgen erkennen."
           ]
         }
       }
@@ -193,7 +194,7 @@
           "text": "Amy Surfwing übersetzt komplexe digitale Themen in eine Sprache und Form, die Kinder verstehen können. So entstehen Orientierung, Klarheit und Sicherheit – ohne Überforderung."
         },
         "5": {
-          "icon": "🛡️",
+          "icon": "🔒",
           "title": "Sicherer Raum statt soziales Netzwerk",
           "text": "Kinder können schwierige Situationen durchdenken, bevor sie ihnen selbst begegnen. Sie haben einen geschützten Raum zum lernen, reflektieren und üben. Inhalte werden nicht geteilt und bleibt lokal auf dem Gerät."
         }
@@ -259,7 +260,7 @@
     },
 
     "parentsRelief": {
-  "title": "Was Amy Surfwing Eltern abnimmt",
+  "title": "Amy Surfwing entlastet Eltern",
   "intro": "",
   "items": {
     "0": "Kein aufwendiges Vorbereiten: Die Themen sind bereits kindgerecht aufbereitet.",
@@ -286,7 +287,7 @@
       "kicker": "Kurzüberblick",
       "whatTitle": "Was ist Amy Surfwing?",
       "usp": "Was Amy Surfwing besonders macht:",
-      "whatBody": "Die Lern-App für Medienreife. Eine interaktive Story-Welt, in der Kids digitale Situationen durchdenken.",
+      "whatBody": "Die neue Chat-Serie für Kids in einer interaktiven Story-Welt. Die Lern-App für Medienreife, in der Kids digitale Situationen durchdenken.",
       "forWhoTitle": "Für wen?",
       "forWhoBody": "Altersempfehlung: Kinder zwischen 10 und 12 Jahren",
       "principlesTitle": "",
@@ -296,13 +297,13 @@
         "2": "🤔 Reflexion statt Konsum",
         "3": "🌐 Training für die digitale Realität",
         "4": "🌱 Altersgerecht statt überfordernd",
-        "5": "🛡️ Sicherer Raum statt soziales Netzwerk"
+        "5": "🔒 Sicherer Raum statt soziales Netzwerk"
       }
     },
     "buttons": {
       "faq": "Zur FAQ →",
       "concept": "Pädagogisches Konzept →",
-      "settings": "Einstellungen für Erwachsene→"
+      "settings": "Einstellungen für Eltern →"
     },
     "transparency": {
       "kicker": "Ein sicherer Raum",

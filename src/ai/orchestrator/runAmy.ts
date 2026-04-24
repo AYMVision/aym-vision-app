@@ -106,7 +106,10 @@ export async function runAmy(input: AmyRunInput): Promise<AmyRunOutput> {
   let confidence = 0.6;
 
   try {
-    label = await amyAI.classifyAnswer(userAnswer, { questionType });
+    label = await amyAI.classifyAnswer(userAnswer, {
+      questionType,
+      reflectionMode: input.reflectionMode ?? false,
+    });
     confidence =
       label === 'A' ? 0.85 :
       label === 'B' ? 0.75 :
