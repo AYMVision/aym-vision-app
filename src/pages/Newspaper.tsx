@@ -905,7 +905,7 @@ const unlockedMap = useMemo(() => {
           </div>
 
           {currentNewsItems.length > 0 ? (
-            <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {currentNewsItems.map((item) => (
                 <CurrentNewsCard key={item.bonusId} item={item} metaById={metaById} />
               ))}
