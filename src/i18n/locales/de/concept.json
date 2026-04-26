@@ -2,12 +2,12 @@
   "hero": {
     "kicker": "Pädagogisches Konzept",
     "title": "Wie Kinder mit Amy Surfwing Medienreife entwickeln",
-    "lead": "Diese Seite zeigt das pädagogische Modell hinter Amy Surfwing: Wie Kinder über Story, Reflexion und alltagsnahe digitale Situationen Schritt für Schritt Medienreife entwickeln.",
+    "lead": "Diese Seite zeigt das pädagogische Modell hinter Amy Surfwing: Wie Kinder über Story, Reflexion und alltagsnahe Situationen im Netz Schritt für Schritt Medienreife entwickeln.",
     "badges": {
       "0": "Storybasiert",
       "1": "Reflexionsorientiert",
       "2": "Alltagsnah",
-      "3": "Für Kinder ab 10 Jahren"
+      "3": "Für Kinder ab 9 Jahren"
     },
     "ctaPrimary": "Für Eltern →",
     "ctaSecondary": "Zur Story →"
@@ -36,7 +36,7 @@
         "number": "2",
         "title": "Story und Reflexion",
         "summary": "Situationen werden über Figuren erlebt und mit Amy reflektiert.",
-        "details": "Kinder erleben digitale Situationen in einer fortlaufenden Story-Welt. Reflexionsfragen regen dazu an, Perspektiven einzubeziehen, eigene Gedanken zu formulieren und das Verhalten der Figuren zu hinterfragen."
+        "details": "Kinder erleben Online-Situationen in einer fortlaufenden Story-Welt. Reflexionsfragen regen dazu an, Perspektiven einzubeziehen, eigene Gedanken zu formulieren und das Verhalten der Figuren zu hinterfragen."
       },
       "2": {
         "number": "3",
@@ -60,13 +60,13 @@
         "number": "6",
         "title": "Medienreife",
         "summary": "Kinder handeln zunehmend selbstständig und verantwortungsvoll.",
-        "details": "Medienreife zeigt sich darin, dass Kinder digitale Situationen besser verstehen, reflektiert einschätzen und im Alltag bewusster und verantwortungsvoller handeln."
+        "details": "Medienreife zeigt sich darin, dass Kinder Online-Situationen besser verstehen, reflektiert einschätzen und im Alltag bewusster und verantwortungsvoller handeln."
       },
                   "6": {
         "number": "",
         "title": "Medienreife",
         "summary": "Kinder handeln zunehmend selbstständig und verantwortungsvoll.",
-        "details": "Medienreife zeigt sich darin, dass Kinder digitale Situationen besser verstehen, reflektiert einschätzen und im Alltag bewusster und verantwortungsvoller handeln."
+        "details": "Medienreife zeigt sich darin, dass Kinder Online-Situationen besser verstehen, reflektiert einschätzen und im Alltag bewusster und verantwortungsvoller handeln."
       }
     },
     "resultTitle": "Didaktische Umsetzung",
@@ -117,7 +117,7 @@
       },
       "1": {
         "title": "Urteilskraft",
-        "body": "Kinder lernen, digitale Situationen zu bewerten, Informationen abzuwägen und sich eine eigene Meinung zu bilden."
+        "body": "Kinder lernen, Online-Situationen zu bewerten, Informationen abzuwägen und sich eine eigene Meinung zu bilden."
       },
       "2": {
         "title": "Verantwortung",
@@ -132,7 +132,7 @@
   "principles": {
     "kicker": "Lernprinzipien",
     "title": "Pädagogische Grundlage",
-    "intro": "Amy Surfwing basiert auf einer Kombination aus mehreren anerkannten Lernprinzipien. Diese bilden die Grundlage für das Lernformat und bestimmen, wie Kinder digitale Situationen verstehen, reflektieren und daraus lernen.",
+    "intro": "Amy Surfwing basiert auf einer Kombination aus mehreren anerkannten Lernprinzipien. Diese bilden die Grundlage für das Lernformat und bestimmen, wie Kinder Online-Situationen verstehen, reflektieren und daraus lernen.",
     "items": {
       "0": "Narratives Lernen",
       "1": "Situatives Lernen",
@@ -218,7 +218,8 @@
   "kicker": "Vertiefung",
   "title": "Story und Reflexion",
   "body": "Kinder lernen besonders wirksam, wenn sie Situationen nicht nur erklärt bekommen, sondern erleben und darüber nachdenken. Genau hier setzt Amy Surfwing an: Digitale Alltagssituationen werden über Figuren in einer fortlaufenden Story erlebbar gemacht.",
-  "body2": "Ein „Amic“ verbindet dabei eine konkrete Situation aus der Chat-Story mit einer kurzen Reflexion. Kinder übertragen das Geschehen auf ihr eigenes Leben, formulieren eigene Gedanken und setzen sich aktiv mit möglichen Handlungen auseinander. So entsteht Lernen nicht durch Vorgaben, sondern durch eigenes Mitdenken."
+  "body2": "Ein „Amic” verbindet dabei eine konkrete Situation aus der Chat-Story mit einer kurzen Reflexion. Kinder übertragen das Geschehen auf ihr eigenes Leben, formulieren eigene Gedanken und setzen sich aktiv mit möglichen Handlungen auseinander. So entsteht Lernen nicht durch Vorgaben, sondern durch eigenes Mitdenken.",
+  "aiNote": "Amy begleitet die Reflexionsmomente mit einem lokalen, offline-fähigen KI-Modell. Es klassifiziert Antworten und gibt passende Rückmeldungen — ohne Cloud, ohne Datenweitergabe."
 },
 "learningSpiral": {
   "kicker": "Vertiefung",

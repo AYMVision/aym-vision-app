@@ -23,6 +23,9 @@ import { canOpenTestSettings } from '../settings/testAccess';
 import { resetChildData, deleteAllData } from '../common/resetAym';
 import { exportBackup, importBackup } from '../common/backupRestore';
 import { hasDiaryPin, resetDiaryPin } from '../diary/diaryPin';
+import { getConsentStatus, setConsent } from '../analytics/consent';
+import { getDecisionCount, clearAnalytics } from '../analytics/analyticsStore';
+import { shareOrDownloadAnalytics } from '../analytics/analyticsExport';
 
 import {
   aggregateDimensionScores,
@@ -33,15 +36,17 @@ import { clearAllStoryV02Responses } from '../story-v02/runtime/storyResponseSto
 import type { StoryDimensionId } from '../story-v02/types/measurementTypes';
 import { useProfile } from '../profile/useProfile';
 import { THEME_META, THEME_ORDER } from '../competencies/themeMeta';
-import { THEME_STICKER_THRESHOLDS } from '../progress/rewardCatalog';
+import { getThemeStickerThreshold } from '../progress/rewardCatalog';
 
 type LocationState = {
   backTo?: string;
+  openSection?: string;
 } | null;
 
 type AccordionSectionId =
   | 'overview'
   | 'manage'
+  | 'analytics'
   | 'transparency'
   | 'protection'
   | 'danger';
@@ -168,10 +173,24 @@ export default function AdultSettings() {
   const [openSections, setOpenSections] = useState<Record<AccordionSectionId, boolean>>({
     overview: true,
     manage: false,
+    analytics: false,
     transparency: false,
     protection: false,
     danger: false,
   });
+
+  const [consentStatus, setConsentStatus] = useState(() => getConsentStatus());
+  const [decisionCount, setDecisionCount] = useState(() => getDecisionCount());
+  const [shareStatus, setShareStatus] = useState<'idle' | 'sharing' | 'done' | 'error'>('idle');
+  const [analyticsClearDone, setAnalyticsClearDone] = useState(false);
+
+  useEffect(() => {
+    const section = locationState?.openSection as AccordionSectionId | undefined;
+    if (section && section in openSections) {
+      setOpenSections((prev) => ({ ...prev, [section]: true }));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     saveSettings({ owlMode });
@@ -569,9 +588,9 @@ export default function AdultSettings() {
 
         <div className="mt-8 space-y-4">
           <AccordionSection
-            title="Überblick"
-            subtitle="Fortschritt und bisher sichtbare Entwicklung"
-            badge="2 Bereiche"
+            title={t('adult:accordions.overview.title', { defaultValue: 'Überblick' })}
+            subtitle={t('adult:accordions.overview.subtitle', { defaultValue: 'Fortschritt und bisher sichtbare Entwicklung' })}
+            badge={t('adult:accordions.overview.badge', { defaultValue: '2 Bereiche' })}
             open={openSections.overview}
             onToggle={() => toggleSection('overview')}
           >
@@ -591,14 +610,14 @@ export default function AdultSettings() {
                   {THEME_ORDER.map((themeId) => {
                     const meta = THEME_META[themeId];
                     const pts = themePoints[themeId] ?? 0;
-                    const maxPts = THEME_STICKER_THRESHOLDS[3];
+                    const maxPts = getThemeStickerThreshold(themeId, 3);
                     const pct = Math.min(100, Math.round((pts / maxPts) * 100));
                     const level =
-                      pts >= THEME_STICKER_THRESHOLDS[3]
+                      pts >= getThemeStickerThreshold(themeId, 3)
                         ? 3
-                        : pts >= THEME_STICKER_THRESHOLDS[2]
+                        : pts >= getThemeStickerThreshold(themeId, 2)
                         ? 2
-                        : pts >= THEME_STICKER_THRESHOLDS[1]
+                        : pts >= getThemeStickerThreshold(themeId, 1)
                         ? 1
                         : 0;
 
@@ -612,10 +631,10 @@ export default function AdultSettings() {
                             </span>
                           </div>
                           <div className="flex shrink-0 items-center gap-2">
-                            <span className="text-xs text-slate-500">{pts} Pkt</span>
+                            <span className="text-xs text-slate-500">{t('adult:themes.pts', { defaultValue: '{{count}} Pkt', count: pts })}</span>
                             {level > 0 && (
                               <span className="rounded-full border border-[var(--color-teal-200)] bg-[var(--color-teal-50)] px-1.5 py-0.5 text-[10px] font-extrabold text-[var(--color-teal-700)]">
-                                Stufe {level}
+                                {t('adult:themes.level', { defaultValue: 'Stufe {{level}}', level })}
                               </span>
                             )}
                           </div>
@@ -776,9 +795,11 @@ export default function AdultSettings() {
           </AccordionSection>
 
           <AccordionSection
-            title="App verwalten"
-            subtitle="Einstellungen und Freigaben"
-            badge={canOpenTestSettings() ? '3 Bereiche' : '2 Bereiche'}
+            title={t('adult:accordions.manage.title', { defaultValue: 'App verwalten' })}
+            subtitle={t('adult:accordions.manage.subtitle', { defaultValue: 'Einstellungen und Freigaben' })}
+            badge={canOpenTestSettings()
+              ? t('adult:accordions.manage.badge3', { defaultValue: '3 Bereiche' })
+              : t('adult:accordions.manage.badge2', { defaultValue: '2 Bereiche' })}
             open={openSections.manage}
             onToggle={() => toggleSection('manage')}
           >
@@ -926,9 +947,138 @@ export default function AdultSettings() {
           </AccordionSection>
 
           <AccordionSection
-            title="Datenschutz & Transparenz"
-            subtitle="Welche Daten lokal gespeichert werden"
-            badge="1 Bereich"
+            title={t('adult:accordions.analytics.title', { defaultValue: 'Qualitätssicherung' })}
+            subtitle={t('adult:accordions.analytics.subtitle', { defaultValue: 'Freiwillige Daten zur Verbesserung der App' })}
+            open={openSections.analytics}
+            onToggle={() => toggleSection('analytics')}
+          >
+            <section className="rounded-2xl border border-slate-200 bg-white p-5 space-y-5">
+
+              {/* Erklärung */}
+              <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm text-slate-700 leading-relaxed">
+                <p className="font-semibold text-slate-900 mb-1">{t('adult:accordions.analytics.whyTitle', { defaultValue: 'Wofür sind diese Daten?' })}</p>
+                <p>{t('adult:accordions.analytics.whyBody', { defaultValue: 'Wenn du zustimmst, speichert die App anonym, welche Story-Entscheidungen dein Kind trifft — ohne Text, ohne Namen. Diese Daten helfen uns, die Wirksamkeit der App zu verstehen und sie weiterzuentwickeln.' })}</p>
+                <p className="mt-2 text-xs text-slate-500">
+                  {t('adult:accordions.analytics.whyNote', { defaultValue: 'Alle Daten bleiben lokal auf diesem Gerät. Du kannst sie jederzeit herunterladen oder löschen.' })}
+                </p>
+              </div>
+
+              {/* Consent Toggle */}
+              <div>
+                <div className="text-sm font-semibold text-slate-900 mb-2">{t('adult:accordions.analytics.consentLabel', { defaultValue: 'Datenweitergabe zur Qualitätssicherung' })}</div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => { setConsent(true); setConsentStatus('granted'); }}
+                    className={`rounded-xl border px-4 py-2 text-sm font-semibold transition ${
+                      consentStatus === 'granted'
+                        ? 'bg-[var(--color-teal-700)] border-[var(--color-teal-700)] text-white'
+                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    {t('adult:accordions.analytics.consentYes', { defaultValue: '✓ Ja, ich helfe gern' })}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setConsent(false); setConsentStatus('denied'); }}
+                    className={`rounded-xl border px-4 py-2 text-sm font-semibold transition ${
+                      consentStatus === 'denied'
+                        ? 'bg-slate-800 border-slate-800 text-white'
+                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    {t('adult:accordions.analytics.consentNo', { defaultValue: 'Nein danke' })}
+                  </button>
+                </div>
+                {consentStatus === 'granted' && (
+                  <p className="mt-2 text-xs text-[var(--color-teal-700)]">
+                    {t('adult:accordions.analytics.consentActiveNote', { defaultValue: 'Aktiv — Entscheidungsdaten werden lokal gespeichert.' })}
+                  </p>
+                )}
+                {consentStatus === 'denied' && (
+                  <p className="mt-2 text-xs text-slate-500">{t('adult:accordions.analytics.consentDeniedNote', { defaultValue: 'Deaktiviert — es werden keine Daten gespeichert.' })}</p>
+                )}
+              </div>
+
+              {/* Stats */}
+              {consentStatus === 'granted' && (
+                <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">{t('adult:accordions.analytics.statsHeading', { defaultValue: 'Gespeicherte Daten' })}</div>
+                  <div className="text-sm text-slate-800">
+                    {t('adult:accordions.analytics.statsDecisions', { defaultValue: 'Story-Entscheidungen erfasst:' })} <span className="font-extrabold">{decisionCount}</span>
+                  </div>
+                  <p className="mt-1 text-xs text-slate-500">
+                    {t('adult:accordions.analytics.statsWhatStored', { defaultValue: 'Was gespeichert wird: Schritt-ID, Score (A/B/C), Themen-Tag, Anzahl Versuche, Datum.' })}<br />
+                    {t('adult:accordions.analytics.statsWhatNot', { defaultValue: 'Was nicht gespeichert wird: Texteingaben, Namen, Standort.' })}
+                  </p>
+                </div>
+              )}
+
+              {/* Export / Share */}
+              {consentStatus === 'granted' && decisionCount > 0 && (
+                <div>
+                  <div className="text-sm font-semibold text-slate-900 mb-2">{t('adult:accordions.analytics.shareTitle', { defaultValue: 'Daten teilen oder herunterladen' })}</div>
+                  <p className="text-xs text-slate-500 mb-3">
+                    {t('adult:accordions.analytics.shareHint', { defaultValue: 'Auf dem Handy öffnet sich der Share-Dialog — du kannst die Datei per E-Mail oder einem anderen Kanal senden. Auf dem Computer wird eine JSON-Datei heruntergeladen.' })}
+                  </p>
+                  <button
+                    type="button"
+                    disabled={shareStatus === 'sharing'}
+                    onClick={async () => {
+                      setShareStatus('sharing');
+                      const completed = Object.entries(profile.progress?.completedChapters ?? {})
+                        .filter(([, done]) => done)
+                        .map(([key]) => key);
+                      const result = await shareOrDownloadAnalytics({
+                        chaptersCompleted: completed,
+                        currentEpisodeId: profile.progress?.current?.episodeId,
+                        themePoints: profile.progress?.themePoints ?? {},
+                      });
+                      setShareStatus(result === 'error' ? 'error' : 'done');
+                      setTimeout(() => setShareStatus('idle'), 4000);
+                    }}
+                    className="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-60"
+                  >
+                    {shareStatus === 'sharing'
+                      ? t('adult:accordions.analytics.shareBusy', { defaultValue: 'Wird vorbereitet …' })
+                      : t('adult:accordions.analytics.shareButton', { defaultValue: '📤 Daten teilen / herunterladen' })}
+                  </button>
+                  {shareStatus === 'done' && (
+                    <p className="mt-2 text-xs text-emerald-700">{t('adult:accordions.analytics.shareDone', { defaultValue: 'Erfolgreich geteilt oder heruntergeladen.' })}</p>
+                  )}
+                  {shareStatus === 'error' && (
+                    <p className="mt-2 text-xs text-red-700">{t('adult:accordions.analytics.shareError', { defaultValue: 'Fehler beim Teilen. Bitte nochmal versuchen.' })}</p>
+                  )}
+                </div>
+              )}
+
+              {/* Löschen */}
+              {consentStatus === 'granted' && decisionCount > 0 && (
+                <div className="border-t border-slate-100 pt-4">
+                  {analyticsClearDone ? (
+                    <p className="text-sm text-emerald-700">{t('adult:accordions.analytics.clearDone', { defaultValue: 'Alle Analysedaten wurden gelöscht.' })}</p>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        clearAnalytics();
+                        setDecisionCount(0);
+                        setAnalyticsClearDone(true);
+                      }}
+                      className="rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-100"
+                    >
+                      {t('adult:accordions.analytics.clearButton', { defaultValue: 'Analysedaten löschen' })}
+                    </button>
+                  )}
+                </div>
+              )}
+            </section>
+          </AccordionSection>
+
+          <AccordionSection
+            title={t('adult:accordions.transparency.title', { defaultValue: 'Datenschutz & Transparenz' })}
+            subtitle={t('adult:accordions.transparency.subtitle', { defaultValue: 'Welche Daten lokal gespeichert werden' })}
+            badge={t('adult:accordions.transparency.badge', { defaultValue: '1 Bereich' })}
             open={openSections.transparency}
             onToggle={() => toggleSection('transparency')}
           >
@@ -959,7 +1109,7 @@ export default function AdultSettings() {
                     }),
                   },
                   {
-                    label: t('adult:privacy.items.traces', { defaultValue: 'LEntwicklungsbereiche' }),
+                    label: t('adult:privacy.items.traces', { defaultValue: 'Entwicklungsbereiche' }),
                     detail: t('adult:privacy.items.tracesDetail', {
                       defaultValue: 'Reaktionen auf Situationen in der Story (lokal, anonym)',
                     }),
@@ -983,6 +1133,10 @@ export default function AdultSettings() {
                       defaultValue: 'Spracheinstellung, Eule-Modus',
                     }),
                   },
+                  {
+                    label: t('adult:accordions.analytics.privacyLabel', { defaultValue: 'Qualitätssicherung (optional)' }),
+                    detail: t('adult:accordions.analytics.privacyDetail', { defaultValue: 'Nur bei Zustimmung: anonyme Entscheidungsdaten (Schritt-ID, Score, Thema, Datum). Kein Freitext, kein Name. Lokal gespeichert, manuell exportierbar.' }),
+                  },
                 ].map((item) => (
                   <div key={item.label} className="flex items-start gap-2 text-sm">
                     <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-teal-400)]" />
@@ -1004,9 +1158,9 @@ export default function AdultSettings() {
           </AccordionSection>
 
           <AccordionSection
-            title="Schutz & Sicherung"
-            subtitle="Passcode, Tagebuchschutz und Backup"
-            badge="3 Bereiche"
+            title={t('adult:accordions.protection.title', { defaultValue: 'Schutz & Sicherung' })}
+            subtitle={t('adult:accordions.protection.subtitle', { defaultValue: 'Passcode, Tagebuchschutz und Backup' })}
+            badge={t('adult:accordions.protection.badge', { defaultValue: '3 Bereiche' })}
             open={openSections.protection}
             onToggle={() => toggleSection('protection')}
           >
@@ -1211,9 +1365,9 @@ export default function AdultSettings() {
           </AccordionSection>
 
           <AccordionSection
-            title="Zurücksetzen & Löschen"
-            subtitle="Sensible Aktionen mit möglichem Datenverlust"
-            badge="2 Aktionen"
+            title={t('adult:accordions.danger.title', { defaultValue: 'Zurücksetzen & Löschen' })}
+            subtitle={t('adult:accordions.danger.subtitle', { defaultValue: 'Sensible Aktionen mit möglichem Datenverlust' })}
+            badge={t('adult:accordions.danger.badge', { defaultValue: '2 Aktionen' })}
             open={openSections.danger}
             onToggle={() => toggleSection('danger')}
             tone="danger"

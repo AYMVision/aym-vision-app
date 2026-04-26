@@ -433,10 +433,22 @@ export default function AvatarPicker() {
         </span>
       </div>
 
-      <div className="mt-1 text-center text-[11px] font-semibold text-slate-500">
-        {t('avatar.shop.coinsHint', {
-          defaultValue: 'Mit Coins kannst du neue Sachen freischalten.',
-        })}
+      <div className="mt-2 text-center text-[11px] text-slate-500 space-y-0.5 leading-snug">
+        <div>
+          {t('avatar.shop.coinsHint.earn', {
+            defaultValue: 'Kapitel spielen → 🪙 1 Coin · Episode fertig → 🪙 +5',
+          })}
+        </div>
+        <div>
+          {t('avatar.shop.coinsHint.streak', {
+            defaultValue: '5 Tage am Stück → ⭐ +2 Extra-Coins',
+          })}
+        </div>
+        <div className="font-semibold text-slate-600">
+          {t('avatar.shop.coinsHint.unlock', {
+            defaultValue: 'Damit: neue Avatar-Looks freischalten ✨',
+          })}
+        </div>
       </div>
     </div>
             {SLOT_SECTIONS.map(({ slot, icon, labelKey, defaultValue }) => {

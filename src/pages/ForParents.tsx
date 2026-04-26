@@ -187,6 +187,29 @@ export default function ForParents() {
 <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
   {/* Left column */}
   <div className="lg:col-span-8 space-y-4 sm:space-y-6">
+
+    {/* SETUP CALLOUT */}
+    <div className="rounded-2xl border border-[var(--color-teal-200)] bg-[var(--color-teal-50)] p-5 sm:p-6">
+      <div className="text-xs font-semibold text-[var(--color-teal-700)]">
+        {t('setup.kicker', { defaultValue: 'App einrichten' })}
+      </div>
+      <h2 className="mt-1 text-base sm:text-lg font-semibold text-slate-900">
+        {t('setup.title', { defaultValue: 'App für Ihr Kind einrichten' })}
+      </h2>
+      <p className="mt-2 text-sm sm:text-base text-slate-700 leading-relaxed">
+        {t('setup.body', { defaultValue: 'Datenschutz-Einstellungen anpassen, Amys Begleitmodus wählen und die App mit einem Passcode schützen — alles in wenigen Minuten.' })}
+      </p>
+      <div className="mt-4">
+        <Link
+          to="/adult-settings"
+          state={{ backTo: '/parents' }}
+          className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+        >
+          {t('setup.cta', { defaultValue: 'App jetzt einrichten →' })}
+        </Link>
+      </div>
+    </div>
+
     <Panel
       title={t('sections.learnMain.title')}
       kicker={t('sections.learnMain.kicker')}
@@ -297,50 +320,88 @@ export default function ForParents() {
                 <li>{t('accordions.privacy.items.0')}</li>
                 <li>{t('accordions.privacy.items.1')}</li>
                 <li>{t('accordions.privacy.items.2')}</li>
+                <li>{t('accordions.privacy.items.3')}</li>
               </ul>
-              <p className="mt-3">{t('accordions.privacy.footer')}</p>
+
+              <Link
+                to="/adult-settings"
+                state={{ backTo: '/parents', openSection: 'analytics' }}
+                className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-teal-700)] hover:underline"
+              >
+                Einstellungen &amp; Datenweitergabe öffnen →
+              </Link>
+
+              <div className="mt-4 rounded-xl border border-[var(--color-teal-100)] bg-[var(--color-teal-50)] p-4 text-sm text-slate-700 space-y-2">
+                <p className="font-semibold text-slate-900">Freiwillige Qualitätssicherung</p>
+                <p>
+                  AYM Vision kann — mit deiner ausdrücklichen Zustimmung — anonyme Nutzungsdaten
+                  lokal speichern und auf deinen Wunsch hin teilen. Diese helfen uns, die pädagogische
+                  Wirksamkeit der App zu verstehen.
+                </p>
+                <p className="font-semibold text-slate-800 mt-1">Was gespeichert wird (nur bei Zustimmung):</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Welche Story-Kapitel gespielt wurden</li>
+                  <li>Score der Reflexionsfragen (A / B / C — ohne den Text selbst)</li>
+                  <li>Themen-Tags der Schritte (z.B. "Datenschutz")</li>
+                  <li>Datum (nur Tag, keine Uhrzeit)</li>
+                </ul>
+                <p className="font-semibold text-slate-800 mt-1">Was niemals gespeichert wird:</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Texteingaben oder Antworten deines Kindes</li>
+                  <li>Name, Alter oder persönliche Angaben</li>
+                  <li>Standort, IP-Adresse oder Gerätedaten</li>
+                </ul>
+                <p className="mt-2 text-xs text-slate-500">
+                  Alle Daten bleiben lokal auf diesem Gerät. Du kannst sie in den Eltern-Einstellungen
+                  einsehen, herunterladen oder jederzeit löschen.
+                </p>
+                <Link
+                  to="/adult-settings"
+                  state={{ backTo: '/parents', openSection: 'analytics' }}
+                  className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-teal-700)] hover:underline"
+                >
+                  Jetzt in den Einstellungen aktivieren →
+                </Link>
+              </div>
             </Accordion>
 
-            {/* 4) KI Panel */}
-            <Panel title={t('sections.ai.title')} kicker={t('sections.ai.kicker')}>
-              <p>{t('sections.ai.intro')}</p>
+            {/* 4+5) KI – zusammengefasst als Accordion */}
+            <Accordion title={t('sections.ai.title')}>
+              <p>{t('sections.ai.introShort')}</p>
               <p className="mt-3">{t('sections.ai.description')}</p>
 
-              <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <div className="text-sm font-semibold text-slate-900">{t('sections.ai.safeAi.title')}</div>
-                <p className="mt-1 text-sm text-slate-700 leading-relaxed">{t('sections.ai.safeAi.text')}</p>
+              <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
+                {t('sections.ai.safeAi.text')}
               </div>
 
               <p className="mt-4 font-semibold text-slate-900">{t('sections.ai.control')}</p>
 
-              <Link
-  to="/adult-settings"
-  state={{ backTo: '/parents' }}
-  className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
->
-  {t('sections.ai.ctaModes')}
-</Link>
-            </Panel>
-
-            {/* 5) KI Modi (Accordion) */}
-            <Accordion title={t('sections.ai.modeTitle')}>
-              <div className="space-y-3">
+              <div className="mt-3 space-y-2 text-sm">
                 <div>
-                  <div className="font-semibold text-slate-900">{t('sections.ai.modes.on.title')}</div>
-                  <p className="mt-1">{t('sections.ai.modes.on.text')}</p>
+                  <span className="font-semibold text-slate-900">{t('sections.ai.modes.on.title')}</span>
+                  {' — '}{t('sections.ai.modes.on.text')}
                 </div>
                 <div>
-                  <div className="font-semibold text-slate-900">{t('sections.ai.modes.auto.title')}</div>
-                  <p className="mt-1">{t('sections.ai.modes.auto.text')}</p>
+                  <span className="font-semibold text-slate-900">{t('sections.ai.modes.auto.title')}</span>
+                  {' — '}{t('sections.ai.modes.auto.text')}
                 </div>
                 <div>
-                  <div className="font-semibold text-slate-900">{t('sections.ai.modes.off.title')}</div>
-                  <p className="mt-1">{t('sections.ai.modes.off.text')}</p>
+                  <span className="font-semibold text-slate-900">{t('sections.ai.modes.off.title')}</span>
+                  {' — '}{t('sections.ai.modes.off.text')}
                 </div>
               </div>
 
-              <p className="mt-4">{t('sections.ai.changeHint')}</p>
-              <p className="mt-2">{t('sections.ai.performanceHint')}</p>
+              <p className="mt-3 text-sm text-slate-500">{t('sections.ai.changeHint')}</p>
+
+              <div className="mt-4">
+                <Link
+                  to="/adult-settings"
+                  state={{ backTo: '/parents' }}
+                  className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
+                >
+                  {t('sections.ai.ctaModes')}
+                </Link>
+              </div>
             </Accordion>
 
             {/* 6) Parents can do */}

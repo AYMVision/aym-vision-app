@@ -8,6 +8,7 @@ import ChatMessage from '../../components/ChatMessage';
 import { runAmy } from '../../ai/orchestrator/runAmy';
 import { isCriticalSafety } from '../../ai/core/contentFlags';
 import { isTrivialInput } from '../utils/isTrivialInput';
+import { trackReflectionStep } from '../../analytics/analyticsEvents';
 
 // ---------------------------------------------------------------------------
 // Phase state machine
@@ -51,11 +52,13 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       setAttemptCount(1);
       setText('');
       setPhase('retry');
+      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'trivial', topicIds: step.topicIds, attemptCount: 1 });
       return;
     }
 
     setLastSubmitted(trimmed);
     setPhase('unlocked');
+    trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'bypass', topicIds: step.topicIds, attemptCount });
   }
 
   async function handleOpenTextSubmit() {
@@ -81,18 +84,18 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       const critical = isCriticalSafety(result.contentFlags);
       const forcedUnlock = attemptCount >= 2;
 
+      const nextAttempt = attemptCount + 1;
+
       if (fromSupportRequired) {
-        // Already in support_required: AI still checks, but no new hint is shown.
-        // Only a genuinely adequate answer (A/B, non-critical) unlocks further progress.
         if (!result.mustReAnswer && !critical) {
-          // Passed — clear amyReply so the adult hint doesn't appear again in amy_reaction.
           setAmyReply('');
           setPhase('unlocked');
+          trackReflectionStep({ stepId: step.id, type: 'open_text', score: result.label, topicIds: step.topicIds, attemptCount: nextAttempt });
         } else {
-          // Still not a real answer — textarea stays open, adult hint stays visible.
           setAttemptCount((c) => c + 1);
           setText('');
           setPhase('support_required');
+          trackReflectionStep({ stepId: step.id, type: 'open_text', score: result.label, topicIds: step.topicIds, attemptCount: nextAttempt });
         }
       } else {
         // Normal path — update Amy's reply for display.
@@ -100,28 +103,30 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
 
         if (!result.mustReAnswer || forcedUnlock) {
           if (critical && !forcedUnlock) {
-            // Safety on attempt 0 or 1.
             setAttemptCount((c) => c + 1);
             setText('');
             setPhase('retry');
+            trackReflectionStep({ stepId: step.id, type: 'open_text', score: result.label, topicIds: step.topicIds, attemptCount: nextAttempt });
           } else if (critical && forcedUnlock) {
-            // Safety on final attempt.
             setAttemptCount((c) => c + 1);
             setText('');
             setPhase('support_required');
+            trackReflectionStep({ stepId: step.id, type: 'open_text', score: result.label, topicIds: step.topicIds, attemptCount: nextAttempt });
           } else if (forcedUnlock && result.mustReAnswer) {
-            // Non-critical C/UNSICHER on forced-unlock attempt.
             setAttemptCount((c) => c + 1);
             setText('');
             setPhase('support_required');
+            trackReflectionStep({ stepId: step.id, type: 'open_text', score: result.label, topicIds: step.topicIds, attemptCount: nextAttempt });
           } else {
             setPhase('unlocked');
+            trackReflectionStep({ stepId: step.id, type: 'open_text', score: result.label, topicIds: step.topicIds, attemptCount: nextAttempt });
           }
         } else {
           // C or UNSICHER (not yet forced unlock).
           setAttemptCount((c) => c + 1);
           setText('');
           setPhase('retry');
+          trackReflectionStep({ stepId: step.id, type: 'open_text', score: result.label, topicIds: step.topicIds, attemptCount: nextAttempt });
         }
       }
     } catch {

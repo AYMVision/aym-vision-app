@@ -285,7 +285,63 @@
       "disclaimer": "Alle Einstufungen basieren ausschließlich auf dem Verhalten in der Story und sind keine psychologische oder diagnostische Aussage."
     }
   },
+  "accordions": {
+    "overview": {
+      "title": "Überblick",
+      "subtitle": "Fortschritt und bisher sichtbare Entwicklung",
+      "badge": "2 Bereiche"
+    },
+    "manage": {
+      "title": "App verwalten",
+      "subtitle": "Einstellungen und Freigaben",
+      "badge2": "2 Bereiche",
+      "badge3": "3 Bereiche"
+    },
+    "analytics": {
+      "title": "Qualitätssicherung",
+      "subtitle": "Freiwillige Daten zur Verbesserung der App",
+      "whyTitle": "Wofür sind diese Daten?",
+      "whyBody": "Wenn du zustimmst, speichert die App anonym, welche Story-Entscheidungen dein Kind trifft — ohne Text, ohne Namen. Diese Daten helfen uns, die Wirksamkeit der App zu verstehen und sie weiterzuentwickeln.",
+      "whyNote": "Alle Daten bleiben lokal auf diesem Gerät. Du kannst sie jederzeit herunterladen oder löschen.",
+      "consentLabel": "Datenweitergabe zur Qualitätssicherung",
+      "consentYes": "✓ Ja, ich helfe gern",
+      "consentNo": "Nein danke",
+      "consentActiveNote": "Aktiv — Entscheidungsdaten werden lokal gespeichert.",
+      "consentDeniedNote": "Deaktiviert — es werden keine Daten gespeichert.",
+      "statsHeading": "Gespeicherte Daten",
+      "statsDecisions": "Story-Entscheidungen erfasst:",
+      "statsWhatStored": "Was gespeichert wird: Schritt-ID, Score (A/B/C), Themen-Tag, Anzahl Versuche, Datum.",
+      "statsWhatNot": "Was nicht gespeichert wird: Texteingaben, Namen, Standort.",
+      "shareTitle": "Daten teilen oder herunterladen",
+      "shareHint": "Auf dem Handy öffnet sich der Share-Dialog — du kannst die Datei per E-Mail oder einem anderen Kanal senden. Auf dem Computer wird eine JSON-Datei heruntergeladen.",
+      "shareBusy": "Wird vorbereitet …",
+      "shareButton": "📤 Daten teilen / herunterladen",
+      "shareDone": "Erfolgreich geteilt oder heruntergeladen.",
+      "shareError": "Fehler beim Teilen. Bitte nochmal versuchen.",
+      "clearDone": "Alle Analysedaten wurden gelöscht.",
+      "clearButton": "Analysedaten löschen",
+      "privacyLabel": "Qualitätssicherung (optional)",
+      "privacyDetail": "Nur bei Zustimmung: anonyme Entscheidungsdaten (Schritt-ID, Score, Thema, Datum). Kein Freitext, kein Name. Lokal gespeichert, manuell exportierbar."
+    },
+    "transparency": {
+      "title": "Datenschutz & Transparenz",
+      "subtitle": "Welche Daten lokal gespeichert werden",
+      "badge": "1 Bereich"
+    },
+    "protection": {
+      "title": "Schutz & Sicherung",
+      "subtitle": "Passcode, Tagebuchschutz und Backup",
+      "badge": "3 Bereiche"
+    },
+    "danger": {
+      "title": "Zurücksetzen & Löschen",
+      "subtitle": "Sensible Aktionen mit möglichem Datenverlust",
+      "badge": "2 Aktionen"
+    }
+  },
   "themes": {
+    "pts": "{{count}} Pkt",
+    "level": "Stufe {{level}}",
     "titleParent": "Bisher sichtbare Themenfelder",
     "emptyParent": "Hier siehst du, welche Themen in den bisher gespielten Kapiteln vorkamen.",
     "infoCheck": {

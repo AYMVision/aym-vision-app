@@ -2,14 +2,17 @@
   "categories": {
     "characters": "Freundebuch",
     "diaries": "Tagebücher",
-    "newspaper": "Schülerzeitung"
+    "newspaper": "Schulhof-Echo"
   },
 
   "newspaper": {
-    "title": "Schülerzeitung",
+    "title": "Schulhof-Echo",
     "kicker": "📰 Newsroom",
-    "headline": "Unsere Schülerzeitung",
+    "headline": "Schulhof-Echo",
     "subtitle": "Artikel, Audio & Meinungen aus der Story",
+    "mastheadMeta": "Amy Surfwing · Newsroom",
+    "mastheadTagline": "Die offizielle",
+    "mastheadAuthor": "von Carlos & der Klasse",
 
     "searchPlaceholder": "Suche…",
     "searchAria": "Artikel suchen",

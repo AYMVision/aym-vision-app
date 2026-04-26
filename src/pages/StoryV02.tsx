@@ -1217,7 +1217,8 @@ function hasStoryMigrationDone(key: string): boolean {
               stickerImage={episodeMeta?.stickerImage}
               bonusCoins={entry.bonusCoins}
               onViewSticker={() => navigate('/album')}
-              onContinue={() => navigate('/')}
+              onContinue={() => navigate('/stories')}
+              onProfile={() => navigate('/profile')}
             />
           </div>
         );

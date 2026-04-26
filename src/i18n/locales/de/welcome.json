@@ -7,14 +7,19 @@
     "leadEmphasis2":"Finde es heraus. 👀",
     "ctaPrimary": "Zur Story →",
     "ctaSecondary": "Für Eltern →",
-    "bannerAlt": "Einblick in die Story-Welt von Amy Surfwing"
+    "bannerAlt": "Einblick in die Story-Welt von Amy Surfwing",
+    "badgeAge": "Für Kinder ab 9 Jahren",
+    "badgeTime": "5 min täglich",
+    "badgeAmy": "Chat-Story & mehr",
+    "parentHint": "Elternteil?",
+    "parentHintLink": "Hier informieren & App einrichten →"
   },
 
   "about": {
     "whatTitle": "Was ist Amy Surfwing?",
     "whatBody1": "Die neue Chat-Serie für Kids in einer interaktiven Story-Welt.",
-    "whatBody2": "Die Lern-App für Medienreife, in der Kids digitale Situationen durchdenken.",
-    "uspTitle": "Was Amy Surfwing besonders macht:",
+    "whatBody2": "Die Lern-App für Medienreife, in der Kids Online-Situationen durchdenken.",
+"uspTitle": "Was Amy Surfwing besonders macht:",
     "principles": {
       "0": "📖 Story statt Unterricht",
       "1": "⏱️ 5 Minuten statt endloser Bildschirmzeit",

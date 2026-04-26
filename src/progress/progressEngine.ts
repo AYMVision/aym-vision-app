@@ -224,52 +224,6 @@ export function applyChapterReward(profile: UserProfile, meta: ChapterMeta) {
 
   const newMilestoneStickerIds: string[] = [];
 
-  // ✅ Milestone: erstes Chapter überhaupt abgeschlossen
-  if (
-    totalCompletedChaptersOverall === 1 &&
-    !next.progress.earnedStickers?.['milestone-first-chapter']
-  ) {
-    const now = Date.now();
-    next = {
-      ...next,
-      progress: {
-        ...next.progress,
-        earnedStickers: {
-          ...(next.progress.earnedStickers ?? {}),
-          'milestone-first-chapter': true,
-        },
-        earnedStickersAt: {
-          ...(next.progress.earnedStickersAt ?? {}),
-          'milestone-first-chapter': now,
-        },
-      },
-    };
-    newMilestoneStickerIds.push('milestone-first-chapter');
-  }
-
-  // ✅ Milestone: erste Episode überhaupt abgeschlossen
-  if (
-    episodeJustCompletedNow &&
-    !next.progress.earnedStickers?.['milestone-first-episode']
-  ) {
-    const now = Date.now();
-    next = {
-      ...next,
-      progress: {
-        ...next.progress,
-        earnedStickers: {
-          ...(next.progress.earnedStickers ?? {}),
-          'milestone-first-episode': true,
-        },
-        earnedStickersAt: {
-          ...(next.progress.earnedStickersAt ?? {}),
-          'milestone-first-episode': now,
-        },
-      },
-    };
-    newMilestoneStickerIds.push('milestone-first-episode');
-  }
-
   // ✅ Weitere Milestones
   const earnedStickerIds = Object.keys(next.progress.earnedStickers ?? {});
   const totalCompletedEpisodesOverall = Object.keys(next.progress.completedEpisodes ?? {}).length;

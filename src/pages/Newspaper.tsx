@@ -14,7 +14,6 @@ import Layout from '../components/Layout';
 import { useTranslation } from 'react-i18next';
 import { assetUrl } from '../common/assetUrl';
 import { cn } from '../common/utils';
-import SmartImage from '../components/SmartImage';
 
 import { useProfile } from '../profile/useProfile';
 import MiniAudioPlayer from '../components/MiniAudioPlayer';
@@ -328,77 +327,6 @@ function SwipeRow({ children, className }: { children: React.ReactNode; classNam
   );
 }
 
-function StatPill({
-  label,
-  value,
-  kind,
-}: {
-  label: string;
-  value: string;
-  kind: 'emerald' | 'amber' | 'sky';
-}) {
-  const tone =
-    kind === 'emerald'
-      ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-      : kind === 'amber'
-      ? 'bg-amber-50 border-amber-200 text-amber-900'
-      : 'bg-sky-50 border-sky-200 text-sky-900';
-
-  return (
-    <div className={cn('inline-flex items-center gap-2 rounded-full border px-3 py-2', tone)}>
-      <div className="text-xs font-extrabold">{label}</div>
-      <div className="text-xs font-extrabold">{value}</div>
-    </div>
-  );
-}
-
-function TopicButton({
-  id,
-  active,
-  count,
-  onClick,
-}: {
-  id: TopicId;
-  active: boolean;
-  count: number;
-  onClick: () => void;
-}) {
-  const { t } = useTranslation('bonus');
-
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-className={cn(
-  'rounded-2xl border p-2.5 sm:p-3 text-left transition shadow-sm hover:shadow-md active:scale-[0.99]',
-  active
-    ? 'border-[var(--color-teal-300)] bg-[var(--color-teal-50)] ring-2 ring-[var(--color-teal-100)]'
-    : id === 'infoCheck'
-      ? 'border-sky-200 bg-gradient-to-br from-sky-50 via-white to-blue-50 hover:border-sky-300'
-      : id === 'teamTalk'
-        ? 'border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-teal-50 hover:border-emerald-300'
-        : id === 'create'
-          ? 'border-rose-200 bg-gradient-to-br from-rose-50 via-white to-pink-50 hover:border-rose-300'
-          : id === 'safe'
-            ? 'border-violet-200 bg-gradient-to-br from-violet-50 via-white to-indigo-50 hover:border-violet-300'
-            : id === 'solve'
-              ? 'border-amber-200 bg-gradient-to-br from-amber-50 via-white to-yellow-50 hover:border-amber-300'
-              : id === 'reflect'
-                ? 'border-cyan-200 bg-gradient-to-br from-cyan-50 via-white to-sky-50 hover:border-cyan-300'
-                : 'border-orange-200 bg-gradient-to-br from-orange-50 via-white to-amber-50 hover:border-orange-300'
-)}
-    >
-      <div className="flex items-start justify-between gap-2">
-        <div className="text-lg sm:text-xl">{topicIcon(id)}</div>
-        <div className="text-[10px] sm:text-[11px] font-extrabold text-slate-500">{count}</div>
-      </div>
-      <div className="mt-2 text-[11px] sm:text-[12px] font-extrabold text-slate-900 leading-snug">
-        {prettyTopic(t, id)}
-      </div>
-    </button>
-  );
-}
-
 function FreshCard({
   item,
   unlocked,
@@ -705,37 +633,44 @@ function NewspaperHero({
   freshText: string;
   readText: string;
 }) {
+  const { t } = useTranslation('bonus');
+
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-sky-200 via-violet-100 to-amber-100 px-4 py-5 shadow-md border border-white/40">
-      <div className="pointer-events-none absolute -top-10 -left-10 w-32 h-32 rounded-full bg-white/30 blur-2xl" />
-      <div className="pointer-events-none absolute top-6 right-4 w-20 h-20 rounded-full bg-yellow-300/30 blur-xl" />
-      <div className="pointer-events-none absolute bottom-0 right-10 w-24 h-24 rounded-full bg-pink-300/20 blur-xl" />
+    <section className="overflow-hidden rounded-3xl border-2 border-[var(--color-teal-900)] bg-white shadow-md">
+      {/* Meta bar */}
+      <div className="flex items-center justify-between gap-2 border-b border-[var(--color-teal-900)] bg-[var(--color-teal-900)] px-4 py-1.5">
+        <span className="text-[10px] font-extrabold tracking-widest uppercase text-white/70">
+          {t('newspaper.mastheadMeta', { defaultValue: 'Amy Surfwing · Newsroom' })}
+        </span>
+        <span className="text-[10px] text-white/50">
+          {new Date().toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })}
+        </span>
+      </div>
 
-      <div className="relative">
-        <div>
-          <div className="text-xs font-extrabold text-slate-700">📰 Newsroom</div>
-
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-            {title}
-          </h1>
-
-          <p className="mt-1 text-sm text-slate-800 max-w-md">
-            {subtitle}
-          </p>
-
-          <div className="mt-3 flex flex-wrap gap-2">
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/70">
-              {unlockedText}
-            </span>
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/70">
-              {freshText}
-            </span>
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/70">
-              {readText}
-            </span>
-          </div>
+      {/* Masthead */}
+      <div className="border-b-[3px] border-double border-[var(--color-teal-900)] px-5 py-5 text-center">
+        <div className="text-[9px] font-extrabold tracking-[0.3em] uppercase text-[var(--color-teal-700)]">
+          {t('newspaper.mastheadTagline', { defaultValue: 'Die offizielle' })}
         </div>
+        <h1
+          className="mt-1 text-4xl sm:text-5xl font-black tracking-tight text-[var(--color-teal-900)] leading-none"
+          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+        >
+          {title}
+        </h1>
+        <div className="mt-1 text-[9px] font-extrabold tracking-[0.3em] uppercase text-[var(--color-teal-700)]">
+          {t('newspaper.mastheadAuthor', { defaultValue: 'von Carlos & der Klasse' })}
+        </div>
+        <p className="mt-3 text-sm text-slate-600 max-w-sm mx-auto">{subtitle}</p>
+      </div>
 
+      {/* Stats strip */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 bg-[var(--color-teal-50)] px-4 py-2.5 text-xs">
+        <span className="font-semibold text-[var(--color-teal-900)]">{unlockedText}</span>
+        <span className="text-[var(--color-teal-200)] hidden sm:inline">·</span>
+        <span className="font-semibold text-amber-700">{freshText}</span>
+        <span className="text-[var(--color-teal-200)] hidden sm:inline">·</span>
+        <span className="font-semibold text-sky-700">{readText}</span>
       </div>
     </section>
   );
@@ -754,6 +689,14 @@ export default function Newspaper() {
   const [query, setQuery] = useState('');
   const [format, setFormat] = useState<'all' | 'text' | 'audio' | 'link'>('all');
   const [topic, setTopic] = useState<string>('all');
+  const feedRef = useRef<HTMLDivElement>(null);
+
+  function handleTopicSelect(id: string) {
+    setTopic(id);
+    setTimeout(() => {
+      feedRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
+  }
 
   useEffect(() => {
     setSeenBonusIds(loadSeenBonusIds());
@@ -845,12 +788,12 @@ const unlockedMap = useMemo(() => {
 
   return (
     <Layout
-      title={t('newspaper.title', { defaultValue: 'Schülerzeitung' })}
+      title={t('newspaper.title', { defaultValue: 'Schulhof-Echo' })}
       backPath={state?.backTo ?? '/bonus'}
     >
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-3 py-6 sm:py-10 space-y-6 mx-auto">
         <NewspaperHero
-  title={t('newspaper.headline', { defaultValue: 'Unsere Schülerzeitung' })}
+  title={t('newspaper.headline', { defaultValue: 'Schulhof-Echo' })}
   subtitle={t('newspaper.subtitle', {
     defaultValue: 'Artikel, Audio & Meinungen aus der Story',
   })}
@@ -929,36 +872,40 @@ const unlockedMap = useMemo(() => {
               })}
             </div>
 
-            <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+            <SwipeRow className="-mx-4 px-4 lg:mx-0 lg:px-0 mt-3">
               <button
                 type="button"
-                onClick={() => setTopic('all')}
+                onClick={() => handleTopicSelect('all')}
                 className={cn(
-                  'rounded-2xl border p-2.5 text-left transition shadow-sm hover:shadow-md active:scale-[0.99]',
+                  'shrink-0 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-extrabold whitespace-nowrap transition',
                   topic === 'all'
-                    ? 'border-[var(--color-teal-300)] bg-[var(--color-teal-50)] ring-2 ring-[var(--color-teal-100)]'
-                    : 'border-slate-200 bg-white hover:border-slate-300'
+                    ? 'bg-[var(--color-teal-600)] text-white border-[var(--color-teal-600)]'
+                    : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
                 )}
               >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="text-lg">🗂️</div>
-                  <div className="text-[10px] font-extrabold text-slate-500">{stats.total}</div>
-                </div>
-                <div className="mt-2 text-[11px] font-extrabold text-slate-900 leading-snug">
-                  {t('newspaper.topics.all', { defaultValue: 'Alle Themen' })}
-                </div>
+                <span>🗂️</span>
+                <span>{t('newspaper.topics.all', { defaultValue: 'Alle' })}</span>
+                <span className={cn('ml-0.5 text-[10px]', topic === 'all' ? 'text-white/70' : 'text-slate-400')}>{stats.total}</span>
               </button>
 
               {TOPICS.map((id) => (
-                <TopicButton
+                <button
                   key={id}
-                  id={id}
-                  count={topicsWithCounts[id] ?? 0}
-                  active={topic === id}
-                  onClick={() => setTopic(id)}
-                />
+                  type="button"
+                  onClick={() => handleTopicSelect(id)}
+                  className={cn(
+                    'shrink-0 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-extrabold whitespace-nowrap transition',
+                    topic === id
+                      ? 'bg-[var(--color-teal-600)] text-white border-[var(--color-teal-600)]'
+                      : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                  )}
+                >
+                  <span>{topicIcon(id)}</span>
+                  <span>{prettyTopic(t, id)}</span>
+                  <span className={cn('ml-0.5 text-[10px]', topic === id ? 'text-white/70' : 'text-slate-400')}>{topicsWithCounts[id] ?? 0}</span>
+                </button>
               ))}
-            </div>
+            </SwipeRow>
 
             <div className="mt-4">
               <input
@@ -995,6 +942,7 @@ const unlockedMap = useMemo(() => {
         </Panel>
 
         {/* FEED */}
+        <div ref={feedRef} className="scroll-mt-4">
         <Panel
           kicker={t('newspaper.sections.feedKicker', { defaultValue: '📰 Feed' })}
           title={t('newspaper.sections.feedTitle', { defaultValue: 'Alle Beiträge' })}
@@ -1030,6 +978,7 @@ const unlockedMap = useMemo(() => {
             </div>
           )}
         </Panel>
+        </div>
 
         <div className="h-6" />
       </div>

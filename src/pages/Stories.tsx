@@ -9,7 +9,7 @@ import { getProgress, getCompletedChapterCount } from '../progress/storyProgress
 import { assetUrl } from '../common/assetUrl';
 
 import { getStoryCards } from '../content/contentIndex';
-import { getPlayableEpisode } from '../content/getPlayableEpisode';
+import { getPlayableEpisodeV02 } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile'; // ✅ NEW
 import { shouldBypassAll } from '../gating/entitlements';
 
@@ -195,7 +195,7 @@ const cardsForUI = cardsInOrder;
     const playableById = useMemo(() => {
     const m: { [key: string]: boolean } = {};
     for (const c of cardsForUI) {
-      m[c.id] = Boolean(getPlayableEpisode(c.id, lang));
+      m[c.id] = Boolean(getPlayableEpisodeV02(c.id, lang));
     }
     return m;
   }, [cardsForUI, lang]);
@@ -305,7 +305,7 @@ function isUnlockedByChain(
               <Badge>{tStories('hero.badges.0', { defaultValue: '5 min/Tag' })}</Badge>
               <Badge>{tStories('hero.badges.1', { defaultValue: '1 Amic/Tag' })}</Badge>
               <Badge>{tStories('hero.badges.2', { defaultValue: '5/Woche' })}</Badge>
-              <Badge>{tStories('hero.badges.3', { defaultValue: 'ab 10 Jahre' })}</Badge>
+              <Badge>{tStories('hero.badges.3', { defaultValue: 'ab 9 Jahre' })}</Badge>
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -538,7 +538,8 @@ function isUnlockedByChain(
         tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
         title: tStories('bonus.cards.coins.title', { defaultValue: 'Coins' }),
         text: tStories('bonus.cards.coins.text', {
-          defaultValue: 'Verdiene Coins, wenn du aktiv bist – und nutze sie für neue Extras.',
+          defaultValue:
+            'Für jedes Kapitel gibt es 1 Coin. Episode fertig? +5 Bonus. 5 Tage am Stück? +2 Extra. Damit kannst du neue Avatar-Looks freischalten.',
         }),
         img: 'media/ui/about/sample-1024.webp',
         alt: tStories('bonus.cards.coins.imageAlt', { defaultValue: 'Bild: Coins-Übersicht' }),
@@ -641,14 +642,19 @@ function isUnlockedByChain(
       {cardsForUI.map((card) => {
         const playable = playableById[card.id] ?? false;
 
-        const locked =
-          !card.released ||
-          !playable ||
-          !isUnlockedByChain(cardsInOrder, card.id); // ✅ Kette immer auf cardsInOrder
+        const isReleasedAndPlayable = card.released && playable;
+        const isChainUnlocked = isUnlockedByChain(cardsInOrder, card.id);
+        const locked = !isReleasedAndPlayable || !isChainUnlocked;
 
         const coverPath = card.cover?.trim() ? card.cover : 'media/ui/locked-512.webp';
         const title = locked ? `🔒 ${tStories(card.titleKey)}` : tStories(card.titleKey);
-        const description = tStories(card.descriptionKey);
+
+        const lockedDescription = locked
+          ? (!isReleasedAndPlayable
+              ? tStories('list.locked.comingSoon', { defaultValue: 'Kommt bald ✨' })
+              : tStories('list.locked.completeFirst', { defaultValue: 'Schließe zuerst die vorherige Folge ab.' }))
+          : null;
+        const description = lockedDescription ?? tStories(card.descriptionKey);
 
         return (
           <div key={card.id} className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
@@ -728,6 +734,17 @@ function isUnlockedByChain(
           text={tStories('howto.info.tiles.backup.text', {
             defaultValue:
               'Dein Fortschritt bleibt auf deinem Gerät gespeichert. 💾 Wenn du möchtest, kannst du ihn zusätzlich sichern.',
+          })}
+        />
+      </div>
+      {/* 6) Coins */}
+      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
+        <InfoTile
+          colorIdx={2}
+          title={tStories('howto.info.tiles.coins.title', { defaultValue: 'So bekommst du Coins 🪙' })}
+          text={tStories('howto.info.tiles.coins.text', {
+            defaultValue:
+              'Kapitel spielen → 1 Coin. Episode fertig → +5 Bonus-Coins. 5 Tage am Stück → +2 Extra-Coins ⭐. Mit deinen Coins kannst du im Shop neue Avatar-Looks freischalten.',
           })}
         />
       </div>
@@ -829,6 +846,35 @@ function isUnlockedByChain(
             </a>
           </div>
         </Panel>
+
+        {/* BONUS WORLD TEASER */}
+        <div className="rounded-2xl border border-teal-100 bg-gradient-to-br from-teal-50 via-white to-amber-50 p-5 sm:p-6 shadow-sm">
+          <div className="text-xs font-semibold text-teal-700">
+            {tStories('bonusHub.kicker', { defaultValue: 'Entdecke mehr' })}
+          </div>
+          <h2 className="mt-1 text-base sm:text-lg font-semibold text-slate-900">
+            {tStories('bonusHub.title', { defaultValue: 'Bonuswelt im Profil 🎁' })}
+          </h2>
+          <p className="mt-2 text-sm text-slate-700 leading-relaxed">
+            {tStories('bonusHub.body', { defaultValue: 'Sticker sammeln, in der Schülerzeitung lesen, Tagebuch führen – alles wartet auf dich im Profil.' })}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {(['⭐ Sticker-Album', '📰 Schülerzeitung', '📔 Tagebuch', '🎴 Sammelkarten'] as const).map((label) => (
+              <span key={label} className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white border border-slate-200 text-slate-700">
+                {label}
+              </span>
+            ))}
+          </div>
+          <div className="mt-4">
+            <Link
+              to="/profile"
+              className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
+            >
+              {tStories('bonusHub.cta', { defaultValue: 'Zum Profil →' })}
+            </Link>
+          </div>
+        </div>
+
       </div>
     </Layout>
   );

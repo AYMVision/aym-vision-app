@@ -1,4 +1,5 @@
 import type { UserProfile } from '../profile/types';
+import { earnCoins } from '../profile/wallet';
 
 function todayStr() {
   const now = new Date();
@@ -59,13 +60,16 @@ export function applyDailyStreak(profile: UserProfile) {
     completedWeeks += 1;
     weekCompleted = true;
 
+    // +2 Bonus-Coins für 5 Tage am Stück
+    next = earnCoins(next, 2, 'STREAK');
+
     if (!profile.progress.earnedBadges?.['weekly-streak-5']) {
       next = {
-        ...profile,
+        ...next,
         progress: {
-          ...profile.progress,
+          ...next.progress,
           earnedBadges: {
-            ...(profile.progress.earnedBadges ?? {}),
+            ...(next.progress.earnedBadges ?? {}),
             'weekly-streak-5': true,
           },
         },

@@ -304,7 +304,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
   mediaType: 'text',
   titleKey: 'bonus:newspaper.currentNews.example.title',
   descriptionKey: 'bonus:newspaper.currentNews.example.description',
-  coverImage: 'media/ui/welcome/chioma-news-school-ai-1024.webp',
+  coverImage: 'media/newspaper/chioma-news-school-ai-1024.webp',
   bodySrc: 'media/newspaper/articles/news/kw14_26_chioma-news-school-ai',
   bodyKind: 'md',
   topicTags: ['infoCheck', 'reflect'],

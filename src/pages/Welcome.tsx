@@ -1,15 +1,22 @@
 // src/pages/Welcome.tsx
 import React, { useMemo } from 'react';
 import Layout from '../components/Layout';
-import SmartImage from '../components/SmartImage';
 import { assetUrl } from '../common/assetUrl';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getProgress, getCompletedChapterCount } from '../progress/storyProgress';
 import { getStoryCards } from '../content/contentIndex';
-import { getPlayableEpisode } from '../content/getPlayableEpisode';
+import { getPlayableEpisodeV02 } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile';
 import { shouldBypassAll } from '../gating/entitlements';
+
+function Badge({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full px-3 py-1 text-xs sm:text-sm font-semibold bg-white/80 border border-white/60 text-[var(--color-teal-900)] backdrop-blur">
+      {children}
+    </span>
+  );
+}
 
 function Panel({
   title,
@@ -80,7 +87,7 @@ const { t: tStories } = useTranslation('stories');
   const playableById = useMemo(() => {
     const m: Record<string, boolean> = {};
     for (const c of cardsForUI) {
-      m[c.id] = Boolean(getPlayableEpisode(c.id, lang));
+      m[c.id] = Boolean(getPlayableEpisodeV02(c.id, lang));
     }
     return m;
   }, [cardsForUI, lang]);
@@ -179,6 +186,12 @@ function isUnlockedByChain(
         {t('hero.leadEmphasis2')}
       </p>
 
+      <div className="mt-5 flex flex-wrap gap-2">
+        <Badge>🎓 {t('hero.badgeAge', { defaultValue: 'Für Kinder ab 9 Jahren' })}</Badge>
+        <Badge>⏱️ {t('hero.badgeTime', { defaultValue: '5 min täglich' })}</Badge>
+        <Badge>🦉 {t('hero.badgeAmy', { defaultValue: 'Chat-Story & mehr' })}</Badge>
+      </div>
+
       <div className="mt-6 flex flex-wrap gap-3">
         <Link
           to="/stories"
@@ -194,6 +207,13 @@ function isUnlockedByChain(
           {t('hero.ctaSecondary')}
         </Link>
       </div>
+
+      <p className="mt-3 text-xs text-slate-500">
+        {t('hero.parentHint', { defaultValue: 'Elternteil?' })}{' '}
+        <Link to="/parents" className="underline hover:text-slate-700">
+          {t('hero.parentHintLink', { defaultValue: 'Hier informieren & App einrichten →' })}
+        </Link>
+      </p>
     </div>
 
     {/* MEDIA */}

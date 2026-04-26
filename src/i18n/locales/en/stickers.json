@@ -19,7 +19,6 @@
     "s1e08": "Episode 8 completed"
   },
   "milestones": {
-    "firstEpisode": "First episode completed!",
     "firstFive": "Awesome! First 5 days completed!",
     "tenChapters": "10 chapters completed!",
     "firstSeason": "First season completed!",
@@ -28,7 +27,7 @@
     "fiftyStickers": "50 stickers collected!",
     "firstThemeSticker": "First theme sticker!",
     "allThemesOnce": "First sticker collected in every theme!",
-    "diaryThreeDays": "Diary used for 3 days!",
+    "diaryTenDays": "Diary used for 10 days!",
     "playedThirtyDays": "Played on 30 days total!",
     "friendbookEntry": "My friendbook entry written!"
 

@@ -19,7 +19,6 @@
     "s1e08": "Episode 8 abgeschlossen"
   },
   "milestones": {
-    "firstEpisode": "Erste Episode abgeschlossen!",
     "firstFive": "Mega! Die ersten 5 Tage geschafft!",
     "tenChapters": "10 Kapitel geschafft!",
     "firstSeason": "Erste Staffel abgeschlossen!",
@@ -28,7 +27,7 @@
     "fiftyStickers": "50 Sticker gesammelt!",
     "firstThemeSticker": "Erster Themen-Sticker!",
     "allThemesOnce": "In jedem Thema den ersten Sticker gesammelt!",
-    "diaryThreeDays": "3 Tage Tagebuch genutzt!",
+    "diaryTenDays": "10 Tage Tagebuch genutzt!",
     "playedThirtyDays": "30 Tage insgesamt gespielt!",
     "friendbookEntry": "Mein Freundebucheintrag geschrieben!"
   },

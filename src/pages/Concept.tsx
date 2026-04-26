@@ -469,6 +469,7 @@ export default function Concept() {
     >
       <p>{t('storyReflection.body')}</p>
       <p className="mt-3">{t('storyReflection.body2')}</p>
+      <p className="mt-3 text-xs text-slate-500">{t('storyReflection.aiNote')}</p>
 
       <div className="mt-4 flex flex-wrap gap-4">
         <button
