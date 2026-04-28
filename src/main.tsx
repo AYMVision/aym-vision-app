@@ -1,7 +1,4 @@
 // src/main.tsx
-import './ai/core/fetchPatch';
-import './ai/llm/xenovaEnv';
-
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 

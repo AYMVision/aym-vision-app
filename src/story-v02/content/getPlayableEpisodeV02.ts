@@ -1,44 +1,51 @@
 // src/story-v02/content/getPlayableEpisodeV02.ts
+// Each episode is loaded on-demand via dynamic import so only the requested
+// episode file is included in the active chunk — not all 12 at once.
 
 import type { StoryEpisodeV02 } from '../types/storyTypes';
 
-import s1e01De from './de/s1e01.de';
-import s1e01En from './en/s1e01.en';
-import s1e02De from './de/s1e02.de';
-import s1e02En from './en/s1e02.en';
-import s1e03De from './de/s1e03.de';
-import s1e03En from './en/s1e03.en';
-import s1e04De from './de/s1e04.de';
-import s1e04En from './en/s1e04.en';
-import s1e05De from './de/s1e05.de';
-import s1e05En from './en/s1e05.en';
-import s1e06De from './de/s1e06.de';
-import s1e06En from './en/s1e06.en';
-
 type Lang = 'de' | 'en';
 
-const COURSE_MAP: Record<Lang, Record<string, StoryEpisodeV02>> = {
-  de: {
-    s1e01: s1e01De,
-    s1e02: s1e02De,
-    s1e03: s1e03De,
-    s1e04: s1e04De,
-    s1e05: s1e05De,
-    s1e06: s1e06De,
-  },
-  en: {
-    s1e01: s1e01En,
-    s1e02: s1e02En,
-    s1e03: s1e03En,
-    s1e04: s1e04En,
-    s1e05: s1e05En,
-    s1e06: s1e06En,
-  },
+/** Synchronous availability check — no content loaded. */
+const AVAILABLE: Record<Lang, readonly string[]> = {
+  de: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05', 's1e06'],
+  en: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05', 's1e06'],
 };
 
-export function getPlayableEpisodeV02(
+export function isEpisodeAvailable(courseId: string, lang: Lang): boolean {
+  return (AVAILABLE[lang] ?? []).includes(courseId);
+}
+
+/** Loads episode content lazily. Returns null if not found. */
+export async function getPlayableEpisodeV02(
   courseId: string,
   lang: Lang
-): StoryEpisodeV02 | null {
-  return COURSE_MAP[lang]?.[courseId] ?? null;
+): Promise<StoryEpisodeV02 | null> {
+  try {
+    if (lang === 'de') {
+      switch (courseId) {
+        case 's1e01': return (await import('./de/s1e01.de')).default;
+        case 's1e02': return (await import('./de/s1e02.de')).default;
+        case 's1e03': return (await import('./de/s1e03.de')).default;
+        case 's1e04': return (await import('./de/s1e04.de')).default;
+        case 's1e05': return (await import('./de/s1e05.de')).default;
+        case 's1e06': return (await import('./de/s1e06.de')).default;
+        default: return null;
+      }
+    }
+    if (lang === 'en') {
+      switch (courseId) {
+        case 's1e01': return (await import('./en/s1e01.en')).default;
+        case 's1e02': return (await import('./en/s1e02.en')).default;
+        case 's1e03': return (await import('./en/s1e03.en')).default;
+        case 's1e04': return (await import('./en/s1e04.en')).default;
+        case 's1e05': return (await import('./en/s1e05.en')).default;
+        case 's1e06': return (await import('./en/s1e06.en')).default;
+        default: return null;
+      }
+    }
+    return null;
+  } catch {
+    return null;
+  }
 }

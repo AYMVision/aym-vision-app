@@ -4,7 +4,9 @@
 // /public/media/avatars/full/
 //   ├─ {id}-384.avif | .webp
 //   ├─ {id}-768.avif | .webp
-//   └─ default-384.webp
+//   └─ default-384.avif | .webp   (Fallback wenn id leer oder Datei fehlt)
+// WICHTIG: Für jede ID in AVATAR_BASES müssen die 4 Dateien existieren:
+//   {id}-384.avif, {id}-384.webp, {id}-768.avif, {id}-768.webp
 
 import SmartImage from './SmartImage';
 import { assetUrl } from '../common/assetUrl';

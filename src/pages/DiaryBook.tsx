@@ -522,7 +522,7 @@ className={[
         return title ? <div className="mt-3 text-sm font-extrabold text-slate-900">{title}</div> : null;
       })()}
 
-      <div className="mt-3 text-[18px] leading-8 text-slate-900 diary-hand whitespace-pre-wrap">
+      <div className="mt-3 text-xl leading-8 text-slate-900 diary-hand whitespace-pre-wrap">
         {body}
       </div>
     </article>
@@ -537,7 +537,7 @@ function MiniEntryPreview({ entry }: { entry: MeEntry }) {
         className="absolute top-0 left-0 pointer-events-none"
         style={{ width: 320, transform: 'scale(0.25)', transformOrigin: 'top left', padding: '12px', minHeight: 400 }}
       >
-        <div className="text-[18px] leading-8 text-slate-900 diary-hand whitespace-pre-wrap">
+        <div className="text-xl leading-8 text-slate-900 diary-hand whitespace-pre-wrap">
           {entry.text}
         </div>
         {entry.stickers.map((s) => (
@@ -561,12 +561,36 @@ function MiniEntryPreview({ entry }: { entry: MeEntry }) {
 }
 
 // -------------------- MY DIARY --------------------
+
+const DAILY_PROMPTS = [
+  'Heute war…',
+  'Was hat dich heute zum Lachen gebracht?',
+  'Was war heute schwierig für dich?',
+  'Wer war heute besonders nett zu dir?',
+  'Worüber hast du heute nachgedacht?',
+  'Was würdest du heute gerne nochmal erleben?',
+  'Was hast du heute Neues gelernt?',
+  'Was hat dich heute überrascht?',
+  'Was macht dich heute glücklich?',
+  'Wie hast du dich heute gefühlt?',
+  'Was wünschst du dir für morgen?',
+  'Mit wem hast du heute gelacht?',
+  'Was war der beste Moment heute?',
+  'Welche Gedanken beschäftigen dich gerade?',
+];
+
+function getDailyPrompt(): string {
+  const d = new Date();
+  return DAILY_PROMPTS[(d.getDate() + d.getMonth() * 3) % DAILY_PROMPTS.length];
+}
+
 // -------------------- PIN wrapper --------------------
 function MyDiaryWithPin() {
   const { t } = useTranslation('bonus');
 
-  const [hasPin] = useState(() => hasDiaryPin());
+  const [hasPin, setHasPin] = useState(() => hasDiaryPin());
   const [unlocked, setUnlocked] = useState(false);
+  const [showPinSetup, setShowPinSetup] = useState(false);
 
   // setup
   const [setupPin, setSetupPin] = useState('');
@@ -597,7 +621,7 @@ function MyDiaryWithPin() {
     setSetupError('');
     const ok = await setDiaryPin(p1, setupHint);
     setSetupBusy(false);
-    if (ok) setUnlocked(true);
+    if (ok) { setHasPin(true); setShowPinSetup(false); }
   }, [setupPin, setupPinRepeat, setupHint, t]);
 
   const handleUnlock = useCallback(async () => {
@@ -615,102 +639,104 @@ function MyDiaryWithPin() {
     }
   }, [pinInput, t]);
 
-  if (unlocked || !hasPin) {
-    if (!hasPin && !unlocked) {
-      // First time: show PIN setup screen
-      return (
-        <div className="mt-6 rounded-[28px] border border-[var(--color-teal-200)] bg-white shadow-sm overflow-hidden">
-          <div className="p-5 sm:p-6">
-            <div className="text-base font-extrabold text-slate-900">
-              {t('diaries.pin.setupTitle', { defaultValue: '🔒 Tagebuch schützen' })}
+  // Optional PIN setup (user chose to protect diary from inside)
+  if (!hasPin && showPinSetup) {
+    return (
+      <div className="mt-6 rounded-[28px] border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-purple-50 shadow-sm overflow-hidden">
+        <div className="p-5 sm:p-6">
+          <div className="flex items-start gap-3 mb-5">
+            <span className="text-3xl shrink-0">🔒</span>
+            <div>
+              <div className="text-base font-extrabold text-slate-900">
+                {t('diaries.pin.setupTitle', { defaultValue: 'Tagebuch schützen' })}
+              </div>
+              <p className="mt-1 text-sm text-slate-600">
+                {t('diaries.pin.setupBody', { defaultValue: 'Leg einen PIN fest, damit nur du dein Tagebuch lesen kannst.' })}
+              </p>
             </div>
-            <p className="mt-1 text-sm text-slate-600">
-              {t('diaries.pin.setupBody', {
-                defaultValue: 'Leg einen PIN fest, damit nur du dein Tagebuch lesen kannst. Wenn du ihn vergisst, können deine Eltern ihn zurücksetzen.',
-              })}
-            </p>
-
-            <div className="mt-5 space-y-3">
-              <div>
-                <label className="text-xs font-semibold text-slate-500">
-                  {t('diaries.pin.pinLabel', { defaultValue: 'Dein PIN (mind. 4 Zeichen)' })}
-                </label>
-                <input
-                  type="password"
-                  value={setupPin}
-                  onChange={(e) => setSetupPin(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSetup()}
-                  placeholder="····"
-                  className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-[var(--color-teal-400)] focus:ring-2 focus:ring-[var(--color-teal-100)]"
-                />
-              </div>
-              <div>
-                <label className="text-xs font-semibold text-slate-500">
-                  {t('diaries.pin.pinRepeatLabel', { defaultValue: 'PIN nochmal eingeben' })}
-                </label>
-                <input
-                  type="password"
-                  value={setupPinRepeat}
-                  onChange={(e) => setSetupPinRepeat(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSetup()}
-                  placeholder="····"
-                  className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-[var(--color-teal-400)] focus:ring-2 focus:ring-[var(--color-teal-100)]"
-                />
-              </div>
-              <div>
-                <label className="text-xs font-semibold text-slate-500">
-                  {t('diaries.pin.hintLabel', { defaultValue: 'Hinweis (optional, falls du ihn vergisst)' })}
-                </label>
-                <input
-                  type="text"
-                  value={setupHint}
-                  onChange={(e) => setSetupHint(e.target.value)}
-                  placeholder={t('diaries.pin.hintPlaceholder', { defaultValue: 'z.B. mein Lieblingstier' })}
-                  className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-[var(--color-teal-400)] focus:ring-2 focus:ring-[var(--color-teal-100)]"
-                />
-              </div>
-            </div>
-
-            {setupError && (
-              <div className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-                {setupError}
-              </div>
-            )}
-
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-              <button
-                type="button"
-                onClick={handleSetup}
-                disabled={setupBusy}
-                className="rounded-xl bg-[var(--color-teal-600)] px-5 py-3 text-sm font-extrabold text-white hover:bg-[var(--color-teal-700)] disabled:opacity-60"
-              >
-                {t('diaries.pin.setupButton', { defaultValue: 'PIN festlegen & Tagebuch öffnen' })}
-              </button>
-              <button
-                type="button"
-                onClick={() => setUnlocked(true)}
-                className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-              >
-                {t('diaries.pin.skipButton', { defaultValue: 'Jetzt ohne PIN öffnen' })}
-              </button>
-            </div>
-
-            <p className="mt-4 text-xs text-slate-400">
-              {t('diaries.pin.parentNote', {
-                defaultValue: 'Vergessen? Eltern können den PIN im Elternbereich zurücksetzen – deine Einträge bleiben dabei erhalten.',
-              })}
-            </p>
           </div>
+
+          <div className="space-y-3">
+            <div>
+              <label className="text-xs font-semibold text-slate-500">
+                {t('diaries.pin.pinLabel', { defaultValue: 'Dein PIN (mind. 4 Zeichen)' })}
+              </label>
+              <input
+                type="password"
+                value={setupPin}
+                onChange={(e) => setSetupPin(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSetup()}
+                placeholder="····"
+                className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-slate-500">
+                {t('diaries.pin.pinRepeatLabel', { defaultValue: 'PIN nochmal eingeben' })}
+              </label>
+              <input
+                type="password"
+                value={setupPinRepeat}
+                onChange={(e) => setSetupPinRepeat(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSetup()}
+                placeholder="····"
+                className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-slate-500">
+                {t('diaries.pin.hintLabel', { defaultValue: 'Hinweis (optional, falls du ihn vergisst)' })}
+              </label>
+              <input
+                type="text"
+                value={setupHint}
+                onChange={(e) => setSetupHint(e.target.value)}
+                placeholder={t('diaries.pin.hintPlaceholder', { defaultValue: 'z.B. mein Lieblingstier' })}
+                className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
+              />
+            </div>
+          </div>
+
+          {setupError && (
+            <div className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+              {setupError}
+            </div>
+          )}
+
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={handleSetup}
+              disabled={setupBusy}
+              className="rounded-xl bg-violet-600 px-5 py-3 text-sm font-extrabold text-white hover:bg-violet-700 disabled:opacity-60"
+            >
+              {t('diaries.pin.setupButton', { defaultValue: 'PIN festlegen →' })}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowPinSetup(false)}
+              className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >
+              {t('diaries.pin.skipButton', { defaultValue: 'Jetzt ohne PIN weiter' })}
+            </button>
+          </div>
+
+          <p className="mt-4 text-xs text-slate-400">
+            {t('diaries.pin.parentNote', { defaultValue: 'Vergessen? Eltern können den PIN im Elternbereich zurücksetzen – deine Einträge bleiben dabei erhalten.' })}
+          </p>
         </div>
-      );
-    }
-    // Unlocked or no pin ever set
-    return <MyDiarySection />;
+      </div>
+    );
   }
 
-  // Locked: show PIN entry
+  // No PIN or already unlocked → show diary directly
+  if (!hasPin || unlocked) {
+    return <MyDiarySection hasPin={hasPin} onRequestPinSetup={() => setShowPinSetup(true)} />;
+  }
+
+  // Has PIN but locked — show unlock screen
   return (
-    <div className="mt-6 rounded-[28px] border border-[var(--color-teal-200)] bg-white shadow-sm overflow-hidden">
+    <div className="mt-6 rounded-[28px] border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-purple-50 shadow-sm overflow-hidden">
       <div className="p-5 sm:p-6 max-w-sm mx-auto text-center">
         <div className="text-4xl mb-3">🔒</div>
         <div className="text-base font-extrabold text-slate-900">
@@ -727,7 +753,7 @@ function MyDiaryWithPin() {
           onKeyDown={(e) => e.key === 'Enter' && handleUnlock()}
           placeholder="····"
           autoFocus
-          className="mt-5 w-full rounded-xl border border-slate-300 px-4 py-3 text-center text-lg font-bold tracking-widest outline-none focus:border-[var(--color-teal-400)] focus:ring-2 focus:ring-[var(--color-teal-100)]"
+          className="mt-5 w-full rounded-xl border border-violet-200 px-4 py-3 text-center text-lg font-bold tracking-widest outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
         />
 
         {pinError && (
@@ -740,9 +766,9 @@ function MyDiaryWithPin() {
           type="button"
           onClick={handleUnlock}
           disabled={pinBusy || !pinInput.trim()}
-          className="mt-4 w-full rounded-xl bg-[var(--color-teal-600)] px-5 py-3 text-sm font-extrabold text-white hover:bg-[var(--color-teal-700)] disabled:opacity-60"
+          className="mt-4 w-full rounded-xl bg-violet-600 px-5 py-3 text-sm font-extrabold text-white hover:bg-violet-700 disabled:opacity-60"
         >
-          {t('diaries.pin.unlockButton', { defaultValue: 'Öffnen' })}
+          {t('diaries.pin.unlockButton', { defaultValue: 'Öffnen →' })}
         </button>
 
         <div className="mt-4">
@@ -764,9 +790,7 @@ function MyDiaryWithPin() {
                 </>
               ) : null}
               <span className="mt-1 block">
-                {t('diaries.pin.forgotHint', {
-                  defaultValue: 'Vergessen? Bitte deine Eltern, den PIN im Elternbereich zurückzusetzen. Deine Einträge bleiben erhalten.',
-                })}
+                {t('diaries.pin.forgotHint', { defaultValue: 'Vergessen? Bitte deine Eltern, den PIN im Elternbereich zurückzusetzen. Deine Einträge bleiben erhalten.' })}
               </span>
             </div>
           )}
@@ -777,7 +801,7 @@ function MyDiaryWithPin() {
 }
 
 // -------------------- diary_me content --------------------
-function MyDiarySection() {
+function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequestPinSetup: () => void }) {
   const { t } = useTranslation('bonus');
   const { updateProfile } = useProfile();
   const canvasRef = useRef<HTMLDivElement | null>(null);
@@ -786,10 +810,14 @@ function MyDiarySection() {
     loadMeDiary().sort((a, b) => b.createdAt - a.createdAt)
   );
   const [text, setText] = useState('');
+  const [draftStickers, setDraftStickers] = useState<DiaryStickerId[]>([]);
+  const [showPinBanner, setShowPinBanner] = useState(false);
   const [activeEntryId, setActiveEntryId] = useState<string | null>(entries[0]?.id ?? null);
   const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
   const [editText, setEditText] = useState('');
   const [selectedStickerId, setSelectedStickerId] = useState<string | null>(null);
+
+  const dailyPrompt = useMemo(() => getDailyPrompt(), []);
 
   const activeEntry = useMemo(() => entries.find((e) => e.id === activeEntryId) ?? null, [entries, activeEntryId]);
 
@@ -824,21 +852,46 @@ function MyDiarySection() {
     });
   }, [updateProfile]);
 
+  function toggleDraftSticker(sid: DiaryStickerId) {
+    setDraftStickers((prev) =>
+      prev.includes(sid) ? prev.filter((s) => s !== sid) : [...prev, sid]
+    );
+  }
+
   function createEntry() {
     const trimmed = text.trim();
     if (!trimmed) return;
+
+    const PRESET_POS = [
+      { xPx: 235, yPx: 80, rot: -6 },
+      { xPx: 225, yPx: 220, rot: 9 },
+      { xPx: 240, yPx: 340, rot: -4 },
+    ];
+    const stickers: MeSticker[] = draftStickers.slice(0, 3).map((stickerId, i) => ({
+      id: uid('stk'),
+      stickerId,
+      xPx: PRESET_POS[i]?.xPx ?? 220,
+      yPx: PRESET_POS[i]?.yPx ?? 80 + i * 130,
+      rot: PRESET_POS[i]?.rot ?? 0,
+      size: 100,
+    }));
 
     const e: MeEntry = {
       id: uid('me'),
       createdAt: Date.now(),
       text: trimmed,
-      stickers: [],
+      stickers,
     };
 
     const next = [e, ...entries];
     setEntries(next);
     setActiveEntryId(e.id);
     setText('');
+    setDraftStickers([]);
+
+    if (!hasPin && entries.length === 0) {
+      setTimeout(() => setShowPinBanner(true), 400);
+    }
   }
 
   function addSticker(sid: DiaryStickerId) {
@@ -898,54 +951,138 @@ function MyDiarySection() {
   }
 
   return (
-    <div className="mt-6 space-y-6">
-      {/* Create */}
-      <div className="rounded-3xl border border-black/5 bg-white shadow-sm overflow-hidden">
-        <div className="p-5 sm:p-6">
-          <div className="text-sm font-extrabold text-slate-900">
-            {t('diaries.me.writeTitle', { defaultValue: 'Neue Seite schreiben' })}
-          </div>
-          <div className="mt-2 text-sm text-slate-600">
-            {t('diaries.me.writeHint', { defaultValue: 'Schreib einfach drauflos. Danach kannst du Sticker draufkleben.' })}
-          </div>
+    <div className="mt-6 space-y-5">
 
+      {/* ── WRITE AREA — Notizbuch-Stil ── */}
+      <div className="rounded-3xl border border-violet-100 overflow-hidden shadow-sm">
+
+        {/* Header */}
+        <div className="flex items-center gap-3 px-5 py-3 bg-violet-50 border-b border-violet-100">
+          <span className="text-xl" aria-hidden>✏️</span>
+          <div className="text-sm font-extrabold text-violet-900">
+            {t('diaries.me.writeTitle', { defaultValue: 'Neue Seite' })}
+          </div>
+          <div className="ml-auto text-xs text-violet-400 font-semibold">
+            {new Date().toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' })}
+          </div>
+        </div>
+
+        {/* Liniertes Papier */}
+        <div
+          className="relative"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(139,92,246,0.25) 1px, transparent 1px),
+              repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, rgba(15,23,42,0.07) 31px, rgba(15,23,42,0.07) 32px),
+              linear-gradient(180deg, rgba(255,253,255,1), rgba(255,255,255,1))
+            `,
+            backgroundSize: '1px 100%, 100% 32px, 100% 100%',
+            backgroundPosition: '52px 0, 0 8px, 0 0',
+            backgroundRepeat: 'no-repeat, repeat, no-repeat',
+          }}
+        >
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder={t('diaries.me.placeholder', { defaultValue: 'Heute war…' })}
-            className="mt-4 w-full min-h-[140px] rounded-2xl border border-slate-200 bg-white p-4 text-base leading-relaxed outline-none focus:ring-2 focus:ring-[var(--color-teal-200)]"
+            placeholder={dailyPrompt}
+            rows={6}
+            className="w-full bg-transparent pl-[68px] pr-4 py-2 text-xl diary-hand text-slate-900 outline-none resize-none placeholder:text-slate-300"
+            style={{ lineHeight: '32px' }}
           />
+        </div>
 
-          <div className="mt-4 flex items-center gap-3">
-            <button
-              type="button"
-              onClick={createEntry}
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
-            >
-              {t('diaries.me.save', { defaultValue: 'Seite speichern' })}
-            </button>
-            <div className="text-xs text-slate-500">
-              {t('diaries.me.localOnly', { defaultValue: 'Wird nur auf diesem Gerät gespeichert.' })}
-            </div>
+        {/* Sticker-Auswahl */}
+        <div className="px-4 pt-3 pb-2 border-t border-slate-100 bg-white">
+          <div className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wide mb-2">
+            Sticker für diese Seite:
           </div>
+          <div className="flex flex-wrap gap-1">
+            {DIARY_STICKERS.map((sid) => (
+              <button
+                key={sid}
+                type="button"
+                onClick={() => toggleDraftSticker(sid)}
+                aria-label={sid}
+                aria-pressed={draftStickers.includes(sid)}
+                className={[
+                  'rounded-xl p-0.5 transition-all duration-150',
+                  draftStickers.includes(sid)
+                    ? 'ring-2 ring-violet-400 bg-violet-50 scale-110'
+                    : 'hover:scale-105 hover:bg-slate-50',
+                ].join(' ')}
+              >
+                <img src={stickerSrc(sid, 256)} alt={sid} className="w-10 h-10" loading="lazy" />
+              </button>
+            ))}
+          </div>
+          {draftStickers.length > 0 && (
+            <div className="mt-2 flex items-center gap-3 text-xs">
+              <span className="font-semibold text-violet-700">{draftStickers.length} Sticker ausgewählt</span>
+              <button type="button" onClick={() => setDraftStickers([])} className="text-slate-400 hover:text-red-500 transition-colors">
+                Alle entfernen
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Speichern + Datenschutz-Hinweis */}
+        <div className="px-5 py-4 bg-white border-t border-slate-100">
+          <button
+            type="button"
+            onClick={createEntry}
+            disabled={!text.trim()}
+            className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-violet-600 text-white hover:bg-violet-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {t('diaries.me.save', { defaultValue: 'Seite speichern ✓' })}
+          </button>
+          <p className="mt-2 text-xs text-slate-400 leading-relaxed">
+            📱 {t('diaries.me.localOnly', { defaultValue: 'Wird nur auf diesem Gerät gespeichert.' })}{' '}
+            {t('diaries.me.deviceWarning', { defaultValue: 'Andere Personen, die dieses Gerät nutzen, könnten deine Einträge lesen.' })}
+          </p>
         </div>
       </div>
 
-      {/* List + Canvas */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* List */}
-        <div className="lg:col-span-5">
-          <div className="rounded-3xl border border-black/5 bg-white shadow-sm overflow-hidden">
-            <div className="p-5 sm:p-6">
-              <div className="text-sm font-extrabold text-slate-900">
-                {t('diaries.me.pagesTitle', { defaultValue: 'Deine Seiten' })}
-              </div>
+      {/* ── PIN-SCHUTZ-BANNER (nach erstem Eintrag) ── */}
+      {showPinBanner && !hasPin && (
+        <div className="rounded-3xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-purple-50 p-4 flex items-start gap-3 shadow-sm">
+          <span className="text-2xl shrink-0 mt-0.5">🔒</span>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-extrabold text-violet-900">
+              {t('diaries.pin.bannerTitle', { defaultValue: 'Tagebuch schützen?' })}
+            </div>
+            <p className="mt-1 text-xs text-violet-800 leading-relaxed">
+              {t('diaries.pin.bannerBody', { defaultValue: 'Andere Personen, die dieses Gerät nutzen, könnten deine Einträge lesen. Mit einem PIN gehört dein Tagebuch wirklich nur dir.' })}
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => { setShowPinBanner(false); onRequestPinSetup(); }}
+                className="rounded-xl bg-violet-600 px-4 py-2 text-xs font-extrabold text-white hover:bg-violet-700 transition-colors"
+              >
+                {t('diaries.pin.bannerYes', { defaultValue: 'Ja, PIN festlegen →' })}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowPinBanner(false)}
+                className="rounded-xl border border-violet-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-violet-50 transition-colors"
+              >
+                {t('diaries.pin.bannerSkip', { defaultValue: 'Später' })}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-              {entries.length === 0 ? (
-                <div className="mt-3 text-sm text-slate-600">
-                  {t('diaries.me.noPages', { defaultValue: 'Noch keine Einträge. Schreib deine erste Seite oben.' })}
+      {/* ── SEITEN-LISTE + CANVAS ── */}
+      {entries.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Liste */}
+          <div className="lg:col-span-5">
+            <div className="rounded-3xl border border-black/5 bg-white shadow-sm overflow-hidden">
+              <div className="p-5 sm:p-6">
+                <div className="text-base font-extrabold text-slate-900">
+                  {t('diaries.me.pagesTitle', { defaultValue: 'Deine Seiten' })}
                 </div>
-              ) : (
                 <div className="mt-4 space-y-3">
                   {entries.map((e) => (
                     <button
@@ -955,7 +1092,7 @@ function MyDiarySection() {
                       className={[
                         'w-full text-left rounded-2xl border p-3 transition',
                         e.id === activeEntryId
-                          ? 'border-[var(--color-teal-300)] bg-[var(--color-teal-50)]'
+                          ? 'border-violet-300 bg-violet-50'
                           : 'border-slate-200 bg-white hover:bg-slate-50',
                       ].join(' ')}
                     >
@@ -974,121 +1111,120 @@ function MyDiarySection() {
                     </button>
                   ))}
                 </div>
-              )}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Canvas */}
-        <div className="lg:col-span-7">
-          <div className="rounded-3xl border border-black/5 bg-white shadow-sm overflow-hidden">
-            <div className="p-5 sm:p-6">
-              <div className="flex items-center justify-between gap-3">
-                <div className="text-sm font-extrabold text-slate-900">
-                  {t('diaries.me.canvasTitle', { defaultValue: 'Sticker & Seite' })}
-                </div>
-                <div className="flex items-center gap-2">
-                  {activeEntry ? (
-                    <div className="text-xs font-bold text-slate-500">{formatDate(activeEntry.createdAt)}</div>
-                  ) : null}
-                  {activeEntry && editingEntryId !== activeEntry.id ? (
-                    <button
-                      type="button"
-                      onClick={() => startEditing(activeEntry)}
-                      className="rounded-xl border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-                    >
-                      Bearbeiten
-                    </button>
-                  ) : null}
-                </div>
-              </div>
-
-              {!activeEntry ? (
-                <div className="mt-4 text-sm text-slate-600">
-                  {t('diaries.me.pickPage', { defaultValue: 'Wähle links eine Seite aus.' })}
-                </div>
-              ) : (
-                <>
-                  {/* Sticker Picker */}
-                  <div className="mt-4 flex flex-wrap gap-1">
-                    {DIARY_STICKERS.map((sid) => (
-                      <button
-                        key={sid}
-                        type="button"
-                        onClick={() => addSticker(sid)}
-                        className="transition-transform hover:scale-110 active:scale-95"
-                        aria-label={sid}
-                      >
-                        <img src={stickerSrc(sid, 256)} alt={sid} className="w-10 h-10" />
-                      </button>
-                    ))}
+          {/* Canvas */}
+          <div className="lg:col-span-7">
+            <div className="rounded-3xl border border-black/5 bg-white shadow-sm overflow-hidden">
+              <div className="p-5 sm:p-6">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="text-base font-extrabold text-slate-900">
+                    {t('diaries.me.canvasTitle', { defaultValue: 'Sticker & Seite' })}
                   </div>
-
-                  {/* Canvas */}
-                  <div className="mt-4 rounded-3xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,250,240,1),rgba(255,255,255,1))] overflow-hidden">
-                    <div ref={canvasRef} className={['relative p-5 sm:p-6', editingEntryId === activeEntry.id ? '' : 'touch-none'].join(' ')} style={{ minHeight: 340 }}>
-                      {/* Text */}
-                      <div className="relative z-0">
-                        {editingEntryId === activeEntry.id ? (
-                          <>
-                            <textarea
-                              value={editText}
-                              onChange={(e) => setEditText(e.target.value)}
-                              className="w-full min-h-[140px] rounded-xl border border-slate-200 bg-white p-3 text-base leading-relaxed outline-none focus:ring-2 focus:ring-[var(--color-teal-200)] resize-none"
-                            />
-                            <div className="mt-2 flex gap-2">
-                              <button
-                                type="button"
-                                onClick={saveEdit}
-                                className="rounded-xl bg-[var(--color-teal-600)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--color-teal-700)]"
-                              >
-                                Speichern
-                              </button>
-                              <button
-                                type="button"
-                                onClick={cancelEdit}
-                                className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                              >
-                                Abbrechen
-                              </button>
-                            </div>
-                          </>
-                        ) : (
-                          <div className="text-[18px] leading-8 text-slate-900 diary-hand whitespace-pre-wrap">
-                            {activeEntry.text}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Stickers layer */}
-                      <div
-                        className={['absolute inset-0 z-10', editingEntryId === activeEntry.id ? 'pointer-events-none' : 'pointer-events-auto'].join(' ')}
-                        onClick={() => setSelectedStickerId(null)}
+                  <div className="flex items-center gap-2">
+                    {activeEntry ? (
+                      <div className="text-xs font-bold text-slate-500">{formatDate(activeEntry.createdAt)}</div>
+                    ) : null}
+                    {activeEntry && editingEntryId !== activeEntry.id ? (
+                      <button
+                        type="button"
+                        onClick={() => startEditing(activeEntry)}
+                        className="rounded-xl border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50"
                       >
-                        {activeEntry.stickers.map((s) => (
-                          <StickerDraggable
-                            key={s.id}
-                            sticker={s}
-                            canvasRef={canvasRef}
-                            selected={s.id === selectedStickerId}
-                            onSelect={() => setSelectedStickerId(s.id)}
-                            onMove={(xPx, yPx) => updateSticker(s.id, { xPx, yPx })}
-                            onRemove={() => { removeSticker(s.id); setSelectedStickerId(null); }}
-                          />
-                        ))}
+                        Bearbeiten
+                      </button>
+                    ) : null}
+                  </div>
+                </div>
+
+                {!activeEntry ? (
+                  <div className="mt-4 text-sm text-slate-600">
+                    {t('diaries.me.pickPage', { defaultValue: 'Wähle links eine Seite aus.' })}
+                  </div>
+                ) : (
+                  <>
+                    <div className="mt-4 flex flex-wrap gap-1">
+                      {DIARY_STICKERS.map((sid) => (
+                        <button
+                          key={sid}
+                          type="button"
+                          onClick={() => addSticker(sid)}
+                          className="transition-transform hover:scale-110 active:scale-95"
+                          aria-label={sid}
+                        >
+                          <img src={stickerSrc(sid, 256)} alt={sid} className="w-10 h-10" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="mt-4 rounded-3xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,250,240,1),rgba(255,255,255,1))] overflow-hidden">
+                      <div ref={canvasRef} className={['relative p-5 sm:p-6', editingEntryId === activeEntry.id ? '' : 'touch-none'].join(' ')} style={{ minHeight: 340 }}>
+                        <div className="relative z-0">
+                          {editingEntryId === activeEntry.id ? (
+                            <>
+                              <textarea
+                                value={editText}
+                                onChange={(e) => setEditText(e.target.value)}
+                                className="w-full min-h-[140px] rounded-xl border border-slate-200 bg-white p-3 text-base leading-relaxed outline-none focus:ring-2 focus:ring-[var(--color-teal-200)] resize-none"
+                              />
+                              <div className="mt-2 flex gap-2">
+                                <button type="button" onClick={saveEdit} className="rounded-xl bg-[var(--color-teal-600)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--color-teal-700)]">Speichern</button>
+                                <button type="button" onClick={cancelEdit} className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Abbrechen</button>
+                              </div>
+                            </>
+                          ) : (
+                            <div className="text-xl leading-8 text-slate-900 diary-hand whitespace-pre-wrap">
+                              {activeEntry.text}
+                            </div>
+                          )}
+                        </div>
+
+                        <div
+                          className={['absolute inset-0 z-10', editingEntryId === activeEntry.id ? 'pointer-events-none' : 'pointer-events-auto'].join(' ')}
+                          onClick={() => setSelectedStickerId(null)}
+                        >
+                          {activeEntry.stickers.map((s) => (
+                            <StickerDraggable
+                              key={s.id}
+                              sticker={s}
+                              canvasRef={canvasRef}
+                              selected={s.id === selectedStickerId}
+                              onSelect={() => setSelectedStickerId(s.id)}
+                              onMove={(xPx, yPx) => updateSticker(s.id, { xPx, yPx })}
+                              onRemove={() => { removeSticker(s.id); setSelectedStickerId(null); }}
+                            />
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="mt-3 text-xs text-slate-500">
-                    {t('diaries.me.dragHint', { defaultValue: 'Sticker antippen zum Auswählen, dann ✕ zum Entfernen.' })}
-                  </div>
-                </>
-              )}
+                    <div className="mt-3 text-xs text-slate-500">
+                      {t('diaries.me.dragHint', { defaultValue: 'Sticker antippen zum Auswählen, dann ✕ zum Entfernen.' })}
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {/* ── DAUERHAFTER DATENSCHUTZ-HINWEIS (wenn kein PIN) ── */}
+      {!hasPin && entries.length > 0 && !showPinBanner && (
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500 leading-relaxed">
+          <span className="font-semibold">Hinweis:</span>{' '}
+          Andere Personen, die dieses Gerät nutzen, könnten deine Einträge lesen.{' '}
+          <button
+            type="button"
+            onClick={onRequestPinSetup}
+            className="font-semibold underline text-violet-700 hover:text-violet-900"
+          >
+            Jetzt mit PIN schützen →
+          </button>
+        </div>
+      )}
     </div>
   );
 }

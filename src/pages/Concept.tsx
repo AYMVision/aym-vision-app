@@ -3,6 +3,8 @@ import Layout from '../components/Layout';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../common/utils';
+import SmartImage from '../components/SmartImage';
+import { assetUrl } from '../common/assetUrl';
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
@@ -178,13 +180,12 @@ export default function Concept() {
         {/* HERO */}
 
 <section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg">
-  <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-[var(--color-teal-50)]" />
-  <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-[var(--color-teal-200)]/30 blur-2xl" />
-  <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-[var(--color-teal-300)]/20 blur-2xl" />
+  <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-white" />
+  <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full" />
 
   <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch">
     {/* TEXT */}
-    <div className="lg:col-span-6 p-6 sm:p-10 lg:pr-6 flex flex-col justify-center">
+    <div className="lg:col-span-7 p-6 sm:p-10 lg:pr-6 flex flex-col justify-center">
       <div className="text-xs sm:text-sm font-semibold text-[var(--color-teal-700)]">
         {t('hero.kicker')}
       </div>
@@ -222,21 +223,24 @@ export default function Concept() {
     </div>
 
     {/* MEDIA */}
-    <div className="lg:col-span-6 relative min-h-[280px] sm:min-h-[340px] lg:min-h-[420px]">
-      <video
-        className="absolute inset-0 w-full h-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/media/ui/Kids_surfen_smart-poster.jpg"
-      >
-        <source src="/media/ui/Kids_surfen_smart.mp4" type="video/mp4" />
-      </video>
+    <div className="lg:col-span-5 relative min-h-[280px] sm:min-h-[340px] lg:min-h-[420px]">
+      <SmartImage
+        alt=""
+        className="absolute inset-0 w-full h-full object-contain scale-100"
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        avif={[
+          { src: assetUrl('media/ui/concept/hero-concept-2-512.avif'), w: 512 },
+          { src: assetUrl('media/ui/concept/hero-concept-2-1024.avif'), w: 1024 },
+        ]}
+        webp={[
+          { src: assetUrl('media/ui/concept/hero-concept-2-512.webp'), w: 512 },
+          { src: assetUrl('media/ui/concept/hero-concept-2-1024.webp'), w: 1024 },
+        ]}
+        fallback={assetUrl('media/ui/concept/hero-concept-2-1024.webp')}
+        loading="eager"
+        decoding="async"
+      />
 
-      {/* sanfter Übergang zur Textseite */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/10 to-transparent lg:from-transparent lg:via-transparent lg:to-transparent pointer-events-none" />
     </div>
   </div>
   

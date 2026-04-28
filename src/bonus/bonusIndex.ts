@@ -216,13 +216,16 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
   bonusId: 'chioma-news-school-social-media',
   category: 'newspaper',
   released: true,
-  order: 5,
+  order: 6,
   mediaType: 'audio',
+  titleKey: 'bonus:newspaper.currentNews.socialMedia.title',
+  descriptionKey: 'bonus:newspaper.currentNews.socialMedia.description',
   coverImage: 'media/ui/welcome/feat-newspaper-1024.webp',
   audioSrc: 'media/newspaper/audio/kw15_26_audio_chiomas-news-school-social-media.mp3',
   bodySrc: 'media/newspaper/articles/news/kw15_26_audio_chiomas-news-school-social-media',
   bodyKind: 'md',
   topicTags: ['infoCheck', 'reflect'],
+  unlockedBy: { type: 'chapter', id: 's1e01c01' },
 },
 
 //_________________________________________________________

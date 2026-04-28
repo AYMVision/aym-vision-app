@@ -517,6 +517,46 @@ export default function StickerAlbum() {
           </div>
         </section>
 
+
+        {/* STREAK */}
+        <section className="rounded-[28px] border border-black/5 bg-gradient-to-br from-rose-50 via-orange-50 to-yellow-50 shadow-sm p-5">
+          <SectionHeader
+            emoji="🔥"
+            title={tStories('album.streakTitle', { defaultValue: 'Streak-Belohnungen' })}
+            count={unlockedStreaks}
+            total={totalStreaks}
+          />
+          <p className="text-xs text-slate-600 mb-4">
+            {tStories('album.streakHint', {
+              defaultValue: 'Komm immer wieder zurück und sammle auch diese Sticker.',
+            })}
+          </p>
+          <StickerGrid
+            stickers={STREAK_STICKERS}
+            earnedStickers={Object.fromEntries(STREAK_STICKERS.map((s) => [s.id, isEarned(s.id)]))}
+            seen={seen}
+            onSeen={handleSeen}
+          />
+        </section>
+
+
+        {/* MEILENSTEINE */}
+        <section className="rounded-[28px] border border-black/5 bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 shadow-sm p-5">
+          <SectionHeader
+            emoji="🎯"
+            title={tStories('album.milestonesTitle', { defaultValue: 'Meilensteine' })}
+            count={unlockedMilestones}
+            total={totalMilestones}
+          />
+          <StickerGrid
+            stickers={MILESTONE_STICKERS}
+            earnedStickers={Object.fromEntries(MILESTONE_STICKERS.map((s) => [s.id, isEarned(s.id)]))}
+            seen={seen}
+            onSeen={handleSeen}
+          />
+        </section>
+
+
         {/* THEMEN */}
         <section className="rounded-[28px] border border-black/5 bg-gradient-to-br from-teal-50 via-sky-50 to-violet-50 shadow-sm p-5">
           <SectionHeader
@@ -549,43 +589,6 @@ export default function StickerAlbum() {
           </div>
         </section>
 
-
-        {/* MEILENSTEINE */}
-        <section className="rounded-[28px] border border-black/5 bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 shadow-sm p-5">
-          <SectionHeader
-            emoji="🎯"
-            title={tStories('album.milestonesTitle', { defaultValue: 'Meilensteine' })}
-            count={unlockedMilestones}
-            total={totalMilestones}
-          />
-          <StickerGrid
-            stickers={MILESTONE_STICKERS}
-            earnedStickers={Object.fromEntries(MILESTONE_STICKERS.map((s) => [s.id, isEarned(s.id)]))}
-            seen={seen}
-            onSeen={handleSeen}
-          />
-        </section>
-
-        {/* STREAK */}
-        <section className="rounded-[28px] border border-black/5 bg-gradient-to-br from-rose-50 via-orange-50 to-yellow-50 shadow-sm p-5">
-          <SectionHeader
-            emoji="🔥"
-            title={tStories('album.streakTitle', { defaultValue: 'Streak-Belohnungen' })}
-            count={unlockedStreaks}
-            total={totalStreaks}
-          />
-          <p className="text-xs text-slate-600 mb-4">
-            {tStories('album.streakHint', {
-              defaultValue: 'Komm immer wieder zurück und sammle auch diese Sticker.',
-            })}
-          </p>
-          <StickerGrid
-            stickers={STREAK_STICKERS}
-            earnedStickers={Object.fromEntries(STREAK_STICKERS.map((s) => [s.id, isEarned(s.id)]))}
-            seen={seen}
-            onSeen={handleSeen}
-          />
-        </section>
       </div>
     </Layout>
   );

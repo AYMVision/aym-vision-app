@@ -1,5 +1,6 @@
 // src/ai/core/extractKeyIdea.ts
 // Hybrid: local ML (Embeddings-Ranking) -> Fallback Heuristik
+import { ensureXenovaReady } from '../llm/initXenova';
 
 let _embedder: any | null = null;
 
@@ -44,6 +45,7 @@ async function mlKeyIdea(tipText: string): Promise<string> {
   if (sentences.length === 0) return clamp(toShortIdea(raw, 12), 110);
 
   if (!_embedder) {
+    await ensureXenovaReady();
     const { pipeline } = await import('@xenova/transformers');
     _embedder = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
   }

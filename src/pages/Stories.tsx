@@ -7,9 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '../common/utils';
 import { getProgress, getCompletedChapterCount } from '../progress/storyProgress';
 import { assetUrl } from '../common/assetUrl';
+import SmartImage from '../components/SmartImage';
 
 import { getStoryCards } from '../content/contentIndex';
-import { getPlayableEpisodeV02 } from '../story-v02/content/getPlayableEpisodeV02';
+import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile'; // ✅ NEW
 import { shouldBypassAll } from '../gating/entitlements';
 
@@ -171,14 +172,14 @@ export default function Stories() {
         className={`w-full ${hClass} ${object}`}
         loading="lazy"
       />
-      <div className="absolute top-2 right-2 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-600 shadow-sm">
+      <div className="absolute top-2 right-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-bold bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-600 shadow-sm">
         {tag}
       </div>
     </div>
     {/* Text unten — kompakt */}
     <div className="px-3 py-2 sm:px-4 sm:py-3">
       <div className="font-extrabold text-slate-900 leading-snug text-sm">{title}</div>
-      <div className="mt-0.5 text-[11px] text-slate-500 leading-snug">{text}</div>
+      <div className="mt-0.5 text-sm text-slate-500 leading-snug">{text}</div>
     </div>
   </div>
 );
@@ -195,7 +196,7 @@ const cardsForUI = cardsInOrder;
     const playableById = useMemo(() => {
     const m: { [key: string]: boolean } = {};
     for (const c of cardsForUI) {
-      m[c.id] = Boolean(getPlayableEpisodeV02(c.id, lang));
+      m[c.id] = isEpisodeAvailable(c.id, lang);
     }
     return m;
   }, [cardsForUI, lang]);
@@ -332,13 +333,22 @@ function isUnlockedByChain(
 
           {/* MEDIA */}
           <div className="lg:col-span-6 relative min-h-[280px] sm:min-h-[340px] lg:min-h-[420px]">
-            <img
-              src={assetUrl('media/ui/stories/stories-hero-1024.webp')}
+            <SmartImage
               alt={tStories('hero.imageAlt', { defaultValue: 'Story-Welt: Mia, Finn und Freunde' })}
               className="absolute inset-0 w-full h-full object-cover object-center"
-              loading="lazy"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              avif={[
+                { src: assetUrl('media/ui/stories/stories-hero-512.avif'), w: 512 },
+                { src: assetUrl('media/ui/stories/stories-hero-1024.avif'), w: 1024 },
+              ]}
+              webp={[
+                { src: assetUrl('media/ui/stories/stories-hero-512.webp'), w: 512 },
+                { src: assetUrl('media/ui/stories/stories-hero-1024.webp'), w: 1024 },
+              ]}
+              fallback={assetUrl('media/ui/stories/stories-hero-1024.webp')}
+              loading="eager"
+              decoding="async"
             />
-
           </div>
         </div>
       </section>
@@ -531,8 +541,8 @@ function isUnlockedByChain(
         img: 'media/ui/welcome/feat-avatar-1024.webp',
         alt: tStories('bonus.cards.avatar.imageAlt', { defaultValue: 'Bild: Avatar-Ansicht' }),
         object: 'object-cover object-top',
-        mobileH: 'h-52',
-        desktopH: 'h-60',
+        mobileH: 'h-56',
+        desktopH: 'h-64',
       },
       {
         tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
@@ -544,8 +554,8 @@ function isUnlockedByChain(
         img: 'media/ui/about/sample-1024.webp',
         alt: tStories('bonus.cards.coins.imageAlt', { defaultValue: 'Bild: Coins-Übersicht' }),
         object: 'object-cover object-top',
-        mobileH: 'h-52',
-        desktopH: 'h-60',
+        mobileH: 'h-56',
+        desktopH: 'h-64',
       },
       {
         tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
@@ -557,8 +567,8 @@ function isUnlockedByChain(
         img: 'media/ui/welcome/feat-stickers-1024.webp',
         alt: tStories('bonus.cards.sticker.imageAlt', { defaultValue: 'Bild: Sticker-Album' }),
         object: 'object-cover object-top',
-        mobileH: 'h-52',
-        desktopH: 'h-60',
+        mobileH: 'h-56',
+        desktopH: 'h-64',
       },
       {
         tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
@@ -569,8 +579,8 @@ function isUnlockedByChain(
         img: 'media/ui/welcome/feat-newspaper-1024.webp',
         alt: tStories('bonus.cards.newspaper.imageAlt', { defaultValue: 'Bild: Schülerzeitung-Bereich' }),
         object: 'object-cover object-top',
-        mobileH: 'h-52',
-        desktopH: 'h-60',
+        mobileH: 'h-56',
+        desktopH: 'h-64',
       },
       {
         tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
@@ -581,8 +591,8 @@ function isUnlockedByChain(
         img: 'media/ui/welcome/feat-tagebuch-1024.webp',
         alt: tStories('bonus.cards.diary.imageAlt', { defaultValue: 'Bild: Tagebuch-Ansicht' }),
         object: 'object-cover object-top',
-        mobileH: 'h-52',
-        desktopH: 'h-60',
+        mobileH: 'h-56',
+        desktopH: 'h-64',
       },
       {
         tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
@@ -593,8 +603,8 @@ function isUnlockedByChain(
         img: 'media/ui/welcome/feat-sammelkarten-1024.webp',
         alt: tStories('bonus.cards.collectibles.imageAlt', { defaultValue: 'Bild: Sammelkarten-Übersicht' }),
         object: 'object-cover object-top',
-        mobileH: 'h-52',
-        desktopH: 'h-60',
+        mobileH: 'h-56',
+        desktopH: 'h-64',
       },
     ];
 

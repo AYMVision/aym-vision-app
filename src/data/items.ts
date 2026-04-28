@@ -71,12 +71,6 @@ export const ITEMS: ItemDef[] = [
     labelKey: 'items.headphones',
   },
   {
-    id: 'item_ice-skates_white',
-    slot: 'featured',
-    shopPrice: 25,
-    labelKey: 'items.iceSkatesWhite',
-  },
-  {
     id: 'item_ice-skates_black',
     slot: 'featured',
     shopPrice: 25,
@@ -231,28 +225,10 @@ export const ITEMS: ItemDef[] = [
 
   // ✨ Effekte
   {
-    id: 'feuerwerk_1',
-    slot: 'effect',
-    shopPrice: 6,
-    labelKey: 'items.feuerwerk1',
-  },
-  {
-    id: 'glowing_energy_1',
-    slot: 'effect',
-    shopPrice: 6,
-    labelKey: 'items.glowingEnergy1',
-  },
-  {
     id: 'herzen_1',
     slot: 'effect',
     shopPrice: 6,
     labelKey: 'items.herzen1',
-  },
-  {
-    id: 'soft_glowing_1',
-    slot: 'effect',
-    shopPrice: 6,
-    labelKey: 'items.softGlowing1',
   },
   {
     id: 'sparkling_1',
@@ -385,7 +361,7 @@ export const ITEM_STYLE: Partial<Record<string, string>> = {
     'transform scale-[1.08] translate-y-[-4%] opacity-85',
 
   'effect:herzen_1':
-    'transform scale-[1.05] translate-y-[-3%] opacity-85',
+    'transform scale-[0.70] translate-y-[-23%] opacity-85',
 
   'effect:soft_glowing_1':
     'transform scale-[1.12] translate-y-[-2%] opacity-75',

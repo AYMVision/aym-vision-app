@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useProfile } from '../profile/useProfile';
-import { assetUrl } from '../common/assetUrl';
 import AvatarLookCircle from '../components/AvatarLookCircle';
+import AvatarFullImage from '../components/AvatarFullImage';
 
 type MyCardData = {
   mostly: string;
@@ -292,10 +292,6 @@ function setField<K extends keyof MyCardData>(field: K, value: MyCardData[K]) {
   const displayName =
     chatName.trim() || t('charactersUi.myCard.defaultName', { defaultValue: 'Ich' });
 
-  const avatarSrc = assetUrl(
-    `media/avatars/base/${(profile.avatarBaseId?.trim() || 'default').toLowerCase()}-256.webp`
-  );
-
   return (
     <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
 
@@ -340,14 +336,14 @@ function setField<K extends keyof MyCardData>(field: K, value: MyCardData[K]) {
           </div>
 
 {/* RIGHT: avatar */}
-
-<div className="w-full h-[340px] bg-gradient-to-br from-[var(--color-teal-50)] via-white to-amber-50 overflow-hidden flex items-end justify-center pt-4">
-  <AvatarLookCircle
-    avatarBaseId={profile.avatarBaseId}
-    equipment={profile.equipment}
-    size={320}
-  />
-
+<div className="flex justify-center items-center">
+  <div className="w-[148px] h-[148px] rounded-full overflow-hidden border-2 border-slate-200 shadow-sm shrink-0">
+    <AvatarLookCircle
+      avatarBaseId={profile.avatarBaseId}
+      equipment={profile.equipment}
+      size={148}
+    />
+  </div>
 </div>
         </div>
       </div>
@@ -449,6 +445,63 @@ function setField<K extends keyof MyCardData>(field: K, value: MyCardData[K]) {
               defaultValue: 'Etwas Lustiges oder Besonderes über dich',
             })}
           />
+        </div>
+
+        {/* Full-body avatar photo — like character card portraits */}
+        <div className="md:col-span-2">
+          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-2xl" aria-hidden>📸</span>
+              <div className="text-[13px] font-extrabold text-slate-900">
+                {ui('sections.photo', 'Dein Foto')}
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <div className="relative w-[200px]">
+                {/* Tape strips */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    width: 44,
+                    height: 14,
+                    background: 'linear-gradient(180deg, rgba(255,252,200,0.90) 0%, rgba(255,242,140,0.80) 100%)',
+                    borderRadius: 2,
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.18)',
+                    zIndex: 10,
+                    top: -4,
+                    left: -4,
+                    transform: 'rotate(-45deg)',
+                  }}
+                />
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    width: 44,
+                    height: 14,
+                    background: 'linear-gradient(180deg, rgba(255,252,200,0.90) 0%, rgba(255,242,140,0.80) 100%)',
+                    borderRadius: 2,
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.18)',
+                    zIndex: 10,
+                    top: -4,
+                    right: -4,
+                    transform: 'rotate(45deg)',
+                  }}
+                />
+
+                <div className="w-full aspect-square bg-gradient-to-br from-slate-100 via-white to-slate-50 flex items-end justify-center overflow-hidden p-3 rounded-sm border border-slate-200">
+                  <AvatarFullImage
+                    id={profile.avatarBaseId}
+                    width={180}
+                    className="w-full h-full object-contain object-bottom"
+                    alt={displayName}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>

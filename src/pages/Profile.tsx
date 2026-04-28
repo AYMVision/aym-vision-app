@@ -63,14 +63,17 @@ export default function Profile() {
             <div className="flex items-start gap-4">
               {/* Avatar + Button */}
               <div className="flex flex-col items-center gap-2 self-start">
-                <div className="w-50 h-50 rounded-full border border-slate-200 bg-white overflow-hidden flex items-center justify-center">
+                <Link
+                  to="/avatar"
+                  state={{ backTo: '/profile' }}
+                  className="w-50 h-50 rounded-full border border-slate-200 bg-white overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity"
+                >
                   <AvatarLookCircle
-  avatarBaseId={profile.avatarBaseId}
-  equipment={profile.equipment}
-  size={200}
-/>
-                </div>
-
+                    avatarBaseId={profile.avatarBaseId}
+                    equipment={profile.equipment}
+                    size={200}
+                  />
+                </Link>
               </div>
 
               {/* Name + Coins */}
@@ -92,12 +95,12 @@ export default function Profile() {
                     placeholder={t('name.placeholder', { defaultValue: 'Wie soll ich dich nennen?' })}
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-base font-extrabold text-slate-900 outline-none focus:ring-2 focus:ring-[var(--color-teal-200)] placeholder:text-slate-300"
                   />
+                  <p className="mt-1.5 text-xs text-slate-400">
+                    {t('name.hint', { defaultValue: 'So wirst du in der Story genannt.' })}
+                  </p>
                 </div>
 
                 {/* Coins */}
-                <div className="text-sm text-slate-500">
-                  {t('wallet.coinsLabel', { defaultValue: 'Coins' })}
-                </div>
                 <Link
                   to="/avatar"
                   state={{ backTo: '/profile', initialTab: 'shop' }}
@@ -144,16 +147,16 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* Weitere 3 Kacheln */}
-          <div className="grid grid-cols-4 gap-2">
+          {/* Bonus-Kacheln */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <Link
               to="/album"
               state={{ backTo: '/profile' }}
-              className="rounded-2xl border border-black/5 bg-gradient-to-br from-yellow-50 via-white to-orange-50 p-3 hover:shadow-sm transition"
+              className="rounded-2xl border border-black/5 bg-gradient-to-br from-yellow-50 via-white to-orange-50 p-4 hover:shadow-md transition"
               aria-label={t('album.aria', { defaultValue: 'Sticker-Album öffnen' })}
             >
-              <div className="text-xl">⭐</div>
-              <div className="mt-1 text-[11px] font-extrabold text-slate-900 leading-tight">
+              <div className="text-3xl">⭐</div>
+              <div className="mt-2 text-sm font-extrabold text-slate-900 leading-tight">
                 {t('album.title', { defaultValue: 'Sticker-Album' })}
               </div>
             </Link>
@@ -161,11 +164,11 @@ export default function Profile() {
             <Link
               to="/newspaper"
               state={{ backTo: '/profile' }}
-              className="rounded-2xl border border-black/5 bg-gradient-to-br from-sky-50 via-white to-violet-50 p-3 hover:shadow-sm transition"
+              className="rounded-2xl border border-black/5 bg-gradient-to-br from-sky-50 via-white to-violet-50 p-4 hover:shadow-md transition"
               aria-label={t('bonus.hub.newspaper.aria', { defaultValue: 'Schülerzeitung öffnen' })}
             >
-              <div className="text-xl">📰</div>
-              <div className="mt-1 text-[11px] font-extrabold text-slate-900 leading-tight">
+              <div className="text-3xl">📰</div>
+              <div className="mt-2 text-sm font-extrabold text-slate-900 leading-tight">
                 {t('bonus.hub.newspaper.title', { defaultValue: 'Schülerzeitung' })}
               </div>
             </Link>
@@ -173,27 +176,26 @@ export default function Profile() {
             <Link
               to="/diaries"
               state={{ backTo: '/profile' }}
-              className="rounded-2xl border border-black/5 bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-3 hover:shadow-sm transition"
+              className="rounded-2xl border border-black/5 bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-4 hover:shadow-md transition"
               aria-label={t('bonus.hub.diaries.aria', { defaultValue: 'Tagebuch öffnen' })}
             >
-              <div className="text-xl">📔</div>
-              <div className="mt-1 text-[11px] font-extrabold text-slate-900 leading-tight">
+              <div className="text-3xl">📔</div>
+              <div className="mt-2 text-sm font-extrabold text-slate-900 leading-tight">
                 {t('bonus.hub.diaries.title', { defaultValue: 'Tagebuch' })}
               </div>
             </Link>
 
-                        <Link
+            <Link
               to="/cards"
               state={{ backTo: '/profile' }}
-              className="rounded-2xl border border-black/5 bg-gradient-to-br from-yellow-50 via-white to-orange-50 p-3 hover:shadow-sm transition"
-             aria-label={t('bonus.hub.cards.aria', { defaultValue: 'Sammelkarten öffnen' })}
+              className="rounded-2xl border border-black/5 bg-gradient-to-br from-violet-50 via-white to-pink-50 p-4 hover:shadow-md transition"
+              aria-label={t('bonus.hub.cards.aria', { defaultValue: 'Sammelkarten öffnen' })}
             >
-              <div className="text-xl">🎴</div>
-              <div className="mt-1 text-[11px] font-extrabold text-slate-900 leading-tight">
-               {t('bonus.hub.cards.title', { defaultValue: 'Freundebuch' })}
+              <div className="text-3xl">🎴</div>
+              <div className="mt-2 text-sm font-extrabold text-slate-900 leading-tight">
+                {t('bonus.hub.cards.title', { defaultValue: 'Freundebuch' })}
               </div>
             </Link>
-
           </div>
         </div>
 

@@ -2,11 +2,12 @@
 import React, { useMemo } from 'react';
 import Layout from '../components/Layout';
 import { assetUrl } from '../common/assetUrl';
+import SmartImage from '../components/SmartImage';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getProgress, getCompletedChapterCount } from '../progress/storyProgress';
 import { getStoryCards } from '../content/contentIndex';
-import { getPlayableEpisodeV02 } from '../story-v02/content/getPlayableEpisodeV02';
+import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile';
 import { shouldBypassAll } from '../gating/entitlements';
 
@@ -87,7 +88,7 @@ const { t: tStories } = useTranslation('stories');
   const playableById = useMemo(() => {
     const m: Record<string, boolean> = {};
     for (const c of cardsForUI) {
-      m[c.id] = Boolean(getPlayableEpisodeV02(c.id, lang));
+      m[c.id] = isEpisodeAvailable(c.id, lang);
     }
     return m;
   }, [cardsForUI, lang]);
@@ -156,16 +157,14 @@ function isUnlockedByChain(
   return (
     <Layout>
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
-        {/* HERO */}
 {/* HERO */}
-<section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg">
-  <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-[var(--color-teal-50)]" />
-  <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-[var(--color-teal-200)]/30 blur-2xl" />
-  <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-[var(--color-teal-300)]/20 blur-2xl" />
+<section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg bg-white">
+  <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-white" />
+  <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full " />
 
   <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch">
     {/* TEXT */}
-    <div className="lg:col-span-6 p-6 sm:p-10 lg:pr-6 flex flex-col justify-center">
+<div className="lg:col-span-7 p-6 sm:p-10 lg:pr-10 flex flex-col justify-center">
       <div className="text-xs sm:text-sm font-semibold text-[var(--color-teal-700)]">
         {t('hero.kicker')}
       </div>
@@ -174,15 +173,15 @@ function isUnlockedByChain(
         {t('hero.title')}
       </h1>
 
-      <p className="mt-5 text-sm sm:text-base text-slate-800 leading-relaxed">
+      <p className="mt-3 text-sm sm:text-base text-slate-800 leading-relaxed">
         {t('hero.lead')}
       </p>
 
-      <p className="mt-4 text-sm sm:text-base font-semibold text-slate-900 leading-relaxed">
+      <p className="mt-2 text-sm sm:text-base font-semibold text-slate-900 leading-relaxed">
         {t('hero.leadEmphasis')}
       </p>
 
-      <p className="mt-5 text-sm sm:text-base text-slate-800 leading-relaxed">
+      <p className="mt-2 text-sm sm:text-base text-slate-800 leading-relaxed">
         {t('hero.leadEmphasis2')}
       </p>
 
@@ -217,9 +216,9 @@ function isUnlockedByChain(
     </div>
 
     {/* MEDIA */}
-    <div className="lg:col-span-6 relative min-h-[280px] sm:min-h-[340px] lg:min-h-[420px]">
+<div className="lg:col-span-5 relative min-h-[380px] sm:min-h-[440px] lg:min-h-[420px] overflow-hidden">
       <video
-        className="absolute inset-0 w-full h-full object-cover object-[center_40%] lg:object-center"
+         className="absolute inset-0 w-full h-full object-contain scale-85"
         autoPlay
         muted
         loop
@@ -229,6 +228,8 @@ function isUnlockedByChain(
       >
         <source src="/media/ui/Kids_surfen_smart.mp4" type="video/mp4" />
       </video>
+
+      {/* sanfter Übergang zur Textseite */}
 
     </div>
   </div>

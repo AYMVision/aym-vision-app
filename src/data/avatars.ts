@@ -33,6 +33,6 @@ export const AVATAR_BASES = [
   { id: 'kid_27', label: 'Avatar 27' },
   { id: 'kid_28', label: 'Avatar 28' },
   { id: 'kid_29', label: 'Avatar 29' },
-  // { id: 'kid_09', label: 'Avatar 9' },
+  // kid_30 noch ohne Bilddateien → erst eintragen wenn kid_30-384/768.avif+webp in /public/media/avatars/full/ liegen
   // später einfach erweitern
 ];

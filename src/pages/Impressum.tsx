@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Layout from '../components/Layout';
 
 function Section({
@@ -41,6 +42,100 @@ function DisclaimerSection() {
           </div>
         </div>
       </div>
+    </section>
+  );
+}
+
+const LICENSES = [
+  {
+    name: 'Baloo Bhaijaan 2',
+    type: 'SIL Open Font License 1.1 (OFL)',
+    author: 'Ek Type',
+    url: 'https://scripts.sil.org/OFL',
+  },
+  {
+    name: 'Caveat',
+    type: 'SIL Open Font License 1.1 (OFL)',
+    author: 'Impallari Type',
+    url: 'https://scripts.sil.org/OFL',
+  },
+  {
+    name: '@xenova/transformers',
+    type: 'Apache License 2.0',
+    author: 'Xenova / Hugging Face',
+    url: 'https://www.apache.org/licenses/LICENSE-2.0',
+  },
+  {
+    name: 'lucide-react',
+    type: 'ISC License',
+    author: 'Lucide Contributors',
+    url: 'https://opensource.org/license/isc-license-txt',
+  },
+  {
+    name: 'React',
+    type: 'MIT License',
+    author: 'Meta Platforms, Inc.',
+    url: 'https://opensource.org/licenses/MIT',
+  },
+  {
+    name: 'Vite',
+    type: 'MIT License',
+    author: 'Evan You',
+    url: 'https://opensource.org/licenses/MIT',
+  },
+  {
+    name: 'Tailwind CSS',
+    type: 'MIT License',
+    author: 'Tailwind Labs, Inc.',
+    url: 'https://opensource.org/licenses/MIT',
+  },
+];
+
+function LicensesSection() {
+  const [open, setOpen] = useState(false);
+  return (
+    <section className="bg-white rounded-2xl border border-slate-100 shadow-sm">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full text-left px-5 py-4 flex items-center justify-between gap-4"
+        aria-expanded={open}
+      >
+        <div>
+          <div className="text-base font-extrabold text-slate-900">Lizenzen & Open-Source-Hinweise</div>
+          <div className="mt-0.5 text-xs text-slate-500">Verwendete Schriften und Bibliotheken</div>
+        </div>
+        <div className="shrink-0 w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 transition-transform" style={{ transform: open ? 'rotate(45deg)' : undefined }}>
+          +
+        </div>
+      </button>
+
+      {open && (
+        <div className="px-5 pb-5">
+          <div className="divide-y divide-slate-100">
+            {LICENSES.map((l) => (
+              <div key={l.name} className="py-3 flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                <div className="font-semibold text-sm text-slate-900 sm:w-48 shrink-0">{l.name}</div>
+                <div className="text-xs text-slate-500 mt-0.5 sm:mt-0">
+                  {l.type} &mdash; {l.author}
+                  {' · '}
+                  <a
+                    href={l.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline text-[var(--color-teal-700)] hover:text-[var(--color-teal-900)]"
+                  >
+                    Lizenztext
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-xs text-slate-400">
+            Der vollständige Quellcode der verwendeten Open-Source-Pakete ist über die jeweiligen Repositories zugänglich.
+          </p>
+        </div>
+      )}
     </section>
   );
 }
@@ -126,11 +221,14 @@ an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilz
         {/* ─── Disclaimer ─── */}
         <DisclaimerSection />
 
+        {/* ─── Lizenzen ─── */}
+        <LicensesSection />
+
         <Section title="Datenschutz">
           <p>
             Informationen zum Umgang mit personenbezogenen Daten findest du in unserer{' '}
             <a
-              href="datenschutz-web.pdf"
+              href="/datenschutz-web.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="underline text-[var(--color-teal-700)] hover:text-[var(--color-teal-900)]"

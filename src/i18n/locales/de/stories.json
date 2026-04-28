@@ -26,7 +26,7 @@
     }
   },
 
-  "chapterDivider": "Kapitel {{number}}",
+  "chapterDivider": "Amics {{number}}",
 
   "hero": {
     "kicker": "Amy Surfwing",
@@ -95,12 +95,12 @@
 
   "howto": {
     "kicker": "Kurz erklärt",
-    "title": "So funktioniert ein Tag mit Amy Surfwing",
+    "title": "So funktionieren die täglichen 5min mit Amy Surfwing",
     "flow": {
       "steps": {
         "1": {
           "title": "🎬 Starte Amy Surfwing",
-          "text": "Ein Klick und du bist mitten im Abenteuer. Lies was Yasmin, Carlos & Co online erleben."
+          "text": "Ein Klick und du bist mitten im Abenteuer."
         },
         "2": {
           "title": "✍️ Was denkst du?",
@@ -108,7 +108,7 @@
         },
         "3": {
           "title": "🦉 Amy",
-          "text": "Manchmal fragt Amy auch nach und sie gibt dir einen Tipp."
+          "text": "Manchmal fragt Amy auch nach und sie gibt dir zum Abschluss des Tages einen Tipp."
         },
         "4": {
           "title": "🔎 Entdecke Amy´s Welt",

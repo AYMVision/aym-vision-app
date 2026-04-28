@@ -66,7 +66,7 @@ export default function MultiSelectItemCard({ step, onSubmit }: Props) {
   }
 
   const prompt = step.prompt ?? t(step.promptKey ?? '', { defaultValue: '' });
-  const helper = step.helperText ?? '';
+  const helper = step.helperText ?? t('item.multiHint', { defaultValue: 'Du kannst mehrere Antwortoptionen auswählen.' });
   const canSubmit = selected.size >= minSel;
 
   return (
@@ -82,9 +82,10 @@ export default function MultiSelectItemCard({ step, onSubmit }: Props) {
       />
 
       <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-rose-200 bg-rose-50 p-4 shadow-sm">
-        {helper ? (
-          <p className="mb-3 text-xs text-slate-500">{helper}</p>
-        ) : null}
+        <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-rose-200 bg-white px-3 py-1 text-xs font-semibold text-rose-700">
+          <span aria-hidden>ℹ️</span>
+          {helper}
+        </div>
 
         <div className="flex flex-col gap-2">
           {step.options.map((option) => {

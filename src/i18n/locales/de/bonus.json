@@ -67,6 +67,17 @@
       "locked": "Gesperrt"
     },
 
+    "currentNews": {
+      "example": {
+        "title": "KI in der Schule – was steckt dahinter?",
+        "description": "Chioma erklärt, wie KI im Unterricht eingesetzt wird und was das bedeutet."
+      },
+      "socialMedia": {
+        "title": "Social Media in der Schule – Fluch oder Segen?",
+        "description": "Chioma fragt nach: Was passiert, wenn Likes und Follower in den Schulalltag einziehen?"
+      }
+    },
+
     "open": "Öffnen →",
     "readMore": "Weiterlesen →",
     "lockHint": "Lies weiter in der Story, um das freizuschalten.",
@@ -167,7 +178,7 @@
       "writeHint": "Schreib einfach drauflos. Danach kannst du Sticker draufkleben.",
       "placeholder": "Heute war…",
       "save": "Seite speichern",
-      "localOnly": "🔒 Dein Tagebuch bleibt auf diesem Gerät. 👀 Andere können es sehen, wenn sie dein Handy benutzen. 💡 Schreib nichts hinein, was sehr privat ist.",
+      "localOnly": "🔒 Dein Tagebuch bleibt auf diesem Gerät. Wir können es nicht einsehen.  👀 Aber wer dein Handy nutzt können es sehen. 💡 Schreib nichts hinein, was sehr privat ist.",
       "pagesTitle": "Deine Seiten",
       "noPages": "Noch keine Einträge. Schreib deine erste Seite oben.",
       "canvasTitle": "Sticker & Seite",

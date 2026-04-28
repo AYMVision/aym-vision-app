@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { assetUrl } from '../common/assetUrl';
 
 
 const Footer: React.FC = () => {
@@ -38,7 +39,7 @@ const Footer: React.FC = () => {
           </Link>
 
           <a
-            href="datenschutz-web.pdf"
+            href="/datenschutz-web.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline"
@@ -47,6 +48,27 @@ const Footer: React.FC = () => {
           </a>
         </div>
 
+      </div>
+
+      {/* Hafven partnership badge */}
+      <div className="max-w-7xl mx-auto mt-5 pt-4 border-t border-slate-100 flex justify-center">
+        <div className="flex items-center gap-3">
+          <span className="text-xs text-slate-400">Unterstützt von</span>
+          <a
+            href="https://hafven.de/impact-accelerator"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="opacity-60 hover:opacity-90 transition-opacity"
+            aria-label="Hafven Impact Accelerator"
+          >
+            <img
+              src={assetUrl('media/ui/HafvenImpactAccelerator_Logo_schwarz.png')}
+              alt="Hafven Impact Accelerator"
+              className="h-7 w-auto"
+              loading="lazy"
+            />
+          </a>
+        </div>
       </div>
     </footer>
   );

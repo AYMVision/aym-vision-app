@@ -6,7 +6,7 @@ export function createDefaultProfile(): UserProfile {
 
   return {
     version: 3,
-    avatarBaseId: 'kid_01',
+    avatarBaseId: 'default',
 
     wallet: {
       coins: 0,

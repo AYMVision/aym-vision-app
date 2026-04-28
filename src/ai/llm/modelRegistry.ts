@@ -1,5 +1,5 @@
 // src/ai/llm/modelRegistry.ts
-import '../core/transformersConfig';
+import { ensureXenovaReady } from './initXenova';
 
 let _pipe: any | null = null;
 let _warming: Promise<void> | null = null;
@@ -9,6 +9,7 @@ export const LOCAL_TEXTGEN_MODEL = 'Xenova/flan-t5-small';
 export async function getTextGenPipeline() {
   if (_pipe) return _pipe;
 
+  await ensureXenovaReady();
   const { pipeline } = await import('@xenova/transformers');
   _pipe = await pipeline('text2text-generation', LOCAL_TEXTGEN_MODEL);
   return _pipe;

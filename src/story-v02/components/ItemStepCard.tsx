@@ -30,6 +30,10 @@ export default function ItemStepCard({ step, onSelect }: Props) {
       />
 
       <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-rose-200 bg-rose-50 p-4 shadow-sm">
+        <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-rose-200 bg-white px-3 py-1 text-xs font-semibold text-rose-700">
+          <span aria-hidden>ℹ️</span>
+          {t('item.singleHint', { defaultValue: 'Wähle eine Antwort aus.' })}
+        </div>
         <div className="flex flex-col gap-2">
           {step.options.map((option) => (
             <button

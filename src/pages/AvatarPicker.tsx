@@ -288,10 +288,11 @@ export default function AvatarPicker() {
         </div>
 
         {/* Sticky Vorschau */}
-        <div className="sticky top-2 z-20 mb-6">
+        <div className="sticky top-16 sm:top-20 z-20 mb-6">
           <div className="rounded-3xl border border-black/5 bg-white/95 backdrop-blur shadow-sm px-3 pt-3 pb-2">
             <div className="relative flex justify-center">
               <AvatarStage
+                key={`${profile.avatarBaseId}-${previewEquipment?.featured ?? ''}-${previewEquipment?.background ?? ''}-${previewEquipment?.effect ?? ''}`}
                 avatarBaseId={profile.avatarBaseId}
                 equipment={previewEquipment}
                 width={320}
@@ -436,17 +437,22 @@ export default function AvatarPicker() {
       <div className="mt-2 text-center text-[11px] text-slate-500 space-y-0.5 leading-snug">
         <div>
           {t('avatar.shop.coinsHint.earn', {
-            defaultValue: 'Kapitel spielen → 🪙 1 Coin · Episode fertig → 🪙 +5',
+            defaultValue: 'Pro Amic = +1 Coin',
+          })}
+        </div>
+                <div>
+          {t('avatar.shop.coinsHint.earn2', {
+            defaultValue: 'Episode fertig = +5 Extra-Coins',
           })}
         </div>
         <div>
           {t('avatar.shop.coinsHint.streak', {
-            defaultValue: '5 Tage am Stück → ⭐ +2 Extra-Coins',
+            defaultValue: '5 Tage am Stück = +2 Extra-Coins ⭐ ',
           })}
         </div>
         <div className="font-semibold text-slate-600">
           {t('avatar.shop.coinsHint.unlock', {
-            defaultValue: 'Damit: neue Avatar-Looks freischalten ✨',
+            defaultValue: 'Schalte mit deinen Coins neue Sachen frei ✨',
           })}
         </div>
       </div>

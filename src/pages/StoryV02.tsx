@@ -14,6 +14,7 @@ import { unlockBonusById } from '../bonus/unlockBonusById';
 import { hasCompletedChapter } from '../progress/storyProgress';
 
 import { getPlayableEpisodeV02 } from '../story-v02/content/getPlayableEpisodeV02';
+import type { StoryEpisodeV02 } from '../story-v02/types/storyTypes';
 import type {
   ItemOptionReaction,
   ReflectionChoiceReaction,
@@ -49,7 +50,7 @@ import AmyFeedbackStepCard from '../story-v02/components/AmyFeedbackStepCard';
 import ReflectionStepCard from '../story-v02/components/ReflectionStepCard';
 import AmyReactionStepCard from '../story-v02/components/AmyReactionStepCard';
 import ChallengeStepCard from '../story-v02/components/ChallengeStepCard';
-import { getNextChapterGateState } from '../gating/storyGateHelpers';
+import { getNextChapterGateState, getHighestPlayableChapterIndex0 } from '../gating/storyGateHelpers';
 import UnlockedToast from '../components/UnlockedToast';
 import { useRewardFx } from '../progress/rewardFx';
 import { getStickerById } from '../progress/rewardCatalog';
@@ -287,18 +288,21 @@ export default function StoryV02() {
     return getEpisodeMetaByCourseId(courseId);
   }, [courseId]);
 
-  const episode = useMemo(() => {
-    if (!courseId) return null;
-    return getPlayableEpisodeV02(courseId, lang);
-  }, [courseId, lang]);
+  const [episode, setEpisode] = useState<StoryEpisodeV02 | null>(null);
   useEffect(() => {
-  console.log('[V02] loaded episode', {
-    routeCourseId: courseId,
-    episodeId: episode?.id,
-    episodeCourseId: episode?.courseId,
-    firstChapterId: episode?.chapters?.[0]?.id,
-  });
-}, [courseId, episode]);
+    if (!courseId) { setEpisode(null); return; }
+    getPlayableEpisodeV02(courseId, lang).then(ep => {
+      setEpisode(ep);
+      if (import.meta.env.DEV) {
+        console.log('[V02] loaded episode', {
+          routeCourseId: courseId,
+          episodeId: ep?.id,
+          episodeCourseId: ep?.courseId,
+          firstChapterId: ep?.chapters?.[0]?.id,
+        });
+      }
+    });
+  }, [courseId, lang]);
 
   const [state, dispatch] = useReducer(storyRuntimeReducer, FALLBACK_STATE);
 
@@ -557,14 +561,19 @@ function hasStoryMigrationDone(key: string): boolean {
       return;
     }
 
-    const firstChapter = episode.chapters[0] ?? null;
-    if (!firstChapter) return;
+    // Kein Snapshot vorhanden — Startposition aus gespeichertem Fortschritt lesen.
+    // Ohne diesen Fix würde nach einem Browser-Neustart immer Kapitel 0 gestartet,
+    // obwohl unlockedEpisode in localStorage bereits weiter ist.
+    const highestPlayable = getHighestPlayableChapterIndex0(courseId ?? undefined);
+    const startIndex = Math.min(highestPlayable, episode.chapters.length - 1);
+    const startChapter = episode.chapters[startIndex] ?? null;
+    if (!startChapter) return;
 
     dispatch({
       type: 'START_CHAPTER',
       payload: {
         courseId,
-        chapter: firstChapter,
+        chapter: startChapter,
       },
     });
   }, [courseId, episodeMeta, episode]);

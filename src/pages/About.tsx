@@ -453,6 +453,33 @@ const valueAccents = [
                 </div>
               </div>
             </section>
+
+            {/* KOOPERATIONEN & FÖRDERUNG */}
+            <section className="bg-white rounded-2xl shadow-md border border-slate-100 p-5 sm:p-6">
+              <div className="text-xs font-semibold text-[var(--color-teal-600)]">Kooperationen & Förderung</div>
+              <h2 className="mt-1 text-base sm:text-lg font-semibold text-[var(--color-teal-900)]">
+                Unterstützt von
+              </h2>
+              <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                <a
+                  href="https://hafven.de/impact-accelerator"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
+                  aria-label="Hafven Impact Accelerator"
+                >
+                  <img
+                    src={assetUrl('media/ui/HafvenImpactAccelerator_Logo_schwarz.png')}
+                    alt="Hafven Impact Accelerator"
+                    className="h-10 w-auto"
+                    loading="lazy"
+                  />
+                </a>
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  Amy Surfwing wird vom <strong>Hafven Impact Accelerator</strong> unterstützt — einem Programm für soziale Innovationen und gesellschaftlich wirksame Projekte in Hannover.
+                </p>
+              </div>
+            </section>
           </div>
 
           {/* RIGHT */}

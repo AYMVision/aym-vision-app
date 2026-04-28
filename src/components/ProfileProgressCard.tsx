@@ -40,7 +40,7 @@ export default function ProfileProgressCard({
           {t('profile:progress.title', { defaultValue: 'Dein Fortschritt' })}
         </div>
         <div className="mt-3 text-sm font-semibold text-anthracite-900">
-          {t('profile:progress.empty', { defaultValue: 'Starte deine erste Folge ✨' })}
+          {t('profile:progress.empty', { defaultValue: 'Starte deinen ersten Amic ✨' })}
         </div>
 
         {!compact && (
@@ -67,7 +67,7 @@ export default function ProfileProgressCard({
         </div>
         <div className="mt-1 text-sm font-semibold text-amber-900">
           {t('profile:progress.debugMissingEpisode', {
-            defaultValue: 'Folge-Metadaten nicht gefunden',
+            defaultValue: 'Amic-Metadaten nicht gefunden',
           })}
         </div>
         <div className="mt-1 text-xs text-amber-800">
@@ -101,9 +101,9 @@ export default function ProfileProgressCard({
     remaining === 0
       ? t('profile:progress.doneTeaser', { defaultValue: 'Wow! Folge geschafft 🎉' })
       : remaining === 1
-      ? t('profile:progress.oneLeft', { defaultValue: 'Noch 1 Chapter bis zum Sticker ✨' })
+      ? t('profile:progress.oneLeft', { defaultValue: 'Noch 1 Amic bis zum Sticker ✨' })
       : t('profile:progress.manyLeft', {
-          defaultValue: 'Noch {{count}} Chapter bis zum Sticker',
+          defaultValue: 'Noch {{count}} Amics bis zum Sticker',
           count: remaining,
         });
 
@@ -130,7 +130,7 @@ export default function ProfileProgressCard({
 
           <div className="mt-1 flex items-center justify-between">
             <div className="text-xs text-slate-600">
-              {t('profile:progress.chapterLabel', { defaultValue: 'Chapter' })}
+              {t('profile:progress.chapterLabel', { defaultValue: 'Amic' })}
             </div>
             <div className="text-sm font-extrabold text-slate-900">
               {currentShown}

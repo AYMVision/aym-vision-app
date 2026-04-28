@@ -52,10 +52,15 @@ export default function AudioBubble({ src, label, durationSec }: Props) {
     const a = audioRef.current;
     if (!a) return;
     try {
-      if (a.paused) await a.play();
-      else a.pause();
-    } catch {
-      // autoplay restrictions etc.
+      if (a.paused) {
+        // iOS requires load() if src changed or element was not yet loaded
+        if (a.readyState === 0) a.load();
+        await a.play();
+      } else {
+        a.pause();
+      }
+    } catch (err) {
+      console.error('[AudioBubble] play() failed:', err);
     }
   };
 
@@ -63,8 +68,12 @@ export default function AudioBubble({ src, label, durationSec }: Props) {
 
   return (
     <div className="w-full">
-      <audio ref={audioRef} preload="metadata">
-        <source src={url} type="audio/mpeg" />
+      {/* playsInline required for iOS inline playback.
+          type="audio/mp4" matches the actual M4A/AAC-LC container —
+          the files are named .mp3 but are Apple AAC, not MPEG audio. */}
+      <audio ref={audioRef} preload="metadata" playsInline>
+        <source src={url} type="audio/mp4" />
+        <source src={url} type="audio/aac" />
       </audio>
 
       {label ? (

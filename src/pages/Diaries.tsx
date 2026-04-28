@@ -153,36 +153,38 @@ function StoryDiaryTile(props: {
     >
       <div
         className={cn(
-          'rounded-2xl border shadow-sm overflow-hidden transition',
+          'rounded-3xl border shadow-md overflow-hidden transition',
           tone.bg,
           tone.border,
-          locked ? 'opacity-65' : 'hover:shadow-md'
+          locked ? 'opacity-65' : 'hover:shadow-lg'
         )}
       >
         <div className={cn('h-2', tone.accent)} />
 
-        <div className="p-3 sm:p-4">
-          <div className="grid grid-cols-[76px_1fr] sm:grid-cols-[84px_1fr] gap-3 items-start">
-            <div className="rounded-2xl overflow-hidden border border-white/70 bg-white/70 shadow-sm h-[76px] sm:h-[84px] flex items-center justify-center">
-              {preview}
+        <div className="p-4 sm:p-6">
+          <div className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 items-center">
+            <div className="flex justify-center md:justify-start">
+              <div className="w-[120px] h-[120px] rounded-2xl overflow-hidden border border-white/70 bg-white/70 shadow-sm flex items-center justify-center shrink-0">
+                {preview}
+              </div>
             </div>
 
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <span className={cn('inline-flex items-center rounded-full px-2 py-1 text-[10px] font-extrabold', tone.chip)}>
+                <span className={cn('inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold', tone.chip)}>
                   {badgeText}
                 </span>
               </div>
 
-              <div className={cn('mt-2 text-sm sm:text-base font-extrabold tracking-tight line-clamp-2', tone.title)}>
+              <div className={cn('mt-2 text-xl sm:text-2xl font-extrabold tracking-tight line-clamp-2', tone.title)}>
                 {locked ? `🔒 ${title}` : title}
               </div>
 
-              <div className="mt-1 text-xs sm:text-sm text-slate-700 line-clamp-2">
+              <div className="mt-2 text-sm sm:text-base text-slate-700 leading-relaxed line-clamp-2">
                 {desc}
               </div>
 
-              <div className="mt-3 text-xs sm:text-sm font-extrabold text-slate-800">
+              <div className="mt-4 inline-flex items-center rounded-2xl px-4 py-2 bg-white border border-slate-200 text-sm font-extrabold text-slate-800 group-hover:bg-slate-50">
                 {ctaText}
               </div>
             </div>
@@ -212,26 +214,25 @@ function MyDiaryCard(props: {
       onClick={() => onOpen?.()}
       className="block group"
     >
-      <div className="rounded-3xl border border-[var(--color-teal-200)] bg-gradient-to-br from-[var(--color-teal-50)] via-white to-emerald-50 shadow-md overflow-hidden transition hover:shadow-lg">
-        <div className="h-2 bg-[var(--color-teal-300)]" />
+      <div className="rounded-3xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-purple-50 shadow-md overflow-hidden transition hover:shadow-lg">
+        <div className="h-2 bg-violet-300" />
 
         <div className="p-4 sm:p-6">
           <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4 items-center">
             <div className="flex justify-center md:justify-start">
-              <div className="rounded-3xl border border-white/70 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+              <div className="w-[120px] h-[120px] rounded-full overflow-hidden border-2 border-white/80 shadow-sm shrink-0">
                 <AvatarLookCircle
                   avatarBaseId={avatarId}
                   equipment={equipment}
                   size={120}
                   alt={title}
-                  className="rounded-2xl"
                 />
               </div>
             </div>
 
             <div className="min-w-0">
               <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold bg-[var(--color-teal-100)] text-[var(--color-teal-900)]">
+                <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold bg-violet-100 text-violet-900">
                   {badgeMain}
                 </span>
                 <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white border border-black/5 text-slate-700">
@@ -239,7 +240,7 @@ function MyDiaryCard(props: {
                 </span>
               </div>
 
-              <div className="mt-3 text-xl sm:text-2xl font-extrabold text-[var(--color-teal-950)] leading-tight">
+              <div className="mt-3 text-xl sm:text-2xl font-extrabold text-violet-950 leading-tight">
                 {title}
               </div>
 
@@ -365,7 +366,7 @@ export default function Diaries() {
           kicker={t('diaries.bookTag', { defaultValue: 'Tagebuch' })}
           title="Tagebücher aus der Story"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="space-y-4">
             {storyBooks.map((item) => {
               const tone = toneForDiary(item.bonusId);
 

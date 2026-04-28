@@ -21,7 +21,7 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Sommerferien', [
 
   S('s1e01c01_story_intro_private', [
     privateChat('Du', 'Yasmin'),
-    m(ch.yasmin, 'Hi 👋 Bist du neu hier in der Klasse?', '10:05'),
+    m(ch.yasmin, 'Hi 👋 Bist du neu hier im Chat', '10:05'),
   ]),
 
   inp('s1e01c01_input_intro_reply', 'stories:s1e01.c01.input.introReply', {
@@ -369,7 +369,7 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
 // KAPITEL 4 — Am Wasserfall wird es kritisch
 // ─────────────────────────────────────────────────────────────────────────────
 
-const c04 = C('s1e01c04', 3, 'Amic 4', 'Am Wasserfall wird es kritisch', [
+const c04 = C('s1e01c04', 3, 'Amic 4', 'Am Wasserfall', [
 
   S('s1e01c04_story_groupchat_waterfall', [
     privateChat('Igor', 'Lukas', 'Yasmin'),
@@ -448,10 +448,10 @@ const c04 = C('s1e01c04', 3, 'Amic 4', 'Am Wasserfall wird es kritisch', [
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
-// KAPITEL 5 — Das Bild sorgt für Alarm
+// KAPITEL 5 — Das Bild
 // ─────────────────────────────────────────────────────────────────────────────
 
-const c05 = C('s1e01c05', 4, 'Amic 5', 'Das Bild sorgt für Alarm', [
+const c05 = C('s1e01c05', 4, 'Amic 5', 'Das Bild', [
 
   S('s1e01c05_story_class_chat_escalation', [
     classChat(),
@@ -615,7 +615,8 @@ const c06 = C('s1e01c06', 5, 'Amic 6', 'Spuren im Bild', [
     m(ch.carlos, 'Nein. Dieser Wasserfall ist es nicht. Viel zu weit weg.', '16:37'),
     m(ch.carlos, 'Aber vielleicht dieser…', '16:37'),
     m(ch.chioma, 'Wo ist der?', '16:38'),
-    m(ch.carlos, 'In den Grieswald-Bergen.', '16:38'),
+    img(ch.carlos, '/media/story/episodes/s1e01/s1e01c06-512.webp', '15:31'),
+    m(ch.lisa, 'Das ist in den Grieswald-Bergen!', '16:38'),
     m(ch.lisa, 'Könnte hinkommen 🤔', '16:38'),
     m(ch.carlos, '@Lukas, @Igor Ist das die richtige Location?', '16:39'),
     m(ch.lisa, 'Sie antworten nicht.', '16:39'),
@@ -712,7 +713,7 @@ const c07 = C('s1e01c07', 6, 'Amic 7', 'Entwarnung und Zweifel', [
 // KAPITEL 8 — Das Bild war nicht echt
 // ─────────────────────────────────────────────────────────────────────────────
 
-const c08 = C('s1e01c08', 7, 'Amic', 'Das Bild war nicht echt', [
+const c08 = C('s1e01c08', 7, 'Amic 8', 'Nächster Tag', [
 
   S('s1e01c08_story_lukas_friendbook', [
     privateChat('Du', 'Lukas'),
