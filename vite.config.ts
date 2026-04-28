@@ -78,6 +78,21 @@ export default defineConfig(({ command }) => {
       }),
     ],
 
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('@xenova/transformers') || id.includes('onnxruntime')) {
+              return 'vendor-ai';
+            }
+            if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+              return 'vendor-react';
+            }
+          },
+        },
+      },
+    },
+
     // gut für wasm assets (lassen wir drin)
     assetsInclude: ['**/*.wasm'],
 
