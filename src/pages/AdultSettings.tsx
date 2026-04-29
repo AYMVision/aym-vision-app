@@ -582,7 +582,7 @@ export default function AdultSettings() {
 
   return (
     <Layout backPath={backTo} hideFooter>
-      <div className="mx-auto max-w-3xl px-4 py-10">
+      <div className="w-full mx-auto max-w-3xl px-4 py-10">
         <h1 className="text-2xl font-bold">{t('adult:adult.title')}</h1>
         <p className="mt-2 text-slate-600">{t('adult:adult.subtitle')}</p>
 

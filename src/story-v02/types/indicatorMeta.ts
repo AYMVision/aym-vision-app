@@ -121,4 +121,25 @@ export const INDICATOR_META: Record<IndicatorId, IndicatorMeta> = {
     labelKey: 'stories:measurement.indicators.judgementExplain.label',
     descriptionKey: 'stories:measurement.indicators.judgementExplain.description',
   },
+
+  rules_consequences: {
+    id: 'rules_consequences',
+    dimension: 'responsibility',
+    labelKey: 'stories:measurement.indicators.rulesConsequences.label',
+    descriptionKey: 'stories:measurement.indicators.rulesConsequences.description',
+  },
+
+  regulate_emotions: {
+    id: 'regulate_emotions',
+    dimension: 'self_regulation',
+    labelKey: 'stories:measurement.indicators.regulateEmotions.label',
+    descriptionKey: 'stories:measurement.indicators.regulateEmotions.description',
+  },
+
+  goal_conflicts: {
+    id: 'goal_conflicts',
+    dimension: 'perspective',
+    labelKey: 'stories:measurement.indicators.goalConflicts.label',
+    descriptionKey: 'stories:measurement.indicators.goalConflicts.description',
+  },
 };

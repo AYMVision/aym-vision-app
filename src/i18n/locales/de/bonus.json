@@ -320,6 +320,40 @@
 }
 },
 
+"schubert": {
+  "name": "Hedwig Schubert",
+  "friendbook": {
+    "mostly": "Strukturiert. Wachsam. Geduldig.\nIch glaube daran, dass Ordnung vieles leichter macht.",
+    "othersLike": [
+      "Ich merke, wenn jemand Hilfe braucht – ohne dass man mich fragen muss.",
+      "Ich erkläre Dinge so lange, bis die Schüler sie verstanden haben.",
+      "Und ich vergesse fast nichts."
+    ],
+    "annoys": [
+      "Ich mag keine Unordnung.",
+      "Ich frage lieber zweimal nach als gar nicht.",
+      "Und Technik und ich … nun ja, wir führen eine schwierige Beziehung."
+    ],
+    "hobbies": [
+      "Lesen",
+      "Gartenarbeit",
+      "Spaziergänge am Fluss",
+      "Mit Beethoven singen"
+    ],
+    "friends": [
+      "Mein Kanarienvogel Beethoven",
+      "Bücher",
+      "Geranien"
+    ],
+    "colors": "Senfgelb. Warm, freundlich und nicht so aufdringlich.",
+    "happy": "Wenn ein Schüler sich viel Mühe gibt.",
+    "netRule": "Nicht alles glauben, nur weil es schön bunt aussieht.",
+    "mistake": "Dann liegt es meistens an der verflixten Technik. Und dann müssen mir die Schüler oder Herr Alvarez da wieder raushelfen.",
+    "secret": "Ich habe gar keine Lust, die Technik zu verstehen. Es ist schön, dass mir immer gleich jemand zur Hilfe kommt.",
+    "funFact": "Ich vertausche manchmal Sprichwörter. Aber: Beim Üben ist halt noch kein Meister vom Himmel gefallen."
+  }
+},
+
 
     "yasmin": {
       "name": "Yasmin",
@@ -340,6 +374,7 @@
         "funFact": "Mein Handy-Speicher ist voller Entwürfe, die ich dann doch nicht poste."
       }
     },
+
     "dominik": {
       "name": "Dominik",
       "friendbook": {
@@ -413,6 +448,35 @@
       "secret": "Meine Devise lautet: Verstand über Muskeln! – Aber insgeheim wär ich auch gern so sportlich wie Igor.",
       "funFact": "Ich benutze beim Erklären manchmal Schachbegriffe. Nicht absichtlich. Passiert einfach."
     }
+},
+"finn": {
+  "name": "finn",
+  "friendbook": {
+    "mostly": "locker, ehrlich\nich mach nicht gern großes theater und bin lieber einfach ich",
+    "othersLike": [
+      "ich bin ziemlich unkompliziert, glaub ich",
+      "mit mir kann man einfach chillen"
+    ],
+    "annoys": [
+      "ich sag oft „passt schon“, auch wenn’s nicht passt",
+      "ich weich stress lieber aus, statt ihn anzusprechen"
+    ],
+    "hobbies": [
+      "skaten",
+      "zocken",
+      "musik hören"
+    ],
+    "friends": [
+      "tom",
+      "mia"
+    ],
+    "colors": "blau",
+    "happy": "wenn ein song genau das sagt, was ich gerade dachte",
+    "netRule": "du musst online nicht perfekt wirken. echt sein reicht",
+    "mistake": "ich tu oft erst so, als wär’s nicht schlimm. später denk ich dann viel zu lange drüber nach",
+    "secret": "ich hab manchmal angst in situationen, die für andere völlig normal sind",
+    "funFact": "beim skaten summe ich immer irgendwelche lieder"
+  }
 }
 
     

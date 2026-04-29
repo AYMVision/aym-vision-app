@@ -295,5 +295,107 @@
     "nextTomorrowBody": "The next Amic is waiting for you tomorrow. Until then, you can browse the school newspaper.",
     "nextMondayBody": "You’ve read all the Amics for this week. The next Amic will be waiting for you again on Monday. Until then, you can browse the school newspaper.",
     "toNewspaper": "Go to the school newspaper →"
+  },
+  "measurement": {
+    "dimensions": {
+      "perspective": {
+        "label": "Perspective-taking",
+        "childLabel": "Understanding others",
+        "description": "How well your child recognises and considers other people’s points of view."
+      },
+      "judgement": {
+        "label": "Critical judgement",
+        "childLabel": "Thinking carefully",
+        "description": "How your child evaluates information and assesses situations."
+      },
+      "selfRegulation": {
+        "label": "Self-regulation",
+        "childLabel": "Knowing myself",
+        "description": "How your child handles impulses and pursues personal goals."
+      },
+      "responsibility": {
+        "label": "Responsible action",
+        "childLabel": "Taking responsibility",
+        "description": "How your child takes responsibility for their own actions and for others."
+      }
+    },
+    "indicators": {
+      "privacyProtect": {
+        "label": "Protecting privacy",
+        "description": "Protects own and others’ privacy and data."
+      },
+      "doNotHarm": {
+        "label": "Avoiding harm",
+        "description": "Refrains from actions or content that could harm others or oneself."
+      },
+      "intervene": {
+        "label": "Intervening",
+        "description": "Actively intervenes when witnessing problematic behaviour (e.g. cyberbullying)."
+      },
+      "takeResponsibility": {
+        "label": "Acting positively",
+        "description": "Actively supports positive and respectful behaviour in digital spaces."
+      },
+      "rulesConsequences": {
+        "label": "Rules & consequences",
+        "description": "Understands and respects digital rules and their consequences."
+      },
+      "interruptImpulse": {
+        "label": "Interrupting impulses",
+        "description": "Interrupts impulsive or automated media behaviour (e.g. endless scrolling)."
+      },
+      "keepLimits": {
+        "label": "Keeping limits",
+        "description": "Maintains self-set usage limits or goals."
+      },
+      "steerAttention": {
+        "label": "Steering attention",
+        "description": "Consciously steers attention despite digital distractions."
+      },
+      "pursueGoal": {
+        "label": "Pursuing goals",
+        "description": "Pursues self-set goals over time despite media distractions."
+      },
+      "regulateEmotions": {
+        "label": "Recognising feelings & acting deliberately",
+        "description": "Recognises own feelings and regulates behaviour deliberately rather than reacting impulsively."
+      },
+      "perspectivesRecognize": {
+        "label": "Recognising perspectives",
+        "description": "Recognises and describes different perspectives and interests without judging them."
+      },
+      "mediaEffectUnderstand": {
+        "label": "Understanding media effects",
+        "description": "Understands how media content affects different people or groups."
+      },
+      "perspectivesDistinguish": {
+        "label": "Distinguishing perceptions",
+        "description": "Clearly distinguishes own perception from the perception of others."
+      },
+      "rolesUnderstand": {
+        "label": "Understanding roles",
+        "description": "Understands social roles in media contexts (e.g. influencer, viewer, platform)."
+      },
+      "goalConflicts": {
+        "label": "Recognising goal conflicts",
+        "description": "Recognises conflicts between personal interests and shared rules or expectations."
+      },
+      "credibilityAssess": {
+        "label": "Assessing credibility",
+        "description": "Evaluates the credibility of information using clear criteria."
+      },
+      "manipulationRecognize": {
+        "label": "Recognising manipulation",
+        "description": "Identifies distortions, manipulation or one-sided representations."
+      },
+      "informationClassify": {
+        "label": "Comparing information",
+        "description": "Compares different pieces of information or arguments."
+      },
+      "judgementExplain": {
+        "label": "Reasoning judgements",
+        "description": "Justifies own judgements logically and clearly."
+      }
+    }
   }
 }

@@ -101,6 +101,10 @@ const CHARACTER_UNLOCKS_BY_CHAPTER: Record<string, CharacterId[]> = {
   s1e02c04: ['alvarez'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
   s1e02c06: ['chioma'],  // bonusLink in c06 (Chioma schreibt Freundebuch)
   s1e02c09: ['carlos'],  // bonusLink in c09 (Carlos schreibt Freundebuch)
+
+  // s1e03
+  s1e03c02: ['schubert'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
+  s1e03c08: ['finn'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
 };
 
 /**

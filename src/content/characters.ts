@@ -323,6 +323,22 @@ alvarez: {
   bioKey: 'characters.alvarez.bio',
 },
 
+schubert: {
+  id: 'schubert',
+  name: 'Mrs. schubert',
+  avatar: 'schubert',
+  card: {
+    portrait: portraitPath('schubert'),
+    detailImage: detailImagePath('schubert'),
+    extraImages: [
+      `${ROOT}/schubert-extra-1-512.webp`,
+      `${ROOT}/schubert-extra-2-512.webp`,
+    ],
+    detailVideo: `${ROOT}/schubert-intro.mp4`,
+  },
+  bioKey: 'characters.schubert.bio',
+},
+
 
 } as const satisfies Record<string, CharacterEx>;
 

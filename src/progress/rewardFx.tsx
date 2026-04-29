@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useMemo, useRef, useState } from 'react';
 import { assetUrl } from '../common/assetUrl';
+import { useProfile } from '../profile/useProfile';
+import { playCoinSound, playStickerSound } from '../common/soundPlayer';
 
 export type RewardFx = {
   id: string;
@@ -43,6 +45,8 @@ export function RewardFxProvider({ children }: { children: React.ReactNode }) {
   const walletElRef = useRef<HTMLDivElement | null>(null);
   const profileElRef = useRef<HTMLDivElement | null>(null);
 
+  const { profile } = useProfile();
+
   const [activeRewards, setActiveRewards] = useState<RewardFx[]>([]);
 
   const pushReward = (reward: RewardFx) => {
@@ -55,6 +59,8 @@ export function RewardFxProvider({ children }: { children: React.ReactNode }) {
 
     const from = centerOfRect(fromRect);
     const to = centerOfRect(walletEl.getBoundingClientRect());
+
+    playCoinSound(profile.soundEnabled !== false);
 
     pushReward({
       id: `${Date.now()}_${Math.random().toString(16).slice(2)}`,
@@ -71,6 +77,8 @@ export function RewardFxProvider({ children }: { children: React.ReactNode }) {
     stickerImgSrc: string,
     opts?: { toRect?: DOMRect; durationMs?: number }
   ) => {
+    playStickerSound(profile.soundEnabled !== false);
+
     const from = centerOfRect(fromRect);
 
 

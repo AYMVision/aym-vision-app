@@ -85,6 +85,7 @@ export type UserProfile = {
   updatedAt: number;
   storyTranscripts?: Record<string, StoryTranscriptSnapshot>;
   chatName?: string;
+  soundEnabled?: boolean; // undefined = true (Standard: an)
 
   myCard?: {
     mostly: string;

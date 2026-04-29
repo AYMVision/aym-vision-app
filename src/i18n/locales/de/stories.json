@@ -370,6 +370,84 @@
         "childLabel": "Verantwortung tragen",
         "description": "Wie Ihr Kind Verantwortung für eigene Handlungen und andere übernimmt."
       }
+    },
+    "indicators": {
+      "privacyProtect": {
+        "label": "Privatsphäre schützen",
+        "description": "Schützt Privatsphäre und Daten – eigene und die anderer."
+      },
+      "doNotHarm": {
+        "label": "Nicht schaden",
+        "description": "Unterlässt Handlungen oder Inhalte, die anderen oder sich selbst schaden könnten."
+      },
+      "intervene": {
+        "label": "Eingreifen",
+        "description": "Greift aktiv bei problematischem Verhalten ein (z. B. Cybermobbing)."
+      },
+      "takeResponsibility": {
+        "label": "Positiv handeln",
+        "description": "Unterstützt aktiv positives und respektvolles Verhalten im digitalen Raum."
+      },
+      "rulesConsequences": {
+        "label": "Regeln & Konsequenzen",
+        "description": "Versteht und respektiert digitale Regeln und deren Konsequenzen."
+      },
+      "interruptImpulse": {
+        "label": "Impulse unterbrechen",
+        "description": "Unterbricht impulsives oder automatisiertes Medienverhalten (z. B. endloses Scrollen)."
+      },
+      "keepLimits": {
+        "label": "Grenzen einhalten",
+        "description": "Hält selbst gesetzte Nutzungsgrenzen oder Ziele ein."
+      },
+      "steerAttention": {
+        "label": "Aufmerksamkeit steuern",
+        "description": "Steuert Aufmerksamkeit bewusst trotz digitaler Ablenkung."
+      },
+      "pursueGoal": {
+        "label": "Ziele verfolgen",
+        "description": "Verfolgt selbst gesetzte Ziele trotz medialer Ablenkung."
+      },
+      "regulateEmotions": {
+        "label": "Gefühle erkennen & bewusst handeln",
+        "description": "Erkennt eigene Gefühle und steuert Verhalten bewusst statt impulsiv zu reagieren."
+      },
+      "perspectivesRecognize": {
+        "label": "Perspektiven erkennen",
+        "description": "Erkennt und beschreibt unterschiedliche Perspektiven und Interessen ohne Bewertung."
+      },
+      "mediaEffectUnderstand": {
+        "label": "Medienwirkung einschätzen",
+        "description": "Schätzt die Wirkung von Medieninhalten auf verschiedene Personen oder Gruppen ein."
+      },
+      "perspectivesDistinguish": {
+        "label": "Wahrnehmungen unterscheiden",
+        "description": "Unterscheidet eigene Wahrnehmung klar von der Wahrnehmung anderer."
+      },
+      "rolesUnderstand": {
+        "label": "Rollen verstehen",
+        "description": "Versteht soziale Rollen im medialen Kontext (z. B. Influencer, Zuschauer, Plattform)."
+      },
+      "goalConflicts": {
+        "label": "Zielkonflikte erkennen",
+        "description": "Erkennt Konflikte zwischen eigenen Interessen und gemeinsamen Regeln oder Erwartungen."
+      },
+      "credibilityAssess": {
+        "label": "Glaubwürdigkeit bewerten",
+        "description": "Bewertet die Glaubwürdigkeit von Informationen anhand nachvollziehbarer Kriterien."
+      },
+      "manipulationRecognize": {
+        "label": "Manipulation erkennen",
+        "description": "Erkennt Verzerrungen, Manipulation oder einseitige Darstellungen."
+      },
+      "informationClassify": {
+        "label": "Informationen vergleichen",
+        "description": "Vergleicht verschiedene Informationen oder Argumente miteinander."
+      },
+      "judgementExplain": {
+        "label": "Urteile begründen",
+        "description": "Begründet eigene Urteile logisch und nachvollziehbar."
+      }
     }
   }
 }

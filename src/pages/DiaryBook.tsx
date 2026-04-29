@@ -10,6 +10,7 @@ import {
 } from '../diary/diaryPin';
 
 import Layout from '../components/Layout';
+import AvatarStage from '../components/AvatarStage';
 import { BONUS_INDEX } from '../bonus/bonusIndex';
 import { useProfile } from '../profile/useProfile';
 import type { BonusProgressSnapshot } from '../bonus/bonusUnlock';
@@ -324,12 +325,15 @@ const unlockedEntries = useMemo(() => {
         {/* HERO (book cover vibe) */}
         <div className={['mt-4 rounded-3xl border bg-white shadow-sm overflow-hidden', style.border].join(' ')}>
           <div className="p-5 sm:p-6 flex items-center gap-4">
-            <div className={['w-24 h-32 rounded-2xl border bg-slate-50 overflow-hidden', style.border].join(' ')}>
+            <div className={['w-24 h-32 rounded-2xl border overflow-hidden', style.border].join(' ')}>
               {diaryId === 'diary_me' ? (
-                <img
-                  src={assetUrl(`media/avatars/full/${(profile.avatarBaseId?.trim() || 'default').toLowerCase()}-384.webp`)}
-                  alt={bookTitle}
-                  className="w-full h-full object-cover object-top"
+                <AvatarStage
+                  key={`${profile.avatarBaseId}-${profile.equipment?.featured ?? ''}-${profile.equipment?.background ?? ''}-${profile.equipment?.effect ?? ''}`}
+                  avatarBaseId={profile.avatarBaseId}
+                  equipment={profile.equipment}
+                  width={96}
+                  height={128}
+                  withBackdrop={false}
                 />
               ) : heroImage ? (
                 <img src={assetUrl(heroImage)} alt="" className="w-full h-full object-cover" />
@@ -398,7 +402,7 @@ function StoryDiarySection(props: {
 
   return (
     <div className={['mt-6 rounded-[28px] border bg-white shadow-sm overflow-hidden', styleBorder].join(' ')}>
-      <div className="relative p-5 sm:p-6 touch-none" style={{ minHeight: 340 }}>
+      <div className="relative p-5 sm:p-6" style={{ minHeight: 340 }}>
         {/* paper bg */}
         <div
           aria-hidden="true"
@@ -667,7 +671,7 @@ function MyDiaryWithPin() {
                 onChange={(e) => setSetupPin(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSetup()}
                 placeholder="····"
-                className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
+                className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-[16px] outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
               />
             </div>
             <div>
@@ -680,7 +684,7 @@ function MyDiaryWithPin() {
                 onChange={(e) => setSetupPinRepeat(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSetup()}
                 placeholder="····"
-                className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
+                className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-[16px] outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
               />
             </div>
             <div>
@@ -692,7 +696,7 @@ function MyDiaryWithPin() {
                 value={setupHint}
                 onChange={(e) => setSetupHint(e.target.value)}
                 placeholder={t('diaries.pin.hintPlaceholder', { defaultValue: 'z.B. mein Lieblingstier' })}
-                className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
+                className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-[16px] outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
               />
             </div>
           </div>
@@ -816,6 +820,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
   const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
   const [editText, setEditText] = useState('');
   const [selectedStickerId, setSelectedStickerId] = useState<string | null>(null);
+  const [deletingEntryId, setDeletingEntryId] = useState<string | null>(null);
 
   const dailyPrompt = useMemo(() => getDailyPrompt(), []);
 
@@ -924,6 +929,13 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
     );
   }
 
+  function deleteEntry(id: string) {
+    const next = entries.filter((e) => e.id !== id);
+    setEntries(next);
+    if (activeEntryId === id) setActiveEntryId(next[0]?.id ?? null);
+    setDeletingEntryId(null);
+  }
+
   function removeSticker(stickerId: string) {
     if (!activeEntry) return;
     setEntries((prev) =>
@@ -986,15 +998,29 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
             onChange={(e) => setText(e.target.value)}
             placeholder={dailyPrompt}
             rows={6}
-            className="w-full bg-transparent pl-[68px] pr-4 py-2 text-xl diary-hand text-slate-900 outline-none resize-none placeholder:text-slate-300"
+            className={['w-full bg-transparent pl-[68px] py-2 text-xl diary-hand text-slate-900 outline-none resize-none placeholder:text-slate-300', draftStickers.length > 0 ? 'pr-[88px]' : 'pr-4'].join(' ')}
             style={{ lineHeight: '32px' }}
           />
+          {/* Live preview: selected draft stickers float on the right of the page */}
+          {draftStickers.length > 0 && (
+            <div className="pointer-events-none absolute right-2 top-2 bottom-2 w-[76px] flex flex-col gap-1 items-center justify-start pt-1">
+              {draftStickers.slice(0, 3).map((sid, i) => (
+                <img
+                  key={sid}
+                  src={stickerSrc(sid, 256)}
+                  alt=""
+                  className="w-14 h-14 drop-shadow-md"
+                  style={{ transform: `rotate(${i === 0 ? -6 : i === 1 ? 7 : -3}deg)` }}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Sticker-Auswahl */}
         <div className="px-4 pt-3 pb-2 border-t border-slate-100 bg-white">
           <div className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wide mb-2">
-            Sticker für diese Seite:
+            Sticker auf deine Seite kleben:
           </div>
           <div className="flex flex-wrap gap-1">
             {DIARY_STICKERS.map((sid) => (
@@ -1085,30 +1111,66 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
                 </div>
                 <div className="mt-4 space-y-3">
                   {entries.map((e) => (
-                    <button
+                    <div
                       key={e.id}
-                      type="button"
-                      onClick={() => setActiveEntryId(e.id)}
                       className={[
-                        'w-full text-left rounded-2xl border p-3 transition',
+                        'w-full rounded-2xl border transition overflow-hidden',
                         e.id === activeEntryId
                           ? 'border-violet-300 bg-violet-50'
-                          : 'border-slate-200 bg-white hover:bg-slate-50',
+                          : 'border-slate-200 bg-white',
                       ].join(' ')}
                     >
-                      <div className="flex gap-3 items-start">
-                        <MiniEntryPreview entry={e} />
-                        <div className="flex-1 min-w-0">
-                          <div className="text-xs font-bold text-slate-500">{formatDate(e.createdAt)}</div>
-                          <div className="mt-1 text-sm font-semibold text-slate-900 line-clamp-3 diary-hand">
-                            {e.text}
+                      <button
+                        type="button"
+                        onClick={() => { setActiveEntryId(e.id); setDeletingEntryId(null); }}
+                        className="w-full text-left p-3"
+                      >
+                        <div className="flex gap-3 items-start">
+                          <MiniEntryPreview entry={e} />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs font-bold text-slate-500">{formatDate(e.createdAt)}</div>
+                            <div className="mt-1 text-sm font-semibold text-slate-900 line-clamp-3 diary-hand">
+                              {e.text}
+                            </div>
+                            {e.stickers.length > 0 && (
+                              <div className="mt-2 text-xs text-slate-400">{e.stickers.length} Sticker</div>
+                            )}
                           </div>
-                          {e.stickers.length > 0 && (
-                            <div className="mt-2 text-xs text-slate-400">{e.stickers.length} Sticker</div>
-                          )}
                         </div>
-                      </div>
-                    </button>
+                      </button>
+
+                      {/* Delete row */}
+                      {deletingEntryId === e.id ? (
+                        <div className="flex items-center gap-2 px-3 pb-3">
+                          <span className="text-xs text-red-600 font-semibold flex-1">Wirklich löschen?</span>
+                          <button
+                            type="button"
+                            onClick={() => deleteEntry(e.id)}
+                            className="rounded-xl bg-red-500 px-3 py-1 text-xs font-extrabold text-white hover:bg-red-600"
+                          >
+                            Ja, löschen
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setDeletingEntryId(null)}
+                            className="rounded-xl border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                          >
+                            Nein
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex justify-end px-3 pb-2">
+                          <button
+                            type="button"
+                            onClick={() => setDeletingEntryId(e.id)}
+                            aria-label="Seite löschen"
+                            className="text-slate-300 hover:text-red-400 transition-colors text-base leading-none"
+                          >
+                            🗑
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -1193,6 +1255,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
                               selected={s.id === selectedStickerId}
                               onSelect={() => setSelectedStickerId(s.id)}
                               onMove={(xPx, yPx) => updateSticker(s.id, { xPx, yPx })}
+                              onResize={(size) => updateSticker(s.id, { size })}
                               onRemove={() => { removeSticker(s.id); setSelectedStickerId(null); }}
                             />
                           ))}
@@ -1201,7 +1264,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
                     </div>
 
                     <div className="mt-3 text-xs text-slate-500">
-                      {t('diaries.me.dragHint', { defaultValue: 'Sticker antippen zum Auswählen, dann ✕ zum Entfernen.' })}
+                      {t('diaries.me.dragHint', { defaultValue: 'Sticker verschieben: einfach ziehen. Größe ändern: zwei Finger zusammen- oder auseinanderziehen. Entfernen: antippen, dann ✕.' })}
                     </div>
                   </>
                 )}
@@ -1235,22 +1298,31 @@ function StickerDraggable(props: {
   selected: boolean;
   onSelect: () => void;
   onMove: (xPx: number, yPx: number) => void;
+  onResize: (size: number) => void;
   onRemove: () => void;
 }) {
-  const { sticker, canvasRef, selected, onSelect, onMove, onRemove } = props;
+  const { sticker, canvasRef, selected, onSelect, onMove, onResize, onRemove } = props;
   const divRef = useRef<HTMLDivElement>(null);
 
   const drag = useRef({
+    // primary pointer / drag
     down: false,
     pid: -1,
     startX: 0,
     startY: 0,
     baseXPx: sticker.xPx,
     baseYPx: sticker.yPx,
-    raf: 0 as any,
     nextXPx: sticker.xPx,
     nextYPx: sticker.yPx,
+    raf: 0 as ReturnType<typeof requestAnimationFrame> | 0,
     hasMoved: false,
+    // secondary pointer / pinch
+    pid2: -1,
+    p2X: 0,
+    p2Y: 0,
+    pinchStartDist: 0,
+    pinchBaseSize: sticker.size,
+    nextSize: sticker.size,
   });
 
   useEffect(() => {
@@ -1260,9 +1332,25 @@ function StickerDraggable(props: {
       drag.current.nextXPx = sticker.xPx;
       drag.current.nextYPx = sticker.yPx;
     }
-  }, [sticker.xPx, sticker.yPx]);
+    drag.current.nextSize = sticker.size;
+    drag.current.pinchBaseSize = sticker.size;
+  }, [sticker.xPx, sticker.yPx, sticker.size]);
 
   const clampPx = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
+
+  function scheduleRaf() {
+    if (!drag.current.raf) {
+      drag.current.raf = requestAnimationFrame(() => {
+        drag.current.raf = 0;
+        const el = divRef.current;
+        if (!el) return;
+        el.style.left = `${drag.current.nextXPx}px`;
+        el.style.top = `${drag.current.nextYPx}px`;
+        el.style.width = `${drag.current.nextSize}px`;
+        el.style.height = `${drag.current.nextSize}px`;
+      });
+    }
+  }
 
   return (
     <div
@@ -1275,7 +1363,7 @@ function StickerDraggable(props: {
         height: sticker.size,
         transform: `translate(-50%, -50%) rotate(${sticker.rot}deg)`,
         touchAction: 'none',
-        willChange: 'left, top',
+        willChange: 'left, top, width, height',
         zIndex: selected ? 20 : undefined,
       }}
       onClick={(e) => e.stopPropagation()}
@@ -1286,6 +1374,20 @@ function StickerDraggable(props: {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
+        // Second finger → start pinch
+        if (drag.current.down && drag.current.pid !== -1) {
+          drag.current.pid2 = e.pointerId;
+          drag.current.p2X = e.clientX;
+          drag.current.p2Y = e.clientY;
+          const dx = e.clientX - drag.current.startX;
+          const dy = e.clientY - drag.current.startY;
+          drag.current.pinchStartDist = Math.hypot(dx, dy) || 1;
+          drag.current.pinchBaseSize = drag.current.nextSize;
+          (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+          return;
+        }
+
+        // First finger → drag
         drag.current.down = true;
         drag.current.pid = e.pointerId;
         drag.current.startX = e.clientX;
@@ -1299,10 +1401,24 @@ function StickerDraggable(props: {
         (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
       }}
       onPointerMove={(e) => {
-        if (!drag.current.down || drag.current.pid !== e.pointerId) return;
-
         const canvas = canvasRef.current;
         if (!canvas) return;
+
+        // Pinch move (second pointer)
+        if (drag.current.pid2 === e.pointerId) {
+          drag.current.p2X = e.clientX;
+          drag.current.p2Y = e.clientY;
+          const dx = drag.current.p2X - drag.current.startX;
+          const dy = drag.current.p2Y - drag.current.startY;
+          const dist = Math.hypot(dx, dy) || 1;
+          const scale = dist / drag.current.pinchStartDist;
+          drag.current.nextSize = clampPx(drag.current.pinchBaseSize * scale, 40, 240);
+          scheduleRaf();
+          return;
+        }
+
+        // Drag move (first pointer)
+        if (!drag.current.down || drag.current.pid !== e.pointerId) return;
 
         const r = canvas.getBoundingClientRect();
         const dx = e.clientX - drag.current.startX;
@@ -1310,49 +1426,41 @@ function StickerDraggable(props: {
 
         if (Math.abs(dx) + Math.abs(dy) > 6) drag.current.hasMoved = true;
 
+        const half = drag.current.nextSize / 2;
         const rawX = drag.current.baseXPx + dx;
         const rawY = drag.current.baseYPx + dy;
+        drag.current.nextXPx = clampPx(rawX, half + 8, r.width - half - 8);
+        drag.current.nextYPx = clampPx(rawY, half + 8, r.height - half - 8);
 
-        const half = sticker.size / 2;
-        const xPx = clampPx(rawX, half + 8, r.width - half - 8);
-        const yPx = clampPx(rawY, half + 8, r.height - half - 8);
-
-        drag.current.nextXPx = xPx;
-        drag.current.nextYPx = yPx;
-
-        if (!drag.current.raf) {
-          drag.current.raf = requestAnimationFrame(() => {
-            drag.current.raf = 0;
-            const el = divRef.current;
-            if (el) {
-              el.style.left = `${drag.current.nextXPx}px`;
-              el.style.top = `${drag.current.nextYPx}px`;
-            }
-          });
-        }
+        scheduleRaf();
       }}
       onPointerUp={(e) => {
+        // Second finger lifted → commit size
+        if (drag.current.pid2 === e.pointerId) {
+          onResize(Math.round(drag.current.nextSize));
+          drag.current.pid2 = -1;
+          try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch { /* ignore */ }
+          return;
+        }
+
+        // First finger lifted → commit position or select
         if (drag.current.down && drag.current.pid === e.pointerId) {
           if (drag.current.hasMoved) {
             onMove(drag.current.nextXPx, drag.current.nextYPx);
-          } else {
+          } else if (drag.current.pid2 === -1) {
             onSelect();
           }
         }
         drag.current.down = false;
         drag.current.pid = -1;
-        try {
-          (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-        } catch {
-          // ignore
-        }
+        try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch { /* ignore */ }
       }}
       onPointerCancel={() => {
-        if (drag.current.down) {
-          onMove(drag.current.nextXPx, drag.current.nextYPx);
-        }
+        if (drag.current.down) onMove(drag.current.nextXPx, drag.current.nextYPx);
+        if (drag.current.pid2 !== -1) onResize(Math.round(drag.current.nextSize));
         drag.current.down = false;
         drag.current.pid = -1;
+        drag.current.pid2 = -1;
       }}
     >
       <img

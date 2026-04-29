@@ -21,8 +21,12 @@ export function saveStorySessionSnapshot(
       ...snapshot,
       updatedAt: Date.now(),
     };
-
-    sessionStorage.setItem(sessionKey(scope), JSON.stringify(full));
+    const value = JSON.stringify(full);
+    const key = sessionKey(scope);
+    // localStorage: survives iOS tab suspension / memory pressure
+    localStorage.setItem(key, value);
+    // sessionStorage: fast fallback if localStorage is unavailable
+    try { sessionStorage.setItem(key, value); } catch { /* ignore */ }
   } catch {
     // ignore
   }
@@ -31,23 +35,30 @@ export function saveStorySessionSnapshot(
 export function loadStorySessionSnapshot(
   scope: StorySessionScope
 ): StorySessionSnapshot | null {
-  try {
-    const raw = sessionStorage.getItem(sessionKey(scope));
-    if (!raw) return null;
+  const key = sessionKey(scope);
 
-    const parsed = JSON.parse(raw);
-    if (!parsed || !Array.isArray(parsed.transcript)) return null;
+  // Prefer sessionStorage (in-tab, freshest) — fall back to localStorage
+  const sources = [
+    () => sessionStorage.getItem(key),
+    () => localStorage.getItem(key),
+  ];
 
-    return parsed as StorySessionSnapshot;
-  } catch {
-    return null;
+  for (const getItem of sources) {
+    try {
+      const raw = getItem();
+      if (!raw) continue;
+      const parsed = JSON.parse(raw);
+      if (!parsed || !Array.isArray(parsed.transcript)) continue;
+      return parsed as StorySessionSnapshot;
+    } catch {
+      // try next source
+    }
   }
+  return null;
 }
 
 export function clearStorySessionSnapshot(scope: StorySessionScope): void {
-  try {
-    sessionStorage.removeItem(sessionKey(scope));
-  } catch {
-    // ignore
-  }
+  const key = sessionKey(scope);
+  try { sessionStorage.removeItem(key); } catch { /* ignore */ }
+  try { localStorage.removeItem(key); } catch { /* ignore */ }
 }

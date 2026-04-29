@@ -134,7 +134,7 @@ const isActive = (to: string) => {
   }, []);
 
   return (
-    <div className={cn(fullHeight ? 'h-[100dvh] overflow-hidden' : 'min-h-screen', 'bg-[var(--color-teal-300)] flex flex-col')}>
+    <div className={cn(fullHeight ? 'h-[100dvh] overflow-hidden' : 'min-h-screen', 'bg-[var(--color-teal-300)] flex flex-col overflow-x-hidden')}>
       {/* =========================
           HEADER (Sticky)
          ========================= */}
@@ -193,7 +193,7 @@ const isActive = (to: string) => {
             <div className="flex-1" />
 
             {/* Mobile: Coins → Shop, Avatar → Profile */}
-            <div className="flex items-center gap-2 p-1">
+            <div className="flex items-center gap-2 p-1 shrink-0">
               <Link
                 to="/avatar"
                 state={{ backTo: location.pathname + location.search + location.hash, initialTab: 'shop' }}
@@ -201,14 +201,14 @@ const isActive = (to: string) => {
               >
                 <div
                   ref={walletElRef}
-                  className="px-2 py-1 rounded-xl bg-amber-50 border border-amber-200 text-xs font-semibold flex items-center gap-1"
+                  className="px-2 py-1 rounded-xl bg-amber-50 border border-amber-200 text-xs font-semibold flex items-center gap-1 shrink-0"
                 >
                   <img
                     src={assetUrl('media/story/ui/coin-128.webp')}
                     alt=""
-                    className="w-5 h-5"
+                    className="w-5 h-5 shrink-0"
                   />
-                  <span>{coins}</span>
+                  <span className="whitespace-nowrap">{coins}</span>
                 </div>
               </Link>
 

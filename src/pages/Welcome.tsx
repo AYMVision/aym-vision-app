@@ -159,8 +159,14 @@ function isUnlockedByChain(
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 {/* HERO */}
 <section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg bg-white">
-  <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-white" />
-  <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full " />
+  
+  {/* Hintergrund-Verlauf (sehr subtil) */}
+  <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-teal-50)] via-white to-white" />
+
+  {/* Grüner Glow NUR oben links */}
+  <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-[var(--color-teal-200)]/30 blur-2xl" />
+
+
 
   <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch">
     {/* TEXT */}
@@ -176,13 +182,8 @@ function isUnlockedByChain(
       <p className="mt-3 text-sm sm:text-base text-slate-800 leading-relaxed">
         {t('hero.lead')}
       </p>
-
-      <p className="mt-2 text-sm sm:text-base font-semibold text-slate-900 leading-relaxed">
-        {t('hero.leadEmphasis')}
-      </p>
-
       <p className="mt-2 text-sm sm:text-base text-slate-800 leading-relaxed">
-        {t('hero.leadEmphasis2')}
+        {t('hero.leadEmphasis')}
       </p>
 
       <div className="mt-5 flex flex-wrap gap-2">
@@ -208,10 +209,6 @@ function isUnlockedByChain(
       </div>
 
       <p className="mt-3 text-xs text-slate-500">
-        {t('hero.parentHint', { defaultValue: 'Elternteil?' })}{' '}
-        <Link to="/parents" className="underline hover:text-slate-700">
-          {t('hero.parentHintLink', { defaultValue: 'Hier informieren & App einrichten →' })}
-        </Link>
       </p>
     </div>
 

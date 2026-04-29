@@ -22,6 +22,9 @@ export type IndicatorId =
   | 'credibility_assess'
   | 'manipulation_recognize'
   | 'information_classify'
-  | 'judgement_explain';
+  | 'judgement_explain'
+  | 'rules_consequences'
+  | 'regulate_emotions'
+  | 'goal_conflicts';
 
 export type ItemScore = 0 | 1 | 2 | 3;

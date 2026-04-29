@@ -212,7 +212,7 @@ export default function Phone({
                 <div className="flex-1 relative">
                   <input
                     ref={userTextRef}
-                    className="w-full py-[6%] px-[5%] pr-[12%] rounded-full bg-gold-50 text-gray-800 placeholder-gray-500 outline-none focus:ring-2 focus:ring-gold-500 focus:bg-white transition-all text-xs sm:text-sm"
+                    className="w-full py-[6%] px-[5%] pr-[12%] rounded-full bg-gold-50 text-gray-800 placeholder-gray-500 outline-none focus:ring-2 focus:ring-gold-500 focus:bg-white transition-all text-[16px] sm:text-sm"
                     placeholder={inputPlaceholder}
                     onKeyDown={(e) => {
                       if ((e as any).isComposing) return;

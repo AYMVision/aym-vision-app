@@ -46,6 +46,100 @@ function DisclaimerSection() {
   );
 }
 
+const MEDIA_CREDITS = [
+  {
+    type: 'Soundeffekt',
+    title: '„Short Success Sound – Glockenspiel / Treasure / Video Game" von freesound_community',
+    source: 'Pixabay',
+    license: 'Pixabay Content License',
+    licenseUrl: 'https://pixabay.com/service/license-summary/',
+    usedFor: 'Coin-Belohnungseffekt',
+  },
+  {
+    type: 'Soundeffekt',
+    title: 'Sticker-Reward-Sound von Crunchpix Studio',
+    source: 'Pixabay',
+    license: 'Pixabay Content License',
+    licenseUrl: 'https://pixabay.com/service/license-summary/',
+    usedFor: 'Sticker-Belohnungseffekt',
+  },
+  {
+    type: 'Soundeffekt',
+    title: '„Episoden-Abschluss-Sound" von freesound_community',
+    source: 'Pixabay',
+    license: 'Pixabay Content License',
+    licenseUrl: 'https://pixabay.com/service/license-summary/',
+    usedFor: 'Abschluss einer Episode',
+  },
+  {
+    type: 'Musik',
+    title: 'Vlad Krotov',
+    source: 'Pixabay',
+    license: 'Pixabay Content License',
+    licenseUrl: 'https://pixabay.com/service/license-summary/',
+    usedFor: 'Diskussion zwischen Chioma und Dominik; Weeklys mit Chioma',
+  },
+  {
+    type: 'Hintergrundgeräusche',
+    title: '„school break noise outdoor.wav" von Libra222',
+    source: 'Freesound',
+    license: 'Creative Commons Zero (CC0)',
+    licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+    usedFor: 'Diskussion zwischen Chioma und Dominik; Weeklys mit Chioma',
+  },
+];
+
+function MediaCreditsSection() {
+  const [open, setOpen] = useState(false);
+  return (
+    <section className="bg-white rounded-2xl border border-slate-100 shadow-sm">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full text-left px-5 py-4 flex items-center justify-between gap-4"
+        aria-expanded={open}
+      >
+        <div>
+          <div className="text-base font-extrabold text-slate-900">Verwendete Audioinhalte</div>
+          <div className="mt-0.5 text-xs text-slate-500">Musik und Hintergrundgeräusche</div>
+        </div>
+        <div className="shrink-0 w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 transition-transform" style={{ transform: open ? 'rotate(45deg)' : undefined }}>
+          +
+        </div>
+      </button>
+
+      {open && (
+        <div className="px-5 pb-5">
+          <div className="divide-y divide-slate-100">
+            {MEDIA_CREDITS.map((c) => (
+              <div key={c.title} className="py-3">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wide shrink-0">{c.type}</span>
+                  <span className="font-semibold text-sm text-slate-900">{c.title}</span>
+                </div>
+                <div className="mt-0.5 text-xs text-slate-500">
+                  {c.source} &mdash;{' '}
+                  <a
+                    href={c.licenseUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline text-[var(--color-teal-700)] hover:text-[var(--color-teal-900)]"
+                  >
+                    {c.license}
+                  </a>
+                </div>
+                <div className="mt-1 text-xs text-slate-400">
+                  Verwendet für: {c.usedFor}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
 const LICENSES = [
   {
     name: 'Baloo Bhaijaan 2',
@@ -223,6 +317,9 @@ an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilz
 
         {/* ─── Lizenzen ─── */}
         <LicensesSection />
+
+        {/* ─── Audioinhalte ─── */}
+        <MediaCreditsSection />
 
         <Section title="Datenschutz">
           <p>

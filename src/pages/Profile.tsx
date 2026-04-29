@@ -123,6 +123,23 @@ export default function Profile() {
                 >
                   {t('shop.openCta', { defaultValue: 'Avatar ändern'})}
                 </Link>
+
+                {/* Sound-Toggle */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    updateProfile((prev) => ({
+                      ...prev,
+                      soundEnabled: prev.soundEnabled === false ? true : false,
+                      updatedAt: Date.now(),
+                    }))
+                  }
+                  className="mt-2 inline-flex items-center justify-center gap-2 w-full rounded-xl px-3 py-2 text-xs font-semibold border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors"
+                  aria-label={profile.soundEnabled === false ? t('sound.enable', { defaultValue: 'Sound einschalten' }) : t('sound.disable', { defaultValue: 'Sound ausschalten' })}
+                >
+                  <span>{profile.soundEnabled === false ? '🔕' : '🔔'}</span>
+                  <span>{profile.soundEnabled === false ? t('sound.off', { defaultValue: 'Sound aus' }) : t('sound.on', { defaultValue: 'Sound an' })}</span>
+                </button>
               </div>
             </div>
           </div>

@@ -55,6 +55,7 @@ import UnlockedToast from '../components/UnlockedToast';
 import { useRewardFx } from '../progress/rewardFx';
 import { getStickerById } from '../progress/rewardCatalog';
 import { assetUrl } from '../common/assetUrl';
+import { playEpisodeSound } from '../common/soundPlayer';
 import EpisodeSummaryCard from '../story-v02/components/EpisodeSummaryCard';
 
 type SceneTone = 'private' | 'class' | 'newsroom';
@@ -278,7 +279,7 @@ export default function StoryV02() {
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
-  const { updateProfile } = useProfile();
+  const { profile, updateProfile } = useProfile();
 
   const lang: Lang =
     (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
@@ -436,6 +437,7 @@ function hasStoryMigrationDone(key: string): boolean {
       storyScrollPositions.set(key, top);
       if (ssKey && top > 0) {
         try { sessionStorage.setItem(ssKey, String(top)); } catch { /* ignore */ }
+        try { localStorage.setItem(ssKey, String(top)); } catch { /* ignore */ }
       }
     };
 
@@ -615,12 +617,14 @@ function hasStoryMigrationDone(key: string): boolean {
       restoreScrollToValue(saved);
       return;
     }
-    // Fallback: sessionStorage per courseId (z.B. nach "Weiter"-Button mit neuem location.key)
+    // Fallback: sessionStorage → localStorage per courseId (überlebt iOS-Tab-Suspension)
     if (courseId) {
       try {
-        const raw = sessionStorage.getItem(`aym_story_scroll_${courseId}`);
-        const fromSS = raw ? Number(raw) : 0;
-        if (fromSS > 0) restoreScrollToValue(fromSS);
+        const ssKey = `aym_story_scroll_${courseId}`;
+        const rawSS = sessionStorage.getItem(ssKey);
+        const rawLS = localStorage.getItem(ssKey);
+        const fromStorage = rawSS ? Number(rawSS) : rawLS ? Number(rawLS) : 0;
+        if (fromStorage > 0) restoreScrollToValue(fromStorage);
       } catch { /* ignore */ }
     }
   }, [location.key, courseId]);
@@ -897,6 +901,7 @@ function hasStoryMigrationDone(key: string): boolean {
         // Abschluss-Karte direkt im Messenger erscheint nach den Animationen
         const summaryId = `episode-summary-${courseId}`;
         setTimeout(() => {
+          playEpisodeSound(profile.soundEnabled !== false);
           dispatch({
             type: 'ADD_EPISODE_SUMMARY',
             payload: {

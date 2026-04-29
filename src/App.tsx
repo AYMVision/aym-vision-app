@@ -4,6 +4,9 @@ import { HashRouter as Router, Routes, Route, useLocation, useParams } from 'rea
 import type { Location } from 'react-router-dom';
 
 import { ProfileProvider } from './profile/useProfile';
+import { initSoundPlayer } from './common/soundPlayer';
+
+initSoundPlayer();
 import { RewardFxProvider } from './progress/rewardFx';
 import CoinOverlay from './progress/CoinOverlay';
 import RouteI18nLoader from './i18n/RouteI18nLoader';
