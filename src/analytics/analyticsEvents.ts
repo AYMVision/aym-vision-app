@@ -14,6 +14,33 @@ function today(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
+export function trackItemStep(params: {
+  stepId: string;
+  itemScore: 0 | 1 | 2 | 3;
+  dimensionId: string;
+  indicatorId: string;
+  topicIds?: string[];
+}): void {
+  if (getConsentStatus() !== 'granted') return;
+
+  try {
+    const decision: StepDecision = {
+      stepId: params.stepId,
+      episodeId: episodeFromStepId(params.stepId),
+      type: 'item',
+      itemScore: params.itemScore,
+      dimensionId: params.dimensionId,
+      indicatorId: params.indicatorId,
+      topicIds: params.topicIds?.length ? params.topicIds : undefined,
+      attemptCount: 1,
+      date: today(),
+    };
+    appendDecision(decision);
+  } catch {
+    // fire-and-forget
+  }
+}
+
 export function trackReflectionStep(params: {
   stepId: string;
   type: 'open_text' | 'guided_choice';

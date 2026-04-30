@@ -170,7 +170,7 @@ function isUnlockedByChain(
 
   <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch">
     {/* TEXT */}
-<div className="lg:col-span-7 p-6 sm:p-10 lg:pr-10 flex flex-col justify-center">
+<div className="lg:col-span-7 p-6 pb-2 sm:p-10 lg:pr-10 flex flex-col justify-center">
       <div className="text-xs sm:text-sm font-semibold text-[var(--color-teal-700)]">
         {t('hero.kicker')}
       </div>
@@ -208,12 +208,12 @@ function isUnlockedByChain(
         </Link>
       </div>
 
-      <p className="mt-3 text-xs text-slate-500">
+      <p className="mt10 text-xs text-slate-500">
       </p>
     </div>
 
     {/* MEDIA */}
-<div className="lg:col-span-5 relative min-h-[380px] sm:min-h-[440px] lg:min-h-[420px] overflow-hidden">
+<div className="lg:col-span-5 relative -mt-6 sm:mt-0 min-h-[380px] sm:min-h-[440px] lg:min-h-[420px] overflow-hidden">
       <video
          className="absolute inset-0 w-full h-full object-contain scale-85"
         autoPlay

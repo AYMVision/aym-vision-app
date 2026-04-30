@@ -33,6 +33,10 @@ import {
   saveStorySessionSnapshot,
 } from '../story-v02/runtime/storySessionSnapshotStore';
 import {
+  saveAmicSession,
+  loadAmicSession,
+} from '../story-v02/runtime/amicSessionStore';
+import {
   saveChallengeStatus,
   saveInputResponse,
   saveItemResponse,
@@ -56,6 +60,7 @@ import { useRewardFx } from '../progress/rewardFx';
 import { getStickerById } from '../progress/rewardCatalog';
 import { assetUrl } from '../common/assetUrl';
 import { playEpisodeSound } from '../common/soundPlayer';
+import { trackItemStep } from '../analytics/analyticsEvents';
 import EpisodeSummaryCard from '../story-v02/components/EpisodeSummaryCard';
 
 type SceneTone = 'private' | 'class' | 'newsroom';
@@ -274,8 +279,8 @@ function snapshotMatchesCourseId(
 const storyScrollPositions = new Map<string, number>();
 
 export default function StoryV02() {
-  const { courseId } = useParams();
-  console.log('[V02] route courseId =', courseId);
+  const { courseId, chapterId: routeChapterId } = useParams<{ courseId: string; chapterId?: string }>();
+  console.log('[V02] route courseId =', courseId, 'chapterId =', routeChapterId);
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
@@ -345,6 +350,10 @@ export default function StoryV02() {
     starterStickerAwarded: boolean;
     weeklyBadgeAwarded: boolean;
   } | null>(null);
+
+  // Nach Amic-Abschluss: ID des nächsten Amics (wenn verfügbar), oder null = letzter Amic
+  const [amicDoneNextChapterId, setAmicDoneNextChapterId] = useState<string | null | undefined>(undefined);
+  // undefined = Karte noch nicht zeigen; null = letzter Amic (keine Weiter-Option); string = nächster Amic
 
   const { flyStickerFromRect, flyCoinFromRect } = useRewardFx();
 
@@ -473,14 +482,72 @@ function hasStoryMigrationDone(key: string): boolean {
       saveStoryMigrationDone(migrationKey);
     }
 
+    // --- Per-Amic resume (chapter-specific URL) ---
+    // When a specific chapterId is in the route, load only that chapter's session.
+    // Never auto-advance — the user navigated here intentionally.
+    if (routeChapterId) {
+      const targetChapter = episode.chapters.find((c) => c.id === routeChapterId) ?? null;
+      if (!targetChapter) return;
+
+      const amicSnap = loadAmicSession(courseId, routeChapterId);
+
+      if (amicSnap) {
+        restoredAsFinishedRef.current = amicSnap.phase === 'chapter_finished';
+
+        // Re-unlock bonus-link markers that may have been cleared
+        if (amicSnap.completedStepIds.length > 0) {
+          for (const ch of episode.chapters) {
+            for (const step of ch.steps) {
+              if (!amicSnap.completedStepIds.includes(step.id)) continue;
+              if (step.type !== 'story') continue;
+              for (const message of step.messages) {
+                if (message.type === 'system' && message.kind === 'bonus-link' && message.bonusId) {
+                  unlockBonusById(message.bonusId);
+                }
+              }
+            }
+          }
+        }
+
+        dispatch({ type: 'RESTORE_SNAPSHOT', payload: amicSnap });
+
+        // Show locked-hint if chapter is finished and next chapter is time-gated
+        if (amicSnap.phase === 'chapter_finished') {
+          const gateState = getNextChapterGateState({
+            courseId,
+            course: { script: episode.chapters },
+            currentChapterIndex0: amicSnap.chapterIndex0,
+            bypassAll: false,
+            maxPerWeek: 5,
+          });
+          if (gateState.hasNext && !gateState.timeAllowed && gateState.shouldShowLockedHint) {
+            setShowNextChapterLockedHint(true);
+            setNextChapterLockedReason(
+              gateState.blockedReason === 'daily_limit' || gateState.blockedReason === 'weekly_limit'
+                ? gateState.blockedReason
+                : null
+            );
+            setDismissedNextChapterLockedHint(false);
+          }
+        }
+        return;
+      }
+
+      // No amic session yet — start this chapter fresh
+      setAmicDoneNextChapterId(undefined);
+      dispatch({
+        type: 'START_CHAPTER',
+        payload: { courseId, chapter: targetChapter },
+      });
+      return;
+    }
+
+    // --- Fallback: episode-level session (no chapterId in route) ---
     const snap = loadStorySessionSnapshot(scope);
 
     if (snap) {
       restoredAsFinishedRef.current = snap.phase === 'chapter_finished';
 
-      // Bonus-Marker für bereits abgeschlossene Story-Steps neu setzen.
-      // Nötig wenn localStorage gecleart wurde aber der Session-Snapshot noch existiert:
-      // completedStepIds enthält den Step, aber der Marker ist weg → Karte wirkt locked.
       if (snap.completedStepIds.length > 0) {
         for (const chapter of episode.chapters) {
           for (const step of chapter.steps) {
@@ -495,10 +562,7 @@ function hasStoryMigrationDone(key: string): boolean {
         }
       }
 
-      dispatch({
-        type: 'RESTORE_SNAPSHOT',
-        payload: snap,
-      });
+      dispatch({ type: 'RESTORE_SNAPSHOT', payload: snap });
 
       if (snap.phase === 'chapter_finished') {
         const gateState = getNextChapterGateState({
@@ -538,10 +602,7 @@ function hasStoryMigrationDone(key: string): boolean {
 
             dispatch({
               type: 'ADVANCE_TO_CHAPTER',
-              payload: {
-                courseId,
-                chapter: nextChapter,
-              },
+              payload: { courseId, chapter: nextChapter },
             });
 
             return;
@@ -563,9 +624,7 @@ function hasStoryMigrationDone(key: string): boolean {
       return;
     }
 
-    // Kein Snapshot vorhanden — Startposition aus gespeichertem Fortschritt lesen.
-    // Ohne diesen Fix würde nach einem Browser-Neustart immer Kapitel 0 gestartet,
-    // obwohl unlockedEpisode in localStorage bereits weiter ist.
+    // No snapshot — start from highest playable chapter
     const highestPlayable = getHighestPlayableChapterIndex0(courseId ?? undefined);
     const startIndex = Math.min(highestPlayable, episode.chapters.length - 1);
     const startChapter = episode.chapters[startIndex] ?? null;
@@ -573,35 +632,38 @@ function hasStoryMigrationDone(key: string): boolean {
 
     dispatch({
       type: 'START_CHAPTER',
-      payload: {
-        courseId,
-        chapter: startChapter,
-      },
+      payload: { courseId, chapter: startChapter },
     });
-  }, [courseId, episodeMeta, episode]);
+  }, [courseId, routeChapterId, episodeMeta, episode]);
 
   useEffect(() => {
     if (!courseId || !episodeMeta) return;
     if (!state.courseId || !state.chapterId) return;
 
+    const snapshotPayload = {
+      courseId: state.courseId,
+      chapterId: state.chapterId,
+      chapterIndex0: state.chapterIndex0,
+      stepIndex0: state.stepIndex0,
+      phase: state.phase,
+      storyCursor: state.storyCursor,
+      transcript: state.transcript,
+      completedStepIds: state.completedStepIds,
+      activeStepId: state.activeStepId,
+    };
+
+    // Episode-level save (backward compat)
     saveStorySessionSnapshot(
       {
         seasonId: episodeMeta.seasonId,
         episodeId: episodeMeta.episodeId,
         courseId,
       },
-      {
-        courseId: state.courseId,
-        chapterId: state.chapterId,
-        chapterIndex0: state.chapterIndex0,
-        stepIndex0: state.stepIndex0,
-        phase: state.phase,
-        storyCursor: state.storyCursor,
-        transcript: state.transcript,
-        completedStepIds: state.completedStepIds,
-        activeStepId: state.activeStepId,
-      }
+      snapshotPayload
     );
+
+    // Per-Amic save — key includes chapterId so each chapter resumes independently
+    saveAmicSession(courseId, state.chapterId, snapshotPayload);
   }, [state, courseId, episodeMeta]);
 
   const currentStep: StoryStep | null = useMemo(() => {
@@ -920,6 +982,7 @@ function hasStoryMigrationDone(key: string): boolean {
       setShowNextChapterLockedHint(false);
       setNextChapterLockedReason(null);
       setDismissedNextChapterLockedHint(false);
+      setAmicDoneNextChapterId(null);
       if (!wasAlreadyCompletedBeforeAnswer && lastVisibleEntryId) {
         setPendingChapterRewards({ lastEntryId: lastVisibleEntryId, coinAwarded: result.coinAwarded, themeStickerIds: result.newThemeStickerIds, milestoneStickerIds: result.newMilestoneStickerIds, starterStickerAwarded: result.starterStickerAwarded, weeklyBadgeAwarded: result.weeklyBadgeAwarded });
       }
@@ -950,32 +1013,8 @@ function hasStoryMigrationDone(key: string): boolean {
     setNextChapterLockedReason(null);
     setDismissedNextChapterLockedHint(false);
 
-    dispatch({
-      type: 'APPEND_STORY_MESSAGE',
-      payload: {
-        message: {
-          id: `${courseId}-${nextChapter.id}-chapter-divider`,
-          type: 'system',
-          kind: 'chapter-divider',
-          content:
-            nextChapter.chapterTitle ?? `Kapitel ${nextChapter.chapterIndex0 + 1}`,
-          chapterMeta: {
-            title:
-              nextChapter.chapterTitle ?? `Kapitel ${nextChapter.chapterIndex0 + 1}`,
-            subtitle: nextChapter.chapterSubtitle,
-          },
-          timestamp: '',
-        },
-      },
-    });
-
-    dispatch({
-      type: 'ADVANCE_TO_CHAPTER',
-      payload: {
-        courseId,
-        chapter: nextChapter,
-      },
-    });
+    // Statt inline-Weiterschalten: Navigations-Karte zeigen
+    setAmicDoneNextChapterId(nextChapter.id);
 
     // Rewards warten bis der letzte Eintrag im Viewport sichtbar ist
     if (!wasAlreadyCompletedBeforeAnswer && lastVisibleEntryId) {
@@ -1026,24 +1065,30 @@ function hasStoryMigrationDone(key: string): boolean {
       unlockBonusById(payload.bonusId);
     }
 
+    const snapshotPayload = {
+      courseId: state.courseId,
+      chapterId: state.chapterId,
+      chapterIndex0: state.chapterIndex0,
+      stepIndex0: state.stepIndex0,
+      phase: state.phase,
+      storyCursor: state.storyCursor,
+      transcript: state.transcript,
+      completedStepIds: state.completedStepIds,
+      activeStepId: state.activeStepId,
+    };
+
     saveStorySessionSnapshot(
       {
         seasonId: episodeMeta.seasonId,
         episodeId: episodeMeta.episodeId,
         courseId,
       },
-      {
-        courseId: state.courseId,
-        chapterId: state.chapterId,
-        chapterIndex0: state.chapterIndex0,
-        stepIndex0: state.stepIndex0,
-        phase: state.phase,
-        storyCursor: state.storyCursor,
-        transcript: state.transcript,
-        completedStepIds: state.completedStepIds,
-        activeStepId: state.activeStepId,
-      }
+      snapshotPayload
     );
+
+    if (state.chapterId) {
+      saveAmicSession(courseId, state.chapterId, snapshotPayload);
+    }
 
     navigate(payload.linkTo, {
       state: {
@@ -1364,6 +1409,14 @@ function hasStoryMigrationDone(key: string): boolean {
               timestamp: new Date().toISOString(),
             });
 
+            trackItemStep({
+              stepId: currentStep.id,
+              itemScore: payload.score,
+              dimensionId: currentStep.dimension,
+              indicatorId: currentStep.indicatorId,
+              topicIds: currentStep.topicIds,
+            });
+
             markTopicsSeen({
               topicIds: currentStep.topicIds ?? [],
               courseId,
@@ -1527,7 +1580,7 @@ function hasStoryMigrationDone(key: string): boolean {
   }
 
   return (
-    <Layout backPath="/stories" fullHeight>
+    <Layout backPath={courseId ? `/stories-v02/${courseId}` : '/stories'} fullHeight>
       <div
         className="ios-anti-zoom flex flex-col w-full flex-1 min-h-0 overflow-hidden
                    sm:items-center sm:justify-center sm:w-[420px] md:w-[480px] sm:p-4"
@@ -1600,6 +1653,33 @@ function hasStoryMigrationDone(key: string): boolean {
           ) : (
             renderActiveStep()
           )}
+
+          {/* Amic-Abschluss-Karte: erscheint wenn chapter_finished und nächster Amic verfügbar */}
+          {amicDoneNextChapterId !== undefined && state.phase === 'chapter_finished' ? (
+            <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-[var(--color-teal-200)] bg-[var(--color-teal-50)] p-4 shadow-sm">
+              <div className="font-semibold text-sm text-[var(--color-teal-900)] mb-3">
+                {t('stories:amicDone.title', { defaultValue: 'Amic abgeschlossen ✓' })}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {amicDoneNextChapterId && (
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/stories-v02/${courseId}/${amicDoneNextChapterId}`)}
+                    className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+                  >
+                    {t('stories:amicDone.ctaNext', { defaultValue: 'Nächster Amic →' })}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => navigate(`/stories-v02/${courseId}`)}
+                  className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-white border border-[var(--color-teal-200)] text-[var(--color-teal-800)] hover:bg-[var(--color-teal-50)] transition-colors"
+                >
+                  {t('stories:amicDone.ctaOverview', { defaultValue: 'Zur Übersicht' })}
+                </button>
+              </div>
+            </div>
+          ) : null}
 
           {showNextChapterLockedHint && !dismissedNextChapterLockedHint ? (
             <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-sky-200 bg-sky-50 p-4 text-sm text-sky-900 shadow-sm">

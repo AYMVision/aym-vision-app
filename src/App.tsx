@@ -20,6 +20,7 @@ import NotFound from './pages/NotFound.tsx';
 // Lazy — loaded only when the route is visited
 const Stories        = lazy(() => import('./pages/Stories'));
 const StoryV02Page   = lazy(() => import('./pages/StoryV02'));
+const StoryEpisodeOverview = lazy(() => import('./pages/StoryEpisodeOverview'));
 const About          = lazy(() => import('./pages/About'));
 const Profile        = lazy(() => import('./pages/Profile'));
 const AvatarPicker   = lazy(() => import('./pages/AvatarPicker'));
@@ -50,9 +51,9 @@ function ScrollRestorationManual() {
   return null;
 }
 
-function StoryV02Route() {
-  const { courseId } = useParams<{ courseId: string }>();
-  return <StoryV02Page key={courseId} />;
+function StoryV02ChapterRoute() {
+  const { courseId, chapterId } = useParams<{ courseId: string; chapterId: string }>();
+  return <StoryV02Page key={`${courseId}/${chapterId}`} />;
 }
 
 function AppRoutes() {
@@ -65,7 +66,8 @@ function AppRoutes() {
       <Routes location={backgroundLocation || location}>
         <Route path="/" element={<Welcome />} />
         <Route path="/stories" element={<Stories />} />
-        <Route path="/stories-v02/:courseId" element={<StoryV02Route />} />
+        <Route path="/stories-v02/:courseId" element={<StoryEpisodeOverview />} />
+        <Route path="/stories-v02/:courseId/:chapterId" element={<StoryV02ChapterRoute />} />
         <Route path="/about" element={<About />} />
 
         <Route path="/profile" element={<Profile />} />

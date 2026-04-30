@@ -310,7 +310,7 @@
       "consentDeniedNote": "Deaktiviert — es werden keine Daten gespeichert.",
       "statsHeading": "Gespeicherte Daten",
       "statsDecisions": "Story-Entscheidungen erfasst:",
-      "statsWhatStored": "Was gespeichert wird: Schritt-ID, Score (A/B/C), Themen-Tag, Anzahl Versuche, Datum.",
+      "statsWhatStored": "Was gespeichert wird: Schritt-ID, Score, Dimension, Indikator, Themen-Tag, Anzahl Versuche, Datum.",
       "statsWhatNot": "Was nicht gespeichert wird: Texteingaben, Namen, Standort.",
       "shareTitle": "Daten teilen oder herunterladen",
       "shareHint": "Auf dem Handy öffnet sich der Share-Dialog — du kannst die Datei per E-Mail oder einem anderen Kanal senden. Auf dem Computer wird eine JSON-Datei heruntergeladen.",

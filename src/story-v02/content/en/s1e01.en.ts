@@ -91,7 +91,7 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Summer Holidays', [
 
   IT('s1e01c01_item_yasmin_feeling',
     'Yasmin doesn\'t seem able to decide what to write. Why? How might Yasmin be feeling right now?',
-    'perspective', 'perspectives_recognize',
+    'perspective', 'media_effect_understand',
     [
       opt('a', 'Yasmin is probably thinking about what she can write so it comes across well in class.', 1),
       opt('b', 'Yasmin probably feels left out and is unsure what to write.', 3),
@@ -590,7 +590,7 @@ const c06 = C('s1e01c06', 5, 'Amic 6', 'Clues in the Picture', [
 
   IT('s1e01c06_item_find_location',
     'The group has gathered different clues, but still no certain solution. Do you have an idea what they could do now?',
-    'judgement', 'information_classify',
+    'judgement', 'judgement_explain',
     [
       optSegs('a', 'If they don\'t know exactly where Yasmin is, they can\'t do anything else. Maybe she\'ll message again in a moment.', 0,
         '👉 Nothing happens in the group at first. Everyone hopes the situation will resolve itself, even though it could be dangerous.',

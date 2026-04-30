@@ -12,9 +12,12 @@ export type DecisionScore = 'A' | 'B' | 'C' | 'UNSICHER' | 'bypass' | 'trivial';
 export interface StepDecision {
   stepId: string;
   episodeId: string;       // abgeleitet aus stepId, z.B. 's1e02'
-  type: 'open_text' | 'guided_choice';
+  type: 'open_text' | 'guided_choice' | 'item';
   score?: DecisionScore;
+  itemScore?: 0 | 1 | 2 | 3; // nur bei type='item'
   choiceId?: string;       // nur bei guided_choice
+  dimensionId?: string;    // nur bei type='item'
+  indicatorId?: string;    // nur bei type='item'
   topicIds?: string[];     // Themen-Tags des Steps
   attemptCount: number;
   date: string;            // YYYY-MM-DD — kein präziser Zeitstempel

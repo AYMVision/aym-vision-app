@@ -91,7 +91,7 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Sommerferien', [
 
   IT('s1e01c01_item_yasmin_feeling',
     'Yasmin scheint sich nicht entscheiden zu können, was sie schreiben soll. Warum? Wie könnte sich Yasmin gerade fühlen?',
-    'perspective', 'perspectives_recognize',
+    'perspective', 'media_effect_understand',
     [
       opt('a', 'Yasmin überlegt wahrscheinlich, was sie schreiben kann, damit es in der Klasse gut rüberkommt.', 1),
       opt('b', 'Yasmin fühlt sich wohl ausgeschlossen und ist unsicher, was sie schreiben soll.', 3),
@@ -580,7 +580,7 @@ const c06 = C('s1e01c06', 5, 'Amic 6', 'Spuren im Bild', [
 
   IT('s1e01c06_item_find_location',
     'Die Gruppe hat verschiedene Hinweise gesammelt, aber noch keine sichere Lösung. Hast du eine Idee, was sie nun tun könnten?',
-    'judgement', 'information_classify',
+    'judgement', 'judgement_explain',
     [
       optSegs('a', 'Wenn sie nicht wissen, wo genau Yasmin ist, können sie nichts weiter tun. Vielleicht meldet sie sich ja gleich.', 0,
         '👉 In der Gruppe passiert erstmal nichts. Alle hoffen, dass sich die Situation von selbst klärt, obwohl es gefährlich sein könnte.',

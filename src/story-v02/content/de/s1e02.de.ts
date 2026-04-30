@@ -265,7 +265,7 @@ const c03 = C('s1e02c03', 2, 'Amic 3', 'Dazugehören', [
   IT('s1e02c03_item_chioma_self_regulation',
     'Chioma ist raus aus dem Klassenchat und fühlt sich machtlos. Was würdest du Chioma in dieser Situation raten?',
     'self_regulation',
-    'pursue_goal',
+    'regulate_emotions',
     [
       optSegs('a', 'Sie soll es einfach vergessen und sich denken: „Dann halt nicht. Ich hab keine Lust mehr auf den Chat.“', 0,
         'Wenn sie alles einfach abhakt, bleibt der Ärger im Kopf – und die Situation ist nicht aus der Welt.',
@@ -673,7 +673,7 @@ const c08 = C('s1e02c08', 7, 'Amic 8', 'Regeln gelten auch hier', [
   IT('s1e02c08_item_goal_conflict',
     'Chioma hat sich so viel Mühe gegeben und jetzt das. Was macht die Situation für Chioma gerade so schwierig?',
     'perspective',
-    'perspectives_distinguish',
+    'goal_conflicts',
     [
       optSegs('a', 'Carlos hat Chioma nichts von den Regeln gesagt. Deshalb ist sie jetzt sauer auf ihn.', 0,
         'Du suchst nach einem Schuldigen. So wirkt es, als läge das Problem nur bei Carlos.',

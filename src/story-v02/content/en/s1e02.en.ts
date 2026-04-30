@@ -156,7 +156,7 @@ const c03 = C('s1e02c03', 2, 'Amic 3', 'Chioma unter Druck', [
   IT('s1e02c03_item_selfcontrol',
     'Was würdest du Chioma raten?',
     'self_regulation',
-    'interrupt_impulse',
+    'regulate_emotions',
     [
       opt('a', 'Einfach ignorieren.', 0),
       opt('b', 'Abwarten.', 1),

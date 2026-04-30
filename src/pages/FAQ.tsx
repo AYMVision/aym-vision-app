@@ -24,30 +24,10 @@ export default function FAQ() {
 
           <FaqItem question="Ich habe mein Eltern-Passcode vergessen. Was kann ich tun?">
             <p>
-              Falls du deinen Eltern-Passcode vergessen hast, kannst du ihn mit dem
-              Master-Reset-Code zurücksetzen. Der Master-Reset-Code lautet:
-            </p>
-            <div className="mt-3 inline-block rounded-xl bg-slate-50 border border-slate-200 px-4 py-2 font-mono font-bold text-lg tracking-widest text-slate-900">
-              AYM-RESET-2025
-            </div>
-            <p className="mt-3">
-              So gehst du vor:
-            </p>
-            <ol className="mt-2 list-decimal list-inside space-y-1">
-              <li>
-                Öffne den{' '}
-                <Link to="/parents" className="font-semibold text-[var(--color-teal-700)] underline underline-offset-2">
-                  Elternbereich
-                </Link>
-                .
-              </li>
-              <li>Tippe auf <strong>„Passcode vergessen?"</strong> unterhalb des Eingabefelds.</li>
-              <li>Gib den Master-Reset-Code ein: <strong>AYM-RESET-2025</strong></li>
-              <li>Dein Passcode wird zurückgesetzt – danach kannst du einen neuen vergeben.</li>
-            </ol>
-            <p className="mt-3 text-xs text-slate-500">
-              Hinweis: Durch den Reset werden nur der Passcode und die Sitzungssperre gelöscht.
-              Alle Lernfortschritte und Profileinstellungen deines Kindes bleiben erhalten.
+              Öffne den Elternbereich und gib das Passwort ein. Nach mehreren Fehlversuchen
+              erscheint automatisch die Option <strong>„Passcode vergessen?"</strong> — darüber
+              kannst du den Passcode zurücksetzen. Alle Lernfortschritte und Profileinstellungen
+              des Kindes bleiben dabei erhalten.
             </p>
           </FaqItem>
 
