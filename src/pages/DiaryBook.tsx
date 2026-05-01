@@ -492,33 +492,29 @@ function DiaryEntryBlock(props: {
   return (
     <article
       id={`entry-${entry.entryId}`}
-className={[
-  'relative rounded-3xl border bg-white/75 p-4 sm:p-5 scroll-mt-24 overflow-hidden',
-  'pr-[150px]',          // ✅ rechts Platz für Sticker-Spalte
-  'min-h-[220px]',       // optional: damit Sticker nicht zu eng
-  accent.border,
-  highlight ? `ring-2 ${accent.ring}` : '',
-].join(' ')}
+      className={[
+        'rounded-3xl border bg-white/75 p-4 sm:p-5 scroll-mt-24 overflow-hidden',
+        accent.border,
+        highlight ? `ring-2 ${accent.ring}` : '',
+      ].join(' ')}
     >
-      {/* ✅ Big stickers, distributed */}
-{/* ✅ Sticker-Spalte rechts (niemals über Text) */}
-<div className="absolute right-4 top-4 bottom-4 w-[120px] flex flex-col gap-3 items-center justify-start pointer-events-none">
-  {autoStickers.slice(0, 2).map((sid, idx) => (
-    <img
-      key={`${entry.entryId}-${sid}-${idx}`}
-      src={stickerSrc(sid, 256)}
-      alt=""
-      className={idx === 0 ? 'w-24 h-24' : 'w-24 h-24 rotate-[8deg]'}
-      loading="lazy"
-    />
-  ))}
-</div>
-
-      <div className="flex items-start gap-3">
-        <span className={['inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold', accent.marker].join(' ')}>
+      {/* Kopfzeile: Datum-Badge links, Sticker rechts — Text darunter auf voller Breite */}
+      <div className="flex items-center justify-between gap-3 mb-3">
+        <span className={['inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold shrink-0', accent.marker].join(' ')}>
           {entry.decor?.moodEmoji ?? '📌'}
           <span className="ml-2">{dateLabel || entryLabel}</span>
         </span>
+        <div className="flex items-center gap-1 pointer-events-none">
+          {autoStickers.slice(0, 2).map((sid, idx) => (
+            <img
+              key={`${entry.entryId}-${sid}-${idx}`}
+              src={stickerSrc(sid, 256)}
+              alt=""
+              className={['w-12 h-12', idx === 1 ? 'rotate-[8deg]' : '-rotate-[4deg]'].join(' ')}
+              loading="lazy"
+            />
+          ))}
+        </div>
       </div>
 
       {(() => {

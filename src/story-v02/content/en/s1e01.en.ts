@@ -165,6 +165,15 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Summer Holidays', [
     bonusLink('diary-yasmin-entry1', 'Diary entry Yasmin – 1st entry',
       '/diaries/diary_yasmin?entry=s1e01c01_0001', 'Open entry →'),
   ]),
+
+  S('s1e01c01_story_amy_intro_me_diary', [
+    m(ch.amy, 'You can also write your own diary and keep track of your thoughts.'),
+  ]),
+
+  S('s1e01c01_story_my_diary_bonus', [
+    bonusLink('diary-me', 'My diary',
+      '/diaries/diary_me', 'Open diary →'),
+  ]),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────

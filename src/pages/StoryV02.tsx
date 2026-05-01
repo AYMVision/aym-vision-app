@@ -324,6 +324,8 @@ export default function StoryV02() {
 
   const restoreScrollTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pendingReturnScrollRef = useRef<number | null>(null);
+  // Set to true when "Weiter" is clicked — cleared once the story-step cascade settles
+  const pendingScrollToBottomRef = useRef(false);
 
   const courseIdRef = useRef(courseId);
   courseIdRef.current = courseId;
@@ -671,15 +673,17 @@ function hasStoryMigrationDone(key: string): boolean {
     return chapter.steps[state.stepIndex0] ?? null;
   }, [chapter, state.stepIndex0]);
 
-  // Scrollposition wiederherstellen wenn location.key wechselt
-  // (Modal schließt, Vollnavigation zurück, oder "Weiter"-Button)
+  // Scrollposition beim ersten Laden wiederherstellen (location.key ändert sich durch React Router v7
+  // LocationContext-Override nicht beim Öffnen/Schließen von Bonus-Modals → dafür popstate-Listener)
   useLayoutEffect(() => {
+    // In-memory map (accurate for same-session forward/back navigation)
     const saved = storyScrollPositions.get(location.key);
     if (typeof saved === 'number' && saved > 0) {
       restoreScrollToValue(saved);
       return;
     }
-    // Fallback: sessionStorage → localStorage per courseId (überlebt iOS-Tab-Suspension)
+
+    // Fallback: sessionStorage → localStorage per courseId (survives iOS tab suspension)
     if (courseId) {
       try {
         const ssKey = `aym_story_scroll_${courseId}`;
@@ -690,6 +694,42 @@ function hasStoryMigrationDone(key: string): boolean {
       } catch { /* ignore */ }
     }
   }, [location.key, courseId]);
+
+  // Scroll-Restore nach Bonus-Modal-Schließen via popstate.
+  // React Router v7 überschreibt LocationContext für die Story-Komponente mit backgroundLocation,
+  // daher ändert sich location.key beim Öffnen/Schließen des Modals nicht.
+  // navigate(-1) aus ModalShell löst aber immer einen nativen popstate-Event aus — darauf hören wir.
+  useEffect(() => {
+    if (!courseId) return;
+    const lsKey = `aym_story_modal_return_${courseId}`;
+
+    const onPopState = () => {
+      try {
+        const raw = localStorage.getItem(lsKey);
+        if (!raw) return;
+        localStorage.removeItem(lsKey);
+        const pos = Number(raw);
+        if (pos > 0) restoreScrollToValue(pos);
+      } catch { /* ignore */ }
+    };
+
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [courseId]);
+
+  // Nach "Weiter"-Klick: scroll zu unterst, damit neuer Inhalt oben beginnt.
+  // Bleibt aktiv über die gesamte story-step-Kaskade (mehrere Render-Zyklen),
+  // bis der nächste interaktive Schritt sichtbar ist.
+  useLayoutEffect(() => {
+    if (!pendingScrollToBottomRef.current) return;
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    // Story-steps werden auto-verarbeitet (eigener useEffect → weiterer Render).
+    // Ref erst löschen wenn die Kaskade auf einem nicht-story Step endet.
+    if (currentStep?.type !== 'story') {
+      pendingScrollToBottomRef.current = false;
+    }
+  }, [state.stepIndex0, state.transcript.length, currentStep]);
 
   // IntersectionObserver: Coin + Theme-Sticker fliegen wenn der letzte Chapter-Eintrag sichtbar wird
   useEffect(() => {
@@ -1061,6 +1101,11 @@ function hasStoryMigrationDone(key: string): boolean {
   }) {
     if (!courseId || !episodeMeta) return;
 
+    // Remember where the user was so we can return them to the exact position
+    if (scrollRef.current) {
+      modalReturnScrollRef.current = scrollRef.current.scrollTop;
+    }
+
     if (payload.bonusId) {
       unlockBonusById(payload.bonusId);
     }
@@ -1101,7 +1146,7 @@ function hasStoryMigrationDone(key: string): boolean {
 
   function goToNextStep() {
     if (!chapter) return;
-
+    pendingScrollToBottomRef.current = true;
     dispatch({
       type: 'GO_TO_NEXT_STEP',
       payload: { chapter },
@@ -1557,6 +1602,11 @@ function hasStoryMigrationDone(key: string): boolean {
     }
 
     if (currentStep.type === 'challenge') {
+      // SHOW_CHALLENGE adds the step to completedStepIds and to the transcript.
+      // When it's the last step GO_TO_NEXT_STEP keeps stepIndex0 unchanged (phase → chapter_finished),
+      // so currentStep still points here — skip renderActiveStep to avoid a duplicate card.
+      if (state.completedStepIds.includes(currentStep.id)) return null;
+
       const challengeText =
         currentStep.prompt ?? t(currentStep.promptKey ?? '', { defaultValue: '' });
 

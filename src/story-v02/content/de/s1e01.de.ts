@@ -21,7 +21,7 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Sommerferien', [
 
   S('s1e01c01_story_intro_private', [
     privateChat('Du', 'Yasmin'),
-    m(ch.yasmin, 'Hi 👋 Bist du neu hier im Chat', '10:05'),
+    m(ch.yasmin, 'Hi 👋 Bist du neu hier im Chat?', '10:05'),
   ]),
 
   inp('s1e01c01_input_intro_reply', 'stories:s1e01.c01.input.introReply', {
@@ -165,6 +165,14 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Sommerferien', [
     bonusLink('diary-yasmin-entry1', 'Tagebucheintrag Yasmin – 1. Eintrag',
       '/diaries/diary_yasmin?entry=s1e01c01_0001', 'Eintrag öffnen →'),
   ]),
+    S('s1e01c01_story_amy_intro_me_diary', [
+    m(ch.amy, 'Du kannst auch dein eigenes Tagebuch schreiben und deine Gedanken festhalten.'),
+  ]),
+
+  S('s1e01c01_story_my_diary_bonus', [
+    bonusLink('diary-me', 'Mein Tagebuch',
+      '/diaries/diary_me', 'Tagebuch öffnen →'),
+  ]),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -295,6 +303,7 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
     m(ch.igor, 'kp 😂', '14:08'),
     m(ch.igor, 'Irgendwo im Wald. Richtig cool hier 🌲🚲🐿️', '14:09'),
     m(ch.lukas, 'Ich habe meinen Standort geteilt, dann siehst du es genau.', '14:09'),
+    img(ch.lukas, '/media/story/episodes/s1e01/s1e01c03_3-512.webp', '14:09'),
     m(ch.lukas, 'Ich bin ehrlich gesagt ziemlich erschöpft 😰', '14:10'),
     img(ch.lukas, '/media/story/episodes/s1e01/s1e01c03_1-512.webp', '14:10'),
     m(ch.lukas, 'Ich hoffe nur, es ist nicht mehr allzu weit. Meine Kräfte sind nicht unbegrenzt.', '14:11'),
@@ -382,7 +391,7 @@ const c04 = C('s1e01c04', 3, 'Amic 4', 'Am Wasserfall', [
     m(ch.igor, 'Chill mal. Alles easy 😎', '15:09'),
     m(ch.lukas, 'Das ist kein Anstellen. Das ist Physik.', '15:10'),
     m(ch.yasmin, 'Was ist mit dem Fluss?', '15:10'),
-    m(ch.lukas, 'Naja, der Geräuschkulisse nach zu urteilen gibt es ordentlich Strömung.', '15:11'),
+    m(ch.lukas, 'Naja, der Geräuschkulisse nach zu urteilen, gibt es ordentlich Strömung.', '15:11'),
     m(ch.lukas, 'Der Wasserstand muss weit über dem Normalniveau liegen. 🌊 Wir sollten vorsichtig sein.', '15:11'),
     m(ch.igor, 'Hör nicht auf Lukas Gelaber: Ist echt krass hier, coole Kulisse und geile Abfahrten 👍', '15:12'),
     m(ch.yasmin, 'Okay, mache mich auf den Weg 😊', '15:13'),
@@ -440,7 +449,7 @@ const c04 = C('s1e01c04', 3, 'Amic 4', 'Am Wasserfall', [
 
   S('s1e01c04_story_back_to_yasmin_aylin', [
     privateChat('Yasmin', 'Aylin'),
-    m(ch.yasmin, 'Und jetzt bin ich schon mal hier… Aber… sieht gar nicht nach Badesee aus.', '15:36'),
+    m(ch.yasmin, 'Jetzt bin ich schon mal hier… Aber… sieht gar nicht nach Badesee aus.', '15:36'),
     m(ch.yasmin, 'Eher nach Wildwasser-Abenteuer. Was mach ich bloß?', '15:36'),
     m(ch.yasmin, 'Warte… Ich habe ´ne Idee. Vielleicht kannst du mir kurz helfen. Du kennst dich doch gut mit KI aus.', '15:37'),
     m(ch.yasmin, 'Aylin? Bist du online?', '15:37'),
@@ -470,7 +479,7 @@ const c05 = C('s1e01c05', 4, 'Amic 5', 'Das Bild', [
     m(ch.lukas, '😳', '16:04'),
     m(ch.lukas, 'Baden ist dort ausdrücklich nicht gestattet. Du solltest doch warten.', '16:04'),
     m(ch.lukas, 'Und zwar aus gutem Grund. Es ist äußerst gefährlich.', '16:05'),
-    m(ch.chioma, 'Oh nein. Yasmin?', '16:05'),
+    m(ch.chioma, '😟 Oh nein. Yasmin?', '16:05'),
     m(ch.lukas, 'Nach dem starken Regen ist das noch gefährlicher.', '16:06'),
     m(ch.dominik, 'Chill, bro. Das heißt doch nix 😤', '16:06'),
     m(ch.chioma, 'Igor, Lukas, seid ihr bei Yasmin?', '16:07'),

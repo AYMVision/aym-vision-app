@@ -8,12 +8,17 @@ import i18n, { ensureNamespace } from './i18n';
 import App from './App';
 import { registerSW } from 'virtual:pwa-register';
 
-// Service Worker registrieren — Update-Prompt nach neuem Deployment
-registerSW({
+// updateSW: sendet erst SKIP_WAITING an den wartenden SW,
+// wartet auf controllerchange, DANN lädt die Seite neu.
+// window.location.reload() allein würde die Seite neu laden,
+// ohne den neuen SW zu aktivieren — der Prompt käme endlos wieder.
+export let triggerSwUpdate: (() => void) | null = null;
+
+const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm('Eine neue Version ist verfügbar. Jetzt neu laden?')) {
-      window.location.reload();
-    }
+    // updateSW(true) = skipWaiting + Reload nach SW-Aktivierung
+    triggerSwUpdate = () => updateSW(true);
+    window.dispatchEvent(new CustomEvent('pwa-update-available'));
   },
   onOfflineReady() {
     console.info('[PWA] App ist jetzt offline verfügbar.');

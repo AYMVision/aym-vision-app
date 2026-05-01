@@ -4,7 +4,7 @@
     "points": "{{count}} Punkte",
     "progressNow": "Jetzt: {{count}}",
     "nextStage": "Nächste Stufe: {{count}}",
-    "nextRewardSimple": "Noch {{count}} bis zum nächsten Sticker",
+    "nextRewardSimple": "Du bist fast da! Noch {{count}} Themen bis zum nächsten Sticker 🎉",
     "allStagesDone": "Alle Sticker für dieses Thema geschafft!",
     "collected": "{{count}} von 3 Stickern gesammelt"
   },

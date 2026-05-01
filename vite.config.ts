@@ -54,7 +54,9 @@ export default defineConfig(({ command }) => {
           maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // 4 MB (große Sticker-PNGs)
           // Cache-Strategie: Network-first für HTML (immer aktuell), Cache-first für Assets
           navigateFallback: 'index.html',
-          navigateFallbackDenylist: [/^\/api\//],
+          // PDFs und andere Nicht-SPA-Ressourcen vom Fallback ausschließen,
+          // damit der SW nicht index.html statt der echten Datei serviert.
+          navigateFallbackDenylist: [/^\/api\//, /\.pdf$/i],
           runtimeCaching: [
             {
               // Bilder & Medien: Cache-first (ändern sich selten)
@@ -73,7 +75,7 @@ export default defineConfig(({ command }) => {
             },
           ],
           // Alle Build-Assets precachen (JS, CSS, Fonts)
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,pdf}'],
         },
       }),
     ],

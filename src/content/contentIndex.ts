@@ -125,24 +125,42 @@ chapterTopicTags: {
       },
 
       {
-        seasonId: 's1',
-        episodeId: 's1e03',
-        courseId: 's1e03',
+  seasonId: 's1',
+  episodeId: 's1e03',
+  courseId: 's1e03',
 
-        titleKey: 'stories:episodes.s1e03.title',
-        descriptionKey: 'stories:episodes.s1e03.description',
+  titleKey: 'stories:episodes.s1e03.title',
+  descriptionKey: 'stories:episodes.s1e03.description',
 
-        coverImage: '/media/story/episodes/s1e03/s1e03-512.webp',
-        stickerImage: '/media/stickers/episodes/s1e03-512.webp',
+  coverImage: '/media/story/episodes/s1e03/s1e03-512.webp',
+  stickerImage: '/media/stickers/episodes/s1e03-512.webp',
 
-        chapterCount: 10,
-        released: true,
-        order: 3,
-        storyEngine: 'v2',
-        topicTags: [],
-        chapterTopicTags: {},
-      },
+  chapterCount: 10,
+  released: true,
+  order: 3,
+  storyEngine: 'v2',
 
+topicTags: [
+  'info-check',
+  'talk-act',
+  'safe-online',
+  'reflect-understand',
+  'fairness',
+],
+
+chapterTopicTags: {
+  1: ['talk-act', 'reflect-understand', 'safe-online'],
+  2: ['reflect-understand', 'safe-online'],
+  3: ['info-check', 'safe-online'],
+  4: ['fairness', 'talk-act'],
+  5: ['fairness', 'reflect-understand'],
+  6: ['reflect-understand', 'safe-online'],
+  7: ['info-check', 'safe-online', 'reflect-understand'],
+  8: ['reflect-understand', 'talk-act', 'safe-online'],
+  9: ['reflect-understand', 'talk-act'],
+  10: ['reflect-understand', 'safe-online', 'fairness'],
+},
+},
       {
         seasonId: 's1',
         episodeId: 's1e04',

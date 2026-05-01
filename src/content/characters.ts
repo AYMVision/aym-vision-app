@@ -33,15 +33,11 @@ const ROOT = 'media/story/characters';
 // Konventionen:
 // - Portrait: <id>-512.webp
 // - Detail Image: <id>-detail-1024.webp
-// - Detail Video: <id>-intro.mp4 (optional)
 function portraitPath(id: string) {
   return `${ROOT}/${id}-512.webp`;
 }
 function detailImagePath(id: string) {
   return `${ROOT}/${id}-detail-1024.webp`;
-}
-function introVideoPath(id: string) {
-  return `${ROOT}/${id}-intro.mp4`;
 }
 
 export const CHARACTERS = {
@@ -61,7 +57,6 @@ export const CHARACTERS = {
       `${ROOT}/amy-extra-1-512.webp`,
       `${ROOT}/amy-extra-2-512.webp`,
     ],
-        detailVideo: `${ROOT}/amy-intro.mp4`,
     },
     bioKey: 'characters.amy.bio',
     detailCaptionKey: 'characters.amy.detailCaption',
@@ -80,7 +75,6 @@ export const CHARACTERS = {
       `${ROOT}/chioma-extra-1-512.webp`,
       `${ROOT}/chioma-extra-2-512.webp`,
     ],
-        detailVideo: `${ROOT}/chioma-intro.mp4`,
     },
     
     bioKey: 'characters.chioma.bio',
@@ -88,7 +82,6 @@ export const CHARACTERS = {
   },
 
 
-  // ✅ Beispiel mit Video (dein lisa-intro.mp4)
 lisa: {
   id: 'lisa',
   name: 'Lisa',
@@ -103,7 +96,6 @@ lisa: {
       `${ROOT}/lisa-extra-2-512.webp`,
     ],
 
-    detailVideo: `${ROOT}/lisa-intro.mp4`,
   },
   bioKey: 'characters.lisa.bio',
   detailCaptionKey: 'characters.lisa.detailCaption',
@@ -120,7 +112,6 @@ lisa: {
       `${ROOT}/yasmin-extra-1-512.webp`,
       `${ROOT}/yasmin-extra-2-512.webp`,
     ],
-        detailVideo: `${ROOT}/yasmin-intro.mp4`,
     },
     bioKey: 'characters.yasmin.bio',
   },
@@ -137,14 +128,13 @@ lisa: {
       `${ROOT}/dominik-extra-2-512.webp`,
     ],
 
-    detailVideo: `${ROOT}/dominik-intro.mp4`,
     },
     bioKey: 'characters.dominik.bio',
   },
 
     lukas: {
     id: 'lukas',
-    name: 'lukas',
+    name: 'Lukas',
     avatar: 'lukas',
     card: {
       portrait: portraitPath('lukas'),
@@ -154,7 +144,6 @@ lisa: {
       `${ROOT}/lukas-extra-2-512.webp`,
     ],
 
-    detailVideo: `${ROOT}/lukas-intro.mp4`,
     },
     bioKey: 'characters.lukas.bio',
   },
@@ -171,7 +160,6 @@ lisa: {
       `${ROOT}/lisa-extra-2-512.webp`,
     ],
 
-    detailVideo: `${ROOT}/jonas-intro.mp4`,
     },
     bioKey: 'characters.jonas.bio',
   },
@@ -188,7 +176,6 @@ lisa: {
       `${ROOT}/carlos-extra-2-512.webp`,
     ],
 
-    detailVideo: `${ROOT}/carlos-intro.mp4`,
     },
     bioKey: 'characters.carlos.bio',
   },
@@ -202,7 +189,6 @@ lisa: {
       `${ROOT}/aylin-extra-2-512.webp`,
     ],
 
-    detailVideo: `${ROOT}/aylin-intro.mp4`,
     },
     bioKey: 'characters.aylin.bio',
     },
@@ -219,7 +205,6 @@ lisa: {
       `${ROOT}/mia-extra-2-512.webp`,
     ],
 
-    detailVideo: `${ROOT}/mia-intro.mp4`,
     },
     bioKey: 'characters.mia.bio',
   },
@@ -236,7 +221,6 @@ lisa: {
       `${ROOT}/finn-extra-2-512.webp`,
     ],
 
-    detailVideo: `${ROOT}/finn-intro.mp4`,
     },
     bioKey: 'characters.finn.bio',
   },
@@ -253,7 +237,6 @@ lisa: {
       `${ROOT}/tom-extra-2-512.webp`,
     ],
 
-    detailVideo: `${ROOT}/tom-intro.mp4`,
     },
     bioKey: 'characters.tom.bio',
   },
@@ -270,7 +253,6 @@ markus: {
       `${ROOT}/markus-extra-1-512.webp`,
       `${ROOT}/markus-extra-2-512.webp`,
     ],
-    detailVideo: `${ROOT}/markus-intro.mp4`,
   },
   bioKey: 'characters.markus.bio',
 },
@@ -286,7 +268,6 @@ elsa: {
       `${ROOT}/elsa-extra-1-512.webp`,
       `${ROOT}/elsa-extra-2-512.webp`,
     ],
-    detailVideo: `${ROOT}/elsa-intro.mp4`,
   },
   bioKey: 'characters.elsa.bio',
 },
@@ -302,7 +283,6 @@ igor: {
       `${ROOT}/igor-extra-1-512.webp`,
       `${ROOT}/igor-extra-2-512.webp`,
     ],
-    detailVideo: `${ROOT}/igor-intro.mp4`,
   },
   bioKey: 'characters.igor.bio',
 },
@@ -318,7 +298,6 @@ alvarez: {
       `${ROOT}/alvarez-extra-1-512.webp`,
       `${ROOT}/alvarez-extra-2-512.webp`,
     ],
-    detailVideo: `${ROOT}/alvarez-intro.mp4`,
   },
   bioKey: 'characters.alvarez.bio',
 },
@@ -334,9 +313,68 @@ schubert: {
       `${ROOT}/schubert-extra-1-512.webp`,
       `${ROOT}/schubert-extra-2-512.webp`,
     ],
-    detailVideo: `${ROOT}/schubert-intro.mp4`,
   },
   bioKey: 'characters.schubert.bio',
+},
+
+emma: {
+  id: 'emma',
+  name: 'Emma',
+  avatar: 'emma',
+  card: {
+    portrait: portraitPath('emma'),
+    detailImage: detailImagePath('emma'),
+    extraImages: [
+      `${ROOT}/emma-extra-1-512.webp`,
+      `${ROOT}/emma-extra-2-512.webp`,
+    ],
+  },
+  bioKey: 'characters.emma.bio',
+},
+
+noah: {
+  id: 'noah',
+  name: 'Noah',
+  avatar: 'noah',
+  card: {
+    portrait: portraitPath('noah'),
+    detailImage: detailImagePath('noah'),
+    extraImages: [
+      `${ROOT}/noah-extra-1-512.webp`,
+      `${ROOT}/noah-extra-2-512.webp`,
+    ],
+  },
+  bioKey: 'characters.noah.bio',
+},
+
+farida: {
+  id: 'farida',
+  name: 'Farida',
+  avatar: 'farida',
+  card: {
+    portrait: portraitPath('farida'),
+    detailImage: detailImagePath('farida'),
+    extraImages: [
+      `${ROOT}/farida-extra-1-512.webp`,
+      `${ROOT}/farida-extra-2-512.webp`,
+    ],
+  },
+  bioKey: 'characters.farida.bio',
+},
+
+amir: {
+  id: 'amir',
+  name: 'Amir',
+  avatar: 'amir',
+  card: {
+    portrait: portraitPath('amir'),
+    detailImage: detailImagePath('amir'),
+    extraImages: [
+      `${ROOT}/amir-extra-1-512.webp`,
+      `${ROOT}/amir-extra-2-512.webp`,
+    ],
+  },
+  bioKey: 'characters.amir.bio',
 },
 
 

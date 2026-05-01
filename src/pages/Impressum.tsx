@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Layout from '../components/Layout';
+import { assetUrl } from '../common/assetUrl';
 
 function Section({
   title,
@@ -278,7 +279,7 @@ werden nachgetragen.</p>
           {/* ✏️ PLATZHALTER: Telefonnummer (optional, aber üblich) */}
           <p></p>
           {/* ✏️ PLATZHALTER: E-Mail-Adresse */}
-          <p>E-Mail: hello@aymvision.de</p>
+          <p>E-Mail: hello@amysurfwing.de</p>
         </Section>
 
         <Section title="Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV">
@@ -287,14 +288,9 @@ werden nachgetragen.</p>
           <p>Melina Wiegers, Vis Hermann Hesse 11,6926 Montagnola, TI, Schweiz</p>
         </Section>
 
-                <Section title="Online-Streitbeilegung">
+                <Section title="Hinweis gemäß § 36 VSBG:">
           {/* ✏️ PLATZHALTER: Vollständiger Name + Anschrift der inhaltlich verantwortlichen Person */}
-          <p>Unter https://ec.europa.eu/consumers/odr/ stellt die Europäische Kommission eine Plattform
-zur Online-Streitbeilegung bereit, die Verbraucher für die Beilegung einer Streitigkeit nutzen
-können. Unter dem Link finden Sie auch weitere Informationen zum Thema Streitschlichtung.</p>
-<p className="font-semibold">Außergerichtliche Streitbeilegung</p>
-          <p>Wir sind weder verpflichtet noch dazu bereit, im Falle einer Streitigkeit mit einem Verbraucher
-an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+          <p>Wir sind weder verpflichtet noch bereit, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
         </Section>
 
         {/*
@@ -325,7 +321,7 @@ an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilz
           <p>
             Informationen zum Umgang mit personenbezogenen Daten findest du in unserer{' '}
             <a
-              href="/datenschutz-web.pdf"
+              href={assetUrl('datenschutz-web.pdf')}
               target="_blank"
               rel="noopener noreferrer"
               className="underline text-[var(--color-teal-700)] hover:text-[var(--color-teal-900)]"

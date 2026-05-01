@@ -190,11 +190,14 @@ const valueAccents = [
   return (
     <Layout>
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
-        {/* HERO */}
-      <section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg">
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-[var(--color-teal-50)]" />
-        <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-[var(--color-teal-200)]/30 blur-2xl" />
-        <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-[var(--color-teal-300)]/20 blur-2xl" />
+{/* HERO */}
+<section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg bg-white">
+  
+  {/* Hintergrund-Verlauf (sehr subtil) */}
+  <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-teal-50)] via-white to-white" />
+
+  {/* Grüner Glow NUR oben links */}
+  <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-[var(--color-teal-200)]/30 blur-2xl" />
 
         <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch">
           {/* TEXT */}

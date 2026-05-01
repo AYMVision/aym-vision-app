@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HashRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import type { Location } from 'react-router-dom';
@@ -12,6 +12,8 @@ import CoinOverlay from './progress/CoinOverlay';
 import RouteI18nLoader from './i18n/RouteI18nLoader';
 import ScrollToHash from './common/utils.ts';
 import ModalShell from './components/ModalShell';
+import PwaUpdateBanner from './components/PwaUpdateBanner';
+import { triggerSwUpdate } from './main';
 
 // Eager — always needed immediately
 import Welcome from './pages/Welcome.tsx';
@@ -148,6 +150,28 @@ function AppRoutes() {
   );
 }
 
+function PwaUpdateHandler() {
+  const [showBanner, setShowBanner] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setShowBanner(true);
+    window.addEventListener('pwa-update-available', handler);
+    return () => window.removeEventListener('pwa-update-available', handler);
+  }, []);
+
+  if (!showBanner) return null;
+
+  return (
+    <PwaUpdateBanner
+      onUpdate={() => {
+        setShowBanner(false);
+        triggerSwUpdate?.();
+      }}
+      onDismiss={() => setShowBanner(false)}
+    />
+  );
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ProfileProvider>
@@ -156,6 +180,7 @@ const App = () => (
           <ScrollRestorationManual />
           <ScrollToHash />
           <CoinOverlay />
+          <PwaUpdateHandler />
 
           <RouteI18nLoader>
             <AppRoutes />

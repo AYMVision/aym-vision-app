@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
         {/* Right: Rechtliches */}
         <div className="flex gap-4">
           <a
-            href="mailto:hello@aymvision.de"
+            href="mailto:hello@amysurfwing.de"
             className="hover:underline"
           >
             Kontakt
@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
           </Link>
 
           <a
-            href="/datenschutz-web.pdf"
+            href={assetUrl('datenschutz-web.pdf')}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline"
