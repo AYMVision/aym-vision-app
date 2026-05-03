@@ -308,6 +308,7 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
     img(ch.lukas, '/media/story/episodes/s1e01/s1e01c03_1-512.webp', '14:10'),
     m(ch.lukas, 'Ich hoffe nur, es ist nicht mehr allzu weit. Meine Kräfte sind nicht unbegrenzt.', '14:11'),
     m(ch.lukas, 'Aber ehrlich: Die Gegend hier ist unglaublich schön.', '14:11'),
+        m(ch.lukas, 'Das soll echt gut sein für die Stimmung. Steht hier.', '14:11'),
     bonusLink('tip-amy-staunen', 'Artikel: Staunen', '/newspaper/tip-amy-staunen', 'Artikel öffnen →'),
     m(ch.yasmin, 'Und da ist ein Wasserfall?', '14:12'),
     m(ch.lukas, 'Ich sehe ihn noch nicht. Wir sind noch ein Stück weit entfernt.', '14:12'),
@@ -325,7 +326,7 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
   S('s1e01c03_story_private_yasmin_lisa', [
     privateChat('Yasmin', 'Lisa'),
     m(ch.lisa, 'Hast du Igors Posts gesehen? So cool!', '14:19'),
-    img(ch.lisa, '/media/story/episodes/s1e01/s1e01c03_2-512.webp', '14:19', { content: 'Weitergeleitet:' }),
+    img(ch.lisa, '/media/story/episodes/s1e01/s1e01c03_2-512.webp', '14:19', { forwarded: {} }),
     m(ch.yasmin, 'Ja.', '14:20'),
     m(ch.yasmin, 'Bist du schon zurück?', '14:20'),
     m(ch.lisa, 'Sind gerade erst zwischengelandet ✈️', '14:21'),
@@ -642,10 +643,10 @@ const c06 = C('s1e01c06', 5, 'Amic 6', 'Spuren im Bild', [
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
-// KAPITEL 7 — Entwarnung und Zweifel
+// KAPITEL 7 — Zweifel
 // ─────────────────────────────────────────────────────────────────────────────
 
-const c07 = C('s1e01c07', 6, 'Amic 7', 'Entwarnung und Zweifel', [
+const c07 = C('s1e01c07', 6, 'Amic 7', 'Zweifel', [
 
   S('s1e01c07_story_class_relief', [
     classChat(),

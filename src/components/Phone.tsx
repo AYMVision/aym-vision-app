@@ -5,6 +5,7 @@
 // - Auto-scroll behavior that respects user's scroll position
 
 import { useLayoutEffect, useRef, type PropsWithChildren } from 'react';
+import { assetUrl } from '../common/assetUrl';
 
 type SceneTone = 'private' | 'class' | 'newsroom';
 
@@ -26,6 +27,9 @@ interface PhoneProps extends PropsWithChildren {
   headerSubtitle?: string;
   headerAvatarSrc?: string;
   headerAvatarTargetAttr?: string;
+  headerCoins?: number;
+  onBack?: () => void;
+  onMenu?: () => void;
   scrollRef?: React.MutableRefObject<HTMLDivElement | null>;
 
   sceneTone?: SceneTone;
@@ -45,6 +49,9 @@ export default function Phone({
   headerSubtitle,
   headerAvatarSrc,
   headerAvatarTargetAttr,
+  headerCoins,
+  onBack,
+  onMenu,
 
   sceneTone = 'private',
   sceneTitle = '',
@@ -120,10 +127,16 @@ export default function Phone({
           </div>
 
           {showHeader && (
-            <div className="bg-white/80 backdrop-blur-lg border-b border-gold-200/50 px-[4%] py-[3%] flex items-center">
-              <button className="p-[2%] -ml-[2%]" type="button" aria-label="Back">
+            <div className="bg-white/90 backdrop-blur-lg border-b border-slate-200/60 px-[4%] py-[2.5%] flex items-center gap-[2%]">
+              {/* Back button */}
+              <button
+                className="shrink-0 p-[2%] -ml-[2%] rounded-full hover:bg-slate-100 active:bg-slate-200 transition-colors"
+                type="button"
+                aria-label="Zurück"
+                onClick={onBack}
+              >
                 <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--color-teal-700)]"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -137,28 +150,27 @@ export default function Phone({
                 </svg>
               </button>
 
-              <div className="ml-[3%] flex items-center gap-[3%] min-w-0 pointer-events-none">
+              {/* Avatar + title */}
+              <div className="flex items-center gap-[3%] min-w-0 flex-1">
                 {headerAvatarSrc ? (
                   <img
                     src={headerAvatarSrc}
                     data-reward-target={headerAvatarTargetAttr}
                     alt=""
-                    className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full object-cover border border-slate-200 bg-white"
+                    className="shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover border border-slate-200 bg-white"
                   />
                 ) : (
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-gray-950 font-semibold text-[0.7rem] sm:text-xs md:text-sm">
-                    AV
+                  <div className="shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-[var(--color-teal-400)] to-[var(--color-teal-600)] rounded-full flex items-center justify-center text-white font-semibold text-[0.7rem] sm:text-xs">
+                    AY
                   </div>
                 )}
 
                 <div className="min-w-0">
-                  <div className="font-semibold text-gray-900 text-xs sm:text-sm truncate">
+                  <div className="font-semibold text-gray-900 text-xs sm:text-sm truncate leading-tight">
                     {headerTitle ?? ''}
                   </div>
-
-                  <div className="text-[0.65rem] sm:text-xs text-gray-500 flex items-center gap-1 min-w-0">
+                  <div className="text-[0.62rem] sm:text-xs text-gray-500 flex items-center gap-1 min-w-0 leading-tight">
                     <span aria-hidden>{SCENE_EMOJI[sceneTone]}</span>
-
                     <span className="truncate min-w-0">
                       {sceneTitle
                         ? sceneTitle
@@ -170,7 +182,21 @@ export default function Phone({
                 </div>
               </div>
 
-              <button className="ml-auto p-[2%] -mr-[2%]" type="button" aria-label="Menu">
+              {/* Coins pill */}
+              {headerCoins != null && (
+                <div className="shrink-0 flex items-center gap-1 bg-amber-50 border border-amber-200 rounded-xl px-2 py-1 text-xs font-semibold">
+                  <img src={assetUrl('media/story/ui/coin-128.webp')} alt="" className="w-4 h-4 shrink-0" />
+                  <span className="whitespace-nowrap">{headerCoins}</span>
+                </div>
+              )}
+
+              {/* Menu button */}
+              <button
+                className="shrink-0 p-[2%] -mr-[2%] rounded-full hover:bg-slate-100 active:bg-slate-200 transition-colors"
+                type="button"
+                aria-label="Menü"
+                onClick={onMenu}
+              >
                 <svg
                   className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"
                   fill="none"

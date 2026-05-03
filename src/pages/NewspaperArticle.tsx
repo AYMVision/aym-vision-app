@@ -113,7 +113,7 @@ export default function NewspaperArticle() {
 
   if (!item) {
     return (
-      <Layout backPath="/newspaper">
+      <Layout backPath="/newspaper" hideFooter>
         <div className="max-w-3xl mx-auto px-4 mt-10 text-sm text-slate-600">
           Artikel nicht gefunden.
         </div>
@@ -122,7 +122,7 @@ export default function NewspaperArticle() {
   }
 
   return (
-    <Layout backPath={state?.backTo ?? '/newspaper'} hideHeader={isModal}>
+    <Layout backPath={state?.backTo ?? '/newspaper'} hideHeader={isModal} hideFooter>
       <div className="max-w-2xl mx-auto px-5 sm:px-8 py-6">
 
         {/* LOCK */}

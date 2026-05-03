@@ -60,6 +60,7 @@ type SubmitItemAction = {
     dimension: StoryDimensionId;
     indicatorId: IndicatorId;
     score: ItemScore;
+    promptText?: string;
   };
 };
 
@@ -72,6 +73,7 @@ type SubmitItemMultiAction = {
     optionScores: Record<string, ItemScore>;
     dimension: StoryDimensionId;
     indicatorId: IndicatorId;
+    promptText?: string;
   };
 };
 
@@ -269,6 +271,7 @@ export function storyRuntimeReducer(
           dimension: action.payload.dimension,
           indicatorId: action.payload.indicatorId,
           score: action.payload.score,
+          promptText: action.payload.promptText || undefined,
         }),
         completedStepIds: addCompletedStepId(state, action.payload.stepId),
       };
@@ -286,6 +289,7 @@ export function storyRuntimeReducer(
           optionScores: action.payload.optionScores,
           dimension: action.payload.dimension,
           indicatorId: action.payload.indicatorId,
+          promptText: action.payload.promptText || undefined,
         }),
         completedStepIds: addCompletedStepId(state, action.payload.stepId),
       };

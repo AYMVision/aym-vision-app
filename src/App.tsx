@@ -1,7 +1,11 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { createContext, lazy, Suspense, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HashRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import type { Location } from 'react-router-dom';
+
+// Exposes whether a modal overlay is currently open (backgroundLocation is set).
+// StoryV02 reads this to detect when a modal has just closed and scroll should be restored.
+export const BackgroundLocationContext = createContext<Location | null | undefined>(undefined);
 
 import { ProfileProvider } from './profile/useProfile';
 import { initSoundPlayer } from './common/soundPlayer';
@@ -64,6 +68,7 @@ function AppRoutes() {
   const backgroundLocation = state?.backgroundLocation;
 
   return (
+    <BackgroundLocationContext.Provider value={backgroundLocation ?? null}>
     <Suspense fallback={null}>
       <Routes location={backgroundLocation || location}>
         <Route path="/" element={<Welcome />} />
@@ -147,6 +152,7 @@ function AppRoutes() {
         </Routes>
       )}
     </Suspense>
+    </BackgroundLocationContext.Provider>
   );
 }
 

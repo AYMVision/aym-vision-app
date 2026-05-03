@@ -500,8 +500,8 @@ export default function AvatarPicker() {
 
       {/* Kaufbestätigung */}
       {confirmingItem ? (
-        <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-4 bg-black/40">
-          <div className="w-full max-w-sm rounded-3xl bg-white shadow-xl p-6">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/40 overflow-y-auto">
+          <div className="w-full max-w-sm rounded-3xl bg-white shadow-xl p-6 my-auto">
             <div className="text-center mb-4">
               <div className="h-[72px] flex items-center justify-center mb-3">
                 <img

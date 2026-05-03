@@ -1,6 +1,7 @@
 // src/pages/Welcome.tsx
 import React, { useMemo } from 'react';
 import Layout from '../components/Layout';
+import BetaBanner from '../components/BetaBanner';
 import { assetUrl } from '../common/assetUrl';
 import SmartImage from '../components/SmartImage';
 import { Link, useNavigate } from 'react-router-dom';
@@ -156,6 +157,7 @@ function isUnlockedByChain(
 
   return (
     <Layout>
+      <BetaBanner />
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 {/* HERO */}
 <section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg bg-white">
@@ -190,6 +192,7 @@ function isUnlockedByChain(
         <Badge>🎓 {t('hero.badgeAge', { defaultValue: 'Für Kinder ab 9 Jahren' })}</Badge>
         <Badge>⏱️ {t('hero.badgeTime', { defaultValue: '5 min täglich' })}</Badge>
         <Badge>🦉 {t('hero.badgeAmy', { defaultValue: 'Chat-Story & mehr' })}</Badge>
+        <Badge>🧪 {t('hero.badgeBeta', { defaultValue: 'Beta' })}</Badge>
       </div>
 
       <div className="mt-6 flex flex-wrap gap-3">

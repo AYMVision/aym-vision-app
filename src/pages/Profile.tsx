@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import Layout from '../components/Layout';
+import BetaBanner from '../components/BetaBanner';
 import { useProfile } from '../profile/useProfile';
 import ProfileProgressCard from '../components/ProfileProgressCard';
 
@@ -48,6 +49,7 @@ export default function Profile() {
 
   return (
     <Layout hideFooter backPath={backTo}>
+      <BetaBanner />
       <div className="w-full max-w-5xl mx-auto px-4 py-8">
         {/* Page-Topbar */}
         <div className="mt-2 mb-4">
@@ -144,12 +146,54 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* Kasten 2: Fortschritt */}
+                   {/* Kasten 2: Fortschritt */}
           <div className="p-4 rounded-2xl border border-black/5 bg-white shadow-sm h-full">
             <ProfileProgressCard noCard />
           </div>
 
         </div>
+
+
+                  {/* Neue Sticker — direkt unter den Top-Kästen, prominent */}
+        {newStickers.length > 0 && (
+          <div className="mt-4 p-4 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-yellow-50 shadow-sm">
+            <div className="flex items-center justify-between mb-3">
+              <div className="text-sm font-extrabold text-amber-900">
+                🌟 {t('rewards.newTitle', { defaultValue: 'Neue Sticker für dich!' })}
+              </div>
+              <Link
+                to="/album"
+                state={{ backTo: '/profile' }}
+                className="text-xs font-semibold text-amber-700 hover:text-amber-900"
+              >
+                {t('rewards.open', { defaultValue: 'Im Album →' })}
+              </Link>
+            </div>
+
+            {/* ≤2: side by side centered; ≥3: horizontal scroll */}
+            <div className={newStickers.length <= 2
+              ? 'flex justify-center gap-8'
+              : 'flex gap-4 overflow-x-auto pb-1'
+            }>
+              {newStickers.map((s) => (
+                <div key={s.id} className="flex flex-col items-center gap2 flex-shrink-0">
+                  <img
+                    src={assetUrl(s.image)}
+                    alt={s.title ?? ''}
+                    className={newStickers.length === 1 ? 'w-40 h-40 object-contain' : 'w-24 h-24 object-contain'}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = assetUrl('media/stickers/placeholder-512.webp');
+                    }}
+                  />
+                  <div className="text-xs font-semibold text-amber-900 text-center max-w-[110px] leading-tight">
+                    {s.title ?? s.titleKey}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
 
         {/* Bonuswelt — volle Breite unter den beiden Kästen */}
         <div className="mt-4 p-4 rounded-2xl border border-black/5 bg-white shadow-sm">
@@ -215,36 +259,6 @@ export default function Profile() {
             </Link>
           </div>
         </div>
-
-        {newStickers.length > 0 && (
-          <div className="mt-4 p-4 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-yellow-50 shadow-sm">
-            <div className="text-sm font-extrabold text-amber-900 mb-3">
-              🌟 {t('rewards.newTitle', { defaultValue: 'Neue Sticker für dich!' })}
-            </div>
-
-            <div className="flex flex-wrap gap-3 mb-3">
-              {newStickers.map((s) => (
-                <img
-                  key={s.id}
-                  src={assetUrl(s.image)}
-                  alt={s.title}
-                  className="w-40 h-40 object-contain rounded-xl bg-white/60 p-1"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = assetUrl('media/stickers/placeholder-512.webp');
-                  }}
-                />
-              ))}
-            </div>
-
-            <Link
-              to="/album"
-              state={{ backTo: '/profile' }}
-              className="text-xs font-semibold text-amber-800 hover:text-amber-900"
-            >
-              {t('rewards.open', { defaultValue: 'Im Album ansehen →' })}
-            </Link>
-          </div>
-        )}
 
         {/* Hidden entry (kid-safe, low attention) */}
 <div

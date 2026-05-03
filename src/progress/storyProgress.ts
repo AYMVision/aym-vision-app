@@ -84,14 +84,11 @@ export function markChapterCompleted(
 export function getCompletedChapterCount(courseId: string): number {
   const p = getProgress(courseId);
   if (!p) return 0;
-
-  const uniqueChapters = new Set((p.answers ?? []).map((a) => a.chapter));
-  return uniqueChapters.size;
+  return Math.max(0, p.unlockedEpisode - 1);
 }
 
 export function hasCompletedChapter(courseId: string, chapterIndex0: number): boolean {
   const p = getProgress(courseId);
   if (!p) return false;
-
-  return new Set((p.answers ?? []).map((a) => a.chapter)).has(chapterIndex0);
+  return p.unlockedEpisode >= chapterIndex0 + 2;
 }

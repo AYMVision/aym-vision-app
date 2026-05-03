@@ -58,12 +58,7 @@ const { t: tCommon } = useTranslation('common');
   // Reward FX targets (Coin-Fly Animation)
   const { walletElRef, profileElRef } = useRewardFx();
 
-  // Footer nur in Story-Spielrouten (mit ID) verstecken, nicht auf der Übersichtsseite
-  const isStoryPlayerRoute =
-    /^\/stories(-v02)?\/[^/]+/.test(location.pathname);
-  const shouldHideFooter = Boolean(hideFooter) || isStoryPlayerRoute;
-
-    // Mobile Bottom Nav: nur für kinderrelevante Bereiche zeigen
+  // Mobile Bottom Nav: nur für kinderrelevante Bereiche zeigen
   const showBottomNav =
     !hideHeader &&
     !location.pathname.startsWith('/parents') &&
@@ -72,6 +67,12 @@ const { t: tCommon } = useTranslation('common');
     !location.pathname.startsWith('/privacy') &&
     !location.pathname.startsWith('/faq') &&
     !location.pathname.startsWith('/adult-settings');
+
+  // Footer nur in Story-Spielrouten (mit ID) verstecken, nicht auf der Übersichtsseite
+  const isStoryPlayerRoute =
+    /^\/stories(-v02)?\/[^/]+/.test(location.pathname);
+  const isWelcomeRoute = location.pathname === '/';
+  const shouldHideFooter = Boolean(hideFooter) || isStoryPlayerRoute || (showBottomNav && !isWelcomeRoute);
 
 // Navigation Links (Desktop + Mobile)
 const desktopLinks = useMemo(
@@ -88,7 +89,7 @@ const desktopLinks = useMemo(
 const mobilePrimaryLinks = useMemo(
   () => [
     { to: '/', label: tNav('home') as string },
-    { to: '/stories', label: tNav('storiesKids', { defaultValue: 'Meine Amics' }) as string },
+    { to: '/stories', label: tNav('storiesKids', { defaultValue: 'Amy Surfwing' }) as string },
     { to: '/diaries', label: tNav('diaries', { defaultValue: 'Tagebuch' }) as string },
     { to: '/newspaper', label: tNav('newspaper', { defaultValue: 'Schülerzeitung' }) as string },
     { to: '/album', label: tNav('album', { defaultValue: 'Sticker' }) as string },

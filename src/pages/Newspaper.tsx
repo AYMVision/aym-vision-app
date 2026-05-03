@@ -844,7 +844,7 @@ const unlockedMap = useMemo(() => {
           }
         >
           <div className="text-sm text-slate-700">
-            Einmal pro Woche gibt es hier einen aktuellen Beitrag von Chioma zu Themen, über die gerade viele sprechen.
+            Hier gibt es aktuelle Beiträge von Chioma zu Themen, über die gerade viele sprechen.
           </div>
 
           {currentNewsItems.length > 0 ? (

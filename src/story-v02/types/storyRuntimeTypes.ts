@@ -39,6 +39,7 @@ export type TranscriptEntry =
       dimension: StoryDimensionId;
       indicatorId: IndicatorId;
       score: ItemScore;
+      promptText?: string; // Amy's question — persisted so it stays visible in transcript
     }
   | {
       kind: 'item_multi_response';
@@ -50,6 +51,7 @@ export type TranscriptEntry =
       optionScores: Record<string, ItemScore>;
       dimension: StoryDimensionId;
       indicatorId: IndicatorId;
+      promptText?: string; // Amy's question — persisted so it stays visible in transcript
     }
   | {
       kind: 'amy_feedback';

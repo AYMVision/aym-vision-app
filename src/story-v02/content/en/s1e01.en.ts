@@ -778,7 +778,7 @@ const c08 = C('s1e01c08', 7, 'Amic', 'The Picture Wasn’t Real', [
     m(ch.lisa, 'But I already wondered who was supposed to have taken the photo!!', '18:38'),
     m(ch.finn, 'crazy… i really thought you were in the water', '18:38'),
     m(ch.aylin, 'Let me see it again…', '18:39'),
-    img(ch.finn, '/media/story/episodes/s1e01/s1e01c05-512.webp', '18:39', { content: 'forwarded:' }),
+    img(ch.finn, '/media/story/episodes/s1e01/s1e01c05-512.webp', '18:39', { forwarded: {} }),
     m(ch.aylin, 'Wow, technically that\'s really good 👍', '18:40'),
     m(ch.aylin, 'The light and perspective match. Nicely done.', '18:40'),
     m(ch.lisa, '😕', '18:40'),

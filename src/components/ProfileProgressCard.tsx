@@ -148,7 +148,7 @@ export default function ProfileProgressCard({
       {!compact && (
         <div className="mt-5">
           <Link
-            to={`/stories/${cur.episodeId}`}
+            to={`/stories-v02/${cur.courseId}`}
             className="text-xs px-3 py-1 rounded-lg border border-slate-200 bg-white font-semibold text-slate-700 hover:bg-slate-50"
           >
             {t('profile:progress.continue', { defaultValue: 'Weiterlesen →' })}

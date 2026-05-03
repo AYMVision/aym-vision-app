@@ -1,7 +1,8 @@
 // src/pages/StoryV02.tsx
 
-import { useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { BackgroundLocationContext } from '../App';
 import { useTranslation } from 'react-i18next';
 
 import Layout from '../components/Layout';
@@ -12,6 +13,7 @@ import { useProfile } from '../profile/useProfile';
 import { getEpisodeMetaByCourseId } from '../content/contentIndex';
 import { unlockBonusById } from '../bonus/unlockBonusById';
 import { hasCompletedChapter } from '../progress/storyProgress';
+import { assetUrl } from '../common/assetUrl';
 
 import { getPlayableEpisodeV02 } from '../story-v02/content/getPlayableEpisodeV02';
 import type { StoryEpisodeV02 } from '../story-v02/types/storyTypes';
@@ -55,10 +57,12 @@ import ReflectionStepCard from '../story-v02/components/ReflectionStepCard';
 import AmyReactionStepCard from '../story-v02/components/AmyReactionStepCard';
 import ChallengeStepCard from '../story-v02/components/ChallengeStepCard';
 import { getNextChapterGateState, getHighestPlayableChapterIndex0 } from '../gating/storyGateHelpers';
+import { shouldBypassAll } from '../gating/entitlements';
+import { canStartNextNewChapterToday } from '../gating/gateEngine';
 import UnlockedToast from '../components/UnlockedToast';
-import { useRewardFx } from '../progress/rewardFx';
+import RewardToast from '../components/RewardToast';
+import type { RewardToastData } from '../components/RewardToast';
 import { getStickerById } from '../progress/rewardCatalog';
-import { assetUrl } from '../common/assetUrl';
 import { playEpisodeSound } from '../common/soundPlayer';
 import { trackItemStep } from '../analytics/analyticsEvents';
 import EpisodeSummaryCard from '../story-v02/components/EpisodeSummaryCard';
@@ -283,6 +287,7 @@ export default function StoryV02() {
   console.log('[V02] route courseId =', courseId, 'chapterId =', routeChapterId);
   const navigate = useNavigate();
   const location = useLocation();
+  const backgroundLocation = useContext(BackgroundLocationContext);
   const { t, i18n } = useTranslation();
   const { profile, updateProfile } = useProfile();
 
@@ -324,8 +329,13 @@ export default function StoryV02() {
 
   const restoreScrollTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pendingReturnScrollRef = useRef<number | null>(null);
-  // Set to true when "Weiter" is clicked — cleared once the story-step cascade settles
-  const pendingScrollToBottomRef = useRef(false);
+  // ID des letzten Transcript-Eintrags vor "Weiter"-Klick.
+  // null = kein pending scroll. Nach der Kaskade zum ersten Element danach scrollen.
+  const scrollAnchorIdRef = useRef<string | null>(null);
+
+  // Scroll-Position die vor dem Öffnen eines Bonus-Modals gesichert wird.
+  // Wird wiederhergestellt, sobald das Modal geschlossen wird (backgroundLocation → null).
+  const modalReturnScrollRef = useRef<number | null>(null);
 
   const courseIdRef = useRef(courseId);
   courseIdRef.current = courseId;
@@ -334,14 +344,14 @@ export default function StoryV02() {
   const [nextChapterLockedReason, setNextChapterLockedReason] = useState<
     'daily_limit' | 'weekly_limit' | null
   >(null);
-  const [dismissedNextChapterLockedHint, setDismissedNextChapterLockedHint] =
-    useState(false);
 
   const [unlockedToast, setUnlockedToast] = useState<{
     title: string;
     subtitle?: string;
     linkTo?: string;
   } | null>(null);
+
+  const [rewardToast, setRewardToast] = useState<RewardToastData | null>(null);
 
   // Belohnungen warten bis der letzte Chapter-Eintrag sichtbar ist (IntersectionObserver)
   const [pendingChapterRewards, setPendingChapterRewards] = useState<{
@@ -357,7 +367,24 @@ export default function StoryV02() {
   const [amicDoneNextChapterId, setAmicDoneNextChapterId] = useState<string | null | undefined>(undefined);
   // undefined = Karte noch nicht zeigen; null = letzter Amic (keine Weiter-Option); string = nächster Amic
 
-  const { flyStickerFromRect, flyCoinFromRect } = useRewardFx();
+  const [storyMenuOpen, setStoryMenuOpen] = useState(false);
+
+  function fireRewardToast(opts: {
+    stickerIds?: string[];
+    staticStickers?: Array<{ image: string; title: string }>;
+    coins?: number;
+  }) {
+    const stickers: Array<{ image: string; title: string }> = [];
+    (opts.stickerIds ?? []).forEach((id) => {
+      const def = getStickerById(id);
+      if (!def) return;
+      stickers.push({ image: def.image, title: def.title ?? def.titleKey ?? id });
+    });
+    (opts.staticStickers ?? []).forEach((s) => stickers.push(s));
+    const coins = opts.coins ?? 0;
+    if (stickers.length === 0 && coins === 0) return;
+    setRewardToast({ stickers, coins });
+  }
 
   function restoreScrollToValue(target: number) {
     pendingReturnScrollRef.current = target;
@@ -394,7 +421,9 @@ export default function StoryV02() {
       // If content hasn't rendered yet, maxScrollable is near 0 — keep retrying.
       const contentReady = maxScrollable >= wanted - 8;
 
-      if ((closeEnough && contentReady) || tries >= maxTries) {
+      // tries >= 6 ensures at least ~300ms of polling even after first success,
+      // catching async iOS scroll resets that happen after the initial apply().
+      if ((closeEnough && contentReady && tries >= 6) || tries >= maxTries) {
         if (restoreScrollTimerRef.current != null) {
           clearInterval(restoreScrollTimerRef.current);
           restoreScrollTimerRef.current = null;
@@ -441,7 +470,8 @@ function hasStoryMigrationDone(key: string): boolean {
     if (!el) return;
 
     const key = location.key;
-    const ssKey = courseId ? `aym_story_scroll_${courseId}` : null;
+    // Key per Amic (nicht nur per Episode) — verhindert dass Amic-1-Scroll auf Amic-2 übertragen wird
+    const ssKey = courseId ? `aym_story_scroll_${courseId}_${routeChapterId ?? ''}` : null;
 
     const onScroll = () => {
       const top = el.scrollTop;
@@ -529,13 +559,28 @@ function hasStoryMigrationDone(key: string): boolean {
                 ? gateState.blockedReason
                 : null
             );
-            setDismissedNextChapterLockedHint(false);
+
+            setAmicDoneNextChapterId(null);
           }
         }
         return;
       }
 
-      // No amic session yet — start this chapter fresh
+      // No amic session yet — check time gate before starting fresh
+      const isAlreadyCompleted = hasCompletedChapter(courseId, targetChapter.chapterIndex0);
+      if (!isAlreadyCompleted && !shouldBypassAll(courseId)) {
+        const timeGate = canStartNextNewChapterToday({ maxPerWeek: 5 });
+        if (!timeGate.allowed) {
+          setShowNextChapterLockedHint(true);
+          setNextChapterLockedReason(
+            timeGate.reason === 'daily_limit' || timeGate.reason === 'weekly_limit'
+              ? timeGate.reason
+              : null
+          );
+          setAmicDoneNextChapterId(null);
+          return;
+        }
+      }
       setAmicDoneNextChapterId(undefined);
       dispatch({
         type: 'START_CHAPTER',
@@ -619,7 +664,7 @@ function hasStoryMigrationDone(key: string): boolean {
               ? gateState.blockedReason
               : null
           );
-          setDismissedNextChapterLockedHint(false);
+          setAmicDoneNextChapterId(null);
         }
       }
 
@@ -683,10 +728,11 @@ function hasStoryMigrationDone(key: string): boolean {
       return;
     }
 
-    // Fallback: sessionStorage → localStorage per courseId (survives iOS tab suspension)
+    // Fallback: sessionStorage → localStorage per Amic (courseId + chapterId)
+    // Wichtig: chapterId einschließen, sonst würde Amic-1-Scroll auf Amic-2 angewendet
     if (courseId) {
       try {
-        const ssKey = `aym_story_scroll_${courseId}`;
+        const ssKey = `aym_story_scroll_${courseId}_${routeChapterId ?? ''}`;
         const rawSS = sessionStorage.getItem(ssKey);
         const rawLS = localStorage.getItem(ssKey);
         const fromStorage = rawSS ? Number(rawSS) : rawLS ? Number(rawLS) : 0;
@@ -695,43 +741,49 @@ function hasStoryMigrationDone(key: string): boolean {
     }
   }, [location.key, courseId]);
 
-  // Scroll-Restore nach Bonus-Modal-Schließen via popstate.
-  // React Router v7 überschreibt LocationContext für die Story-Komponente mit backgroundLocation,
-  // daher ändert sich location.key beim Öffnen/Schließen des Modals nicht.
-  // navigate(-1) aus ModalShell löst aber immer einen nativen popstate-Event aus — darauf hören wir.
-  useEffect(() => {
-    if (!courseId) return;
-    const lsKey = `aym_story_modal_return_${courseId}`;
-
-    const onPopState = () => {
-      try {
-        const raw = localStorage.getItem(lsKey);
-        if (!raw) return;
-        localStorage.removeItem(lsKey);
-        const pos = Number(raw);
-        if (pos > 0) restoreScrollToValue(pos);
-      } catch { /* ignore */ }
-    };
-
-    window.addEventListener('popstate', onPopState);
-    return () => window.removeEventListener('popstate', onPopState);
-  }, [courseId]);
-
-  // Nach "Weiter"-Klick: scroll zu unterst, damit neuer Inhalt oben beginnt.
-  // Bleibt aktiv über die gesamte story-step-Kaskade (mehrere Render-Zyklen),
-  // bis der nächste interaktive Schritt sichtbar ist.
+  // Scroll-Restore nach Bonus-Modal-Schließen.
+  // backgroundLocation ist gesetzt während ein Modal offen ist.
+  // Wenn es null wird (Modal geschlossen), stellen wir die gesicherte Scroll-Position wieder her.
+  // useLayoutEffect (nicht useEffect!) damit scrollTop VOR dem Paint gesetzt wird —
+  // iOS Safari resettet scrollTop beim Entfernen von position:fixed Elementen genau beim Paint.
   useLayoutEffect(() => {
-    if (!pendingScrollToBottomRef.current) return;
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    // Story-steps werden auto-verarbeitet (eigener useEffect → weiterer Render).
-    // Ref erst löschen wenn die Kaskade auf einem nicht-story Step endet.
-    if (currentStep?.type !== 'story') {
-      pendingScrollToBottomRef.current = false;
-    }
-  }, [state.stepIndex0, state.transcript.length, currentStep]);
+    if (backgroundLocation !== null) return; // Modal noch offen oder nie geöffnet
+    const pos = modalReturnScrollRef.current;
+    if (pos === null) return;
+    modalReturnScrollRef.current = null;
+    if (pos > 0) restoreScrollToValue(pos);
+  }, [backgroundLocation]);
 
-  // IntersectionObserver: Coin + Theme-Sticker fliegen wenn der letzte Chapter-Eintrag sichtbar wird
+  // Nach "Weiter"-Klick: scroll zum ersten neuen Eintrag, aber erst wenn die
+  // Story-Step-Kaskade fertig ist (currentStep ist kein 'story'-Typ mehr).
+  useLayoutEffect(() => {
+    if (!scrollAnchorIdRef.current) return;
+    if (currentStep?.type === 'story') return; // Kaskade läuft noch
+
+    const scrollEl = scrollRef.current;
+    if (!scrollEl) return;
+
+    const anchorId = scrollAnchorIdRef.current;
+    scrollAnchorIdRef.current = null;
+
+    // Finde das Anker-Element und dann das nächste danach
+    const anchorEl = scrollEl.querySelector(`[data-story-entry-id="${CSS.escape(anchorId)}"]`);
+    const allEntries = Array.from(scrollEl.querySelectorAll('[data-story-entry-id]'));
+    const anchorIndex = anchorEl ? allEntries.indexOf(anchorEl) : -1;
+
+    // Guard: wenn Anker nicht im DOM → kein Scroll (verhindert Sprung zu allEntries[0])
+    if (anchorIndex < 0) return;
+
+    const target = allEntries[anchorIndex + 1] as HTMLElement | undefined;
+
+    if (target) {
+      const containerTop = scrollEl.getBoundingClientRect().top;
+      const entryTop = target.getBoundingClientRect().top;
+      scrollEl.scrollTop += entryTop - containerTop - 12;
+    }
+  }, [state.transcript.length, currentStep]);
+
+  // IntersectionObserver: Reward-Toast zeigen wenn der letzte Chapter-Eintrag sichtbar wird
   useEffect(() => {
     if (!pendingChapterRewards) return;
     const { lastEntryId, coinAwarded, themeStickerIds, milestoneStickerIds, starterStickerAwarded, weeklyBadgeAwarded } = pendingChapterRewards;
@@ -742,50 +794,19 @@ function hasStoryMigrationDone(key: string): boolean {
     const targetEl = scrollEl.querySelector(`[data-story-entry-id="${CSS.escape(lastEntryId)}"]`);
     if (!targetEl) {
       // Element nicht im DOM (sollte nicht vorkommen) — direkt auslösen
-      if (coinAwarded) flyCoinFromRect(new DOMRect(window.innerWidth / 2 - 24, window.innerHeight * 0.7, 48, 48));
+      const staticStickers: Array<{ image: string; title: string }> = [];
+      if (starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
+      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 Tage am Stück!' });
+      setTimeout(() => fireRewardToast({ stickerIds: [...themeStickerIds, ...milestoneStickerIds], staticStickers, coins: coinAwarded ? 1 : 0 }), 1200);
       setPendingChapterRewards(null);
       return;
     }
 
-    const fire = (el: Element) => {
-      const rect = el.getBoundingClientRect();
-      // from: Mitte des letzten sichtbaren Eintrags
-      const from = new DOMRect(
-        rect.left + rect.width / 2 - 24,
-        rect.top + rect.height / 2 - 24,
-        48, 48
-      );
-      if (coinAwarded) flyCoinFromRect(from);
-
-      let nextDelay = 200;
-      themeStickerIds.forEach((stickerId, idx) => {
-        const def = getStickerById(stickerId);
-        if (!def?.image) return;
-        setTimeout(() => flyStickerFromRect(from, assetUrl(def.image!), { durationMs: 2800 }), nextDelay + idx * 700);
-      });
-      nextDelay += themeStickerIds.length * 700;
-
-      milestoneStickerIds.forEach((stickerId) => {
-        const def = getStickerById(stickerId);
-        if (!def?.image) return;
-        setTimeout(() => flyStickerFromRect(from, assetUrl(def.image!), { durationMs: 2800 }), nextDelay);
-        nextDelay += 700;
-      });
-
-      if (starterStickerAwarded) {
-        setTimeout(
-          () => flyStickerFromRect(from, assetUrl('media/stickers/milestones/chapters-5-512.webp'), { durationMs: 2800 }),
-          nextDelay
-        );
-        nextDelay += 700;
-      }
-      if (weeklyBadgeAwarded) {
-        setTimeout(
-          () => flyStickerFromRect(from, assetUrl('media/stickers/streaks/streak-5-512.webp'), { durationMs: 2800 }),
-          nextDelay
-        );
-      }
-
+    const fire = () => {
+      const staticStickers: Array<{ image: string; title: string }> = [];
+      if (starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
+      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 Tage am Stück!' });
+      setTimeout(() => fireRewardToast({ stickerIds: [...themeStickerIds, ...milestoneStickerIds], staticStickers, coins: coinAwarded ? 1 : 0 }), 1200);
       setPendingChapterRewards(null);
     };
 
@@ -793,14 +814,14 @@ function hasStoryMigrationDone(key: string): boolean {
       ([entry]) => {
         if (entry.isIntersecting) {
           observer.disconnect();
-          fire(entry.target);
+          fire();
         }
       },
       { root: scrollEl, threshold: 0 }
     );
     observer.observe(targetEl);
     return () => observer.disconnect();
-  }, [pendingChapterRewards, flyCoinFromRect, flyStickerFromRect]);
+  }, [pendingChapterRewards]);
 
   useEffect(() => {
     if (!courseId || !chapter || !currentStep) return;
@@ -924,13 +945,6 @@ function hasStoryMigrationDone(key: string): boolean {
       });
     }
 
-    // Fallback-Startpunkt für Episode-End-Animationen
-    const flyFromRect = new DOMRect(
-      window.innerWidth / 2 - 24,
-      window.innerHeight * 0.68,
-      48, 48
-    );
-
     // ID des letzten sichtbaren Transcript-Eintrags — Observer wartet bis er im Viewport ist
     const lastVisibleEntryId = (() => {
       for (let i = state.transcript.length - 1; i >= 0; i--) {
@@ -959,48 +973,24 @@ function hasStoryMigrationDone(key: string): boolean {
     if (!gateState.hasNext) {
       setShowNextChapterLockedHint(false);
       setNextChapterLockedReason(null);
-      setDismissedNextChapterLockedHint(false);
 
       if (!wasAlreadyCompletedBeforeAnswer) {
-        // Episodensticker fliegt zum Profilbild
-        if (result.stickerAwarded && episodeMeta.stickerImage) {
-          const stickerSrc = assetUrl(episodeMeta.stickerImage);
-          setTimeout(() => {
-            flyStickerFromRect(flyFromRect, stickerSrc, { durationMs: 3000 });
-          }, 500);
-        }
-
-        // +5 Bonus-Coins fliegen gestaffelt zur Geldbörse
-        if (result.episodeBonusAwarded) {
-          for (let i = 0; i < 5; i++) {
-            setTimeout(() => flyCoinFromRect(flyFromRect), 700 + i * 220);
+        // Reward-Toast: Episodensticker + Coins + Sondersticker
+        {
+          const stickerIds = [...result.newMilestoneStickerIds];
+          const staticStickers: Array<{ image: string; title: string }> = [];
+          if (result.stickerAwarded && episodeMeta.stickerImage) {
+            staticStickers.push({ image: episodeMeta.stickerImage, title: 'Episode abgeschlossen' });
+          }
+          if (result.starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
+          if (result.weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 Tage am Stück!' });
+          const coins = result.episodeBonusAwarded ? 5 : 0;
+          if (stickerIds.length > 0 || staticStickers.length > 0 || coins > 0) {
+            setTimeout(() => fireRewardToast({ stickerIds, staticStickers, coins }), 5000);
           }
         }
 
-        // Besondere Ereignis-Sticker fliegen nach den Coins
-        let specialStickerDelay = result.episodeBonusAwarded ? 1800 : 900;
-        if (result.starterStickerAwarded) {
-          setTimeout(() => {
-            flyStickerFromRect(flyFromRect, assetUrl('media/stickers/milestones/chapters-5-512.webp'), { durationMs: 2800 });
-          }, specialStickerDelay);
-          specialStickerDelay += 700;
-        }
-        if (result.weeklyBadgeAwarded) {
-          setTimeout(() => {
-            flyStickerFromRect(flyFromRect, assetUrl('media/stickers/streaks/streak-5-512.webp'), { durationMs: 2800 });
-          }, specialStickerDelay);
-          specialStickerDelay += 700;
-        }
-        result.newMilestoneStickerIds.forEach((stickerId) => {
-          const def = getStickerById(stickerId);
-          if (!def?.image) return;
-          setTimeout(() => {
-            flyStickerFromRect(flyFromRect, assetUrl(def.image!), { durationMs: 2800 });
-          }, specialStickerDelay);
-          specialStickerDelay += 700;
-        });
-
-        // Abschluss-Karte direkt im Messenger erscheint nach den Animationen
+        // Abschluss-Karte direkt im Messenger erscheint nach dem Toast
         const summaryId = `episode-summary-${courseId}`;
         setTimeout(() => {
           playEpisodeSound(profile.soundEnabled !== false);
@@ -1021,7 +1011,6 @@ function hasStoryMigrationDone(key: string): boolean {
     if (!gateState.structuralAllowed) {
       setShowNextChapterLockedHint(false);
       setNextChapterLockedReason(null);
-      setDismissedNextChapterLockedHint(false);
       setAmicDoneNextChapterId(null);
       if (!wasAlreadyCompletedBeforeAnswer && lastVisibleEntryId) {
         setPendingChapterRewards({ lastEntryId: lastVisibleEntryId, coinAwarded: result.coinAwarded, themeStickerIds: result.newThemeStickerIds, milestoneStickerIds: result.newMilestoneStickerIds, starterStickerAwarded: result.starterStickerAwarded, weeklyBadgeAwarded: result.weeklyBadgeAwarded });
@@ -1038,7 +1027,7 @@ function hasStoryMigrationDone(key: string): boolean {
             ? gateState.blockedReason
             : null
         );
-        setDismissedNextChapterLockedHint(false);
+        setAmicDoneNextChapterId(null);
       }
       if (!wasAlreadyCompletedBeforeAnswer && lastVisibleEntryId) {
         setPendingChapterRewards({ lastEntryId: lastVisibleEntryId, coinAwarded: result.coinAwarded, themeStickerIds: result.newThemeStickerIds, milestoneStickerIds: result.newMilestoneStickerIds, starterStickerAwarded: result.starterStickerAwarded, weeklyBadgeAwarded: result.weeklyBadgeAwarded });
@@ -1051,7 +1040,6 @@ function hasStoryMigrationDone(key: string): boolean {
 
     setShowNextChapterLockedHint(false);
     setNextChapterLockedReason(null);
-    setDismissedNextChapterLockedHint(false);
 
     // Statt inline-Weiterschalten: Navigations-Karte zeigen
     setAmicDoneNextChapterId(nextChapter.id);
@@ -1060,7 +1048,7 @@ function hasStoryMigrationDone(key: string): boolean {
     if (!wasAlreadyCompletedBeforeAnswer && lastVisibleEntryId) {
       setPendingChapterRewards({ lastEntryId: lastVisibleEntryId, coinAwarded: result.coinAwarded, themeStickerIds: result.newThemeStickerIds, milestoneStickerIds: result.newMilestoneStickerIds, starterStickerAwarded: result.starterStickerAwarded, weeklyBadgeAwarded: result.weeklyBadgeAwarded });
     }
-  }, [state.phase, courseId, chapter, episodeMeta, episode, updateProfile, flyStickerFromRect, flyCoinFromRect]);
+  }, [state.phase, courseId, chapter, episodeMeta, episode, updateProfile]);
 
   const sceneInfo = useMemo(() => {
     const latestSceneMessage = findLatestSceneMessage(state.transcript);
@@ -1101,10 +1089,9 @@ function hasStoryMigrationDone(key: string): boolean {
   }) {
     if (!courseId || !episodeMeta) return;
 
-    // Remember where the user was so we can return them to the exact position
-    if (scrollRef.current) {
-      modalReturnScrollRef.current = scrollRef.current.scrollTop;
-    }
+    // Scrollposition vor dem Öffnen des Modals sichern.
+    // Wird wiederhergestellt, sobald backgroundLocation wieder null wird (Modal geschlossen).
+    modalReturnScrollRef.current = scrollRef.current?.scrollTop ?? 0;
 
     if (payload.bonusId) {
       unlockBonusById(payload.bonusId);
@@ -1146,7 +1133,23 @@ function hasStoryMigrationDone(key: string): boolean {
 
   function goToNextStep() {
     if (!chapter) return;
-    pendingScrollToBottomRef.current = true;
+
+    // Find the last transcript entry that actually renders a DOM element.
+    // 'chat-switch' and 'chapter-divider' messages render null → no data-story-entry-id.
+    // If we anchor on those, querySelector returns null → anchorIndex = -1 → target = allEntries[0] → scrolls to top!
+    let anchorId: string | null = null;
+    for (let i = state.transcript.length - 1; i >= 0; i--) {
+      const e = state.transcript[i];
+      if (e.kind === 'message') {
+        const mk = e.message.kind;
+        if (mk === 'chat-switch' || mk === 'chapter-divider') continue;
+      }
+      if (e.kind === 'input_response' && !e.text && !e.choiceText) continue;
+      anchorId = e.id;
+      break;
+    }
+    scrollAnchorIdRef.current = anchorId;
+
     dispatch({
       type: 'GO_TO_NEXT_STEP',
       payload: { chapter },
@@ -1221,6 +1224,17 @@ function hasStoryMigrationDone(key: string): boolean {
 
         return (
           <div key={entry.id} data-story-entry-id={entry.id}>
+            {entry.promptText ? (
+              <ChatMessage
+                message={{
+                  id: `${entry.id}-prompt`,
+                  type: 'main',
+                  speaker: characters.amy,
+                  content: entry.promptText,
+                  timestamp: '',
+                }}
+              />
+            ) : null}
             <ChatMessage
               message={{
                 id: entry.id,
@@ -1241,6 +1255,17 @@ function hasStoryMigrationDone(key: string): boolean {
 
         return (
           <div key={entry.id} data-story-entry-id={entry.id}>
+            {entry.promptText ? (
+              <ChatMessage
+                message={{
+                  id: `${entry.id}-prompt`,
+                  type: 'main',
+                  speaker: characters.amy,
+                  content: entry.promptText,
+                  timestamp: '',
+                }}
+              />
+            ) : null}
             <CompletedMultiSelectItemCard
               selectedOptionIds={entry.selectedOptionIds}
               allOptions={sourceStep.options}
@@ -1423,6 +1448,7 @@ function hasStoryMigrationDone(key: string): boolean {
                 optionScores: payload.optionScores,
                 dimension: currentStep.dimension,
                 indicatorId: currentStep.indicatorId,
+                promptText: (currentStep.prompt ?? t(currentStep.promptKey ?? '', { defaultValue: '' })) || undefined,
               },
             });
 
@@ -1479,6 +1505,7 @@ function hasStoryMigrationDone(key: string): boolean {
                 dimension: currentStep.dimension,
                 indicatorId: currentStep.indicatorId,
                 score: payload.score,
+                promptText: (currentStep.prompt ?? t(currentStep.promptKey ?? '', { defaultValue: '' })) || undefined,
               },
             });
 
@@ -1629,8 +1656,10 @@ function hasStoryMigrationDone(key: string): boolean {
     );
   }
 
+  const backPath = courseId ? `/stories-v02/${courseId}` : '/stories';
+
   return (
-    <Layout backPath={courseId ? `/stories-v02/${courseId}` : '/stories'} fullHeight>
+    <Layout fullHeight hideHeader>
       <div
         className="ios-anti-zoom flex flex-col w-full flex-1 min-h-0 overflow-hidden
                    sm:items-center sm:justify-center sm:w-[420px] md:w-[480px] sm:p-4"
@@ -1644,6 +1673,9 @@ function hasStoryMigrationDone(key: string): boolean {
           headerSubtitle={t('stories:ui.header.online', { defaultValue: 'online' })}
           headerAvatarSrc={episodeMeta.coverImage}
           headerAvatarTargetAttr="header-avatar"
+          headerCoins={profile.wallet?.coins ?? 0}
+          onBack={() => navigate(backPath)}
+          onMenu={() => setStoryMenuOpen(true)}
           sceneTone={sceneInfo.tone}
           sceneTitle={sceneInfo.title}
           sceneParticipants={sceneInfo.participants}
@@ -1704,14 +1736,33 @@ function hasStoryMigrationDone(key: string): boolean {
             renderActiveStep()
           )}
 
-          {/* Amic-Abschluss-Karte: erscheint wenn chapter_finished und nächster Amic verfügbar */}
+          {/* Amic-Abschluss-Karte */}
           {amicDoneNextChapterId !== undefined && state.phase === 'chapter_finished' ? (
             <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-[var(--color-teal-200)] bg-[var(--color-teal-50)] p-4 shadow-sm">
-              <div className="font-semibold text-sm text-[var(--color-teal-900)] mb-3">
+              <div className="font-semibold text-sm text-[var(--color-teal-900)] mb-1">
                 {t('stories:amicDone.title', { defaultValue: 'Amic abgeschlossen ✓' })}
               </div>
+
+              {/* Zeit-Sperre: "Für heute bist du fertig" */}
+              {showNextChapterLockedHint ? (
+                <div className="mt-2 mb-3">
+                  <div className="text-sm font-semibold text-[var(--color-teal-900)]">
+                    {t('stories:gate.nextTomorrowTitle', { defaultValue: 'Für heute bist du fertig ✨' })}
+                  </div>
+                  <div className="mt-0.5 text-xs text-[var(--color-teal-800)]">
+                    {nextChapterLockedReason === 'weekly_limit'
+                      ? t('stories:gate.nextMondayBody', {
+                          defaultValue: 'Diese Woche hast du alle Amics gelesen. Der nächste Amic wartet Montag wieder auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.',
+                        })
+                      : t('stories:gate.nextTomorrowBody', {
+                          defaultValue: 'Der nächste Amic wartet morgen auf dich.',
+                        })}
+                  </div>
+                </div>
+              ) : <div className="mb-3" />}
+
               <div className="flex flex-wrap gap-2">
-                {amicDoneNextChapterId && (
+                {amicDoneNextChapterId && !showNextChapterLockedHint && (
                   <button
                     type="button"
                     onClick={() => navigate(`/stories-v02/${courseId}/${amicDoneNextChapterId}`)}
@@ -1720,50 +1771,21 @@ function hasStoryMigrationDone(key: string): boolean {
                     {t('stories:amicDone.ctaNext', { defaultValue: 'Nächster Amic →' })}
                   </button>
                 )}
+                {showNextChapterLockedHint && (
+                  <button
+                    type="button"
+                    onClick={() => navigate('/newspaper')}
+                    className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+                  >
+                    {t('stories:gate.toNewspaper', { defaultValue: 'Zur Schülerzeitung →' })}
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => navigate(`/stories-v02/${courseId}`)}
                   className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-white border border-[var(--color-teal-200)] text-[var(--color-teal-800)] hover:bg-[var(--color-teal-50)] transition-colors"
                 >
                   {t('stories:amicDone.ctaOverview', { defaultValue: 'Zur Übersicht' })}
-                </button>
-              </div>
-            </div>
-          ) : null}
-
-          {showNextChapterLockedHint && !dismissedNextChapterLockedHint ? (
-            <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-sky-200 bg-sky-50 p-4 text-sm text-sky-900 shadow-sm">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <div className="font-semibold mb-1">
-                    {t('stories:gate.nextTomorrowTitle', {
-                      defaultValue: 'Für heute bist du fertig ✨',
-                    })}
-                  </div>
-                  <div>
-                    {nextChapterLockedReason === 'weekly_limit'
-                      ? t('stories:gate.nextMondayBody', {
-                          defaultValue:
-                            'Diese Woche hast du alle Amics gelesen. Der nächste Amic wartet Montag wieder auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.',
-                        })
-                      : t('stories:gate.nextTomorrowBody', {
-                          defaultValue: 'Der nächste Amic wartet morgen auf dich.',
-                        })}
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    navigate('/newspaper');
-                  }}
-                  className="inline-flex items-center justify-center rounded-xl border border-sky-200 bg-white px-3 py-2 text-xs font-semibold text-sky-900 hover:bg-sky-100"
-                >
-                  {t('stories:gate.toNewspaper', {
-                    defaultValue: 'Zur Schülerzeitung →',
-                  })}
                 </button>
               </div>
             </div>
@@ -1783,6 +1805,116 @@ function hasStoryMigrationDone(key: string): boolean {
           }}
         />
       ) : null}
+
+      {rewardToast ? (
+        <RewardToast
+          reward={rewardToast}
+          onDismiss={() => setRewardToast(null)}
+        />
+      ) : null}
+
+      {/* Story-Menü (Bottom Sheet) */}
+      {storyMenuOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center"
+          onClick={() => setStoryMenuOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/40" aria-hidden />
+          <div
+            className="relative w-full max-w-md bg-white rounded-t-3xl shadow-xl pb-safe"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Handle */}
+            <div className="flex justify-center pt-3 pb-1">
+              <div className="w-10 h-1 rounded-full bg-slate-300" />
+            </div>
+
+            {/* Header */}
+            <div className="px-5 pt-2 pb-4 border-b border-slate-100">
+              <div className="text-sm font-extrabold text-slate-800">
+                {t('stories:ui.menu.title', { defaultValue: 'Story-Menü' })}
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex flex-col divide-y divide-slate-100">
+              {/* Zurück zu Amics */}
+              <button
+                type="button"
+                className="flex items-center gap-3 px-5 py-4 text-left hover:bg-slate-50 active:bg-slate-100 transition-colors"
+                onClick={() => { setStoryMenuOpen(false); navigate(backPath); }}
+              >
+                <span className="flex items-center justify-center w-9 h-9 rounded-full bg-[var(--color-teal-50)] text-[var(--color-teal-700)] shrink-0">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </span>
+                <div>
+                  <div className="text-sm font-semibold text-slate-800">
+                    {t('stories:ui.menu.backToAmics', { defaultValue: 'Zu den Amics' })}
+                  </div>
+                  <div className="text-xs text-slate-500">
+                    {t('stories:ui.menu.backToAmicsHint', { defaultValue: 'Übersicht dieser Episode' })}
+                  </div>
+                </div>
+              </button>
+
+              {/* Profil & Coins */}
+              <button
+                type="button"
+                className="flex items-center gap-3 px-5 py-4 text-left hover:bg-slate-50 active:bg-slate-100 transition-colors"
+                onClick={() => { setStoryMenuOpen(false); navigate('/profile', { state: { backTo: location.pathname } }); }}
+              >
+                <span className="flex items-center justify-center w-9 h-9 rounded-full bg-amber-50 shrink-0">
+                  <img src={assetUrl('media/story/ui/coin-128.webp')} alt="" className="w-5 h-5" />
+                </span>
+                <div>
+                  <div className="text-sm font-semibold text-slate-800">
+                    {t('stories:ui.menu.profile', { defaultValue: 'Profil & Coins' })}
+                  </div>
+                  <div className="text-xs text-slate-500">
+                    {profile.wallet?.coins ?? 0} {t('stories:ui.menu.coins', { defaultValue: 'Münzen' })}
+                  </div>
+                </div>
+              </button>
+
+              {/* Sound-Toggle */}
+              <button
+                type="button"
+                className="flex items-center gap-3 px-5 py-4 text-left hover:bg-slate-50 active:bg-slate-100 transition-colors"
+                onClick={() => updateProfile((prev) => ({ ...prev, soundEnabled: prev.soundEnabled === false ? true : false, updatedAt: Date.now() }))}
+              >
+                <span className="flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 text-slate-600 shrink-0 text-lg">
+                  {profile.soundEnabled === false ? '🔕' : '🔔'}
+                </span>
+                <div>
+                  <div className="text-sm font-semibold text-slate-800">
+                    {profile.soundEnabled === false
+                      ? t('profile:sound.off', { defaultValue: 'Sound aus' })
+                      : t('profile:sound.on', { defaultValue: 'Sound an' })}
+                  </div>
+                  <div className="text-xs text-slate-500">
+                    {profile.soundEnabled === false
+                      ? t('stories:ui.menu.soundOffHint', { defaultValue: 'Tippen zum Einschalten' })
+                      : t('stories:ui.menu.soundOnHint', { defaultValue: 'Tippen zum Ausschalten' })}
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            {/* Close */}
+            <div className="px-5 py-4">
+              <button
+                type="button"
+                onClick={() => setStoryMenuOpen(false)}
+                className="w-full rounded-2xl py-3 text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 active:bg-slate-300 transition-colors"
+              >
+                {t('common:close', { defaultValue: 'Schließen' })}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </Layout>
   );

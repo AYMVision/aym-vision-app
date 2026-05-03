@@ -1,6 +1,7 @@
 // src/pages/Stories.tsx
 import React, { useMemo, useRef } from 'react';
 import Layout from '../components/Layout';
+import BetaBanner from '../components/BetaBanner';
 import CourseCard from '../components/CourseCard';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -277,6 +278,7 @@ function isUnlockedByChain(
 
   return (
     <Layout>
+      <BetaBanner />
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-3 py-6 sm:py-10 space-y-6">
 {/* HERO */}
 <section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg bg-white">

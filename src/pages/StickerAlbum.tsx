@@ -200,7 +200,7 @@ function ThemeRow({
         <div className="rounded-2xl bg-white/80 border border-slate-100 px-3 py-3">
           <div className="text-xs font-semibold text-slate-700 mb-2">
             {tStickers('album.nextRewardSimple', {
-              defaultValue: 'Noch {{count}} bis zum nächsten Sticker',
+              defaultValue: 'Noch {{count}} Themen bis zum nächsten Sticker',
               count: remaining,
             })}
           </div>
