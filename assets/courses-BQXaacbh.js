@@ -1,0 +1,1 @@
+const s="Our Amics",e="Completed",o="In progress...",n="Locked",r="Progress",c={headline:s,done:e,inProgress:o,new:"New",locked:n,progress:r};export{c as default,e as done,s as headline,o as inProgress,n as locked,r as progress};

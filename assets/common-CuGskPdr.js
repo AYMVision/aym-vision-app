@@ -1,0 +1,1 @@
+const c="Zurück",t="Deine Antwort…",e="Wischen",o="gesperrt",s={chapter:"Amic",youAreAt:"Du bist bei",amic:"Amic"},n={back:c,inputPlaceholder:t,swipeHint:e,locked:o,progress:s};export{c as back,n as default,t as inputPlaceholder,o as locked,s as progress,e as swipeHint};

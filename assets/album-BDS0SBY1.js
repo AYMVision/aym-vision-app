@@ -1,0 +1,1 @@
+const e="Sticker-Album",s="Profil",t="Zurück zum Profil",o="Sammle Sticker, wenn du eine Folge schaffst ✨",a={episodes:"Folgen",seasons:"Staffeln"},c="Badge",n="Gesperrt",l={title:e,backLabel:s,backAria:t,lead:o,tabs:a,new:"Neu ✨",badge:c,locked:n};export{t as backAria,s as backLabel,c as badge,l as default,o as lead,n as locked,a as tabs,e as title};
