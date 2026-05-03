@@ -1,0 +1,34 @@
+{
+  "home": "Home",
+  "stories": "Amy Surfwing",
+  "about": "About us",
+  "cooperations": "Partner",
+  "openMenu": "Menü öffnen",
+  "closeMenu": "Menü schließen",
+  "openProfile": "Profil öffnen",
+  "profile": "Profil",
+  "kids": "Für Kinder",
+  "parents": "Für Eltern",
+  "concept": "Konzept",
+  "privacy": "Datenschutz",
+  "faq": "FAQ",
+
+  "profileMeta": {
+    "openAria": "Profil öffnen",
+    "avatarAlt": "Profil"
+  },
+
+  "mobileNav": {
+    "stories": "Amy Surfwing",
+    "storiesKids": "Amy Surfwing",
+    "diaries": "Tagebücher",
+    "newspaper": "Schülerzeitung",
+    "album": "Stickeralbum",
+    "profile": "Profil",
+    "openStories": "Stories öffnen",
+    "openDiaries": "Tagebuch öffnen",
+    "openNewspaper": "Schülerzeitung öffnen",
+    "openAlbum": "Sticker-Album öffnen",
+    "openProfile": "Profil öffnen"
+  }
+}

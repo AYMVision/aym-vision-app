@@ -1,0 +1,77 @@
+{
+  "album": {
+    "new": "New",
+    "points": "{{count}} points",
+    "progressNow": "Now: {{count}}",
+    "nextStage": "Next stage: {{count}}",
+    "nextRewardSimple": "{{count}} to the next sticker",
+    "allStagesDone": "All stickers for this theme completed!",
+    "collected": "{{count}} of 3 stickers collected"
+  },
+  "episodes": {
+    "s1e01": "Episode 1 completed",
+    "s1e02": "Episode 2 completed",
+    "s1e03": "Episode 3 completed",
+    "s1e04": "Episode 4 completed",
+    "s1e05": "Episode 5 completed",
+    "s1e06": "Episode 6 completed",
+    "s1e07": "Episode 7 completed",
+    "s1e08": "Episode 8 completed"
+  },
+  "milestones": {
+    "firstFive": "Awesome! First 5 days completed!",
+    "tenChapters": "10 Amics completed!",
+    "firstSeason": "First season completed!",
+    "tenStickers": "10 stickers collected!",
+    "twentyFiveStickers": "25 stickers collected!",
+    "fiftyStickers": "50 stickers collected!",
+    "firstThemeSticker": "First theme sticker!",
+    "allThemesOnce": "First sticker collected in every theme!",
+    "diaryTenDays": "Diary used for 10 days!",
+    "playedThirtyDays": "Played on 30 days total!",
+    "friendbookEntry": "My friendbook entry written!"
+
+  },
+  "streak": {
+    "week5": "5 days in a row!",
+    "week10": "10 days in a row!",
+    "week20": "20 days in a row!"
+  },
+  "themes": {
+    "talk-act": {
+      "1": "First words chosen",
+      "2": "Communication talent",
+      "3": "Voice for others"
+    },
+    "reflect-understand": {
+      "1": "Thoughtful mind",
+      "2": "Deep thinker",
+      "3": "Master of understanding"
+    },
+    "info-check": {
+      "1": "Curious mind",
+      "2": "Fact checker",
+      "3": "Info pro"
+    },
+    "safe-online": {
+      "1": "Careful surfer",
+      "2": "Net protector",
+      "3": "Digital guardian"
+    },
+    "creative": {
+      "1": "Creative spark",
+      "2": "Idea machine",
+      "3": "Creative master"
+    },
+    "fairness": {
+      "1": "Sense of fairness",
+      "2": "Fairness hero",
+      "3": "Champion of fairness"
+    },
+    "problem-solving": {
+      "1": "First solution path",
+      "2": "Problem solver",
+      "3": "Crisis expert"
+    }
+  }
+}

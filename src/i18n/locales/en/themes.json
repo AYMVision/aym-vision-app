@@ -1,0 +1,32 @@
+{
+  "themes": {
+    "infoCheck": {
+      "child": "Check information smartly",
+      "parent": "Evaluate sources and identify fake news"
+    },
+    "talkAct": {
+      "child": "Talk & act together",
+      "parent": "Communicate and collaborate respectfully online"
+    },
+    "creative": {
+      "child": "Be creative yourself",
+      "parent": "Use and create media creatively"
+    },
+    "safeOnline": {
+      "child": "Stay safe online",
+      "parent": "Protect yourself online"
+    },
+    "problemSolving": {
+      "child": "Find smart solutions",
+      "parent": "Solve problems using digital tools"
+    },
+    "reflectUnderstand": {
+      "child": "Think & understand",
+      "parent": "Critically understand and reflect on media"
+    },
+    "fairness": {
+      "child": "Be fair & show integrity",
+      "parent": "Live values and develop respect"
+    }
+  }
+}

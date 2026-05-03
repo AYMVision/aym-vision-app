@@ -1,0 +1,12 @@
+{
+  "back": "Zurück",
+  "inputPlaceholder": "Deine Antwort…",
+  "swipeHint": "Wischen",
+  "locked": "gesperrt",
+  
+  "progress": {
+    "chapter": "Amic",
+    "youAreAt": "Du bist bei",
+    "amic": "Amic"
+  }
+}

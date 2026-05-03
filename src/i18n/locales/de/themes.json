@@ -1,0 +1,32 @@
+{
+  "themes": {
+    "infoCheck": {
+      "child": "Infos clever checken",
+      "parent": "Quellen bewerten und Fake News erkennen"
+    },
+    "talkAct": {
+      "child": "Gemeinsam reden & handeln",
+      "parent": "Respektvoll digital kommunizieren und zusammenarbeiten"
+    },
+    "creative": {
+      "child": "Selbst kreativ werden",
+      "parent": "Medien kreativ nutzen und gestalten"
+    },
+    "safeOnline": {
+      "child": "Sicher im Netz",
+      "parent": "Sich im Netz schützen"
+    },
+    "problemSolving": {
+      "child": "Schlau Lösungen finden",
+      "parent": "Probleme mit digitalen Werkzeugen lösen"
+    },
+    "reflectUnderstand": {
+      "child": "Nachdenken & verstehen",
+      "parent": "Medien kritisch verstehen und reflektieren"
+    },
+    "fairness": {
+      "child": "Fair sein & Haltung zeigen",
+      "parent": "Werte leben und Respekt entwickeln"
+    }
+  }
+}

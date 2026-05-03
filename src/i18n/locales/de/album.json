@@ -1,0 +1,13 @@
+{
+  "title": "Sticker-Album",
+  "backLabel": "Profil",
+  "backAria": "Zurück zum Profil",
+  "lead": "Sammle Sticker, wenn du eine Folge schaffst ✨",
+  "tabs": {
+    "episodes": "Folgen",
+    "seasons": "Staffeln"
+  },
+  "new": "Neu ✨",
+  "badge": "Badge",
+  "locked": "Gesperrt"
+}

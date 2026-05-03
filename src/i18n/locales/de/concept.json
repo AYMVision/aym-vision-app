@@ -1,0 +1,230 @@
+{
+  "hero": {
+    "kicker": "Pädagogisches Konzept",
+    "title": "Wie Kinder mit Amy Surfwing Medienreife entwickeln",
+    "lead": "Diese Seite zeigt das pädagogische Modell hinter Amy Surfwing: Wie Kinder über Story, Reflexion und alltagsnahe Situationen im Netz Schritt für Schritt Medienreife entwickeln.",
+    "badges": {
+      "0": "Storybasiert",
+      "1": "Reflexionsorientiert",
+      "2": "Alltagsnah",
+      "3": "Für Kinder ab 9 Jahren"
+    },
+    "ctaPrimary": "Für Eltern →",
+    "ctaSecondary": "Zur Story →"
+  },
+  "goal": {
+    "kicker": "Ziel",
+    "title": "Kinder entwickeln mit Amy Surfwing Medienreife",
+    "body": "Mit Amy Surfwing verfolgen wir ein klares Ziel: Kinder treffen im Internet eigenständig verantwortungsvolle Entscheidungen."
+  },
+  "learningModel": {
+    "kicker": "Wie Medienreife Schritt für Schritt entsteht",
+    "title": "Das Amy-Surfwing-Lernformat",
+    "intro": "Amy Surfwing ist die erste Lern-App, die Storytelling und Gamification mit kindgerechter Selbstreflexion verbindet. So entwickeln Kinder zentrale Fähigkeiten und wenden sie mit der Zeit bewusster im digitalen Alltag an.",
+    "logicLabel": "Kurzlogik:",
+    "logic": "Digitale Lebenswelt → Story und Reflexion → Medienkompetenzen → Wirkdimensionen → Medienreife",
+    "detailsKicker": "Vertiefung",
+    "detailsTitle": "Die fünf Schritte im Überblick",
+    "steps": {
+      "0": {
+        "number": "1",
+        "title": "Digitale Lebenswelt",
+        "summary": "Kinder begegnen realen Situationen aus ihrem digitalen Alltag.",
+        "details": "Amy Surfwing greift Themen wie Klassenchat, Cybermobbing, Selbstdarstellung, KI, Gaming oder digitale Balance auf. So lernen Kinder nicht abstrakt, sondern an Situationen, die für ihren Alltag relevant sind."
+      },
+      "1": {
+        "number": "2",
+        "title": "Story und Reflexion",
+        "summary": "Situationen werden über Figuren erlebt und mit Amy reflektiert.",
+        "details": "Kinder erleben Online-Situationen in einer fortlaufenden Story-Welt. Reflexionsfragen regen dazu an, Perspektiven einzubeziehen, eigene Gedanken zu formulieren und das Verhalten der Figuren zu hinterfragen."
+      },
+      "2": {
+        "number": "3",
+        "title": "Medienkompetenzen",
+        "summary": "Wichtige Fähigkeiten werden im Lernprozess geübt und angewendet.",
+        "details": "Kinder lernen zum Beispiel, Informationen zu bewerten, Fake News zu erkennen, respektvoll zu kommunizieren, sich im Netz zu schützen und Medien kritisch zu verstehen."
+      },
+      "3": {
+        "number": "4",
+        "title": "Lernspirale",
+        "summary": "Kinder entwickeln schrittweise mehr Verständnis und Handlungssicherheit.",
+        "details": ""
+      },
+      "4": {
+        "number": "5",
+        "title": "Innere Entwicklung",
+        "summary": "Kinder entwickeln Perspektivfähigkeit, Urteilskraft, Verantwortung und Selbstwirksamkeit.",
+        "details": "Im wiederholten Lernprozess wachsen Perspektivfähigkeit, Urteilskraft, Verantwortung sowie Selbstwirksamkeit und situationsangemessenes Handeln."
+      },
+            "5": {
+        "number": "6",
+        "title": "Medienreife",
+        "summary": "Kinder handeln zunehmend selbstständig und verantwortungsvoll.",
+        "details": "Medienreife zeigt sich darin, dass Kinder Online-Situationen besser verstehen, reflektiert einschätzen und im Alltag bewusster und verantwortungsvoller handeln."
+      },
+                  "6": {
+        "number": "",
+        "title": "Medienreife",
+        "summary": "Kinder handeln zunehmend selbstständig und verantwortungsvoll.",
+        "details": "Medienreife zeigt sich darin, dass Kinder Online-Situationen besser verstehen, reflektiert einschätzen und im Alltag bewusster und verantwortungsvoller handeln."
+      }
+    },
+    "resultTitle": "Didaktische Umsetzung",
+    "resultBody": "Amy Surfwing übersetzt pädagogischen Lernprinzipien in ein Format, das für Kinder verständlich, motivierend und alltagsnah ist. So wird Medienbildung nicht nur erklärt, sondern in konkreten Situationen erlebbar gemacht."
+  },
+  "model": {
+    "kicker": "Kernmodell",
+    "title": "Wie entsteht Medienreife?",
+    "intro": "Medienreife entsteht, wenn Kinder zentrale Medienkompetenzen entwickeln und sie in realistischen Situationen der digitalen Welt refelektiert anwenden.",
+    "logic": "Digitale Alltagssituationen bilden den Ausgangspunkt. Daran üben Kinder entscheidende Medienkompetenzen. Durch Reflexion und Anwendung entwickeln sich zentrale innere Fähigkeiten, aus denen Schritt für Schritt Medienreife entsteht."
+  },
+  "fields": {
+    "kicker": "Digitale Lebenswelt",
+    "title": "Reale Situationen des digitalen Alltags",
+    "intro": "Kinder brauchen Medienreife nicht abstrakt, sondern in konkreten Alltagssituationen.",
+    "items": {
+      "0": "Digitale Balance und Gesundheit",
+      "1": "Selbstdarstellung und Soziale Medien",
+      "2": "Künstliche Intelligenz",
+      "3": "Klassenchat",
+      "4": "Digitale Spiele und Gaming",
+      "5": "Cybermobbing",
+      "6": "Chancen der digitalen Welt"
+    }
+  },
+  "skills": {
+    "kicker": "Fähigkeiten",
+    "title": "Entscheidende Medienkompetenzen",
+    "intro": "Die Medienkompetenzen basieren auf den Kompetenzrahmen DigComp (EU), MIL (UNESCO) und dem Medienkompetenzrahmen NRW und wurden für unser Modell sprachlich angepasst. Diese Fähigkeiten werden im Lernprozess angewendet und geübt.",
+    "items": {
+      "0": "Quellen bewerten und Fake News erkennen",
+      "1": "Respektvoll digital kommunizieren und zusammenarbeiten",
+      "2": "Medien kreativ nutzen und gestalten",
+      "3": "Sich im Netz schützen",
+      "4": "Probleme mit digitalen Werkzeugen lösen",
+      "5": "Medien kritisch verstehen und reflektieren",
+      "6": "Werte leben und Respekt entwickeln"
+    }
+  },
+  "dimensions": {
+    "kicker": "Innere Entwicklung",
+    "title": "Zentrale innere Fähigkeiten der Medienreife",
+    "intro": "Wenn Kinder entscheidende Medienkompetenzen in realistischen Situationen der digitalen Lebenswelt anwenden und über ihr eigenes Verhalten nachdenken, entwickeln sie Schritt für Schritt die zentralen innere Fähigkeiten, die Medienreife ausmachen.",
+    "items": {
+      "0": {
+        "title": "Perspektivfähigkeit",
+        "body": "Kinder lernen, andere Sichtweisen zu verstehen und Situationen aus verschiedenen Blickwinkeln zu betrachten."
+      },
+      "1": {
+        "title": "Urteilskraft",
+        "body": "Kinder lernen, Online-Situationen zu bewerten, Informationen abzuwägen und sich eine eigene Meinung zu bilden."
+      },
+      "2": {
+        "title": "Verantwortung",
+        "body": "Kinder lernen, die möglichen Folgen ihres Handelns im Netz mitzudenken und verantwortungsvoll zu handeln."
+      },
+      "3": {
+        "title": "Selbstwirksamkeit",
+        "body": "Kinder lernen ihre Handlungsmöglichkeiten kennen und erleben, dass sie Situationen durch eigene Entscheidungen beeinflussen können."
+      }
+    }
+  },
+  "principles": {
+    "kicker": "Lernprinzipien",
+    "title": "Pädagogische Grundlage",
+    "intro": "Amy Surfwing basiert auf einer Kombination aus mehreren anerkannten Lernprinzipien. Diese bilden die Grundlage für das Lernformat und bestimmen, wie Kinder Online-Situationen verstehen, reflektieren und daraus lernen.",
+    "items": {
+      "0": "Narratives Lernen",
+      "1": "Situatives Lernen",
+      "2": "Reflexives Lernen",
+      "3": "Aktives Lernen",
+      "4": "Microlearning"
+    },
+    "explain": {
+      "0": "Kinder lernen über Figuren, Handlungen und Zusammenhänge in einer fortlaufenden Story-Welt. Die Geschichte schafft emotionale Nähe, Kontext und Identifikation.",
+      "1": "Gelernt wird nicht losgelöst, sondern an Situationen, die Kinder aus ihrem digitalen Alltag kennen oder kennen lernen müssen.",
+      "2": "Kinder denken über Verhalten, Motive, Folgen und Perspektiven nach. Reflexionsfragen machen diesen Prozess bewusst und alltagstauglich.",
+      "3": "Kinder bleiben nicht passiv, sondern formulieren eigene Gedanken, treffen Entscheidungen und setzen sich aktiv mit Situationen auseinander.",
+      "4": "Kurze tägliche Einheiten helfen, Aufmerksamkeit zu halten und Lernen in kleinen, machbaren Schritten aufzubauen."
+    }
+  },
+"didactics": {
+  "kicker": "Didaktische Umsetzung",
+  "title": "Wie Amy Surfwing Lernen konkret möglich macht",
+  "intro": "Amy Surfwing ist ein durchdachtes Lernformat, das für Kinder verständlich, alltagsnah und motivierend ist.",
+  "items": {
+    "0": "Story-Welt mit Bezug zum Alltag",
+    "1": "Reflexion und aktive Beteiligung",
+    "2": "Sicherer Denkraum",
+    "3": "Motivierende Lernbegleitung"
+  },
+  "explain": {
+    "0": "Digitale Themen sind in eine fortlaufende Geschichte mit Figuren und realistischen Situationen eingebettet. So lernen Kinder im Kontext von Erlebnissen und Alltag.",
+    "1": "Reflexionsfragen regen die Kinder dazu an, die Handlungen der Figuren zu hinterfragen, die Situationen auf das eigene Leben zu übertragen und die Gedanken zu formulieren.",
+    "2": "Kinder setzen sich mit schwierigen digitalen Situationen in einem geschützten Rahmen auseinander. Sie können sich über Figuren in solche Situationen hineinversetzen., ohne selbst unter sozialem Druck zu stehen.",
+    "3": "Kurze Episoden, sichtbarer Fortschritt und Bonusbereiche wie eine Schülerzeitung, Tagebücher oder Sammelobjekte unterstützen die Auseinandersetzung mit dem Thema und machen Lernen zugänglich und interessant."
+  }
+},
+
+  "target": {
+    "kicker": "Zielgruppe",
+    "title": "Fokus auf Kinder von 10 bis 12 Jahren",
+    "body": "Der aktuelle Schwerpunkt liegt auf Kindern zwischen 10 und 12 Jahren. In dieser Phase beginnt für viele die Selbstständigkeit in der digitalen Welt: erste eigene Erfahrungen, mehr Verantwortung, erste Unsicherheiten und neue Dynamiken in Klassenchat, Gaming, sozialen Medien und digitalen Trends.",
+    "body2": "Genau in dieser Übergangsphase setzt Amy Surfwing an: vorbereitend, begleitend und alltagsnah. Perspektivisch kann das Modell erweitert werden – der derzeitige Fokus liegt jedoch bewusst auf den ersten Jahren digitaler Eigenständigkeit.",
+    "note": "Weitere Altersgruppen sind perspektivisch in Planung."
+  },
+  "frameworks": {
+    "kicker": "Transparenz",
+    "title": "Fachliche Einordnung",
+    "body": ""
+  },
+  "evidence": {
+    "title": "",
+    "body1": "Amy Surfwing basiert auf anerkannten Kompetenzrahmen wie DigComp (EU), MIL (UNESCO) und dem Medienkompetenzrahmen NRW.",
+    "body2": "Die Auswahl, sprachliche Anpassung und Anordnung der Fähigkeiten sowie der Begriff „Medienreife“ sind Teil unseres eigenen pädagogischen Modells.",
+    "body3": "„Medienreife“ verwenden wir dabei als Arbeitsbegriff. Die App ist darauf angelegt, Kinder bei der Entwicklung dieser Fähigkeiten im Alltag zu unterstützen. Eine eigenständige wissenschaftliche Wirksamkeitsprüfung des Gesamtmodells ist in Vorbereitung."
+  },
+  "sidebar": {
+    "overview": {
+      "kicker": "Kurzüberblick",
+      "title": "Worum geht es auf dieser Seite?",
+      "body": "Diese Seite beschreibt das pädagogische Modell hinter Amy Surfwing: Wie Kinder Medienreife entwickeln, welche Fähigkeiten sie dafür brauchen und wie das Lernformat diesen Prozess unterstützt.",
+      "sections": {
+        "goalLabel": "Ziel",
+        "goalValue": "Kinder entwickeln Medienreife und handeln im digitalen Alltag zunehmend selbstständig und verantwortungsvoll.",
+        "logicLabel": "Kurzlogik",
+        "logicValue": "Digitale Lebenswelt → Story und Reflexion → Medienkompetenzen → Wirkdimensionen → Medienreife",
+        "targetLabel": "Zielgruppe",
+        "targetValue": "Aktueller Schwerpunkt: Kinder von 10 bis 12 Jahren.",
+        "frameworkLabel": "Einordnung",
+        "frameworkValue": "Das Modell orientiert sich an DigComp (EU), MIL (UNESCO) und dem Medienkompetenzrahmen NRW."
+      },
+      "ctaPrimary": "Für Eltern →",
+      "ctaSecondary": "Zur Story →"
+    },
+    "transparency": {
+      "kicker": "Einordnung",
+      "title": "Wie ist das zu verstehen?",
+      "body": "Amy Surfwing ist ein eigenes pädagogisches Modell. Es stützt sich auf bestehende Kompetenzrahmen, formuliert aber eine eigene Arbeitsdefinition von Medienreife und überträgt diese in ein konkretes Lernformat für Kinder."
+    }
+  },
+  "navigation": {
+  "backToModel": "Zurück zum Lernformat ↑",
+  "backToOverview": "Zur Übersicht ↑",
+    "more": "Mehr dazu ↓",
+      "toPrinciples": "Zur pädagogischen Grundlage ↓"
+},
+"storyReflection": {
+  "kicker": "Vertiefung",
+  "title": "Story und Reflexion",
+  "body": "Kinder lernen besonders wirksam, wenn sie Situationen nicht nur erklärt bekommen, sondern erleben und darüber nachdenken. Genau hier setzt Amy Surfwing an: Digitale Alltagssituationen werden über Figuren in einer fortlaufenden Story erlebbar gemacht.",
+  "body2": "Ein „Amic” verbindet dabei eine konkrete Situation aus der Chat-Story mit einer kurzen Reflexion. Kinder übertragen das Geschehen auf ihr eigenes Leben, formulieren eigene Gedanken und setzen sich aktiv mit möglichen Handlungen auseinander. So entsteht Lernen nicht durch Vorgaben, sondern durch eigenes Mitdenken.",
+  "aiNote": "Amy begleitet die Reflexionsmomente mit einem lokalen, offline-fähigen KI-Modell. Es klassifiziert Antworten und gibt passende Rückmeldungen — ohne Cloud, ohne Datenweitergabe."
+},
+"learningSpiral": {
+  "kicker": "Vertiefung",
+  "title": "Lernspirale",
+  "body": "Medienreife entsteht nicht durch einmaliges Verstehen, sondern durch wiederholte Auseinandersetzung. Kinder begegnen ähnlichen Situationen in unterschiedlichen Kontexten, reflektieren sie und entwickeln dabei schrittweise mehr Sicherheit.",
+  "body2": "Die Lernspirale beschreibt diesen Prozess: Erfahrungen werden aufgegriffen, vertieft und auf neue Situationen übertragen. So erweitern Kinder nach und nach ihre Perspektiven, ihre Urteilskraft und ihre Fähigkeit, im digitalen Alltag angemessen zu entscheiden."
+}
+}
