@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useProfile } from '../profile/useProfile';
+import { saveProfile } from '../profile/storage';
 import AvatarLookCircle from '../components/AvatarLookCircle';
-import AvatarFullImage from '../components/AvatarFullImage';
+import AvatarStage from '../components/AvatarStage';
 
 type MyCardData = {
   mostly: string;
@@ -257,8 +258,15 @@ export default function MyCharacterCardEditor() {
   const { profile, updateProfile } = useProfile();
 
   const [funOpen, setFunOpen] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const card: MyCardData = profile.myCard ?? EMPTY_MY_CARD;
+
+  const handleSave = useCallback(() => {
+    saveProfile(profile);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  }, [profile]);
 
 function setField<K extends keyof MyCardData>(field: K, value: MyCardData[K]) {
   updateProfile((prev) => ({
@@ -458,7 +466,7 @@ function setField<K extends keyof MyCardData>(field: K, value: MyCardData[K]) {
             </div>
 
             <div className="flex justify-center">
-              <div className="relative w-[200px]">
+              <div className="relative" style={{ width: 220 }}>
                 {/* Tape strips */}
                 <div
                   aria-hidden="true"
@@ -491,20 +499,35 @@ function setField<K extends keyof MyCardData>(field: K, value: MyCardData[K]) {
                   }}
                 />
 
-                <div className="w-full aspect-square bg-gradient-to-br from-slate-100 via-white to-slate-50 flex items-end justify-center overflow-hidden p-3 rounded-sm border border-slate-200">
-                  <AvatarFullImage
-                    id={profile.avatarBaseId}
-                    width={180}
-                    className="w-full h-full object-contain object-bottom"
-                    alt={displayName}
-                  />
-                </div>
+                <AvatarStage
+                  avatarBaseId={profile.avatarBaseId}
+                  equipment={profile.equipment}
+                  width={220}
+                  height={320}
+                  withBackdrop={true}
+                />
               </div>
             </div>
           </div>
         </div>
 
       </div>
+
+      {/* ── SAVE BUTTON ── */}
+      <div className="px-4 sm:px-6 pb-6">
+        <button
+          type="button"
+          onClick={handleSave}
+          className={`w-full rounded-2xl px-5 py-3 font-extrabold transition-colors ${
+            saved
+              ? 'bg-emerald-500 text-white'
+              : 'bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)]'
+          }`}
+        >
+          {saved ? '✓ Gespeichert!' : 'Speichern'}
+        </button>
+      </div>
+
     </div>
   );
 }

@@ -24,7 +24,7 @@ export default defineConfig(({ command }) => {
       react(),
       tailwindcss(),
       VitePWA({
-        registerType: 'prompt',       // Update-Prompt statt stillem Auto-Reload
+        registerType: 'autoUpdate',
         injectRegister: 'auto',
         includeAssets: [
           'favicon.ico',
