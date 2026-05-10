@@ -65,6 +65,16 @@ export const DIARY_ENTRIES: Record<DiaryId, DiaryEntry[]> = {
       unlock: { afterChapterId: 's1e03c02' },
       decor: { moodEmoji: '🙂', tape: true, marker: true, accent: 'amber' },
     },
+    {
+      entryId: 's1e03c08_0002',
+      bonusId: 'diary-mia-entry2',
+      order: 2,
+      dateKey: 'diaries.entries.mia.s1e03c08_0002.date',
+      titleKey: 'diaries.entries.mia.s1e03c08_0002.title',
+      bodyKey: 'diaries.entries.mia.s1e03c08_0002.body',
+      unlock: { afterChapterId: 's1e03c08' },
+      decor: { moodEmoji: '😤', tape: true, marker: true, accent: 'amber' },
+    },
   ],
 
   diary_jonas: [

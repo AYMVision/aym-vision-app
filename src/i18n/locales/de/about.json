@@ -126,8 +126,8 @@
   "brand": {
     "title": "AYM Vision",
     "aria": "Abschnitt Wofür AYM steht öffnen",
-    "copy1": "Wir gründen unter AYM Vision und starten mit unserem ersten Produkt Amy Surfwing. AYM steht für „Amplify Your Mind“: jungen Menschen Raum zu geben, ihre eigene Sicht auf die Welt zu entwickeln und zu entfalten.",
-    "copy2": "„Amplify“ heißt, vorhandene Fähigkeiten wie Neugier, Kreativität und Urteilsvermögen zu stärken. „Vision“ beschreibt, wohin das führt: eine Generation, die versteht, hinterfragt und verantwortungsvoll handelt."
+    "copy1": "Wir gründen unter AYM Vision und starten mit unserem ersten Produkt Amy Surfwing. AYM steht für 'Amplify Your Mind': jungen Menschen Raum zu geben, ihre eigene Sicht auf die Welt zu entwickeln und zu entfalten.",
+    "copy2": "'Amplify' heißt, vorhandene Fähigkeiten wie Neugier, Kreativität und Urteilsvermögen zu stärken. 'Vision' beschreibt, wohin das führt: eine Generation, die versteht, hinterfragt und verantwortungsvoll handelt."
   },
 
   "whyAmy": {
@@ -163,6 +163,80 @@
         "experience": "Projektarbeit, Coaching & Personal",
         "quote": "Ich arbeite gern an Lösungen, die nicht nur funktionieren, sondern etwas verändern.",
         "imageAlt": "Ann-Sofie Höbrink"
+      }
+    }
+  },
+
+  "faq": {
+    "title": "Häufige Fragen",
+    "general": {
+      "label": "Allgemein",
+      "age": {
+        "question": "Für welches Alter ist Amy Surfwing geeignet?",
+        "answer": "Amy Surfwing richtet sich an Kinder ab 9 Jahren. Die Themen und Sprache sind auf diesen Altersbereich abgestimmt — anspruchsvoll genug, um zu fordern, aber nicht überwältigend.",
+        "link": "Mehr für Eltern →"
+      },
+      "topics": {
+        "question": "Welche Themen behandelt Amy Surfwing?",
+        "answer": "Die Themen stammen direkt aus dem digitalen Alltag von Kindern: Cybermobbing, Gruppendruck, Fake News, Künstliche Intelligenz, Datenschutz und manipulierte Bilder — eingebettet in eine fortlaufende Chat-Story.",
+        "link": "Alle Themen auf der Eltern-Seite →"
+      },
+      "social": {
+        "question": "Kann mein Kind mit anderen Kindern interagieren?",
+        "answer": "Nein. Amy Surfwing ist bewusst kein soziales Netzwerk. Kinder lesen und erleben die Story-Welt für sich. Inhalte werden nicht öffentlich geteilt, es gibt keine Chats mit anderen Nutzern und keine Profile die sichtbar sind."
+      },
+      "costs": {
+        "question": "Was kostet Amy Surfwing?",
+        "answer": "Die erste Woche ist vollständig kostenlos zugänglich — ohne Anmeldung, ohne Kreditkarte. Weitere Informationen zu Preisen folgen in Kürze."
+      }
+    },
+    "parents": {
+      "label": "Elternbereich & Einstellungen",
+      "code": {
+        "question": "Wo kann ich meinen Code eingeben, falls ich einen habe?",
+        "answer1": "Freischaltcodes kannst du im",
+        "answer2": "Elternbereich unter Einstellungen",
+        "answer3": "eingeben. Öffne den Bereich, scrolle zum Abschnitt",
+        "answer4": "Freischaltcode",
+        "answer5": "und gib deinen Code dort ein."
+      },
+      "changePasscode": {
+        "question": "Wie ändere ich meinen Eltern-Passcode?",
+        "answer1": "Im",
+        "answer2": "Elternbereich",
+        "answer3": "findest du den Abschnitt",
+        "answer4": "Passcode ändern",
+        "answer5": ". Gib dort deinen aktuellen Passcode sowie zweimal den neuen ein (mindestens 6 Zeichen)."
+      },
+      "duration": {
+        "question": "Wie lange bleibt der Elternbereich entsperrt?",
+        "answer1": "Nach der Eingabe des richtigen Passcodes bleibt der",
+        "answer2": "Elternbereich",
+        "answer3": "10 Minuten geöffnet. Danach wird er automatisch gesperrt. Du kannst ihn auch manuell über",
+        "answer4": "Elternbereich sperren",
+        "answer5": "schließen."
+      },
+      "forgot": {
+        "question": "Ich habe meinen Eltern-Passcode vergessen.",
+        "answer1": "Schreibe uns an",
+        "answer2": "— wir schicken dir einen Reset-Code. Den gibst du dann im",
+        "answer3": "Elternbereich",
+        "answer4": "unter",
+        "answer5": "Passcode vergessen?",
+        "answer6": "ein. Alle Lernfortschritte und Profileinstellungen des Kindes bleiben erhalten."
+      }
+    },
+    "data": {
+      "label": "Daten & Datenschutz",
+      "storage": {
+        "question": "Was passiert mit den Daten meines Kindes?",
+        "answer": "Alle Daten — Fortschritt, Sticker, Profileinstellungen — werden ausschließlich lokal auf diesem Gerät gespeichert. Es wird kein Konto benötigt, keine Daten werden in eine Cloud übertragen oder mit Dritten geteilt."
+      },
+      "deviceSwitch": {
+        "question": "Was passiert, wenn ich das Gerät wechsle oder den Speicher lösche?",
+        "answer1": "Da alles lokal gespeichert ist, gehen Fortschritt und Einstellungen beim Gerätewechsel oder beim Löschen des Browser-Speichers verloren. Eine Exportfunktion findest du im",
+        "answer2": "Elternbereich",
+        "answer3": "."
       }
     }
   },

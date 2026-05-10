@@ -4,6 +4,7 @@ export type OwlMode = 'off' | 'auto' | 'on';
 export type AppSettings = {
   owlMode: OwlMode;
   devToolsEnabled: boolean;
+  remindersEnabled: boolean;
 };
 
 const KEY = 'aym_settings_v1';
@@ -11,6 +12,7 @@ const KEY = 'aym_settings_v1';
 const DEFAULTS: AppSettings = {
   owlMode: 'auto',
   devToolsEnabled: Boolean(import.meta.env.DEV),
+  remindersEnabled: false,
 };
 
 export function loadSettings(): AppSettings {
@@ -30,6 +32,11 @@ export function loadSettings(): AppSettings {
         typeof parsed.devToolsEnabled === 'boolean'
           ? parsed.devToolsEnabled
           : DEFAULTS.devToolsEnabled,
+
+      remindersEnabled:
+        typeof parsed.remindersEnabled === 'boolean'
+          ? parsed.remindersEnabled
+          : DEFAULTS.remindersEnabled,
     };
   } catch {
     return { ...DEFAULTS };

@@ -96,7 +96,7 @@ export default function StoryEpisodeOverview() {
   useEffect(() => {
     if (!courseId) return;
     getPlayableEpisodeV02(courseId, lang).then((ep) => {
-      setChapters(ep?.chapters ?? []);
+setChapters(ep?.chapters ?? []);
     });
   }, [courseId, lang]);
 
@@ -141,7 +141,7 @@ export default function StoryEpisodeOverview() {
         {/* Back */}
         <div>
           <Link
-            to="/stories"
+            to="/stories#story-list"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-teal-700)] hover:text-[var(--color-teal-900)]"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -153,14 +153,14 @@ export default function StoryEpisodeOverview() {
 
         {/* Episode-Header */}
         <section className="rounded-2xl border border-slate-100 bg-white shadow-sm overflow-hidden">
-          <div className="relative h-40 sm:h-70 bg-slate-100">
+          <div className="relative h-70 sm:h-90 bg-slate-100">
             <img
               src={assetUrl(episodeMeta.coverImage)}
               alt={t(episodeMeta.titleKey)}
               className="w-full h-full object-cover"
               loading="eager"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 p-4">
               <div className="text-xs font-semibold text-white/80 mb-0.5">
                 {t('overview.season', { defaultValue: 'Staffel 1' })}

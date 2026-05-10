@@ -7,12 +7,22 @@
     "leadEmphasis2": "Amy Surfwing helps them understand this world better and protect themselves.",
     "ctaPrimary": "Go to the stories →",
     "ctaSecondary": "For parents →",
-    "bannerAlt": "Insight into the story world of Amy Surfwing"
+    "bannerAlt": "Insight into the story world of Amy Surfwing",
+    "badgeAge": "For children from age 9",
+    "badgeTime": "5 min daily",
+    "badgeAmy": "Chat story & more",
+    "parentHint": "Parent?",
+    "parentHintLink": "Find out more & set up the app →",
+    "introCta": "Discover Amy Surfwing →",
+    "introKicker": "Your starting point",
+    "introLabel": "Your first story",
+    "introHint": "No sign-up needed – just get started."
   },
 
   "about": {
     "whatTitle": "What is Amy Surfwing?",
-    "whatBody": "The learning app for media literacy. An interactive story world where kids think through digital situations.",
+    "whatBody1": "The new chat series for kids in an interactive story world.",
+    "whatBody2": "The learning app for media literacy, where kids think through digital situations.",
     "uspTitle": "What makes Amy Surfwing special:",
     "principles": {
       "0": "📖 Story instead of lessons",
@@ -23,6 +33,46 @@
       "5": "🔒 A safe space instead of a social network"
     },
     "ctaParents": "For parents →"
+  },
+
+  "onboarding": {
+    "welcome": {
+      "badge": "Amy Surfwing",
+      "imageAlt": "Yasmin, Carlos & Co",
+      "title": "Welcome to\nAmy Surfwing!",
+      "lead": "Discover the secrets of Yasmin, Carlos & Co. With Amy Surfwing you master challenges. The online adventures are waiting for you.",
+      "badge0": "⏱️ 5 min daily",
+      "badge1": "🎓 from age 9",
+      "badge2": "💬 1 Amic/day",
+      "cta": "Next →"
+    },
+    "info": {
+      "title": "Here's how it works",
+      "amicExplain": "💬 An Amic is a short chat chapter — ⏱️ 5 min, 5× a week",
+      "feature0title": "Real topics",
+      "feature0body": "Fake news, AI, cyberbullying — what Yasmin & Co. experience also happens in real life.",
+      "feature1title": "You're right there!",
+      "feature1body": "You have access to the class chat! Read along as Yasmin & Co. experience real situations — and answer questions that make you think.",
+      "feature2title": "Extras are waiting for you",
+      "feature2body": "After each Amic, extras unlock: Yasmin's secret diary, the class newspaper, and Carlos's lexicon.",
+      "cta": "Next →"
+    },
+    "avatar": {
+      "title": "Choose your avatar",
+      "hint": "You can change it any time in your profile.",
+      "soundLabel": "Sounds",
+      "soundOn": "On",
+      "soundOff": "Off",
+      "cta": "Next →"
+    },
+    "ready": {
+      "title": "Ready!",
+      "lead": "Your first Amic is waiting. See what's happening in class.",
+      "remindersLabel": "Remind me when a new Amic is waiting",
+      "ctaStart": "Start now →",
+      "ctaOverview": "More info →",
+      "ctaParents": "For parents →"
+    }
   },
 
   "entries": {

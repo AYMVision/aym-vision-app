@@ -5,7 +5,7 @@
 // - Main Content Slot (children)
 // - Optionaler Footer (z. B. ausgeblendet in Stories)
 
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -40,6 +40,7 @@ type LayoutProps = {
 export default function Layout({ children, backPath, hideFooter, hideHeader, fullHeight }: LayoutProps) {
   const location = useLocation();
   const navigate = useNavigate();
+  const navigationType = useNavigationType();
 
   // i18n: getrennte Translator-Funktionen pro Namespace
 const { t: tNav } = useTranslation('navigation');
@@ -61,6 +62,7 @@ const { t: tCommon } = useTranslation('common');
   // Mobile Bottom Nav: nur für kinderrelevante Bereiche zeigen
   const showBottomNav =
     !hideHeader &&
+    location.pathname !== '/' &&
     !location.pathname.startsWith('/parents') &&
     !location.pathname.startsWith('/concept') &&
     !location.pathname.startsWith('/about') &&
@@ -124,6 +126,14 @@ const isActive = (to: string) => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname, location.hash, location.search, hideHeader]);
+
+  // UX: Scroll-to-top bei neuen Seitenaufrufen (PUSH/REPLACE), nicht bei Zurück-Navigation (POP).
+  // fullHeight-Seiten (Story-Player) verwalten ihren eigenen internen Scroll.
+  useEffect(() => {
+    if (fullHeight) return;
+    if (navigationType === 'POP') return;
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+  }, [location.pathname, location.search, navigationType, fullHeight]);
 
   // UX: Drawer schließt bei Desktop-Width
   useEffect(() => {

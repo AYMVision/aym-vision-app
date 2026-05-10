@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { assetUrl } from '../common/assetUrl';
 
@@ -316,6 +317,30 @@ werden nachgetragen.</p>
 
         {/* ─── Audioinhalte ─── */}
         <MediaCreditsSection />
+
+        <Section title="KI-Einsatz">
+          <p>
+            Amy Surfwing nutzt Künstliche Intelligenz an zwei Stellen:
+          </p>
+          <p className="mt-2 font-semibold">Bildmaterial</p>
+          <p>
+            Die Illustrationen und Bilder in der App wurden mit Unterstützung von ChatGPT (OpenAI) erstellt.
+            Sie sind kein Werk einzelner Personen und werden als KI-generierte Inhalte verwendet.
+          </p>
+          <p className="mt-2 font-semibold">Reflexionsbegleitung</p>
+          <p>
+            In den Storys begleitet die Figur Amy Reflexionsmomente mithilfe eines lokalen KI-Modells
+            (@xenova/transformers, läuft direkt auf dem Gerät). Das Modell klassifiziert Antworten
+            und gibt passende Rückmeldungen — ohne Cloudanbindung, ohne Datenweitergabe.
+          </p>
+          <p className="mt-2">
+            Ausführliche Informationen findest du auf der Seite{' '}
+            <Link to="/parents#ki-einsatz" className="underline text-[var(--color-teal-700)] hover:text-[var(--color-teal-900)]">
+              Für Eltern
+            </Link>
+            .
+          </p>
+        </Section>
 
         <Section title="Datenschutz">
           <p>

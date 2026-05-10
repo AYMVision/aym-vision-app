@@ -70,5 +70,22 @@
       "hiddenVersion": "Version {{version}}",
       "footerHint": "For adults: press and hold"
     }
+  },
+
+  "learningTrace": {
+    "title": "Your strengths are growing",
+    "subtitle": "The more stories you experience, the more …",
+    "levels": {
+      "frequent": "You already show this often ✨",
+      "visible": "This is growing right now 🌱",
+      "growing": "You're gathering your first experiences"
+    }
+  },
+
+  "rewards": {
+    "title": "Special rewards",
+    "subtitle": "Find your special achievements in the album.",
+    "open": "View →",
+    "empty": "Special stickers and badges will appear here soon."
   }
 }

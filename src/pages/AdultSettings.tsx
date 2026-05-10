@@ -133,6 +133,11 @@ export default function AdultSettings() {
   const backTo = locationState?.backTo || '/parents';
 
   const [owlMode, setOwlMode] = useState<OwlMode>(() => loadSettings().owlMode);
+  const [remindersEnabled, setRemindersEnabled] = useState(() => loadSettings().remindersEnabled);
+  const [notifPermission, setNotifPermission] = useState<NotificationPermission | 'unsupported'>(() => {
+    if (typeof Notification === 'undefined') return 'unsupported';
+    return Notification.permission;
+  });
 
   const [code, setCode] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
@@ -195,6 +200,27 @@ export default function AdultSettings() {
   useEffect(() => {
     saveSettings({ owlMode });
   }, [owlMode]);
+
+  useEffect(() => {
+    saveSettings({ remindersEnabled });
+  }, [remindersEnabled]);
+
+  async function handleToggleReminders() {
+    if (notifPermission === 'unsupported') return;
+
+    if (!remindersEnabled) {
+      // Einschalten: ggf. Browser-Erlaubnis anfragen
+      if (notifPermission === 'default') {
+        const result = await Notification.requestPermission();
+        setNotifPermission(result);
+        if (result !== 'granted') return;
+      }
+      if (notifPermission === 'denied') return;
+      setRemindersEnabled(true);
+    } else {
+      setRemindersEnabled(false);
+    }
+  }
 
   const modeLabel = useMemo(() => {
     if (owlMode === 'on') return t('adult:sections.ai.modes.on.title');
@@ -854,9 +880,14 @@ export default function AdultSettings() {
                     {t('adult:sections.ai.performanceHint')}
                   </p>
 
+                  <div className="mt-4 rounded-xl border border-slate-200 bg-white p-3 text-sm text-slate-700">
+                    <span className="font-semibold text-slate-900">{t('adult:sections.ai.safeAi.title', { defaultValue: 'Safe AI' })}: </span>
+                    {t('adult:sections.ai.safeAi.text', { defaultValue: 'Die KI arbeitet innerhalb klarer pädagogischer Leitplanken.' })}
+                  </div>
+
                   <div className="mt-3">
                     <Link
-                      to="/parents"
+                      to="/parents#ki-einsatz"
                       className="text-sm font-semibold text-[var(--color-teal-700)] hover:text-[var(--color-teal-900)]"
                     >
                       {t('adult:ai.moreInfo', { defaultValue: 'Mehr Infos für Eltern →' })}
@@ -876,6 +907,61 @@ export default function AdultSettings() {
                     <option value="on">{t('adult:ai.owlMode.on')}</option>
                   </select>
                 </div>
+              </section>
+
+              <section className="rounded-2xl border border-slate-200 bg-white p-5">
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {t('adult:reminders.title', { defaultValue: 'Erinnerungen' })}
+                </h3>
+                <p className="mt-1 text-sm text-slate-600">
+                  {t('adult:reminders.description', {
+                    defaultValue: 'Wenn ein neuer Amic verfügbar ist, kann die App dein Kind erinnern. Du entscheidest hier, ob das gewünscht ist.',
+                  })}
+                </p>
+
+                <div className="mt-4 flex items-center justify-between gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="min-w-0">
+                    <div className="text-sm font-semibold text-slate-900">
+                      {remindersEnabled
+                        ? t('adult:reminders.statusOn', { defaultValue: 'Erinnerungen aktiv' })
+                        : t('adult:reminders.statusOff', { defaultValue: 'Erinnerungen deaktiviert' })}
+                    </div>
+                    <div className="mt-0.5 text-xs text-slate-500">
+                      {notifPermission === 'unsupported'
+                        ? t('adult:reminders.unsupported', { defaultValue: 'Dieses Gerät unterstützt keine Benachrichtigungen.' })
+                        : notifPermission === 'denied'
+                        ? t('adult:reminders.denied', { defaultValue: 'Benachrichtigungen wurden im Browser blockiert. Bitte in den Browser-Einstellungen erlauben.' })
+                        : remindersEnabled
+                        ? t('adult:reminders.hintOn', { defaultValue: 'Dein Kind bekommt eine Erinnerung, wenn ein neuer Amic bereit ist.' })
+                        : t('adult:reminders.hintOff', { defaultValue: 'Dein Kind bekommt keine Erinnerungen.' })}
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    disabled={notifPermission === 'unsupported' || notifPermission === 'denied'}
+                    onClick={handleToggleReminders}
+                    className={[
+                      'shrink-0 relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none disabled:opacity-40',
+                      remindersEnabled ? 'bg-[var(--color-teal-600)]' : 'bg-slate-300',
+                    ].join(' ')}
+                    aria-pressed={remindersEnabled}
+                    aria-label={t('adult:reminders.toggle', { defaultValue: 'Erinnerungen umschalten' })}
+                  >
+                    <span
+                      className={[
+                        'inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform',
+                        remindersEnabled ? 'translate-x-6' : 'translate-x-1',
+                      ].join(' ')}
+                    />
+                  </button>
+                </div>
+
+                {notifPermission === 'denied' && (
+                  <p className="mt-3 text-xs text-amber-700">
+                    {t('adult:reminders.deniedHint', { defaultValue: 'Um Erinnerungen zu aktivieren, Benachrichtigungen für diese Seite in den Browser-Einstellungen erlauben und dann neu laden.' })}
+                  </p>
+                )}
               </section>
 
               <section className="rounded-2xl border border-slate-200 bg-white p-5">

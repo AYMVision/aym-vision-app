@@ -77,7 +77,7 @@
       }
     },
     "changeHint": "You can change the mode at any time.",
-    "performanceHint": "If the app responds slowly or takes longer to load, we recommend “Auto” or “Off”."
+    "performanceHint": "If the app responds slowly or takes longer to load, we recommend Auto or Off."
   },
   "hint": {
     "title": "Talk to an adult briefly",
@@ -137,7 +137,8 @@
       "session": "Reset session",
       "entitlementsDone": "All unlocks have been removed.",
       "sessionDone": "The current session has been reset."
-    }
+    },
+    "openPage": "Go to test page →"
   },
   "sections": {
     "ai": {
@@ -157,46 +158,12 @@
         }
       },
       "changeHint": "You can change the mode at any time.",
-      "performanceHint": "If the app responds slowly or takes longer to load, we recommend “Auto” or “Off”."
+      "performanceHint": "If the app responds slowly or takes longer to load, we recommend \"Auto\" or \"Off\".",
+      "safeAi": {
+        "title": "Safe AI",
+        "text": "The AI works within clear pedagogical guidelines. It does not make personal evaluations, give therapy recommendations, or replace conversations with adults."
+      }
     }
-  },
-  "testMode": {
-    "title": "Test mode",
-    "description": "For development, internal testing, and pilot phases.",
-    "global": {
-      "title": "Global unlock",
-      "description": "Removes daily and weekly limits as well as chapter locks.",
-      "label": "Unlock all content",
-      "enabled": "All content has been unlocked.",
-      "disabled": "Global unlock has been disabled."
-    },
-    "until": {
-      "title": "Unlock until date",
-      "description": "Example: 2026-03-30",
-      "placeholder": "YYYY-MM-DD",
-      "apply": "Apply",
-      "set": "Unlocked until {{date}}.",
-      "removed": "Date-based unlock has been removed."
-    },
-    "episode": {
-      "title": "Unlock episode",
-      "description": "Example: s1e01",
-      "placeholder": "s1e01",
-      "unlock": "Unlock",
-      "remove": "Remove",
-      "missing": "Please enter an episode.",
-      "unlocked": "Episode {{episode}} has been unlocked.",
-      "removed": "Episode {{episode}} has been removed."
-    },
-    "reset": {
-      "title": "Reset",
-      "description": "Helpful if you want to restart a test run cleanly.",
-      "entitlements": "Remove test unlocks",
-      "session": "Reset session",
-      "entitlementsDone": "All unlocks have been removed.",
-      "sessionDone": "The current session has been reset."
-    },
-    "openPage": "Go to test page →"
   },
   "mediaSkills": {
     "title": "Media Skills Progress",
@@ -267,10 +234,88 @@
     "emptyState": "Once your child has experienced the first story sections, initial impressions will appear here.",
     "deleteButton": "Delete learning traces",
     "deleteConfirm": "All saved learning traces have been deleted.",
+    "deleteWarning": "Deleting removes all recorded development observations permanently. Learning progress in the story (played chapters, decisions) is preserved – only the evaluation of development areas is reset.",
+    "levelExplanation": {
+      "toggle": "What do these levels mean?",
+      "intro": "The levels show how often your child displayed behaviours in the story that can be assigned to a development area – not an evaluation, but an observation.",
+      "items": {
+        "growing":  { "label": "Currently building",        "description": "First reactions are visible. Your child is engaging with this for the first time." },
+        "visible":  { "label": "Developing further",        "description": "The behaviour appears regularly. Your child shows growing awareness in this area." },
+        "frequent": { "label": "Already frequently visible","description": "This area is well developed. Your child responds consistently across different situations." }
+      },
+      "disclaimer": "All levels are based exclusively on behaviour in the story and are not a psychological or diagnostic statement."
+    },
     "levels": {
       "frequent": "already frequently visible",
       "visible": "developing further",
       "growing": "currently building"
     }
+  },
+  "accordions": {
+    "overview": {
+      "title": "Overview",
+      "subtitle": "Progress and currently visible development",
+      "badge": "2 areas"
+    },
+    "manage": {
+      "title": "Manage app",
+      "subtitle": "Settings and unlocks",
+      "badge2": "2 areas",
+      "badge3": "3 areas"
+    },
+    "analytics": {
+      "title": "Quality assurance",
+      "subtitle": "Optional data to improve the app",
+      "whyTitle": "What is this data used for?",
+      "whyBody": "If you agree, the app anonymously stores which story decisions your child makes — no text, no names. This data helps us understand the app's effectiveness and continue developing it.",
+      "whyNote": "All data stays locally on this device. You can download or delete it at any time.",
+      "consentLabel": "Data sharing for quality assurance",
+      "consentYes": "✓ Yes, I'm happy to help",
+      "consentNo": "No thanks",
+      "consentActiveNote": "Active — decision data is stored locally.",
+      "consentDeniedNote": "Disabled — no data is stored.",
+      "statsHeading": "Stored data",
+      "statsDecisions": "Story decisions recorded:",
+      "statsWhatStored": "What is stored: step ID, score, dimension, indicator, theme tag, number of attempts, date.",
+      "statsWhatNot": "What is not stored: text inputs, names, location.",
+      "shareTitle": "Share or download data",
+      "shareHint": "On mobile, the share dialog opens — you can send the file by email or another channel. On desktop, a JSON file is downloaded.",
+      "shareBusy": "Preparing …",
+      "shareButton": "📤 Share / download data",
+      "shareDone": "Successfully shared or downloaded.",
+      "shareError": "Error while sharing. Please try again.",
+      "clearDone": "All analytics data has been deleted.",
+      "clearButton": "Delete analytics data",
+      "privacyLabel": "Quality assurance (optional)",
+      "privacyDetail": "Only with consent: anonymous decision data (step ID, score, theme, date). No free text, no name. Stored locally, manually exportable."
+    },
+    "transparency": {
+      "title": "Privacy & Transparency",
+      "subtitle": "Which data is stored locally",
+      "badge": "1 area"
+    },
+    "protection": {
+      "title": "Protection & Security",
+      "subtitle": "Passcode, diary protection, and backup",
+      "badge": "3 areas"
+    },
+    "danger": {
+      "title": "Reset & Delete",
+      "subtitle": "Sensitive actions with possible data loss",
+      "badge": "2 actions"
+    }
+  },
+  "themes": {
+    "pts": "{{count}} pts",
+    "level": "Level {{level}}",
+    "titleParent": "Theme areas visible so far",
+    "emptyParent": "Here you can see which topics appeared in the chapters played so far.",
+    "infoCheck": { "parent": "Evaluating sources and recognising fake news" },
+    "talkAct": { "parent": "Communicating and collaborating respectfully online" },
+    "creative": { "parent": "Using and creating media creatively" },
+    "safeOnline": { "parent": "Staying safe online" },
+    "problemSolving": { "parent": "Solving problems with digital tools" },
+    "reflectUnderstand": { "parent": "Understanding and reflecting on media critically" },
+    "fairness": { "parent": "Living values and developing respect" }
   }
 }

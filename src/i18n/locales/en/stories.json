@@ -1,12 +1,36 @@
 {
-  "stories:s1e02.c01.input.chiomaGossipReply": "Write your reply to Chioma …",
-  "stories:s1e02.c01.input.dominikReply": "Write your reply to Dominik …",
-  "stories:s1e02.c02.input.yasminDiaryReply": "Write your reply to Yasmin …",
-  "stories:s1e02.c06.input.chiomaNervousReply": "What would you reply to Chioma?",
-  "stories:s1e02.c06.input.togetherBetter": "Tell about a situation where something worked better together than alone …",
-  "stories:multiSelect.completed.selectedTitle": "Your selection",
-  "stories:multiSelect.completed.missedCorrectTitle": "This also fits 👍",
-  "stories:multiSelect.completed.incorrectLabel": "This doesn’t fit so well here 🤔",
+  "s1e02": {
+    "c01": {
+      "input": {
+        "chiomaGossipReply": "Write your reply to Chioma …",
+        "dominikReply": "Write your reply to Dominik …"
+      }
+    },
+    "c02": {
+      "input": {
+        "yasminDiaryReply": "Write your reply to Yasmin …"
+      }
+    },
+    "c06": {
+      "input": {
+        "chiomaNervousReply": "What would you reply to Chioma?",
+        "togetherBetter": "Tell about a situation where something worked better together than alone …"
+      }
+    }
+  },
+  "multiSelect": {
+    "completed": {
+      "selectedTitle": "Your selection",
+      "missedCorrectTitle": "This also fits 👍",
+      "incorrectLabel": "This doesn’t fit so well here 🤔"
+    }
+  },
+  "common": {
+    "gotIt": "Got it",
+    "continue": "Continue",
+    "send": "Send",
+    "amyThinking": "Amy is thinking…"
+  },
   "chapterDivider": "Amic {{number}}",
   "hero": {
     "kicker": "Amy Surfwing",

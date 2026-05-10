@@ -1,5 +1,5 @@
 // src/pages/Welcome.tsx
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Layout from '../components/Layout';
 import BetaBanner from '../components/BetaBanner';
 import { assetUrl } from '../common/assetUrl';
@@ -11,6 +11,7 @@ import { getStoryCards } from '../content/contentIndex';
 import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile';
 import { shouldBypassAll } from '../gating/entitlements';
+import { shouldSkipOnboarding } from '../common/firstRun';
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
@@ -42,39 +43,6 @@ function Panel({
   );
 }
 
-function EntryCard({
-  kicker,
-  title,
-  body,
-  cta,
-  to,
-  bg = 'bg-white',
-  border = 'border-slate-200',
-  kickerColor = 'text-[var(--color-teal-600)]',
-  ctaColor = 'text-[var(--color-teal-700)]',
-}: {
-  kicker: string;
-  title: string;
-  body: string;
-  cta: string;
-  to: string;
-  bg?: string;
-  border?: string;
-  kickerColor?: string;
-  ctaColor?: string;
-}) {
-  return (
-    <Link
-      to={to}
-      className={`block rounded-2xl border ${border} ${bg} p-5 shadow-sm hover:shadow-md transition-shadow`}
-    >
-      <div className={`text-xs font-semibold ${kickerColor}`}>{kicker}</div>
-      <div className="mt-2 text-lg font-bold text-slate-900 leading-snug">{title}</div>
-      <p className="mt-3 text-sm text-slate-700 leading-relaxed">{body}</p>
-      <div className={`mt-5 font-semibold ${ctaColor}`}>{cta}</div>
-    </Link>
-  );
-}
 
 export default function Welcome() {
   const navigate = useNavigate();
@@ -155,6 +123,9 @@ function isUnlockedByChain(
   const hasStarted = currentPct > 0;
   const noAvailableStories = availableCards.length === 0;
 
+  // Einmal berechnen — ändert sich nie innerhalb einer Session
+  const [isFirstTime] = useState(() => !shouldSkipOnboarding());
+
   return (
     <Layout>
       <BetaBanner />
@@ -196,19 +167,51 @@ function isUnlockedByChain(
       </div>
 
       <div className="mt-6 flex flex-wrap gap-3">
-        <Link
-          to="/stories"
-          className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
-        >
-          {t('hero.ctaPrimary')}
-        </Link>
+        {isFirstTime ? (
+          /* Erstbesuch: primärer Button + Eltern-Link */
+          <>
+            <Link
+              to="/start"
+              className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+            >
+              {t('hero.introCta')}
+            </Link>
+            <Link
+              to="/parents"
+              className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
+            >
+              {t('hero.ctaSecondary')}
+            </Link>
+          </>
+        ) : (
+          /* Wiederkehrende Nutzer: zwei Buttons wie bisher */
+          <>
+            <Link
+              to="/stories"
+              className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+            >
+              {t('hero.ctaPrimary')}
+            </Link>
 
-        <Link
-          to="/parents"
-          className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
-        >
-          {t('hero.ctaSecondary')}
-        </Link>
+            {currentCard ? (
+              <Link
+                to={currentCard.storyEngine === 'v2' ? `/stories-v02/${currentCard.id}` : `/stories/${currentCard.id}`}
+                className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
+              >
+                {hasStarted
+                  ? t('hero.ctaContinue', { defaultValue: 'Weiterlesen →' })
+                  : t('hero.ctaStart', { defaultValue: 'Story starten →' })}
+              </Link>
+            ) : (
+              <Link
+                to="/parents"
+                className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
+              >
+                {t('hero.ctaSecondary')}
+              </Link>
+            )}
+          </>
+        )}
       </div>
 
       <p className="mt10 text-xs text-slate-500">
@@ -271,7 +274,7 @@ function isUnlockedByChain(
         <div className="mt-6 sm:mt-8">
           {noAvailableStories ? (
             <Panel
-              kicker={tStories('comingSoon.kicker', { defaultValue: 'Bald geht’s los' })}
+              kicker={tStories('comingSoon.kicker', { defaultValue: "Bald geht's los" })}
               title={tStories('comingSoon.title', { defaultValue: 'Neue Stories kommen bald ✨' })}
             >
               <p className="text-sm text-slate-700">
@@ -279,6 +282,41 @@ function isUnlockedByChain(
                   defaultValue: 'Im Moment ist noch keine Story freigeschaltet. Schau bald wieder vorbei!',
                 })}
               </p>
+            </Panel>
+          ) : isFirstTime ? (
+            <Panel kicker={t('hero.introKicker')} title={t('episodes.s1e01.title', { ns: 'stories', defaultValue: 'Wirbel am Wasserfall' })}>
+              <div className="mt-2 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+                <div className="lg:col-span-4">
+                  <div className="aspect-[16/10] max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
+                    <SmartImage
+                      fallback={assetUrl('media/story/episodes/s1e01/s1e01-512.webp')}
+                      alt={t('episodes.s1e01.title', { ns: 'stories', defaultValue: 'Wirbel am Wasserfall' })}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                <div className="lg:col-span-8 flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div>
+                    <div className="text-sm font-semibold text-slate-500">{t('hero.introLabel')}</div>
+                    <div className="mt-1 text-lg font-extrabold text-slate-900 leading-snug">
+                      {t('episodes.s1e01.title', { ns: 'stories', defaultValue: 'Wirbel am Wasserfall' })}
+                    </div>
+                    <div className="mt-1 text-sm text-slate-600">
+                      {t('episodes.s1e01.description', { ns: 'stories', defaultValue: '' })}
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <div className="text-xs font-semibold text-slate-500">{t('hero.introHint')}</div>
+                    <Link
+                      to="/start"
+                      className="mt-3 w-full inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+                    >
+                      {t('hero.introCta')}
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </Panel>
           ) : currentCard ? (
             <Panel
@@ -296,8 +334,8 @@ function isUnlockedByChain(
               <div className="mt-2 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
                 <div className="lg:col-span-4">
                   <div className="aspect-[16/10] max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
-                    <img
-                      src={assetUrl(currentCard.cover?.trim() ? currentCard.cover : 'media/ui/locked-1024.webp')}
+                    <SmartImage
+                      fallback={assetUrl(currentCard.cover?.trim() ? currentCard.cover : 'media/ui/locked-1024.webp')}
                       alt={tStories('continue.imageAlt', { defaultValue: 'Aktuelle Story' })}
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -358,53 +396,6 @@ function isUnlockedByChain(
           ) : null}
         </div>
 
-        {/* EINSTIEG */}
-        <div className="mt-6 sm:mt-8">
-          <Panel kicker={t('entries.kicker')} title={t('entries.title')}>
-            <p>{t('entries.body')}</p>
-
-            <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3">
-              {/* Für Kinder – teal */}
-              <EntryCard
-                kicker={t('entries.cards.2.kicker')}
-                title={t('entries.cards.2.title')}
-                body={t('entries.cards.2.body')}
-                cta={t('entries.cards.2.cta')}
-                to="/stories"
-                bg="bg-teal-50"
-                border="border-teal-200"
-                kickerColor="text-teal-700"
-                ctaColor="text-teal-700"
-              />
-
-              {/* Für Eltern – violet */}
-              <EntryCard
-                kicker={t('entries.cards.0.kicker')}
-                title={t('entries.cards.0.title')}
-                body={t('entries.cards.0.body')}
-                cta={t('entries.cards.0.cta')}
-                to="/parents"
-                bg="bg-violet-50"
-                border="border-violet-200"
-                kickerColor="text-violet-700"
-                ctaColor="text-violet-700"
-              />
-
-              {/* Zum Konzept – amber */}
-              <EntryCard
-                kicker={t('entries.cards.1.kicker')}
-                title={t('entries.cards.1.title')}
-                body={t('entries.cards.1.body')}
-                cta={t('entries.cards.1.cta')}
-                to="/concept"
-                bg="bg-amber-50"
-                border="border-amber-200"
-                kickerColor="text-amber-700"
-                ctaColor="text-amber-700"
-              />
-            </div>
-          </Panel>
-        </div>
       </div>
     </Layout>
   );

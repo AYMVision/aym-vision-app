@@ -1,5 +1,5 @@
 // src/pages/Stories.tsx
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import Layout from '../components/Layout';
 import BetaBanner from '../components/BetaBanner';
 import CourseCard from '../components/CourseCard';
@@ -10,10 +10,13 @@ import { getProgress, getCompletedChapterCount } from '../progress/storyProgress
 import { assetUrl } from '../common/assetUrl';
 import SmartImage from '../components/SmartImage';
 
-import { getStoryCards } from '../content/contentIndex';
+import { getStoryCards, CONTENT_INDEX } from '../content/contentIndex';
 import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile'; // ✅ NEW
 import { shouldBypassAll } from '../gating/entitlements';
+import NewAmicBanner from '../components/NewAmicBanner';
+import { loadNextAmicInfo } from '../notifications/amicNotif';
+import { loadSettings } from '../settings/appSettings';
 
 function Panel({
   title,
@@ -190,6 +193,12 @@ export default function Stories() {
     const lang = (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
   const { profile } = useProfile(); // ✅ NEW
 
+  const [amicBannerInfo] = useState(() => {
+    if (!loadSettings().remindersEnabled) return null;
+    return loadNextAmicInfo();
+  });
+  const [amicBannerVisible, setAmicBannerVisible] = useState(Boolean(amicBannerInfo));
+
   // ✅ Reihenfolge: genau so wie Content Index es liefert
 const cardsInOrder = useMemo(() => getStoryCards(), []);
 const cardsForUI = cardsInOrder;
@@ -318,13 +327,17 @@ function isUnlockedByChain(
               <button
                 type="button"
                 onClick={() => {
-                  document
-                    .getElementById('story-list')
-                    ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  if (currentCard) {
+                    navigate(currentCard.storyEngine === 'v2' ? `/stories-v02/${currentCard.id}` : `/stories/${currentCard.id}`);
+                  } else {
+                    document.getElementById('story-list')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
                 }}
                 className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
               >
-                {tStories('hero.ctaPrimary', { defaultValue: 'Zu den Amics →' })}
+                {hasStarted
+                  ? tStories('hero.ctaContinue', { defaultValue: 'Weiterlesen →' })
+                  : tStories('hero.ctaPrimary', { defaultValue: 'Jetzt starten →' })}
               </button>
 
               <Link
@@ -358,97 +371,117 @@ function isUnlockedByChain(
         </div>
       </section>
 
-     {/* ✅ CONTINUE / START – direkt unter Hero */}
-{noAvailableStories ? (
-  <Panel
-    kicker={tStories('comingSoon.kicker', { defaultValue: 'Bald geht’s los' })}
-    title={tStories('comingSoon.title', { defaultValue: 'Neue Stories kommen bald ✨' })}
-  >
-    <p className="text-sm text-slate-700">
-      {tStories('comingSoon.text', {
-        defaultValue:
-          'Im Moment ist noch keine Story freigeschaltet. Schau bald wieder vorbei!',
-      })}
-    </p>
-  </Panel>
-) : currentCard ? (
-  <Panel
-    kicker={
-      hasStarted
-        ? tStories('continue.kicker', { defaultValue: 'Weiterlesen' })
-        : tStories('start.kicker', { defaultValue: 'Jetzt starten' })
-    }
-    title={
-      hasStarted
-        ? tStories('continue.title', { defaultValue: 'Mach da weiter, wo du aufgehört hast' })
-        : tStories('start.title', { defaultValue: 'Teste eine Story kostenfrei' })
-    }
+      {/* STORY CARDS – direkt unter Hero */}
+      {(() => {
+        const seasons = CONTENT_INDEX;
+        const firstSeason = seasons[0];
+        const seasonLabel = firstSeason?.seasonTitle ?? 'Staffel 1';
+        const totalEpisodes = cardsForUI.length;
+
+        return (
+          <Panel
+            kicker={tStories('list.kicker', { defaultValue: 'Amy Surfwing' })}
+            title={tStories('list.title', { defaultValue: 'Starte dein Amic' })}
           >
-            <div className="mt-2 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
-              {/* Bild: nicht länglich, nie verzerrt */}
-              <div className="lg:col-span-4">
-                <div className="aspect-[16/10] max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
-                  <img
-                    src={assetUrl(currentCard.cover?.trim() ? currentCard.cover : 'media/ui/locked-1024.webp')}
-                    alt={tStories('continue.imageAlt', { defaultValue: 'Aktuelle Story' })}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
+            <div id="story-list" className="scroll-mt-24" />
 
-              {/* Text + CTA */}
-              <div className="lg:col-span-8 flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <div>
-                  <div className="text-sm font-semibold text-slate-500">
-                    {hasStarted
-                      ? tStories('continue.label', { defaultValue: 'Aktuell' })
-                      : tStories('start.label', { defaultValue: 'Neu für dich' })}
-                  </div>
+            {/* Serienkontext */}
+            <p className="text-xs text-slate-500 -mt-1">
+              📱 Chat-Serie&nbsp;&nbsp;·&nbsp;&nbsp;{seasonLabel}&nbsp;&nbsp;·&nbsp;&nbsp;{totalEpisodes} Folgen
+            </p>
 
-                  <div className="mt-1 text-lg font-extrabold text-slate-900 leading-snug">
-                    {tStories(currentCard.titleKey)}
-                  </div>
-
-                  <div className="mt-1 text-sm text-slate-600">
-                    {tStories(currentCard.descriptionKey)}
-                  </div>
-                </div>
-
-                <div className="mt-4">
-                  {hasStarted ? (
-                    <>
-                      <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1">
-                        <span>{tStories('continue.progress', { defaultValue: 'Fortschritt' })}</span>
-                        <span>{currentPct}%</span>
-                      </div>
-                      <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
-                        <div
-                          className="h-2 rounded-full bg-[#0084ff]"
-                          style={{ width: `${currentPct}%` }}
-                        />
-                      </div>
-                    </>
-                  ) : (
-                    <div className="text-xs font-semibold text-slate-500">
-                      {tStories('start.hint', { defaultValue: 'Keine Anmeldung nötig – einfach loslesen.' })}
+            {noAvailableStories ? (
+              <p className="mt-3 text-sm text-slate-500">
+                {tStories('comingSoon.text', {
+                  defaultValue: 'Im Moment ist noch keine Story freigeschaltet. Schau bald wieder vorbei!',
+                })}
+              </p>
+            ) : (
+              <>
+                {/* Aktuell / Weitermachen – Highlight-Karte */}
+                {currentCard && (
+                  <div className="mt-4 flex gap-3 items-center bg-slate-50 border border-slate-200 rounded-2xl p-3 sm:p-4">
+                    <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+                      <img
+                        src={assetUrl(currentCard.cover?.trim() ? currentCard.cover : 'media/ui/locked-512.webp')}
+                        alt={tStories('continue.imageAlt', { defaultValue: 'Aktuelle Story' })}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
                     </div>
-                  )}
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-semibold text-[var(--color-teal-600)]">
+                        {hasStarted
+                          ? tStories('continue.label', { defaultValue: 'Aktuell' })
+                          : tStories('start.label', { defaultValue: 'Neu für dich' })}
+                      </div>
+                      <div className="mt-0.5 font-extrabold text-slate-900 leading-snug truncate">
+                        {tStories(currentCard.titleKey)}
+                      </div>
+                      {hasStarted && (
+                        <div className="mt-1.5 flex items-center gap-2">
+                          <div className="flex-1 h-1.5 rounded-full bg-slate-200 overflow-hidden">
+                            <div className="h-1.5 rounded-full bg-[#0084ff]" style={{ width: `${currentPct}%` }} />
+                          </div>
+                          <span className="text-[11px] text-slate-500 shrink-0">{currentPct}%</span>
+                        </div>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => navigate(currentCard.storyEngine === 'v2' ? `/stories-v02/${currentCard.id}` : `/stories/${currentCard.id}`)}
+                      className="shrink-0 inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-sm"
+                    >
+                      {hasStarted
+                        ? tStories('continue.cta', { defaultValue: 'Weiterlesen →' })
+                        : tStories('start.cta', { defaultValue: 'Starten →' })}
+                    </button>
+                  </div>
+                )}
 
-                  <button
-                    type="button"
-                    onClick={() => navigate(currentCard.storyEngine === 'v2' ? `/stories-v02/${currentCard.id}` : `/stories/${currentCard.id}`)}
-                    className="mt-4 w-full inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
-                  >
-                    {hasStarted
-                      ? tStories('continue.cta', { defaultValue: 'Weiterlesen →' })
-                      : tStories('start.cta', { defaultValue: 'Jetzt starten →' })}
-                  </button>
+                {/* Alle Story-Kacheln */}
+                <div className="mt-4">
+                  <SwipeRow className="-mx-4 px-4 lg:mx-0 lg:px-0">
+                    {cardsForUI.map((card) => {
+                      const playable = playableById[card.id] ?? false;
+                      const isReleasedAndPlayable = card.released && playable;
+                      const isChainUnlocked = isUnlockedByChain(cardsInOrder, card.id);
+                      const locked = !isReleasedAndPlayable || !isChainUnlocked;
+                      const coverPath = card.cover?.trim() ? card.cover : 'media/ui/locked-512.webp';
+                      const title = locked ? `🔒 ${tStories(card.titleKey)}` : tStories(card.titleKey);
+                      const lockedDescription = locked
+                        ? (!isReleasedAndPlayable
+                            ? tStories('list.locked.comingSoon', { defaultValue: 'Kommt bald ✨' })
+                            : tStories('list.locked.completeFirst', { defaultValue: 'Schließe zuerst die vorherige Folge ab.' }))
+                        : null;
+                      const description = lockedDescription ?? tStories(card.descriptionKey);
+                      const epNum = parseInt(card.episodeId.replace(/.*e(\d+)$/i, '$1'));
+                      const episodeLabel = !isNaN(epNum) ? `E${String(epNum).padStart(2, '0')}` : undefined;
+                      return (
+                        <div key={card.id} className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
+                          <CourseCard
+                            compact
+                            locked={locked}
+                            image={assetUrl(coverPath)}
+                            title={title}
+                            description={description}
+                            progressPercent={locked ? 0 : (progressById[card.id] ?? 0)}
+                            episodeLabel={episodeLabel}
+                            onClick={() => {
+                              if (locked) return;
+                              navigate(card.storyEngine === 'v2' ? `/stories-v02/${card.id}` : `/stories/${card.id}`);
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </SwipeRow>
                 </div>
-              </div>
-            </div>
+              </>
+            )}
           </Panel>
-        ) : null}
+        );
+      })()}
 
 
 {/* HOW-TO (neu, strukturiert) */}
@@ -639,58 +672,6 @@ function isUnlockedByChain(
   })()}
 </Panel>
 
- {/* STORY CARDS */}
-<Panel
-  kicker={tStories('list.kicker', { defaultValue: 'Amy Surfwing' })}
-  title={tStories('list.title', { defaultValue: 'Starte dein Amic' })}
->
-  <div id="story-list" className="scroll-mt-24" />
-
-  <p className="text-sm sm:text-base text-slate-700">
-    {tStories('list.lead', { defaultValue: 'Ein Klick und du bist mitten im Abenteuer.' })}
-  </p>
-
-
-
-  <div className="mt-4">
-    <SwipeRow className="-mx-4 px-4 lg:mx-0 lg:px-0">
-      {cardsForUI.map((card) => {
-        const playable = playableById[card.id] ?? false;
-
-        const isReleasedAndPlayable = card.released && playable;
-        const isChainUnlocked = isUnlockedByChain(cardsInOrder, card.id);
-        const locked = !isReleasedAndPlayable || !isChainUnlocked;
-
-        const coverPath = card.cover?.trim() ? card.cover : 'media/ui/locked-512.webp';
-        const title = locked ? `🔒 ${tStories(card.titleKey)}` : tStories(card.titleKey);
-
-        const lockedDescription = locked
-          ? (!isReleasedAndPlayable
-              ? tStories('list.locked.comingSoon', { defaultValue: 'Kommt bald ✨' })
-              : tStories('list.locked.completeFirst', { defaultValue: 'Schließe zuerst die vorherige Folge ab.' }))
-          : null;
-        const description = lockedDescription ?? tStories(card.descriptionKey);
-
-        return (
-          <div key={card.id} className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-            <CourseCard
-              compact
-              locked={locked}
-              image={assetUrl(coverPath)}
-              title={title}
-              description={description}
-              progressPercent={locked ? 0 : (progressById[card.id] ?? 0)}
-              onClick={() => {
-                if (locked) return;
-                navigate(card.storyEngine === 'v2' ? `/stories-v02/${card.id}` : `/stories/${card.id}`);
-              }}
-            />
-          </div>
-        );
-      })}
-    </SwipeRow>
-  </div>
-</Panel>
 
 {/* GOOD TO KNOW – swipe cards */}
 <Panel
@@ -891,6 +872,13 @@ function isUnlockedByChain(
         </div>
 
       </div>
+
+      {amicBannerVisible && amicBannerInfo && (
+        <NewAmicBanner
+          info={amicBannerInfo}
+          onDismiss={() => setAmicBannerVisible(false)}
+        />
+      )}
     </Layout>
   );
 }

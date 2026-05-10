@@ -22,6 +22,7 @@ interface Props {
   onClick: () => void;
 
   compact?: boolean;
+  episodeLabel?: string;
 }
 
 const LOCKED_FALLBACK = {
@@ -48,6 +49,7 @@ export default function CourseCard({
   locked = false,
   onClick,
   compact = false,
+  episodeLabel,
 }: Props) {
   const { t } = useTranslation('courses');
 
@@ -107,6 +109,12 @@ const effectiveFallback = imageFallback ?? image;
   {/* leichter Weiß-Overlay wenn locked */}
   {locked && (
     <div className="absolute inset-0 bg-white/60" />
+  )}
+
+  {episodeLabel && (
+    <div className="absolute top-2 left-2 rounded-full px-2 py-0.5 text-xs font-bold bg-black/55 text-white leading-none">
+      {episodeLabel}
+    </div>
   )}
 
 </div>

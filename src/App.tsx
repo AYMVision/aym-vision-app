@@ -41,6 +41,8 @@ const Diaries        = lazy(() => import('./pages/Diaries'));
 const DiaryBook      = lazy(() => import('./pages/DiaryBook'));
 const Newspaper      = lazy(() => import('./pages/Newspaper'));
 const NewspaperArticle = lazy(() => import('./pages/NewspaperArticle'));
+const Lexikon          = lazy(() => import('./pages/Lexikon'));
+const Onboarding       = lazy(() => import('./pages/Onboarding'));
 const TestSettings   = import.meta.env.DEV ? lazy(() => import('./pages/TestSettings')) : null;
 const DevLab         = import.meta.env.DEV ? lazy(() => import('./pages/DevLab')) : null;
 
@@ -94,6 +96,9 @@ function AppRoutes() {
 
         <Route path="/newspaper" element={<Newspaper />} />
         <Route path="/newspaper/:id" element={<NewspaperArticle />} />
+
+        <Route path="/lexikon" element={<Lexikon />} />
+        <Route path="/start" element={<Onboarding />} />
 
         {import.meta.env.DEV && TestSettings && (
           <Route path="/test-settings" element={<TestSettings />} />

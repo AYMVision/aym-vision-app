@@ -9,10 +9,10 @@
     "title": "Schulhof-Echo",
     "kicker": "📰 Newsroom",
     "headline": "Schulhof-Echo",
-    "subtitle": "Artikel, Audio & Meinungen aus der Story",
+    "subtitle": "",
     "mastheadMeta": "Amy Surfwing · Newsroom",
-    "mastheadTagline": "Die offizielle",
-    "mastheadAuthor": "von Carlos & der Klasse",
+    "mastheadTagline": "Die online Schülerzeitung",
+    "mastheadAuthor": "Artikel, Audio & Meinungen aus der Story",
 
     "searchPlaceholder": "Suche…",
     "searchAria": "Artikel suchen",
@@ -450,7 +450,7 @@
     }
 },
 "finn": {
-  "name": "finn",
+  "name": "Finn",
   "friendbook": {
     "mostly": "locker, ehrlich\nich mach nicht gern großes theater und bin lieber einfach ich",
     "othersLike": [

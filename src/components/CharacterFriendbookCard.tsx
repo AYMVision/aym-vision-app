@@ -117,12 +117,16 @@ function CoverImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-function PhotoTile({ src, alt }: { src: string | null | undefined; alt: string }) {
+function PhotoTile({ src, alt, onClick }: { src: string | null | undefined; alt: string; onClick?: () => void }) {
   const [failed, setFailed] = useState(false);
   if (!src?.trim() || failed) return null;
 
   return (
-    <div className="rounded-3xl border border-slate-200 overflow-hidden aspect-square bg-gradient-to-br from-slate-100 via-white to-slate-50">
+    <button
+      type="button"
+      onClick={onClick}
+      className="rounded-3xl border border-slate-200 overflow-hidden aspect-square bg-gradient-to-br from-slate-100 via-white to-slate-50 cursor-zoom-in w-full"
+    >
       <div className="w-full h-full p-2">
         <SmartImage
           alt={alt}
@@ -134,6 +138,30 @@ function PhotoTile({ src, alt }: { src: string | null | undefined; alt: string }
           decoding="async"
         />
       </div>
+    </button>
+  );
+}
+
+function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+      onClick={onClose}
+    >
+      <button
+        type="button"
+        onClick={onClose}
+        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white text-xl font-bold transition-colors"
+        aria-label="Schließen"
+      >
+        ✕
+      </button>
+      <img
+        src={assetUrl(src)}
+        alt={alt}
+        className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      />
     </div>
   );
 }
@@ -175,6 +203,7 @@ export default function CharacterFriendbookCard({
 
   const [secretOpen, setSecretOpen] = useState(false);
   const [funOpen, setFunOpen] = useState(false);
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   const quickFacts = useMemo(() => {
     const rows: { emoji: string; label: string; value: string }[] = [];
@@ -194,6 +223,8 @@ export default function CharacterFriendbookCard({
   const coverSrc = coverImage ? assetUrl(coverImage) : null;
 
   return (
+    <>
+    {lightboxSrc && <Lightbox src={lightboxSrc} alt={name} onClose={() => setLightboxSrc(null)} />}
     <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
 
       {/* ── HEADER ── */}
@@ -330,9 +361,9 @@ export default function CharacterFriendbookCard({
 photoSources.length === 2 ? 'grid-cols-1 sm:grid-cols-2' :
 'grid-cols-1 sm:grid-cols-2',
               ].join(' ')}>
-                <PhotoTile src={detailImage ?? null} alt={name} />
-                <PhotoTile src={extras[0] ?? null} alt={name} />
-                <PhotoTile src={extras[1] ?? null} alt={name} />
+                <PhotoTile src={detailImage ?? null} alt={name} onClick={detailImage ? () => setLightboxSrc(detailImage) : undefined} />
+                <PhotoTile src={extras[0] ?? null} alt={name} onClick={extras[0] ? () => setLightboxSrc(extras[0]) : undefined} />
+                <PhotoTile src={extras[1] ?? null} alt={name} onClick={extras[1] ? () => setLightboxSrc(extras[1]) : undefined} />
               </div>
             </div>
           </div>
@@ -340,6 +371,7 @@ photoSources.length === 2 ? 'grid-cols-1 sm:grid-cols-2' :
 
       </div>
     </div>
+    </>
   );
 }
 

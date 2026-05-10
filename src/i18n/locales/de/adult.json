@@ -77,7 +77,7 @@
       }
     },
     "changeHint": "Sie können den Modus jederzeit ändern.",
-    "performanceHint": "Wenn die App verzögert reagiert oder länger lädt, empfehlen wir „Auto“ oder „Off“."
+    "performanceHint": "Wenn die App verzögert reagiert oder länger lädt, empfehlen wir \"Auto\" oder \"Off\"."
   },
   "hint": {
     "title": "Kurz mit Erwachsenen sprechen",
@@ -137,67 +137,33 @@
       "session": "Sitzung zurücksetzen",
       "entitlementsDone": "Alle Freischaltungen wurden entfernt.",
       "sessionDone": "Die aktuelle Sitzung wurde zurückgesetzt."
-    }
-  },
-  "sections": {
-  "ai": {
-    "modeTitle": "So arbeitet Amy",
-    "modes": {
-      "on": {
-        "title": "On",
-        "text": "Die KI ist aktiv und begleitet Reflexionsmomente in der Story. Sie reagiert kontextbezogen – nicht dauerhaft, sondern dort, wo es pädagogisch sinnvoll ist. Auf älteren oder schwächeren Geräten kann sie langsamer reagieren."
-      },
-      "auto": {
-        "title": "Auto",
-        "text": "Die KI unterstützt nur, wenn es sinnvoll und technisch stabil ist. Dies ist für die meisten Geräte die empfohlene Einstellung."
-      },
-      "off": {
-        "title": "Off",
-        "text": "Die KI ist ausgeschaltet. Die Story funktioniert weiterhin vollständig und pädagogisch fundiert – nur ohne KI-Reflexionsimpulse."
-      }
-    },
-    "changeHint": "Sie können den Modus jederzeit ändern.",
-    "performanceHint": "Wenn die App verzögert reagiert oder länger lädt, empfehlen wir „Auto“ oder „Off“."
-  }
-},
-
-  "testMode": {
-    "title": "Testmodus",
-    "description": "Für Entwicklung, interne Tests und Pilotphasen.",
-    "global": {
-      "title": "Globale Freischaltung",
-      "description": "Hebt Tages- und Wochenlimits sowie Kapitel-Sperren auf.",
-      "label": "Alle Inhalte freischalten",
-      "enabled": "Alle Inhalte wurden freigeschaltet.",
-      "disabled": "Die globale Freischaltung wurde deaktiviert."
-    },
-    "until": {
-      "title": "Freischaltung bis Datum",
-      "description": "Beispiel: 2026-03-30",
-      "placeholder": "YYYY-MM-DD",
-      "apply": "Anwenden",
-      "set": "Freischaltung bis {{date}} gesetzt.",
-      "removed": "Datumsfreigabe wurde entfernt."
-    },
-    "episode": {
-      "title": "Episode freischalten",
-      "description": "Beispiel: s1e01",
-      "placeholder": "s1e01",
-      "unlock": "Freischalten",
-      "remove": "Entfernen",
-      "missing": "Bitte gib eine Episode ein.",
-      "unlocked": "Episode {{episode}} wurde freigeschaltet.",
-      "removed": "Episode {{episode}} wurde entfernt."
-    },
-    "reset": {
-      "title": "Zurücksetzen",
-      "description": "Hilfreich, wenn du einen Testlauf sauber neu starten möchtest.",
-      "entitlements": "Testfreischaltungen entfernen",
-      "session": "Sitzung zurücksetzen",
-      "entitlementsDone": "Alle Freischaltungen wurden entfernt.",
-      "sessionDone": "Die aktuelle Sitzung wurde zurückgesetzt."
     },
     "openPage": "Zur Testseite →"
+  },
+  "sections": {
+    "ai": {
+      "modeTitle": "So arbeitet Amy",
+      "modes": {
+        "on": {
+          "title": "On",
+          "text": "Die KI ist aktiv und begleitet Reflexionsmomente in der Story. Sie reagiert kontextbezogen – nicht dauerhaft, sondern dort, wo es pädagogisch sinnvoll ist. Auf älteren oder schwächeren Geräten kann sie langsamer reagieren."
+        },
+        "auto": {
+          "title": "Auto",
+          "text": "Die KI unterstützt nur, wenn es sinnvoll und technisch stabil ist. Dies ist für die meisten Geräte die empfohlene Einstellung."
+        },
+        "off": {
+          "title": "Off",
+          "text": "Die KI ist ausgeschaltet. Die Story funktioniert weiterhin vollständig und pädagogisch fundiert – nur ohne KI-Reflexionsimpulse."
+        }
+      },
+      "changeHint": "Sie können den Modus jederzeit ändern.",
+      "performanceHint": "Wenn die App verzögert reagiert oder länger lädt, empfehlen wir \"Auto\" oder \"Off\".",
+      "safeAi": {
+        "title": "Safe AI",
+        "text": "Die KI arbeitet innerhalb klarer pädagogischer Leitplanken. Sie bewertet nicht persönlich, gibt keine Therapieempfehlungen und ersetzt kein Gespräch mit Erwachsenen."
+      }
+    }
   },
   "mediaSkills": {
     "title": "Themenfelder zur Medienkompetenz",

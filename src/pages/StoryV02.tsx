@@ -66,6 +66,10 @@ import { getStickerById } from '../progress/rewardCatalog';
 import { playEpisodeSound } from '../common/soundPlayer';
 import { trackItemStep } from '../analytics/analyticsEvents';
 import EpisodeSummaryCard from '../story-v02/components/EpisodeSummaryCard';
+import { getLexikonEntry } from '../lexikon/lexikonIndex';
+import { LexikonTermModal } from './Lexikon';
+import { saveNextAmicInfo } from '../notifications/amicNotif';
+import { loadSettings } from '../settings/appSettings';
 
 type SceneTone = 'private' | 'class' | 'newsroom';
 type Lang = 'de' | 'en';
@@ -353,6 +357,9 @@ export default function StoryV02() {
 
   const [rewardToast, setRewardToast] = useState<RewardToastData | null>(null);
 
+  const [lexikonTermId, setLexikonTermId] = useState<string | null>(null);
+  const openLexikonEntry = getLexikonEntry(lexikonTermId ?? '');
+
   // Belohnungen warten bis der letzte Chapter-Eintrag sichtbar ist (IntersectionObserver)
   const [pendingChapterRewards, setPendingChapterRewards] = useState<{
     lastEntryId: string;
@@ -543,7 +550,7 @@ function hasStoryMigrationDone(key: string): boolean {
 
         dispatch({ type: 'RESTORE_SNAPSHOT', payload: amicSnap });
 
-        // Show locked-hint if chapter is finished and next chapter is time-gated
+        // Show amic-done card if chapter is finished
         if (amicSnap.phase === 'chapter_finished') {
           const gateState = getNextChapterGateState({
             courseId,
@@ -552,14 +559,24 @@ function hasStoryMigrationDone(key: string): boolean {
             bypassAll: false,
             maxPerWeek: 5,
           });
-          if (gateState.hasNext && !gateState.timeAllowed && gateState.shouldShowLockedHint) {
+          if (!gateState.hasNext) {
+            // Last chapter — no card needed (episode summary handled elsewhere)
+          } else if (gateState.structuralAllowed && gateState.timeAllowed) {
+            // Next chapter fully available — show navigation card
+            const nextChapter = episode.chapters[gateState.nextChapterIndex0] ?? null;
+            if (nextChapter) {
+              setAmicDoneNextChapterId(nextChapter.id);
+            }
+          } else if (!gateState.timeAllowed && gateState.shouldShowLockedHint) {
+            // Time-gated — show locked hint
             setShowNextChapterLockedHint(true);
             setNextChapterLockedReason(
               gateState.blockedReason === 'daily_limit' || gateState.blockedReason === 'weekly_limit'
                 ? gateState.blockedReason
                 : null
             );
-
+            setAmicDoneNextChapterId(null);
+          } else {
             setAmicDoneNextChapterId(null);
           }
         }
@@ -1044,6 +1061,16 @@ function hasStoryMigrationDone(key: string): boolean {
     // Statt inline-Weiterschalten: Navigations-Karte zeigen
     setAmicDoneNextChapterId(nextChapter.id);
 
+    // Cache der erste Sender des nächsten Kapitels für den "Amic hat..." Banner
+    if (!wasAlreadyCompletedBeforeAnswer && loadSettings().remindersEnabled) {
+      const firstSender = nextChapter.steps
+        .flatMap(s => (s.type === 'story' ? s.messages : []))
+        .find(msg => msg.type !== 'system' && msg.speaker?.name)?.speaker?.name;
+      if (firstSender) {
+        saveNextAmicInfo({ senderName: firstSender, chapterId: nextChapter.id, courseId });
+      }
+    }
+
     // Rewards warten bis der letzte Eintrag im Viewport sichtbar ist
     if (!wasAlreadyCompletedBeforeAnswer && lastVisibleEntryId) {
       setPendingChapterRewards({ lastEntryId: lastVisibleEntryId, coinAwarded: result.coinAwarded, themeStickerIds: result.newThemeStickerIds, milestoneStickerIds: result.newMilestoneStickerIds, starterStickerAwarded: result.starterStickerAwarded, weeklyBadgeAwarded: result.weeklyBadgeAwarded });
@@ -1184,6 +1211,7 @@ function hasStoryMigrationDone(key: string): boolean {
                   anchorId: entry.id,
                 })
               }
+              onOpenLexikonTerm={termId => setLexikonTermId(termId)}
             />
           </div>
         );
@@ -1703,26 +1731,27 @@ function hasStoryMigrationDone(key: string): boolean {
                     </div>
                   ) : null}
 
-                  <div className="mb-2 flex items-center gap-2 text-[11px] text-slate-500">
-                    <span aria-hidden>
-                      {group.tone === 'private'
-                        ? '🔒'
-                        : group.tone === 'class'
-                          ? '🏫'
-                          : '📰'}
-                    </span>
-
-                    <span className="font-medium shrink-0">
-                      {t(group.labelKey, { defaultValue: 'Chat' })}
-                    </span>
-
-                    <span className="truncate text-slate-400">
-                      {group.title
-                        ? group.title
-                        : group.participants.length
-                          ? group.participants.join(', ')
-                          : ''}
-                    </span>
+                  <div className="flex items-center gap-2 my-3 px-1">
+                    <div className="flex-1 h-px bg-[var(--color-teal-100)]" />
+                    <div className="flex items-center gap-1.5 text-[13px] font-medium text-[var(--color-teal-700)] bg-[var(--color-teal-50)] rounded-full px-2.5 py-0.5 shrink-0">
+                      <span aria-hidden>
+                        {group.tone === 'private'
+                          ? '🔒'
+                          : group.tone === 'class'
+                            ? '🏫'
+                            : '📰'}
+                      </span>
+                      <span>{t(group.labelKey, { defaultValue: 'Chat' })}</span>
+                      {(group.title || group.participants.length > 0) && (
+                        <>
+                          <span className="opacity-50">·</span>
+                          <span className="font-normal">
+                            {group.title ? group.title : group.participants.join(', ')}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <div className="flex-1 h-px bg-[var(--color-teal-100)]" />
                   </div>
 
                   <div className={['rounded-2xl p-3', toneToBg(group.tone)].join(' ')}>
@@ -1812,6 +1841,13 @@ function hasStoryMigrationDone(key: string): boolean {
           onDismiss={() => setRewardToast(null)}
         />
       ) : null}
+
+      {openLexikonEntry && (
+        <LexikonTermModal
+          entry={openLexikonEntry}
+          onClose={() => setLexikonTermId(null)}
+        />
+      )}
 
       {/* Story-Menü (Bottom Sheet) */}
       {storyMenuOpen && (

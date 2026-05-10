@@ -366,11 +366,13 @@ export default function ForParents() {
             </Accordion>
 
             {/* 4+5) KI – zusammengefasst als Accordion */}
+            <div id="ki-einsatz" className="scroll-mt-24">
             <Accordion title={t('sections.ai.title')}>
               <p>{t('sections.ai.introShort')}</p>
               <p className="mt-3">{t('sections.ai.description')}</p>
 
               <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
+                <span className="font-semibold text-slate-900">{t('sections.ai.safeAi.title')}: </span>
                 {t('sections.ai.safeAi.text')}
               </div>
 
@@ -393,16 +395,23 @@ export default function ForParents() {
 
               <p className="mt-3 text-sm text-slate-500">{t('sections.ai.changeHint')}</p>
 
-              <div className="mt-4">
+              <div className="mt-4 flex flex-wrap gap-2">
                 <Link
-                  to="/adult-settings"
+                  to="/adult-settings#ai-modes"
                   state={{ backTo: '/parents' }}
                   className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
                 >
                   {t('sections.ai.ctaModes')}
                 </Link>
+                <Link
+                  to="/impressum"
+                  className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-500 hover:border-slate-300 transition-colors text-sm"
+                >
+                  {t('sections.ai.ctaImpressum')}
+                </Link>
               </div>
             </Accordion>
+            </div>
 
             {/* 6) Parents can do */}
             <Panel title={t('sections.parentsCanDo.title')} kicker={t('sections.parentsCanDo.kicker')}>

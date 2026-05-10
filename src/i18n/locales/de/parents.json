@@ -5,7 +5,7 @@
     "lead": "Situationen im Netz gehören heute zum Aufwachsen dazu. Ob wir wollen oder nicht.",
     "leadEmphasis": "Machst du dir auch Sorgen, was deinem Kind online begegnet und wie es damit umgeht?",
        "leadEmphasis2": "🦉 Amy Surfwing - Die Lern-App für Medienreife.",
-    "ctaPrimary": "Story starten →",
+    "ctaPrimary": "Amy Surfwing →",
     "ctaSecondary": "Einstellungen für Eltern →",
     "bannerAlt": "Einblick in die Story-Welt von Amy Surfwing"
   },
@@ -214,6 +214,7 @@
         "text": "Die KI arbeitet innerhalb klarer pädagogischer Leitplanken. Sie bewertet nicht persönlich, gibt keine Therapieempfehlungen und ersetzt kein Gespräch mit Erwachsenen."
       },
       "ctaModes": "Zu den KI-Modi →",
+      "ctaImpressum": "Rechtliche Angaben im Impressum →",
       "control": "Sie entscheiden selbst, ob und wie die KI aktiv sein soll.",
       "introShort": "Unsere Eule Amy nutzt KI, um Kinder beim Nachdenken und Reflektieren zu unterstützen. Die Geschichten werden von echten Autor:innen entwickelt.",
       "modeTitle": "KI-Modus wählen",

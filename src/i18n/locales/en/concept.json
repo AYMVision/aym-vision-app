@@ -61,6 +61,12 @@
         "title": "Digital literacy",
         "summary": "Children act increasingly independently and responsibly.",
         "details": "Digital literacy is shown when children better understand digital situations, reflect on them, and act more consciously and responsibly in everyday life."
+      },
+      "6": {
+        "number": "",
+        "title": "Digital literacy",
+        "summary": "Children act increasingly independently and responsibly.",
+        "details": "Digital literacy is shown when children better understand digital situations, reflect on them, and act more consciously and responsibly in everyday life."
       }
     },
     "resultTitle": "Didactic implementation",
@@ -133,6 +139,30 @@
       "2": "Reflective learning",
       "3": "Active learning",
       "4": "Microlearning"
+    },
+    "explain": {
+      "0": "Children learn through characters, events, and connections within an ongoing story world. The story creates emotional closeness, context, and identification.",
+      "1": "Learning happens not in isolation, but in situations children know or need to understand from their digital everyday lives.",
+      "2": "Children reflect on behaviour, motives, consequences, and perspectives. Reflection questions make this process conscious and applicable to daily life.",
+      "3": "Children don't stay passive — they express their own thoughts, make decisions, and actively engage with situations.",
+      "4": "Short daily units help maintain attention and build learning in small, manageable steps."
+    }
+  },
+  "didactics": {
+    "kicker": "Didactic implementation",
+    "title": "How Amy Surfwing makes learning possible",
+    "intro": "Amy Surfwing is a carefully designed learning format that is understandable, relevant, and motivating for children.",
+    "items": {
+      "0": "Story world connected to everyday life",
+      "1": "Reflection and active participation",
+      "2": "Safe thinking space",
+      "3": "Motivating learning companion"
+    },
+    "explain": {
+      "0": "Digital topics are embedded in an ongoing story with characters and realistic situations. Children learn in the context of experiences and everyday life.",
+      "1": "Reflection questions encourage children to question the characters' actions, transfer situations to their own lives, and put their thoughts into words.",
+      "2": "Children engage with challenging digital situations in a protected space. They can step into those situations through characters without facing social pressure themselves.",
+      "3": "Short episodes, visible progress, and bonus areas like a school newspaper, diaries, and collectibles support engagement with the topic and make learning accessible and interesting."
     }
   },
   "target": {
@@ -141,5 +171,59 @@
     "body": "The current focus is on children aged 10 to 12. At this stage, many begin to navigate the digital world independently: first experiences, more responsibility, uncertainties, and new dynamics in class chats, gaming, social media, and trends.",
     "body2": "Amy Surfwing supports children exactly in this transition phase: preparing, guiding, and staying close to everyday life.",
     "note": "Additional age groups are planned for the future."
+  },
+  "frameworks": {
+    "kicker": "Transparency",
+    "title": "Academic context",
+    "body": ""
+  },
+  "evidence": {
+    "title": "",
+    "body1": "Amy Surfwing is based on established competency frameworks such as DigComp (EU), MIL (UNESCO), and the Media Competence Framework NRW.",
+    "body2": "The selection, language adaptation, and arrangement of competencies, as well as the term \"digital literacy\", are part of our own educational model.",
+    "body3": "We use \"digital literacy\" as a working term. The app is designed to support children in developing these skills in everyday life. An independent scientific evaluation of the overall model is in preparation."
+  },
+  "sidebar": {
+    "overview": {
+      "kicker": "Quick overview",
+      "title": "What is this page about?",
+      "body": "This page describes the educational model behind Amy Surfwing: how children develop digital literacy, what skills they need, and how the learning format supports this process.",
+      "sections": {
+        "goalLabel": "Goal",
+        "goalValue": "Children develop digital literacy and act increasingly independently and responsibly in their digital everyday lives.",
+        "logicLabel": "In short",
+        "logicValue": "Digital life → Story and reflection → Digital skills → Core dimensions → Digital literacy",
+        "targetLabel": "Target group",
+        "targetValue": "Current focus: children aged 10 to 12.",
+        "frameworkLabel": "Context",
+        "frameworkValue": "The model draws on DigComp (EU), MIL (UNESCO), and the Media Competence Framework NRW."
+      },
+      "ctaPrimary": "For parents →",
+      "ctaSecondary": "Explore stories →"
+    },
+    "transparency": {
+      "kicker": "Context",
+      "title": "How should this be understood?",
+      "body": "Amy Surfwing is its own educational model. It draws on existing competency frameworks but formulates its own working definition of digital literacy and translates it into a concrete learning format for children."
+    }
+  },
+  "navigation": {
+    "backToModel": "Back to learning format ↑",
+    "backToOverview": "To overview ↑",
+    "more": "More ↓",
+    "toPrinciples": "To educational foundation ↓"
+  },
+  "storyReflection": {
+    "kicker": "In depth",
+    "title": "Story and reflection",
+    "body": "Children learn most effectively when they don't just have situations explained to them, but experience them and reflect on them. This is exactly where Amy Surfwing comes in: real digital situations are made tangible through characters in an ongoing story.",
+    "body2": "An \"Amic\" connects a concrete situation from the chat story with a short reflection. Children transfer what happens to their own lives, put their own thoughts into words, and actively engage with possible courses of action. Learning happens not through instructions, but through active thinking.",
+    "aiNote": "Amy supports reflection moments with a local, offline-capable AI model. It classifies responses and provides appropriate feedback — without cloud connectivity, without data sharing."
+  },
+  "learningSpiral": {
+    "kicker": "In depth",
+    "title": "Learning spiral",
+    "body": "Digital literacy doesn't develop through a single moment of understanding, but through repeated engagement. Children encounter similar situations in different contexts, reflect on them, and gradually build more confidence.",
+    "body2": "The learning spiral describes this process: experiences are revisited, deepened, and applied to new situations. Children gradually expand their perspectives, their judgment, and their ability to make appropriate decisions in digital everyday life."
   }
 }

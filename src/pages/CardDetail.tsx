@@ -108,6 +108,7 @@ const autoOpen = Boolean(state?.autoOpen);
   title={isModal ? undefined : t('cards.title', { defaultValue: 'Freundebuch' })}
   backPath={isModal ? undefined : backPath}
   hideHeader={isModal}
+  hideFooter={isModal}
 >
 
         <div className="max-w-3xl mx-auto px-4 py-8">
@@ -178,6 +179,7 @@ return (
     title={isModal ? undefined : name}
     backPath={isModal ? undefined : backPath}
     hideHeader={isModal}
+    hideFooter={isModal}
   >
 
       <div className="max-w-3xl mx-auto px-4 py-6">

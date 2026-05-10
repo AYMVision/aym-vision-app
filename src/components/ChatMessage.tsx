@@ -286,19 +286,47 @@ function TimeStamp({ value, align = 'end' }: { value?: string; align?: 'end' | '
 interface ChatMessageProps {
   message: Message;
   onOpenBonusLink?: (payload: { linkTo: string; bonusId?: string }) => void;
+  onOpenLexikonTerm?: (termId: string) => void;
 }
 
+/** Parse [[termId]] tokens in text and return mixed array of strings + term spans */
+function renderWithLexikonTerms(
+  text: string,
+  onOpenLexikonTerm?: (termId: string) => void
+): React.ReactNode {
+  if (!onOpenLexikonTerm || !text.includes('[[')) return text;
+
+  const parts = text.split(/(\[\[[\w-]+\]\])/g);
+  return parts.map((part, i) => {
+    const match = part.match(/^\[\[([\w-]+)\]\]$/);
+    if (match) {
+      const termId = match[1];
+      return (
+        <button
+          key={i}
+          onClick={() => onOpenLexikonTerm(termId)}
+          className="inline underline decoration-dotted decoration-teal-500 text-teal-700 font-medium cursor-pointer"
+        >
+          {termId.replace(/-/g, ' ')}
+        </button>
+      );
+    }
+    return part;
+  });
+}
 
 function MessageBody({
   message,
   isMain,
   mainTextClass,
   chatName,
+  onOpenLexikonTerm,
 }: {
   message: Message;
   isMain: boolean;
   mainTextClass: string;
   chatName?: string;
+  onOpenLexikonTerm?: (termId: string) => void;
 }) {
   if (message.type === 'audio') {
     if (!message.audioSrc) return null;
@@ -320,14 +348,14 @@ function MessageBody({
 
   return (
     <p className={`text-lg min-w-0 break-words leading-relaxed ${isMain ? mainTextClass : 'text-anthracite-800'}`}>
-      {resolvedContent}
+      {renderWithLexikonTerms(resolvedContent, onOpenLexikonTerm)}
     </p>
   );
 }
 
 
 
-export default function ChatMessage({ message, onOpenBonusLink }: ChatMessageProps) {
+export default function ChatMessage({ message, onOpenBonusLink, onOpenLexikonTerm }: ChatMessageProps) {
   const { profile } = useProfile();
   const { t } = useTranslation('stories');
 
@@ -561,6 +589,7 @@ onClick={() => {
   isMain={true}
   mainTextClass="text-white"
   chatName={profile.chatName}
+  onOpenLexikonTerm={onOpenLexikonTerm}
 />
 
 
@@ -619,6 +648,7 @@ onClick={() => {
           isMain={isMain}
           mainTextClass={mainTheme.text}
           chatName={profile.chatName}
+          onOpenLexikonTerm={onOpenLexikonTerm}
         />
 
         <TimeStamp value={message.timestamp} align="start" />

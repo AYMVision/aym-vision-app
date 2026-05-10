@@ -201,18 +201,104 @@
     "ai": {
       "kicker": "AI support",
       "title": "What role does AI play?",
-      "intro": "Stories are written by humans. AI supports reflection.",
-      "description": "Amy helps children think further without judging.",
+      "intro": "The stories of Amy Surfwing are developed by real authors. The images in the story are created using AI. A special feature of Amy Surfwing: our owl Amy uses AI to support children in thinking and reflecting.",
+      "description": "Amy can pick up on thoughts, mirror perspectives, and encourage further thinking. It does not diagnose or make psychological assessments.",
       "safeAi": {
         "title": "Safe AI",
-        "text": "No diagnosis, no therapy, no replacement for adults."
-      }
+        "text": "The AI works within clear pedagogical guidelines. It does not make personal evaluations, give therapy recommendations, or replace conversations with adults."
+      },
+      "ctaModes": "Go to AI modes →",
+      "ctaImpressum": "Legal information in Impressum →",
+      "control": "You decide for yourself whether and how the AI should be active.",
+      "introShort": "Our owl Amy uses AI to support children in thinking and reflecting. The stories are developed by real authors.",
+      "modeTitle": "Choose AI mode",
+      "modes": {
+        "on": {
+          "title": "On",
+          "text": "The AI is active and supports reflection moments in the story. It responds contextually – not constantly, but where it is pedagogically meaningful. On older or less powerful devices, it may respond more slowly."
+        },
+        "auto": {
+          "title": "Auto",
+          "text": "The AI supports only when it is useful and technically stable. This is the recommended setting for most devices."
+        },
+        "off": {
+          "title": "Off",
+          "text": "The AI is turned off. The story still works fully and remains pedagogically sound – just without AI reflection prompts."
+        }
+      },
+      "changeHint": "You can change the mode at any time.",
+      "performanceHint": "If the app responds slowly or takes longer to load, we recommend \"Auto\" or \"Off\"."
     },
 
-    "warn": {
-      "kicker": "Note",
-      "title": "Conversations matter most",
-      "body": "Amy gives impulses—but real conversations help most."
+    "parentsCanDo": {
+      "kicker": "Support in everyday life",
+      "title": "What parents can do",
+      "items": {
+        "0": "Start together with the first episode – after that your child can continue independently.",
+        "1": "Ask: \"What would you do – and why?\" and also: \"How do you feel about it?\"",
+        "2": "Sharing the experience helps more than bans: talk about situations, not blame.",
+        "3": "If you wish, choose the AI mode (On/Auto/Off) to suit your child."
+      }
+    }
+  },
+
+  "accordions": {
+    "privacy": {
+      "title": "Data & Privacy",
+      "items": {
+        "0": "Progress and settings are stored locally on the device – not in a cloud.",
+        "1": "If the device is changed, reset, or lost, progress may be gone.",
+        "2": "This is intentional: we do not use accounts and collect no personal user data.",
+        "3": "The images in the app are created with AI support."
+      },
+      "footer": ""
+    },
+    "parentsRelief": {
+      "title": "Amy Surfwing supports parents",
+      "intro": "",
+      "items": {
+        "0": "No time-consuming preparation: topics are already presented in a child-friendly way.",
+        "1": "Short units: the daily episodes only take a few minutes.",
+        "2": "Clear structure: the stories address typical situations from digital everyday life.",
+        "3": "Child-friendly explanations: even complex topics like fake news or data protection are explained accessibly.",
+        "4": "Conversation starters arise naturally through questions and story situations."
+      },
+      "footer": ""
+    }
+  },
+
+  "warn": {
+    "kicker": "Note",
+    "title": "Conversations remain the most important part",
+    "body": "Amy Surfwing can provide prompts. When something is troubling, a calm conversation usually helps most."
+  },
+
+  "sidebar": {
+    "overview": {
+      "kicker": "Quick overview",
+      "whatTitle": "What is Amy Surfwing?",
+      "usp": "What makes Amy Surfwing special:",
+      "whatBody": "The new chat series for kids in an interactive story world. The learning app for media literacy, where kids think through situations online.",
+      "forWhoTitle": "Who is it for?",
+      "forWhoBody": "Recommended age: children between 10 and 12 years",
+      "principlesTitle": "",
+      "principles": {
+        "0": "📖 Story instead of lessons",
+        "1": "⏱️ 5 minutes instead of endless screen time",
+        "2": "🤔 Reflection instead of consumption",
+        "3": "🌐 Training for the digital world",
+        "4": "🌱 Age-appropriate instead of overwhelming",
+        "5": "🔒 Safe space instead of a social network"
+      }
+    },
+    "buttons": {
+      "faq": "Go to FAQ →",
+      "concept": "Educational concept →",
+      "settings": "Adult settings →"
+    },
+    "transparency": {
+      "kicker": "A safe space",
+      "body": "Amy Surfwing is intentionally not a social network. Content is not shared publicly. Progress stays locally on the device."
     }
   }
 }

@@ -257,6 +257,18 @@ export default function Profile() {
                 {t('bonus.hub.cards.title', { defaultValue: 'Freundebuch' })}
               </div>
             </Link>
+
+            <Link
+              to="/lexikon"
+              state={{ backTo: '/profile' }}
+              className="rounded-2xl border border-black/5 bg-gradient-to-br from-teal-50 via-white to-cyan-50 p-4 hover:shadow-md transition"
+              aria-label="Carlos' Lexikon öffnen"
+            >
+              <div className="text-3xl">📚</div>
+              <div className="mt-2 text-sm font-extrabold text-slate-900 leading-tight">
+                Carlos' Lexikon
+              </div>
+            </Link>
           </div>
         </div>
 

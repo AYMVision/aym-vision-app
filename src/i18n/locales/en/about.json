@@ -170,6 +170,80 @@
     }
   },
 
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "general": {
+      "label": "General",
+      "age": {
+        "question": "What age is Amy Surfwing suitable for?",
+        "answer": "Amy Surfwing is aimed at children from age 9. The topics and language are tailored to this age group — challenging enough to engage, but not overwhelming.",
+        "link": "More for parents →"
+      },
+      "topics": {
+        "question": "What topics does Amy Surfwing cover?",
+        "answer": "The topics come directly from children's digital everyday lives: cyberbullying, peer pressure, fake news, artificial intelligence, privacy, and manipulated images — embedded in an ongoing chat story.",
+        "link": "All topics on the parents page →"
+      },
+      "social": {
+        "question": "Can my child interact with other children?",
+        "answer": "No. Amy Surfwing is deliberately not a social network. Children read and experience the story world on their own. Content is not shared publicly, there are no chats with other users, and no visible profiles."
+      },
+      "costs": {
+        "question": "What does Amy Surfwing cost?",
+        "answer": "The first week is completely free — no sign-up, no credit card. More information about pricing will follow soon."
+      }
+    },
+    "parents": {
+      "label": "Parent area & settings",
+      "code": {
+        "question": "Where can I enter my code if I have one?",
+        "answer1": "You can enter unlock codes in the",
+        "answer2": "parent area under settings",
+        "answer3": ". Open the area, scroll to the",
+        "answer4": "\"Unlock code\"",
+        "answer5": "section and enter your code there."
+      },
+      "changePasscode": {
+        "question": "How do I change my parent passcode?",
+        "answer1": "In the",
+        "answer2": "parent area",
+        "answer3": "you'll find the",
+        "answer4": "\"Change passcode\"",
+        "answer5": "section. Enter your current passcode and the new one twice (at least 6 characters)."
+      },
+      "duration": {
+        "question": "How long does the parent area stay unlocked?",
+        "answer1": "After entering the correct passcode, the",
+        "answer2": "parent area",
+        "answer3": "stays open for 10 minutes. After that it locks automatically. You can also close it manually via",
+        "answer4": "\"Lock parent area\"",
+        "answer5": "."
+      },
+      "forgot": {
+        "question": "I forgot my parent passcode.",
+        "answer1": "Write to us at",
+        "answer2": "— we'll send you a reset code. Enter it in the",
+        "answer3": "parent area",
+        "answer4": "under",
+        "answer5": "\"Forgot passcode?\"",
+        "answer6": ". All learning progress and profile settings remain intact."
+      }
+    },
+    "data": {
+      "label": "Data & privacy",
+      "storage": {
+        "question": "What happens to my child's data?",
+        "answer": "All data — progress, stickers, profile settings — is stored exclusively locally on this device. No account is needed, no data is transferred to a cloud or shared with third parties."
+      },
+      "deviceSwitch": {
+        "question": "What happens if I switch devices or clear storage?",
+        "answer1": "Since everything is stored locally, progress and settings will be lost when switching devices or clearing browser storage. You can find an export function in the",
+        "answer2": "parent area",
+        "answer3": "."
+      }
+    }
+  },
+
   "cta": {
     "kicker": "Contact & collaboration",
     "title": "Would you like to get to know AYM VISION or work with us?",

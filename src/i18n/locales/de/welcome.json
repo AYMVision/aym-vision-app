@@ -12,7 +12,11 @@
     "badgeTime": "5 min täglich",
     "badgeAmy": "Chat-Story & mehr",
     "parentHint": "Elternteil?",
-    "parentHintLink": "Hier informieren & App einrichten →"
+    "parentHintLink": "Hier informieren & App einrichten →",
+    "introCta": "Amy Surfwing entdecken →",
+    "introKicker": "Dein Einstieg",
+    "introLabel": "Deine erste Story",
+    "introHint": "Keine Anmeldung nötig – einfach loslegen."
   },
 
   "about": {
@@ -29,6 +33,46 @@
       "5": "🔒 Sicherer Raum statt soziales Netzwerk"
     },
     "ctaParents": "Für Eltern →"
+  },
+
+  "onboarding": {
+    "welcome": {
+      "badge": "Amy Surfwing",
+      "imageAlt": "Yasmin, Carlos & Co",
+      "title": "Willkommen bei\nAmy Surfwing!",
+      "lead": "Entdecke die Geheimnisse von Yasmin, Carlos & Co. Mit Amy Surfwing meisterst du Challenges. Die Online Abenteuer warten auf dich.",
+      "badge0": "⏱️ 5 min täglich",
+      "badge1": "🎓 ab 9 Jahre",
+      "badge2": "💬 Chat & mehr",
+      "cta": "Weiter →"
+    },
+    "info": {
+      "title": "So läuft's ab",
+      "amicExplain": "💬 Ein Amic ist ein kurzes Chat-Kapitel — ⏱️ 5 min, 5× die Woche",
+      "feature0title": "Echte Themen",
+      "feature0body": "Fake News, KI, Cybermobbing — was Yasmin & Co. erleben, passiert auch im echten Leben.",
+      "feature1title": "Du bist dabei!",
+      "feature1body": "Du hast Zugang zum Klassenchat! Lies mit, was Yasmin & Co. wirklich erleben — und beantworte Fragen, die dich nachdenken lassen.",
+      "feature2title": "Extras warten auf dich",
+      "feature2body": "Nach jedem Amic warten Extras: Yasmins geheimes Tagebuch, die online Schüler-Zeitung und noch mehr.",
+      "cta": "Weiter →"
+    },
+    "avatar": {
+      "title": "Wähle deinen Avatar",
+      "hint": "Du kannst ihn jederzeit im Profil ändern.",
+      "soundLabel": "Töne",
+      "soundOn": "An",
+      "soundOff": "Aus",
+      "cta": "Weiter →"
+    },
+    "ready": {
+      "title": "Bereit!",
+      "lead": "Dein erstes Amic wartet. Schau, was in der Klasse gerade los ist.",
+      "remindersLabel": "Erinnere mich, wenn ein neues Amic wartet",
+      "ctaStart": "Jetzt starten →",
+      "ctaOverview": "Weitere Infos →",
+      "ctaParents": "Für Eltern →"
+    }
   },
 
   "entries": {

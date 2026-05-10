@@ -319,6 +319,62 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
 
 
 
+  // --- s1e03c03: Chioma Weekly 4 – David gegen Goliath ---
+  {
+    bonusId: 'weekly-4-david-gegen-goliath',
+    category: 'newspaper',
+    topicTags: ['infoCheck', 'reflect'],
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/weekly-4-david-gegen-goliath',
+    coverImage: 'media/newspaper/articles/weekly-4-david-gegen-goliath-1024.webp',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 's1e03c03' },
+    order: 55,
+  },
+
+  // --- s1e03c04: Carlos' Lexikon für die Schülerzeitung ---
+  {
+    bonusId: 'tip-carlos-schubert-lexikon',
+    category: 'newspaper',
+    topicTags: ['infoCheck', 'reflect'],
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/tip-carlos-schubert-lexikon',
+    coverImage: 'media/newspaper/articles/tip-carlos-schubert-lexikon-1024.webp',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 's1e03c04' },
+    order: 56,
+  },
+
+  // --- s1e03c07: Carlos – Die Tricks der Spiele ---
+  {
+    bonusId: 'tip-carlos-game-tricks',
+    category: 'newspaper',
+    topicTags: ['reflect', 'safe'],
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/tip-carlos-game-tricks',
+    coverImage: 'media/newspaper/articles/tip-carlos-game-tricks-1024.webp',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 's1e03c07' },
+    order: 57,
+  },
+
+  // --- s1e03c10: Jonas interviewt Tom – Offline-Inseln ---
+  {
+    bonusId: 'article-jonas-tom-offline-inseln',
+    category: 'newspaper',
+    topicTags: ['reflect', 'solve'],
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/article-jonas-tom-offline-inseln',
+    coverImage: 'media/newspaper/articles/article-jonas-tom-offline-inseln-1024.webp',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 's1e03c10' },
+    order: 58,
+  },
+
 //_________________________________________________________
 // TAGEBUCH-EINTRÄGE HIER EINTRAGEN
 //_________________________________________________________
