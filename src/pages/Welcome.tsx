@@ -2,6 +2,8 @@
 import React, { useMemo, useState } from 'react';
 import Layout from '../components/Layout';
 import BetaBanner from '../components/BetaBanner';
+import PwaTransferBanner from '../components/PwaTransferBanner';
+import { TransferStaleBanner } from '../components/TransferStaleWarning';
 import { assetUrl } from '../common/assetUrl';
 import SmartImage from '../components/SmartImage';
 import { Link, useNavigate } from 'react-router-dom';
@@ -130,6 +132,8 @@ function isUnlockedByChain(
     <Layout>
       <BetaBanner />
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        <PwaTransferBanner />
+        <TransferStaleBanner />
 {/* HERO */}
 <section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg bg-white">
   

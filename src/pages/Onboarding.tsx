@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { isStandalonePwa } from '../common/usePwaContext';
 import { useTranslation } from 'react-i18next';
 import { useProfile } from '../profile/useProfile';
 import { AVATAR_BASES } from '../data/avatars';
@@ -276,6 +277,27 @@ function ReadyStep({ onFinish }: { onFinish: (destination: 'story' | 'overview')
           {t('onboarding.ready.ctaParents')}
         </Link>
       </div>
+
+      {/* Install hint — only when not already in PWA mode */}
+      {!isStandalonePwa() && (
+        <div className="mt-5 w-full max-w-xs rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-base">📲</span>
+            <span className="text-xs font-bold text-slate-800">
+              {t('onboarding.ready.installTitle', { defaultValue: 'App zum Home-Bildschirm hinzufügen' })}
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 leading-relaxed mb-2">
+            {t('onboarding.ready.installHint', { defaultValue: 'So läuft Amy Surfwing wie eine richtige App – schneller und immer griffbereit.' })}
+          </p>
+          <Link
+            to="/install"
+            className="text-xs font-semibold text-[var(--color-teal-700)] hover:text-[var(--color-teal-900)]"
+          >
+            {t('onboarding.ready.installCta', { defaultValue: 'Anleitung ansehen →' })}
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

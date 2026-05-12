@@ -13,6 +13,8 @@ import { assetUrl } from '../common/assetUrl';
 
 import ParentGateDialog from '../components/ParentGateDialog';
 import { useLongPress } from '../common/useLongPress';
+import TransferExportPanel from '../components/TransferExportPanel';
+import TransferStaleWarning from '../components/TransferStaleWarning';
 import { STICKER_CATALOG } from '../progress/rewardCatalog';
 import AvatarLookCircle from '../components/AvatarLookCircle';
 import { THEME_META, THEME_ORDER } from '../competencies/themeMeta';
@@ -271,6 +273,32 @@ export default function Profile() {
             </Link>
           </div>
         </div>
+
+        {/* Transfer stale warning (only in PWA mode when link is old) */}
+        <div className="mt-4">
+          <TransferStaleWarning />
+        </div>
+
+        {/* Transfer-Link — Spielstand sichern */}
+        <details className="mt-0 group rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <summary className="flex cursor-pointer list-none items-center justify-between px-5 py-4 select-none">
+            <div className="flex items-center gap-3">
+              <span className="text-xl">🔗</span>
+              <div>
+                <div className="text-sm font-semibold text-slate-900">
+                  {t('transfer.title', { defaultValue: 'Spielstand sichern & übertragen' })}
+                </div>
+                <div className="text-xs text-slate-500">
+                  {t('transfer.subtitle', { defaultValue: 'Zwischen Browser und App wechseln' })}
+                </div>
+              </div>
+            </div>
+            <span className="text-slate-400 text-sm group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div className="border-t border-slate-100 px-5 py-5">
+            <TransferExportPanel />
+          </div>
+        </details>
 
         {/* Hidden entry (kid-safe, low attention) */}
 <div

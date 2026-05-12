@@ -22,6 +22,7 @@ import { applyUnlockCode } from '../gating/unlockCodes';
 import { canOpenTestSettings } from '../settings/testAccess';
 import { resetChildData, deleteAllData } from '../common/resetAym';
 import { exportBackup, importBackup } from '../common/backupRestore';
+import TransferExportPanel from '../components/TransferExportPanel';
 import { hasDiaryPin, resetDiaryPin } from '../diary/diaryPin';
 import { getConsentStatus, setConsent } from '../analytics/consent';
 import { getDecisionCount, clearAnalytics } from '../analytics/analyticsStore';
@@ -1369,6 +1370,29 @@ export default function AdultSettings() {
                       </button>
                     </>
                   )}
+                </div>
+              </section>
+
+              <section className="rounded-2xl border border-slate-200 bg-white p-5">
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {t('adult:transfer.title', { defaultValue: 'Spielstand übertragen' })}
+                </h3>
+                <p className="mt-1 text-sm text-slate-600">
+                  {t('adult:transfer.body', {
+                    defaultValue:
+                      'Übertrage Fortschritt und Einstellungen zwischen Browser und App oder auf ein anderes Gerät – per Link, ohne Datei.',
+                  })}
+                </p>
+                <div className="mt-5">
+                  <TransferExportPanel />
+                </div>
+                <div className="mt-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-600 leading-relaxed">
+                  📲{' '}
+                  <strong>App noch nicht installiert?</strong>{' '}
+                  Als installierte App auf dem Home-Bildschirm läuft Amy Surfwing schneller und der Spielstand bleibt stabiler.{' '}
+                  <Link to="/install" className="font-semibold text-[var(--color-teal-700)] hover:underline">
+                    Anleitung ansehen →
+                  </Link>
                 </div>
               </section>
 

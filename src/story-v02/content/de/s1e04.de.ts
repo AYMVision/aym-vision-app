@@ -5,7 +5,7 @@ import { amyChat, m, S, C } from '../storyBuilder';
 const c01 = C('s1e04c01', 0, 'Amic 1', 'Bald verfügbar', [
   S('s1e04c01_story_placeholder', [
     amyChat(),
-    m(ch.amy, 'Diese Episode ist bald verfügbar.'),
+    m(ch.amy, 'Neue Episode jeden Freitag.'),
   ]),
 ]);
 

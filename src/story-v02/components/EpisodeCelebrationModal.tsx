@@ -3,6 +3,7 @@
 // Konfetti + Sticker-Reveal + Buttons.
 
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { assetUrl } from '../../common/assetUrl';
 
 // ---------------------------------------------------------------------------
@@ -203,6 +204,15 @@ export default function EpisodeCelebrationModal({
               Weiter
             </button>
           </div>
+
+          {/* Transfer reminder */}
+          <Link
+            to="/profile"
+            onClick={onContinue}
+            className="mt-1 text-xs text-violet-300 hover:text-violet-100 underline underline-offset-2"
+          >
+            🔗 Spielstand sichern & übertragen
+          </Link>
         </div>
       </div>
     </>
