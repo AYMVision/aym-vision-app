@@ -1,0 +1,1 @@
+import{S as e}from"./characters-C97xzR_X.js";import{C as s,S as a,f as o,m as r}from"./storyBuilder-CIkirpFk.js";const d=s("s1e05c01",0,"Amic 1","Bald verfügbar",[a("s1e05c01_story_placeholder",[o(),r(e.amy,"Neue Episode jeden Freitag.")])]),m={id:"s1e05",seasonId:"s1",episodeId:"s1e05",courseId:"s1e05",chapters:[d]};export{m as default};
