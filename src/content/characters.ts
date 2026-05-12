@@ -378,6 +378,7 @@ amir: {
 },
 
 
+
 } as const satisfies Record<string, CharacterEx>;
 
 

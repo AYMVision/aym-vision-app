@@ -94,10 +94,9 @@ const CHARACTER_UNLOCKS_BY_CHAPTER: Record<string, CharacterId[]> = {
   // s1e01: bonusLink für Yasmin feuert in c02 → c02 noch nicht abgeschlossen beim Feuern
   // → Marker-Fallback greift; nach Kapitelabschluss via completedChapters gesichert
   s1e01c02: ['yasmin'],  // bonusLink in c02 (Yasmin schreibt Freundebuch)
-  s1e01c08: ['lukas'],   // bonusLink in c08 (Lukas schreibt Freundebuch)
+  s1e01c04: ['lukas'],   // bonusLink in c08 (Lukas schreibt Freundebuch)
 
   // s1e02
-  s1e02c01: ['dominik'], // bonusLink früh in c01 → Marker-Fallback
   s1e02c04: ['alvarez'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
   s1e02c06: ['chioma'],  // bonusLink in c06 (Chioma schreibt Freundebuch)
   s1e02c09: ['carlos'],  // bonusLink in c09 (Carlos schreibt Freundebuch)
@@ -318,6 +317,23 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
 },
 
 
+
+  // --- s1e03c03: Chioma Weekly – David gegen Goliath (Audio) ---
+  {
+    bonusId: 'chioma-news-david-goliath-audio',
+    category: 'newspaper',
+    released: true,
+    order: 7,
+    mediaType: 'audio',
+    titleKey: 'bonus:newspaper.currentNews.davidGoliath.title',
+    descriptionKey: 'bonus:newspaper.currentNews.davidGoliath.description',
+    coverImage: 'media/newspaper/audio/kw15_26_audio_chiomas-news-school-david-Goliath-s1e03c03-1024.webp',
+    audioSrc: 'media/newspaper/audio/kw15_26_audio_chiomas-news-school-david-Goliath-s1e03c03.mp3',
+    bodySrc: 'media/newspaper/articles/news/kw15_26_audio_chiomas-news-school-david-Goliath-s1e03c03',
+    bodyKind: 'md',
+    topicTags: ['infoCheck', 'reflect'],
+    unlockedBy: { type: 'chapter', id: 's1e03c03' },
+  },
 
   // --- s1e03c03: Chioma Weekly 4 – David gegen Goliath ---
   {

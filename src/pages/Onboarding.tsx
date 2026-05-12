@@ -121,11 +121,14 @@ function InfoStep({ onNext }: { onNext: () => void }) {
         {t('onboarding.info.title')}
       </h2>
 
-      <div className="bg-teal-50 border border-teal-100 rounded-xl px-4 py-2.5 text-sm text-teal-800 leading-snug mb-4">
-        {t('onboarding.info.amicExplain')}
-      </div>
-
       <div className="flex flex-col gap-3 mb-5">
+        <div className="flex gap-3 items-start bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+          <span className="text-2xl leading-none mt-0.5">💬</span>
+          <div>
+            <div className="text-sm font-bold text-slate-900">{t('onboarding.info.amicTitle')}</div>
+            <div className="text-xs text-slate-600 mt-0.5 leading-snug">{t('onboarding.info.amicExplain')}</div>
+          </div>
+        </div>
         {features.map(f => (
           <div key={f.titleKey} className="flex gap-3 items-start bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
             <span className="text-2xl leading-none mt-0.5">{f.emoji}</span>

@@ -410,7 +410,7 @@ export default function StoryV02() {
       const el = scrollRef.current;
       const wanted = pendingReturnScrollRef.current;
 
-      if (!el || wanted == null) {
+      if (wanted == null) {
         if (restoreScrollTimerRef.current != null) {
           clearInterval(restoreScrollTimerRef.current);
           restoreScrollTimerRef.current = null;
@@ -418,8 +418,24 @@ export default function StoryV02() {
         return;
       }
 
+      if (!el) {
+        // Phone not yet mounted (episode still loading) — keep polling until it appears.
+        if (tries >= maxTries) {
+          pendingReturnScrollRef.current = null;
+          if (restoreScrollTimerRef.current != null) {
+            clearInterval(restoreScrollTimerRef.current);
+            restoreScrollTimerRef.current = null;
+          }
+        }
+        return;
+      }
+
       const maxScrollable = Math.max(0, el.scrollHeight - el.clientHeight);
       const clamped = Math.min(wanted, maxScrollable);
+
+      if (import.meta.env.DEV && tries <= 3) {
+        console.log(`[V02] restoreScroll apply #${tries}:`, { wanted, clamped, maxScrollable, scrollTopBefore: el.scrollTop });
+      }
 
       el.scrollTop = clamped;
 
@@ -491,7 +507,9 @@ function hasStoryMigrationDone(key: string): boolean {
 
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => el.removeEventListener('scroll', onScroll);
-  }, [location.key, courseId]);
+  // episode als Dependency: wenn es nach dem Mount async lädt, ist scrollRef.current erst
+  // dann != null — Effect muss neu laufen, um den Listener anzuhängen.
+  }, [location.key, courseId, episode]);
 
   // Interval aufräumen wenn Komponente unmountet
   useLayoutEffect(() => {
@@ -765,11 +783,23 @@ function hasStoryMigrationDone(key: string): boolean {
   // iOS Safari resettet scrollTop beim Entfernen von position:fixed Elementen genau beim Paint.
   useLayoutEffect(() => {
     if (backgroundLocation !== null) return; // Modal noch offen oder nie geöffnet
-    const pos = modalReturnScrollRef.current;
+    // Primary: position saved synchronously in handleOpenBonusLink.
+    // Fallback: module-level scroll map (updated on every scroll event, survives re-renders).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const pos = modalReturnScrollRef.current ?? storyScrollPositions.get(location.key) ?? null;
+    if (import.meta.env.DEV) {
+      console.log('[V02] modal closed, restoring scroll:', {
+        pos,
+        ref: modalReturnScrollRef.current,
+        map: storyScrollPositions.get(location.key),
+        locationKey: location.key,
+        scrollTopNow: scrollRef.current?.scrollTop,
+      });
+    }
     if (pos === null) return;
     modalReturnScrollRef.current = null;
     if (pos > 0) restoreScrollToValue(pos);
-  }, [backgroundLocation]);
+  }, [backgroundLocation]); // location.key is stable for same history entry — intentionally omitted
 
   // Nach "Weiter"-Klick: scroll zum ersten neuen Eintrag, aber erst wenn die
   // Story-Step-Kaskade fertig ist (currentStep ist kein 'story'-Typ mehr).
@@ -1118,7 +1148,18 @@ function hasStoryMigrationDone(key: string): boolean {
 
     // Scrollposition vor dem Öffnen des Modals sichern.
     // Wird wiederhergestellt, sobald backgroundLocation wieder null wird (Modal geschlossen).
-    modalReturnScrollRef.current = scrollRef.current?.scrollTop ?? 0;
+    const _scrollPos = scrollRef.current?.scrollTop ?? 0;
+    modalReturnScrollRef.current = _scrollPos;
+    // Auch in sessionStorage/localStorage sichern — überlebt einen Remount (z.B. wenn
+    // die Story nach Schließen des Modals neu mountet weil backgroundLocation nicht korrekt erhalten blieb).
+    if (_scrollPos > 0) {
+      const ssKey = `aym_story_scroll_${courseId}_${routeChapterId ?? ''}`;
+      try { sessionStorage.setItem(ssKey, String(_scrollPos)); } catch { /* ignore */ }
+      try { localStorage.setItem(ssKey, String(_scrollPos)); } catch { /* ignore */ }
+    }
+    if (import.meta.env.DEV) {
+      console.log('[V02] openBonusLink: saving scroll', { scrollPos: _scrollPos, scrollRefEl: scrollRef.current });
+    }
 
     if (payload.bonusId) {
       unlockBonusById(payload.bonusId);

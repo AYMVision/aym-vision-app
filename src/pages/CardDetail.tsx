@@ -184,26 +184,17 @@ return (
 
       <div className="max-w-3xl mx-auto px-4 py-6">
         {isModal ? (
-  <div className="mb-3 flex items-center justify-between">
-    <button
-      type="button"
-      onClick={() => navigate(-1)}
-      className="text-sm font-extrabold text-[var(--color-teal-900)]"
-    >
-      ← {t('cards.backToStory', { defaultValue: 'Zurück zur Story' })}
-    </button>
-
-<button
-  type="button"
-  onClick={() =>
-    navigate('/cards', { state: { backgroundLocation: state?.backgroundLocation, backTo: state?.backTo } })
-  }
-  className="text-sm font-semibold text-slate-700 underline"
->
-  {t('cards.backToList', { defaultValue: 'Zur Übersicht' })}
-</button>
-  </div>
-) : null}
+          <div className="mb-3 flex justify-end">
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              aria-label="Schließen"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition-colors text-base leading-none"
+            >
+              ✕
+            </button>
+          </div>
+        ) : null}
 
         <div className="rounded-3xl border border-black/5 bg-white shadow-sm overflow-hidden">
           {/* Portrait: NICHT crop — mit Rand & object-contain */}

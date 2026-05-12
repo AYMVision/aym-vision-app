@@ -83,7 +83,7 @@ export default function RewardToast({ reward, onDismiss }: Props) {
       >
         {/* Header */}
         <div style={{ fontSize: '13px', fontWeight: 700, color: '#be123c', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-          Geschafft! Deine Belohnung wartet!
+          Amic geschafft! ✨
         </div>
 
         {/* Stickers */}

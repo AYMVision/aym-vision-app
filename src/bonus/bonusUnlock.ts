@@ -1,6 +1,7 @@
 // src/bonus/bonusUnlock.ts
 import type { BonusItem } from './bonusIndex';
 import { isBonusMarkerUnlocked } from './bonusSeen';
+import { shouldBypassAll } from '../gating/entitlements';
 
 export interface BonusProgressSnapshot {
   seenChapterIds: string[]; // z.B. ['s1e01c01','s1e01c02',...]
@@ -8,7 +9,10 @@ export interface BonusProgressSnapshot {
 }
 
 export function isBonusUnlocked(item: BonusItem, progress: BonusProgressSnapshot): boolean {
-    if (item.category === 'characters' && item.characterId === 'amy') {
+  // AMY-DEV: alles freischalten (Story-Kapitel + alle Bonus-Inhalte)
+  if (shouldBypassAll()) return true;
+
+  if (item.category === 'characters' && item.characterId === 'amy') {
     return true;
   }
   // Behalte dein bisheriges Konzept bei: released muss true sein

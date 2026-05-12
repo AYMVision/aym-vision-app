@@ -48,7 +48,8 @@
     },
     "info": {
       "title": "Here's how it works",
-      "amicExplain": "💬 An Amic is a short chat chapter — ⏱️ 5 min, 5× a week",
+      "amicTitle": "An Amic is…",
+      "amicExplain": "A short chat chapter — 5 minutes, 5× a week.",
       "feature0title": "Real topics",
       "feature0body": "Fake news, AI, cyberbullying — what Yasmin & Co. experience also happens in real life.",
       "feature1title": "You're right there!",

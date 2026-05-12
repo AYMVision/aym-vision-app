@@ -75,6 +75,10 @@
       "socialMedia": {
         "title": "Social Media in der Schule – Fluch oder Segen?",
         "description": "Chioma fragt nach: Was passiert, wenn Likes und Follower in den Schulalltag einziehen?"
+      },
+      "davidGoliath": {
+        "title": "David gegen Goliath – Wer hat Recht?",
+        "description": "Chioma denkt nach: Was hat eine alte Geschichte mit einer Schulsituation zu tun – und auf welcher Seite stehst du?"
       }
     },
 
@@ -178,12 +182,43 @@
       "writeHint": "Schreib einfach drauflos. Danach kannst du Sticker draufkleben.",
       "placeholder": "Heute war…",
       "save": "Seite speichern",
-      "localOnly": "🔒 Dein Tagebuch bleibt auf diesem Gerät. Wir können es nicht einsehen.  👀 Aber wer dein Handy nutzt können es sehen. 💡 Schreib nichts hinein, was sehr privat ist.",
+      "localOnly": "🔒 Dein Tagebuch bleibt auf diesem Gerät. Wir können es nicht einsehen. Aber wer dein Handy nutzt 👀 könnte es lesen. 💡 Schreib nichts hinein, was sehr privat ist.",
       "pagesTitle": "Deine Seiten",
       "noPages": "Noch keine Einträge. Schreib deine erste Seite oben.",
       "canvasTitle": "Sticker & Seite",
       "pickPage": "Wähle links eine Seite aus.",
-      "dragHint": "Sticker ziehen: Finger oder Maus."
+      "dragHint": "Sticker verschieben: einfach ziehen. Größe ändern: zwei Finger zusammen- oder auseinanderziehen. Entfernen: antippen, dann ✕.",
+      "newPage": "Neue Seite",
+      "stickerLabel": "Sticker auf deine Seite kleben:",
+      "stickerPositionLabel": "Sticker positionieren:",
+      "stickerCount": "{{count}} Sticker ausgewählt",
+      "stickerRemoveAll": "Alle entfernen",
+      "stickerCountInList": "{{count}} Sticker",
+      "deleteConfirm": "Wirklich löschen?",
+      "deleteYes": "Ja, löschen",
+      "deleteNo": "Nein",
+      "editButton": "Bearbeiten",
+      "editSave": "Speichern",
+      "editCancel": "Abbrechen",
+      "pinHintNote": "Hinweis:",
+      "pinHintBody": "Du kannst auch einen PIN hinzufügen.",
+      "pinSetupLink": "Jetzt mit PIN schützen →",
+      "dailyPrompts": [
+        "Heute war…",
+        "Was hat dich heute zum Lachen gebracht?",
+        "Was war heute schwierig für dich?",
+        "Wer war heute besonders nett zu dir?",
+        "Worüber hast du heute nachgedacht?",
+        "Was würdest du heute gerne nochmal erleben?",
+        "Was hast du heute Neues gelernt?",
+        "Was hat dich heute überrascht?",
+        "Was macht dich heute glücklich?",
+        "Wie hast du dich heute gefühlt?",
+        "Was wünschst du dir für morgen?",
+        "Mit wem hast du heute gelacht?",
+        "Was war der beste Moment heute?",
+        "Welche Gedanken beschäftigen dich gerade?"
+      ]
     }
 
   },
@@ -449,6 +484,7 @@
       "funFact": "Ich benutze beim Erklären manchmal Schachbegriffe. Nicht absichtlich. Passiert einfach."
     }
 },
+
 "finn": {
   "name": "Finn",
   "friendbook": {

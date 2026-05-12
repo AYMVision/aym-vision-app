@@ -19,6 +19,7 @@ const noah = (ch as any).noah ?? { id: 'noah', name: 'Noah', avatar: 'noah' };
 const farida = (ch as any).farida ?? { id: 'farida', name: 'Farida', avatar: 'farida' };
 const amir = (ch as any).amir ?? { id: 'amir', name: 'Amir', avatar: 'amir' };
 const emma = (ch as any).emma ?? { id: 'emma', name: 'Emma', avatar: 'emma' };
+const gameFreund = { id: 'game-freund', name: 'Game-Freund', avatar: 'game-freund' };
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CHAPTER 1 — Finn on Fire
@@ -44,7 +45,7 @@ const c01 = C('s1e03c01', 0, 'Amic 1', 'Finn on Fire', [
     m(ch.markus, 'Noch so ein Video, bro!', '19:30'),
     m(ch.finn, '▶️', '19:34'),
     m(ch.mia, 'Genug gespamt!', '19:36'),
-    m(ch.chioma, 'Mia hat recht. Ist doch schon spät 😴.', '19:40'),
+    audio(ch.chioma, '/media/story/episodes/s1e03/chiomas-sprachnachricht-s1e03c01.mp3', '19:40'),
     m(ch.tom, 'Ich komme grad aus dem Stall und sehe dies:', '19:45'),
     m(ch.tom, 'weitergeleitet: 🔔 67 neue Nachrichten', '19:46'),
     m(ch.tom, '😲 Habt ihr nichts Richtiges zu tun?', '19:46'),
@@ -68,7 +69,7 @@ const c01 = C('s1e03c01', 0, 'Amic 1', 'Finn on Fire', [
     m(ch.tom, 'Hast du mal gesehen, bis wann Finn nachts online ist? 🤔', '7:20'),
     m(ch.mia, 'kp. Er war doch schon immer Gamer.', '7:21'),
     m(ch.tom, 'Aber nicht so..', '7:21'),
-    m(ch.tom, 'Irgendwas ist anders.', '7:22'),
+    m(ch.tom, 'Irgendwas ist anders. 🤔', '7:22'),
     m(ch.mia, 'Hm', '7:22'),
     m(ch.tom, 'Wann war er das letzte Mal mit uns Skaten? 🤔', '7:23'),
     m(ch.mia, 'Das ist ewig her.', '7:23'),
@@ -111,22 +112,22 @@ const c01 = C('s1e03c01', 0, 'Amic 1', 'Finn on Fire', [
   S('s1e03c01_story_finn_game_friend', [
     privateChat('Finn', 'Game-Freund'),
     m(ch.finn, 'ich muss weg', '14:53'),
-    m({ id: 'game-freund', name: 'Game-Freund', avatar: 'game-freund' } as any, 'Bro nicht jetzt', '14:53'),
-    m({ id: 'game-freund', name: 'Game-Freund', avatar: 'game-freund' } as any, 'Wir sind mitten im Battle', '14:54'),
+    m(gameFreund as any, 'Bro nicht jetzt', '14:53'),
+    m(gameFreund as any, 'Wir sind mitten im Battle', '14:54'),
     m(ch.finn, 'ich muss los', '14:54'),
-    m({ id: 'game-freund', name: 'Game-Freund', avatar: 'game-freund' } as any, 'Das kannst du nicht machen. Ohne dich sind wir lost', '14:55'),
-    m({ id: 'game-freund', name: 'Game-Freund', avatar: 'game-freund' } as any, 'Zieh durch. Danach kannst du ja gehen', '14:55'),
+    m(gameFreund as any, 'Das kannst du nicht machen. Ohne dich sind wir lost', '14:55'),
+    m(gameFreund as any, 'Zieh durch. Danach kannst du ja gehen', '14:55'),
     m(ch.finn, 'ok. aber nur noch kurz', '14:56'),
     divider('Später'),
     m(ch.finn, 'waaas? schon so spät???', '17:12'),
     m(ch.finn, 'mist. hab meine verabredung verpasst', '17:12'),
-    m({ id: 'game-freund', name: 'Game-Freund', avatar: 'game-freund' } as any, 'Reg dich nicht auf. Wir haben doch gewonnen 🔥', '17:13'),
+    m(gameFreund as any, 'Reg dich nicht auf. Wir haben doch gewonnen 🔥', '17:13'),
     m(ch.finn, 'jetzt ist eh zu spät', '17:13'),
   ], ['talk-act', 'self-regulation' as any]),
 
   S('s1e03c01_story_finn_dm', [
     privateChat('Finn', 'Du'),
-    m(ch.finn, '@{{chatName}} hab hier die karte für dich ausgefüllt: Charakterkarte Finn', '17:14'),
+    m(ch.finn, '@{{chatName}} hab hier die karte für dich ausgefüllt', '17:14'),
     bonusLink('char-finn', 'Charakterkarte Finn', '/cards/char-finn', 'Karte ansehen →'),
   ], ['talk-act']),
 
@@ -280,8 +281,13 @@ const c02 = C('s1e03c02', 1, 'Amic 2', 'Immer noch online', [
 
   AR('s1e03c02_amy_reaction_handle_finn', 's1e03c02_reflection_handle_finn'),
 
+  S('s1e03c02_story_amy_intro_mia_diary', [
+    amyChat(),
+    m(ch.amy, 'In Mia Tagebuch erfährst du, was Mia denkt.'),
+  ], ['reflect-understand']),
+
   S('s1e03c02_story_mia_diary_bonus', [
-    bonusLink('diary-mia-entry1', 'Tagebuch Mia – 1. Eintrag', '/diaries/diary_mia?entry=s1e03c02_0001', 'Eintrag öffnen →'),
+    bonusLink('diary-mia-entry4', 'Tagebuch Mia – 1. Eintrag', '/diaries/diary_mia?entry=s1e03c02_0004', 'Eintrag öffnen →'),
   ]),
 ]);
 
@@ -296,12 +302,12 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
     classChat(),
     m(ch.yasmin, 'Gestern habe ich ein voll gutes Video gesehen.', '15:28'),
     m(ch.yasmin, 'Zu unserem Thema in Geschichte.', '15:28'),
-    m(ch.yasmin, 'Jetzt finde ich es nicht mehr.', '15:29'),
+    m(ch.yasmin, 'Jetzt finde ich es nicht mehr. 🙄', '15:29'),
     m(noah, 'Worum geht es denn?', '15:29'),
     m(ch.yasmin, 'Römisches Reich. Das war voll einfach erklärt.', '15:29'),
     m(noah, 'Hier, ich hab´s sofort.', '15:30'),
     m(noah, 'Aber danach kommen nur noch Basketball-Videos.', '15:30'),
-    m(ch.yasmin, 'Ich finde nur andere Videos…', '15:31'),
+    m(ch.yasmin, 'Ich finde nur andere Videos… 😩', '15:31'),
     m(ch.yasmin, 'und dann wieder nur Mode und Make-up.', '15:31'),
     m(ch.yasmin, 'Nicht, dass ich was dagegen hätte 😉', '15:31'),
     m(ch.yasmin, "Jetzt hab ich's. Ist nur heute viel weiter unten.", '15:32'),
@@ -319,9 +325,9 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
     m(ch.lukas, 'Oder er weiß, wie er dich festhält.', '15:36'),
     m(ch.finn, '🤔 könnte was dran sein', '15:36'),
     m(ch.lisa, 'Das ist ja voll spooky 👻', '15:36'),
-    m(ch.yasmin, 'Ich versteh gar nichts mehr. Wo ist jetzt mein Video?', '15:37'),
+    m(ch.yasmin, 'Ich versteh gar nichts mehr. Wo ist jetzt mein Video? 😤', '15:37'),
     m(ch.lukas, 'Wenn du genau eingibst, was du suchst, findest du es auch. Es ist vielleicht weiter unten… der Algorithmus entscheidet nur, was zuerst kommt.', '15:37'),
-    m(ch.yasmin, 'Wer ist dieser Algorithmus jetzt schon wieder?', '15:38'),
+    m(ch.yasmin, 'Wer ist dieser Algorithmus jetzt schon wieder? 🤔', '15:38'),
     m(ch.carlos, 'Das ist kein Mensch. Das ist eine Regel der App, die entscheidet, was du zuerst siehst. Ein [[algorithmus]] ist eine Anleitung. Die App merkt sich, was du magst, und zeigt dir mehr davon.', '15:38'),
     m(ch.yasmin, 'Warum?', '15:39'),
     m(ch.lukas, 'Die App will, dass du möglichst lange bleibst und viele Videos anschaust. Denn, wer sich langweilt, klickt weg.', '15:39'),
@@ -342,8 +348,7 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
     m(ch.carlos, 'Die Schubert versteht vielleicht etwas von Genitiv und Goethe, aber von Algorithmen? 😂', '15:44'),
     m(ch.chioma, 'Das Wort muss sie erst mal im Wörterbuch nachschlagen 😅', '15:45', { reactions: [R('😂')] }),
     m(ch.carlos, 'Ein Lexikon für unsere Klassenlehrerin? 🤔 Das wäre keine schlechte Idee.', '15:45'),
-    bonusLink('lexikon', 'Carlos\' Lexikon', '/lexikon', 'Lexikon öffnen →'),
-    m(ch.yasmin, 'Aha. Da ist es ja. Mein Video ist nur viel weiter nach unten gerutscht.', '15:46'),
+    m(ch.yasmin, 'Aha. Da ist es ja. 😅 Mein Video ist nur viel weiter nach unten gerutscht.', '15:46'),
   ], ['info-check', 'reflect-understand', 'talk-act']),
 
   S('s1e03c03_story_switch_to_amy', [
@@ -374,13 +379,11 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
   ),
 
   S('s1e03c03_story_challenge_intro', [
-    m(ch.amy, 'Lust auf ein kleines Duell? 💪'),
-    m(ch.amy, 'Du gegen den Algorithmus:'),
-    m(ch.amy, 'Er will, dass du weiterscrollst.'),
+    m(ch.amy, 'Lust auf ein kleines Duell? 💪 Du gegen den Algorithmus: Er will, dass du weiterscrollst.'),
   ], ['problem-solving']),
 
   CH('s1e03c03_challenge_algorithm_exit',
-    '👉 Schaffst du es, einmal auszusteigen?',
+    '👉 Schaffst du es, trotzdem einfach auszusteigen?',
   ),
 
   inp('s1e03c03_input_after_challenge', 'stories:s1e03.c03.input.afterChallenge', {
@@ -388,9 +391,12 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
     promptSpeakerId: 'amy',
   }),
 
-  S('s1e03c03_story_newspaper_bonus', [
-    bonusLink('weekly-4-david-gegen-goliath', 'Schülerzeitung: Chioma: Weekly 4 - David gegen Goliath', '/newspaper/weekly-4-david-gegen-goliath', 'Artikel öffnen →'),
-  ], ['info-check']),
+  S('s1e03c03_story_newsroom_audio', [
+    privateChat('Aylin', 'Carlos', 'Jonas', 'Chioma'),
+    m(ch.chioma, 'Ich hab zum Artikel auch noch ein Weekly aufgenommen. Falls ihr reinhören wollt 🎧', '15:50'),
+    bonusLink('chioma-news-david-goliath-audio', 'Chiomas Weekly: David gegen Goliath (Audio)', '/newspaper/chioma-news-david-goliath-audio', 'Anhören →'),
+    m(ch.jonas, 'Oh nice. Direkt liefern. 👌', '15:50', { reactions: [R('🎧')] }),
+  ], ['talk-act', 'info-check']),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -605,7 +611,7 @@ const c05 = C('s1e03c05', 4, 'Amic 5', 'Das Handy', [
 
   S('s1e03c05_story_schubert_card', [
     m(ch.mia, '@{{chatName}}, du kennst die Schubert ja gar noch nicht.'),
-    m(ch.mia, 'Hier ein paar Infos über sie: Charakterkarte Schubert'),
+    m(ch.mia, 'Hier ein paar Infos über sie'),
     bonusLink('char-schubert', 'Charakterkarte Schubert', '/cards/char-schubert', 'Karte ansehen →'),
   ], ['talk-act']),
 
@@ -718,7 +724,7 @@ const c06 = C('s1e03c06', 5, 'Amic 6', 'Offline-Zeit', [
     m(ch.chioma, 'Kurze Idee an alle.', '14:40'),
     m(ch.chioma, 'Wie wäre es mit einer freiwilligen Offline-Zeit?', '14:40'),
     m(ch.finn, 'wozu das?', '14:41'),
-    m(ch.mia, 'Ich lass mir nichts vorschreiben.', '14:41'),
+    m(ch.mia, 'Ich lass mir nichts vorschreiben. 🙄', '14:41'),
     m(ch.chioma, 'Es schreibt dir ja niemand etwas vor.', '14:42'),
     m(ch.mia, 'Doch, das versuchst du doch gerade.', '14:42'),
     m(ch.mia, 'Und nur weil manche in der Klasse ihr Handy nicht im Griff haben, brauch ich nicht gleich neue Regeln.', '14:43'),
@@ -845,7 +851,7 @@ const c07 = C('s1e03c07', 6, 'Amic 7', 'Event', [
     m(ch.dominik, 'Oder muss Geld dafür zahlen.', '13:50'),
     m(ch.dominik, 'Klassiker.', '13:50'),
     m(ch.tom, 'Moment mal.', '13:51'),
-    m(ch.tom, 'Das ist doch Absicht.', '13:51'),
+    m(ch.tom, 'Das ist doch Absicht. 🤔', '13:51'),
     m(ch.finn, 'hä?', '13:51'),
     m(ch.tom, 'Damit du auf jeden Fall wieder spielst.', '13:52'),
     m(ch.carlos, 'Tom hat recht.', '13:52'),

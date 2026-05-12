@@ -165,14 +165,6 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Sommerferien', [
     bonusLink('diary-yasmin-entry1', 'Tagebucheintrag Yasmin – 1. Eintrag',
       '/diaries/diary_yasmin?entry=s1e01c01_0001', 'Eintrag öffnen →'),
   ]),
-    S('s1e01c01_story_amy_intro_me_diary', [
-    m(ch.amy, 'Du kannst auch dein eigenes Tagebuch schreiben und deine Gedanken festhalten.'),
-  ]),
-
-  S('s1e01c01_story_my_diary_bonus', [
-    bonusLink('diary-me', 'Mein Tagebuch',
-      '/diaries/diary_me', 'Tagebuch öffnen →'),
-  ]),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -373,6 +365,12 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
   S('s1e01c03_story_amy_wrapup', [
     m(ch.amy, 'Mal sehen, wie Yasmin sich entscheidet – und auf welche Idee sie plötzlich kommt.'),
   ], ['reflect-understand']),
+
+  S('s1e01c03_story_lukas_friendbook', [
+    privateChat('Du', 'Yasmin'),
+    m(ch.yasmin, 'Ja, wirklich, ich weiß nicht…', '14:25'),
+    m(ch.yasmin, 'Übrigens... Ich hab Lukas auch gefragt, ob er dir ins Freundebuch schreibt. Er gibt\'s dir gleich morgen', '14:26'),
+  ], ['talk-act']),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -380,6 +378,13 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const c04 = C('s1e01c04', 3, 'Amic 4', 'Am Wasserfall', [
+
+  S('s1e01c04_story_lukas_friendbook', [
+    privateChat('Du', 'Lukas', 'Yasmin'),
+    m(ch.lukas, 'Hi {{chatName}}, hier: Charakterkarte Lukas . Ich habe mich in deinem Freundebuch verewigt.', '15:40'),
+    bonusLink('char-lukas', 'Charakterkarte Lukas', '/cards/char-lukas', 'Karte ansehen →'),
+    m(ch.yasmin, 'Hi {{chatName}}, wie geht\'s?', '15:44'),
+  ], ['talk-act']),
 
   S('s1e01c04_story_groupchat_waterfall', [
     privateChat('Igor', 'Lukas', 'Yasmin'),
@@ -455,7 +460,11 @@ const c04 = C('s1e01c04', 3, 'Amic 4', 'Am Wasserfall', [
     m(ch.yasmin, 'Warte… Ich habe ´ne Idee. Vielleicht kannst du mir kurz helfen. Du kennst dich doch gut mit KI aus.', '15:37'),
     m(ch.yasmin, 'Aylin? Bist du online?', '15:37'),
   ], ['reflect-understand', 'talk-act']),
+
 ]);
+
+
+ 
 
 // ─────────────────────────────────────────────────────────────────────────────
 // KAPITEL 5 — Das Bild
@@ -535,6 +544,23 @@ S('s1e01c05_story_amy_tip_emergency_help', [
   m(ch.amy, '👉 Die Eltern, Polizei oder andere Helfer zu informieren, kann sich nach einem großen Schritt anfühlen. Aber genau so kann verhindert werden, dass etwas Schlimmes passiert.'),
   m(ch.amy, '💡 Wenn etwas gefährlich sein könnte, ist es besser, zu früh zu handeln als zu spät.'),
 ], ['reflect-understand', 'talk-act']),
+
+
+  S('s1e01c05_story_amy_intro_me_diary', [
+    amyChat(),
+    m(ch.amy, 'Schwierige Momente kann man manchmal besser verarbeiten, wenn man sie aufschreibt.'),
+    m(ch.amy, 'Gibt es etwas, das dich gerade beschäftigt?'),
+  ], ['reflect-understand']),
+
+  inp('s1e01c05_input_me_diary', 'stories:s1e01.c05.input.meDiary', {
+    topics: ['reflect-understand'],
+    promptSpeakerId: 'amy',
+  }),
+
+  S('s1e01c05_story_my_diary_bonus', [
+    bonusLink('diary-me', 'Mein Tagebuch',
+      '/diaries/diary_me', 'Tagebuch öffnen →'),
+  ]),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -714,9 +740,6 @@ const c07 = C('s1e01c07', 6, 'Amic 7', 'Zweifel', [
 
   AF('s1e01c07_amy_feedback_outdated_tip', 's1e01c07_item_outdated_tip'),
 
-  S('s1e01c07_story_amy_wrapup', [
-    m(ch.amy, 'Übrigens, ich seh gerade, dass dir Lukas in dein Freundebuch schreibt. Schau morgen wieder vorbei, dann kannst du es dir ansehen. 😊'),
-  ], ['info-check', 'reflect-understand']),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -724,13 +747,6 @@ const c07 = C('s1e01c07', 6, 'Amic 7', 'Zweifel', [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const c08 = C('s1e01c08', 7, 'Amic 8', 'Nächster Tag', [
-
-  S('s1e01c08_story_lukas_friendbook', [
-    privateChat('Du', 'Lukas'),
-    m(ch.lukas, 'Ich habe mir erlaubt, ebenfalls einen Eintrag für dein Freundebuch zu verfassen.', '08:14'),
-    bonusLink('char-lukas', 'Charakterkarte Lukas', '/cards/char-lukas', 'Karte ansehen →'),
-    m(ch.lukas, 'Du kannst ihn dir anschauen, wenn du möchtest.', '08:14'),
-  ], ['talk-act']),
 
   S('s1e01c08_story_class_reveal', [
     classChat(),

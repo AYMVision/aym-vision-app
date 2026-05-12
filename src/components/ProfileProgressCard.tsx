@@ -2,7 +2,9 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useProfile } from '../profile/useProfile';
-import { getEpisodeMeta } from '../content/contentIndex';
+import { getEpisodeMeta, getStoryCards } from '../content/contentIndex';
+import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
+import { shouldBypassAll } from '../gating/entitlements';
 import { assetUrl } from '../common/assetUrl';
 
 export default function ProfileProgressCard({
@@ -13,7 +15,15 @@ export default function ProfileProgressCard({
   noCard?: boolean;
 }) {
   const { profile } = useProfile();
-  const { t } = useTranslation(['profile', 'stories']);
+  const { t, i18n } = useTranslation(['profile', 'stories']);
+  const lang = (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
+
+  const firstStoryPath = useMemo(() => {
+    const cards = getStoryCards();
+    const first = cards.find(c => c.released && (shouldBypassAll(c.id) || isEpisodeAvailable(c.id, lang)));
+    if (!first) return '/stories';
+    return first.storyEngine === 'v2' ? `/stories-v02/${first.id}` : `/stories/${first.id}`;
+  }, [lang]);
 
   const cur = profile.progress?.current;
 
@@ -46,10 +56,10 @@ export default function ProfileProgressCard({
         {!compact && (
           <div className="mt-5">
             <Link
-              to="/stories"
+              to={firstStoryPath}
               className="text-xs px-3 py-1 rounded-lg border border-slate-200 bg-white font-semibold text-slate-700 hover:bg-slate-50"
             >
-              {t('profile:progress.openStories', { defaultValue: 'Zur Story →' })}
+              {t('profile:progress.openStories', { defaultValue: 'Story starten →' })}
             </Link>
           </div>
         )}

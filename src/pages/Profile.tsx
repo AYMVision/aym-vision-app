@@ -209,7 +209,7 @@ export default function Profile() {
           </div>
 
           {/* Bonus-Kacheln */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
             <Link
               to="/album"
               state={{ backTo: '/profile' }}

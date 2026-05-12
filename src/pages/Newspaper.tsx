@@ -390,7 +390,7 @@ function FreshCard({
           <span className="text-sm">{mediaIcon(item)}</span>
         </div>
 
-        <div className="mt-3 rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 h-24 relative flex items-center justify-center">
+        <div className="mt-3 rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 h-36 relative flex items-center justify-center">
           {item.coverImage && !imgFailed ? (
             <img
               src={coverSrc}
@@ -415,9 +415,11 @@ function FreshCard({
 function CurrentNewsCard({
   item,
   metaById,
+  compact = false,
 }: {
   item: BonusItem;
   metaById: Record<string, ArticleMetaLite>;
+  compact?: boolean;
 }) {
   const { t } = useTranslation('bonus');
   const location = useLocation();
@@ -429,6 +431,47 @@ function CurrentNewsCard({
   const isAudio = item.mediaType === 'audio';
   const audioHref = item.audioSrc ? assetUrl(item.audioSrc) : '';
   const kwNum = metaById[item.bonusId]?.date ? isoWeek(metaById[item.bonusId].date!) : null;
+
+  if (compact) {
+    return (
+      <Link
+        to={`/newspaper/${item.bonusId}`}
+        state={{ backTo: '/newspaper', backgroundLocation: location }}
+        className="block snap-start shrink-0 w-[58%] sm:w-[34%] lg:w-[200px]"
+      >
+        <div className="h-full rounded-2xl border border-rose-200 bg-gradient-to-br from-rose-50 via-white to-amber-50 shadow-sm p-3 flex flex-col hover:shadow-md transition">
+          <div className="flex items-center justify-between gap-2">
+            <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] font-extrabold border border-rose-200 bg-white text-rose-700">
+              🗞️ Chioma
+            </span>
+            <span className="text-sm">{isAudio ? '🎧' : '📰'}</span>
+          </div>
+
+          <div className="mt-3 rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 h-36 relative flex items-center justify-center">
+            {item.coverImage && !imgFailed ? (
+              <img
+                src={coverSrc}
+                alt=""
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={() => setImgFailed(true)}
+              />
+            ) : (
+              <div className="text-3xl">{fallback}</div>
+            )}
+          </div>
+
+          <div className="mt-3 text-sm font-extrabold text-slate-900 leading-snug line-clamp-2">
+            {title}
+          </div>
+
+          {kwNum ? (
+            <div className="mt-2 text-[10px] font-semibold text-slate-400">KW {kwNum}</div>
+          ) : null}
+        </div>
+      </Link>
+    );
+  }
 
   return (
     <div className="rounded-2xl border border-rose-200 bg-gradient-to-br from-rose-50 via-white to-amber-50 shadow-sm overflow-hidden hover:shadow-md transition">
@@ -452,8 +495,8 @@ function CurrentNewsCard({
           ) : null}
         </div>
 
-        <div className="mt-3 grid grid-cols-[92px_1fr] sm:grid-cols-[120px_1fr] gap-3 sm:gap-4 items-start">
-          <div className="rounded-2xl overflow-hidden border border-slate-200 bg-white h-[92px] sm:h-[110px] relative flex items-center justify-center">
+        <div className="mt-3 grid grid-cols-[120px_1fr] sm:grid-cols-[140px_1fr] gap-3 sm:gap-4 items-start">
+          <div className="rounded-2xl overflow-hidden border border-slate-200 bg-white h-[120px] sm:h-[140px] relative flex items-center justify-center">
             {item.coverImage && !imgFailed ? (
               <img
                 src={coverSrc}
@@ -547,8 +590,8 @@ function FeedCard({
   )}
 >
         <div className="p-3 sm:p-4">
-          <div className="grid grid-cols-[84px_1fr] sm:grid-cols-[104px_1fr] gap-3 items-start">
-            <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 h-[84px] sm:h-[98px] relative flex items-center justify-center">
+          <div className="grid grid-cols-[120px_1fr] sm:grid-cols-[140px_1fr] gap-3 items-start">
+            <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 h-[120px] sm:h-[140px] relative flex items-center justify-center">
               {item.coverImage && !imgFailed ? (
                 <img
                   src={coverSrc}
@@ -741,7 +784,8 @@ const unlockedMap = useMemo(() => {
   const filteredItems = useMemo(() => {
     const q = query.trim().toLowerCase();
 
-    return regularItems.filter((item) => {
+    // allItems: Chioma-Beiträge erscheinen im Feed und in der Suche
+    return allItems.filter((item) => {
       if (format !== 'all' && item.mediaType !== format) return false;
       if (topic !== 'all' && !(item.topicTags ?? []).includes(topic)) return false;
 
@@ -751,7 +795,7 @@ const unlockedMap = useMemo(() => {
       const blob = `${title} ${desc} ${(item.topicTags ?? []).join(' ')} ${item.mediaType}`.toLowerCase();
       return blob.includes(q);
     });
-  }, [regularItems, format, topic, query, t, metaById]);
+  }, [allItems, format, topic, query, t, metaById]);
 
   const stats = useMemo(() => {
     let total = 0;
@@ -838,21 +882,26 @@ const unlockedMap = useMemo(() => {
           kicker="🗞️ Aktuelle Nachrichten"
           title="Chiomas aktuelle Themen"
           right={
-            <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold border border-amber-200 bg-amber-50 text-amber-900">
-              Für alle frei
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold border border-amber-200 bg-amber-50 text-amber-900">
+                ✨ Für alle frei
+              </span>
+              <span className="text-xs font-semibold text-slate-400 hidden sm:inline">
+                Wische →
+              </span>
+            </div>
           }
         >
           <div className="text-sm text-slate-700">
-            Hier gibt es aktuelle Beiträge von Chioma zu Themen, über die gerade viele sprechen.
+            Aktuelle Beiträge von Chioma zu Themen, über die gerade viele sprechen.
           </div>
 
           {currentNewsItems.length > 0 ? (
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <SwipeRow className="-mx-4 px-4 lg:mx-0 lg:px-0 mt-4">
               {currentNewsItems.map((item) => (
-                <CurrentNewsCard key={item.bonusId} item={item} metaById={metaById} />
+                <CurrentNewsCard key={item.bonusId} item={item} metaById={metaById} compact />
               ))}
-            </div>
+            </SwipeRow>
           ) : (
             <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
               Hier erscheint bald Chiomas erster aktueller Beitrag.

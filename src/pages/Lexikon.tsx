@@ -41,7 +41,7 @@ function LexikonTermModal({ entry, onClose }: { entry: LexikonEntry; onClose: ()
           <div className="flex items-start justify-between gap-3 mb-4">
             <div>
               <span className="text-xs font-semibold uppercase tracking-widest text-teal-600 mb-1 block">
-                Carlos' Lexikon
+                Carlos Lexikon
               </span>
               <h2 className="text-2xl font-bold text-anthracite-900">{entry.title}</h2>
             </div>
@@ -93,15 +93,15 @@ export default function Lexikon() {
 
   return (
     <Layout title="Lexikon">
-      <div className="max-w-lg mx-auto px-4 pt-4 pb-16">
+      <div className="max-w-lg mx-auto px-4 pt-4 pb-28">
         {/* Hero */}
         <div className="rounded-2xl bg-gradient-to-br from-teal-500 to-teal-700 text-white px-5 py-5 mb-5 shadow-md">
           <div className="flex items-center gap-3">
             <span className="text-4xl">📚</span>
             <div>
-              <h1 className="text-xl font-bold leading-tight">Carlos' Lexikon</h1>
+              <h1 className="text-xl font-bold leading-tight">Carlos Lexikon</h1>
               <p className="text-sm text-teal-100 mt-0.5">
-                Technik-Begriffe — einfach erklärt.
+                Technik-Begriffe so erklärt, dass sie sogar Frau Schubert versteht.
               </p>
             </div>
           </div>

@@ -420,7 +420,7 @@ const c05 = C('s1e02c05', 4, 'Amic 5', 'Die Debatte', [
     m(ch.chioma, 'Oder hast du etwa Angst?', '13:08'),
     m(ch.dominik, 'Quatsch!', '13:08'),
     m(ch.chioma, 'Dann also morgen in der Freistunde, 10 Uhr vor Raum 116', '13:09'),
-    m(ch.chioma, 'Ach und übrigens: Die Regeln der Debatte: 1. Ausreden lassen. 2. Keine Beleidigungen. 3. Zeitlimit.', '13:09'),
+    audio(ch.chioma, '/media/story/episodes/s1e02/chiomas-sprachnachricht-s1e02c05.mp3', '13:10'),
     m(ch.dominik, 'Grrr', '13:09'),
   ], ['fairness', 'talk-act', 'problem-solving']),
 
@@ -432,11 +432,6 @@ const c05 = C('s1e02c05', 4, 'Amic 5', 'Die Debatte', [
     m(ch.lisa, 'Was hast du vor?', '13:41'),
     m(ch.lisa, 'Ich weiß nicht, ob das eine gute Idee ist. Glaubst du echt, du hast eine Chance gegen den?', '13:41'),
   ], ['reflect-understand', 'talk-act']),
-
-  S('s1e02c05_story_chioma_friendbook_teaser', [
-    privateChat('Du', 'Chioma'),
-    m(ch.chioma, 'Hey {{chatName}}, cool dein Freundebuch. Soll ich vielleicht auch reinschreiben? Ich schicke dir die Seite, wenn wir uns das nächste Mal sehen.', '13:44'),
-  ], ['talk-act']),
 
   S('s1e02c05_story_amy_reflection', [
     amyChat(),
@@ -453,7 +448,14 @@ const c05 = C('s1e02c05', 4, 'Amic 5', 'Die Debatte', [
     m(ch.amy, 'Fair ist, wenn alle ihre Sicht sagen dürfen.', '13:46'),
     m(ch.amy, 'Nur so kann man wirklich verstehen, worum es geht.', '13:46'),
   ], ['fairness', 'reflect-understand']),
+
+    S('s1e02c05_story_chioma_friendbook_teaser', [
+    privateChat('Du', 'Chioma'),
+    m(ch.chioma, 'Hey {{chatName}}, cool dein Freundebuch. Soll ich vielleicht auch reinschreiben? Ich schicke dir die Seite, wenn wir uns das nächste Mal sehen.', '13:44'),
+  ], ['talk-act']),
 ]);
+
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CHAPTER 6 — Nicht allein
@@ -832,6 +834,7 @@ audio(ch.carlos, '/media/newspaper/audio/chatrules-chioma-dominik.mp3', '15:43',
     m(ch.chioma, 'Niemand wird gezwungen, hier zu bleiben. Aber wer bleibt, hält sich dran.', '15:45'),
     m(ch.dominik, 'Hält sich woran??', '15:45'),
     m(ch.chioma, 'An das, was wir gemeinsam abstimmen.', '15:45'),
+    audio(ch.chioma, '/media/story/episodes/s1e02/chiomas-sprachnachricht-s1e02c10.mp3', '15:46'),
     bonusLink('article-chioma-gruppenchats', 'Chiomas Anleitung für Gruppenchats', '/newspaper/article-chioma-gruppenchats', 'Artikel öffnen →'),
   ], ['fairness', 'talk-act', 'problem-solving']),
 
