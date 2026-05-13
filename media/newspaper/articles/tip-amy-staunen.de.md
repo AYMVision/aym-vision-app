@@ -1,12 +1,12 @@
 ---
-title: BONUS-TIPP: Staunen
-description: Manchmal hilft Staunen dabei, Abstand vom Internet zu gewinnen und wieder bei sich selbst anzukommen.
+title: Schlechte Laune vom Handy? Probier´s mal mit Staunen.
+description: Manchmal macht dich das Internet wütend, neidisch oder traurig? Hier erfährst du einen einfachen Trick, der dich wieder runterholt. Ganz ohne Handy.
 author: Carlos
 date: 2026-02-11
 topicTags: [reflect]
 ---
 
-# 🧠 BONUS-TIPP: Staunen
+# Schlechte Laune vom Handy? Probier´s mal mit Staunen.
 
 Manchmal macht uns das Internet schlechte Laune.  
 Es kann mal wütend machen. Ein anderes Mal neidisch. Oder traurig.

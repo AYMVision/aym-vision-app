@@ -1,6 +1,6 @@
 ---
-title: Geodaten in Bildern
-description: Carlos zeigt dir, was Fotos über dich verraten können – und wie du sicher damit umgehst.
+title: Spuren im Bild – so liest du Fotos richtig
+description: Du postest ein Foto – aber was postet das Foto über dich? Finde heraus, welche versteckten Infos darin stecken.
 author: Carlos
 date: 2026-01-27
 topicTags: [create, teamTalk, safe]

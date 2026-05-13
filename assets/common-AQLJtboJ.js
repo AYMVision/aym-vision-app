@@ -1,1 +1,0 @@
-const c="Back",o="Your answer…",e="Swipe",t="Locked",s={chapter:"Amic",youAreAt:"You are at",amic:"Amic"},a={back:c,inputPlaceholder:o,swipeHint:e,locked:t,progress:s};export{c as back,a as default,o as inputPlaceholder,t as locked,s as progress,e as swipeHint};

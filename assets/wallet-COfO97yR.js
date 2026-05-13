@@ -1,0 +1,1 @@
+function l(t){return{coins:t.wallet?.coins??0,totalEarned:t.wallet?.totalEarned??0,totalSpent:t.wallet?.totalSpent??0}}function r(t,n,o){if(!Number.isFinite(n)||n<=0)return t;const e=l(t),a=Date.now();return{...t,wallet:{...e,coins:e.coins+n,totalEarned:e.totalEarned+n},updatedAt:a}}export{r as e};

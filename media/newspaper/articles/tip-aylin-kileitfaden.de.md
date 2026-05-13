@@ -1,12 +1,14 @@
 ---
-title: KI Leitfaden
-description: Aylin zeigt dir, wie du KI sicher, fair und klug nutzen kannst.
+title: Aylins KI-Guide: So bleibst du sicher
+description: Was darfst du einer KI sagen und was lieber nicht? Mit diesen einfachen Regeln bleibst du auf der sicheren Seite.
 author: Aylin
-date: 2026-01-27
-topicTags: [create, teamTalk, safe]
+date: 2026-05-11
+topicTags: [reflect]
 ---
 
-# 🤖 KI-Kurzleitfaden
+# 🤖 Aylins KI-Guide: So bleibst du sicher
+
+# 🤖 KI benutzen
 
 Viele KI-Programme haben Altersregeln.  
 👉 Und das ist gut so. Sie sind nur zu deinem Schutz da.
@@ -14,130 +16,128 @@ Viele KI-Programme haben Altersregeln.
 Nutze KI nur mit Erlaubnis deiner Eltern.  
 Am besten: starte zusammen mit einem Erwachsenen.
 
+[[img src="media/newspaper/articles/s1e01c08_aylins-KI-Leitfaden1" alt="Dein Kopf braucht auch Offline-Zeit."]]
+
 ## ⭐ Die drei goldenen KI-Regeln
 
-**Ich schütze mich.**  
-(Keine echten Daten, keine Geheimnisse)
+[[checklist title=""]]
+- Ich schütze mich (keine echten Daten, keine Geheimnisse)
+- Ich prüfe, was ich bekomme (KI kann sich irren)
+- Ich bin fair zu anderen (KI kennzeichnen, niemanden täuschen)
+[[/checklist]]
 
-**Ich prüfe, was ich bekomme.**  
-(KI kann sich irren – Quellen checken!)
+[[img src="media/newspaper/articles/s1e01c08_aylins-KI-Leitfaden2" alt="Dein Kopf braucht auch Offline-Zeit.""]]
 
-**Ich bin fair zu anderen.**  
-(KI kennzeichnen, niemanden täuschen)
+## 💬 So sprichst du mit KI
 
-[[details title="1️⃣ So sprichst du richtig mit KI"]]
 Du schreibst mit einer KI wie in einem Chat.
 
-So geht’s gut:
+So klappt es gut:
 - Schreib freundlich
 - Sag klar, was du willst
 - Frag nach, wenn du etwas nicht verstehst
 
-Beispiel:  
-„Erklär mir bitte, wie ein Vulkan entsteht. Einfach erklärt für Kinder.“
-
-👉 Wichtig: Die KI ist kein Mensch, auch wenn sie so schreibt.
-
-[[callout kind="tip"]]
-⭐ Extra-Tipp für Eltern
-
-Eltern können gleich am Anfang einen Start-Text (Prompt) schreiben, zum Beispiel:
-
-„Du sprichst mit einem Kind.  
-Erkläre Dinge einfach.  
-Stelle keine Gegenfragen.  
-Sage Bescheid, wenn etwas schwierig oder gefährlich ist.  
-Erinnere nach 20 Minuten an eine Bildschirm-Pause.“
-
-👉 So wird die KI kindgerechter und sicherer.
+[[callout kind="tip" title="Beispiel"]]
+„Erklär mir bitte, wie ein Vulkan entsteht. Einfach erklärt für Kinder."
 [[/callout]]
-[[/details]]
 
-[[details title="2️⃣ Das darfst du eingeben – und das niemals"]]
-✅ Erlaubt:
+[[callout kind="info" title="Wichtig"]]
+Die KI ist kein Mensch. Auch wenn sie so schreibt.
+[[/callout]]
+
+[[img src="media/newspaper/articles/s1e01c08_aylins-KI-Leitfaden3" alt="Dein Kopf braucht auch Offline-Zeit.""]]
+
+## 🔒 Das darfst du eingeben – und das niemals
+
+[[checklist title="Das ist okay"]]
 - erfundene Namen
 - allgemeine Fragen
-- Ideen, Geschichten, Fantasie
+- Ideen und Geschichten
 - Hilfe beim Lernen
+[[/checklist]]
 
-❌ Niemals eingeben:
-- deinen echten Namen
-- Adresse, Schule oder Klasse
-- Telefonnummer oder Passwörter
-- Fotos von dir oder anderen
-- Geheimnisse
+[[callout kind="warn" title="Achtung"]]
+Gib niemals ein:
+- deinen echten Namen  
+- Adresse, Schule oder Klasse  
+- Telefonnummer oder Passwörter  
+- Fotos von dir oder anderen  
+- Geheimnisse  
+[[/callout]]
 
 👉 Merksatz:  
 Alles, was du Fremden nicht erzählen würdest, gehört auch nicht in die KI.
-[[/details]]
 
-[[details title="3️⃣ Du musst nicht auf alles antworten"]]
-Die KI darf dich zwar etwas fragen –  
-aber du entscheidest, ob du antwortest.
+[[img src="media/newspaper/articles/s1e01c08_aylins-KI-Leitfaden4" alt="Dein Kopf braucht auch Offline-Zeit.""]]
+
+
+## 🧠 Du entscheidest
+
+Die KI stellt die Fragen.  
+Aber du entscheidest, ob du antwortest.
 
 Du darfst:
 - Fragen überspringen
 - „Das will ich nicht sagen“ schreiben
 - den Chat jederzeit beenden
 
-👉 Du hast immer die Kontrolle.
-[[/details]]
+[[img src="media/newspaper/articles/s1e01c08_aylins-KI-Leitfaden5" alt="Mit Hilfe von KI erstellt."]]
 
-[[details title="4️⃣ Sind die Antworten einer KI immer richtig?"]]
+
+## 🤔 Sind KI-Antworten immer richtig?
+
 Nein.
 
-- KI kann sich irren
-- KI erfindet manchmal Dinge
-- KI klingt oft sicher, auch wenn sie falsche Antworten gibt
+- KI kann sich irren  
+- KI erfindet manchmal Dinge  
+- KI klingt oft sicher, auch wenn es falsch ist  
 
-👉 Wichtig:  
-Prüfe wichtige Infos immer noch woanders.
-
-[[callout kind="tip"]]
-💡 Extra-Tipp:
-
-Du kannst auch direkt fragen:  
-„Nenne mir vertrauenswürdige oder wissenschaftliche Quellen dazu.“
+[[callout kind="tip" title="Tipp"]]
+Prüfe wichtige Infos immer noch woanders.  
+Du kannst auch fragen:  
+„Nenne mir vertrauenswürdige Quellen dazu.“ und die kannst du dann überprüfen.
 [[/callout]]
-[[/details]]
 
-[[details title="5️⃣ KI für die Schule"]]
+
+
+## 📚 KI für die Schule
+
 KI darf dir helfen:
-- Dinge erklären ✔️
-- beim Lernen unterstützen ✔️
-- Ideen sammeln ✔️
+- Dinge erklären ✔️  
+- beim Lernen unterstützen ✔️  
+- Ideen sammeln ✔️  
 
 KI darf nicht:
-- Hausaufgaben für dich machen ❌
-- Texte einfach für dich schreiben ❌
+- Hausaufgaben für dich machen ❌  
+- Texte einfach für dich schreiben ❌  
 
-👉 Wenn KI geholfen hat, schreib dazu:  
+👉 Wenn KI dir geholfen hat, schreib dazu:  
 „Mit Hilfe von KI erstellt.“
 
-[[callout kind="warn"]]
-⚠️ Wichtig:
 
-Die KI selbst ist keine Quelle.
-[[/callout]]
-[[/details]]
 
-[[details title="6️⃣ KI-Bilder & Texte: ehrlich bleiben"]]
-KI kann Bilder und Texte machen, die sehr echt aussehen.
+## ⚖️ KI-Bilder & Texte: ehrlich bleiben
+
+KI kann Bilder und Texte erstellen, die sehr echt aussehen.
 
 Das kann:
-- andere erschrecken
-- verwirren
-- oder traurig machen
+- andere erschrecken  
+- verwirren  
+- oder traurig machen  
 
-👉 Regel:  
+👉 Deshalb gilt:  
 Wenn du etwas mit KI erstellst und teilst, schreibe es immer dazu.
-[[/details]]
 
-[[details title="7️⃣ Wie viel KI ist okay?"]]
-KI ist spannend – aber kein Dauer-Spiel.
+[[img src="media/newspaper/articles/s1e01c08_aylins-KI-Leitfaden6" alt="Mit Hilfe von KI erstellt."]]
 
-- Mach regelmäßig Pausen
-- Halte dich an die Regeln deiner Eltern
+## ⏸️ Wie viel KI ist okay?
+
+KI ist spannend aber kein Dauer-Spiel.
+
+- Mach regelmäßig Pausen  
+- Benutze sie nicht ständig
+- Halte dich an die Regeln deiner Eltern  
 
 👉 Dein Kopf braucht auch Offline-Zeit.
-[[/details]]
+
+[[img src="media/newspaper/articles/s1e01c08_aylins-KI-Leitfaden7" alt="Dein Kopf braucht auch Offline-Zeit.""]]

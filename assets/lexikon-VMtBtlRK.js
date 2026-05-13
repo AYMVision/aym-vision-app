@@ -1,0 +1,1 @@
+const e="Carlos Lexikon",s="Technik-Begriffe so erklärt, dass sie sogar Frau Schubert versteht.",t="Begriff suchen…",o="Kein Begriff gefunden.",n={label:"Carlos Lexikon",closeAria:"Schließen",didYouKnow:"Wusstest du?"},r={title:e,subtitle:s,searchPlaceholder:t,emptyState:o,modal:n};export{r as default,o as emptyState,n as modal,t as searchPlaceholder,s as subtitle,e as title};

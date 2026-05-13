@@ -70,21 +70,15 @@ Hier steht zusätzlicher Text.
 
 ---
 
-## 🎯 Mini-Aufgabe
-
-[[task title="Probier es aus"]]
-Überlege dir ein Beispiel aus deinem Alltag.
-[[/task]]
-
----
-
 ## 🖼️ Bild
 
 [[img src="media/newspaper/articles/ARTIKEL-ID/bildname" alt="Beschreibung" caption="Optional"]]
 
-👉 Du brauchst nur:
-- bildname-512.webp
-- bildname-1024.webp
+👉 Du brauchst:
+- bildname-512.webp + bildname-1024.webp
+- optional: bildname-512.avif + bildname-1024.avif (empfohlen)
+
+👉 Pfad immer vollständig: `media/newspaper/articles/bildname`
 
 ---
 

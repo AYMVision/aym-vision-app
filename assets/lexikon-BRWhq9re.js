@@ -1,0 +1,1 @@
+const e="Carlos Lexicon",o="Tech terms explained so even Mrs. Schubert understands.",t="Search term…",s="No term found.",n={label:"Carlos Lexicon",closeAria:"Close",didYouKnow:"Did you know?"},c={title:e,subtitle:o,searchPlaceholder:t,emptyState:s,modal:n};export{c as default,s as emptyState,n as modal,t as searchPlaceholder,o as subtitle,e as title};
