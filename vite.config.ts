@@ -75,7 +75,7 @@ export default defineConfig(({ command }) => {
             },
           ],
           // Alle Build-Assets precachen (JS, CSS, Fonts)
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,pdf}'],
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,pdf,md}'],
         },
       }),
     ],

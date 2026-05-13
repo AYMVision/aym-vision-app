@@ -584,17 +584,10 @@ audio(ch.carlos, '/media/newspaper/audio/chatrules-chioma-dominik.mp3', '14:31',
     m(ch.dominik, 'Und, wann geht das live?', '14:33'),
     m(ch.carlos, 'Morgen, Punkt 15:00 Uhr wird alles freigeschaltet.', '14:33'),
     sysMsg('Dominik hat den Chat verlassen.', '14:34'),
-    //m(ch.carlos, 'Ich hab zum Artikel schon ´ne kleine Umfrage gebastelt. Schau mal rein: „zur Umfrage” (https://docs.google.com/forms/d/e/1FAIpQLSfBs-oBN5hBBe1PcwCjlZaIAe-hCDk2huriKZZbQVC9CJMpoQ/viewform?usp=publish-editor)', '14:35', {
-    //  reactions: [R('🙏')],
-    //}),
+
     m(ch.chioma, 'Was, wenn mich morgen alle auslachen?', '14:36'),
   ], ['talk-act', 'problem-solving', 'fairness']),
 
-  S('s1e02c07_story_switch_to_amy', [
-    amyChat(),
-    m(ch.amy, 'Nach dem Gespräch von Chioma und Dominik:', '14:38'),
-    m(ch.amy, 'Was findest du wichtiger in einem Klassenchat?', '14:38'),
-  ], ['fairness', 'reflect-understand']),
 
   GR('s1e02c07_reflection_rules_or_no_rules',
     'Was findest du wichtiger in einem Klassenchat?',

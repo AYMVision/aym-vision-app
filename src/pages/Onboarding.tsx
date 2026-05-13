@@ -85,6 +85,26 @@ function WelcomeStep({ onNext }: { onNext: () => void }) {
           {t('onboarding.welcome.lead')}
         </p>
 
+        {/* Charakter-Reihe */}
+        <div className="flex items-end justify-between gap-1">
+          {[
+            { name: 'Mia',    id: 'mia'    },
+            { name: 'Chioma', id: 'chioma' },
+            { name: 'Carlos', id: 'carlos' },
+            { name: 'Yasmin', id: 'yasmin' },
+            { name: 'Igor',   id: 'igor'   },
+          ].map(c => (
+            <div key={c.id} className="flex flex-col items-center gap-1 flex-1">
+              <img
+                src={assetUrl(`media/story/characters/${c.id}-256.webp`)}
+                alt={c.name}
+                className="w-12 h-12 rounded-full object-cover object-top border-2 border-white shadow-sm"
+              />
+              <span className="text-[10px] font-semibold text-slate-500">{c.name}</span>
+            </div>
+          ))}
+        </div>
+
         <div className="flex flex-wrap gap-2">
           {(['badge0', 'badge1', 'badge2'] as const).map(key => (
             <span
@@ -118,9 +138,17 @@ function InfoStep({ onNext }: { onNext: () => void }) {
 
   return (
     <div className="flex flex-col px-5 pt-6 pb-4">
-      <h2 className="text-xl font-bold text-anthracite-900 text-center mb-4">
-        {t('onboarding.info.title')}
-      </h2>
+      {/* Amy als Erzählerin */}
+      <div className="flex items-center gap-3 mb-5">
+        <img
+          src={assetUrl('media/story/characters/amy-256.webp')}
+          alt="Amy"
+          className="w-12 h-12 rounded-full object-cover object-top flex-shrink-0 border-2 border-teal-100 shadow-sm"
+        />
+        <div className="bg-teal-50 border border-teal-100 rounded-2xl px-4 py-2.5 text-sm font-semibold text-teal-800 leading-snug">
+          „Ich erkläre dir kurz, wie es läuft."
+        </div>
+      </div>
 
       <div className="flex flex-col gap-3 mb-5">
         <div className="flex gap-3 items-start bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
@@ -262,7 +290,7 @@ function ReadyStep({ onFinish }: { onFinish: (destination: 'story' | 'overview')
           onClick={() => onFinish('story')}
           className="w-full bg-[var(--color-teal-600)] hover:bg-[var(--color-teal-700)] active:scale-[0.98] text-white font-bold rounded-2xl py-3.5 text-base shadow-md transition-all"
         >
-          {t('onboarding.ready.ctaStart')}
+          {t('onboarding.ready.ctaStart', { defaultValue: 'Yasmin wartet schon auf dich →' })}
         </button>
         <button
           onClick={() => onFinish('overview')}

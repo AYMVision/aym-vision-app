@@ -4,6 +4,21 @@
   "back": "Zurück",
   "backAria": "Zurück zur vorherigen Seite",
 
+  "name": {
+    "label": "Dein Name",
+    "placeholder": "Wie soll ich dich nennen?"
+  },
+
+  "shop": {
+    "openCta": "Avatar ändern"
+  },
+
+  "sound": {
+    "enable": "Sound einschalten",
+    "disable": "Sound ausschalten",
+    "off": "Sound aus",
+    "on": "Sound an"
+  },
 
   "avatar": {
     "alt": "Dein Avatar",
@@ -25,7 +40,32 @@
     "title": "Bonusmaterial",
     "subtitle": "Extras, Tipps & Überraschungen",
     "cta": "Entdecken →",
-    "aria": "Bonusmaterial entdecken"
+    "aria": "Bonusmaterial entdecken",
+    "hub": {
+      "title": "Story-Welt",
+      "subtitle": "Extras aus der Story – zum Sammeln & Entdecken",
+      "newspaper": {
+        "title": "Schülerzeitung",
+        "aria": "Schülerzeitung öffnen"
+      },
+      "diaries": {
+        "title": "Tagebuch",
+        "aria": "Tagebuch öffnen"
+      },
+      "cards": {
+        "title": "Freundebuch",
+        "aria": "Sammelkarten öffnen"
+      },
+      "lexikon": {
+        "title": "Carlos Lexikon",
+        "aria": "Carlos' Lexikon öffnen"
+      }
+    }
+  },
+
+  "transfer": {
+    "title": "Spielstand sichern & übertragen",
+    "subtitle": "Zwischen Browser und App wechseln"
   },
 
   "look": {
@@ -35,9 +75,7 @@
 
   "wardrobe": {
     "title": "Deine Items",
-
     "itemLabel": "Item",
-
     "head": "Kopf",
     "face": "Gesicht",
     "top": "Oberteil",
@@ -45,34 +83,27 @@
     "feet": "Schuhe",
     "background": "Hintergrund",
     "effect": "Effekt",
-
     "wearingLabel": "Angezogen:",
     "notWearing": "Nicht angezogen",
     "noneOwned": "Noch keine Items freigeschaltet",
-
     "equipTitle": "Klicken zum Anziehen",
     "unequipTitle": "Klicken zum Ausziehen",
-
     "equipAria": "{{id}} anziehen",
     "unequipAria": "{{id}} ausziehen",
-
     "accessories": {
       "title": "Accessoires",
       "soon": "Noch nicht verfügbar"
     },
-
     "effects": {
       "title": "Effekte",
       "soon": "Noch nicht verfügbar"
-    },
+    }
+  },
 
-  
   "adult": {
     "hiddenAria": "Bereich für Eltern öffnen",
     "hiddenVersion": "Version {{version}}",
     "footerHint": "Für Erwachsene: lange drücken"
-  }
-
   },
 
   "learningTrace": {
@@ -88,7 +119,8 @@
   "rewards": {
     "title": "Besondere Belohnungen",
     "subtitle": "Deine besonderen Erfolge findest du im Album.",
-    "open": "Ansehen →",
+    "newTitle": "Neue Sticker für dich!",
+    "open": "Im Album →",
     "empty": "Hier erscheinen bald besondere Sticker und Badges."
   }
 }

@@ -14,6 +14,7 @@ import AvatarStage from '../components/AvatarStage';
 import { BONUS_INDEX } from '../bonus/bonusIndex';
 import { useProfile } from '../profile/useProfile';
 import type { BonusProgressSnapshot } from '../bonus/bonusUnlock';
+import { shouldBypassAll } from '../gating/entitlements';
 import { DIARY_ENTRIES, type DiaryId, type DiaryEntry } from '../bonus/diaryEntries';
 import { isBonusSeen, markBonusSeen } from '../bonus/bonusSeen';
 import { CHARACTERS, type CharacterEx } from '../content/characters';
@@ -97,8 +98,9 @@ function normalizeChapterIdMaybe(id: string): string[] {
 }
 
 
-// ✅ unlocked = chapter done OR clicked (bonusSeen)
+// ✅ unlocked = bypass (AMY-DEV) OR chapter done OR clicked (bonusSeen)
 function isEntryUnlocked(entry: DiaryEntry, progress: BonusProgressSnapshot): boolean {
+  if (shouldBypassAll()) return true;
   const ids = normalizeChapterIdMaybe(entry.unlock.afterChapterId);
   const byChapter = ids.some((id) => progress.seenChapterIds.includes(id));
   return byChapter || isBonusSeen(entry.bonusId);
@@ -903,6 +905,55 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
         </div>
       )}
 
+      {/* ── SEITEN-LEISTE (horizontal, oben) ── */}
+      {entries.length > 0 && (
+        <div className="overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
+          <div className="flex gap-2" style={{ minWidth: 'max-content' }}>
+            <button type="button" onClick={() => { setMode('write'); setText(''); setDraftStickers([]); }}
+              className={['shrink-0 rounded-2xl border px-4 py-3 text-sm font-semibold transition flex flex-col items-center justify-center gap-1 w-[100px]',
+                mode === 'write' ? 'border-violet-300 bg-violet-50 text-violet-700' : 'border-dashed border-violet-200 text-violet-600 hover:bg-violet-50 bg-white'].join(' ')}>
+              <span className="text-xl">✏️</span>
+              <span>{t('diaries.me.newPage', { defaultValue: 'Neue Seite' })}</span>
+            </button>
+            {entries.map((e) => (
+              <div key={e.id} className={['shrink-0 rounded-2xl border transition overflow-hidden',
+                e.id === activeEntryId && mode === 'view' ? 'border-violet-300 bg-violet-50' : 'border-slate-200 bg-white'].join(' ')}>
+                <button type="button"
+                  onClick={() => { setActiveEntryId(e.id); setMode('view'); setDeletingEntryId(null); setEditingEntryId(null); }}
+                  className="flex flex-col items-start p-2.5 w-[120px]">
+                  <div className="text-[10px] font-bold text-slate-400">{formatDate(e.createdAt)}</div>
+                  <div className="mt-1 text-xs text-slate-700 line-clamp-2 diary-hand leading-snug">{e.text}</div>
+                  {e.stickers.length > 0 && (
+                    <div className="mt-1.5 flex gap-0.5">
+                      {e.stickers.slice(0, 3).map(s => (
+                        <img key={s.id} src={stickerSrc(s.stickerId, 256)} alt="" className="w-5 h-5" />
+                      ))}
+                    </div>
+                  )}
+                </button>
+                {deletingEntryId === e.id ? (
+                  <div className="flex items-center gap-1 px-2 pb-2">
+                    <button type="button" onClick={() => deleteEntry(e.id)}
+                      className="rounded-lg bg-red-500 px-2 py-1 text-[10px] font-extrabold text-white hover:bg-red-600">
+                      {t('diaries.me.deleteYes', { defaultValue: 'Ja, löschen' })}
+                    </button>
+                    <button type="button" onClick={() => setDeletingEntryId(null)}
+                      className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-[10px] font-semibold text-slate-600 hover:bg-slate-50">
+                      {t('diaries.me.deleteNo', { defaultValue: 'Nein' })}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex justify-end px-2 pb-1.5">
+                    <button type="button" onClick={() => setDeletingEntryId(e.id)} aria-label="Seite löschen"
+                      className="text-slate-300 hover:text-red-400 transition-colors text-sm leading-none">🗑</button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ── HAUPTBEREICH: SCHREIBEN oder CANVAS ── */}
       <div className="rounded-3xl border border-violet-100 overflow-hidden shadow-sm">
 
@@ -1038,53 +1089,6 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
         )}
       </div>
 
-      {/* ── SEITEN-LEISTE (horizontal scrollbar) ── */}
-      {entries.length > 0 && (
-        <div className="overflow-x-auto pb-1">
-          <div className="flex gap-2" style={{ minWidth: 'max-content' }}>
-            {entries.map((e) => (
-              <div key={e.id} className={['shrink-0 rounded-2xl border transition overflow-hidden',
-                e.id === activeEntryId && mode === 'view' ? 'border-violet-300 bg-violet-50' : 'border-slate-200 bg-white'].join(' ')}>
-                <button type="button"
-                  onClick={() => { setActiveEntryId(e.id); setMode('view'); setDeletingEntryId(null); setEditingEntryId(null); }}
-                  className="flex flex-col items-start p-2.5 w-[120px]">
-                  <div className="text-[10px] font-bold text-slate-400">{formatDate(e.createdAt)}</div>
-                  <div className="mt-1 text-xs text-slate-700 line-clamp-2 diary-hand leading-snug">{e.text}</div>
-                  {e.stickers.length > 0 && (
-                    <div className="mt-1.5 flex gap-0.5">
-                      {e.stickers.slice(0, 3).map(s => (
-                        <img key={s.id} src={stickerSrc(s.stickerId, 256)} alt="" className="w-5 h-5" />
-                      ))}
-                    </div>
-                  )}
-                </button>
-                {deletingEntryId === e.id ? (
-                  <div className="flex items-center gap-1 px-2 pb-2">
-                    <button type="button" onClick={() => deleteEntry(e.id)}
-                      className="rounded-lg bg-red-500 px-2 py-1 text-[10px] font-extrabold text-white hover:bg-red-600">
-                      {t('diaries.me.deleteYes', { defaultValue: 'Ja, löschen' })}
-                    </button>
-                    <button type="button" onClick={() => setDeletingEntryId(null)}
-                      className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-[10px] font-semibold text-slate-600 hover:bg-slate-50">
-                      {t('diaries.me.deleteNo', { defaultValue: 'Nein' })}
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex justify-end px-2 pb-1.5">
-                    <button type="button" onClick={() => setDeletingEntryId(e.id)} aria-label="Seite löschen"
-                      className="text-slate-300 hover:text-red-400 transition-colors text-sm leading-none">🗑</button>
-                  </div>
-                )}
-              </div>
-            ))}
-            <button type="button" onClick={() => { setMode('write'); setText(''); setDraftStickers([]); }}
-              className="shrink-0 rounded-2xl border border-dashed border-violet-200 px-4 py-3 text-sm font-semibold text-violet-600 hover:bg-violet-50 transition flex flex-col items-center justify-center gap-1 w-[100px]">
-              <span className="text-xl">✏️</span>
-              <span>{t('diaries.me.newPage', { defaultValue: 'Neue Seite' })}</span>
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* ── PIN-HINWEIS ── */}
       {!hasPin && entries.length > 0 && !showPinBanner && (

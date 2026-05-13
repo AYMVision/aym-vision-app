@@ -432,7 +432,7 @@ export default function StickerAlbum() {
         <section className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-amber-200 via-yellow-100 to-orange-100 px-5 py-6 shadow-md border border-white/40">
           <div className="pointer-events-none absolute -top-10 -left-10 w-32 h-32 rounded-full bg-white/30 blur-2xl" />
           <div className="pointer-events-none absolute top-6 right-4 w-20 h-20 rounded-full bg-yellow-300/30 blur-xl" />
-          <div className="text-xs font-extrabold text-slate-700">Bonuswelt</div>
+          <div className="text-xs font-extrabold text-slate-700">Story-Welt</div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
             ⭐ {tStories('album.title', { defaultValue: 'Sticker-Album' })}
           </h1>

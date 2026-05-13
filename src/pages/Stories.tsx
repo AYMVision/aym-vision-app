@@ -1,5 +1,5 @@
 // src/pages/Stories.tsx
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import BetaBanner from '../components/BetaBanner';
 import CourseCard from '../components/CourseCard';
@@ -17,24 +17,32 @@ import { shouldBypassAll } from '../gating/entitlements';
 import NewAmicBanner from '../components/NewAmicBanner';
 import { loadNextAmicInfo } from '../notifications/amicNotif';
 import { loadSettings } from '../settings/appSettings';
+import { loadStore } from '../analytics/analyticsStore';
 
 function Panel({
   title,
   kicker,
+  right,
   children,
 }: {
   title: string;
   kicker?: string;
+  right?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
     <section className="bg-white rounded-2xl shadow-md border border-slate-100 p-5 sm:p-6">
-      {kicker ? (
-        <div className="text-xs font-semibold text-[var(--color-teal-600)]">{kicker}</div>
-      ) : null}
-      <h2 className="mt-1 text-base sm:text-lg font-semibold text-[var(--color-teal-900)]">
-        {title}
-      </h2>
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          {kicker ? (
+            <div className="text-xs font-semibold text-[var(--color-teal-600)]">{kicker}</div>
+          ) : null}
+          <h2 className="mt-1 text-base sm:text-lg font-semibold text-[var(--color-teal-900)]">
+            {title}
+          </h2>
+        </div>
+        {right ? <div className="shrink-0">{right}</div> : null}
+      </div>
       <div className="mt-3 text-sm sm:text-base leading-relaxed text-slate-700">{children}</div>
     </section>
   );
@@ -146,8 +154,68 @@ function SwipeRow({ children, className }: { children: React.ReactNode; classNam
   );
 }
 
+function InfoBottomSheet({ onClose, children }: { onClose: () => void; children: React.ReactNode }) {
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  // Lock body scroll while open
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, []);
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartY.current = e.touches[0].clientY;
+  }
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (touchStartY.current === null) return;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (dy > 80) onClose();
+    touchStartY.current = null;
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-end"
+      style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+      onClick={onClose}
+    >
+      <div
+        ref={sheetRef}
+        className="w-full bg-white rounded-t-3xl shadow-2xl flex flex-col"
+        style={{ maxHeight: '85dvh' }}
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Drag handle */}
+        <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
+          <div className="w-10 h-1 rounded-full bg-slate-300" />
+        </div>
+        {/* Sheet header */}
+        <div className="flex items-center justify-between px-5 py-2 flex-shrink-0 border-b border-slate-100">
+          <div className="text-sm font-semibold text-slate-700">Amy Surfwing</div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Schließen"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors text-slate-600 text-sm"
+          >
+            ✕
+          </button>
+        </div>
+        {/* Scrollable content */}
+        <div className="overflow-y-auto flex-1 px-4 py-4 space-y-4 pb-10">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const SURVEY_URL =
-  'https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__tVBf5hUMUNFRjhWUzdDMTBBWVlJMVJIRE80M0sxTy4u';
+  'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__tVBf5hUQlM2V0k0OFdWMEQzNVhaUVhSNzU2STdBSC4u';
 
 export default function Stories() {
   const CardTile = ({
@@ -198,6 +266,28 @@ export default function Stories() {
     return loadNextAmicInfo();
   });
   const [amicBannerVisible, setAmicBannerVisible] = useState(Boolean(amicBannerInfo));
+  const [infoOpen, setInfoOpen] = useState(false);
+
+  // Survey-Banner: erscheint nach ≥3 Kapiteln + ≥3 Tagen, einmal wegklickbar
+  const [surveyBannerVisible, setSurveyBannerVisible] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    if (localStorage.getItem('surveyDismissed')) return false;
+    // Kapitelzahl über alle Courses
+    const totalCompleted = getStoryCards().reduce(
+      (sum, c) => sum + getCompletedChapterCount(c.id), 0
+    );
+    if (totalCompleted < 3) return false;
+    // Tage seit erstem Start
+    const firstSeenStr = loadStore().meta?.firstSeen ?? '';
+    if (!firstSeenStr) return false;
+    const daysSince = (Date.now() - new Date(firstSeenStr).getTime()) / (1000 * 60 * 60 * 24);
+    return daysSince >= 3;
+  });
+
+  function dismissSurvey() {
+    localStorage.setItem('surveyDismissed', '1');
+    setSurveyBannerVisible(false);
+  }
 
   // ✅ Reihenfolge: genau so wie Content Index es liefert
 const cardsInOrder = useMemo(() => getStoryCards(), []);
@@ -289,6 +379,7 @@ function isUnlockedByChain(
     <Layout>
       <BetaBanner />
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-3 py-6 sm:py-10 space-y-6">
+
 {/* HERO */}
 <section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg bg-white">
   
@@ -382,6 +473,16 @@ function isUnlockedByChain(
           <Panel
             kicker={tStories('list.kicker', { defaultValue: 'Amy Surfwing' })}
             title={tStories('list.title', { defaultValue: 'Starte dein Amic' })}
+            right={
+              <button
+                type="button"
+                onClick={() => setInfoOpen(true)}
+                aria-label="Info zu Amy Surfwing"
+                className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-100 border border-slate-200 text-slate-500 hover:bg-slate-200 transition-colors text-sm font-semibold"
+              >
+                ⓘ
+              </button>
+            }
           >
             <div id="story-list" className="scroll-mt-24" />
 
@@ -430,11 +531,20 @@ function isUnlockedByChain(
                     <button
                       type="button"
                       onClick={() => navigate(currentCard.storyEngine === 'v2' ? `/stories-v02/${currentCard.id}` : `/stories/${currentCard.id}`)}
-                      className="shrink-0 inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-sm"
+                      className="shrink-0 inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-2 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-sm"
                     >
-                      {hasStarted
-                        ? tStories('continue.cta', { defaultValue: 'Weiterlesen →' })
-                        : tStories('start.cta', { defaultValue: 'Starten →' })}
+                      {hasStarted ? (
+                        tStories('continue.cta', { defaultValue: 'Weiterlesen \u2192' })
+                      ) : (
+                        <>
+                          <img
+                            src={assetUrl('media/story/characters/yasmin-256.webp')}
+                            alt="Yasmin"
+                            className="w-5 h-5 rounded-full object-cover object-top flex-shrink-0"
+                          />
+                          {tStories('start.cta', { defaultValue: 'Yasmin wartet schon \u2192' })}
+                        </>
+                      )}
                     </button>
                   </div>
                 )}
@@ -484,392 +594,232 @@ function isUnlockedByChain(
       })()}
 
 
-{/* HOW-TO (neu, strukturiert) */}
-<Panel
-  kicker={tStories('howto.kicker', { defaultValue: 'Kurz erklärt' })}
-  title={tStories('howto.title', { defaultValue: 'So nutzt du Amy Surfwing' })}
->
 
+{/* MEHR VON YASMIN, CARLOS & CO – character-driven world panel */}
+{(() => {
+  const characterCards = [
+    {
+      character: 'amy',
+      img: 'media/story/characters/amy-512.webp',
+      label: 'Amy',
+      tag: '💬 Weiterdenken',
+      hook: 'Manche Fragen stellt dir niemand. Ich schon.',
+      firstPerson: true,
+      badgeEmoji: '🎮',
+      badgeLabel: 'Story starten',
+      to: '/stories',
+      accentFrom: 'from-violet-50',
+      accentTo: 'to-indigo-50',
+      accentBorder: 'border-violet-100',
+      accentText: 'text-violet-700',
+    },
+    {
+      character: 'chioma',
+      img: 'media/story/characters/chioma-512.webp',
+      label: 'Chioma',
+      tag: '📰 Zeitung',
+      hook: 'Ich will wissen, was wirklich stimmt. Du auch?',
+      firstPerson: true,
+      badgeEmoji: '📰',
+      badgeLabel: 'Schülerzeitung',
+      to: '/newspaper',
+      accentFrom: 'from-sky-50',
+      accentTo: 'to-cyan-50',
+      accentBorder: 'border-sky-100',
+      accentText: 'text-sky-700',
+    },
+    {
+      character: 'carlos',
+      img: 'media/story/characters/carlos-512.webp',
+      label: 'Carlos',
+      tag: '📚 Lexikon',
+      hook: 'Algorithmus. Filterblase. Fake News. Ich erkläre, was wirklich dahintersteckt.',
+      firstPerson: true,
+      badgeEmoji: '📚',
+      badgeLabel: 'Lexikon',
+      to: '/lexikon',
+      accentFrom: 'from-teal-50',
+      accentTo: 'to-emerald-50',
+      accentBorder: 'border-teal-100',
+      accentText: 'text-teal-700',
+    },
+    {
+      character: 'yasmin',
+      img: 'media/story/characters/yasmin-512.webp',
+      label: 'Yasmin',
+      tag: '📔 Tagebuch',
+      hook: 'Was ich aufschreibe, sage ich niemandem. Außer dir.',
+      firstPerson: true,
+      badgeEmoji: '📔',
+      badgeLabel: 'Tagebuch',
+      to: '/diaries',
+      accentFrom: 'from-amber-50',
+      accentTo: 'to-orange-50',
+      accentBorder: 'border-amber-100',
+      accentText: 'text-amber-700',
+    },
+    {
+      character: 'igor',
+      img: 'media/story/characters/igor-512.webp',
+      label: 'Igor',
+      tag: '🎴 Freundebuch',
+      hook: 'Ich hab mehr zu sagen als du denkst. Schau in meine Karte.',
+      firstPerson: true,
+      badgeEmoji: '🎴',
+      badgeLabel: 'Freundebuch',
+      to: '/cards',
+      accentFrom: 'from-rose-50',
+      accentTo: 'to-pink-50',
+      accentBorder: 'border-rose-100',
+      accentText: 'text-rose-700',
+    },
+  ];
 
-  {/* FLOW */}
-  <div className="mt-5">
-
-
-    <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-      {(['1', '2', '3', '4'] as const).map((k, idx) => (
-        <div key={k} className="relative rounded-2xl border border-slate-200 bg-slate-50 p-4">
-          <div className="text-xs font-bold text-slate-400">Step {idx + 1}</div>
-          <div className="mt-1 font-semibold text-slate-900">
-            {tStories(`howto.flow.steps.${k}.title`)}
-          </div>
-          <div className="mt-1 text-sm text-slate-700 leading-snug">
-            {tStories(`howto.flow.steps.${k}.text`)}
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-
-
-  <div className="mt-5 font-semibold text-slate-900">
-    {tStories('howto.cta', { defaultValue: 'Viel Spaß mit Amy Surfwing! 💬🦉' })}
-  </div>
-</Panel>
-
-{/* AYM VISION – so sieht’s aus & das kann es */}
-<Panel
-  kicker={tStories('aym.kicker', { defaultValue: 'AYM VISION' })}
-  title={tStories('aym.title', { defaultValue: "So sieht’s aus – und das kannst du damit machen" })}
->
-  {(() => {
-    const items = [
-      {
-        tag: tStories('aym.tags.experience', { defaultValue: 'Erlebnis' }),
-        title: tStories('experience.cards.0.title', { defaultValue: 'Story erleben' }),
-        text: tStories('experience.cards.0.text', {
-          defaultValue:
-            'Du tauchst in eine erzählte Welt ein: Mia, Igor & Co erleben Situationen aus dem digitalen Leben – mit Freundschaften, Geheimnissen und Konflikten.',
-        }),
-        img: 'media/ui/welcome/exp-story-1024.webp',
-        alt: tStories('experience.cards.0.imageAlt', {
-          defaultValue: 'Illustration: Charaktere in einer digitalen Story-Szene',
-        }),
-        object: 'object-cover object-top',
-        mobileH: 'h-56',
-        desktopH: 'h-64',
-      },
-      {
-        tag: tStories('aym.tags.experience', { defaultValue: 'Erlebnis' }),
-        title: tStories('experience.cards.1.title', { defaultValue: 'Weiterdenken' }),
-        text: tStories('experience.cards.1.text', {
-          defaultValue:
-            'Beim Lesen bleibst du nicht nur Zuschauer: Was triggert dich? Was findest du unfair? Und warum sehen andere das vielleicht ganz anders?',
-        }),
-        img: 'media/ui/welcome/exp-reflect-1024.webp',
-        alt: tStories('experience.cards.1.imageAlt', {
-          defaultValue: 'Illustration: Nachdenklicher Moment in der Story',
-        }),
-        object: 'object-cover object-top',
-        mobileH: 'h-56',
-        desktopH: 'h-64',
-      },
-      {
-        tag: tStories('aym.tags.experience', { defaultValue: 'Erlebnis' }),
-        title: tStories('experience.cards.2.title', { defaultValue: 'Deine Sicht zählt' }),
-        text: tStories('experience.cards.2.text', {
-          defaultValue:
-            'Du formulierst deine eigene Antwort – in deinen Worten. Es geht nicht um richtig oder falsch, sondern darum, deine Gedanken ernst zu nehmen.',
-        }),
-        img: 'media/ui/welcome/exp-decide-1024.webp',
-        alt: tStories('experience.cards.2.imageAlt', {
-          defaultValue: 'Illustration: Eigene Antwort im Story-Verlauf',
-        }),
-        object: 'object-cover object-top',
-        mobileH: 'h-56',
-        desktopH: 'h-64',
-      },
-
-      {
-        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-        title: tStories('bonus.cards.avatar.title', { defaultValue: 'Avatare' }),
-        text: tStories('bonus.cards.avatar.text', {
-          defaultValue:
-            'Gestalte deinen eigenen Avatar und schalte neue Looks frei – so fühlt sich die Story-Welt noch mehr nach dir an.',
-        }),
-        img: 'media/ui/welcome/feat-avatar-1024.webp',
-        alt: tStories('bonus.cards.avatar.imageAlt', { defaultValue: 'Bild: Avatar-Ansicht' }),
-        object: 'object-cover object-top',
-        mobileH: 'h-56',
-        desktopH: 'h-64',
-      },
-      {
-        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-        title: tStories('bonus.cards.coins.title', { defaultValue: 'Coins' }),
-        text: tStories('bonus.cards.coins.text', {
-          defaultValue:
-            'Für jedes Kapitel gibt es 1 Coin. Episode fertig? +5 Bonus. 5 Tage am Stück? +2 Extra. Damit kannst du neue Avatar-Looks freischalten.',
-        }),
-        img: 'media/ui/about/sample-1024.webp',
-        alt: tStories('bonus.cards.coins.imageAlt', { defaultValue: 'Bild: Coins-Übersicht' }),
-        object: 'object-cover object-top',
-        mobileH: 'h-56',
-        desktopH: 'h-64',
-      },
-      {
-        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-        title: tStories('bonus.cards.sticker.title', { defaultValue: 'Sticker' }),
-        text: tStories('bonus.cards.sticker.text', {
-          defaultValue:
-            'Für jedes abgeschlossene Kapitel bekommst du Sticker – kleine Zeichen dafür, dass du dranbleibst.',
-        }),
-        img: 'media/ui/welcome/feat-stickers-1024.webp',
-        alt: tStories('bonus.cards.sticker.imageAlt', { defaultValue: 'Bild: Sticker-Album' }),
-        object: 'object-cover object-top',
-        mobileH: 'h-56',
-        desktopH: 'h-64',
-      },
-      {
-        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-        title: tStories('bonus.cards.newspaper.title', { defaultValue: 'Schülerzeitung' }),
-        text: tStories('bonus.cards.newspaper.text', {
-          defaultValue: 'Lies Bonusartikel und entdecke neue Perspektiven aus der Story-Welt.',
-        }),
-        img: 'media/ui/welcome/feat-newspaper-1024.webp',
-        alt: tStories('bonus.cards.newspaper.imageAlt', { defaultValue: 'Bild: Schülerzeitung-Bereich' }),
-        object: 'object-cover object-top',
-        mobileH: 'h-56',
-        desktopH: 'h-64',
-      },
-      {
-        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-        title: tStories('bonus.cards.diary.title', { defaultValue: 'Tagebuch' }),
-        text: tStories('bonus.cards.diary.text', {
-          defaultValue: 'Halte deine Gedanken fest und sieh später nach, wie sich deine Sicht entwickelt hat.',
-        }),
-        img: 'media/ui/welcome/feat-tagebuch-1024.webp',
-        alt: tStories('bonus.cards.diary.imageAlt', { defaultValue: 'Bild: Tagebuch-Ansicht' }),
-        object: 'object-cover object-top',
-        mobileH: 'h-56',
-        desktopH: 'h-64',
-      },
-      {
-        tag: tStories('aym.tags.bonus', { defaultValue: 'Bonus' }),
-        title: tStories('bonus.cards.collectibles.title', { defaultValue: 'Freundebuch' }),
-        text: tStories('bonus.cards.collectibles.text', {
-          defaultValue: 'Schalte besondere Karten frei, wenn du ganze Story-Abschnitte meisterst.',
-        }),
-        img: 'media/ui/welcome/feat-sammelkarten-1024.webp',
-        alt: tStories('bonus.cards.collectibles.imageAlt', { defaultValue: 'Bild: Sammelkarten-Übersicht' }),
-        object: 'object-cover object-top',
-        mobileH: 'h-56',
-        desktopH: 'h-64',
-      },
-    ];
-
-    return (
+  return (
+    <Panel
+      kicker="Story-Welt"
+      title="Mehr von Yasmin, Carlos & Co."
+    >
       <div className="mt-2">
+        {/* Mobile: horizontal swipe */}
         <div className="lg:hidden -mx-4 px-4">
           <SwipeRow>
-            {items.map((it, idx) => (
-              <div key={idx} className="snap-start shrink-0 w-[45%] sm:w-[32%]">
-                <CardTile {...it} hClass={it.mobileH} />
+            {characterCards.map((c) => (
+              <div key={c.character} className="snap-start shrink-0 w-[56%] sm:w-[38%]">
+                <Link
+                  to={c.to}
+                  className={`flex flex-col rounded-2xl border ${c.accentBorder} bg-gradient-to-b ${c.accentFrom} via-white ${c.accentTo} shadow-sm overflow-hidden h-full hover:shadow-md transition-shadow`}
+                >
+                  <div className="relative w-full aspect-square overflow-hidden bg-slate-100 flex-shrink-0">
+                    <img
+                      src={assetUrl(c.img)}
+                      alt={c.label}
+                      className="w-full h-full object-cover object-top"
+                      loading="lazy"
+                    />
+                    <div className="absolute top-2 left-2 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-600 shadow-sm">
+                      {c.tag}
+                    </div>
+                  </div>
+                  <div className="px-3 py-3 flex flex-col gap-2 flex-1">
+                    <p className="text-sm text-slate-700 leading-snug italic flex-1">
+                      {c.firstPerson ? `„${c.hook}"` : c.hook}
+                    </p>
+                    <div className={`inline-flex items-center gap-1 text-xs font-bold ${c.accentText}`}>
+                      {c.badgeEmoji} {c.badgeLabel} →
+                    </div>
+                  </div>
+                </Link>
               </div>
             ))}
           </SwipeRow>
-
           <div className="mt-2 text-xs font-semibold text-slate-500">
             {tCommon('swipeHint', { defaultValue: 'Wischen' })}
           </div>
         </div>
 
-        <div className="hidden lg:grid grid-cols-4 gap-4">
-          {items.map((it, idx) => (
-            <CardTile key={idx} {...it} hClass={it.desktopH} />
+        {/* Desktop: 5-column grid */}
+        <div className="hidden lg:grid grid-cols-5 gap-4">
+          {characterCards.map((c) => (
+            <Link
+              key={c.character}
+              to={c.to}
+              className={`flex flex-col rounded-2xl border ${c.accentBorder} bg-gradient-to-b ${c.accentFrom} via-white ${c.accentTo} shadow-sm overflow-hidden hover:shadow-md transition-shadow`}
+            >
+              <div className="relative w-full aspect-[3/4] overflow-hidden bg-slate-100 flex-shrink-0">
+                <img
+                  src={assetUrl(c.img)}
+                  alt={c.label}
+                  className="w-full h-full object-cover object-top"
+                  loading="lazy"
+                />
+                <div className="absolute top-2 left-2 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-600 shadow-sm">
+                  {c.tag}
+                </div>
+              </div>
+              <div className="px-3 py-3 flex flex-col gap-2 flex-1">
+                <p className="text-sm text-slate-700 leading-snug italic flex-1">
+                  {c.firstPerson ? `„${c.hook}"` : c.hook}
+                </p>
+                <div className={`inline-flex items-center gap-1 text-xs font-bold ${c.accentText}`}>
+                  {c.badgeEmoji} {c.badgeLabel} →
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
-    );
-  })()}
-</Panel>
-
-
-{/* GOOD TO KNOW – swipe cards */}
-<Panel
-  kicker={tStories('howto.info.kicker', { defaultValue: 'Gut zu wissen' })}
-  title={tStories('howto.info.title', { defaultValue: 'Damit du dich gut zurechtfindest' })}
->
-  <div className="mt-2">
-    <SwipeRow className="-mx-4 px-4 lg:mx-0 lg:px-0">
-      {/* 1) Order */}
-      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          colorIdx={0}
-          title={tStories('howto.info.tiles.order.title', { defaultValue: 'Schritt für Schritt ➡️' })}
-          text={tStories('howto.info.tiles.order.text', {
-            defaultValue: 'Du machst die Kapitel der Reihe nach: erst das nächste, dann geht\u2019s weiter.',
-          })}
-        />
-      </div>
-      {/* 2) Reflektion */}
-      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          colorIdx={1}
-          title={tStories('howto.info.tiles.reflection.title', { defaultValue: 'Deine Sicht zählt 👁' })}
-          text={tStories('howto.info.tiles.reflection.text', {
-            defaultValue:
-              'Du formulierst deine eigene Antwort – in deinen Worten. Es geht nicht um richtig oder falsch, sondern darum, deine Gedanken ernst zu nehmen.',
-          })}
-        />
-      </div>
-      {/* 3) Retry + Lock (combined) */}
-      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          colorIdx={2}
-          title={tStories('howto.info.tiles.retryLock.title', { defaultValue: 'Wenn es nicht passt 🔁' })}
-          text={tStories('howto.info.tiles.retryLock.text', {
-            defaultValue:
-              'Wenn deine Antwort zu kurz ist oder nicht zur Frage passt, fragt Amy nochmal. Nach 3 Versuchen ist kurz Pause – dann am besten mit Eltern anschauen.',
-          })}
-        />
-      </div>
-      {/* 4) Safe */}
-      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          colorIdx={3}
-          title={tStories('howto.info.tiles.safe.title', { defaultValue: 'Fair & safe ✅' })}
-          text={tStories('howto.info.tiles.safe.text', {
-            defaultValue: 'Beleidigungen, Mobbing oder gefährliche Inhalte gehen nicht. Dann stoppt Amy.',
-          })}
-        />
-      </div>
-      {/* 5) Backup */}
-      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          colorIdx={4}
-          title={tStories('howto.info.tiles.backup.title', { defaultValue: 'Speichern & Backup 💾' })}
-          text={tStories('howto.info.tiles.backup.text', {
-            defaultValue:
-              'Dein Fortschritt bleibt auf deinem Gerät gespeichert. 💾 Wenn du möchtest, kannst du ihn zusätzlich sichern.',
-          })}
-        />
-      </div>
-      {/* 6) Coins */}
-      <div className="snap-start shrink-0 w-[78%] sm:w-[44%] lg:w-[320px]">
-        <InfoTile
-          colorIdx={2}
-          title={tStories('howto.info.tiles.coins.title', { defaultValue: 'So bekommst du Coins 🪙' })}
-          text={tStories('howto.info.tiles.coins.text', {
-            defaultValue:
-              'Kapitel spielen → 1 Coin. Episode fertig → +5 Bonus-Coins. 5 Tage am Stück → +2 Extra-Coins ⭐. Mit deinen Coins kannst du im Shop neue Avatar-Looks freischalten.',
-          })}
-        />
-      </div>
-    </SwipeRow>
-  </div>
-</Panel>
-
-<Panel
-  kicker={tStories('trust.kicker', { defaultValue: 'Vertrauen' })}
-  title={tStories('trust.title', { defaultValue: 'Ein sicherer Raum für deine Gedanken' })}
->
-  <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-    {tStories('trust.body', {
-      defaultValue:
-        'In Amy Surfwing liest du nicht nur – du denkst mit. Niemand sieht, was du schreibst. Es gibt keine Likes, kein Ranking und keinen Vergleich. Dein Fortschritt bleibt auf deinem Gerät. Hier kannst du in Ruhe überlegen, was du richtig findest – und Schritt für Schritt lernen, selbst gute Entscheidungen zu treffen.',
-    })}
-  </p>
-
-
-  <div className="mt-4 flex flex-wrap gap-2">
-    {[
-      'Privat 🔒',
-      'Ohne Ranking 🚫',
-      'Lokal gespeichert 💾',
-      'Unterstützende KI 🤝',
-    ].map((x, i) => (
-      <span
-        key={i}
-        className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-slate-50 border border-slate-200 text-slate-700"
-      >
-        {x}
-      </span>
-    ))}
-  </div>
-
-    <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-    <div className="text-sm font-semibold text-slate-900">
-      {tStories('helpHint.title', { defaultValue: 'Wenn etwas komisch ist…' })}
-    </div>
-    <p className="mt-1 text-sm text-slate-700">
-      {tStories('helpHint.body', {
-        defaultValue:
-          'Sprich kurz mit einer erwachsenen Person, der du vertraust (z. B. Eltern, Lehrkraft, Schulsozialarbeit).',
-      })}
-    </p>
-  </div>
-
-  <div className="mt-5 flex flex-wrap gap-3">
-    <Link
-      to="/concept"
-      className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
-    >
-      Pädagogisches Konzept →
-    </Link>
-
-    <Link
-      to="/parents"
-      className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
-    >
-      Für Eltern →
-    </Link>
-  </div>
-
-</Panel>
+    </Panel>
+  );
+})()}
 
 
 
-        {/* SURVEY – separat */}
-        <Panel
-          kicker={tStories('survey.kicker', { defaultValue: 'Feedback' })}
-          title={tStories('survey.title', { defaultValue: '📝 Kurze Umfrage' })}
-        >
-          <p className="text-sm sm:text-base text-slate-700">
-            {tStories('survey.description', {
-              defaultValue: 'Sag uns, wie dir die Story gefallen hat – anonym und in wenigen Minuten.',
-            })}
-          </p>
 
-          <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <div className="text-sm font-semibold text-slate-900">
-              {tStories('survey.noticeTitle', { defaultValue: 'Hinweis' })}
+
+
+        {/* AMY SURVEY BANNER – erscheint nach ≥3 Kapiteln + ≥3 Tagen */}
+        {surveyBannerVisible && (
+          <div className="rounded-2xl border border-violet-100 bg-gradient-to-r from-violet-50 to-white p-4 sm:p-5 flex items-start gap-3">
+            <img
+              src={assetUrl('media/story/characters/amy-256.webp')}
+              alt="Amy"
+              className="w-12 h-12 rounded-full object-cover object-top flex-shrink-0 border-2 border-violet-200"
+            />
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-semibold text-violet-700 uppercase tracking-wide">Amy fragt</div>
+              <div className="mt-0.5 font-semibold text-slate-900 text-sm">
+                Ich habe eine Frage an dich — was denkst du bisher?
+              </div>
+              <p className="mt-1 text-xs text-slate-500">
+                3 Minuten, anonym. Deine Meinung hilft uns, Amy Surfwing besser zu machen.
+              </p>
+              <div className="mt-3 flex items-center gap-3">
+                <a
+                  href={SURVEY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={dismissSurvey}
+                  className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-xs"
+                >
+                  Zur Umfrage →
+                </a>
+                <button
+                  type="button"
+                  onClick={dismissSurvey}
+                  className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  Nicht jetzt
+                </button>
+              </div>
             </div>
-            <p className="mt-1 text-sm text-slate-700">
-              {tStories('survey.noticeBody', {
-                defaultValue:
-                  'Du wirst zu einem externen Formular (Microsoft Forms) weitergeleitet. Es gelten die Datenschutzbestimmungen des Anbieters.',
-              })}
+          </div>
+        )}
+
+        {/* SURVEY – Beta-Feedback Banner */}
+        <div className="rounded-2xl border border-teal-100 bg-gradient-to-r from-teal-50 to-white p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-semibold text-teal-700 uppercase tracking-wide">Beta-Feedback</div>
+            <div className="mt-0.5 font-semibold text-slate-900 text-sm sm:text-base">
+              📝 Was denkst du über Amy Surfwing?
+            </div>
+            <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-snug">
+              3 Minuten, anonym.{' '}
+              <span className="text-slate-400">
+                Du wirst zu Microsoft Forms weitergeleitet – deine Antworten werden anonym gespeichert, wir erhalten keine persönlichen Daten. Teilnahme freiwillig.
+              </span>
             </p>
           </div>
-
-          <div className="mt-5">
-            <a
-              href={SURVEY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
-            >
-              {tStories('survey.cta', { defaultValue: 'Zur Umfrage →' })}
-            </a>
-          </div>
-        </Panel>
-
-        {/* BONUS WORLD TEASER */}
-        <div className="rounded-2xl border border-teal-100 bg-gradient-to-br from-teal-50 via-white to-amber-50 p-5 sm:p-6 shadow-sm">
-          <div className="text-xs font-semibold text-teal-700">
-            {tStories('bonusHub.kicker', { defaultValue: 'Entdecke mehr' })}
-          </div>
-          <h2 className="mt-1 text-base sm:text-lg font-semibold text-slate-900">
-            {tStories('bonusHub.title', { defaultValue: 'Bonuswelt im Profil 🎁' })}
-          </h2>
-          <p className="mt-2 text-sm text-slate-700 leading-relaxed">
-            {tStories('bonusHub.body', { defaultValue: 'Sticker sammeln, in der Schülerzeitung lesen, Tagebuch führen – alles wartet auf dich im Profil.' })}
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {(['⭐ Sticker-Album', '📰 Schülerzeitung', '📔 Tagebuch', '🎴 Sammelkarten'] as const).map((label) => (
-              <span key={label} className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white border border-slate-200 text-slate-700">
-                {label}
-              </span>
-            ))}
-          </div>
-          <div className="mt-4">
-            <Link
-              to="/profile"
-              className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
-            >
-              {tStories('bonusHub.cta', { defaultValue: 'Zum Profil →' })}
-            </Link>
-          </div>
+          <a
+            href={SURVEY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-sm"
+          >
+            Zur Umfrage →
+          </a>
         </div>
+
 
       </div>
 
@@ -878,6 +828,129 @@ function isUnlockedByChain(
           info={amicBannerInfo}
           onDismiss={() => setAmicBannerVisible(false)}
         />
+      )}
+
+      {/* ⓘ INFO BOTTOM SHEET */}
+      {infoOpen && (
+        <InfoBottomSheet onClose={() => setInfoOpen(false)}>
+          {/* HOW-TO */}
+          <Panel
+            kicker={tStories('howto.kicker', { defaultValue: 'Kurz erklärt' })}
+            title={tStories('howto.title', { defaultValue: 'So nutzt du Amy Surfwing' })}
+          >
+            <div className="mt-5">
+              <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {(['1', '2', '3', '4'] as const).map((k, idx) => (
+                  <div key={k} className="relative rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                    <div className="text-xs font-bold text-slate-400">Step {idx + 1}</div>
+                    <div className="mt-1 font-semibold text-slate-900">
+                      {tStories(`howto.flow.steps.${k}.title`)}
+                    </div>
+                    <div className="mt-1 text-sm text-slate-700 leading-snug">
+                      {tStories(`howto.flow.steps.${k}.text`)}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="mt-5 font-semibold text-slate-900">
+              {tStories('howto.cta', { defaultValue: 'Viel Spaß mit Amy Surfwing! 💬🦉' })}
+            </div>
+          </Panel>
+
+          {/* GOOD TO KNOW */}
+          <Panel
+            kicker={tStories('howto.info.kicker', { defaultValue: 'Gut zu wissen' })}
+            title={tStories('howto.info.title', { defaultValue: 'Damit du dich gut zurechtfindest' })}
+          >
+            <div className="mt-2">
+              <SwipeRow className="-mx-4 px-4">
+                <div className="snap-start shrink-0 w-[78%] sm:w-[44%]">
+                  <InfoTile colorIdx={0}
+                    title={tStories('howto.info.tiles.order.title', { defaultValue: 'Schritt für Schritt ➡️' })}
+                    text={tStories('howto.info.tiles.order.text', { defaultValue: 'Du machst die Kapitel der Reihe nach: erst das nächste, dann geht\u2019s weiter.' })}
+                  />
+                </div>
+                <div className="snap-start shrink-0 w-[78%] sm:w-[44%]">
+                  <InfoTile colorIdx={1}
+                    title={tStories('howto.info.tiles.reflection.title', { defaultValue: 'Deine Sicht zählt 👁' })}
+                    text={tStories('howto.info.tiles.reflection.text', { defaultValue: 'Du formulierst deine eigene Antwort – in deinen Worten. Es geht nicht um richtig oder falsch, sondern darum, deine Gedanken ernst zu nehmen.' })}
+                  />
+                </div>
+                <div className="snap-start shrink-0 w-[78%] sm:w-[44%]">
+                  <InfoTile colorIdx={2}
+                    title={tStories('howto.info.tiles.retryLock.title', { defaultValue: 'Wenn es nicht passt 🔁' })}
+                    text={tStories('howto.info.tiles.retryLock.text', { defaultValue: 'Wenn deine Antwort zu kurz ist oder nicht zur Frage passt, fragt Amy nochmal. Nach 3 Versuchen ist kurz Pause – dann am besten mit Eltern anschauen.' })}
+                  />
+                </div>
+                <div className="snap-start shrink-0 w-[78%] sm:w-[44%]">
+                  <InfoTile colorIdx={3}
+                    title={tStories('howto.info.tiles.safe.title', { defaultValue: 'Fair & safe ✅' })}
+                    text={tStories('howto.info.tiles.safe.text', { defaultValue: 'Beleidigungen, Mobbing oder gefährliche Inhalte gehen nicht. Dann stoppt Amy.' })}
+                  />
+                </div>
+                <div className="snap-start shrink-0 w-[78%] sm:w-[44%]">
+                  <InfoTile colorIdx={4}
+                    title={tStories('howto.info.tiles.backup.title', { defaultValue: 'Speichern & Backup 💾' })}
+                    text={tStories('howto.info.tiles.backup.text', { defaultValue: 'Dein Fortschritt bleibt auf deinem Gerät gespeichert. Wenn du möchtest, kannst du ihn zusätzlich sichern.' })}
+                  />
+                </div>
+                <div className="snap-start shrink-0 w-[78%] sm:w-[44%]">
+                  <InfoTile colorIdx={2}
+                    title={tStories('howto.info.tiles.coins.title', { defaultValue: 'So bekommst du Coins' })}
+                    text={tStories('howto.info.tiles.coins.text', { defaultValue: 'Kapitel spielen → 1 Coin. Episode fertig → +5 Bonus-Coins. 5 Tage am Stück → +2 Extra-Coins ⭐. Mit deinen Coins kannst du im Shop neue Avatar-Looks freischalten.' })}
+                  />
+                </div>
+              </SwipeRow>
+            </div>
+          </Panel>
+
+          {/* DENKRAUM / TRUST */}
+          <Panel
+            kicker={tStories('trust.kicker', { defaultValue: 'Vertrauen' })}
+            title={tStories('trust.title', { defaultValue: 'Ein sicherer Raum für deine Gedanken' })}
+          >
+            <p className="text-sm text-slate-700 leading-relaxed">
+              {tStories('trust.body', {
+                defaultValue:
+                  'In Amy Surfwing liest du nicht nur – du denkst mit. Niemand sieht, was du schreibst. Es gibt keine Likes, kein Ranking und keinen Vergleich. Dein Fortschritt bleibt auf deinem Gerät. Hier kannst du in Ruhe überlegen, was du richtig findest – und Schritt für Schritt lernen, selbst gute Entscheidungen zu treffen.',
+              })}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {['Privat 🔒', 'Ohne Ranking 🚫', 'Lokal gespeichert 💾', 'Unterstützende KI 🤝'].map((x, i) => (
+                <span key={i} className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-slate-50 border border-slate-200 text-slate-700">
+                  {x}
+                </span>
+              ))}
+            </div>
+            <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div className="text-sm font-semibold text-slate-900">
+                {tStories('helpHint.title', { defaultValue: 'Wenn etwas komisch ist…' })}
+              </div>
+              <p className="mt-1 text-sm text-slate-700">
+                {tStories('helpHint.body', {
+                  defaultValue: 'Sprich kurz mit einer erwachsenen Person, der du vertraust (z. B. Eltern, Lehrkraft, Schulsozialarbeit).',
+                })}
+              </p>
+            </div>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link
+                to="/concept"
+                onClick={() => setInfoOpen(false)}
+                className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
+              >
+                Pädagogisches Konzept →
+              </Link>
+              <Link
+                to="/parents"
+                onClick={() => setInfoOpen(false)}
+                className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
+              >
+                Für Eltern →
+              </Link>
+            </div>
+          </Panel>
+        </InfoBottomSheet>
       )}
     </Layout>
   );

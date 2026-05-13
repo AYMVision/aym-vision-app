@@ -1,10 +1,10 @@
 ---
-title: David gegen Goliath – Wer hat Recht?
-description: Chioma denkt nach, was eine alte Geschichte mit einer Schulsituation zu tun hat – und auf welcher Seite man eigentlich steht.
+title: Du gegen dein Handy: Wer gewinnt?
+description: Du wolltest nur kurz ein Video schauen und plötzlich ist eine halbe Stunde weg 😅 Hier erfährst du, warum dein Feed so stark ist … und wie du ihn austricksen kannst.
 author: Chioma
 date: 2026-04-17
 ---
 
-# David gegen Goliath – Wer hat Recht?
+# Du gegen dein Handy: Wer gewinnt?
 
-Hör dir Chiomas Gedanken an – und überleg selbst, auf welcher Seite du stehst.
+Du wolltest nur kurz ein Video schauen und plötzlich ist eine halbe Stunde weg 😅 Hier erfährst du, warum dein Feed so stark ist … und wie du ihn austricksen kannst.

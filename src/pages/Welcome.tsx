@@ -14,6 +14,10 @@ import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile';
 import { shouldBypassAll } from '../gating/entitlements';
 import { shouldSkipOnboarding } from '../common/firstRun';
+import { loadStore } from '../analytics/analyticsStore';
+import { BONUS_INDEX } from '../bonus/bonusIndex';
+import { isBonusMarkerUnlocked, isBonusSeen } from '../bonus/bonusSeen';
+import { DIARY_ENTRIES } from '../bonus/diaryEntries';
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
@@ -48,8 +52,10 @@ function Panel({
 
 export default function Welcome() {
   const navigate = useNavigate();
-const { t, i18n } = useTranslation(['welcome', 'stories']);
+const { t, i18n } = useTranslation(['welcome', 'stories', 'common', 'bonus']);
 const { t: tStories } = useTranslation('stories');
+const { t: tCommon } = useTranslation('common');
+const { t: tBonus } = useTranslation('bonus');
   const lang = (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
   const { profile } = useProfile();
 
@@ -128,6 +134,65 @@ function isUnlockedByChain(
   // Einmal berechnen — ändert sich nie innerhalb einer Session
   const [isFirstTime] = useState(() => !shouldSkipOnboarding());
 
+  // Personalisierte Begrüßung
+  const greeting = (() => {
+    const name = profile.chatName?.trim();
+    const hour = new Date().getHours();
+    const timeGreet = hour < 11 ? 'Guten Morgen' : hour < 18 ? 'Hallo' : 'Guten Abend';
+
+    // Rückkehr nach Pause: letzte Aktivität > 3 Tage
+    const lastSeenStr = loadStore().meta?.lastSeen ?? '';
+    const lastSeenDate = lastSeenStr ? new Date(lastSeenStr).getTime() : 0;
+    const daysSince = lastSeenDate ? (Date.now() - lastSeenDate) / (1000 * 60 * 60 * 24) : 0;
+    if (!isFirstTime && daysSince > 3) {
+      return name
+        ? `Willkommen zurück, ${name}! Mia hat auf dich gewartet.`
+        : 'Willkommen zurück! Mia hat auf dich gewartet.';
+    }
+
+    if (!isFirstTime) {
+      return name
+        ? `${timeGreet}, ${name}! Amy hat schon auf dich gewartet.`
+        : `${timeGreet}! Amy hat schon auf dich gewartet.`;
+    }
+
+    return 'Hallo! Ich bin Amy. Ich freue mich auf dich.';
+  })();
+
+  // Option B: single Amy nudge — highest priority wins
+  const amyHint = useMemo(() => {
+    if (isFirstTime) return null;
+
+    // 1. Most recent unread newspaper article (highest order = newest)
+    //    released: true is enough — newspaper page itself handles chapter-lock display
+    const newestUnread = BONUS_INDEX
+      .filter((item) => item.category === 'newspaper' && item.released && !isBonusSeen(item.bonusId))
+      .sort((a, b) => b.order - a.order)[0];
+    if (newestUnread) {
+      return {
+        type: 'newspaper' as const,
+        titleKey: newestUnread.titleKey,
+        path: '/newspaper',
+      };
+    }
+
+    // 2. Unread diary entry
+    const allDiaryEntries = Object.values(DIARY_ENTRIES).flat();
+    const hasUnreadDiary = allDiaryEntries.some(
+      (e) => isBonusMarkerUnlocked(e.bonusId) && !isBonusSeen(e.bonusId)
+    );
+    if (hasUnreadDiary) {
+      return {
+        type: 'diary' as const,
+        titleKey: undefined,
+        path: '/diaries',
+      };
+    }
+
+    return null;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFirstTime]);
+
   return (
     <Layout>
       <BetaBanner />
@@ -148,11 +213,19 @@ function isUnlockedByChain(
   <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch">
     {/* TEXT */}
 <div className="lg:col-span-7 p-6 pb-2 sm:p-10 lg:pr-10 flex flex-col justify-center">
-      <div className="text-xs sm:text-sm font-semibold text-[var(--color-teal-700)]">
-        {t('hero.kicker')}
+      {/* Personalisierte Begrüßung */}
+      <div className="flex items-center gap-2 mb-3">
+        <img
+          src={assetUrl('media/story/characters/amy-256.webp')}
+          alt="Amy"
+          className="w-8 h-8 rounded-full object-cover object-top flex-shrink-0 border-2 border-teal-100"
+        />
+        <span className="text-sm font-semibold text-[var(--color-teal-700)]">
+          {greeting}
+        </span>
       </div>
 
-      <h1 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
         {t('hero.title')}
       </h1>
 
@@ -242,37 +315,39 @@ function isUnlockedByChain(
   </div>
 </section>
 
-        {/* WAS IST AMY SURFWING */}
-        <div className="mt-6 sm:mt-8">
-          <Panel title={t('about.whatTitle')}>
-            <p>{t('about.whatBody1')}</p>
-            <p className="mt-2">{t('about.whatBody2')}</p>
+        {/* WAS IST AMY SURFWING — nur für Erstbesucher */}
+        {isFirstTime && (
+          <div className="mt-6 sm:mt-8">
+            <Panel title={t('about.whatTitle')}>
+              <p>{t('about.whatBody1')}</p>
+              <p className="mt-2">{t('about.whatBody2')}</p>
 
-            <div className="mt-5 font-semibold text-slate-900">
-              {t('about.uspTitle')}
-            </div>
+              <div className="mt-5 font-semibold text-slate-900">
+                {t('about.uspTitle')}
+              </div>
 
-            <div className="mt-3 flex flex-wrap gap-2">
-              {(['0', '1', '2', '3', '4', '5'] as const).map((k) => (
-                <span
-                  key={k}
-                  className="inline-flex items-center rounded-full px-3 py-1 text-xs sm:text-sm font-semibold bg-slate-50 border border-slate-200 text-slate-700"
+              <div className="mt-3 flex flex-wrap gap-2">
+                {(['0', '1', '2', '3', '4', '5'] as const).map((k) => (
+                  <span
+                    key={k}
+                    className="inline-flex items-center rounded-full px-3 py-1 text-xs sm:text-sm font-semibold bg-slate-50 border border-slate-200 text-slate-700"
+                  >
+                    {t(`about.principles.${k}`)}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-5">
+                <Link
+                  to="/parents"
+                  className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
                 >
-                  {t(`about.principles.${k}`)}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-5">
-              <Link
-                to="/parents"
-                className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
-              >
-                {t('about.ctaParents')}
-              </Link>
-            </div>
-          </Panel>
-        </div>
+                  {t('about.ctaParents')}
+                </Link>
+              </div>
+            </Panel>
+          </div>
+        )}
 
         {/* CONTINUE / START */}
         <div className="mt-6 sm:mt-8">
@@ -314,9 +389,14 @@ function isUnlockedByChain(
                     <div className="text-xs font-semibold text-slate-500">{t('hero.introHint')}</div>
                     <Link
                       to="/start"
-                      className="mt-3 w-full inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+                      className="mt-3 w-full inline-flex items-center justify-center gap-2.5 rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
                     >
-                      {t('hero.introCta')}
+                      <img
+                        src={assetUrl('media/story/characters/yasmin-256.webp')}
+                        alt=""
+                        className="w-6 h-6 rounded-full object-cover object-top border border-white/40"
+                      />
+                      Yasmin wartet schon auf dich →
                     </Link>
                   </div>
                 </div>
@@ -399,6 +479,39 @@ function isUnlockedByChain(
             </Panel>
           ) : null}
         </div>
+
+        {/* Chioma/Yasmin-Nudge: kontextueller Hinweis für Rückkehrer */}
+        {amyHint && (
+          <div className="mt-4">
+            <Link
+              to={amyHint.path}
+              className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <img
+                src={assetUrl(
+                  amyHint.type === 'newspaper'
+                    ? 'media/story/characters/chioma-256.webp'
+                    : 'media/story/characters/yasmin-256.webp'
+                )}
+                alt={amyHint.type === 'newspaper' ? 'Chioma' : 'Yasmin'}
+                className="w-12 h-12 rounded-full object-cover object-top flex-shrink-0 border-2 border-rose-100"
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold text-slate-900 leading-snug line-clamp-2">
+                  {amyHint.type === 'newspaper'
+                    ? (amyHint.titleKey ? tBonus(amyHint.titleKey.replace('bonus:', '')) : 'Neues in der Sch\u00fclerzeitung')
+                    : tCommon('nudge.diary.text')}
+                </p>
+                <p className="mt-0.5 text-xs text-slate-400">
+                  {amyHint.type === 'newspaper'
+                    ? 'Chioma \u00b7 Sch\u00fclerzeitung'
+                    : 'Yasmin \u00b7 Tagebuch'}
+                </p>
+              </div>
+              <span className="text-slate-300 text-xl flex-shrink-0">&rsaquo;</span>
+            </Link>
+          </div>
+        )}
 
       </div>
     </Layout>

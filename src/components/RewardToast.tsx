@@ -2,11 +2,13 @@
 // Centered achievement card that shows stickers + coins, auto-dismisses after 2.5s.
 
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { assetUrl } from '../common/assetUrl';
 
 export type RewardToastData = {
   stickers: Array<{ image: string; title: string }>;
   coins: number;
+  chatName?: string;
 };
 
 type Props = {
@@ -15,6 +17,8 @@ type Props = {
 };
 
 export default function RewardToast({ reward, onDismiss }: Props) {
+  const { t } = useTranslation('common');
+  const name = reward.chatName?.trim();
   // Base 3s + 1.5s per sticker so there's enough time to look at each one
   const DISPLAY_MS = 3000 + reward.stickers.length * 1500;
   const FADEOUT_MS = 350; // matches reward-fadeout animation duration
@@ -81,9 +85,18 @@ export default function RewardToast({ reward, onDismiss }: Props) {
           textAlign: 'center',
         }}
       >
-        {/* Header */}
-        <div style={{ fontSize: '13px', fontWeight: 700, color: '#be123c', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-          Amic geschafft! ✨
+        {/* Amy — dezente persönliche Übergabe */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}>
+          <img
+            src={assetUrl('media/story/characters/amy-256.webp')}
+            alt="Amy"
+            style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover', objectPosition: 'top', flexShrink: 0, border: '1.5px solid #fda4af' }}
+          />
+          <div style={{ fontSize: '13px', fontWeight: 700, color: '#be123c' }}>
+            {name
+              ? t('reward.amicDone', { name })
+              : t('reward.amicDoneNoName')}
+          </div>
         </div>
 
         {/* Stickers */}
@@ -113,7 +126,7 @@ export default function RewardToast({ reward, onDismiss }: Props) {
             borderRadius: '999px',
             padding: '6px 16px',
           }}>
-            <span style={{ fontSize: '20px' }}>🪙</span>
+            <img src={assetUrl('media/story/ui/coin-128.webp')} alt="" style={{ width: 24, height: 24, objectFit: 'contain' }} />
             <span style={{ fontSize: '15px', fontWeight: 700, color: '#92400e' }}>
               +{reward.coins} {reward.coins === 1 ? 'Münze' : 'Münzen'}
             </span>

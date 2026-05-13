@@ -13,6 +13,8 @@ const FULL_TRANSFER_KEYS = [
   'aym_story_v02_challenge_status',
   'aym_story_v02_topic_seen',
   'aym_seen_stickers_v1',
+  'aym_article_read_v1',
+  'aym_article_reactions_v1',
 ] as const;
 
 // Excluded from profile: chatName, myCard, storyTranscripts (personal / privacy-relevant)

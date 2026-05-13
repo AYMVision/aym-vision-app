@@ -23,6 +23,7 @@ export const I18N_NAMESPACES = [
   'parents',
   'concept',
   'themes',
+  'lexikon',
 ] as const;
 
 export type I18nNamespace = (typeof I18N_NAMESPACES)[number];

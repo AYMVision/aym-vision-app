@@ -128,8 +128,8 @@ function useArticleMetaMap(items: BonusItem[], lang: 'de' | 'en') {
       await Promise.all(
         missing.map(async (it) => {
           try {
-            let res = await fetch(`/${it.bodySrc}.${lang}.md`);
-            if (!res.ok) res = await fetch(`/${it.bodySrc}.md`);
+            let res = await fetch(assetUrl(`${it.bodySrc}.${lang}.md`));
+            if (!res.ok) res = await fetch(assetUrl(`${it.bodySrc}.md`));
             if (!res.ok) return;
             const text = await res.text();
             const fm = parseFrontmatter(text);

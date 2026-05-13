@@ -3,6 +3,7 @@
 // Gleicher Look wie die ehemalige EpisodeCelebrationModal, aber als Inline-Karte.
 
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { assetUrl } from '../../common/assetUrl';
 
 // ---------------------------------------------------------------------------
@@ -51,6 +52,9 @@ type Props = {
   episodeTitle?: string;
   stickerImage?: string;
   bonusCoins?: number;
+  chatName?: string;
+  characterImg?: string;
+  characterSays?: string;
   onViewSticker: () => void;
   onContinue: () => void;
   onProfile?: () => void;
@@ -60,10 +64,15 @@ export default function EpisodeSummaryCard({
   episodeTitle,
   stickerImage,
   bonusCoins = 5,
+  chatName,
+  characterImg,
+  characterSays,
   onViewSticker,
   onContinue,
   onProfile,
 }: Props) {
+  const { t } = useTranslation('common');
+  const name = chatName?.trim();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -106,21 +115,47 @@ export default function EpisodeSummaryCard({
         </div>
 
         <div className="relative flex flex-col items-center gap-4 text-center">
+          {/* Amy — Übergabe-Moment, zentriert und prominent */}
+          <img
+            src={assetUrl('media/story/characters/amy-256.webp')}
+            alt="Amy"
+            className="w-14 h-14 rounded-full object-cover object-top border-2 border-violet-300/60 shadow-lg"
+          />
+          <p className="text-base font-extrabold text-white leading-snug text-center px-2">
+            {name
+              ? t('reward.episodeDone', { name })
+              : t('reward.episodeDoneNoName')}
+          </p>
+
           {/* Stars */}
           <div className="text-2xl select-none tracking-widest">⭐ ⭐ ⭐</div>
 
-          {/* Sticker */}
+          {/* Sticker mit Übergabe-Label */}
+          <div className="text-xs font-semibold text-violet-300 uppercase tracking-wide -mb-2">
+            Dein Sticker:
+          </div>
           <StickerReveal src={stickerSrc} />
 
           {/* Title */}
-          <div className="space-y-1.5">
-            <div className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
-              {episodeTitle ? `${episodeTitle} geschafft!` : 'Episode abgeschlossen!'}
-            </div>
-            <div className="text-sm text-violet-200 font-semibold">
-              🎉 Super gemacht! Dein Sticker wartet im Sammelalbum.
-            </div>
+          <div className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
+            {episodeTitle ? `${episodeTitle} geschafft!` : 'Episode abgeschlossen!'}
           </div>
+
+          {/* Charakter-Moment */}
+          {characterImg && characterSays && (
+            <div className="flex items-center gap-2.5 w-full">
+              <img
+                src={assetUrl(characterImg)}
+                alt=""
+                className="w-10 h-10 rounded-full object-cover object-top flex-shrink-0 border-2 border-violet-300/60"
+              />
+              <div className="bg-white/10 border border-white/20 rounded-2xl px-3 py-2 text-left">
+                <p className="text-xs font-semibold text-violet-100 leading-snug">
+                  „{characterSays}"
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Bonus Coins Badge */}
           {bonusCoins > 0 && (
@@ -158,7 +193,7 @@ export default function EpisodeSummaryCard({
                 onClick={onProfile}
                 className="w-full rounded-2xl border border-violet-400/40 bg-transparent px-5 py-2 text-xs font-semibold text-violet-300 hover:bg-violet-800/30 active:scale-95 transition-transform"
               >
-                Profil &amp; Bonuswelt →
+                Profil &amp; Story-Welt →
               </button>
             )}
           </div>

@@ -241,7 +241,7 @@ function CardsHero() {
 
       <div className="relative">
         <div className="text-xs font-extrabold text-slate-700">
-          {t('cards.kicker', { defaultValue: 'Bonuswelt' })}
+          {t('cards.kicker', { defaultValue: 'Story-Welt' })}
         </div>
 
         <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900">

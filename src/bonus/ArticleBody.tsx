@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { assetUrl } from '../common/assetUrl';
-import { parseArticleBlocks } from './articleBlocks';
+import { parseArticleBlocks, type ArticleBlock } from './articleBlocks';
 
 function buildImgCandidates(base: string) {
   const hasExt = /\.\w+$/.test(base);
@@ -71,29 +71,31 @@ function ArticleImage({
 
 function Callout({
   kind,
+  title,
   children,
 }: {
   kind: 'info' | 'tip' | 'warn';
+  title?: string;
   children: React.ReactNode;
 }) {
   const cfg =
     kind === 'tip'
       ? {
           icon: '💡',
-          title: 'Tipp',
+          fallbackTitle: 'Tipp',
           box: 'border-2 border-emerald-300 bg-gradient-to-br from-emerald-50 via-white to-emerald-100/60',
           badge: 'bg-emerald-200/80 text-emerald-950',
         }
       : kind === 'warn'
       ? {
           icon: '⚠️',
-          title: 'Achtung',
+          fallbackTitle: 'Achtung',
           box: 'border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-white to-amber-100/60',
           badge: 'bg-amber-200/80 text-amber-950',
         }
       : {
           icon: 'ℹ️',
-          title: 'Info',
+          fallbackTitle: 'Info',
           box: 'border-2 border-sky-300 bg-gradient-to-br from-sky-50 via-white to-sky-100/60',
           badge: 'bg-sky-200/80 text-sky-950',
         };
@@ -105,11 +107,30 @@ function Callout({
           {cfg.icon}
         </span>
         <span className={['text-xs font-extrabold px-2.5 py-1 rounded-full', cfg.badge].join(' ')}>
-          {cfg.title}
+          {title ?? cfg.fallbackTitle}
         </span>
       </div>
 
       <div className="mt-3">{children}</div>
+    </div>
+  );
+}
+
+function ChecklistBlock({ title, items }: { title?: string; items: string[] }) {
+  return (
+    <div className="rounded-[28px] border-2 border-[var(--color-teal-200)] bg-gradient-to-br from-[var(--color-teal-50)] via-white to-[var(--color-teal-50)] shadow-sm p-4 sm:p-5">
+      <div className="text-sm font-extrabold text-[var(--color-teal-900)] flex items-center gap-2">
+        <span>✅</span>
+        <span>{title ?? 'Merkliste'}</span>
+      </div>
+      <ul className="mt-3 space-y-2">
+        {items.map((item, i) => (
+          <li key={i} className="flex items-start gap-2.5 text-[15px] sm:text-base text-slate-800">
+            <span className="mt-0.5 shrink-0 text-[var(--color-teal-600)]">✓</span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -178,10 +199,20 @@ function MiniMarkdown({ text }: { text: string }) {
   return <div className="space-y-3">{out}</div>;
 }
 
+function renderInline(text: string): React.ReactNode[] {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={i}>{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+}
+
 function ReadingParagraph({ text }: { text: string }) {
   return (
     <p className="text-[16px] sm:text-[17px] leading-8 text-slate-800">
-      {text}
+      {renderInline(text)}
     </p>
   );
 }
@@ -217,11 +248,42 @@ function QuoteBlock({ text }: { text: string }) {
   return (
     <div className="rounded-[28px] border border-[var(--color-teal-200)] bg-[var(--color-teal-50)] shadow-sm p-4 sm:p-5">
       <div className="text-sm font-extrabold text-[var(--color-teal-900)] flex items-center gap-2">
-        💬 Merksatz
+        💬 
       </div>
       <div className="mt-2 text-[15px] sm:text-base text-slate-800 leading-relaxed">
         “{text}”
       </div>
+    </div>
+  );
+}
+
+function ChatBlock({ messages }: { messages: Array<{ sender: string; text: string }> }) {
+  if (!messages.length) return null;
+  const senders = [...new Set(messages.map((m) => m.sender))];
+  // First sender = left (gray), second = right (teal)
+  const leftSender = senders[0] ?? '';
+
+  return (
+    <div className="rounded-[28px] border border-slate-200 bg-[#f5f5f7] shadow-sm p-4 sm:p-5 space-y-2">
+      {messages.map((msg, i) => {
+        const isLeft = msg.sender === leftSender;
+        return (
+          <div key={i} className={`flex flex-col ${isLeft ? 'items-start' : 'items-end'}`}>
+            <div className={`text-[10px] font-bold mb-0.5 ${isLeft ? 'text-slate-400 pl-1' : 'text-[var(--color-teal-600)] pr-1'}`}>
+              {msg.sender}
+            </div>
+            <div
+              className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-[15px] leading-snug shadow-sm ${
+                isLeft
+                  ? 'bg-white text-slate-800 rounded-tl-sm'
+                  : 'bg-[var(--color-teal-500)] text-white rounded-tr-sm'
+              }`}
+            >
+              {msg.text}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -244,8 +306,9 @@ function DetailsBlock({ title, body }: { title: string; body: string }) {
   );
 }
 
-export function ArticleBody({ text }: { text: string }) {
-  const blocks = useMemo(() => parseArticleBlocks(text), [text]);
+export function ArticleBody({ text, blocks: blocksProp }: { text?: string; blocks?: ArticleBlock[] }) {
+  const parsedBlocks = useMemo(() => (text ? parseArticleBlocks(text) : []), [text]);
+  const blocks = blocksProp ?? parsedBlocks;
   const firstH1 = blocks.find((b) => b.type === 'h1') as { type: 'h1'; text: string } | undefined;
 
   return (
@@ -267,10 +330,6 @@ export function ArticleBody({ text }: { text: string }) {
 
           <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
             {firstH1.text}
-          </div>
-
-          <div className="mt-3 text-sm sm:text-base text-slate-700">
-            ✨ Kurz, klar und ohne Stress – lies in deinem Tempo.
           </div>
         </div>
       ) : null}
@@ -325,23 +384,26 @@ export function ArticleBody({ text }: { text: string }) {
 
           if (b.type === 'callout') {
             return (
-              <Callout key={i} kind={b.kind}>
+              <Callout key={i} kind={b.kind} title={b.title}>
                 <MiniMarkdown text={b.body} />
               </Callout>
             );
+          }
+
+          if (b.type === 'checklist') {
+            return <ChecklistBlock key={i} title={b.title} items={b.items} />;
           }
 
           if (b.type === 'details') {
             return <DetailsBlock key={i} title={b.title} body={b.body} />;
           }
 
+          if (b.type === 'chat') {
+            return <ChatBlock key={i} messages={b.messages} />;
+          }
+
           return null;
         })}
-      </div>
-
-      {/* Abschluss */}
-      <div className="mt-8 rounded-[28px] border border-white/60 bg-white/70 backdrop-blur shadow-sm p-4 sm:p-5 text-sm text-slate-700">
-        🎉 Fertig! Wenn du willst: Lies später nochmal – manchmal merkt man beim zweiten Mal noch mehr.
       </div>
     </div>
   );

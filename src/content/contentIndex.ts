@@ -198,63 +198,6 @@ chapterTopicTags: {
         topicTags: [],
         chapterTopicTags: {},
       },
-
-      {
-        seasonId: 's1',
-        episodeId: 's1e06',
-        courseId: 's1e06',
-
-        titleKey: 'stories:episodes.s1e06.title',
-        descriptionKey: 'stories:episodes.s1e06.description',
-
-        coverImage: '/media/story/episodes/s1e06/s1e06-512.webp',
-        stickerImage: '/media/stickers/episodes/s1e06-512.webp',
-
-        chapterCount: 10,
-        released: true,
-        order: 6,
-        storyEngine: 'v2',
-        topicTags: [],
-        chapterTopicTags: {},
-      },
-
-      {
-        seasonId: 's1',
-        episodeId: 's1e07',
-        courseId: 's1e07',
-
-        titleKey: 'stories:episodes.s1e07.title',
-        descriptionKey: 'stories:episodes.s1e07.description',
-
-        coverImage: '/media/story/episodes/s1e07/s1e07-512.webp',
-        stickerImage: '/media/stickers/episodes/s1e07-512.webp',
-
-        chapterCount: 10,
-        released: true,
-        order: 7,
-        storyEngine: 'v2',
-        topicTags: [],
-        chapterTopicTags: {},
-      },
-
-      {
-        seasonId: 's1',
-        episodeId: 's1e08',
-        courseId: 's1e08',
-
-        titleKey: 'stories:episodes.s1e08.title',
-        descriptionKey: 'stories:episodes.s1e08.description',
-
-        coverImage: '/media/story/episodes/s1e08/s1e08-512.webp',
-        stickerImage: '/media/stickers/episodes/s1e08-512.webp',
-
-        chapterCount: 10,
-        released: true,
-        order: 8,
-        storyEngine: 'v2',
-        topicTags: [],
-        chapterTopicTags: {},
-      },
     ],
   },
 ];

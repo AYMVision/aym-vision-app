@@ -54,9 +54,10 @@ export default function TransferExportPanel() {
       {/* Erklärung */}
       <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm text-slate-700 leading-relaxed">
         <p>
-          Mit dem Transfer-Link kannst du deinen Spielstand (Kapitel, Sticker, Münzen, Avatar,
-          Bonus-Fortschritt) auf ein anderes Gerät oder zwischen Browser und App übertragen. Der
-          Link enthält <strong>keine persönlichen Texte</strong> (Tagebuch, Chat-Namen,
+          Mit dem Transfer-Link kannst du deinen Spielstand auf ein anderes Gerät oder zwischen
+          Browser und App übertragen. Enthalten sind: Kapitel- & Episodenfortschritt, Sticker,
+          Münzen, Avatar, Bonus-Fortschritt, gelesene Artikel und deine Reaktionen darauf.
+          Der Link enthält <strong>keine persönlichen Texte</strong> (Tagebuch, Chat-Namen,
           Sammelkarte).
         </p>
         <p className="mt-2 text-xs text-slate-500">

@@ -563,7 +563,6 @@ const c04 = C('s1e03c04', 3, 'Amic 4', 'Schülerzeitung', [
     classChat(),
     m(ch.dominik, '🤣 Das war der Börner! Selten so gelacht!', '12:21'),
     m(ch.markus, 'Was meinst du?', '12:21'),
-    bonusLink('tip-carlos-schubert-lexikon', 'Carlos’ Lexikon für die Schülerzeitung', '/newspaper/tip-carlos-schubert-lexikon', 'Artikel öffnen →'),
   ], ['talk-act']),
 ]);
 

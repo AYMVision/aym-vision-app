@@ -11,7 +11,7 @@ import { BONUS_INDEX, type BonusItem } from '../bonus/bonusIndex';
 import { isBonusUnlocked, type BonusProgressSnapshot } from '../bonus/bonusUnlock';
 import { markBonusSeen } from '../bonus/bonusSeen';
 import { parseFrontmatter } from '../bonus/mdFrontmatter';
-import { ArticleBody } from '../bonus/ArticleBody';
+import { ArticleReader } from '../bonus/ArticleReader';
 import MiniAudioPlayer from '../components/MiniAudioPlayer';
 
 type LocationState = { backTo?: string; backgroundLocation?: unknown } | null;
@@ -67,7 +67,12 @@ export default function NewspaperArticle() {
     return BONUS_INDEX.find((x) => x.bonusId === id && x.category === 'newspaper') ?? null;
   }, [id]);
 
-  const unlocked = item ? isBonusUnlocked(item, progress) : false;
+  // currentNews articles (chioma-news-*, current-news-*, weekly-news-*) are always free
+  const isCurrentNewsItem = (bonusId: string) =>
+    bonusId.includes('current-news') || bonusId.includes('chioma-news') || bonusId.includes('weekly-news');
+  const unlocked = item
+    ? isCurrentNewsItem(item.bonusId) || isBonusUnlocked(item, progress)
+    : false;
 
   useEffect(() => {
     if (!item || !unlocked) return;
@@ -156,7 +161,7 @@ export default function NewspaperArticle() {
     {bodyError ? (
       <div className="text-slate-700">Der Artikel kommt bald ✨</div>
     ) : bodyText ? (
-      <ArticleBody text={bodyText} />
+      <ArticleReader text={bodyText} bonusId={item.bonusId} requireAudioConfirm={!!item.audioSrc} />
     ) : (
       <div className="text-slate-600">Lädt…</div>
     )}

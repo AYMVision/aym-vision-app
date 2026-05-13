@@ -1,5 +1,5 @@
 // src/bonus/bonusIndex.ts
-// Single Source of Truth für Bonuswelt (staffel-/episodenunabhängig erweiterbar).
+// Single Source of Truth für Story-Welt (staffel-/episodenunabhängig erweiterbar).
 // Charakterkarten werden automatisch aus CHARACTERS generiert.
 // Freischaltung pro Charakter erfolgt über eine Map (chapterId -> characterId).
 
@@ -265,11 +265,11 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
       {
     bonusId: 'tip-aylin-kileitfaden',
     category: 'newspaper',
-    topicTags: ['create', 'solve'],
+    topicTags: ['reflect'],
     mediaType: 'text',
     bodyKind: 'md',
     bodySrc: 'media/newspaper/articles/tip-aylin-kileitfaden',
-    coverImage: 'media/ui/welcome/feat-newspaper-1024.webp',
+    coverImage: 'media/newspaper/articles/s1e01c08_aylins-KI-Leitfaden-1024.webp',
     released: true,
     unlockedBy: { type: 'marker', id: 's1e01c08-tip-aylin-kileitfaden' },
     order: 52,
@@ -278,11 +278,11 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
   {
     bonusId: 'tip-carlos-audio-howto',
     category: 'newspaper',
-    topicTags: ['create', 'teamTalk'],
+    topicTags: ['create'],
     mediaType: 'text',
     bodyKind: 'md',
     bodySrc: 'media/newspaper/articles/tip-carlos-audio',
-    coverImage: 'media/newspaper/articles/s1e02c06_tip-carlos-audio-512.webp',
+    coverImage: 'media/newspaper/articles/s1e02c06_aufnahme-setup-512.webp',
     released: true,
     unlockedBy: { type: 'marker', id: 's1e02c07-tip-carlos-audio-howto' },
     order: 53,
@@ -335,43 +335,16 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     unlockedBy: { type: 'chapter', id: 's1e03c03' },
   },
 
-  // --- s1e03c03: Chioma Weekly 4 – David gegen Goliath ---
-  {
-    bonusId: 'weekly-4-david-gegen-goliath',
-    category: 'newspaper',
-    topicTags: ['infoCheck', 'reflect'],
-    mediaType: 'text',
-    bodyKind: 'md',
-    bodySrc: 'media/newspaper/articles/weekly-4-david-gegen-goliath',
-    coverImage: 'media/newspaper/articles/weekly-4-david-gegen-goliath-1024.webp',
-    released: true,
-    unlockedBy: { type: 'chapter', id: 's1e03c03' },
-    order: 55,
-  },
-
-  // --- s1e03c04: Carlos' Lexikon für die Schülerzeitung ---
-  {
-    bonusId: 'tip-carlos-schubert-lexikon',
-    category: 'newspaper',
-    topicTags: ['infoCheck', 'reflect'],
-    mediaType: 'text',
-    bodyKind: 'md',
-    bodySrc: 'media/newspaper/articles/tip-carlos-schubert-lexikon',
-    coverImage: 'media/newspaper/articles/tip-carlos-schubert-lexikon-1024.webp',
-    released: true,
-    unlockedBy: { type: 'chapter', id: 's1e03c04' },
-    order: 56,
-  },
 
   // --- s1e03c07: Carlos – Die Tricks der Spiele ---
   {
     bonusId: 'tip-carlos-game-tricks',
     category: 'newspaper',
-    topicTags: ['reflect', 'safe'],
+    topicTags: ['reflect'],
     mediaType: 'text',
     bodyKind: 'md',
     bodySrc: 'media/newspaper/articles/tip-carlos-game-tricks',
-    coverImage: 'media/newspaper/articles/tip-carlos-game-tricks-1024.webp',
+    coverImage: 'media/newspaper/articles/s1e03c07-carlos-tricks-der-online-spiele-1024.webp',
     released: true,
     unlockedBy: { type: 'chapter', id: 's1e03c07' },
     order: 57,
@@ -381,11 +354,11 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
   {
     bonusId: 'article-jonas-tom-offline-inseln',
     category: 'newspaper',
-    topicTags: ['reflect', 'solve'],
+    topicTags: ['self-control'],
     mediaType: 'text',
     bodyKind: 'md',
     bodySrc: 'media/newspaper/articles/article-jonas-tom-offline-inseln',
-    coverImage: 'media/newspaper/articles/article-jonas-tom-offline-inseln-1024.webp',
+    coverImage: 'media/newspaper/articles/s1e03c10_jonas-interviewt-tom-1024.webp',
     released: true,
     unlockedBy: { type: 'chapter', id: 's1e03c10' },
     order: 58,

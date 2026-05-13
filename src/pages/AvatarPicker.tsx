@@ -279,29 +279,28 @@ export default function AvatarPicker() {
   }
 
   return (
-    <Layout hideFooter backPath={backTo}>
-      <div className="w-full max-w-xl mx-auto px-4 py-6">
-        <div className="mb-4">
-          <h1 className="text-xl font-extrabold text-slate-900">
-            {t('avatar.title', { defaultValue: 'Dein Avatar' })}
-          </h1>
-        </div>
+    <Layout hideFooter backPath={backTo} fullHeight>
+      <div className="w-full max-w-xl mx-auto h-full flex flex-col">
 
-        {/* Sticky Vorschau */}
-        <div className="sticky top-16 sm:top-20 z-20 mb-6">
-          <div className="rounded-3xl border border-black/5 bg-white/95 backdrop-blur shadow-sm px-3 pt-3 pb-2">
-            <div className="relative flex justify-center">
+        {/* Vorschau — immer sichtbar, kein Sticky nötig */}
+        <div className="flex-shrink-0 px-4 pt-4 pb-3">
+          <div className="rounded-3xl border border-black/5 bg-white shadow-sm overflow-hidden">
+            {/* pt-4 = Abstand oben damit Kopf-Items nicht am Rand kleben */}
+            <div className="flex justify-center pt-4 pb-2 px-4">
               <AvatarStage
                 key={`${profile.avatarBaseId}-${previewEquipment?.featured ?? ''}-${previewEquipment?.background ?? ''}-${previewEquipment?.effect ?? ''}`}
                 avatarBaseId={profile.avatarBaseId}
                 equipment={previewEquipment}
-                width={320}
-                height={390}
-                withBackdrop
+                width={340}
+                height={380}
+                withBackdrop={false}
               />
             </div>
           </div>
         </div>
+
+        {/* Scrollbarer Bereich: Reiter + Inhalte */}
+        <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-6">
 
         {/* Reiter */}
         <div className="grid grid-cols-3 gap-1 rounded-2xl bg-slate-100 p-1 mb-5">
@@ -496,7 +495,9 @@ export default function AvatarPicker() {
             })}
           </div>
         )}
-      </div>
+
+        </div>{/* end scrollable area */}
+      </div>{/* end h-full flex-col */}
 
       {/* Kaufbestätigung */}
       {confirmingItem ? (

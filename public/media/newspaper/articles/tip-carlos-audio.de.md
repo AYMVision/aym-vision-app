@@ -1,129 +1,142 @@
 ---
-title: Audio-Beitrag erstellen 🎧 + Mini-Umfrage für Hörer 📊
-description: Carlos zeigt dir Schritt für Schritt, wie du mit einfachen Mitteln einen eigenen Audio-Beitrag aufnimmst – und mit einer Umfrage interaktiv machst.
+title: Dein eigener Audio-Beitrag – so geht’s
+description: Carlos zeigt dir Schritt für Schritt, wie du ganz einfach deinen eigenen Audio-Beitrag aufnehmen kannst.
 author: Carlos
-date: 2026-01-27
-topicTags: [create, teamTalk, safe]
+date: 2026-05-11
+topicTags: [create]
 ---
 
-# 🎧 Carlos’ Mini-Anleitung: Audio-Beitrag erstellen
+# 🎙️ Dein eigener Audio-Beitrag
+
+Hey, hier ist Carlos aus der Technik-Rubrik.
 
 Du willst selbst einen Audio-Beitrag machen?  
-Gute Idee! 🎉  
+Das geht einfacher, als du vielleicht denkst.
 
-Die Apps in dieser Anleitung haben wir selbst benutzt.  
-Es gibt aber **viele andere**, mit denen es genauso gut klappt.
+Die Apps, die ich nenne, haben wir benutzt.  
+Es gibt aber viele andere, die genauso gut funktionieren.
 
-[[callout kind="warn"]]
-⚠️ Manche Apps brauchen einen Account.  
-Erstell ihn am besten **zusammen mit einem Erwachsenen**.
+👉 Für manche brauchst du einen Account.  
+Am besten erstellst du deinen ersten Audio-Beitrag zusammen mit einem Erwachsenen.
+
+Los geht’s.
+
+---
+
+[[img src="media/newspaper/articles/s1e02c06_aufnahme-setup" alt="Kind nimmt Audio mit Smartphone in ruhiger Umgebung auf."]]
+
+## 🧠 1. Idee & Plan
+
+Überlege dir kurz:
+
+- Worum geht es?
+- Was willst du sagen?
+- Wie könnte der Ablauf sein?
+
+👉 Du brauchst keinen perfekten Plan.  
+Ein grober Ablauf reicht völlig.
+
+---
+
+## 🎧 2. Aufnahme starten
+
+Ein Smartphone oder Tablet reicht.
+
+Hast du Kopfhörer mit Mikro?  
+Perfekt.
+
+[[callout kind="info" title="Wichtig"]]
+- Ruhiger Ort  
+- Keine Musik im Hintergrund  
+- Fenster zu  
 [[/callout]]
 
-## 🚀 Los geht’s
+Dann einfach:
 
-[[details title="1️⃣ Idee & Ablauf"]]
-Überlege dir zuerst:
-- Worum soll es gehen?
-- Was willst du erzählen oder fragen?
+- Sprachmemo-App öffnen  
+- Auf „Aufnehmen“ drücken  
+- Losreden
 
-Ein grober Plan reicht völlig.
-[[/details]]
-
-[[details title="2️⃣ Aufnahmegerät"]]
-Ein **Smartphone oder Tablet** reicht völlig aus.  
-Wenn du Kopfhörer mit Mikro hast: **perfekt** 🎤
-
-👉 Achte darauf:
-- ruhiger Ort  
-- keine Musik im Hintergrund  
-- Fenster zu  
-[[/details]]
-
-[[details title="3️⃣ Aufnahme starten"]]
-Keine Angst vor Fehlern!
-
-Öffne die Sprachmemo-App oder eine einfache Aufnahme-App.  
-Drück auf **Aufnehmen** – und leg los.
-
-Versprecher? Egal 😄  
+Versprecher? Egal. 😉  
 Profis schneiden später auch.
-[[/details]]
 
-[[details title="4️⃣ Reinhören & schneiden"]]
-Hör dir deine Aufnahme an:
-- Ist sie zu lang?
-- Klingt der Anfang noch holprig?
+---
 
-Dann schneidet ihr gemeinsam:
-- am Handy oder  
-- am Laptop  
+## ✂️ 3. Reinhören & schneiden
+
+Hör dir deine Aufnahme an.
+
+- Anfang holprig?  
+- Zu lang?
+
+Dann kannst du schneiden.
 
 Zum Beispiel mit:
 - GarageBand (iPhone)
 - Audacity (PC)
 
-👉 Ziel: **kurz, klar und spannend**
-[[/details]]
+👉 Ziel: kurz, klar, spannend
 
-[[details title="5️⃣ Hochladen & teilen"]]
-Lade deinen Audio-Beitrag dort hoch,  
-wo eure **Online-Schülerzeitung** ist.
+---
 
-🎉 Fertig – ihr habt echten Content gemacht!
+[[img src="media/newspaper/articles/s1e02c06_schneiden-audio" alt="Audio wird am Laptop oder Tablet bearbeitet."]]
 
-[[callout kind="warn"]]
-⚠️ Denk dran:  
-Überlegt gut, **wer zuhören darf**,  
-und teilt den Beitrag nur mit Menschen, denen ihr vertraut.
+## 🗳️ 4. Meinungs-Check
+
+Mach deinen Beitrag interaktiv.
+
+Überlege dir eine Frage, zum Beispiel:  
+„Bist du dafür oder dagegen?“
+
+Und dazu:
+- 3 Antwortmöglichkeiten
+
+Das geht z. B. mit:
+- Google Forms  
+- Mentimeter  
+- eurer Schulplattform
+
+👉 So können andere mitdenken und mitentscheiden.
+
+---
+
+## 📤 5. Hochladen & teilen
+
+Jetzt wird’s ernst:
+
+- Audio hochladen  
+- Umfrage verlinken  
+- Fertig 🎉
+
+[[callout kind="warn" title="Achtung"]]
+Überlege gut, wer deinen Beitrag sehen oder hören darf.  
+Teile ihn nur mit Leuten, denen du vertraust.
 [[/callout]]
-[[/details]]
 
 ---
 
-# 📊 Carlos’ Tipp: Mini-Umfrage für Hörer
+## 🚀 Warum das richtig cool ist
 
-Jetzt wird’s **interaktiv**!  
-Mit einer kleinen Umfrage können deine Zuhörer mitreden.
-
-[[details title="🤔 Meinungs-Check für die Hörer"]]
-So geht’s:
-
-🔹 Überlege dir **eine klare Frage**, zum Beispiel:  
-„Was ist deine Meinung dazu?“
-
-🔹 Gib etwa **3 Antwortmöglichkeiten**  
-(damit es übersichtlich bleibt)
-
-🔹 Nutze einfache Tools wie:
-- Google Forms
-- Mentimeter
-- oder eure Schulplattform
-[[/details]]
-
-[[details title="🔗 So passt die Umfrage zum Audio"]]
-1. Audio anhören 🎧  
-2. Umfrage ausfüllen 📊  
-3. Meinung teilen 💬  
-
-👉 Die Zuhörer dürfen **mitdenken und mitentscheiden**
-[[/details]]
-
-[[details title="🚀 Warum das richtig cool ist"]]
-- Ihr arbeitet wie **echte Reporter**
-- Technik + Kreativität = 🔥
-- Eure Zuhörer werden Teil des Beitrags
-[[/details]]
+[[checklist]]
+- Du arbeitest wie ein echter Reporter  
+- Technik + Kreativität = 🔥  
+- Andere können mitmachen  
+[[/checklist]]
 
 ---
 
-## ⭐ Mein Fazit für dich
+## 💡 Mein Fazit
 
 Du brauchst:
-- kein Studio  
-- kein Profi-Equipment  
-- keinen Technik-Guru  
 
-Nur:
-- eine Idee  
-- ein Gerät  
-- **Mut, kreativ zu sein**
+- keine teure Technik  
+- kein Studio  
+- keinen Profi  
+
+👉 Nur eine Idee.  
+
+👉 Ein Gerät.  
+
+👉 Und ein bisschen Mut.
+
+Probier’s doch mal aus.

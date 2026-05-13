@@ -45,25 +45,29 @@ export default function ProfileProgressCard({
 
   if (!cur) {
     return wrap(
-      <>
-        <div className="text-sm text-slate-500">
-          {t('profile:progress.title', { defaultValue: 'Dein Fortschritt' })}
-        </div>
-        <div className="mt-3 text-sm font-semibold text-anthracite-900">
-          {t('profile:progress.empty', { defaultValue: 'Starte deinen ersten Amic ✨' })}
-        </div>
-
-        {!compact && (
-          <div className="mt-5">
-            <Link
-              to={firstStoryPath}
-              className="text-xs px-3 py-1 rounded-lg border border-slate-200 bg-white font-semibold text-slate-700 hover:bg-slate-50"
-            >
-              {t('profile:progress.openStories', { defaultValue: 'Story starten →' })}
-            </Link>
+      <div className="flex flex-col items-center text-center gap-3 py-2">
+        <img
+          src={assetUrl('media/story/characters/yasmin-256.webp')}
+          alt="Yasmin"
+          className="w-20 h-20 rounded-full object-cover object-top border-2 border-slate-200"
+        />
+        <div>
+          <div className="text-sm font-extrabold text-slate-900 leading-snug">
+            Yasmin wartet schon auf dich
           </div>
+          <div className="mt-1 text-xs text-slate-500 leading-relaxed">
+            Starte deine erste Story, um hier deinen Fortschritt zu sehen.
+          </div>
+        </div>
+        {!compact && (
+          <Link
+            to={firstStoryPath}
+            className="mt-1 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-extrabold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+          >
+            Jetzt starten →
+          </Link>
         )}
-      </>
+      </div>
     );
   }
 

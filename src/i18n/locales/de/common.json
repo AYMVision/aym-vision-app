@@ -8,5 +8,21 @@
     "chapter": "Amic",
     "youAreAt": "Du bist bei",
     "amic": "Amic"
+  },
+  "reward": {
+    "amicDone": "Du hast heute mitgedacht, {{name}}. Das z\u00e4hlt.",
+    "amicDoneNoName": "Du hast heute mitgedacht. Das z\u00e4hlt.",
+    "episodeDone": "Du hast eine ganze Folge durchgedacht, {{name}}.",
+    "episodeDoneNoName": "Du hast eine ganze Folge durchgedacht."
+  },
+  "nudge": {
+    "newspaper": {
+      "label": "Neu in der Sch\u00fclerzeitung",
+      "cta": "Lesen \u2192"
+    },
+    "diary": {
+      "text": "Yasmin hat heute Abend etwas aufgeschrieben. Willst du es lesen?",
+      "cta": "Zum Tagebuch \u2192"
+    }
   }
 }

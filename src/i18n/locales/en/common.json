@@ -8,5 +8,21 @@
     "chapter": "Amic",
     "youAreAt": "You are at",
     "amic": "Amic"
+  },
+  "reward": {
+    "amicDone": "You thought it through today, {{name}}. That counts.",
+    "amicDoneNoName": "You thought it through today. That counts.",
+    "episodeDone": "You thought through a whole episode, {{name}}. That\u2019s real media literacy.",
+    "episodeDoneNoName": "You thought through a whole episode. That\u2019s real media literacy."
+  },
+  "nudge": {
+    "newspaper": {
+      "label": "New in the school newspaper",
+      "cta": "Read \u2192"
+    },
+    "diary": {
+      "text": "Yasmin wrote something last night. Want to read it?",
+      "cta": "Open diary \u2192"
+    }
   }
 }

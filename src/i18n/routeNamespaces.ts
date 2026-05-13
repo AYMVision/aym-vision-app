@@ -27,6 +27,7 @@ export function namespacesForPath(pathname: string): I18nNamespace[] {
   if (pathname.startsWith('/cards')) return [...base, 'bonus'];
   if (pathname.startsWith('/diaries')) return [...base, 'bonus'];
   if (pathname.startsWith('/newspaper')) return [...base, 'bonus'];
+  if (pathname.startsWith('/lexikon')) return [...base, 'lexikon'];
 
   // Adult + Parents/Kids
   if (pathname.startsWith('/adult-settings')) return [...base, 'adult', 'themes', 'stories'];

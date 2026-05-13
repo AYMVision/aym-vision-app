@@ -9,6 +9,7 @@ export type CoinReason =
   | 'EPISODE_COMPLETE'
   | 'GOOD_CHOICE'
   | 'STREAK'
+  | 'ARTICLE_READ'
   | 'DEBUG';
 
 function normalizeWallet(profile: UserProfile) {

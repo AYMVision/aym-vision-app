@@ -5,9 +5,11 @@ export type ArticleBlock =
   | { type: 'ul'; items: string[] }
   | { type: 'quote'; text: string }
   | { type: 'img'; src: string; alt?: string; caption?: string }
-  | { type: 'callout'; kind: 'info' | 'tip' | 'warn'; body: string }
+  | { type: 'callout'; kind: 'info' | 'tip' | 'warn'; title?: string; body: string }
+  | { type: 'checklist'; title?: string; items: string[] }
   | { type: 'details'; title: string; body: string }
-  | { type: 'gallery'; images: Array<{ src: string; alt?: string; caption?: string }> };
+  | { type: 'gallery'; images: Array<{ src: string; alt?: string; caption?: string }> }
+  | { type: 'chat'; messages: Array<{ sender: string; text: string }> };
 
 type Dir = { name: string; attrs: Record<string, string>; raw: string; isClose: boolean };
 
@@ -92,8 +94,8 @@ function readUntilClose(startIndex: number, closeName: string): { body: string; 
     const raw = lines[i];
     const line = raw.trim();
 
-    // Leerzeile -> flush
-    if (!line) {
+    // Leerzeile oder HR -> flush
+    if (!line || line === '---' || line === '***' || line === '___') {
       flushAll();
       continue;
     }
@@ -114,11 +116,26 @@ function readUntilClose(startIndex: number, closeName: string): { body: string; 
         continue;
       }
 
-      // [[callout kind="tip"]] ... [[/callout]]
+      // [[callout kind="tip" title="..."]] ... [[/callout]]
       if (dir.name === 'callout') {
         const kind = (dir.attrs.kind as any) ?? 'info';
+        const title = dir.attrs.title;
         const { body, endIndex } = readUntilClose(i + 1, 'callout');
-        blocks.push({ type: 'callout', kind, body });
+        blocks.push({ type: 'callout', kind, title, body });
+        i = endIndex;
+        continue;
+      }
+
+      // [[checklist title="..."]] ... [[/checklist]]
+      if (dir.name === 'checklist') {
+        const title = dir.attrs.title;
+        const { body, endIndex } = readUntilClose(i + 1, 'checklist');
+        const items = body
+          .split('\n')
+          .map((l) => l.trim())
+          .filter((l) => l.startsWith('- '))
+          .map((l) => l.replace(/^-+\s+/, '').trim());
+        blocks.push({ type: 'checklist', title, items });
         i = endIndex;
         continue;
       }
@@ -147,6 +164,24 @@ if (d2 && d2.isClose && d2.name === 'gallery') {
             imgs.push({ src: d2.attrs.src ?? '', alt: d2.attrs.alt, caption: d2.attrs.caption });
           }
         }
+        continue;
+      }
+
+      // [[chat]] ... [[/chat]]
+      if (dir.name === 'chat') {
+        const { body, endIndex } = readUntilClose(i + 1, 'chat');
+        const messages = body
+          .split('\n')
+          .map((l) => l.trim())
+          .filter(Boolean)
+          .map((l) => {
+            const colon = l.indexOf(':');
+            if (colon < 1) return null;
+            return { sender: l.slice(0, colon).trim(), text: l.slice(colon + 1).trim() };
+          })
+          .filter((m): m is { sender: string; text: string } => m !== null);
+        if (messages.length) blocks.push({ type: 'chat', messages });
+        i = endIndex;
         continue;
       }
 

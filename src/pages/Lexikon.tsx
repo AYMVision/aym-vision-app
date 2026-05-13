@@ -2,7 +2,7 @@
 // Carlos' Tech-Lexikon — erklärt Begriffe aus der digitalen Welt.
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout';
 import { getLexikonEntries } from '../lexikon/lexikonIndex';
 import type { LexikonEntry } from '../lexikon/lexikonTypes';
@@ -24,6 +24,8 @@ function LexikonTermCard({ entry, onClick }: { entry: LexikonEntry; onClick: () 
 }
 
 function LexikonTermModal({ entry, onClose }: { entry: LexikonEntry; onClose: () => void }) {
+  const { t } = useTranslation('lexikon');
+
   return (
     <div className="fixed inset-0 z-[9999] flex items-end justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
@@ -41,14 +43,14 @@ function LexikonTermModal({ entry, onClose }: { entry: LexikonEntry; onClose: ()
           <div className="flex items-start justify-between gap-3 mb-4">
             <div>
               <span className="text-xs font-semibold uppercase tracking-widest text-teal-600 mb-1 block">
-                Carlos Lexikon
+                {t('modal.label')}
               </span>
               <h2 className="text-2xl font-bold text-anthracite-900">{entry.title}</h2>
             </div>
             <button
               onClick={onClose}
               className="text-slate-400 hover:text-slate-600 text-2xl leading-none mt-1 shrink-0"
-              aria-label="Schließen"
+              aria-label={t('modal.closeAria')}
             >
               ✕
             </button>
@@ -66,7 +68,7 @@ function LexikonTermModal({ entry, onClose }: { entry: LexikonEntry; onClose: ()
           {entry.didYouKnow && (
             <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
               <p className="text-xs font-bold uppercase tracking-widest text-amber-600 mb-1">
-                Wusstest du?
+                {t('modal.didYouKnow')}
               </p>
               <p className="text-sm text-amber-900 leading-snug">{entry.didYouKnow}</p>
             </div>
@@ -78,7 +80,7 @@ function LexikonTermModal({ entry, onClose }: { entry: LexikonEntry; onClose: ()
 }
 
 export default function Lexikon() {
-  const navigate = useNavigate();
+  const { t } = useTranslation('lexikon');
   const entries = getLexikonEntries();
   const [search, setSearch] = useState('');
   const [openEntry, setOpenEntry] = useState<LexikonEntry | null>(null);
@@ -92,17 +94,15 @@ export default function Lexikon() {
   });
 
   return (
-    <Layout title="Lexikon">
+    <Layout title={t('title')}>
       <div className="max-w-lg mx-auto px-4 pt-4 pb-28">
         {/* Hero */}
         <div className="rounded-2xl bg-gradient-to-br from-teal-500 to-teal-700 text-white px-5 py-5 mb-5 shadow-md">
           <div className="flex items-center gap-3">
             <span className="text-4xl">📚</span>
             <div>
-              <h1 className="text-xl font-bold leading-tight">Carlos Lexikon</h1>
-              <p className="text-sm text-teal-100 mt-0.5">
-                Technik-Begriffe so erklärt, dass sie sogar Frau Schubert versteht.
-              </p>
+              <h1 className="text-xl font-bold leading-tight">{t('title')}</h1>
+              <p className="text-sm text-teal-100 mt-0.5">{t('subtitle')}</p>
             </div>
           </div>
         </div>

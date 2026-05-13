@@ -390,7 +390,7 @@ export default function StoryV02() {
     (opts.staticStickers ?? []).forEach((s) => stickers.push(s));
     const coins = opts.coins ?? 0;
     if (stickers.length === 0 && coins === 0) return;
-    setRewardToast({ stickers, coins });
+    setRewardToast({ stickers, coins, chatName: profile.chatName ?? undefined });
   }
 
   function restoreScrollToValue(target: number) {
@@ -1414,6 +1414,9 @@ function hasStoryMigrationDone(key: string): boolean {
               episodeTitle={episodeMeta ? t(episodeMeta.titleKey) : undefined}
               stickerImage={episodeMeta?.stickerImage}
               bonusCoins={entry.bonusCoins}
+              chatName={profile.chatName ?? undefined}
+              characterImg="media/story/characters/yasmin-256.webp"
+              characterSays="Danke, dass du dabei warst."
               onViewSticker={() => navigate('/album')}
               onContinue={() => navigate('/stories')}
               onProfile={() => navigate('/profile')}
