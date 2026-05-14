@@ -1,6 +1,6 @@
 ---
-title: Social Media unter 16 verboten?
-description: Chioma liest etwas Krasses – Social Media unter 16 verboten? Erst ist sie sauer. Doch dann fragt sie sich wirklich: Wieso eigentlich?
+title: Zu jung für Social Media?
+description: Einige Länder wollen Social Media für Kinder verbieten. Chioma und Lukas diskutieren darüber.
 author: Chioma
 date: 2026-04-10
 ---

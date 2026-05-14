@@ -26,6 +26,30 @@
       "date": "2026-04-17"
     }
   },
+  "chioma-news-ki-hausaufgaben": {
+    "de": {
+      "title": "KI bei den Hausaufgaben – Hilfe oder Schummeln?",
+      "description": "Lukas sagt „Ich hab mir nur helfen lassen.\" Chioma fragt „Oder doch geschummelt?\" Wo ist die Grenze – und wann macht KI dich wirklich besser?",
+      "author": "Chioma",
+      "date": "2026-05-14",
+      "topicTags": [
+        "reflect",
+        "infoCheck"
+      ]
+    }
+  },
+  "chioma-news-schnell-gemacht": {
+    "de": {
+      "title": "Schnell gemacht – aber ist es noch deins?",
+      "description": "KI erstellt in Sekunden Bilder und Texte. Doch je einfacher alles wird, desto wichtiger wird eine Frage – was kommt eigentlich noch von dir?",
+      "author": "Chioma",
+      "date": "2026-05-14",
+      "topicTags": [
+        "reflect",
+        "create"
+      ]
+    }
+  },
   "chioma-news-school-ai": {
     "de": {
       "title": "KI in der Schule – hilfreich oder unfair?",
@@ -36,8 +60,8 @@
   },
   "chioma-news-school-social-media": {
     "de": {
-      "title": "Social Media unter 16 verboten?",
-      "description": "Chioma liest etwas Krasses – Social Media unter 16 verboten? Erst ist sie sauer. Doch dann fragt sie sich wirklich: Wieso eigentlich?",
+      "title": "Zu jung für Social Media?",
+      "description": "Einige Länder wollen Social Media für Kinder verbieten. Chioma und Lukas diskutieren darüber.",
       "author": "Chioma",
       "date": "2026-04-10"
     }
