@@ -1,1 +1,0 @@
-import{o as e}from"./index-DObbjma1.js";import{C as s,S as o,f as a,m as r}from"./storyBuilder-CIkirpFk.js";import"./vendor-react-DlCurzhd.js";const t=s("s1e06c01",0,"Amic 1","Bald verfügbar",[o("s1e06c01_story_placeholder",[a(),r(e.amy,"Neue Episode jeden Freitag.")])]),i={id:"s1e06",seasonId:"s1",episodeId:"s1e06",courseId:"s1e06",chapters:[t]};export{i as default};
