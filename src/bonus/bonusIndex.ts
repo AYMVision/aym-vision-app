@@ -303,7 +303,33 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
 
 
 
-  // --- s1e03c03: Chioma Weekly – David gegen Goliath (Audio) ---
+  // --- Chioma Weekly #3: Schnell gemacht – aber ist es noch deins? ---
+  {
+    bonusId: 'chioma-news-schnell-gemacht',
+    category: 'newspaper',
+    released: true,
+    order: 9,
+    mediaType: 'text',
+    coverImage: 'media/newspaper/articles/chioma-news-schnell-gemacht/cover-1024.webp',
+    bodySrc: 'media/newspaper/articles/chioma-news-schnell-gemacht/article',
+    bodyKind: 'md',
+    unlockedBy: { type: 'chapter', id: 's1e01c01' },
+  },
+
+  // --- Chioma Weekly #2: KI bei den Hausaufgaben ---
+  {
+    bonusId: 'chioma-news-ki-hausaufgaben',
+    category: 'newspaper',
+    released: true,
+    order: 8,
+    mediaType: 'text',
+    coverImage: 'media/newspaper/articles/chioma-news-ki-hausaufgaben/cover-1024.webp',
+    bodySrc: 'media/newspaper/articles/chioma-news-ki-hausaufgaben/article',
+    bodyKind: 'md',
+    unlockedBy: { type: 'chapter', id: 's1e01c01' },
+  },
+
+  // --- Chioma Weekly #4: Du gegen dein Handy – Wer gewinnt? (Audio) ---
   {
     bonusId: 'chioma-news-david-goliath-audio',
     category: 'newspaper',

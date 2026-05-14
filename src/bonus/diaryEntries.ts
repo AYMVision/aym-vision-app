@@ -56,24 +56,22 @@ export const DIARY_ENTRIES: Record<DiaryId, DiaryEntry[]> = {
 
   diary_mia: [
     {
-      entryId: 's1e03c02_0004',
-      bonusId: 'diary-mia-entry4',
+      entryId: 's1e03c02_0005',
+      bonusId: 'diary-mia-entry1',
       order: 1,
-      dateKey: 'diaries.entries.mia.s1e03c02_0004.date',
-      titleKey: 'diaries.entries.mia.s1e03c02_0004.title',
-      bodyKey: 'diaries.entries.mia.s1e03c02_0004.body',
+      dateKey: 'diaries.entries.mia.s1e03c02_0005.date',
+      bodyKey: 'diaries.entries.mia.s1e03c02_0005.body',
       unlock: { afterChapterId: 's1e03c02' },
-      decor: { moodEmoji: '🙂', tape: true, marker: true, accent: 'amber' },
+      decor: { moodEmoji: '😶', tape: true, marker: true, accent: 'amber' },
     },
     {
-      entryId: 's1e03c08_0002',
+      entryId: 's1e03c08_0006',
       bonusId: 'diary-mia-entry2',
       order: 2,
-      dateKey: 'diaries.entries.mia.s1e03c08_0002.date',
-      titleKey: 'diaries.entries.mia.s1e03c08_0002.title',
-      bodyKey: 'diaries.entries.mia.s1e03c08_0002.body',
+      dateKey: 'diaries.entries.mia.s1e03c08_0006.date',
+      bodyKey: 'diaries.entries.mia.s1e03c08_0006.body',
       unlock: { afterChapterId: 's1e03c08' },
-      decor: { moodEmoji: '😤', tape: true, marker: true, accent: 'amber' },
+      decor: { moodEmoji: '😫', tape: true, marker: true, accent: 'amber' },
     },
   ],
 

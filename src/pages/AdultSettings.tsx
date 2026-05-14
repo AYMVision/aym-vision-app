@@ -349,7 +349,7 @@ export default function AdultSettings() {
                 placeholder={t('adult:parent.passPlaceholder', {
                   defaultValue: 'mind. 6 Zeichen',
                 })}
-                className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
+                className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
               />
             </div>
 
@@ -365,7 +365,7 @@ export default function AdultSettings() {
                   placeholder={t('adult:parent.passPlaceholder2', {
                     defaultValue: 'nochmal eingeben',
                   })}
-                  className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
+                  className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
                 />
               </div>
             ) : null}
@@ -421,7 +421,7 @@ export default function AdultSettings() {
                       placeholder={t('adult:parent.resetPlaceholder', {
                         defaultValue: 'Reset-Code',
                       })}
-                      className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
+                      className="w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
                     />
                     {resetCodeError && (
                       <div className="mt-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
@@ -984,7 +984,7 @@ export default function AdultSettings() {
                     placeholder={t('adult:unlock.inputPlaceholder', {
                       defaultValue: 'Code eingeben',
                     })}
-                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
                   />
                   <button
                     type="button"
@@ -1272,7 +1272,7 @@ export default function AdultSettings() {
                         type="password"
                         value={changeCurrentPass}
                         onChange={(e) => setChangeCurrentPass(e.target.value)}
-                        className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
+                        className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
                       />
                     </div>
                     <div>
@@ -1285,7 +1285,7 @@ export default function AdultSettings() {
                         type="password"
                         value={changeNewPass}
                         onChange={(e) => setChangeNewPass(e.target.value)}
-                        className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
+                        className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
                       />
                     </div>
                     <div>
@@ -1298,7 +1298,7 @@ export default function AdultSettings() {
                         type="password"
                         value={changeNewPassRepeat}
                         onChange={(e) => setChangeNewPassRepeat(e.target.value)}
-                        className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
+                        className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
                       />
                     </div>
                   </div>

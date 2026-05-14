@@ -20,6 +20,7 @@ import MiniAudioPlayer from '../components/MiniAudioPlayer';
 import { BONUS_INDEX, type BonusItem } from '../bonus/bonusIndex';
 import { isBonusUnlocked, type BonusProgressSnapshot } from '../bonus/bonusUnlock';
 import { loadSeenBonusIds } from '../bonus/bonusSeen';
+import { shouldBypassAll } from '../gating/entitlements';
 
 type LocationState = { backTo?: string } | null;
 
@@ -323,7 +324,7 @@ function FreshCard({
   const coverSrc = item.coverImage ? assetUrl(item.coverImage) : '';
   const fallback = pickFallbackEmoji(item, metaById);
   const hasContent = !!metaById[item.bonusId];
-  const canOpen = unlocked && hasContent;
+  const canOpen = unlocked && (hasContent || isCurrentNewsItem(item) || shouldBypassAll());
 
   const badgeText = !unlocked
     ? t('newspaper.badge.locked', { defaultValue: 'Gesperrt' })
@@ -414,8 +415,7 @@ function CurrentNewsCard({
   if (compact) {
     return (
       <Link
-        to={hasContent ? `/newspaper/${item.bonusId}` : '/newspaper'}
-        onClick={(e) => { if (!hasContent) e.preventDefault(); }}
+        to={`/newspaper/${item.bonusId}`}
         state={{ backTo: '/newspaper', backgroundLocation: location }}
         className="block snap-start shrink-0 w-[58%] sm:w-[34%] lg:w-[200px]"
       >
@@ -455,7 +455,7 @@ function CurrentNewsCard({
 
   return (
     <div className="rounded-2xl border border-rose-200 bg-gradient-to-br from-rose-50 via-white to-amber-50 shadow-sm overflow-hidden hover:shadow-md transition">
-      <Link to={hasContent ? `/newspaper/${item.bonusId}` : '/newspaper'} state={{ backTo: '/newspaper', backgroundLocation: location }} className="block p-4" onClick={(e) => { if (!hasContent) e.preventDefault(); }}>
+      <Link to={`/newspaper/${item.bonusId}`} state={{ backTo: '/newspaper', backgroundLocation: location }} className="block p-4">
         <div className="flex flex-wrap gap-2 items-center">
           <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-rose-200 bg-white text-rose-700">
             {isAudio ? '🎧' : '📰'} {isAudio
@@ -541,7 +541,7 @@ function FeedCard({
   const audioHref = item.audioSrc ? assetUrl(item.audioSrc) : '';
   const topicTags = resolveTopicTags(item, metaById);
   const hasContent = !!metaById[item.bonusId];
-  const canOpen = unlocked && hasContent;
+  const canOpen = unlocked && (hasContent || isCurrentNewsItem(item) || shouldBypassAll());
 
   const badgeText = !unlocked
     ? t('newspaper.badge.locked', { defaultValue: 'Gesperrt' })
@@ -944,7 +944,7 @@ const unlockedMap = useMemo(() => {
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-slate-200"
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base outline-none focus:ring-2 focus:ring-slate-200"
                 placeholder={t('newspaper.searchPlaceholder', { defaultValue: 'Suche…' })}
                 aria-label={t('newspaper.searchAria', { defaultValue: 'Artikel suchen' })}
               />

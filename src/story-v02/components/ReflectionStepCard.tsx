@@ -206,7 +206,7 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
                   ? t(step.placeholderKey, { defaultValue: 'Deine Antwort…' })
                   : 'Deine Antwort…'
               }
-              className="w-full min-h-[110px] rounded-xl border border-violet-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-violet-400"
+              className="w-full min-h-[110px] rounded-xl border border-violet-200 bg-white px-3 py-2 text-base text-slate-900 outline-none focus:border-violet-400"
             />
 
             <div className="mt-3 flex justify-end">

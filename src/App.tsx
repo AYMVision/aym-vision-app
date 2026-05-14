@@ -1,4 +1,4 @@
-import { createContext, lazy, Suspense, useEffect, useState } from 'react';
+import { createContext, lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HashRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import type { Location } from 'react-router-dom';
@@ -7,6 +7,8 @@ import type { Location } from 'react-router-dom';
 // StoryV02 reads this to detect when a modal has just closed and scroll should be restored.
 export const BackgroundLocationContext = createContext<Location | null | undefined>(undefined);
 
+import { registerSW } from 'virtual:pwa-register';
+import PwaUpdateBanner from './components/PwaUpdateBanner';
 import { ProfileProvider } from './profile/useProfile';
 import { initSoundPlayer } from './common/soundPlayer';
 
@@ -164,21 +166,43 @@ function AppRoutes() {
 }
 
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ProfileProvider>
-      <RewardFxProvider>
-        <Router>
-          <ScrollRestorationManual />
-          <ScrollToHash />
-          <CoinOverlay />
-          <RouteI18nLoader>
-            <AppRoutes />
-          </RouteI18nLoader>
-        </Router>
-      </RewardFxProvider>
-    </ProfileProvider>
-  </QueryClientProvider>
-);
+function App() {
+  const [needRefresh, setNeedRefresh] = useState(false);
+  const updateSWRef = useRef<((reloadPage?: boolean) => Promise<void>) | null>(null);
+
+  useEffect(() => {
+    updateSWRef.current = registerSW({
+      onNeedRefresh() {
+        setNeedRefresh(true);
+      },
+      onOfflineReady() {
+        console.info('[PWA] App ist jetzt offline verfügbar.');
+      },
+    });
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ProfileProvider>
+        <RewardFxProvider>
+          <Router>
+            <ScrollRestorationManual />
+            <ScrollToHash />
+            <CoinOverlay />
+            <RouteI18nLoader>
+              <AppRoutes />
+            </RouteI18nLoader>
+          </Router>
+        </RewardFxProvider>
+      </ProfileProvider>
+      {needRefresh && (
+        <PwaUpdateBanner
+          onUpdate={() => updateSWRef.current?.(true)}
+          onDismiss={() => setNeedRefresh(false)}
+        />
+      )}
+    </QueryClientProvider>
+  );
+}
 
 export default App;

@@ -167,12 +167,10 @@ export default function NewspaperArticle() {
   </div>
 ) : null}
 
-{/* ARTICLE BODY */}
-{unlocked && (
+{/* ARTICLE BODY — nur wenn bodySrc vorhanden und kein Ladefehler */}
+{unlocked && item.bodySrc && !bodyError && (
   <div className="rounded-[32px] bg-white/90 backdrop-blur shadow-sm px-4 sm:px-6 py-5 border border-black/5">
-    {bodyError ? (
-      <div className="text-slate-700">Der Artikel kommt bald ✨</div>
-    ) : bodyText ? (
+    {bodyText ? (
       <ArticleReader text={bodyText} bonusId={item.bonusId} requireAudioConfirm={!!item.audioSrc} />
     ) : (
       <div className="text-slate-600">Lädt…</div>

@@ -150,7 +150,7 @@ function TagListField({
             }
           }}
           placeholder={placeholder}
-          className="flex-1 bg-slate-50 rounded-2xl border border-slate-200 px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-[var(--color-teal-200)] placeholder:text-slate-400"
+          className="flex-1 bg-slate-50 rounded-2xl border border-slate-200 px-4 py-2.5 text-base text-slate-900 outline-none focus:ring-2 focus:ring-[var(--color-teal-200)] placeholder:text-slate-400"
         />
         <button
           type="button"
@@ -243,7 +243,7 @@ function RevealEditCard({
             placeholder={placeholder}
             rows={3}
             onClick={(e) => e.stopPropagation()}
-            className="w-full bg-white rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-[var(--color-teal-200)] placeholder:text-slate-400 resize-none"
+            className="w-full bg-white rounded-2xl border border-slate-200 px-4 py-3 text-base text-slate-900 outline-none focus:ring-2 focus:ring-[var(--color-teal-200)] placeholder:text-slate-400 resize-none"
           />
         </div>
       )}
