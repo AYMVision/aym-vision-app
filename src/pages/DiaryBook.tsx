@@ -727,6 +727,8 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
   );
   const [text, setText] = useState('');
   const [draftStickers, setDraftStickers] = useState<DiaryStickerId[]>([]);
+  const [draftStickerPos, setDraftStickerPos] = useState<Record<string, { xPx: number; yPx: number; rot: number; size: number }>>({});
+  const paperRef = useRef<HTMLDivElement | null>(null);
   const [mode, setMode] = useState<'write' | 'view'>(() => entries.length > 0 ? 'view' : 'write');
   const [showPinBanner, setShowPinBanner] = useState(false);
   const [activeEntryId, setActiveEntryId] = useState<string | null>(entries[0]?.id ?? null);
@@ -776,26 +778,32 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
   }, [updateProfile]);
 
   function toggleDraftSticker(sid: DiaryStickerId) {
-    setDraftStickers(prev => prev.includes(sid) ? prev.filter(s => s !== sid) : [...prev, sid]);
+    setDraftStickers((prev) => {
+      if (prev.includes(sid)) {
+        setDraftStickerPos((p) => { const n = { ...p }; delete n[sid]; return n; });
+        return prev.filter((s) => s !== sid);
+      }
+      // Assign a default position spread across the right side of the paper
+      const idx = prev.length;
+      const defaultPositions = [
+        { xPx: 240, yPx: 70, rot: -8, size: 100 },
+        { xPx: 235, yPx: 210, rot: 10, size: 95 },
+        { xPx: 245, yPx: 340, rot: -5, size: 100 },
+      ];
+      const pos = defaultPositions[idx] ?? { xPx: 230 + idx * 10, yPx: 80 + idx * 120, rot: (idx % 2 === 0 ? -6 : 8), size: 100 };
+      setDraftStickerPos((p) => ({ ...p, [sid]: pos }));
+      return [...prev, sid];
+    });
   }
 
   function createEntry() {
     const trimmed = text.trim();
     if (!trimmed) return;
 
-    const PRESET_POS = [
-      { xPx: 235, yPx: 80, rot: -6 },
-      { xPx: 225, yPx: 220, rot: 9 },
-      { xPx: 240, yPx: 340, rot: -4 },
-    ];
-    const stickers: MeSticker[] = draftStickers.slice(0, 3).map((stickerId, i) => ({
-      id: uid('stk'),
-      stickerId,
-      xPx: PRESET_POS[i]?.xPx ?? 220,
-      yPx: PRESET_POS[i]?.yPx ?? 80 + i * 130,
-      rot: PRESET_POS[i]?.rot ?? 0,
-      size: 100,
-    }));
+    const stickers: MeSticker[] = draftStickers.slice(0, 3).map((stickerId) => {
+      const pos = draftStickerPos[stickerId] ?? { xPx: 235, yPx: 120, rot: -6, size: 100 };
+      return { id: uid('stk'), stickerId, ...pos };
+    });
 
     const e: MeEntry = { id: uid('me'), createdAt: Date.now(), text: trimmed, stickers };
     const next = [e, ...entries];
@@ -803,6 +811,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
     setActiveEntryId(e.id);
     setText('');
     setDraftStickers([]);
+    setDraftStickerPos({});
     setMode('view');
 
     if (!hasPin && entries.length === 0) {
@@ -878,7 +887,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
   }
 
   return (
-    <div className="mt-6 space-y-4">
+    <div className="mt-6 space-y-4 overflow-x-hidden">
 
       {/* ── PIN-SCHUTZ-BANNER ── */}
       {showPinBanner && !hasPin && (
@@ -909,7 +918,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
       {entries.length > 0 && (
         <div className="overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
           <div className="flex gap-2" style={{ minWidth: 'max-content' }}>
-            <button type="button" onClick={() => { setMode('write'); setText(''); setDraftStickers([]); }}
+            <button type="button" onClick={() => { setMode('write'); setText(''); setDraftStickers([]); setDraftStickerPos({}); setSelectedStickerId(null); }}
               className={['shrink-0 rounded-2xl border px-4 py-3 text-sm font-semibold transition flex flex-col items-center justify-center gap-1 w-[100px]',
                 mode === 'write' ? 'border-violet-300 bg-violet-50 text-violet-700' : 'border-dashed border-violet-200 text-violet-600 hover:bg-violet-50 bg-white'].join(' ')}>
               <span className="text-xl">✏️</span>
@@ -955,7 +964,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
       )}
 
       {/* ── HAUPTBEREICH: SCHREIBEN oder CANVAS ── */}
-      <div className="rounded-3xl border border-violet-100 overflow-hidden shadow-sm">
+      <div className="rounded-3xl border border-violet-100 overflow-hidden shadow-sm w-full min-w-0">
 
         {/* Header */}
         <div className="flex items-center gap-3 px-5 py-3 bg-violet-50 border-b border-violet-100">
@@ -981,7 +990,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
         {mode === 'write' ? (
           <>
             {/* Liniertes Papier */}
-            <div className="relative" style={{
+            <div ref={paperRef} className="relative" onClick={() => setSelectedStickerId(null)} style={{
               backgroundImage: `linear-gradient(to right, rgba(139,92,246,0.25) 1px, transparent 1px),repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, rgba(15,23,42,0.07) 31px, rgba(15,23,42,0.07) 32px),linear-gradient(180deg, rgba(255,253,255,1), rgba(255,255,255,1))`,
               backgroundSize: '1px 100%, 100% 32px, 100% 100%',
               backgroundPosition: '52px 0, 0 8px, 0 0',
@@ -995,6 +1004,28 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
                 className="w-full bg-transparent pl-[68px] pr-4 py-2 text-xl diary-hand text-slate-900 outline-none resize-none placeholder:text-slate-300"
                 style={{ lineHeight: '32px' }}
               />
+              {/* Live-Sticker auf dem Papier — sofort verschiebbar */}
+              {draftStickers.length > 0 && (
+                <div className="absolute inset-0 z-10 pointer-events-none">
+                  {draftStickers.map((sid) => {
+                    const pos = draftStickerPos[sid];
+                    if (!pos) return null;
+                    const fakeSticker: MeSticker = { id: sid, stickerId: sid, ...pos };
+                    return (
+                      <StickerDraggable
+                        key={sid}
+                        sticker={fakeSticker}
+                        canvasRef={paperRef}
+                        selected={selectedStickerId === sid}
+                        onSelect={() => setSelectedStickerId(sid)}
+                        onMove={(xPx, yPx) => setDraftStickerPos((p) => ({ ...p, [sid]: { ...p[sid], xPx, yPx } }))}
+                        onResize={(size) => setDraftStickerPos((p) => ({ ...p, [sid]: { ...p[sid], size } }))}
+                        onRemove={() => { toggleDraftSticker(sid); setSelectedStickerId(null); }}
+                      />
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {/* Sticker-Auswahl */}
@@ -1014,8 +1045,8 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
               </div>
               {draftStickers.length > 0 && (
                 <div className="mt-2 flex items-center gap-3 text-xs">
-                  <span className="font-semibold text-violet-700">{t('diaries.me.stickerCount', { defaultValue: '{{count}} Sticker ausgewählt', count: draftStickers.length })}</span>
-                  <button type="button" onClick={() => setDraftStickers([])} className="text-slate-400 hover:text-red-500 transition-colors">
+                  <span className="font-semibold text-violet-700">{t('diaries.me.stickerCount', { defaultValue: '{{count}} Sticker auf der Seite', count: draftStickers.length })}</span>
+                  <button type="button" onClick={() => { setDraftStickers([]); setDraftStickerPos({}); }} className="text-slate-400 hover:text-red-500 transition-colors">
                     {t('diaries.me.stickerRemoveAll', { defaultValue: 'Alle entfernen' })}
                   </button>
                 </div>
