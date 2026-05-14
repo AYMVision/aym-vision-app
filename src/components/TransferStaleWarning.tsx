@@ -3,7 +3,7 @@
 
 import { Link } from 'react-router-dom';
 import { getLastTransferExportTime } from '../common/transferLink';
-import { isStandalonePwa } from '../common/usePwaContext';
+import { isStandalonePwa, isPwaFirstLaunch } from '../common/usePwaContext';
 
 const STALE_DAYS = 5;
 const MS_PER_DAY = 86_400_000;
@@ -44,6 +44,7 @@ export default function TransferStaleWarning() {
 /** Compact version for use in the Welcome page banner area (PWA mode, has progress) */
 export function TransferStaleBanner() {
   if (!isStandalonePwa()) return null;
+  if (isPwaFirstLaunch()) return null;
 
   const lastExport = getLastTransferExportTime();
   const now = Date.now();

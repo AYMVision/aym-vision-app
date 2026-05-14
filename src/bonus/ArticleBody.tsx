@@ -230,17 +230,11 @@ function SectionHeading({ text }: { text: string }) {
 
 function StandaloneList({ items }: { items: string[] }) {
   return (
-    <div className="rounded-[28px] border border-slate-200 bg-white shadow-sm p-4 sm:p-5">
-      <div className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-        ✅ Merkliste
-      </div>
-
-      <ul className="mt-3 list-disc pl-5 space-y-2 text-[15px] sm:text-base text-slate-800">
-        {items.map((it, j) => (
-          <li key={j}>{it}</li>
-        ))}
-      </ul>
-    </div>
+    <ul className="list-disc pl-5 space-y-2 text-[15px] sm:text-base text-slate-800">
+      {items.map((it, j) => (
+        <li key={j}>{renderInline(it)}</li>
+      ))}
+    </ul>
   );
 }
 

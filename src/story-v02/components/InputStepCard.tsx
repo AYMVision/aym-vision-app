@@ -53,7 +53,7 @@ export default function InputStepCard({ step, onSubmit }: Props) {
                   ? 'Dein Chatname'
                   : 'Möchtest du etwas schreiben…'
               }
-              className="w-full min-h-[96px] rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400"
+              className="w-full min-h-[96px] rounded-xl border border-slate-200 px-3 py-2 text-base text-slate-900 outline-none focus:border-slate-400"
             />
 
             <div className="mt-3 flex justify-end">

@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build:images": "node scripts/build-images.mjs",
+    "articles-meta": "node scripts/generate-articles-meta.js",
+    "prebuild": "node scripts/generate-articles-meta.js",
     "build": "npm run build:images && vite build",
     "images": "npm run build:images",
     "lint": "eslint .",

@@ -20,7 +20,6 @@ import MiniAudioPlayer from '../components/MiniAudioPlayer';
 import { BONUS_INDEX, type BonusItem } from '../bonus/bonusIndex';
 import { isBonusUnlocked, type BonusProgressSnapshot } from '../bonus/bonusUnlock';
 import { loadSeenBonusIds } from '../bonus/bonusSeen';
-import { parseFrontmatter } from '../bonus/mdFrontmatter';
 
 type LocationState = { backTo?: string } | null;
 
@@ -54,11 +53,15 @@ function topicIcon(topicId: string) {
   return map[topicId] ?? '📰';
 }
 
-function pickFallbackEmoji(item: BonusItem) {
+function resolveTopicTags(item: BonusItem, metaById: Record<string, ArticleMetaLite>): string[] {
+  return metaById[item.bonusId]?.topicTags ?? item.topicTags ?? [];
+}
+
+function pickFallbackEmoji(item: BonusItem, metaById: Record<string, ArticleMetaLite>) {
   if (item.mediaType === 'audio') return '🎧';
   if (item.mediaType === 'link') return '🔗';
 
-  const firstTopic = (item.topicTags ?? [])[0];
+  const firstTopic = resolveTopicTags(item, metaById)[0];
   if (firstTopic) return topicIcon(firstTopic);
 
   return '📰';
@@ -111,69 +114,42 @@ function chipStyle(active: boolean) {
     : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50';
 }
 
-type ArticleMetaLite = { title?: string; description?: string; date?: string };
+type ArticleMetaLite = { title?: string; description?: string; date?: string; topicTags?: string[] };
 
-function useArticleMetaMap(items: BonusItem[], lang: 'de' | 'en') {
-  const [map, setMap] = useState<Record<string, ArticleMetaLite>>({});
+// Fetches /articles-meta.json once and returns a map keyed by bonusId
+function useArticlesMetaJson(lang: 'de' | 'en'): Record<string, ArticleMetaLite> {
+  const [metaJson, setMetaJson] = useState<Record<string, Record<string, ArticleMetaLite>>>({});
 
   useEffect(() => {
     let alive = true;
+    fetch(assetUrl('articles-meta.json'))
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!alive || !data) return;
+        setMetaJson(data);
+      })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
 
-    const missing = items.filter((it) => !!it.bodySrc && !map[it.bonusId]);
-    if (missing.length === 0) return;
-
-    async function run() {
-      const next: Record<string, ArticleMetaLite> = {};
-
-      await Promise.all(
-        missing.map(async (it) => {
-          try {
-            let res = await fetch(assetUrl(`${it.bodySrc}.${lang}.md`));
-            if (!res.ok) res = await fetch(assetUrl(`${it.bodySrc}.md`));
-            if (!res.ok) return;
-            const text = await res.text();
-            const fm = parseFrontmatter(text);
-            next[it.bonusId] = {
-              title: fm.meta.title,
-              description: fm.meta.description,
-              date: fm.meta.date,
-            };
-          } catch {
-            // ignore
-          }
-        })
-      );
-
-      if (!alive) return;
-      if (Object.keys(next).length === 0) return;
-
-      setMap((prev) => ({ ...prev, ...next }));
+  return useMemo(() => {
+    const result: Record<string, ArticleMetaLite> = {};
+    for (const [folder, langs] of Object.entries(metaJson)) {
+      const entry = (langs as Record<string, ArticleMetaLite>)[lang] ?? (langs as Record<string, ArticleMetaLite>)['de'];
+      if (entry) result[folder] = entry;
     }
-
-    run();
-
-    return () => {
-      alive = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, lang]);
-
-  return map;
+    return result;
+  }, [metaJson, lang]);
 }
 
 function resolveTitleDesc(
-  t: (k: string, o?: any) => string,
+  _t: (k: string, o?: any) => string,
   item: BonusItem,
   metaById: Record<string, ArticleMetaLite>
 ) {
   const meta = metaById[item.bonusId];
-  const title =
-    meta?.title ??
-    (item.titleKey ? t(item.titleKey, { defaultValue: item.bonusId }) : item.bonusId);
-
-  const desc =
-    meta?.description ??
-    (item.descriptionKey ? t(item.descriptionKey, { defaultValue: '' }) : '');
+  const title = meta?.title ?? item.bonusId;
+  const desc = meta?.description ?? '';
 
   return { title, desc };
 }
@@ -345,7 +321,9 @@ function FreshCard({
   const { title } = resolveTitleDesc(t, item, metaById);
   const tone = stateTone(unlocked, seen);
   const coverSrc = item.coverImage ? assetUrl(item.coverImage) : '';
-  const fallback = pickFallbackEmoji(item);
+  const fallback = pickFallbackEmoji(item, metaById);
+  const hasContent = !!metaById[item.bonusId];
+  const canOpen = unlocked && hasContent;
 
   const badgeText = !unlocked
     ? t('newspaper.badge.locked', { defaultValue: 'Gesperrt' })
@@ -355,15 +333,15 @@ function FreshCard({
 
   return (
     <Link
-      to={unlocked ? `/newspaper/${item.bonusId}` : '/newspaper'}
+      to={canOpen ? `/newspaper/${item.bonusId}` : '/newspaper'}
       state={{ backTo: '/newspaper', backgroundLocation: location }}
       className={cn(
         'block snap-start shrink-0 w-[68%] sm:w-[38%] lg:w-[220px]',
-        !unlocked && 'cursor-not-allowed'
+        !canOpen && 'cursor-not-allowed'
       )}
-      aria-disabled={!unlocked}
+      aria-disabled={!canOpen}
       onClick={(e) => {
-        if (!unlocked) e.preventDefault();
+        if (!canOpen) e.preventDefault();
       }}
     >
 <div
@@ -427,15 +405,17 @@ function CurrentNewsCard({
 
   const { title, desc } = resolveTitleDesc(t, item, metaById);
   const coverSrc = item.coverImage ? assetUrl(item.coverImage) : '';
-  const fallback = pickFallbackEmoji(item);
+  const fallback = pickFallbackEmoji(item, metaById);
   const isAudio = item.mediaType === 'audio';
   const audioHref = item.audioSrc ? assetUrl(item.audioSrc) : '';
   const kwNum = metaById[item.bonusId]?.date ? isoWeek(metaById[item.bonusId].date!) : null;
+  const hasContent = !!metaById[item.bonusId];
 
   if (compact) {
     return (
       <Link
-        to={`/newspaper/${item.bonusId}`}
+        to={hasContent ? `/newspaper/${item.bonusId}` : '/newspaper'}
+        onClick={(e) => { if (!hasContent) e.preventDefault(); }}
         state={{ backTo: '/newspaper', backgroundLocation: location }}
         className="block snap-start shrink-0 w-[58%] sm:w-[34%] lg:w-[200px]"
       >
@@ -475,7 +455,7 @@ function CurrentNewsCard({
 
   return (
     <div className="rounded-2xl border border-rose-200 bg-gradient-to-br from-rose-50 via-white to-amber-50 shadow-sm overflow-hidden hover:shadow-md transition">
-      <Link to={`/newspaper/${item.bonusId}`} state={{ backTo: '/newspaper', backgroundLocation: location }} className="block p-4">
+      <Link to={hasContent ? `/newspaper/${item.bonusId}` : '/newspaper'} state={{ backTo: '/newspaper', backgroundLocation: location }} className="block p-4" onClick={(e) => { if (!hasContent) e.preventDefault(); }}>
         <div className="flex flex-wrap gap-2 items-center">
           <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-rose-200 bg-white text-rose-700">
             {isAudio ? '🎧' : '📰'} {isAudio
@@ -557,8 +537,11 @@ function FeedCard({
   const tone = stateTone(unlocked, seen);
 
   const coverSrc = item.coverImage ? assetUrl(item.coverImage) : '';
-  const fallback = pickFallbackEmoji(item);
+  const fallback = pickFallbackEmoji(item, metaById);
   const audioHref = item.audioSrc ? assetUrl(item.audioSrc) : '';
+  const topicTags = resolveTopicTags(item, metaById);
+  const hasContent = !!metaById[item.bonusId];
+  const canOpen = unlocked && hasContent;
 
   const badgeText = !unlocked
     ? t('newspaper.badge.locked', { defaultValue: 'Gesperrt' })
@@ -567,7 +550,7 @@ function FeedCard({
       : t('newspaper.badge.new', { defaultValue: 'Neu' });
 
   const CardShell = ({ children }: { children: React.ReactNode }) =>
-    unlocked ? (
+    canOpen ? (
       <Link to={`/newspaper/${item.bonusId}`} state={{ backTo: '/newspaper', backgroundLocation: location }} className="block">
         {children}
       </Link>
@@ -581,7 +564,7 @@ function FeedCard({
   className={cn(
     'rounded-2xl border shadow-sm overflow-hidden transition',
     tone.border,
-    unlocked ? 'hover:shadow-md' : 'opacity-85',
+    canOpen ? 'hover:shadow-md' : 'opacity-85',
     item.mediaType === 'audio'
       ? 'bg-gradient-to-br from-sky-50 via-white to-violet-50'
       : item.mediaType === 'link'
@@ -630,7 +613,7 @@ function FeedCard({
               {desc ? <div className="mt-1 text-xs text-slate-700 line-clamp-2">{desc}</div> : null}
 
               <div className="mt-2 flex flex-wrap gap-2">
-                {(item.topicTags ?? []).slice(0, 2).map((tag) => (
+                {topicTags.slice(0, 2).map((tag) => (
                   <span
                     key={tag}
                     className="inline-flex items-center rounded-full px-2 py-1 text-[10px] font-semibold border border-slate-200 bg-slate-50 text-slate-700"
@@ -751,7 +734,7 @@ export default function Newspaper() {
       .sort((a, b) => a.order - b.order);
   }, []);
 
-  const metaById = useArticleMetaMap(allItems, lang);
+  const metaById = useArticlesMetaJson(lang);
 
 const unlockedMap = useMemo(() => {
   const m = new Map<string, boolean>();
@@ -766,12 +749,12 @@ const unlockedMap = useMemo(() => {
     for (const id of TOPICS) counts[id] = 0;
 
     for (const it of allItems) {
-      for (const tag of it.topicTags ?? []) {
+      for (const tag of resolveTopicTags(it, metaById)) {
         if (counts[tag] !== undefined) counts[tag] += 1;
       }
     }
     return counts;
-  }, [allItems]);
+  }, [allItems, metaById]);
 
   const currentNewsItems = useMemo(() => {
     return allItems.filter(isCurrentNewsItem);
@@ -787,12 +770,13 @@ const unlockedMap = useMemo(() => {
     // allItems: Chioma-Beiträge erscheinen im Feed und in der Suche
     return allItems.filter((item) => {
       if (format !== 'all' && item.mediaType !== format) return false;
-      if (topic !== 'all' && !(item.topicTags ?? []).includes(topic)) return false;
+      const tags = resolveTopicTags(item, metaById);
+      if (topic !== 'all' && !tags.includes(topic)) return false;
 
       if (!q) return true;
 
       const { title, desc } = resolveTitleDesc(t, item, metaById);
-      const blob = `${title} ${desc} ${(item.topicTags ?? []).join(' ')} ${item.mediaType}`.toLowerCase();
+      const blob = `${title} ${desc} ${tags.join(' ')} ${item.mediaType}`.toLowerCase();
       return blob.includes(q);
     });
   }, [allItems, format, topic, query, t, metaById]);

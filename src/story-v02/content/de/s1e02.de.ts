@@ -856,7 +856,7 @@ audio(ch.carlos, '/media/newspaper/audio/chatrules-chioma-dominik.mp3', '15:43',
 
   S('s1e02c10_story_amy_wrapup_article', [
     m(ch.amy, '👉 Schau dir gern Chiomas Vorschlag an und überlege, was dir davon wichtig wäre.', '16:08'),
-    bonusLink('article-regeln-im-chat', 'Artikel Regeln im Chat', '/newspaper/news-audio-chatrules', 'Artikel öffnen →'),
+    bonusLink('article-regeln-im-chat', 'Artikel Regeln im Chat', '/newspaper/s1e01c10-chiomas-chatrules', 'Artikel öffnen →'),
   ], ['fairness', 'reflect-understand']),
 
   S('s1e02c10_story_cliffhanger', [

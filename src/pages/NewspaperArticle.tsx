@@ -126,6 +126,18 @@ export default function NewspaperArticle() {
     );
   }
 
+  if (!item.bodySrc && !item.audioSrc) {
+    return (
+      <Layout backPath={state?.backTo ?? '/newspaper'} hideHeader={isModal} hideFooter>
+        <div className="max-w-2xl mx-auto px-5 sm:px-8 py-6">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
+            Dieser Artikel ist noch nicht verfügbar.
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout backPath={state?.backTo ?? '/newspaper'} hideHeader={isModal} hideFooter>
       <div className="max-w-2xl mx-auto px-5 sm:px-8 py-6">

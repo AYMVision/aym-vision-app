@@ -1,0 +1,120 @@
+{
+  "article-jonas-tom-offline-inseln": {
+    "de": {
+      "title": "Immer online? Tom zeigt, wie's auch anders geht",
+      "description": "Finn hängt nur noch am Handy und verpasst Treffen mit seinen Freunden. Tom macht's anders. Jonas fragt nach: Wie schafft er das?",
+      "author": "Jonas",
+      "date": "2026-05-11",
+      "topicTags": [
+        "self-control"
+      ]
+    }
+  },
+  "chatrules-chioma-dominik": {
+    "de": {
+      "title": "Regeln im Klassenchat",
+      "description": "\"Heute geht es um eine Frage, die fast jede Klasse kennt: Brauchen wir Regeln im Klassenchat oder nerven die nur? Dazu habe ich mit Dominik diskutiert...\"",
+      "author": "\"chioma\"",
+      "date": "\"2026-01-29\""
+    }
+  },
+  "chioma-news-david-goliath-audio": {
+    "de": {
+      "title": "Du gegen dein Handy: Wer gewinnt?",
+      "description": "Du wolltest nur kurz ein Video schauen und plötzlich ist eine halbe Stunde weg 😅 Hier erfährst du, warum dein Feed so stark ist … und wie du ihn austricksen kannst.",
+      "author": "Chioma",
+      "date": "2026-04-17"
+    }
+  },
+  "chioma-news-school-ai": {
+    "de": {
+      "title": "KI in der Schule – hilfreich oder unfair?",
+      "description": "Chioma schaut darauf, warum gerade so viele über KI bei Hausaufgaben und Referaten sprechen.",
+      "author": "Chioma",
+      "date": "2026-03-29"
+    }
+  },
+  "chioma-news-school-social-media": {
+    "de": {
+      "title": "Social Media unter 16 verboten?",
+      "description": "Chioma liest etwas Krasses – Social Media unter 16 verboten? Erst ist sie sauer. Doch dann fragt sie sich wirklich: Wieso eigentlich?",
+      "author": "Chioma",
+      "date": "2026-04-10"
+    }
+  },
+  "tip-amy-staunen": {
+    "de": {
+      "title": "Schlechte Laune vom Handy? Probier´s mal mit Staunen.",
+      "description": "Manchmal macht dich das Internet wütend, neidisch oder traurig? Hier erfährst du einen einfachen Trick, der dich wieder runterholt. Ganz ohne Handy.",
+      "author": "Carlos",
+      "date": "2026-02-11",
+      "topicTags": [
+        "reflect"
+      ]
+    }
+  },
+  "tip-aylin-kileitfaden": {
+    "de": {
+      "title": "Aylins KI-Guide: So bleibst du sicher",
+      "description": "Was darfst du einer KI sagen und was lieber nicht? Mit diesen einfachen Regeln bleibst du auf der sicheren Seite.",
+      "author": "Aylin",
+      "date": "2026-05-11",
+      "topicTags": [
+        "reflect"
+      ]
+    }
+  },
+  "tip-carlos-audio-howto": {
+    "de": {
+      "title": "Dein eigener Audio-Beitrag – so geht’s",
+      "description": "Carlos zeigt dir Schritt für Schritt, wie du ganz einfach deinen eigenen Audio-Beitrag aufnehmen kannst.",
+      "author": "Carlos",
+      "date": "2026-05-11",
+      "topicTags": [
+        "create"
+      ]
+    }
+  },
+  "tip-carlos-game-tricks": {
+    "de": {
+      "title": "Carlos checkt - Die Tricks der Online-Spiele",
+      "description": "Carlos zeigt, warum aus „nur kurz reinschauen“ manchmal viel mehr Zeit wird und welche Gaming-Tricks dahinterstecken.",
+      "author": "Carlos",
+      "date": "2026-01-27",
+      "topicTags": [
+        "reflect"
+      ]
+    }
+  },
+  "tip-carlos-geodaten": {
+    "de": {
+      "title": "Spuren im Bild – so liest du Fotos richtig",
+      "description": "Du postest ein Foto – aber was postet das Foto über dich? Finde heraus, welche versteckten Infos darin stecken.",
+      "author": "Carlos",
+      "date": "2026-01-27",
+      "topicTags": [
+        "create",
+        "teamTalk",
+        "safe"
+      ]
+    }
+  },
+  "tip-chioma-groupchats": {
+    "de": {
+      "title": "Gruppenchat ohne Stress – so klappt’s",
+      "description": "Chioma zeigt dir einfache Regeln, damit euer Gruppenchat fair bleibt und Spaß macht",
+      "author": "Chioma",
+      "date": "2026-01-27",
+      "topicTags": [
+        "teamTalk"
+      ]
+    },
+    "en": {
+      "title": "Regeln im Klassenchat 🎧",
+      "description": "Heute geht es um eine Frage, die fast jede Klasse kennt: Brauchen wir Regeln im Klassenchat oder nerven die nur? Dazu habe ich mit Dominik diskutiert...",
+      "author": "Chioma",
+      "date": "2026-01-27",
+      "tags": "chat, rules, class"
+    }
+  }
+}
