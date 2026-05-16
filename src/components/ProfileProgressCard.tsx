@@ -53,7 +53,7 @@ export default function ProfileProgressCard({
         />
         <div>
           <div className="text-sm font-extrabold text-slate-900 leading-snug">
-            Yasmin wartet schon auf dich
+            Los geht's →
           </div>
           <div className="mt-1 text-xs text-slate-500 leading-relaxed">
             Starte deine erste Story, um hier deinen Fortschritt zu sehen.

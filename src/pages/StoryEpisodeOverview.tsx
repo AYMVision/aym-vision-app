@@ -115,7 +115,7 @@ setChapters(ep?.chapters ?? []);
 
   const timeGate = bypass
     ? { allowed: true as const, reason: 'ok' as const, mode: 'bypass' as const }
-    : canStartNextNewChapterToday({ maxPerWeek: 5 });
+    : canStartNextNewChapterToday();
   const timeGateAllowed = timeGate.allowed;
 
   const completedCount = getCompletedChapterCount(courseId);
@@ -192,9 +192,7 @@ setChapters(ep?.chapters ?? []);
 
             {!allDone && !timeGateAllowed && !currentChapter && (
               <div className="shrink-0 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-2xl px-3 py-2 text-right leading-snug">
-                {timeGate.reason === 'weekly_limit'
-                  ? t('overview.timeLocked.weekly', { defaultValue: 'Ab Montag wieder verfügbar' })
-                  : t('overview.timeLocked.daily', { defaultValue: 'Morgen wieder verfügbar' })}
+                {t('overview.timeLocked.daily', { defaultValue: 'Morgen wieder verfügbar' })}
               </div>
             )}
             {currentChapter && !allDone && (
@@ -269,9 +267,7 @@ setChapters(ep?.chapters ?? []);
                     )}
                     {isTimeLocked && (
                       <div className="text-xs text-amber-600 font-medium mt-0.5">
-                        {timeGate.reason === 'weekly_limit'
-                          ? t('overview.timeLocked.weekly', { defaultValue: 'Ab Montag wieder verfügbar' })
-                          : t('overview.timeLocked.daily', { defaultValue: 'Morgen wieder verfügbar' })}
+                        {t('overview.timeLocked.daily', { defaultValue: 'Morgen wieder verfügbar' })}
                       </div>
                     )}
                   </div>

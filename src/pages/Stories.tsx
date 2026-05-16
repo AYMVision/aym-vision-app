@@ -540,9 +540,10 @@ function isUnlockedByChain(
                           <img
                             src={assetUrl('media/story/characters/yasmin-256.webp')}
                             alt="Yasmin"
-                            className="w-5 h-5 rounded-full object-cover object-top flex-shrink-0"
+                            className="hidden sm:block w-5 h-5 rounded-full object-cover object-top flex-shrink-0"
                           />
-                          {tStories('start.cta', { defaultValue: 'Yasmin wartet schon \u2192' })}
+                          <span className="sm:hidden">Los →</span>
+                          <span className="hidden sm:inline">{tStories('start.cta', { defaultValue: 'Los geht\'s →' })}</span>
                         </>
                       )}
                     </button>

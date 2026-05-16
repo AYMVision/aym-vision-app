@@ -20,7 +20,7 @@ export type StoryAdvanceDecision =
       type: 'time_block';
       gateDebug: string;
       shouldShowLockedHint: boolean;
-      blockedReason?: 'daily_limit' | 'weekly_limit';
+      blockedReason?: 'daily_limit';
     }
   | {
       type: 'advance';
@@ -33,14 +33,12 @@ export function decideNextStoryStep(args: {
   course: CourseLike | null;
   currentChapterIndex0: number;
   bypassAll?: boolean;
-  maxPerWeek?: number;
 }): StoryAdvanceDecision {
   const gateState = getNextChapterGateState({
     courseId: args.courseId,
     course: args.course,
     currentChapterIndex0: args.currentChapterIndex0,
     bypassAll: args.bypassAll ?? false,
-    maxPerWeek: args.maxPerWeek ?? 5,
   });
 
   const current = args.currentChapterIndex0;
@@ -69,9 +67,7 @@ export function decideNextStoryStep(args: {
       type: 'time_block',
       gateDebug: `time-block | reason=${gateState.blockedReason} | current=${current} | next=${next}`,
       shouldShowLockedHint: gateState.shouldShowLockedHint,
-      blockedReason: gateState.blockedReason === 'daily_limit' || gateState.blockedReason === 'weekly_limit'
-        ? gateState.blockedReason
-        : undefined,
+      blockedReason: gateState.blockedReason === 'daily_limit' ? gateState.blockedReason : undefined,
     };
   }
 

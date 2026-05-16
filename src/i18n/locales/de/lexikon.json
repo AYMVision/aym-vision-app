@@ -1,10 +1,10 @@
 {
-  "title": "Carlos Lexikon",
+  "title": "Carlos' Lexikon",
   "subtitle": "Technik-Begriffe so erklärt, dass sie sogar Frau Schubert versteht.",
   "searchPlaceholder": "Begriff suchen…",
   "emptyState": "Kein Begriff gefunden.",
   "modal": {
-    "label": "Carlos Lexikon",
+    "label": "Carlos' Lexikon",
     "closeAria": "Schließen",
     "didYouKnow": "Wusstest du?"
   }

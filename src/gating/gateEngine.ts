@@ -3,8 +3,7 @@
 type GateReason =
   | 'ok'
   | 'need_previous'
-  | 'daily_limit'
-  | 'weekly_limit';
+  | 'daily_limit';
 
 type GateMode = 'play' | 'rewatch' | 'blocked' | 'bypass';
 
@@ -87,19 +86,8 @@ function todayKeyLocal(): string {
   return `${y}-${m}-${d}`;
 }
 
-function isoWeekKeyLocal(): string {
-  const date = new Date();
-  const tmp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-  const day = tmp.getUTCDay() || 7;
-  tmp.setUTCDate(tmp.getUTCDate() + 4 - day);
-  const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
-  const weekNo = Math.ceil((((tmp.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
-  return `${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
-}
 
 const DAILY_KEY = 'aym-gate-last-completed-day';
-const WEEK_KEY = 'aym-gate-week-key';
-const WEEK_COUNT_KEY = 'aym-gate-week-count';
 
 export function getDailyCompletionKey(): string | null {
   try {
@@ -109,33 +97,8 @@ export function getDailyCompletionKey(): string | null {
   }
 }
 
-export function getWeeklyCount(): { weekKey: string; count: number } {
-  const currentWeek = isoWeekKeyLocal();
-
-  try {
-    const savedWeek = localStorage.getItem(WEEK_KEY);
-    const savedCount = Number(localStorage.getItem(WEEK_COUNT_KEY) ?? '0');
-
-    if (savedWeek !== currentWeek) {
-      return { weekKey: currentWeek, count: 0 };
-    }
-
-    return {
-      weekKey: currentWeek,
-      count: Number.isFinite(savedCount) ? savedCount : 0,
-    };
-  } catch {
-    return { weekKey: currentWeek, count: 0 };
-  }
-}
-
 export function hasCompletedNewChapterToday(): boolean {
   return getDailyCompletionKey() === todayKeyLocal();
-}
-
-export function hasReachedWeeklyLimit(maxPerWeek = 5): boolean {
-  const { count } = getWeeklyCount();
-  return count >= maxPerWeek;
 }
 
 export function recordNewChapterCompletion(args?: {
@@ -145,20 +108,9 @@ export function recordNewChapterCompletion(args?: {
   void args;
 
   const today = todayKeyLocal();
-  const currentWeek = isoWeekKeyLocal();
 
   try {
-    const savedWeek = localStorage.getItem(WEEK_KEY);
-    const savedCount = Number(localStorage.getItem(WEEK_COUNT_KEY) ?? '0');
-
-    const nextCount =
-      savedWeek === currentWeek
-        ? (Number.isFinite(savedCount) ? savedCount : 0) + 1
-        : 1;
-
     localStorage.setItem(DAILY_KEY, today);
-    localStorage.setItem(WEEK_KEY, currentWeek);
-    localStorage.setItem(WEEK_COUNT_KEY, String(nextCount));
   } catch {
     // ignore storage errors
   }
@@ -166,10 +118,8 @@ export function recordNewChapterCompletion(args?: {
 
 export function canStartNextNewChapterToday(opts?: {
   bypassAll?: boolean;
-  maxPerWeek?: number;
 }): GateDecision {
   const bypassAll = opts?.bypassAll ?? false;
-  const maxPerWeek = opts?.maxPerWeek ?? 5;
 
   if (bypassAll) {
     return {
@@ -183,14 +133,6 @@ export function canStartNextNewChapterToday(opts?: {
     return {
       allowed: false,
       reason: 'daily_limit',
-      mode: 'blocked',
-    };
-  }
-
-  if (hasReachedWeeklyLimit(maxPerWeek)) {
-    return {
-      allowed: false,
-      reason: 'weekly_limit',
       mode: 'blocked',
     };
   }

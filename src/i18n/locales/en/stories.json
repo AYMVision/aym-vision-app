@@ -42,7 +42,7 @@
       "0": "🎓 10 to 12 years",
       "1": "🦉 Chat story & more",
       "2": "Tricks & trends",
-      "3": "⏱️ 5 min daily & 5 times a week"
+      "3": "⏱️ 5 min daily"
     },
     "ctaPrimary": "Go to the Amics →",
     "ctaSecondary": "Back to home"
@@ -125,7 +125,7 @@
       "tiles": {
         "order": {
           "title": "Step by step ➡️",
-          "text": "You do the Amics in order – up to five can be unlocked in one week. Each day you can read one Amic including bonus content. You have to answer one question – only then does it continue."
+          "text": "You do the Amics in order. Each day you can read one new Amic including bonus content. You have to answer one question – only then does it continue."
         },
         "reflection": {
           "title": "Thinking space ◎",
@@ -316,7 +316,6 @@
   "gate": {
     "nextTomorrowTitle": "You’re done for today ✨",
     "nextTomorrowBody": "The next Amic is waiting for you tomorrow. Until then, you can browse the school newspaper.",
-    "nextMondayBody": "You’ve read all the Amics for this week. The next Amic will be waiting for you again on Monday. Until then, you can browse the school newspaper.",
     "toNewspaper": "Go to the school newspaper →"
   },
   "measurement": {

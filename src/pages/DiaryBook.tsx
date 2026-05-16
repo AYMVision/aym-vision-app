@@ -887,7 +887,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
   }
 
   return (
-    <div className="mt-6 space-y-4 overflow-x-hidden">
+    <div className="mt-6 space-y-4">
 
       {/* ── PIN-SCHUTZ-BANNER ── */}
       {showPinBanner && !hasPin && (
@@ -1002,7 +1002,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
                 placeholder={dailyPrompt}
                 rows={6}
                 className="w-full bg-transparent pl-[68px] pr-4 py-2 text-xl diary-hand text-slate-900 outline-none resize-none placeholder:text-slate-300"
-                style={{ lineHeight: '32px' }}
+                style={{ lineHeight: '32px', height: '208px', overflowY: 'auto' }}
               />
               {/* Live-Sticker auf dem Papier — sofort verschiebbar */}
               {draftStickers.length > 0 && (

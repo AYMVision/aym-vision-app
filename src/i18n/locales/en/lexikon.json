@@ -1,10 +1,10 @@
 {
-  "title": "Carlos Lexicon",
+  "title": "Carlos' Lexicon",
   "subtitle": "Tech terms explained so even Mrs. Schubert understands.",
   "searchPlaceholder": "Search term…",
   "emptyState": "No term found.",
   "modal": {
-    "label": "Carlos Lexicon",
+    "label": "Carlos' Lexicon",
     "closeAria": "Close",
     "didYouKnow": "Did you know?"
   }

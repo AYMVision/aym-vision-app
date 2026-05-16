@@ -345,9 +345,7 @@ export default function StoryV02() {
   courseIdRef.current = courseId;
 
   const [showNextChapterLockedHint, setShowNextChapterLockedHint] = useState(false);
-  const [nextChapterLockedReason, setNextChapterLockedReason] = useState<
-    'daily_limit' | 'weekly_limit' | null
-  >(null);
+
 
   const [unlockedToast, setUnlockedToast] = useState<{
     title: string;
@@ -575,7 +573,6 @@ function hasStoryMigrationDone(key: string): boolean {
             course: { script: episode.chapters },
             currentChapterIndex0: amicSnap.chapterIndex0,
             bypassAll: false,
-            maxPerWeek: 5,
           });
           if (!gateState.hasNext) {
             // Last chapter — no card needed (episode summary handled elsewhere)
@@ -588,11 +585,6 @@ function hasStoryMigrationDone(key: string): boolean {
           } else if (!gateState.timeAllowed && gateState.shouldShowLockedHint) {
             // Time-gated — show locked hint
             setShowNextChapterLockedHint(true);
-            setNextChapterLockedReason(
-              gateState.blockedReason === 'daily_limit' || gateState.blockedReason === 'weekly_limit'
-                ? gateState.blockedReason
-                : null
-            );
             setAmicDoneNextChapterId(null);
           } else {
             setAmicDoneNextChapterId(null);
@@ -604,14 +596,9 @@ function hasStoryMigrationDone(key: string): boolean {
       // No amic session yet — check time gate before starting fresh
       const isAlreadyCompleted = hasCompletedChapter(courseId, targetChapter.chapterIndex0);
       if (!isAlreadyCompleted && !shouldBypassAll(courseId)) {
-        const timeGate = canStartNextNewChapterToday({ maxPerWeek: 5 });
+        const timeGate = canStartNextNewChapterToday();
         if (!timeGate.allowed) {
           setShowNextChapterLockedHint(true);
-          setNextChapterLockedReason(
-            timeGate.reason === 'daily_limit' || timeGate.reason === 'weekly_limit'
-              ? timeGate.reason
-              : null
-          );
           setAmicDoneNextChapterId(null);
           return;
         }
@@ -652,7 +639,6 @@ function hasStoryMigrationDone(key: string): boolean {
           course: { script: episode.chapters },
           currentChapterIndex0: snap.chapterIndex0,
           bypassAll: false,
-          maxPerWeek: 5,
         });
 
         if (gateState.hasNext && gateState.structuralAllowed && gateState.timeAllowed) {
@@ -693,12 +679,6 @@ function hasStoryMigrationDone(key: string): boolean {
 
         if (gateState.hasNext && !gateState.timeAllowed && gateState.shouldShowLockedHint) {
           setShowNextChapterLockedHint(true);
-          setNextChapterLockedReason(
-            gateState.blockedReason === 'daily_limit' ||
-              gateState.blockedReason === 'weekly_limit'
-              ? gateState.blockedReason
-              : null
-          );
           setAmicDoneNextChapterId(null);
         }
       }
@@ -1014,12 +994,10 @@ function hasStoryMigrationDone(key: string): boolean {
         : null,
       currentChapterIndex0: chapter.chapterIndex0,
       bypassAll: false,
-      maxPerWeek: 5,
     });
 
     if (!gateState.hasNext) {
       setShowNextChapterLockedHint(false);
-      setNextChapterLockedReason(null);
 
       if (!wasAlreadyCompletedBeforeAnswer) {
         // Reward-Toast: Episodensticker + Coins + Sondersticker
@@ -1057,7 +1035,6 @@ function hasStoryMigrationDone(key: string): boolean {
 
     if (!gateState.structuralAllowed) {
       setShowNextChapterLockedHint(false);
-      setNextChapterLockedReason(null);
       setAmicDoneNextChapterId(null);
       if (!wasAlreadyCompletedBeforeAnswer && lastVisibleEntryId) {
         setPendingChapterRewards({ lastEntryId: lastVisibleEntryId, coinAwarded: result.coinAwarded, themeStickerIds: result.newThemeStickerIds, milestoneStickerIds: result.newMilestoneStickerIds, starterStickerAwarded: result.starterStickerAwarded, weeklyBadgeAwarded: result.weeklyBadgeAwarded });
@@ -1068,12 +1045,6 @@ function hasStoryMigrationDone(key: string): boolean {
     if (!gateState.timeAllowed) {
       if (gateState.shouldShowLockedHint) {
         setShowNextChapterLockedHint(true);
-        setNextChapterLockedReason(
-          gateState.blockedReason === 'daily_limit' ||
-            gateState.blockedReason === 'weekly_limit'
-            ? gateState.blockedReason
-            : null
-        );
         setAmicDoneNextChapterId(null);
       }
       if (!wasAlreadyCompletedBeforeAnswer && lastVisibleEntryId) {
@@ -1086,7 +1057,6 @@ function hasStoryMigrationDone(key: string): boolean {
     if (!nextChapter) return;
 
     setShowNextChapterLockedHint(false);
-    setNextChapterLockedReason(null);
 
     // Statt inline-Weiterschalten: Navigations-Karte zeigen
     setAmicDoneNextChapterId(nextChapter.id);
@@ -1823,13 +1793,9 @@ function hasStoryMigrationDone(key: string): boolean {
                     {t('stories:gate.nextTomorrowTitle', { defaultValue: 'Für heute bist du fertig ✨' })}
                   </div>
                   <div className="mt-0.5 text-xs text-[var(--color-teal-800)]">
-                    {nextChapterLockedReason === 'weekly_limit'
-                      ? t('stories:gate.nextMondayBody', {
-                          defaultValue: 'Diese Woche hast du alle Amics gelesen. Der nächste Amic wartet Montag wieder auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.',
-                        })
-                      : t('stories:gate.nextTomorrowBody', {
-                          defaultValue: 'Der nächste Amic wartet morgen auf dich.',
-                        })}
+                    {t('stories:gate.nextTomorrowBody', {
+                      defaultValue: 'Der nächste Amic wartet morgen auf dich.',
+                    })}
                   </div>
                 </div>
               ) : <div className="mb-3" />}

@@ -133,9 +133,11 @@ const effectiveFallback = imageFallback ?? image;
                 </div>
               </div>
 
-              <span className={`shrink-0 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${state.color}`}>
-                {state.label}
-              </span>
+              {!locked && (
+                <span className={`shrink-0 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${state.color}`}>
+                  {state.label}
+                </span>
+              )}
             </div>
 
             {/* Spacer pushes progress to bottom neatly */}
@@ -199,12 +201,7 @@ const effectiveFallback = imageFallback ?? image;
 />
 
 {locked && (
-  <>
-    <div className="absolute inset-0 bg-white/55 backdrop-blur-[1px]" />
-    <div className="absolute bottom-2 left-2 rounded-full bg-white/90 px-2 py-1 text-[10px] font-extrabold text-slate-700 border border-slate-200">
-      🔒 {t('locked', { defaultValue: 'Gesperrt' })}
-    </div>
-  </>
+  <div className="absolute inset-0 bg-white/55 backdrop-blur-[1px]" />
 )}
         </div>
 

@@ -25,6 +25,17 @@ function LexikonTermCard({ entry, onClick }: { entry: LexikonEntry; onClick: () 
 
 function LexikonTermModal({ entry, onClose }: { entry: LexikonEntry; onClose: () => void }) {
   const { t } = useTranslation('lexikon');
+  const touchStartY = React.useRef<number | null>(null);
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartY.current = e.touches[0].clientY;
+  }
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (touchStartY.current === null) return;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (dy > 80) onClose();
+    touchStartY.current = null;
+  }
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-end justify-center" onClick={onClose}>
@@ -32,13 +43,15 @@ function LexikonTermModal({ entry, onClose }: { entry: LexikonEntry; onClose: ()
       <div
         className="relative w-full max-w-lg bg-white rounded-t-3xl shadow-2xl max-h-[85vh] overflow-y-auto"
         onClick={e => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Handle bar */}
         <div className="flex justify-center pt-3 pb-1">
           <div className="w-10 h-1 rounded-full bg-slate-300" />
         </div>
 
-        <div className="px-5 pb-8 pt-3">
+        <div className="px-5 pt-3 pb-[calc(env(safe-area-inset-bottom)+80px)]">
           {/* Header */}
           <div className="flex items-start justify-between gap-3 mb-4">
             <div>

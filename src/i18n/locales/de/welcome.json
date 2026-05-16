@@ -49,7 +49,7 @@
     "info": {
       "title": "So läuft's ab",
       "amicTitle": "Ein Amic ist…",
-      "amicExplain": "Ein kurzer Chat-Verlauf — 5 Minuten, 5× die Woche.",
+      "amicExplain": "Ein kurzer Chat-Verlauf — 5 Minuten täglich.",
       "feature0title": "Echte Themen",
       "feature0body": "Fake News, KI, Cybermobbing — was Yasmin & Co. erleben, passiert auch im echten Leben.",
       "feature1title": "Du bist dabei!",
@@ -70,7 +70,7 @@
       "title": "Bereit!",
       "lead": "Dein erstes Amic wartet. Schau, was in der Klasse gerade los ist.",
       "remindersLabel": "Erinnere mich, wenn ein neues Amic wartet",
-      "ctaStart": "Yasmin wartet schon auf dich →",
+      "ctaStart": "Los geht's →",
       "ctaOverview": "Weitere Infos →",
       "ctaParents": "Für Eltern →"
     }

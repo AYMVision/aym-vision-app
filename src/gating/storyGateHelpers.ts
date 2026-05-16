@@ -17,7 +17,7 @@ export type NextChapterGateState = {
   nextAlreadyCompleted: boolean;
 
   timeAllowed: boolean;
-  blockedReason?: 'need_previous' | 'daily_limit' | 'weekly_limit';
+  blockedReason?: 'need_previous' | 'daily_limit';
 
   shouldShowLockedHint: boolean;
 };
@@ -40,14 +40,12 @@ export function getNextChapterGateState(args: {
   course: CourseLike | null;
   currentChapterIndex0: number;
   bypassAll?: boolean;
-  maxPerWeek?: number;
 }): NextChapterGateState {
 const {
   courseId,
   course,
   currentChapterIndex0,
   bypassAll = false,
-  maxPerWeek = 5,
 } = args;
 
 const entitlementBypass = shouldBypassAll(courseId);
@@ -109,12 +107,10 @@ const effectiveBypass = bypassAll || entitlementBypass;
 
   const timeGate = canStartNextNewChapterToday({
     bypassAll: effectiveBypass,
-    maxPerWeek,
   });
 
   if (!timeGate.allowed) {
-    const shouldShowLockedHint =
-      timeGate.reason === 'daily_limit' || timeGate.reason === 'weekly_limit';
+    const shouldShowLockedHint = timeGate.reason === 'daily_limit';
 
     return {
       currentChapterIndex0,

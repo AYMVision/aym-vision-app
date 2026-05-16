@@ -396,7 +396,7 @@ function isUnlockedByChain(
                         alt=""
                         className="w-6 h-6 rounded-full object-cover object-top border border-white/40"
                       />
-                      Yasmin wartet schon auf dich →
+                      Los geht's →
                     </Link>
                   </div>
                 </div>

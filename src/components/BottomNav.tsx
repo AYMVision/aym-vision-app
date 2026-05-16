@@ -95,7 +95,7 @@ export default function BottomNav({ backTo }: BottomNavProps) {
               className={cn(
                 'mx-1 rounded-2xl px-2 py-2 flex flex-col items-center justify-center text-center transition',
                 active
-                  ? 'bg-[var(--color-teal-50)] text-[var(--color-teal-700)]'
+                  ? 'bg-[var(--color-teal-600)] text-white'
                   : 'text-slate-500 hover:bg-slate-50'
               )}
             >

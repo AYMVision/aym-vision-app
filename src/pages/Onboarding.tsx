@@ -151,13 +151,6 @@ function InfoStep({ onNext }: { onNext: () => void }) {
       </div>
 
       <div className="flex flex-col gap-3 mb-5">
-        <div className="flex gap-3 items-start bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
-          <span className="text-2xl leading-none mt-0.5">💬</span>
-          <div>
-            <div className="text-sm font-bold text-slate-900">{t('onboarding.info.amicTitle')}</div>
-            <div className="text-xs text-slate-600 mt-0.5 leading-snug">{t('onboarding.info.amicExplain')}</div>
-          </div>
-        </div>
         {features.map(f => (
           <div key={f.titleKey} className="flex gap-3 items-start bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
             <span className="text-2xl leading-none mt-0.5">{f.emoji}</span>
@@ -167,6 +160,13 @@ function InfoStep({ onNext }: { onNext: () => void }) {
             </div>
           </div>
         ))}
+        <div className="flex gap-3 items-start bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+          <span className="text-2xl leading-none mt-0.5">💬</span>
+          <div>
+            <div className="text-sm font-bold text-slate-900">{t('onboarding.info.amicTitle')}</div>
+            <div className="text-xs text-slate-600 mt-0.5 leading-snug">{t('onboarding.info.amicExplain')}</div>
+          </div>
+        </div>
       </div>
 
       <button
@@ -290,7 +290,7 @@ function ReadyStep({ onFinish }: { onFinish: (destination: 'story' | 'overview')
           onClick={() => onFinish('story')}
           className="w-full bg-[var(--color-teal-600)] hover:bg-[var(--color-teal-700)] active:scale-[0.98] text-white font-bold rounded-2xl py-3.5 text-base shadow-md transition-all"
         >
-          {t('onboarding.ready.ctaStart', { defaultValue: 'Yasmin wartet schon auf dich →' })}
+          {t('onboarding.ready.ctaStart', { defaultValue: 'Los geht\'s →' })}
         </button>
         <button
           onClick={() => onFinish('overview')}
@@ -366,8 +366,24 @@ export default function Onboarding() {
     }
   }
 
+  const stepOrder: Step[] = ['welcome', 'info', 'avatar', 'ready'];
+  function handleBack() {
+    const idx = stepOrder.indexOf(step);
+    if (idx > 0) setStep(stepOrder[idx - 1]);
+  }
+
   return (
     <div className="min-h-screen bg-slate-100 flex items-start justify-center relative">
+      {/* Zurück-Pfeil — ab Schritt 2 */}
+      {step !== 'welcome' && (
+        <button
+          onClick={handleBack}
+          aria-label="Zurück"
+          className="fixed top-4 left-4 z-50 w-9 h-9 flex items-center justify-center rounded-full bg-white/80 backdrop-blur border border-slate-200 text-slate-500 hover:text-slate-800 shadow-sm transition-colors"
+        >
+          ←
+        </button>
+      )}
       {/* Sprach-Pills fest oben rechts */}
       <div className="fixed top-4 right-4 z-50">
         <LangPills />

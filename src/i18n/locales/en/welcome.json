@@ -49,7 +49,7 @@
     "info": {
       "title": "Here's how it works",
       "amicTitle": "An Amic is…",
-      "amicExplain": "A short chat chapter — 5 minutes, 5× a week.",
+      "amicExplain": "A short chat chapter — 5 minutes daily.",
       "feature0title": "Real topics",
       "feature0body": "Fake news, AI, cyberbullying — what Yasmin & Co. experience also happens in real life.",
       "feature1title": "You're right there!",
@@ -70,7 +70,7 @@
       "title": "Ready!",
       "lead": "Your first Amic is waiting. See what's happening in class.",
       "remindersLabel": "Remind me when a new Amic is waiting",
-      "ctaStart": "Yasmin is waiting for you →",
+      "ctaStart": "Let's go →",
       "ctaOverview": "More info →",
       "ctaParents": "For parents →"
     }

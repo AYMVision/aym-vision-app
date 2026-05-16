@@ -8,6 +8,7 @@ import SmartImage from './SmartImage';
 import { assetUrl } from '../common/assetUrl';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { unlockBonusById } from '../bonus/unlockBonusById.ts';
+import { getLexikonEntry } from '../lexikon/lexikonIndex';
 import AudioBubble from './AudioBubble';
 
 
@@ -301,13 +302,16 @@ function renderWithLexikonTerms(
     const match = part.match(/^\[\[([\w-]+)\]\]$/);
     if (match) {
       const termId = match[1];
+      const entry = getLexikonEntry(termId);
+      const rawTitle = entry?.title ?? termId.replace(/-/g, ' ');
+      const displayText = rawTitle.replace(/\s*\([^)]*\)$/, '');
       return (
         <button
           key={i}
           onClick={() => onOpenLexikonTerm(termId)}
           className="inline underline decoration-dotted decoration-teal-500 text-teal-700 font-medium cursor-pointer"
         >
-          {termId.replace(/-/g, ' ')}
+          {displayText}
         </button>
       );
     }

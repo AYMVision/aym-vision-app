@@ -107,7 +107,7 @@
     "description": "Für Entwicklung, interne Tests und Pilotphasen.",
     "global": {
       "title": "Globale Freischaltung",
-      "description": "Hebt Tages- und Wochenlimits sowie Kapitel-Sperren auf.",
+      "description": "Hebt das Tageslimit sowie Kapitel-Sperren auf.",
       "label": "Alle Inhalte freischalten",
       "enabled": "Alle Inhalte wurden freigeschaltet.",
       "disabled": "Die globale Freischaltung wurde deaktiviert."

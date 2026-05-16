@@ -107,7 +107,7 @@
     "description": "For development, internal testing, and pilot phases.",
     "global": {
       "title": "Global unlock",
-      "description": "Removes daily and weekly limits as well as chapter locks.",
+      "description": "Removes the daily limit as well as chapter locks.",
       "label": "Unlock all content",
       "enabled": "All content has been unlocked.",
       "disabled": "Global unlock has been disabled."

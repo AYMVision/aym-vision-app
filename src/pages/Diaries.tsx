@@ -398,11 +398,11 @@ export default function Diaries() {
               );
 
               const badgeText = locked
-                ? t('diaries.locked', { defaultValue: '🔒 Noch geheim' })
+                ? t('diaries.locked', { defaultValue: 'Noch geheim' })
                 : '✨ freigeschaltet';
 
               const ctaText = locked
-                ? t('diaries.locked', { defaultValue: '🔒 Noch geheim' })
+                ? t('diaries.locked', { defaultValue: 'Noch geheim' })
                 : t('diaries.open', { defaultValue: 'Öffnen →' });
 
               return (

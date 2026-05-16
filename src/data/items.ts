@@ -71,6 +71,12 @@ export const ITEMS: ItemDef[] = [
     labelKey: 'items.headphones',
   },
   {
+    id: 'item_ice-scates_white',
+    slot: 'featured',
+    shopPrice: 25,
+    labelKey: 'items.iceScatesWhite',
+  },
+  {
     id: 'item_ice-skates_black',
     slot: 'featured',
     shopPrice: 25,
@@ -337,7 +343,7 @@ export const ITEM_STYLE: Partial<Record<string, string>> = {
     'transform scale-[0.34] translate-x-[-20%] translate-y-[30%]',
 
   // ⛸ WINTER
-  'featured:item_ice-skates_white':
+  'featured:item_ice-scates_white':
     'transform scale-[0.35] translate-x-[-24%] translate-y-[30%]',
 
   'featured:item_ice-skates_black':
