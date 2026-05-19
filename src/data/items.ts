@@ -73,13 +73,13 @@ export const ITEMS: ItemDef[] = [
   {
     id: 'item_ice-scates_white',
     slot: 'featured',
-    shopPrice: 25,
+    shopPrice: 20,
     labelKey: 'items.iceScatesWhite',
   },
   {
     id: 'item_ice-skates_black',
     slot: 'featured',
-    shopPrice: 25,
+    shopPrice: 20,
     labelKey: 'items.iceSkatesBlack',
   },
   {

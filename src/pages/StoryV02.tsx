@@ -823,7 +823,7 @@ function hasStoryMigrationDone(key: string): boolean {
       // Element nicht im DOM (sollte nicht vorkommen) — direkt auslösen
       const staticStickers: Array<{ image: string; title: string }> = [];
       if (starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
-      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 Tage am Stück!' });
+      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 Tage am Stück! 🔥' });
       setTimeout(() => fireRewardToast({ stickerIds: [...themeStickerIds, ...milestoneStickerIds], staticStickers, coins: coinAwarded ? 1 : 0 }), 1200);
       setPendingChapterRewards(null);
       return;
@@ -832,7 +832,7 @@ function hasStoryMigrationDone(key: string): boolean {
     const fire = () => {
       const staticStickers: Array<{ image: string; title: string }> = [];
       if (starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
-      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 Tage am Stück!' });
+      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 Tage am Stück! 🔥' });
       setTimeout(() => fireRewardToast({ stickerIds: [...themeStickerIds, ...milestoneStickerIds], staticStickers, coins: coinAwarded ? 1 : 0 }), 1200);
       setPendingChapterRewards(null);
     };

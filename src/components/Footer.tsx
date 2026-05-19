@@ -50,10 +50,10 @@ const Footer: React.FC = () => {
 
       </div>
 
-      {/* Hafven partnership badge */}
+      {/* Partner badges */}
       <div className="max-w-7xl mx-auto mt-5 pt-4 border-t border-slate-100 flex justify-center">
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-slate-400">Unterstützt von</span>
+        <div className="flex items-center gap-5 flex-wrap justify-center">
+          <span className="text-xs text-slate-400">Gefördert &amp; unterstützt von</span>
           <a
             href="https://hafven.de/impact-accelerator"
             target="_blank"
@@ -65,6 +65,20 @@ const Footer: React.FC = () => {
               src={assetUrl('media/ui/HafvenImpactAccelerator_Logo_schwarz.png')}
               alt="Hafven Impact Accelerator"
               className="h-7 w-auto"
+              loading="lazy"
+            />
+          </a>
+          <a
+            href="https://www.nbank.de"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="opacity-75 hover:opacity-100 transition-opacity"
+            aria-label="NBank Gründungsstipendium"
+          >
+            <img
+              src={assetUrl('media/ui/Siegel_Gründungsstipendium_Start-up_2024.png')}
+              alt="Gründungsstipendium Start-up 2025/2026 – NBank"
+              className="h-12 w-auto"
               loading="lazy"
             />
           </a>

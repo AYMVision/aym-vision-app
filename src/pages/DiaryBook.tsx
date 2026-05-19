@@ -887,7 +887,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
   }
 
   return (
-    <div className="mt-6 space-y-4">
+    <div className="mt-6 space-y-4 overflow-x-hidden">
 
       {/* ── PIN-SCHUTZ-BANNER ── */}
       {showPinBanner && !hasPin && (
@@ -916,7 +916,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
 
       {/* ── SEITEN-LEISTE (horizontal, oben) ── */}
       {entries.length > 0 && (
-        <div className="overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
+        <div className="overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ width: '100%', maxWidth: '100%', WebkitOverflowScrolling: 'touch' }}>
           <div className="flex gap-2" style={{ minWidth: 'max-content' }}>
             <button type="button" onClick={() => { setMode('write'); setText(''); setDraftStickers([]); setDraftStickerPos({}); setSelectedStickerId(null); }}
               className={['shrink-0 rounded-2xl border px-4 py-3 text-sm font-semibold transition flex flex-col items-center justify-center gap-1 w-[100px]',

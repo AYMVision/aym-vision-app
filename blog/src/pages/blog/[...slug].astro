@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+
+export async function getStaticPaths() {
+  const now = new Date();
+  const posts = await getCollection('posts', ({ data }) => !data.draft && data.date <= now);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+function readingTime(body: string) {
+  const words = body.trim().split(/\s+/).length;
+  const mins = Math.max(1, Math.round(words / 200));
+  return `${mins} Min. Lesezeit`;
+}
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+const authorImages: Record<string, string> = {
+  'Ann-Sofie Höbrink': '/ann-sofie.webp',
+  'Melina Wiegers': '/melina.webp',
+};
+
+const authorImage = authorImages[post.data.author] ?? '/amy-256.webp';
+---
+
+<BlogLayout
+  title={`${post.data.title} — Amy Surfwing Blog`}
+  description={post.data.description}
+  image={post.data.image}
+>
+  <div class="article-layout">
+
+    <a href="/" class="article-back">Alle Artikel</a>
+
+    <header class="article-header">
+      {post.data.tags.length > 0 && (
+        <div class="article-header-tags">
+          {post.data.tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+      <h1 class="article-title">{post.data.title}</h1>
+      <div class="article-meta">
+        <span class="article-meta-author">
+          <img src={authorImage} alt={post.data.author} />
+          {post.data.author}
+        </span>
+        <span>·</span>
+        <span>{formatDate(post.data.date)}</span>
+        <span>·</span>
+        <span>{readingTime(post.body)}</span>
+      </div>
+    </header>
+
+    {post.data.image && (
+      <div class="article-hero-image">
+        <img src={post.data.image} alt={post.data.title} />
+      </div>
+    )}
+
+    <article class="prose">
+      <Content />
+    </article>
+
+  </div>
+</BlogLayout>

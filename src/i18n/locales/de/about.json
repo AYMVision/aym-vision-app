@@ -188,6 +188,11 @@
       "costs": {
         "question": "Was kostet Amy Surfwing?",
         "answer": "Die erste Woche ist vollständig kostenlos zugänglich — ohne Anmeldung, ohne Kreditkarte. Weitere Informationen zu Preisen folgen in Kürze."
+      },
+      "install": {
+        "question": "Wie speichere ich Amy Surfwing auf dem Homescreen?",
+        "answer": "Amy Surfwing kann wie eine echte App auf dem Homescreen gespeichert werden — ganz ohne App Store. Auf dem iPhone in Safari: Teilen-Symbol antippen → \"Zum Home-Bildschirm\". Auf Android in Chrome: Menü → \"App installieren\".",
+        "link": "Schritt-für-Schritt-Anleitung →"
       }
     },
     "parents": {

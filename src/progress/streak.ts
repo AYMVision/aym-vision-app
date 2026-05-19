@@ -56,26 +56,26 @@ export function applyDailyStreak(profile: UserProfile) {
 
   let next = profile;
 
-  if (newStreak === 5) {
+  // Einmalig-Badge bei 5 Tagen
+  if (newStreak === 5 && !profile.progress.earnedBadges?.['weekly-streak-5']) {
+    next = {
+      ...next,
+      progress: {
+        ...next.progress,
+        earnedBadges: {
+          ...(next.progress.earnedBadges ?? {}),
+          'weekly-streak-5': true,
+        },
+      },
+    };
+    weeklyBadgeAwarded = true;
+  }
+
+  // Wiederkehrende +2 Coins alle 7 Tage am Stück
+  if (newStreak % 7 === 0) {
     completedWeeks += 1;
     weekCompleted = true;
-
-    // +2 Bonus-Coins für 5 Tage am Stück
     next = earnCoins(next, 2, 'STREAK');
-
-    if (!profile.progress.earnedBadges?.['weekly-streak-5']) {
-      next = {
-        ...next,
-        progress: {
-          ...next.progress,
-          earnedBadges: {
-            ...(next.progress.earnedBadges ?? {}),
-            'weekly-streak-5': true,
-          },
-        },
-      };
-      weeklyBadgeAwarded = true;
-    }
   }
 
   if (newStreak >= 10 && !next.progress.earnedStickers?.['streak-10']) {

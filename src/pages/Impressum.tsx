@@ -342,6 +342,45 @@ werden nachgetragen.</p>
           </p>
         </Section>
 
+        <Section title="Kooperationen & Förderung">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-4">
+              <a
+                href="https://hafven.de/impact-accelerator"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
+                aria-label="Hafven Impact Accelerator"
+              >
+                <img
+                  src={assetUrl('media/ui/HafvenImpactAccelerator_Logo_schwarz.png')}
+                  alt="Hafven Impact Accelerator"
+                  className="h-8 w-auto"
+                  loading="lazy"
+                />
+              </a>
+              <span>Hafven Impact Accelerator, Hannover</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://www.nbank.de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
+                aria-label="NBank Gründungsstipendium"
+              >
+                <img
+                  src={assetUrl('media/ui/Siegel_Gründungsstipendium_Start-up_2024.png')}
+                  alt="Gründungsstipendium Start-up 2025/2026 – NBank"
+                  className="h-24 w-auto"
+                  loading="lazy"
+                />
+              </a>
+              <span>Gründungsstipendium Start-up 2025/2026, NBank Niedersachsen</span>
+            </div>
+          </div>
+        </Section>
+
         <Section title="Datenschutz">
           <p>
             Informationen zum Umgang mit personenbezogenen Daten findest du in unserer{' '}

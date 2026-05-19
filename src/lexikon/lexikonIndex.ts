@@ -5,6 +5,14 @@ import type { LexikonEntry } from './lexikonTypes';
 
 export const LEXIKON_ENTRIES: LexikonEntry[] = [
   {
+    id: 'admin',
+    title: 'Admin',
+    teaser: 'Die Person, die eine Gruppe oder einen Chat verwaltet und die Regeln festlegt.',
+    body: 'Admin ist kurz für "Administrator" — das bedeutet so viel wie Verwalter. In einem Gruppen-Chat ist der Admin die Person, die die Gruppe erstellt hat oder die Kontrolle übernommen hat. Der Admin kann andere Personen hinzufügen oder entfernen, Regeln festlegen und manchmal auch Nachrichten löschen. Wer Admin ist, hat also mehr Macht als die anderen Mitglieder.',
+    didYouKnow: 'Das Wort "Administrator" kommt aus dem Lateinischen und bedeutet "der, der verwaltet". Im Internet wird es fast immer auf "Admin" abgekürzt.',
+    firstAppearance: 's1e02c06',
+  },
+  {
     id: 'algorithmus',
     title: 'Algorithmus',
     teaser: 'Eine Schritt-für-Schritt-Anleitung, die einer App sagt, was sie tun soll.',

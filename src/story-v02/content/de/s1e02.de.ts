@@ -147,8 +147,6 @@ const c02 = C('s1e02c02', 1, 'Amic 2', 'Rausgeworfen', [
 
   S('s1e02c02_story_switch_to_amy', [
     amyChat(),
-    m(ch.amy, 'Lisa schreibt im Klassenchat nichts, obwohl sich einige unfair verhalten.', '10:22'),
-    m(ch.amy, 'Was würdest du in so einer Situation tun?', '10:22'),
   ], ['reflect-understand', 'fairness']),
 
   IT('s1e02c02_item_lisa_intervene',
@@ -258,8 +256,6 @@ const c03 = C('s1e02c03', 2, 'Amic 3', 'Dazugehören', [
 
   S('s1e02c03_story_switch_to_amy', [
     amyChat(),
-    m(ch.amy, 'Chioma ist raus aus dem Klassenchat und fühlt sich machtlos.', '11:15'),
-    m(ch.amy, 'Was würdest du Chioma in dieser Situation raten?', '11:15'),
   ], ['reflect-understand', 'problem-solving']),
 
   IT('s1e02c03_item_chioma_self_regulation',
@@ -498,7 +494,7 @@ const c06 = C('s1e02c06', 5, 'Amic 6', 'Nicht allein', [
     m(ch.chioma, 'Morgen bin ich mit Dominik verabredet, um einen Audiobeitrag aufzunehmen. Dazu gibt’s einen Meinungs-Check unter den Hörern. Wärst du dabei? Könntest du das aufnehmen? Und online stellen?', '14:11'),
     m(ch.carlos, 'Immer langsam. So viele Fragen auf einmal…', '14:12'),
     m(ch.chioma, 'Sorry. Was hältst du von dem Audioformat?', '14:12'),
-    m(ch.chioma, 'In einem Chat ohne Regeln gewinnt der Lautere, der Fiesere, der Admin, der andere rauswerfen kann.', '14:12'),
+    m(ch.chioma, 'In einem Chat ohne Regeln gewinnt der Lautere, der Fiesere, der [[admin]], der andere rauswerfen kann.', '14:12'),
     m(ch.chioma, 'In einem Gespräch muss jeder dem anderen zuhören.', '14:13'),
     m(ch.carlos, 'Du willst das Spielfeld ändern 🤔', '14:13'),
     m(ch.chioma, 'Genau.', '14:13'),
@@ -509,8 +505,6 @@ const c06 = C('s1e02c06', 5, 'Amic 6', 'Nicht allein', [
 
   S('s1e02c06_story_switch_to_amy', [
     amyChat(),
-    m(ch.amy, 'Chioma weiß: Wenn der Audiobeitrag online geht, hört ihn die ganze Schule. Und wenn es schiefgeht, kann man ihn nicht einfach zurückholen.', '14:16'),
-    m(ch.amy, 'Wie hättest du in dieser Situation entschieden?', '14:16'),
   ], ['reflect-understand', 'fairness']),
 
   IT('s1e02c06_item_audio_decision',
@@ -557,7 +551,7 @@ const c06 = C('s1e02c06', 5, 'Amic 6', 'Nicht allein', [
     m(ch.carlos, 'Klingt spannend!', '14:22'),
     m(ch.chioma, 'Das heißt?', '14:22'),
     m(ch.carlos, 'Ich bin dabei 🙂', '14:23'),
-    bonusLink('article-audiobeitraege-erstellen', 'Artikel Audiobeiträge erstellen', '/newspaper/tip-carlos-audio-howto', 'Artikel öffnen →'),
+    bonusLink('tip-carlos-audio-howto', 'Artikel Audiobeiträge erstellen', '/newspaper/tip-carlos-audio-howto', 'Artikel öffnen →'),
   ], ['problem-solving', 'talk-act']),
 ]);
 
@@ -661,8 +655,6 @@ const c08 = C('s1e02c08', 7, 'Amic 8', 'Regeln gelten auch hier', [
 
   S('s1e02c08_story_switch_to_amy', [
     amyChat(),
-    m(ch.amy, 'Chioma hat sich so viel Mühe gegeben und jetzt das.', '14:56'),
-    m(ch.amy, 'Was macht die Situation für Chioma gerade so schwierig?', '14:56'),
   ], ['reflect-understand', 'fairness']),
 
   IT('s1e02c08_item_goal_conflict',
@@ -723,8 +715,6 @@ const c09 = C('s1e02c09', 8, 'Amic 9', 'Die Lösung mit dem Platzhalter', [
 
   S('s1e02c09_story_switch_to_amy', [
     amyChat(),
-    m(ch.amy, 'Chioma will, dass ihr Beitrag noch rechtzeitig erscheint. Dafür stehen ihr aber Regeln im Weg.', '14:42'),
-    m(ch.amy, 'Was würdest du in so einer Situation tun?', '14:42'),
   ], ['reflect-understand', 'problem-solving']),
 
   IT('s1e02c09_item_rules_and_solution',
@@ -828,7 +818,7 @@ audio(ch.carlos, '/media/newspaper/audio/chatrules-chioma-dominik.mp3', '15:43',
     m(ch.dominik, 'Hält sich woran??', '15:45'),
     m(ch.chioma, 'An das, was wir gemeinsam abstimmen.', '15:45'),
     audio(ch.chioma, '/media/story/episodes/s1e02/chiomas-sprachnachricht-s1e02c10.mp3', '15:46'),
-    bonusLink('article-chioma-gruppenchats', 'Chiomas Anleitung für Gruppenchats', '/newspaper/article-chioma-gruppenchats', 'Artikel öffnen →'),
+    bonusLink('tip-chioma-groupchats', 'Chiomas Anleitung für Gruppenchats', '/newspaper/article-chioma-gruppenchats', 'Artikel öffnen →'),
   ], ['fairness', 'talk-act', 'problem-solving']),
 
   S('s1e02c10_story_student_newsroom_aftermath', [

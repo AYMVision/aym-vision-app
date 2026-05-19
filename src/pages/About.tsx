@@ -479,7 +479,9 @@ const valueAccents = [
               <h2 className="mt-1 text-base sm:text-lg font-semibold text-[var(--color-teal-900)]">
                 Unterstützt von
               </h2>
-              <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+
+              {/* Hafven */}
+              <div className="mt-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-5 border-b border-slate-100">
                 <a
                   href="https://hafven.de/impact-accelerator"
                   target="_blank"
@@ -496,6 +498,27 @@ const valueAccents = [
                 </a>
                 <p className="text-sm text-slate-700 leading-relaxed">
                   Amy Surfwing wird vom <strong>Hafven Impact Accelerator</strong> unterstützt — einem Programm für soziale Innovationen und gesellschaftlich wirksame Projekte in Hannover.
+                </p>
+              </div>
+
+              {/* NBank Gründungsstipendium */}
+              <div className="mt-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <a
+                  href="https://www.nbank.de"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
+                  aria-label="NBank Gründungsstipendium"
+                >
+                  <img
+                    src={assetUrl('media/ui/Siegel_Gründungsstipendium_Start-up_2024.png')}
+                    alt="Gründungsstipendium Start-up 2025/2026 – NBank"
+                    className="h-20 w-auto"
+                    loading="lazy"
+                  />
+                </a>
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  Amy Surfwing ist Trägerin des <strong>Gründungsstipendiums der NBank</strong> (2025/2026) — der Investitions- und Förderbank des Landes Niedersachsen. Das Stipendium fördert innovative Gründungsvorhaben mit besonderem gesellschaftlichem Mehrwert.
                 </p>
               </div>
             </section>

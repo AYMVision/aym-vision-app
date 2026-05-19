@@ -57,6 +57,15 @@ export default function FAQ() {
             <p>{t('faq.general.costs.answer')}</p>
           </FaqItem>
 
+          <FaqItem question={t('faq.general.install.question')}>
+            <p>{t('faq.general.install.answer')}</p>
+            <p>
+              <Link to="/install" className="font-semibold text-[var(--color-teal-700)] underline underline-offset-2">
+                {t('faq.general.install.link')}
+              </Link>
+            </p>
+          </FaqItem>
+
         </Section>
 
         {/* Elternbereich */}

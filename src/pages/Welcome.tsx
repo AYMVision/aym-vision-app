@@ -311,6 +311,24 @@ function isUnlockedByChain(
 
       {/* sanfter Übergang zur Textseite */}
 
+      {/* NBank Siegel — rechts unten im Hero */}
+      <div className="absolute bottom-4 right-4 z-10">
+        <a
+          href="https://www.nbank.de"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="opacity-90 hover:opacity-100 transition-opacity block"
+          aria-label="NBank Gründungsstipendium"
+        >
+          <img
+            src={assetUrl('media/ui/Siegel_Gründungsstipendium_Start-up_2024.png')}
+            alt="Gründungsstipendium Start-up 2025/2026 – NBank"
+            className="h-20 w-auto drop-shadow-sm"
+            loading="lazy"
+          />
+        </a>
+      </div>
+
     </div>
   </div>
 </section>

@@ -179,6 +179,41 @@ export default function Profile() {
 
         </div>
 
+        {/* Stats-Kachel */}
+        {(() => {
+          const streak = profile.progress?.weeklyStreak?.currentStreak ?? 0;
+          const daysPlayed = profile.progress?.activity?.totalPlayedDays ?? 0;
+          const amicsRead = Object.keys(profile.progress?.completedChapters ?? {}).length;
+          const totalEarned = profile.wallet?.totalEarned ?? 0;
+          if (daysPlayed === 0 && amicsRead === 0) return null;
+          return (
+            <div className="mt-4 p-4 rounded-2xl border border-black/5 bg-white shadow-sm">
+              <div className="grid grid-cols-4 gap-2 text-center">
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-xl">🔥</span>
+                  <span className="text-2xl font-extrabold text-slate-900 leading-none">{streak}</span>
+                  <span className="text-[11px] text-slate-500 leading-tight mt-0.5">Tage am Stück</span>
+                </div>
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-xl">📖</span>
+                  <span className="text-2xl font-extrabold text-slate-900 leading-none">{amicsRead}</span>
+                  <span className="text-[11px] text-slate-500 leading-tight mt-0.5">Amics gelesen</span>
+                </div>
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-xl">📅</span>
+                  <span className="text-2xl font-extrabold text-slate-900 leading-none">{daysPlayed}</span>
+                  <span className="text-[11px] text-slate-500 leading-tight mt-0.5">Tage gespielt</span>
+                </div>
+                <div className="flex flex-col items-center gap-0.5">
+                  <img src={assetUrl('media/story/ui/coin-128.webp')} alt="" className="w-6 h-6" />
+                  <span className="text-2xl font-extrabold text-slate-900 leading-none">{totalEarned}</span>
+                  <span className="text-[11px] text-slate-500 leading-tight mt-0.5">Coins erspielt</span>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
         {/* Neue Sticker — direkt unter den Top-Kästen, prominent */}
         {newStickers.length > 0 && (
           <div className="mt-4 p-4 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-yellow-50 shadow-sm">

@@ -1,5 +1,6 @@
 // src/story-v02/components/ItemStepCard.tsx
 
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ItemStep } from '../types/storyTypes';
 import { STORY_CHARACTERS as characters } from '../../content/characters';
@@ -16,6 +17,11 @@ type Props = {
 
 export default function ItemStepCard({ step, onSelect }: Props) {
   const { t } = useTranslation('stories');
+
+  const shuffledOptions = useMemo(
+    () => [...step.options].sort(() => Math.random() - 0.5),
+    [step.id]
+  );
 
   return (
     <div className="w-full">
@@ -34,7 +40,7 @@ export default function ItemStepCard({ step, onSelect }: Props) {
           {t('item.singleHint', { defaultValue: 'Wähle eine Antwort aus.' })}
         </div>
         <div className="flex flex-col gap-2">
-          {step.options.map((option) => (
+          {shuffledOptions.map((option) => (
             <button
               key={option.id}
               type="button"

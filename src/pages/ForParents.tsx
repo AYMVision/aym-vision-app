@@ -423,6 +423,52 @@ export default function ForParents() {
               </ul>
             </Panel>
 
+            {/* Förderung */}
+            <section className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 sm:p-6">
+              <div className="text-xs font-semibold text-[var(--color-teal-600)]">Kooperationen & Förderung</div>
+              <h2 className="mt-1 text-base font-semibold text-slate-900">Gefördert &amp; unterstützt von</h2>
+
+              <div className="mt-4 flex flex-col gap-4 pb-4 border-b border-slate-100">
+                <a
+                  href="https://hafven.de/impact-accelerator"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 opacity-80 hover:opacity-100 transition-opacity self-start"
+                  aria-label="Hafven Impact Accelerator"
+                >
+                  <img
+                    src={assetUrl('media/ui/HafvenImpactAccelerator_Logo_schwarz.png')}
+                    alt="Hafven Impact Accelerator"
+                    className="h-9 w-auto"
+                    loading="lazy"
+                  />
+                </a>
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  Amy Surfwing wird vom <strong>Hafven Impact Accelerator</strong> unterstützt — einem Programm für soziale Innovationen und gesellschaftlich wirksame Projekte in Hannover.
+                </p>
+              </div>
+
+              <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <a
+                  href="https://www.nbank.de"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
+                  aria-label="NBank Gründungsstipendium"
+                >
+                  <img
+                    src={assetUrl('media/ui/Siegel_Gründungsstipendium_Start-up_2024.png')}
+                    alt="Gründungsstipendium Start-up 2025/2026 – NBank"
+                    className="h-24 w-auto"
+                    loading="lazy"
+                  />
+                </a>
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  Amy Surfwing ist Trägerin des <strong>Gründungsstipendiums der NBank</strong> — der Investitions- und Förderbank des Landes Niedersachsen. Das Stipendium fördert innovative Gründungsvorhaben mit besonderem gesellschaftlichem Mehrwert.
+                </p>
+              </div>
+            </section>
+
             {/* 7) Warn */}
             <section className="rounded-2xl border border-amber-200 bg-amber-50 p-5 sm:p-6 shadow-sm">
               <div className="text-xs font-semibold text-amber-800">{t('warn.kicker')}</div>

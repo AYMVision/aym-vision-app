@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import BlogLayout from '../layouts/BlogLayout.astro';
+
+const now = new Date();
+const allPosts = await getCollection('posts', ({ data }) => !data.draft && data.date <= now);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function readingTime(body: string) {
+  const words = body.trim().split(/\s+/).length;
+  const mins = Math.max(1, Math.round(words / 200));
+  return `${mins} Min. Lesezeit`;
+}
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+
+<BlogLayout title="Blog — Amy Surfwing">
+
+  <section class="blog-hero">
+    <div class="container">
+      <h1>Medienreife <span>greifbar machen</span></h1>
+      <p>Reale Situationen aus dem digitalen Alltag von Kindern. Für Eltern, die ihre Kinder durch die digitale Welt begleiten.</p>
+    </div>
+  </section>
+
+  <section class="articles-section">
+    <div class="container">
+      <p class="section-label">Alle Artikel · {posts.length} Beiträge</p>
+
+      {posts.length === 0 && (
+        <p style="color: var(--slate-400); font-size: 0.95rem;">Noch keine Artikel veröffentlicht. Bald geht es los!</p>
+      )}
+
+      <div class="articles-grid">
+        {posts.map((post) => (
+          <a href={`/blog/${post.slug}`} class="article-card">
+            <div class="article-card-image">
+              {post.data.image
+                ? <img src={post.data.image} alt={post.data.title} loading="lazy" />
+                : <div class="article-card-image-placeholder">✍️</div>
+              }
+            </div>
+            <div class="article-card-body">
+              <div class="article-card-meta">
+                <span>{formatDate(post.data.date)}</span>
+                <span class="dot"></span>
+                <span>{readingTime(post.body)}</span>
+              </div>
+              <h2 class="article-card-title">{post.data.title}</h2>
+              <p class="article-card-desc">{post.data.description}</p>
+              {post.data.tags.length > 0 && (
+                <div class="article-card-tags">
+                  {post.data.tags.map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</BlogLayout>

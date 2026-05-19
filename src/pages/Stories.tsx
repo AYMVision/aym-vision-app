@@ -899,7 +899,7 @@ function isUnlockedByChain(
                 <div className="snap-start shrink-0 w-[78%] sm:w-[44%]">
                   <InfoTile colorIdx={2}
                     title={tStories('howto.info.tiles.coins.title', { defaultValue: 'So bekommst du Coins' })}
-                    text={tStories('howto.info.tiles.coins.text', { defaultValue: 'Kapitel spielen → 1 Coin. Episode fertig → +5 Bonus-Coins. 5 Tage am Stück → +2 Extra-Coins ⭐. Mit deinen Coins kannst du im Shop neue Avatar-Looks freischalten.' })}
+                    text={tStories('howto.info.tiles.coins.text', { defaultValue: 'Kapitel spielen → 1 Coin. Episode fertig → +5 Bonus-Coins. 7 Tage am Stück → +2 Extra-Coins ⭐. Mit deinen Coins kannst du im Shop neue Avatar-Looks freischalten.' })}
                   />
                 </div>
               </SwipeRow>

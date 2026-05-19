@@ -446,7 +446,7 @@ export default function AvatarPicker() {
         </div>
         <div>
           {t('avatar.shop.coinsHint.streak', {
-            defaultValue: '5 Tage am Stück = +2 Extra-Coins ⭐ ',
+            defaultValue: '7 Tage am Stück = +2 Extra-Coins ⭐ ',
           })}
         </div>
         <div className="font-semibold text-slate-600">

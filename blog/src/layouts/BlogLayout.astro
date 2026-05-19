@@ -1,0 +1,82 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = 'Medienreife greifbar machen — für Eltern, die ihre Kinder durch die digitale Welt begleiten.', image } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalURL} />
+  {image && <meta property="og:image" content={image} />}
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Amy Surfwing Blog" href="/rss.xml" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="header-brand">
+        <img src="/amy-256.webp" alt="Amy Surfwing" />
+        <span class="header-brand-name">Amy Surfwing</span>
+        <span class="header-brand-tag">Blog</span>
+      </a>
+      <nav class="header-nav">
+        <a href="/about" class="header-nav-link">Über uns</a>
+        <a href="https://amysurfwing.de" class="header-app-link">
+          App öffnen →
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="/amy-256.webp" alt="Amy Surfwing" />
+          <span>Amy Surfwing</span>
+        </div>
+        <nav class="footer-links">
+          <a href="/">Blog</a>
+          <a href="/about">Über uns</a>
+          <a href="/impressum">Impressum</a>
+          <a href="https://amysurfwing.de">Zur App</a>
+          <a href="/rss.xml">RSS</a>
+        </nav>
+        <p class="footer-copy">© {new Date().getFullYear()} AYM-Vision GbR</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

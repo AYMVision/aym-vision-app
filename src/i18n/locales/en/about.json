@@ -191,6 +191,11 @@
       "costs": {
         "question": "What does Amy Surfwing cost?",
         "answer": "The first week is completely free — no sign-up, no credit card. More information about pricing will follow soon."
+      },
+      "install": {
+        "question": "How do I save Amy Surfwing to my home screen?",
+        "answer": "Amy Surfwing can be saved to your home screen like a real app — no app store needed. On iPhone in Safari: tap the share icon → \"Add to Home Screen\". On Android in Chrome: menu → \"Install app\".",
+        "link": "Step-by-step guide →"
       }
     },
     "parents": {
