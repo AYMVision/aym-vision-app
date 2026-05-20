@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import AvatarLookCircle from './AvatarLookCircle';
 import SmartImage from './SmartImage';
 import { assetUrl } from '../common/assetUrl';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { unlockBonusById } from '../bonus/unlockBonusById.ts';
 import { getLexikonEntry } from '../lexikon/lexikonIndex';
 import AudioBubble from './AudioBubble';
@@ -364,7 +364,6 @@ export default function ChatMessage({ message, onOpenBonusLink, onOpenLexikonTer
   const { t } = useTranslation('stories');
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   const isUser = message.type === 'user';
   const isMain = message.type === 'main';
@@ -450,12 +449,7 @@ onClick={() => {
   // Fallback: altes Verhalten (nur falls woanders verwendet)
   if (bid) unlockBonusById(bid);
 
-  navigate(linkTo, {
-    state: {
-      backgroundLocation: location,
-      backTo: location.pathname + location.search,
-    },
-  });
+  navigate(linkTo);
 }}
 
 

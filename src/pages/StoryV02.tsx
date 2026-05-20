@@ -1118,8 +1118,6 @@ function hasStoryMigrationDone(key: string): boolean {
   }) {
     if (!courseId || !episodeMeta) return;
 
-    // Scrollposition vor dem Öffnen des Modals sichern.
-    // Wird wiederhergestellt, sobald backgroundLocation wieder null wird (Modal geschlossen).
     const _scrollPos = scrollRef.current?.scrollTop ?? 0;
     modalReturnScrollRef.current = _scrollPos;
     // Auch in sessionStorage/localStorage sichern — überlebt einen Remount (z.B. wenn
@@ -1162,13 +1160,7 @@ function hasStoryMigrationDone(key: string): boolean {
       saveAmicSession(courseId, state.chapterId, snapshotPayload);
     }
 
-    navigate(payload.linkTo, {
-      state: {
-        backgroundLocation: location,
-        backTo: location.pathname + location.search + location.hash,
-        autoOpen: true,
-      },
-    });
+    navigate(payload.linkTo);
   }
 
   function goToNextStep() {

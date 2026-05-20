@@ -19,7 +19,7 @@ import CharacterFriendbookCard from '../components/CharacterFriendbookCard';
 import MyCharacterCardEditor from '../components/MyCharacterCardEditor';
 
 
-type LocationState = { backTo?: string; backgroundLocation?: unknown; autoOpen?: boolean } | null;
+type LocationState = { backTo?: string; backgroundLocation?: unknown } | null;
 
 
 type CharacterId = keyof typeof CHARACTERS;
@@ -58,7 +58,6 @@ export default function CardDetail() {
   const location = useLocation();
   const state = (location.state ?? null) as LocationState;
 const isModal = Boolean((state as any)?.backgroundLocation);
-const autoOpen = Boolean(state?.autoOpen);
 
 
 
@@ -149,29 +148,15 @@ const extraImages = character?.card?.extraImages ?? [];
 
 
 
-  function openNow() {
+  // Mark as seen as soon as the card is viewed
+  useEffect(() => {
     if (!unlocked) return;
+    if (opened) return;
     unlockBonusById(item.bonusId);
     markBonusSeen(item.bonusId);
     setSeenBonusIds(loadSeenBonusIds());
-  }
-
-  useEffect(() => {
-  if (!autoOpen) return;
-  if (!unlocked) return;
-  if (opened) return;
-  openNow();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [autoOpen, unlocked, opened]);
-
-  // Amy is always unlocked and should never show the gift reveal screen
-  useEffect(() => {
-    if (characterId !== 'amy') return;
-    if (!unlocked) return;
-    if (opened) return;
-    openNow();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [characterId, unlocked, opened]);
+  }, [unlocked, opened]);
 
 
 return (
@@ -188,44 +173,24 @@ return (
           <div className="p-4 sm:p-6">
 
 
-            {/* Actions / Content */}
+            {/* Content */}
             <div className="mt-4">
-              {unlocked && !opened ? (
-                <div className="rounded-3xl border border-amber-200 bg-amber-50 p-4">
-                  <div className="text-sm font-semibold text-amber-900">
-                    ✨ {t('charactersUi.tapToOpen', { defaultValue: '' })}
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={openNow}
-                    className="mt-3 w-full rounded-2xl px-4 py-3 font-extrabold bg-slate-900 text-white hover:bg-slate-800 active:scale-[0.99]"
-                  >
-                    🎁 {t('charactersUi.openNow', { defaultValue: '' })}
-                  </button>
-                </div>
-              ) : null}
-
-              {/* After open: show Friendbook card (ALL content inside) */}
-              {unlocked && opened ? (
+              {unlocked ? (
                 <div className="mt-4">
-<CharacterFriendbookCard
-  characterId={characterId}
-  coverImage={portrait ?? null}
-  detailImage={detailImage ?? null}
-  extraImages={extraImages}
-  videoSrc={detailVideo ?? null}
-  onOpenVideo={
-    detailVideo
-      ? () => window.open(assetUrl(detailVideo), '_blank', 'noopener,noreferrer')
-      : undefined
-  }
-/>
-
+                  <CharacterFriendbookCard
+                    characterId={characterId}
+                    coverImage={portrait ?? null}
+                    detailImage={detailImage ?? null}
+                    extraImages={extraImages}
+                    videoSrc={detailVideo ?? null}
+                    onOpenVideo={
+                      detailVideo
+                        ? () => window.open(assetUrl(detailVideo), '_blank', 'noopener,noreferrer')
+                        : undefined
+                    }
+                  />
                 </div>
               ) : null}
-
-
             </div>
           </div>
         </div>

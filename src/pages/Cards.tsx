@@ -190,10 +190,6 @@ const isCollected = isMyCard ? true : state === 'collected';
   <div className="mt-1 text-xs text-slate-600/80">
     {t('charactersUi.lockedHint', { defaultValue: 'Wird später freigeschaltet.' })}
   </div>
-) : isNew ? (
-  <div className="mt-1 text-xs text-slate-700 line-clamp-2">
-    {t('charactersUi.tapToOpen', { defaultValue: 'Tippe, um die Karte zu öffnen!' })}
-  </div>
 ) : (
   <div className="mt-1 text-xs text-slate-700/80">
     {t('charactersUi.viewHint', { defaultValue: 'Schon geöffnet – du kannst sie ansehen.' })}
@@ -212,8 +208,6 @@ const isCollected = isMyCard ? true : state === 'collected';
   <span>{t('charactersUi.myCard.edit', { defaultValue: 'Bearbeiten →' })}</span>
 ) : isLocked ? (
   <span className="text-slate-500">{t('charactersUi.locked', { defaultValue: 'Gesperrt' })}</span>
-) : isNew ? (
-  <span>{t('charactersUi.openNow', { defaultValue: 'Öffnen →' })}</span>
 ) : (
   <span>{t('charactersUi.view', { defaultValue: 'Ansehen →' })}</span>
 )}
@@ -269,18 +263,6 @@ export default function Cards() {
   const location = useLocation();
   const navigate = useNavigate();
 
-const [cardToast, setCardToast] =
-  useState<null | { bonusId: string; title: string; subtitle?: string }>(null);
-
-function openCardModal(bonusId: string) {
-  navigate(`/cards/${bonusId}`, {
-    state: {
-      backgroundLocation: location,
-      backTo: location.pathname + location.search + location.hash,
-      autoOpen: true,
-    },
-  });
-}
 
 
 

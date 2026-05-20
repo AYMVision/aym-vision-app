@@ -56,7 +56,7 @@ export default defineConfig(({ command }) => {
           navigateFallback: 'index.html',
           // PDFs und andere Nicht-SPA-Ressourcen vom Fallback ausschließen,
           // damit der SW nicht index.html statt der echten Datei serviert.
-          navigateFallbackDenylist: [/^\/api\//, /\.pdf$/i],
+          navigateFallbackDenylist: [/^\/api\//, /\.pdf$/i, /^\/blog/],
           runtimeCaching: [
             {
               // Bilder & Medien: Cache-first (ändern sich selten)
