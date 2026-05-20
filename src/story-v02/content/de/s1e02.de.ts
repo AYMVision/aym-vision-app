@@ -77,7 +77,6 @@ const c01 = C('s1e02c01', 0, 'Amic 1', 'Alarm im Klassenchat', [
     m(ch.dominik, 'So ’ne Spaßbremse braucht hier echt keiner. Du bist raus 💀', '09:52'),
     m(ch.markus, 'Stimmt 😅', '09:52'),
     sysMsg('Dominik hat Chioma entfernt.', '09:52'),
-    bonusLink('char-dominik', 'Charakterkarte Dominik', '/cards/char-dominik', 'Karte ansehen →'),
   ], ['reflect-understand', 'talk-act', 'fairness']),
 
   S('s1e02c01_story_switch_to_amy', [
@@ -119,7 +118,6 @@ const c01 = C('s1e02c01', 0, 'Amic 1', 'Alarm im Klassenchat', [
     privateChat('Du', 'Dominik'),
     m(ch.dominik, 'Hey Bro.', '10:03'),
     m(ch.dominik, 'Endlich ist die raus.', '10:03'),
-    m(ch.dominik, 'Ich hab übrigens in dein Freundebuch geschrieben. Hier der Link.', '10:04'),
     m(ch.dominik, 'Man sieht sich.', '10:04'),
   ], ['talk-act']),
 
@@ -191,7 +189,7 @@ const c02 = C('s1e02c02', 1, 'Amic 2', 'Rausgeworfen', [
     m(ch.lisa, '@ Yasmin: Und warum hast du im Klassenchat ausposaunt, dass ich dir von Dominiks Videos erzählt hab?', '10:30'),
     m(ch.yasmin, 'Hab ich doch gar nicht!', '10:31'),
     m(ch.lisa, 'Doch!', '10:31'),
-    m(ch.lisa, 'Was hast du denn wohl in der Zeit getrieben? Na, soll ich dir auf die Sprünge helfen?', '10:31', { forwarded: { fromName: 'Yasmin' } }),
+    m(ch.yasmin, 'Was hast du denn wohl in der Zeit getrieben? Na, soll ich dir auf die Sprünge helfen?', '10:31', { forwarded: { fromChatLabel: 'Klassenchat' } }),
     m(ch.yasmin, 'Das hätte ich auch selbst gesehen haben können. Du hast dich doch selbst verraten mit deinem „Yasmin, bitte!”', '10:32'),
     m(ch.lisa, 'Jetzt hacken sie alle auf mir rum.', '10:32'),
     m(ch.yasmin, 'Die haben wohl alle Schiss, dass du was ausplauderst. Haha 😂 Lisa-Tratschtante weiß einfach alles', '10:33'),
@@ -423,8 +421,8 @@ const c05 = C('s1e02c05', 4, 'Amic 5', 'Die Debatte', [
   S('s1e02c05_story_lisa_forwarded', [
     divider('Später'),
     privateChat('Du', 'Chioma', 'Lisa'),
-    m(ch.lisa, 'Chioma will mit mir über Regeln labern 😂 Die hat doch zero chance! Klickt rein und voted für mich 🔥', '13:40', { forwarded: { fromName: 'Dominik' } }),
-    m(ch.lisa, 'Ich bring Popcorn mit! 😂🍿 Klare Sache, kannst auf mich zählen.', '13:40', { forwarded: { fromName: 'Markus' } }),
+    m(ch.dominik, 'Chioma will mit mir über Regeln labern 😂 Die hat doch zero chance! Klickt rein und voted für mich 🔥', '13:40', { forwarded: { fromChatLabel: 'Klassenchat' } }),
+    m(ch.markus, 'Ich bring Popcorn mit! 😂🍿 Klare Sache, kannst auf mich zählen.', '13:40', { forwarded: { fromChatLabel: 'Klassenchat' } }),
     m(ch.lisa, 'Was hast du vor?', '13:41'),
     m(ch.lisa, 'Ich weiß nicht, ob das eine gute Idee ist. Glaubst du echt, du hast eine Chance gegen den?', '13:41'),
   ], ['reflect-understand', 'talk-act']),
@@ -631,7 +629,7 @@ const c08 = C('s1e02c08', 7, 'Amic 8', 'Regeln gelten auch hier', [
     m(ch.aylin, 'War doch eine super Redaktionssitzung 🤩', '14:46', { reactions: [R('👍')] }),
     m(ch.aylin, 'Die neueste Ausgabe steht.', '14:46', { reactions: [R('👍')] }),
     m(ch.aylin, 'Bestätigt nur noch kurz, dass Alvarez sein ok für eure Artikel gegeben hat. Und dann geht die neue Ausgabe um Punkt 15 Uhr online 🚀', '14:47'),
-    m(ch.aylin, 'Umfrage mit Check-Box: „📋 Bitte abhaken, wenn ihr Alvarez´ Bestätigung eingeholt habt”', '14:47'),
+    m(ch.aylin, '📋 Bitte abhaken, wenn ihr Alvarez´ Bestätigung eingeholt habt: ☐ Carlos  ☐ Jonas  ☐ Chioma', '14:47'),
     m(ch.chioma, 'Warte mal. Ok von Herrn Alvarez? 🤔', '14:48'),
     m(ch.aylin, 'Ja, natürlich.', '14:48'),
     m(ch.carlos, 'Alvarez muss jeden Artikel absegnen, bevor wir ihn veröffentlichen dürfen.', '14:48'),

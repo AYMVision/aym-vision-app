@@ -53,7 +53,6 @@ const c01 = C('s1e02c01', 0, 'Amic 1', 'Alarm im Klassenchat', [
     m(ch.igor, 'Ey Dominik, lass gut sein.', '11:08'),
     m(ch.markus, 'Genau 👍', '11:08'),
     sysMsg('Dominik hat Chioma entfernt.', '11:09'),
-    bonusLink('char-dominik', 'Charakterkarte Dominik', '/cards/char-dominik', 'Karte ansehen →'),
   ], ['reflect-understand', 'talk-act']),
 
   S('s1e02c01_story_switch_amy', [

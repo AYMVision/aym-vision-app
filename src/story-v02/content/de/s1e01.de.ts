@@ -318,7 +318,7 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
   S('s1e01c03_story_private_yasmin_lisa', [
     privateChat('Yasmin', 'Lisa'),
     m(ch.lisa, 'Hast du Igors Posts gesehen? So cool!', '14:19'),
-    img(ch.lisa, '/media/story/episodes/s1e01/s1e01c03_2-512.webp', '14:19', { forwarded: {} }),
+    img(ch.lisa, '/media/story/episodes/s1e01/s1e01c03_2-512.webp', '14:19', { forwarded: { fromName: 'Igor' } }),
     m(ch.yasmin, 'Ja.', '14:20'),
     m(ch.yasmin, 'Bist du schon zurück?', '14:20'),
     m(ch.lisa, 'Sind gerade erst zwischengelandet ✈️', '14:21'),
@@ -532,7 +532,7 @@ OR('s1e01c05_reflection_emergency_help',
     topics: ['reflect-understand', 'talk-act'],
     category: 'ACTION',
     bypassAi: true,
-    fixedAmyReply: 'Genau — in einer solchen Situation zählt jede Minute. Hilfe zu holen ist das Wichtigste, was man tun kann.',
+    fixedAmyReply: 'In einer solchen Situation zählt jede Minute. Hilfe zu holen ist das Wichtigste, was man tun kann.',
   },
 ),
 

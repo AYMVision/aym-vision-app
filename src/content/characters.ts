@@ -69,12 +69,6 @@ export const CHARACTERS = {
     card: {
       portrait: portraitPath('chioma'),
       detailImage: detailImagePath('chioma'),
-
-          // ✅ NEU: zusätzliche Bilder für die Fotoleiste
-    extraImages: [
-      `${ROOT}/chioma-extra-1-512.webp`,
-      `${ROOT}/chioma-extra-2-512.webp`,
-    ],
     },
     
     bioKey: 'characters.chioma.bio',
@@ -157,7 +151,7 @@ lisa: {
       detailImage: detailImagePath('jonas'),
           extraImages: [
       `${ROOT}/jonas-extra-1-512.webp`,
-      `${ROOT}/lisa-extra-2-512.webp`,
+      `${ROOT}/jonas-extra-2-512.webp`,
     ],
 
     },

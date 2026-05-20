@@ -19,7 +19,7 @@ const noah = (ch as any).noah ?? { id: 'noah', name: 'Noah', avatar: 'noah' };
 const farida = (ch as any).farida ?? { id: 'farida', name: 'Farida', avatar: 'farida' };
 const amir = (ch as any).amir ?? { id: 'amir', name: 'Amir', avatar: 'amir' };
 const emma = (ch as any).emma ?? { id: 'emma', name: 'Emma', avatar: 'emma' };
-const gameFreund = { id: 'game-freund', name: 'Game-Freund', avatar: 'game-freund' };
+const gameFreund = { id: 'game-freund', name: 'Game-Freund', avatar: 's1e03_gaming-freund' };
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CHAPTER 1 — Finn on Fire
@@ -47,7 +47,7 @@ const c01 = C('s1e03c01', 0, 'Amic 1', 'Finn on Fire', [
     m(ch.mia, 'Genug gespamt!', '19:36'),
     audio(ch.chioma, '/media/story/episodes/s1e03/chiomas-sprachnachricht-s1e03c01.mp3', '19:40'),
     m(ch.tom, 'Ich komme grad aus dem Stall und sehe dies:', '19:45'),
-    m(ch.tom, 'weitergeleitet: 🔔 67 neue Nachrichten', '19:46'),
+    m(ch.tom, '🔔 67 neue Nachrichten', '19:46', { forwarded: { fromChatLabel: 'Klassenchat' } }),
     m(ch.tom, '😲 Habt ihr nichts Richtiges zu tun?', '19:46'),
     m(ch.dominik, 'Was kann denn wohl besser sein?', '19:46', { reactions: [R('👍')] }),
        sysImg('/media/story/episodes/s1e03/s1e03c01-512.webp', 's1e03c01-img-01'),

@@ -1,5 +1,6 @@
 ---
 import BlogLayout from '../layouts/BlogLayout.astro';
+const base = import.meta.env.BASE_URL;
 ---
 
 <BlogLayout title="Über uns — Amy Surfwing Blog" description="Wer hinter Amy Surfwing steckt und warum wir Medienreife greifbar machen wollen.">
@@ -31,7 +32,7 @@ import BlogLayout from '../layouts/BlogLayout.astro';
 
         <div class="team-card">
           <div class="team-avatar">
-            <img src="/melina.webp" alt="Melina Wiegers" />
+            <img src={`${base}melina.webp`} alt="Melina Wiegers" />
           </div>
           <div class="team-info">
             <div class="team-name">Melina Wiegers</div>
@@ -46,7 +47,7 @@ import BlogLayout from '../layouts/BlogLayout.astro';
 
         <div class="team-card">
           <div class="team-avatar">
-            <img src="/ann-sofie.webp" alt="Ann-Sofie Höbrink" />
+            <img src={`${base}ann-sofie.webp`} alt="Ann-Sofie Höbrink" />
           </div>
           <div class="team-info">
             <div class="team-name">Ann-Sofie Höbrink</div>
@@ -66,11 +67,11 @@ import BlogLayout from '../layouts/BlogLayout.astro';
       <h2>Gefördert &amp; unterstützt von</h2>
       <div class="support-logos">
         <a href="https://hafven.de/impact-accelerator" target="_blank" rel="noopener noreferrer" class="support-item">
-          <img src="/hafven-logo.png" alt="Hafven Impact Accelerator" class="hafven-logo" />
+          <img src={`${base}hafven-logo.png`} alt="Hafven Impact Accelerator" class="hafven-logo" />
           <span>Hafven Impact Accelerator, Hannover</span>
         </a>
         <a href="https://www.nbank.de" target="_blank" rel="noopener noreferrer" class="support-item">
-          <img src="/siegel-nbank.png" alt="Gründungsstipendium Start-up 2025/2026 – NBank" class="siegel-logo" />
+          <img src={`${base}siegel-nbank.png`} alt="Gründungsstipendium Start-up 2025/2026 – NBank" class="siegel-logo" />
           <span>Gründungsstipendium Start-up 2025/2026, NBank Niedersachsen</span>
         </a>
       </div>
@@ -78,7 +79,7 @@ import BlogLayout from '../layouts/BlogLayout.astro';
 
     <section class="cta-section">
       <div class="cta-box">
-        <img src="/amy-256.webp" alt="Amy Surfwing" class="cta-avatar" />
+        <img src={`${base}amy-256.webp`} alt="Amy Surfwing" class="cta-avatar" />
         <div>
           <h3>Amy Surfwing ausprobieren</h3>
           <p>Einfach loslegen — keine Installation, keine Anmeldung. Die erste Woche kostenlos.</p>

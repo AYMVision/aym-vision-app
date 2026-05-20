@@ -7,6 +7,7 @@ export interface Props {
 
 const { title, description = 'Zwischen Klassenchat, Fake News & KI — für Eltern, die ihre Kinder durch die digitale Welt begleiten.', image } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const base = import.meta.env.BASE_URL;
 ---
 <!doctype html>
 <html lang="de">
@@ -28,22 +29,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   {image && <meta property="og:image" content={image} />}
 
   <!-- RSS -->
-  <link rel="alternate" type="application/rss+xml" title="Amy Surfwing Blog" href="/rss.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Amy Surfwing Blog" href={`${base}rss.xml`} />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href={`${base}favicon.ico`} />
 </head>
 <body>
 
   <header class="site-header">
     <div class="container">
-      <a href="/" class="header-brand">
-        <img src="/amy-256.webp" alt="Amy Surfwing" />
+      <a href={base} class="header-brand">
+        <img src={`${base}amy-256.webp`} alt="Amy Surfwing" />
         <span class="header-brand-name">Amy Surfwing</span>
         <span class="header-brand-tag">Blog</span>
       </a>
       <nav class="header-nav">
-        <a href="/about" class="header-nav-link">Über uns</a>
+        <a href={`${base}about`} class="header-nav-link">Über uns</a>
         <a href="https://amysurfwing.de" class="header-app-link">
           App öffnen →
         </a>
@@ -59,15 +60,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
-          <img src="/amy-256.webp" alt="Amy Surfwing" />
+          <img src={`${base}amy-256.webp`} alt="Amy Surfwing" />
           <span>Amy Surfwing</span>
         </div>
         <nav class="footer-links">
-          <a href="/">Blog</a>
-          <a href="/about">Über uns</a>
+          <a href={base}>Blog</a>
+          <a href={`${base}about`}>Über uns</a>
           <a href="https://amysurfwing.de/impressum">Impressum</a>
           <a href="https://amysurfwing.de">Zur App</a>
-          <a href="/rss.xml">RSS</a>
+          <a href={`${base}rss.xml`}>RSS</a>
         </nav>
         <p class="footer-copy">© {new Date().getFullYear()} AYM-Vision GbR</p>
       </div>

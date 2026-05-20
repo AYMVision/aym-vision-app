@@ -5,6 +5,7 @@ import BlogLayout from '../layouts/BlogLayout.astro';
 const now = new Date();
 const allPosts = await getCollection('posts', ({ data }) => !data.draft && data.date <= now);
 const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const base = import.meta.env.BASE_URL;
 
 function readingTime(body: string) {
   const words = body.trim().split(/\s+/).length;
@@ -36,10 +37,10 @@ function formatDate(date: Date) {
 
       <div class="articles-grid">
         {posts.map((post) => (
-          <a href={`/blog/${post.slug}`} class="article-card">
+          <a href={`${base}${post.slug}`} class="article-card">
             <div class="article-card-image">
               {post.data.image
-                ? <img src={post.data.image} alt={post.data.title} loading="lazy" />
+                ? <img src={`${base}${post.data.image.replace(/^\//, '')}`} alt={post.data.title} loading="lazy" />
                 : <div class="article-card-image-placeholder">✍️</div>
               }
             </div>

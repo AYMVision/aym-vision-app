@@ -215,7 +215,7 @@ const unlockedEntries = useMemo(() => {
       let parent = el.parentElement;
       while (parent) {
         const { overflow, overflowY } = getComputedStyle(parent);
-        if (/auto|scroll/.test(overflow + overflowY)) return parent;
+        if (/auto|scroll/.test(overflow + overflowY) && parent.scrollHeight > parent.clientHeight) return parent;
         parent = parent.parentElement;
       }
       return null;
@@ -887,7 +887,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
   }
 
   return (
-    <div className="mt-6 space-y-4 overflow-x-hidden">
+    <div className="mt-6 space-y-4">
 
       {/* ── PIN-SCHUTZ-BANNER ── */}
       {showPinBanner && !hasPin && (

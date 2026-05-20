@@ -1018,7 +1018,6 @@ function hasStoryMigrationDone(key: string): boolean {
         // Abschluss-Karte direkt im Messenger erscheint nach dem Toast
         const summaryId = `episode-summary-${courseId}`;
         setTimeout(() => {
-          playEpisodeSound(profile.soundEnabled !== false);
           dispatch({
             type: 'ADD_EPISODE_SUMMARY',
             payload: {
@@ -1029,6 +1028,9 @@ function hasStoryMigrationDone(key: string): boolean {
             },
           });
         }, 1400);
+        setTimeout(() => {
+          playEpisodeSound(profile.soundEnabled !== false);
+        }, 3500);
       }
       return;
     }
