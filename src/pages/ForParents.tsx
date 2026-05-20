@@ -163,12 +163,14 @@ export default function ForParents() {
           {t('hero.ctaPrimary')}
         </Link>
 
-        <Link
-          to="/adult-settings"
+        <a
+          href="https://amysurfwing.de/blog"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
         >
           {t('hero.ctaSecondary')}
-        </Link>
+        </a>
       </div>
     </div>
 
@@ -467,6 +469,23 @@ export default function ForParents() {
                   Amy Surfwing ist Trägerin des <strong>Gründungsstipendiums der NBank</strong> — der Investitions- und Förderbank des Landes Niedersachsen. Das Stipendium fördert innovative Gründungsvorhaben mit besonderem gesellschaftlichem Mehrwert.
                 </p>
               </div>
+            </section>
+
+            {/* Blog */}
+            <section className="bg-white rounded-2xl border border-[var(--color-teal-100)] shadow-sm p-5 sm:p-6">
+              <div className="text-xs font-semibold text-[var(--color-teal-600)]">{t('sidebar.blog.kicker')}</div>
+              <h2 className="mt-1 text-base font-semibold text-slate-900">{t('sidebar.blog.title')}</h2>
+              <p className="mt-2 text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                {t('sidebar.blog.body')}
+              </p>
+              <a
+                href="https://amysurfwing.de/blog"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-sm"
+              >
+                {t('sidebar.blog.cta')}
+              </a>
             </section>
 
             {/* 7) Warn */}

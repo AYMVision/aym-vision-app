@@ -8,7 +8,7 @@ export function namespacesForPath(pathname: string): I18nNamespace[] {
   if (pathname === '/') return [...base, 'welcome', 'stories'];
 
   // Stories
-  if (pathname.startsWith('/stories')) return [...base, 'stories', 'amy'];
+  if (pathname.startsWith('/stories')) return [...base, 'stories', 'amy', 'lexikon', 'bonus'];
 
   // Static pages
   if (pathname.startsWith('/about')) return [...base, 'about'];

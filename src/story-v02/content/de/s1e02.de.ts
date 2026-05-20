@@ -568,7 +568,7 @@ const c07 = C('s1e02c07', 6, 'Amic 7', 'Der Beitrag geht live', [
   reactions: [R('🙏')],
 }),
 m(ch.carlos, 'Hier der Audiobeitrag „Regeln im Klassenchat?”', '14:31'),
-audio(ch.carlos, '/media/newspaper/audio/chatrules-chioma-dominik.mp3', '14:31', 'Audiobeitrag'),
+audio(ch.carlos, 'media/newspaper/articles/chatrules-chioma-dominik/audio.mp3', '14:31', 'Audiobeitrag'),
     m(ch.carlos, '@Chioma: Dann kannst du noch die Anmoderation dazu schreiben, wenn du magst.', '14:31'),
     m(ch.dominik, 'Anmoderation?', '14:31'),
     m(ch.carlos, 'Ja, den Teaser, die Einleitung.', '14:31'),
@@ -810,15 +810,13 @@ const c10 = C('s1e02c10', 9, 'Amic 10', 'Wirkung', [
     m(ch.finn, 'typisch! hattest du dein handy wieder nicht am start?', '15:42'),
     m(ch.tom, 'Nee. Wieso, was war?', '15:42'),
     m(ch.finn, 'Hör selbst: „Regeln im Klassenchat?"', '15:43'),
-audio(ch.carlos, '/media/newspaper/audio/chatrules-chioma-dominik.mp3', '15:43', 'Audiobeitrag'),
+audio(ch.carlos, 'media/newspaper/articles/chatrules-chioma-dominik/audio.mp3', '15:43', 'Audiobeitrag'),
     //divider('…'),
     m(ch.tom, 'Respekt! Klare Sache.', '15:44'),
     m(ch.dominik, 'Grrr. Und dein hauchdünner Vorsprung heißt jetzt, ich darf nicht mehr schreiben, was ich will?', '15:44'),
     m(ch.chioma, 'Niemand wird gezwungen, hier zu bleiben. Aber wer bleibt, hält sich dran.', '15:45'),
     m(ch.dominik, 'Hält sich woran??', '15:45'),
     m(ch.chioma, 'An das, was wir gemeinsam abstimmen.', '15:45'),
-    audio(ch.chioma, '/media/story/episodes/s1e02/chiomas-sprachnachricht-s1e02c10.mp3', '15:46'),
-    bonusLink('tip-chioma-groupchats', 'Chiomas Anleitung für Gruppenchats', '/newspaper/article-chioma-gruppenchats', 'Artikel öffnen →'),
   ], ['fairness', 'talk-act', 'problem-solving']),
 
   S('s1e02c10_story_student_newsroom_aftermath', [
@@ -846,7 +844,8 @@ audio(ch.carlos, '/media/newspaper/audio/chatrules-chioma-dominik.mp3', '15:43',
 
   S('s1e02c10_story_amy_wrapup_article', [
     m(ch.amy, '👉 Schau dir gern Chiomas Vorschlag an und überlege, was dir davon wichtig wäre.', '16:08'),
-    bonusLink('article-regeln-im-chat', 'Artikel Regeln im Chat', '/newspaper/s1e01c10-chiomas-chatrules', 'Artikel öffnen →'),
+    audio(ch.chioma, '/media/story/episodes/s1e02/chiomas-sprachnachricht-s1e02c10.mp3', '15:46'),
+    bonusLink('tip-chioma-groupchats', 'Chiomas Anleitung für Gruppenchats', '/newspaper/tip-chioma-groupchats', 'Artikel öffnen →'),
   ], ['fairness', 'reflect-understand']),
 
   S('s1e02c10_story_cliffhanger', [

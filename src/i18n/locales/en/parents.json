@@ -6,7 +6,7 @@
     "leadEmphasis": "Do you also worry about what your child encounters online—and how they deal with it?",
     "leadEmphasis2": "With the learning app Amy Surfwing, your child develops digital literacy.",
     "ctaPrimary": "Start story →",
-    "ctaSecondary": "Explore the concept →",
+    "ctaSecondary": "Read the blog →",
     "bannerAlt": "Insight into the story world of Amy Surfwing"
   },
 
@@ -299,6 +299,12 @@
     "transparency": {
       "kicker": "A safe space",
       "body": "Amy Surfwing is intentionally not a social network. Content is not shared publicly. Progress stays locally on the device."
+    },
+    "blog": {
+      "kicker": "Amy Surfwing Blog",
+      "title": "Between class chats, fake news & AI",
+      "body": "Online situations from children's everyday lives.\nFor parents who want to guide their children through the digital world.",
+      "cta": "Read blog →"
     }
   }
 }

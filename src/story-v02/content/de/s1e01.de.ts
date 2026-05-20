@@ -552,11 +552,6 @@ S('s1e01c05_story_amy_tip_emergency_help', [
     m(ch.amy, 'Gibt es etwas, das dich gerade beschäftigt?'),
   ], ['reflect-understand']),
 
-  inp('s1e01c05_input_me_diary', 'stories:s1e01.c05.input.meDiary', {
-    topics: ['reflect-understand'],
-    promptSpeakerId: 'amy',
-  }),
-
   S('s1e01c05_story_my_diary_bonus', [
     bonusLink('diary-me', 'Mein Tagebuch',
       '/diaries/diary_me', 'Tagebuch öffnen →'),
@@ -840,14 +835,9 @@ const c08 = C('s1e01c08', 7, 'Amic 8', 'Nächster Tag', [
     m(ch.aylin, 'Aber es gibt einige Dinge, die du beachten solltest. Ich habe dazu einen Artikel geschrieben. Guck doch mal rein:'),
     bonusLink('tip-aylin-kileitfaden', 'Artikel: KI-Leitfaden', '/newspaper/tip-aylin-kileitfaden', 'Artikel öffnen →'),
   ]),
-]);
 
-// ─────────────────────────────────────────────────────────────────────────────
-// KAPITEL 9 — Epilog
-// ─────────────────────────────────────────────────────────────────────────────
-
-const c09 = C('s1e01c09', 8, 'Epilog', '', [
-  S('s1e01c09_story_epilogue', [
+  S('s1e01c08_story_epilogue', [
+    divider('Epilog'),
     privateChat('Yasmin', 'Chioma'),
     m(ch.yasmin, 'Lisa ist endlich zurück.', '20:05'),
     m(ch.yasmin, 'Weniger top-gestylte Selfies aus Rom und Paris.', '20:06'),
@@ -858,7 +848,7 @@ const c09 = C('s1e01c09', 8, 'Epilog', '', [
     m(ch.lisa, 'Kann gerade echt nicht 🙈 bin schon auf dem Weg zum Sushi.', '20:09'),
     m(ch.lisa, 'Das mit Dominik heute Morgen hab ich dir ja schon erzählt.', '20:09'),
   ]),
-], { isEpilogue: true });
+]);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // EPISODE
@@ -869,7 +859,7 @@ const s1e01De: StoryEpisodeV02 = {
   seasonId: 's1',
   episodeId: 's1e01',
   courseId: 's1e01',
-  chapters: [c01, c02, c03, c04, c05, c06, c07, c08, c09],
+  chapters: [c01, c02, c03, c04, c05, c06, c07, c08],
 };
 
 export default s1e01De;

@@ -832,14 +832,9 @@ const c08 = C('s1e01c08', 7, 'Amic', 'The Picture Wasn’t Real', [
     m(ch.aylin, 'But there are a few things you should keep in mind. I wrote an article about it. Take a look:'),
     bonusLink('tip-aylin-kileitfaden', 'Article: AI Guide', '/newspaper/tip-aylin-kileitfaden', 'Open article →'),
   ]),
-]);
 
-// ─────────────────────────────────────────────────────────────────────────────
-// CHAPTER 9 — Epilogue
-// ─────────────────────────────────────────────────────────────────────────────
-
-const c09 = C('s1e01c09', 8, 'Epilogue', '', [
-  S('s1e01c09_story_epilogue', [
+  S('s1e01c08_story_epilogue', [
+    divider('Epilogue'),
     privateChat('Yasmin', 'Chioma'),
     m(ch.yasmin, 'Lisa is finally back.', '20:05'),
     m(ch.yasmin, 'Fewer perfectly styled selfies from Rome and Paris.', '20:06'),
@@ -850,7 +845,7 @@ const c09 = C('s1e01c09', 8, 'Epilogue', '', [
     m(ch.lisa, 'I really can’t right now 🙈 already on my way to sushi.', '20:09'),
     m(ch.lisa, 'I already told you about that thing with Dominik this morning.', '20:09'),
   ]),
-], { isEpilogue: true });
+]);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // EPISODE
@@ -861,7 +856,7 @@ const s1e01En: StoryEpisodeV02 = {
   seasonId: 's1',
   episodeId: 's1e01',
   courseId: 's1e01',
-  chapters: [c01, c02, c03, c04, c05, c06, c07, c08, c09],
+  chapters: [c01, c02, c03, c04, c05, c06, c07, c08],
 };
 
 export default s1e01En;

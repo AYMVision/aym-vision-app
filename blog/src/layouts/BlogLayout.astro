@@ -5,7 +5,7 @@ export interface Props {
   image?: string;
 }
 
-const { title, description = 'Medienreife greifbar machen — für Eltern, die ihre Kinder durch die digitale Welt begleiten.', image } = Astro.props;
+const { title, description = 'Zwischen Klassenchat, Fake News & KI — für Eltern, die ihre Kinder durch die digitale Welt begleiten.', image } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
@@ -65,7 +65,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         <nav class="footer-links">
           <a href="/">Blog</a>
           <a href="/about">Über uns</a>
-          <a href="/impressum">Impressum</a>
+          <a href="https://amysurfwing.de/impressum">Impressum</a>
           <a href="https://amysurfwing.de">Zur App</a>
           <a href="/rss.xml">RSS</a>
         </nav>

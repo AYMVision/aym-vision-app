@@ -9,7 +9,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'Amy Surfwing Blog',
-    description: 'Medienreife greifbar machen — für Eltern, die ihre Kinder durch die digitale Welt begleiten.',
+    description: 'Zwischen Klassenchat, Fake News & KI — für Eltern, die ihre Kinder durch die digitale Welt begleiten.',
     site: context.site!.toString(),
     items: sorted.map((post) => ({
       title: post.data.title,

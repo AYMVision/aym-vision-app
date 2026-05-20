@@ -20,6 +20,13 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+      - name: Build blog
+        working-directory: blog
+        run: npm ci && npm run build
+
+      - name: Copy blog into dist
+        run: cp -r blog/dist dist/blog
+
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:

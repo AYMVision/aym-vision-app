@@ -240,7 +240,7 @@ const unlockedEntries = useMemo(() => {
     };
 
     // Defer one tick so the entry elements are painted before we measure.
-    const id = setTimeout(doScroll, 0);
+    const id = setTimeout(doScroll, 80);
     return () => clearTimeout(id);
   }, [entryParam, unlockedEntries.length, isModal]);
 
@@ -1081,7 +1081,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
               {/* Canvas */}
               <div className="rounded-3xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,250,240,1),rgba(255,255,255,1))] overflow-hidden">
                 <div ref={canvasRef}
-                  className={['relative p-5 sm:p-6', editingEntryId === activeEntry.id ? '' : 'touch-none'].join(' ')}
+                  className="relative p-5 sm:p-6"
                   style={{ minHeight: 340 }}>
                   <div className="relative z-0">
                     {editingEntryId === activeEntry.id ? (
