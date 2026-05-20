@@ -1,14 +1,11 @@
 ---
-title: "Mein Kind wird im Klassenchat ausgeschlossen – was tun?"
-description: "Mein Kind wird im Klassenchat ausgeschlossen – was tun? Konkrete Tipps für Eltern, wie sie ihr Kind stärken und richtig reagieren."
+title: "Mein Kind wird im Klassenchat ausgeschlossen. Was kann ich tun?"
+description: "Mein Kind wird im Klassenchat ausgeschlossen. Was kann ich tun? Konkrete Tipps für Eltern, wie sie ihr Kind stärken und richtig reagieren."
 date: 2026-05-20
 author: "Melina Wiegers"
 image: "/images/kind-ausgeschlossen-klassenchat.webp"
 tags: ["Klassenchat", "Medienkompetenz", "Für Eltern"]
 ---
-
-# Mein Kind wird im Klassenchat ausgeschlossen. Was kann ich tun?
-
 
 „Du bist raus.“ 
 
