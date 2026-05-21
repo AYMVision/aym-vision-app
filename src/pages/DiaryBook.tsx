@@ -1,6 +1,6 @@
 // src/pages/DiaryBook.tsx
 import React, { useMemo, useEffect, useRef, useState, useCallback } from 'react';
-import { useLocation, useParams, Link } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   hasDiaryPin,
@@ -179,6 +179,7 @@ function clamp(n: number, min: number, max: number) {
 export default function DiaryBook() {
   const { t } = useTranslation('bonus');
   const location = useLocation();
+  const navigate = useNavigate();
   const state = location.state as LocationState | null;
   const isModal = Boolean((state as any)?.backgroundLocation);
   const { profile } = useProfile();
@@ -296,6 +297,23 @@ const unlockedEntries = useMemo(() => {
     >
       <div className="max-w-3xl mx-auto px-4 pt-4">
 
+        {/* ── CLOSE (top) ── */}
+        {!isModal && (
+          <div className="flex justify-end mb-1">
+            <button
+              type="button"
+              onClick={() => {
+                const idx = (window.history.state as { idx?: number } | null)?.idx ?? 0;
+                if (idx > 0) { navigate(-1); } else { navigate(state?.backTo ?? '/diaries'); }
+              }}
+              aria-label={t('diaries.close', { defaultValue: 'Schließen' })}
+              className="w-9 h-9 rounded-full bg-white/80 border border-black/10 flex items-center justify-center text-slate-600 hover:bg-slate-100 shadow-sm transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
         {/* HERO (book cover vibe) */}
         <div className={['mt-4 rounded-3xl border bg-white shadow-sm overflow-hidden', style.border].join(' ')}>
           <div className="p-5 sm:p-6 flex items-center gap-4">
@@ -352,6 +370,22 @@ const unlockedEntries = useMemo(() => {
             isModal={isModal}
             backTo={state?.backTo}
           />
+        )}
+
+        {/* ── CLOSE (bottom) ── */}
+        {!isModal && (
+          <div className="mt-6 flex justify-center">
+            <button
+              type="button"
+              onClick={() => {
+                const idx = (window.history.state as { idx?: number } | null)?.idx ?? 0;
+                if (idx > 0) { navigate(-1); } else { navigate(state?.backTo ?? '/diaries'); }
+              }}
+              className="rounded-2xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 shadow-sm transition-colors"
+            >
+              ← {t('diaries.backToDiaries', { defaultValue: 'Zurück zur Übersicht' })}
+            </button>
+          </div>
         )}
 
         <div className="h-10" />
@@ -729,7 +763,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
   const [draftStickers, setDraftStickers] = useState<DiaryStickerId[]>([]);
   const [draftStickerPos, setDraftStickerPos] = useState<Record<string, { xPx: number; yPx: number; rot: number; size: number }>>({});
   const paperRef = useRef<HTMLDivElement | null>(null);
-  const [mode, setMode] = useState<'write' | 'view'>(() => entries.length > 0 ? 'view' : 'write');
+  const [mode, setMode] = useState<'write' | 'view' | 'list'>(() => entries.length > 0 ? 'list' : 'write');
   const [showPinBanner, setShowPinBanner] = useState(false);
   const [activeEntryId, setActiveEntryId] = useState<string | null>(entries[0]?.id ?? null);
   const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
@@ -812,7 +846,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
     setText('');
     setDraftStickers([]);
     setDraftStickerPos({});
-    setMode('view');
+    setMode('list');
 
     if (!hasPin && entries.length === 0) {
       setTimeout(() => setShowPinBanner(true), 400);
@@ -854,7 +888,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
     const next = entries.filter((e) => e.id !== id);
     setEntries(next);
     if (activeEntryId === id) {
-      if (next.length > 0) { setActiveEntryId(next[0].id); setMode('view'); }
+      if (next.length > 0) { setActiveEntryId(next[0].id); setMode('list'); }
       else { setActiveEntryId(null); setMode('write'); }
     }
     setDeletingEntryId(null);
@@ -914,211 +948,244 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
         </div>
       )}
 
-      {/* ── SEITEN-LEISTE (horizontal, oben) ── */}
-      {entries.length > 0 && (
-        <div className="overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ width: '100%', maxWidth: '100%', WebkitOverflowScrolling: 'touch' }}>
-          <div className="flex gap-2" style={{ minWidth: 'max-content' }}>
-            <button type="button" onClick={() => { setMode('write'); setText(''); setDraftStickers([]); setDraftStickerPos({}); setSelectedStickerId(null); }}
-              className={['shrink-0 rounded-2xl border px-4 py-3 text-sm font-semibold transition flex flex-col items-center justify-center gap-1 w-[100px]',
-                mode === 'write' ? 'border-violet-300 bg-violet-50 text-violet-700' : 'border-dashed border-violet-200 text-violet-600 hover:bg-violet-50 bg-white'].join(' ')}>
-              <span className="text-xl">✏️</span>
-              <span>{t('diaries.me.newPage', { defaultValue: 'Neue Seite' })}</span>
-            </button>
-            {entries.map((e) => (
-              <div key={e.id} className={['shrink-0 rounded-2xl border transition overflow-hidden',
-                e.id === activeEntryId && mode === 'view' ? 'border-violet-300 bg-violet-50' : 'border-slate-200 bg-white'].join(' ')}>
-                <button type="button"
-                  onClick={() => { setActiveEntryId(e.id); setMode('view'); setDeletingEntryId(null); setEditingEntryId(null); }}
-                  className="flex flex-col items-start p-2.5 w-[120px]">
-                  <div className="text-[10px] font-bold text-slate-400">{formatDate(e.createdAt)}</div>
-                  <div className="mt-1 text-xs text-slate-700 line-clamp-2 diary-hand leading-snug">{e.text}</div>
+      {/* ── LIST VIEW ── */}
+      {mode === 'list' && (
+        <div className="space-y-3">
+          {/* Neue Seite */}
+          <button
+            type="button"
+            onClick={() => { setMode('write'); setText(''); setDraftStickers([]); setDraftStickerPos({}); setSelectedStickerId(null); }}
+            className="w-full rounded-3xl border-2 border-dashed border-violet-200 bg-violet-50/60 px-5 py-4 text-left flex items-center gap-3 hover:bg-violet-50 active:scale-[0.99] transition-all"
+          >
+            <span className="text-2xl">✏️</span>
+            <div>
+              <div className="text-sm font-extrabold text-violet-700">
+                {t('diaries.me.newPage', { defaultValue: 'Neue Seite schreiben' })}
+              </div>
+              <div className="text-xs text-violet-400 mt-0.5">
+                {t('diaries.me.newPageHint', { defaultValue: 'Gedanken, Erlebnisse, Gefühle …' })}
+              </div>
+            </div>
+          </button>
+
+          {/* Einträge */}
+          {entries.map((e) => (
+            <div key={e.id} className="rounded-3xl border border-slate-200 bg-white overflow-hidden shadow-sm">
+              <button
+                type="button"
+                onClick={() => { setActiveEntryId(e.id); setMode('view'); setDeletingEntryId(null); setEditingEntryId(null); }}
+                className="w-full p-4 text-left active:bg-slate-50 transition-colors"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wide">{formatDate(e.createdAt)}</div>
+                    <div className="mt-1.5 text-base diary-hand text-slate-900 line-clamp-3 leading-snug">{e.text}</div>
+                  </div>
                   {e.stickers.length > 0 && (
-                    <div className="mt-1.5 flex gap-0.5">
-                      {e.stickers.slice(0, 3).map(s => (
-                        <img key={s.id} src={stickerSrc(s.stickerId, 256)} alt="" className="w-5 h-5" />
+                    <div className="flex flex-col gap-0.5 shrink-0 mt-0.5">
+                      {e.stickers.slice(0, 3).map((s) => (
+                        <img key={s.id} src={stickerSrc(s.stickerId, 256)} alt="" className="w-10 h-10" />
                       ))}
                     </div>
                   )}
-                </button>
-                {deletingEntryId === e.id ? (
-                  <div className="flex items-center gap-1 px-2 pb-2">
-                    <button type="button" onClick={() => deleteEntry(e.id)}
-                      className="rounded-lg bg-red-500 px-2 py-1 text-[10px] font-extrabold text-white hover:bg-red-600">
-                      {t('diaries.me.deleteYes', { defaultValue: 'Ja, löschen' })}
-                    </button>
-                    <button type="button" onClick={() => setDeletingEntryId(null)}
-                      className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-[10px] font-semibold text-slate-600 hover:bg-slate-50">
-                      {t('diaries.me.deleteNo', { defaultValue: 'Nein' })}
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex justify-end px-2 pb-1.5">
-                    <button type="button" onClick={() => setDeletingEntryId(e.id)} aria-label="Seite löschen"
-                      className="text-slate-300 hover:text-red-400 transition-colors text-sm leading-none">🗑</button>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+                </div>
+                <div className="mt-2 text-xs text-violet-500 font-semibold">
+                  {t('diaries.me.openEntry', { defaultValue: 'Öffnen →' })}
+                </div>
+              </button>
+              {deletingEntryId === e.id ? (
+                <div className="flex items-center gap-2 px-4 pb-3">
+                  <button type="button" onClick={() => deleteEntry(e.id)}
+                    className="rounded-xl bg-red-500 px-3 py-1.5 text-xs font-extrabold text-white hover:bg-red-600">
+                    {t('diaries.me.deleteYes', { defaultValue: 'Ja, löschen' })}
+                  </button>
+                  <button type="button" onClick={() => setDeletingEntryId(null)}
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">
+                    {t('diaries.me.deleteNo', { defaultValue: 'Nein' })}
+                  </button>
+                </div>
+              ) : (
+                <div className="flex justify-end px-4 pb-2">
+                  <button type="button" onClick={() => setDeletingEntryId(e.id)} aria-label="Seite löschen"
+                    className="text-slate-300 hover:text-red-400 transition-colors text-sm">🗑</button>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       )}
 
       {/* ── HAUPTBEREICH: SCHREIBEN oder CANVAS ── */}
-      <div className="rounded-3xl border border-violet-100 overflow-hidden shadow-sm w-full min-w-0">
-
-        {/* Header */}
-        <div className="flex items-center gap-3 px-5 py-3 bg-violet-50 border-b border-violet-100">
-          <span className="text-xl" aria-hidden>{mode === 'write' ? '✏️' : '📄'}</span>
-          <div className="text-sm font-extrabold text-violet-900">
-            {mode === 'write'
-              ? t('diaries.me.writeTitle', { defaultValue: 'Neue Seite' })
-              : formatDate(activeEntry?.createdAt ?? Date.now())}
-          </div>
-          {mode === 'view' && activeEntry && editingEntryId !== activeEntry.id && (
-            <button type="button" onClick={() => startEditing(activeEntry)}
-              className="ml-2 rounded-xl border border-violet-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-violet-50">
-              {t('diaries.me.editButton', { defaultValue: 'Bearbeiten' })}
+      {(mode === 'write' || mode === 'view') && (
+        <>
+          {/* Zurück zur Liste */}
+          {entries.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setMode('list')}
+              className="flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors"
+            >
+              ← {t('diaries.me.backToList', { defaultValue: 'Alle Einträge' })}
             </button>
           )}
-          <div className="ml-auto text-xs text-violet-400 font-semibold">
-            {mode === 'write'
-              ? new Date().toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' })
-              : null}
-          </div>
-        </div>
 
-        {mode === 'write' ? (
-          <>
-            {/* Liniertes Papier */}
-            <div ref={paperRef} className="relative" onClick={() => setSelectedStickerId(null)} style={{
-              backgroundImage: `linear-gradient(to right, rgba(139,92,246,0.25) 1px, transparent 1px),repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, rgba(15,23,42,0.07) 31px, rgba(15,23,42,0.07) 32px),linear-gradient(180deg, rgba(255,253,255,1), rgba(255,255,255,1))`,
-              backgroundSize: '1px 100%, 100% 32px, 100% 100%',
-              backgroundPosition: '52px 0, 0 8px, 0 0',
-              backgroundRepeat: 'no-repeat, repeat, no-repeat',
-            }}>
-              <textarea
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder={dailyPrompt}
-                rows={6}
-                className="w-full bg-transparent pl-[68px] pr-4 py-2 text-xl diary-hand text-slate-900 outline-none resize-none placeholder:text-slate-300"
-                style={{ lineHeight: '32px', height: '208px', overflowY: 'auto' }}
-              />
-              {/* Live-Sticker auf dem Papier — sofort verschiebbar */}
-              {draftStickers.length > 0 && (
-                <div className="absolute inset-0 z-10 pointer-events-none">
-                  {draftStickers.map((sid) => {
-                    const pos = draftStickerPos[sid];
-                    if (!pos) return null;
-                    const fakeSticker: MeSticker = { id: sid, stickerId: sid, ...pos };
-                    return (
-                      <StickerDraggable
-                        key={sid}
-                        sticker={fakeSticker}
-                        canvasRef={paperRef}
-                        selected={selectedStickerId === sid}
-                        onSelect={() => setSelectedStickerId(sid)}
-                        onMove={(xPx, yPx) => setDraftStickerPos((p) => ({ ...p, [sid]: { ...p[sid], xPx, yPx } }))}
-                        onResize={(size) => setDraftStickerPos((p) => ({ ...p, [sid]: { ...p[sid], size } }))}
-                        onRemove={() => { toggleDraftSticker(sid); setSelectedStickerId(null); }}
-                      />
-                    );
-                  })}
-                </div>
+          <div className="rounded-3xl border border-violet-100 overflow-hidden shadow-sm w-full min-w-0">
+
+            {/* Header */}
+            <div className="flex items-center gap-3 px-5 py-3 bg-violet-50 border-b border-violet-100">
+              <span className="text-xl" aria-hidden>{mode === 'write' ? '✏️' : '📄'}</span>
+              <div className="text-sm font-extrabold text-violet-900">
+                {mode === 'write'
+                  ? t('diaries.me.writeTitle', { defaultValue: 'Neue Seite' })
+                  : formatDate(activeEntry?.createdAt ?? Date.now())}
+              </div>
+              {mode === 'view' && activeEntry && editingEntryId !== activeEntry.id && (
+                <button type="button" onClick={() => startEditing(activeEntry)}
+                  className="ml-2 rounded-xl border border-violet-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-violet-50">
+                  {t('diaries.me.editButton', { defaultValue: 'Bearbeiten' })}
+                </button>
               )}
+              <div className="ml-auto text-xs text-violet-400 font-semibold">
+                {mode === 'write'
+                  ? new Date().toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' })
+                  : null}
+              </div>
             </div>
 
-            {/* Sticker-Auswahl */}
-            <div className="px-4 pt-3 pb-2 border-t border-slate-100 bg-white">
-              <div className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wide mb-2">
-                {t('diaries.me.stickerLabel', { defaultValue: 'Sticker auf deine Seite kleben:' })}
-              </div>
-              <div className="flex flex-wrap gap-1">
-                {DIARY_STICKERS.map((sid) => (
-                  <button key={sid} type="button" onClick={() => toggleDraftSticker(sid)}
-                    aria-label={sid} aria-pressed={draftStickers.includes(sid)}
-                    className={['rounded-xl p-0.5 transition-all duration-150',
-                      draftStickers.includes(sid) ? 'ring-2 ring-violet-400 bg-violet-50 scale-110' : 'hover:scale-105 hover:bg-slate-50'].join(' ')}>
-                    <img src={stickerSrc(sid, 256)} alt={sid} className="w-10 h-10" loading="lazy" />
-                  </button>
-                ))}
-              </div>
-              {draftStickers.length > 0 && (
-                <div className="mt-2 flex items-center gap-3 text-xs">
-                  <span className="font-semibold text-violet-700">{t('diaries.me.stickerCount', { defaultValue: '{{count}} Sticker auf der Seite', count: draftStickers.length })}</span>
-                  <button type="button" onClick={() => { setDraftStickers([]); setDraftStickerPos({}); }} className="text-slate-400 hover:text-red-500 transition-colors">
-                    {t('diaries.me.stickerRemoveAll', { defaultValue: 'Alle entfernen' })}
-                  </button>
+            {mode === 'write' ? (
+              <>
+                {/* Liniertes Papier */}
+                <div ref={paperRef} className="relative" onClick={() => setSelectedStickerId(null)} style={{
+                  backgroundImage: `linear-gradient(to right, rgba(139,92,246,0.25) 1px, transparent 1px),repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, rgba(15,23,42,0.07) 31px, rgba(15,23,42,0.07) 32px),linear-gradient(180deg, rgba(255,253,255,1), rgba(255,255,255,1))`,
+                  backgroundSize: '1px 100%, 100% 32px, 100% 100%',
+                  backgroundPosition: '52px 0, 0 8px, 0 0',
+                  backgroundRepeat: 'no-repeat, repeat, no-repeat',
+                }}>
+                  <textarea
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder={dailyPrompt}
+                    rows={6}
+                    className="w-full bg-transparent pl-[68px] pr-4 py-2 text-xl diary-hand text-slate-900 outline-none resize-none placeholder:text-slate-300"
+                    style={{ lineHeight: '32px', height: '208px', overflowY: 'auto' }}
+                  />
+                  {/* Live-Sticker auf dem Papier — sofort verschiebbar */}
+                  {draftStickers.length > 0 && (
+                    <div className="absolute inset-0 z-10 pointer-events-none">
+                      {draftStickers.map((sid) => {
+                        const pos = draftStickerPos[sid];
+                        if (!pos) return null;
+                        const fakeSticker: MeSticker = { id: sid, stickerId: sid, ...pos };
+                        return (
+                          <StickerDraggable
+                            key={sid}
+                            sticker={fakeSticker}
+                            canvasRef={paperRef}
+                            selected={selectedStickerId === sid}
+                            onSelect={() => setSelectedStickerId(sid)}
+                            onMove={(xPx, yPx) => setDraftStickerPos((p) => ({ ...p, [sid]: { ...p[sid], xPx, yPx } }))}
+                            onResize={(size) => setDraftStickerPos((p) => ({ ...p, [sid]: { ...p[sid], size } }))}
+                            onRemove={() => { toggleDraftSticker(sid); setSelectedStickerId(null); }}
+                          />
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
 
-            {/* Speichern */}
-            <div className="px-5 py-4 bg-white border-t border-slate-100">
-              <button type="button" onClick={createEntry} disabled={!text.trim()}
-                className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-violet-600 text-white hover:bg-violet-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                {t('diaries.me.save', { defaultValue: 'Seite speichern ✓' })}
-              </button>
-              <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                {t('diaries.me.localOnly', { defaultValue: 'Wird nur auf diesem Gerät gespeichert.' })}
-              </p>
-            </div>
-          </>
-        ) : (
-          /* ── CANVAS-MODUS ── */
-          activeEntry ? (
-            <div className="p-4 sm:p-5">
-              {/* Sticker-Picker direkt über Canvas */}
-              <div className="flex flex-wrap gap-1 mb-3">
-                {DIARY_STICKERS.map((sid) => (
-                  <button key={sid} type="button" onClick={() => addSticker(sid)}
-                    className="transition-transform hover:scale-110 active:scale-95" aria-label={sid}>
-                    <img src={stickerSrc(sid, 256)} alt={sid} className="w-10 h-10" loading="lazy" />
-                  </button>
-                ))}
-              </div>
-
-              {/* Canvas */}
-              <div className="rounded-3xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,250,240,1),rgba(255,255,255,1))] overflow-hidden">
-                <div ref={canvasRef}
-                  className="relative p-5 sm:p-6"
-                  style={{ minHeight: 340 }}>
-                  <div className="relative z-0">
-                    {editingEntryId === activeEntry.id ? (
-                      <>
-                        <textarea value={editText} onChange={(e) => setEditText(e.target.value)}
-                          className="w-full min-h-[140px] rounded-xl border border-slate-200 bg-white p-3 text-base leading-relaxed outline-none focus:ring-2 focus:ring-[var(--color-teal-200)] resize-none" />
-                        <div className="mt-2 flex gap-2">
-                          <button type="button" onClick={saveEdit} className="rounded-xl bg-[var(--color-teal-600)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--color-teal-700)]">{t('diaries.me.editSave', { defaultValue: 'Speichern' })}</button>
-                          <button type="button" onClick={cancelEdit} className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">{t('diaries.me.editCancel', { defaultValue: 'Abbrechen' })}</button>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="text-xl leading-8 text-slate-900 diary-hand whitespace-pre-wrap">{activeEntry.text}</div>
-                    )}
+                {/* Sticker-Auswahl */}
+                <div className="px-4 pt-3 pb-2 border-t border-slate-100 bg-white">
+                  <div className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wide mb-2">
+                    {t('diaries.me.stickerLabel', { defaultValue: 'Sticker auf deine Seite kleben:' })}
                   </div>
-                  <div className={['absolute inset-0 z-10', editingEntryId === activeEntry.id ? 'pointer-events-none' : 'pointer-events-auto'].join(' ')}
-                    onClick={() => setSelectedStickerId(null)}>
-                    {activeEntry.stickers.map((s) => (
-                      <StickerDraggable key={s.id} sticker={s} canvasRef={canvasRef}
-                        selected={s.id === selectedStickerId}
-                        onSelect={() => setSelectedStickerId(s.id)}
-                        onMove={(xPx, yPx) => updateSticker(s.id, { xPx, yPx })}
-                        onResize={(size) => updateSticker(s.id, { size })}
-                        onRemove={() => { removeSticker(s.id); setSelectedStickerId(null); }}
-                      />
+                  <div className="flex flex-wrap gap-1">
+                    {DIARY_STICKERS.map((sid) => (
+                      <button key={sid} type="button" onClick={() => toggleDraftSticker(sid)}
+                        aria-label={sid} aria-pressed={draftStickers.includes(sid)}
+                        className={['rounded-xl p-0.5 transition-all duration-150',
+                          draftStickers.includes(sid) ? 'ring-2 ring-violet-400 bg-violet-50 scale-110' : 'hover:scale-105 hover:bg-slate-50'].join(' ')}>
+                        <img src={stickerSrc(sid, 256)} alt={sid} className="w-10 h-10" loading="lazy" />
+                      </button>
                     ))}
                   </div>
+                  {draftStickers.length > 0 && (
+                    <div className="mt-2 flex items-center gap-3 text-xs">
+                      <span className="font-semibold text-violet-700">{t('diaries.me.stickerCount', { defaultValue: '{{count}} Sticker auf der Seite', count: draftStickers.length })}</span>
+                      <button type="button" onClick={() => { setDraftStickers([]); setDraftStickerPos({}); }} className="text-slate-400 hover:text-red-500 transition-colors">
+                        {t('diaries.me.stickerRemoveAll', { defaultValue: 'Alle entfernen' })}
+                      </button>
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              <div className="mt-3 text-xs text-slate-500">
-                {t('diaries.me.dragHint', { defaultValue: 'Sticker verschieben: einfach ziehen. Größe ändern: zwei Finger zusammen- oder auseinanderziehen. Entfernen: antippen, dann ✕.' })}
-              </div>
-            </div>
-          ) : null
-        )}
-      </div>
+                {/* Speichern */}
+                <div className="px-5 py-4 bg-white border-t border-slate-100">
+                  <button type="button" onClick={createEntry} disabled={!text.trim()}
+                    className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-violet-600 text-white hover:bg-violet-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                    {t('diaries.me.save', { defaultValue: 'Seite speichern ✓' })}
+                  </button>
+                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
+                    {t('diaries.me.localOnly', { defaultValue: 'Wird nur auf diesem Gerät gespeichert.' })}
+                  </p>
+                </div>
+              </>
+            ) : (
+              /* ── CANVAS-MODUS ── */
+              activeEntry ? (
+                <div className="p-4 sm:p-5">
+                  {/* Sticker-Picker direkt über Canvas */}
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {DIARY_STICKERS.map((sid) => (
+                      <button key={sid} type="button" onClick={() => addSticker(sid)}
+                        className="transition-transform hover:scale-110 active:scale-95" aria-label={sid}>
+                        <img src={stickerSrc(sid, 256)} alt={sid} className="w-10 h-10" loading="lazy" />
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Canvas */}
+                  <div className="rounded-3xl border border-slate-200 bg-[linear-gradient(180deg,rgba(255,250,240,1),rgba(255,255,255,1))] overflow-hidden">
+                    <div ref={canvasRef}
+                      className="relative p-5 sm:p-6"
+                      style={{ minHeight: 340 }}>
+                      <div className="relative z-0">
+                        {editingEntryId === activeEntry.id ? (
+                          <>
+                            <textarea value={editText} onChange={(e) => setEditText(e.target.value)}
+                              className="w-full min-h-[140px] rounded-xl border border-slate-200 bg-white p-3 text-base leading-relaxed outline-none focus:ring-2 focus:ring-[var(--color-teal-200)] resize-none" />
+                            <div className="mt-2 flex gap-2">
+                              <button type="button" onClick={saveEdit} className="rounded-xl bg-[var(--color-teal-600)] px-4 py-2 text-sm font-semibold text-white hover:bg-[var(--color-teal-700)]">{t('diaries.me.editSave', { defaultValue: 'Speichern' })}</button>
+                              <button type="button" onClick={cancelEdit} className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">{t('diaries.me.editCancel', { defaultValue: 'Abbrechen' })}</button>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="text-xl leading-8 text-slate-900 diary-hand whitespace-pre-wrap">{activeEntry.text}</div>
+                        )}
+                      </div>
+                      <div className={['absolute inset-0 z-10', editingEntryId === activeEntry.id ? 'pointer-events-none' : 'pointer-events-auto'].join(' ')}
+                        onClick={() => setSelectedStickerId(null)}>
+                        {activeEntry.stickers.map((s) => (
+                          <StickerDraggable key={s.id} sticker={s} canvasRef={canvasRef}
+                            selected={s.id === selectedStickerId}
+                            onSelect={() => setSelectedStickerId(s.id)}
+                            onMove={(xPx, yPx) => updateSticker(s.id, { xPx, yPx })}
+                            onResize={(size) => updateSticker(s.id, { size })}
+                            onRemove={() => { removeSticker(s.id); setSelectedStickerId(null); }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 text-xs text-slate-500">
+                    {t('diaries.me.dragHint', { defaultValue: 'Sticker verschieben: einfach ziehen. Größe ändern: zwei Finger zusammen- oder auseinanderziehen. Entfernen: antippen, dann ✕.' })}
+                  </div>
+                </div>
+              ) : null
+            )}
+          </div>
+        </>
+      )}
 
 
       {/* ── PIN-HINWEIS ── */}

@@ -1,5 +1,5 @@
 // src/pages/Welcome.tsx
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import Layout from '../components/Layout';
 import BetaBanner from '../components/BetaBanner';
 import PwaTransferBanner from '../components/PwaTransferBanner';
@@ -49,6 +49,56 @@ function Panel({
   );
 }
 
+
+function EmmaTeaserVideo() {
+  const { t } = useTranslation('welcome');
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
+
+  function toggleSound() {
+    const v = videoRef.current;
+    if (!v) return;
+    const next = !muted;
+    v.muted = next;
+    if (!next && v.paused) v.play();
+    setMuted(next);
+  }
+
+  return (
+    <div className="mt-6 md:hidden">
+      {/* Nur Mobile */}
+      <div className="relative w-full rounded-2xl overflow-hidden shadow-xl bg-black"
+        style={{ aspectRatio: '9/16' }}>
+        <video
+          ref={videoRef}
+          src={assetUrl('media/ui/brand/emma_12_jahre_alt_web.mp4')}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Ton-Button unten rechts im Video */}
+        <button
+          type="button"
+          onClick={toggleSound}
+          aria-label={muted
+            ? t('teaser.soundOn', { defaultValue: 'Ton einschalten' })
+            : t('teaser.soundOff', { defaultValue: 'Ton ausschalten' })
+          }
+          className="absolute bottom-4 right-4 flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-semibold px-3 py-2 hover:bg-black/80 transition-colors"
+        >
+          {muted ? '🔇' : '🔊'}
+          <span>{muted
+            ? t('teaser.soundOn', { defaultValue: 'Ton ein' })
+            : t('teaser.soundOff', { defaultValue: 'Ton aus' })
+          }</span>
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function Welcome() {
   const navigate = useNavigate();
@@ -332,6 +382,9 @@ function isUnlockedByChain(
     </div>
   </div>
 </section>
+
+        {/* ── MARKETING VIDEO — nur für Erstbesucher ── */}
+        {isFirstTime && <EmmaTeaserVideo />}
 
         {/* WAS IST AMY SURFWING — nur für Erstbesucher */}
         {isFirstTime && (

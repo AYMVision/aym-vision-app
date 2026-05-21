@@ -74,6 +74,16 @@ const isModal = Boolean((state as any)?.backgroundLocation);
   }, [bonusId]);
 
   const backPath = (state?.backTo ?? '/cards') as string;
+
+  function goBack() {
+    const idx = (window.history.state as { idx?: number } | null)?.idx ?? 0;
+    if (idx > 0) {
+      navigate(-1);
+    } else {
+      navigate(backPath);
+    }
+  }
+
   if (isMyCard) {
   return (
     <Layout backPath={backPath}>
@@ -167,12 +177,21 @@ return (
     hideFooter={isModal}
   >
 
-      <div className="max-w-3xl mx-auto px-4 py-6">
+      <div className="max-w-3xl mx-auto px-4 py-4">
+        {/* ── CLOSE (top) ── */}
+        <div className="flex justify-end mb-3">
+          <button
+            type="button"
+            onClick={goBack}
+            aria-label={t('cards.close', { defaultValue: 'Schließen' })}
+            className="w-9 h-9 rounded-full bg-white/80 border border-black/10 flex items-center justify-center text-slate-600 hover:bg-slate-100 shadow-sm transition-colors"
+          >
+            ✕
+          </button>
+        </div>
+
         <div className="rounded-3xl border border-black/5 bg-white shadow-sm overflow-hidden">
-          {/* Portrait: NICHT crop — mit Rand & object-contain */}
           <div className="p-4 sm:p-6">
-
-
             {/* Content */}
             <div className="mt-4">
               {unlocked ? (
@@ -194,6 +213,18 @@ return (
             </div>
           </div>
         </div>
+
+        {/* ── CLOSE (bottom) ── */}
+        <div className="mt-5 flex justify-center">
+          <button
+            type="button"
+            onClick={goBack}
+            className="rounded-2xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 shadow-sm transition-colors"
+          >
+            ← {t('cards.backToCards', { defaultValue: 'Zurück zum Freundebuch' })}
+          </button>
+        </div>
+        <div className="h-6" />
       </div>
     </Layout>
   );

@@ -122,6 +122,15 @@ const isActive = (to: string) => {
 
   const showBack = Boolean(backPath);
 
+  function goBack() {
+    const idx = (window.history.state as { idx?: number } | null)?.idx ?? 0;
+    if (idx > 0) {
+      navigate(-1);
+    } else {
+      navigate(backPath!);
+    }
+  }
+
   // UX: Drawer schließt automatisch bei Route-Wechsel
   useEffect(() => {
     setIsMenuOpen(false);
@@ -159,7 +168,7 @@ const isActive = (to: string) => {
               {showBack && (
                 <button
                   type="button"
-                  onClick={() => navigate(backPath!)}
+                  onClick={goBack}
                   className="px-2 py-1 text-sm font-semibold text-[var(--color-teal-900)] hover:text-[var(--color-teal-400)]"
                   aria-label={tCommon('back')}
                 >
@@ -272,7 +281,7 @@ const isActive = (to: string) => {
             {showBack && (
               <button
                 type="button"
-                onClick={() => navigate(backPath!)}
+                onClick={goBack}
                 className="px-2 py-1 text-sm font-semibold text-[var(--color-teal-900)] hover:text-[var(--color-teal-400)]"
                 aria-label={tCommon('back')}
               >
