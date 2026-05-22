@@ -154,7 +154,7 @@ const isActive = (to: string) => {
   }, []);
 
   return (
-    <div className={cn(fullHeight ? 'h-[100dvh] overflow-hidden' : 'min-h-screen', 'bg-[var(--color-teal-300)] flex flex-col overflow-x-hidden')}>
+    <div className={cn(fullHeight ? 'h-[100dvh] overflow-hidden' : 'min-h-screen', 'bg-[var(--color-teal-300)] flex flex-col [overflow-x:clip]')}>
       {/* =========================
           HEADER (Sticky)
          ========================= */}

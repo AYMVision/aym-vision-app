@@ -406,8 +406,8 @@
           "Ich kann manchmal ganz schön eingeschnappt sein.",
           "Ich muss mich ständig mit anderen vergleichen."
         ],
-        "hobbies": ["Kurzvideos drehen", "Outfits kombinieren", "Clips schneiden", "Alles, was glänzt"],
-          "friends": ["Finn", "Chioma"],
+        "hobbies": ["Kurzvideos drehen", "Outfits kombinieren", "Clips schneiden", "alles, was glänzt"],
+          "friends": ["Finn", "Chioma", "Lisa"],
         "colors": "Pink. Oder Silber. Oder beides – je nach Stimmung.",
         "happy": "Viele Reaktionen und Komplimente.",
         "netRule": "Wenn ich etwas poste, soll es niemanden verletzen – sonst ist es kein guter Clip.",
@@ -424,7 +424,7 @@
         "othersLike": ["Ich push die Gruppe.", "Ich trau mich was.", "Wenn Action ist, bin ich da."],
         "annoys": ["Ich mach Sprüche, bevor ich nachdenke.", "Und ich check zu spät, wann Schluss ist."],
         "hobbies": ["Fußball", "Basketball", "E-Sports", "Challenges", "Clips posten, die knallen"],
-          "friends": ["Finn", "Chioma"],
+          "friends": ["Markus"],
         "colors": "Rot. Schwarz. Neon.",
         "happy": "Gewinnen. Applaus.",
         "netRule": "Wenn jemand stopp sagt, ist stopp. Auch wenn’s „nur Spaß“ war.",
@@ -479,8 +479,8 @@
       "hobbies": [
         "Schach spielen",
         "Rätsel und Logikspiele lösen",
-        "Alte Detektivgeschichten lesen",
-        "Kleine Puzzle-Programme schreiben"
+        "alte Detektivgeschichten lesen",
+        "kleine Puzzle-Programme schreiben"
       ],
       "friends": ["Noah", "Jonas", "Chioma"],
       "colors": "Dunkelblau. Unauffällig, aber verlässlich.",

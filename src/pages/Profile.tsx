@@ -182,7 +182,8 @@ export default function Profile() {
 
         {/* Stats-Kachel */}
         {(() => {
-          const streak = profile.progress?.weeklyStreak?.currentStreak ?? 0;
+          const recentPlayDates = profile.progress?.weeklyStreak?.recentPlayDates ?? [];
+          const daysInLast7 = recentPlayDates.length;
           const daysPlayed = profile.progress?.activity?.totalPlayedDays ?? 0;
           const amicsRead = Object.keys(profile.progress?.completedChapters ?? {}).length;
           const totalEarned = profile.wallet?.totalEarned ?? 0;
@@ -192,8 +193,8 @@ export default function Profile() {
               <div className="grid grid-cols-4 gap-2 text-center">
                 <div className="flex flex-col items-center gap-0.5">
                   <span className="text-xl">🔥</span>
-                  <span className="text-2xl font-extrabold text-slate-900 leading-none">{streak}</span>
-                  <span className="text-[11px] text-slate-500 leading-tight mt-0.5">Tage am Stück</span>
+                  <span className="text-2xl font-extrabold text-slate-900 leading-none">{daysInLast7}<span className="text-base font-semibold text-slate-400">/7</span></span>
+                  <span className="text-[11px] text-slate-500 leading-tight mt-0.5">Tage diese Woche</span>
                 </div>
                 <div className="flex flex-col items-center gap-0.5">
                   <span className="text-xl">📖</span>
@@ -261,9 +262,6 @@ export default function Profile() {
             </div>
           </div>
         )}
-
-        {/* Challenge-Journal */}
-        <ChallengeJournal />
 
         {/* Story-Welt — volle Breite unter den beiden Kästen */}
         <div className="mt-4 p-4 rounded-2xl border border-black/5 bg-white shadow-sm">
@@ -341,6 +339,10 @@ export default function Profile() {
             </Link>
           </div>
         </div>
+
+
+        {/* Challenge-Journal */}
+        <ChallengeJournal />
 
         {/* Transfer stale warning (only in PWA mode when link is old) */}
         <div className="mt-4">

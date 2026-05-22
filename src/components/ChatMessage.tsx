@@ -293,7 +293,8 @@ interface ChatMessageProps {
 /** Parse [[termId]] tokens in text and return mixed array of strings + term spans */
 function renderWithLexikonTerms(
   text: string,
-  onOpenLexikonTerm?: (termId: string) => void
+  onOpenLexikonTerm?: (termId: string) => void,
+  lang?: string
 ): React.ReactNode {
   if (!onOpenLexikonTerm || !text.includes('[[')) return text;
 
@@ -302,7 +303,7 @@ function renderWithLexikonTerms(
     const match = part.match(/^\[\[([\w-]+)\]\]$/);
     if (match) {
       const termId = match[1];
-      const entry = getLexikonEntry(termId);
+      const entry = getLexikonEntry(termId, lang);
       const rawTitle = entry?.title ?? termId.replace(/-/g, ' ');
       const displayText = rawTitle.replace(/\s*\([^)]*\)$/, '');
       return (
@@ -325,12 +326,14 @@ function MessageBody({
   mainTextClass,
   chatName,
   onOpenLexikonTerm,
+  lang,
 }: {
   message: Message;
   isMain: boolean;
   mainTextClass: string;
   chatName?: string;
   onOpenLexikonTerm?: (termId: string) => void;
+  lang?: string;
 }) {
   if (message.type === 'audio') {
     if (!message.audioSrc) return null;
@@ -352,7 +355,7 @@ function MessageBody({
 
   return (
     <p className={`text-lg min-w-0 break-words leading-relaxed ${isMain ? mainTextClass : 'text-anthracite-800'}`}>
-      {renderWithLexikonTerms(resolvedContent, onOpenLexikonTerm)}
+      {renderWithLexikonTerms(resolvedContent, onOpenLexikonTerm, lang)}
     </p>
   );
 }
@@ -361,7 +364,8 @@ function MessageBody({
 
 export default function ChatMessage({ message, onOpenBonusLink, onOpenLexikonTerm }: ChatMessageProps) {
   const { profile } = useProfile();
-  const { t } = useTranslation('stories');
+  const { t, i18n } = useTranslation('stories');
+  const lang = (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
 
   const navigate = useNavigate();
 
@@ -588,6 +592,7 @@ onClick={() => {
   mainTextClass="text-white"
   chatName={profile.chatName}
   onOpenLexikonTerm={onOpenLexikonTerm}
+  lang={lang}
 />
 
 
@@ -647,6 +652,7 @@ onClick={() => {
           mainTextClass={mainTheme.text}
           chatName={profile.chatName}
           onOpenLexikonTerm={onOpenLexikonTerm}
+          lang={lang}
         />
 
         <TimeStamp value={message.timestamp} align="start" />

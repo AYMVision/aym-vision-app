@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout';
 import { getLexikonEntries } from '../lexikon/lexikonIndex';
+
 import type { LexikonEntry } from '../lexikon/lexikonTypes';
 
 function LexikonTermCard({ entry, onClick }: { entry: LexikonEntry; onClick: () => void }) {
@@ -93,8 +94,9 @@ function LexikonTermModal({ entry, onClose }: { entry: LexikonEntry; onClose: ()
 }
 
 export default function Lexikon() {
-  const { t } = useTranslation('lexikon');
-  const entries = getLexikonEntries();
+  const { t, i18n } = useTranslation('lexikon');
+  const lang = (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
+  const entries = getLexikonEntries(lang);
   const [search, setSearch] = useState('');
   const [openEntry, setOpenEntry] = useState<LexikonEntry | null>(null);
 
@@ -129,7 +131,7 @@ export default function Lexikon() {
             type="search"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Begriff suchen…"
+            placeholder={t('searchPlaceholder')}
             className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-base text-anthracite-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
           />
         </div>
@@ -137,7 +139,7 @@ export default function Lexikon() {
         {/* Entries */}
         <div className="flex flex-col gap-2">
           {filtered.length === 0 && (
-            <p className="text-center text-slate-400 py-8 text-sm">Kein Begriff gefunden.</p>
+            <p className="text-center text-slate-400 py-8 text-sm">{t('emptyState')}</p>
           )}
           {filtered.map(entry => (
             <LexikonTermCard

@@ -87,6 +87,7 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Summer Holidays', [
 
   S('s1e01c01_story_switch_to_amy_chat', [
     amyChat(),
+    m(ch.amy, 'Don\'t worry — just answer honestly. I\'m curious what you think.'),
   ], ['reflect-understand']),
 
   IT('s1e01c01_item_yasmin_feeling',
@@ -144,7 +145,7 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Summer Holidays', [
     m(ch.yasmin, 'Are you coming back today?', '11:28'),
     m(ch.lisa, 'No, we\'re flying back tomorrow. I still have one more day.', '11:28'),
     m(ch.carlos, 'Sounds really great. 😊 That waterfall photo is strong.', '11:29'),
-    m(ch.carlos, 'I\'m checking out the area in Google Earth right now - the 3D views are pretty good. It almost feels like being there 👍', '11:29'),
+    m(ch.carlos, 'I\'m checking out the area in [[google-earth]] right now - the 3D views are pretty good. It almost feels like being there 👍', '11:29'),
     m(ch.igor, 'Feel free to keep sending cool photos like that.', '11:30'),
     img(ch.lisa, '/media/story/episodes/s1e01/s1e01c01_2-512.webp', '11:30', {
       reactions: [R('❤️'), R('🤩')],
@@ -166,14 +167,6 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Summer Holidays', [
       '/diaries/diary_yasmin?entry=s1e01c01_0001', 'Open entry →'),
   ]),
 
-  S('s1e01c01_story_amy_intro_me_diary', [
-    m(ch.amy, 'You can also write your own diary and keep track of your thoughts.'),
-  ]),
-
-  S('s1e01c01_story_my_diary_bonus', [
-    bonusLink('diary-me', 'My diary',
-      '/diaries/diary_me', 'Open diary →'),
-  ]),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -304,10 +297,12 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'The Plan with the Photo', [
     m(ch.igor, 'idk 😂', '14:08'),
     m(ch.igor, 'Somewhere in the woods. Really cool here 🌲🚲🐿️', '14:09'),
     m(ch.lukas, 'I shared my location, so you can see exactly where.', '14:09'),
+    img(ch.lukas, '/media/story/episodes/s1e01/s1e01c03_3-512.webp', '14:09'),
     m(ch.lukas, 'To be honest, I\'m pretty exhausted 😰', '14:10'),
     img(ch.lukas, '/media/story/episodes/s1e01/s1e01c03_1-512.webp', '14:10'),
     m(ch.lukas, 'I just hope it\'s not much farther. My strength is not unlimited.', '14:11'),
     m(ch.lukas, 'But honestly: this area is incredibly beautiful.', '14:11'),
+    m(ch.lukas, 'It\'s supposed to really lift your mood, apparently. It says so here.', '14:11'),
     bonusLink('tip-amy-staunen', 'Article: Wonder', '/newspaper/tip-amy-staunen', 'Open article →'),
     m(ch.yasmin, 'And there\'s a waterfall there?', '14:12'),
     m(ch.lukas, 'I can\'t see it yet. We\'re still some way off.', '14:12'),
@@ -325,7 +320,7 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'The Plan with the Photo', [
   S('s1e01c03_story_private_yasmin_lisa', [
     privateChat('Yasmin', 'Lisa'),
     m(ch.lisa, 'Did you see Igor\'s posts? So cool!', '14:19'),
-    img(ch.lisa, '/media/story/episodes/s1e01/s1e01c03_2-512.webp', '14:19', { content: 'Forwarded:' }),
+    img(ch.lisa, '/media/story/episodes/s1e01/s1e01c03_2-512.webp', '14:19', { forwarded: { fromName: 'Igor' } }),
     m(ch.yasmin, 'Yeah.', '14:20'),
     m(ch.yasmin, 'Are you back yet?', '14:20'),
     m(ch.lisa, 'We just landed ✈️', '14:21'),
@@ -372,6 +367,12 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'The Plan with the Photo', [
   S('s1e01c03_story_amy_wrapup', [
     m(ch.amy, 'Let\'s see what Yasmin decides – and what idea suddenly pops into her head.'),
   ], ['reflect-understand']),
+
+  S('s1e01c03_story_lukas_friendbook', [
+    privateChat('You', 'Yasmin'),
+    m(ch.yasmin, 'Yeah, honestly, I don\'t know…', '14:25'),
+    m(ch.yasmin, 'By the way… I asked Lukas if he\'d write something in your friend book too. He\'ll send it your way tomorrow.', '14:26'),
+  ], ['talk-act']),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -379,6 +380,21 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'The Plan with the Photo', [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const c04 = C('s1e01c04', 3, 'Amic 4', 'Things Get Critical at the Waterfall', [
+
+  S('s1e01c04_story_lukas_friendbook', [
+    privateChat('You', 'Lukas', 'Yasmin'),
+    m(ch.lukas, 'Hi {{chatName}}, I went ahead and wrote an entry in your friend book.', '15:40'),
+    bonusLink('char-lukas', 'Character card Lukas', '/cards/char-lukas', 'View card →'),
+    m(ch.yasmin, 'Hi {{chatName}}, how are you doing?', '15:44'),
+  ], ['talk-act']),
+
+  inp('s1e01c04_input_howru', 'stories:s1e01.c04.input.howru', {
+    required: false,
+    emptySubmitsAllowed: true,
+    maxLength: 200,
+    topics: ['talk-act'],
+    promptSpeakerId: 'yasmin',
+  }),
 
   S('s1e01c04_story_groupchat_waterfall', [
     privateChat('Igor', 'Lukas', 'Yasmin'),
@@ -395,7 +411,7 @@ const c04 = C('s1e01c04', 3, 'Amic 4', 'Things Get Critical at the Waterfall', [
     m(ch.lukas, 'The water level must be way above normal. 🌊 We should be careful.', '15:11'),
     m(ch.igor, 'Don\'t listen to Lukas rambling: it\'s seriously awesome here, cool scenery and awesome downhill sections 👍', '15:12'),
     m(ch.yasmin, 'Okay, I\'m on my way 😊', '15:13'),
-    m(ch.yasmin, 'I found a blog. There are photos - people in the water in front of the waterfall. It looks so cool… I\'d totally be up for it. Did you bring swimwear too?', '15:14'),
+    m(ch.yasmin, 'I found a [[blog]]. There are photos - people in the water in front of the waterfall. It looks so cool… I\'d totally be up for it. Did you bring swimwear too?', '15:14'),
     m(ch.lukas, 'That\'s nonsense ❌', '15:14'),
     m(ch.lukas, 'This place is definitely not suitable for swimming – especially not after the rain.', '15:15'),
     m(ch.igor, 'Let\'s talk about it later. We\'re moving on now.', '15:15'),
@@ -451,7 +467,7 @@ const c04 = C('s1e01c04', 3, 'Amic 4', 'Things Get Critical at the Waterfall', [
     privateChat('Yasmin', 'Aylin'),
     m(ch.yasmin, 'And now I\'m already here… But… this doesn\'t look like a lake for swimming at all.', '15:36'),
     m(ch.yasmin, 'More like a whitewater adventure. What am I supposed to do?', '15:36'),
-    m(ch.yasmin, 'Wait… I\'ve got an idea. Maybe you can help me for a second. You know a lot about AI, right?', '15:37'),
+    m(ch.yasmin, 'Wait… I\'ve got an idea. Maybe you can help me for a second. You know a lot about [[ki]], right?', '15:37'),
     m(ch.yasmin, 'Aylin? Are you online?', '15:37'),
   ], ['reflect-understand', 'talk-act']),
 ]);
@@ -515,35 +531,35 @@ const c05 = C('s1e01c05', 4, 'Amic 5', 'The Picture Causes Alarm', [
     m(ch.amy, 'The situation is escalating. Yasmin isn\'t answering anymore, and nobody knows exactly what happened.'),
   ], ['reflect-understand']),
 
-  IT('s1e01c05_item_emergency_help',
+  OR('s1e01c05_reflection_emergency_help',
     'What should someone in the group do now?',
-    'responsibility', 'intervene',
-    [
-      optSegs('a', 'They all wait for now. Maybe Yasmin will message again in a moment.', 0,
-        '👉 Nothing happens in the group at first. Everyone hopes the situation will resolve itself.',
-        '👉 Meanwhile, time passes. If something really has happened, that doesn\'t make it any better.',
-        '💡 If it might be serious, it\'s important not to just wait, but to get help.',
-      ),
-      optSegs('b', 'They keep trying together to find out where Yasmin is and stay on it.', 2,
-        '👉 The group stays active. They try to find out more.',
-        '👉 That can help, but it doesn\'t necessarily replace getting fast outside support.',
-        '💡 The more serious the situation seems, the more important it is not only to keep searching yourselves, but also to get help in addition.',
-      ),
-      optSegs('c', 'Someone organizes help.', 3,
-        'The situation should be taken seriously, and help should be called in, even if it\'s still unclear what exactly happened.',
-        '👉 Informing parents, the police, or other helpers can feel like a big step. But that is exactly how something terrible can be prevented.',
-        '💡 If something could be dangerous, it\'s better to act too early than too late.',
-      ),
-      optSegs('d', 'Someone in the group texts Yasmin again and hopes she replies.', 1,
-        '👉 Yasmin is messaged again. If she sees her phone, she might respond.',
-        '👉 At the same time, everything depends on whether she is even able to answer. If not, the situation stays unclear.',
-        '💡 Sometimes one message isn\'t enough to really help.',
-      ),
-    ],
-    ['reflect-understand', 'talk-act'],
+    {
+      topics: ['reflect-understand', 'talk-act'],
+      category: 'ACTION',
+      bypassAi: true,
+      fixedAmyReply: 'In a situation like this, every minute counts. Getting help is the most important thing you can do.',
+    },
   ),
 
-  AF('s1e01c05_amy_feedback_emergency_help', 's1e01c05_item_emergency_help'),
+  AR('s1e01c05_amy_reaction_emergency_help', 's1e01c05_reflection_emergency_help'),
+
+  S('s1e01c05_story_amy_tip_emergency_help', [
+    amyChat(),
+    m(ch.amy, 'The situation should be taken seriously and help called in, even if it\'s still not clear what exactly happened.'),
+    m(ch.amy, '👉 Informing parents, the police, or other helpers can feel like a big step. But that is exactly how something terrible can be prevented.'),
+    m(ch.amy, '💡 If something could be dangerous, it\'s better to act too early than too late.'),
+  ], ['reflect-understand', 'talk-act']),
+
+  S('s1e01c05_story_amy_intro_me_diary', [
+    amyChat(),
+    m(ch.amy, 'Difficult moments can sometimes be easier to process when you write them down.'),
+    m(ch.amy, 'Is there something on your mind right now?'),
+  ], ['reflect-understand']),
+
+  S('s1e01c05_story_my_diary_bonus', [
+    bonusLink('diary-me', 'My diary',
+      '/diaries/diary_me', 'Open diary →'),
+  ]),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -559,16 +575,16 @@ const c06 = C('s1e01c06', 5, 'Amic 6', 'Clues in the Picture', [
     m(ch.lisa, 'No clue 🤷‍♀️', '16:21'),
     m(ch.carlos, 'Wait a second.', '16:21'),
     m(ch.carlos, 'We can figure it out.', '16:21'),
-    m(ch.carlos, 'There could be geodata in the picture. 📍', '16:22'),
+    m(ch.carlos, 'There could be [[geodaten]] in the picture. 📍', '16:22'),
     m(ch.lisa, 'Geodata?', '16:22'),
     m(ch.carlos, 'Yeah, you can often infer where a photo was taken from an image.', '16:23'),
-    m(ch.carlos, 'When you take a photo with your phone, it often saves information with it: location, time, sometimes even the device. That\'s called “metadata.”', '16:23'),
+    m(ch.carlos, 'When you take a photo with your phone, it often saves information with it: location, time, sometimes even the device. That\'s called “[[metadaten]].”', '16:23'),
     m(ch.lisa, 'Perfect. That\'s exactly what we need. 🗺️', '16:24'),
     m(ch.carlos, 'Vale… no.', '16:24'),
     m(ch.carlos, 'Wait. In chats, the coordinates are usually removed.', '16:24'),
     m(ch.lisa, 'What?', '16:25'),
     m(ch.chioma, 'Why?', '16:25'),
-    m(ch.carlos, 'When a photo is posted in a chat, the geodata is deleted. For privacy reasons.', '16:25'),
+    m(ch.carlos, 'When a photo is posted in a chat, the geodata is deleted. For [[datenschutz]] reasons.', '16:25'),
     m(ch.lisa, 'Darn.', '16:26'),
     m(ch.carlos, 'Well, actually that\'s a good thing too. So not everyone has access to the data.', '16:26'),
     m(ch.chioma, 'What do we do now?', '16:27'),
@@ -634,7 +650,8 @@ const c06 = C('s1e01c06', 5, 'Amic 6', 'Clues in the Picture', [
     m(ch.carlos, 'No. That waterfall isn\'t it. Way too far away.', '16:37'),
     m(ch.carlos, 'But maybe this one…', '16:37'),
     m(ch.chioma, 'Where is it?', '16:38'),
-    m(ch.carlos, 'In the Grieswald Mountains.', '16:38'),
+    img(ch.carlos, '/media/story/episodes/s1e01/s1e01c06-512.webp', '15:31'),
+    m(ch.lisa, 'That\'s in the Grieswald Mountains!', '16:38'),
     m(ch.lisa, 'Could fit 🤔', '16:38'),
     m(ch.carlos, '@Lukas, @Igor Is that the right location?', '16:39'),
     m(ch.lisa, 'They\'re not answering.', '16:39'),
@@ -648,6 +665,15 @@ const c06 = C('s1e01c06', 5, 'Amic 6', 'Clues in the Picture', [
     m(ch.carlos, 'That whole geodata and image analysis thing is really pretty exciting 🤓 I wrote something up about it. In case you want to check it out:', '16:42'),
     bonusLink('tip-carlos-geodaten', 'Article: Geodata', '/newspaper/tip-carlos-geodaten', 'Open article →'),
   ], ['talk-act']),
+
+  S('s1e01c06_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Ready for a little challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e01c06_challenge_metadata',
+    '👉 Look at a photo today that you\'d want to share – do you know what invisible information might be hidden in it?',
+  ),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -722,23 +748,21 @@ const c07 = C('s1e01c07', 6, 'Amic 7', 'Relief and Doubt', [
 
   AF('s1e01c07_amy_feedback_outdated_tip', 's1e01c07_item_outdated_tip'),
 
-  S('s1e01c07_story_amy_wrapup', [
-    m(ch.amy, 'By the way, I can see that Lukas is writing in your friend book. Come back tomorrow and you can take a look. 😊'),
-  ], ['info-check', 'reflect-understand']),
+  S('s1e01c07_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Ready for a little challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e01c07_challenge_info_check',
+    '👉 Find a tip online today that you\'d normally just believe – and check whether it\'s actually still up to date.',
+  ),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CHAPTER 8 — The Picture Wasn’t Real
 // ─────────────────────────────────────────────────────────────────────────────
 
-const c08 = C('s1e01c08', 7, 'Amic', 'The Picture Wasn’t Real', [
-
-  S('s1e01c08_story_lukas_friendbook', [
-    privateChat('You', 'Lukas'),
-    m(ch.lukas, 'I took the liberty of writing an entry for your friend book as well.', '08:14'),
-    bonusLink('char-lukas', 'Character card Lukas', '/cards/char-lukas', 'View card →'),
-    m(ch.lukas, 'You can look at it if you want.', '08:14'),
-  ], ['talk-act']),
+const c08 = C('s1e01c08', 7, 'Amic 8', 'The Picture Wasn’t Real', [
 
   S('s1e01c08_story_class_reveal', [
     classChat(),
@@ -778,7 +802,7 @@ const c08 = C('s1e01c08', 7, 'Amic', 'The Picture Wasn’t Real', [
     m(ch.lisa, 'But I already wondered who was supposed to have taken the photo!!', '18:38'),
     m(ch.finn, 'crazy… i really thought you were in the water', '18:38'),
     m(ch.aylin, 'Let me see it again…', '18:39'),
-    img(ch.finn, '/media/story/episodes/s1e01/s1e01c05-512.webp', '18:39', { forwarded: {} }),
+    img(ch.finn, '/media/story/episodes/s1e01/s1e01c05-512.webp', '18:39', { forwarded: { fromName: 'Yasmin', fromChatLabel: 'Class chat' } }),
     m(ch.aylin, 'Wow, technically that\'s really good 👍', '18:40'),
     m(ch.aylin, 'The light and perspective match. Nicely done.', '18:40'),
     m(ch.lisa, '😕', '18:40'),

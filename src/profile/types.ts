@@ -36,6 +36,8 @@ export type WeeklyStreakState = {
   currentStreak: number;
   longestStreak: number;
   completedWeeks: number;
+  /** Spieldaten der letzten 7 Tage (YYYY-MM-DD), für den 5-von-7-Ansatz */
+  recentPlayDates?: string[];
 };
 
 export type ActivityProgressState = {

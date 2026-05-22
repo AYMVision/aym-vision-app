@@ -41,6 +41,7 @@ export function createDefaultProfile(): UserProfile {
         currentStreak: 0,
         longestStreak: 0,
         completedWeeks: 0,
+        recentPlayDates: [],
       },
       themePoints: {
         'info-check': 0,

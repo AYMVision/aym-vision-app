@@ -9,24 +9,30 @@ function todayStr() {
   return `${y}-${m}-${d}`;
 }
 
-function yesterdayStr() {
-  const d = new Date();
-  d.setDate(d.getDate() - 1);
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
+/** Gibt alle Datums-Strings der letzten `days` Tage zurück (inklusive heute). */
+function lastNDays(days: number): Set<string> {
+  const result = new Set<string>();
+  const base = new Date();
+  for (let i = 0; i < days; i++) {
+    const d = new Date(base);
+    d.setDate(base.getDate() - i);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    result.add(`${y}-${m}-${day}`);
+  }
+  return result;
 }
 
 export function applyDailyStreak(profile: UserProfile) {
   const today = todayStr();
-  const yesterday = yesterdayStr();
 
   const current = profile.progress.weeklyStreak ?? {
     lastActiveDay: '',
     currentStreak: 0,
     longestStreak: 0,
     completedWeeks: 0,
+    recentPlayDates: [],
   };
 
   const activity = profile.progress.activity ?? {
@@ -44,11 +50,20 @@ export function applyDailyStreak(profile: UserProfile) {
     };
   }
 
-  let newStreak = 1;
+  // recentPlayDates aktualisieren: heute hinzufügen, alles älter als 7 Tage entfernen
+  const window7 = lastNDays(7);
+  const updatedDates = [
+    ...(current.recentPlayDates ?? []).filter((d) => window7.has(d)),
+    today,
+  ];
+  // Duplikate entfernen (sicherheitshalber)
+  const uniqueDates = [...new Set(updatedDates)];
 
-  if (current.lastActiveDay === yesterday) {
-    newStreak = current.currentStreak + 1;
-  }
+  // Anzahl Tage in den letzten 7 Tagen
+  const daysInLast7 = uniqueDates.filter((d) => window7.has(d)).length;
+
+  // currentStreak weiterhin als "Tage gespielt insgesamt" führen (für Sticker bei 10/20)
+  const newStreak = current.currentStreak + 1;
 
   let completedWeeks = current.completedWeeks;
   let weekCompleted = false;
@@ -56,8 +71,8 @@ export function applyDailyStreak(profile: UserProfile) {
 
   let next = profile;
 
-  // Einmalig-Badge bei 5 Tagen
-  if (newStreak === 5 && !profile.progress.earnedBadges?.['weekly-streak-5']) {
+  // 5-von-7-Badge: einmalig, sobald 5 Tage innerhalb der letzten 7 erreicht sind
+  if (daysInLast7 >= 5 && !profile.progress.earnedBadges?.['weekly-streak-5']) {
     next = {
       ...next,
       progress: {
@@ -71,7 +86,7 @@ export function applyDailyStreak(profile: UserProfile) {
     weeklyBadgeAwarded = true;
   }
 
-  // Wiederkehrende +2 Coins alle 7 Tage am Stück
+  // Wiederkehrende +2 Coins alle 7 gespielte Tage (insgesamt)
   if (newStreak % 7 === 0) {
     completedWeeks += 1;
     weekCompleted = true;
@@ -128,6 +143,7 @@ export function applyDailyStreak(profile: UserProfile) {
         currentStreak: newStreak,
         longestStreak: Math.max(current.longestStreak, newStreak),
         completedWeeks,
+        recentPlayDates: uniqueDates,
       },
       activity: {
         totalPlayedDays,

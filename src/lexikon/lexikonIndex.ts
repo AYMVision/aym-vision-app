@@ -2,6 +2,7 @@
 // Carlos' Lexikon — Technik-Begriffe für alle, die's wissen wollen.
 
 import type { LexikonEntry } from './lexikonTypes';
+import { LEXIKON_ENTRIES_EN } from './lexikonIndex.en';
 
 export const LEXIKON_ENTRIES: LexikonEntry[] = [
   {
@@ -340,10 +341,11 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
   },
 ];
 
-export function getLexikonEntry(id: string): LexikonEntry | undefined {
-  return LEXIKON_ENTRIES.find(e => e.id === id);
+export function getLexikonEntry(id: string, lang?: string): LexikonEntry | undefined {
+  const entries = lang === 'en' ? LEXIKON_ENTRIES_EN : LEXIKON_ENTRIES;
+  return entries.find(e => e.id === id);
 }
 
-export function getLexikonEntries(): LexikonEntry[] {
-  return LEXIKON_ENTRIES;
+export function getLexikonEntries(lang?: string): LexikonEntry[] {
+  return lang === 'en' ? LEXIKON_ENTRIES_EN : LEXIKON_ENTRIES;
 }

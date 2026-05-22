@@ -59,7 +59,7 @@ export const CONTENT_INDEX: SeasonMeta[] = [
         coverImage: '/media/story/episodes/s1e01/s1e01-512.webp',
         stickerImage: '/media/stickers/episodes/s1e01-512.webp',
 
-        chapterCount: 9,
+        chapterCount: 8,
         released: true,
         order: 1,
         storyEngine: 'v2',

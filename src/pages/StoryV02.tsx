@@ -356,7 +356,7 @@ export default function StoryV02() {
   const [rewardToast, setRewardToast] = useState<RewardToastData | null>(null);
 
   const [lexikonTermId, setLexikonTermId] = useState<string | null>(null);
-  const openLexikonEntry = getLexikonEntry(lexikonTermId ?? '');
+  const openLexikonEntry = getLexikonEntry(lexikonTermId ?? '', lang);
 
   // Belohnungen warten bis der letzte Chapter-Eintrag sichtbar ist (IntersectionObserver)
   const [pendingChapterRewards, setPendingChapterRewards] = useState<{
@@ -845,7 +845,7 @@ function hasStoryMigrationDone(key: string): boolean {
       // Element nicht im DOM (sollte nicht vorkommen) — direkt auslösen
       const staticStickers: Array<{ image: string; title: string }> = [];
       if (starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
-      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 Tage am Stück! 🔥' });
+      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 von 7 Tagen! 🔥' });
       setTimeout(() => fireRewardToast({ stickerIds: [...themeStickerIds, ...milestoneStickerIds], staticStickers, coins: coinAwarded ? 1 : 0 }), 1200);
       setPendingChapterRewards(null);
       return;
@@ -854,7 +854,7 @@ function hasStoryMigrationDone(key: string): boolean {
     const fire = () => {
       const staticStickers: Array<{ image: string; title: string }> = [];
       if (starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
-      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 Tage am Stück! 🔥' });
+      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 von 7 Tagen! 🔥' });
       setTimeout(() => fireRewardToast({ stickerIds: [...themeStickerIds, ...milestoneStickerIds], staticStickers, coins: coinAwarded ? 1 : 0 }), 1200);
       setPendingChapterRewards(null);
     };
@@ -1031,7 +1031,7 @@ function hasStoryMigrationDone(key: string): boolean {
             staticStickers.push({ image: episodeMeta.stickerImage, title: 'Episode abgeschlossen' });
           }
           if (result.starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
-          if (result.weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 Tage am Stück!' });
+          if (result.weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 von 7 Tagen! 🔥' });
           const coins = result.episodeBonusAwarded ? 5 : 0;
           if (stickerIds.length > 0 || staticStickers.length > 0 || coins > 0) {
             setTimeout(() => fireRewardToast({ stickerIds, staticStickers, coins }), 5000);

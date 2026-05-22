@@ -145,6 +145,9 @@ const friendbookRaw = isObject(progRaw.friendbook) ? progRaw.friendbook : {};
         weeklyRaw.completedWeeks,
         base.progress.weeklyStreak?.completedWeeks ?? 0
       ),
+      recentPlayDates: Array.isArray(weeklyRaw.recentPlayDates)
+        ? (weeklyRaw.recentPlayDates as string[]).filter((d) => typeof d === 'string')
+        : (base.progress.weeklyStreak?.recentPlayDates ?? []),
     },
 
     themePoints: {

@@ -1,5 +1,5 @@
 // src/components/ModalShell.tsx
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function ModalShell({
@@ -10,6 +10,11 @@ export default function ModalShell({
   children: React.ReactNode;
 }) {
   const navigate = useNavigate();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, []);
 
   return (
     <div className="fixed inset-0 z-[100]">
@@ -34,7 +39,7 @@ export default function ModalShell({
               ✕
             </button>
           </div>
-          <div className="max-h-[80vh] overflow-auto">{children}</div>
+          <div ref={scrollRef} className="max-h-[80vh] overflow-auto">{children}</div>
         </div>
       </div>
     </div>
