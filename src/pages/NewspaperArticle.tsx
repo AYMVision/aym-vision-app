@@ -1,7 +1,7 @@
 // src/pages/NewspaperArticle.tsx
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useTranslation } from 'react-i18next';
 import { assetUrl } from '../common/assetUrl';
@@ -48,8 +48,20 @@ export default function NewspaperArticle() {
 
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
+  const navigate = useNavigate();
   const state = (location.state ?? null) as LocationState;
   const isModal = Boolean(state?.backgroundLocation);
+
+  const backPath = state?.backTo ?? '/newspaper';
+
+  function goBack() {
+    const idx = (window.history.state as { idx?: number } | null)?.idx ?? 0;
+    if (idx > 0) {
+      navigate(-1);
+    } else {
+      navigate(backPath);
+    }
+  }
 
   const progress = useBonusProgressFromProfile();
 
@@ -139,8 +151,22 @@ export default function NewspaperArticle() {
   }
 
   return (
-    <Layout backPath={state?.backTo ?? '/newspaper'} hideHeader={isModal} hideFooter>
+    <Layout backPath={isModal ? undefined : backPath} hideHeader={isModal} hideFooter>
       <div className="max-w-2xl mx-auto px-5 sm:px-8 py-6">
+
+        {/* ── CLOSE (top) ── */}
+        {isModal && (
+          <div className="flex justify-end mb-3">
+            <button
+              type="button"
+              onClick={goBack}
+              aria-label={t('cards.close', { defaultValue: 'Schließen' })}
+              className="w-9 h-9 rounded-full bg-white/80 border border-black/10 flex items-center justify-center text-slate-600 hover:bg-slate-100 shadow-sm transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
         {/* LOCK */}
         {!unlocked && (
@@ -178,6 +204,17 @@ export default function NewspaperArticle() {
   </div>
 )}
 
+        {/* ── CLOSE (bottom) ── */}
+        <div className="mt-6 flex justify-center">
+          <button
+            type="button"
+            onClick={goBack}
+            className="rounded-2xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 shadow-sm transition-colors"
+          >
+            ← {t('cards.backToCards', { defaultValue: 'Zurück' })}
+          </button>
+        </div>
+        <div className="h-6" />
       </div>
     </Layout>
   );

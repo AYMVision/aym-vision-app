@@ -121,6 +121,18 @@ const isModal = Boolean((state as any)?.backgroundLocation);
 >
 
         <div className="max-w-3xl mx-auto px-4 py-8">
+          {/* ── CLOSE (top) ── */}
+          <div className="flex justify-end mb-3">
+            <button
+              type="button"
+              onClick={goBack}
+              aria-label={t('cards.close', { defaultValue: 'Schließen' })}
+              className="w-9 h-9 rounded-full bg-white/80 border border-black/10 flex items-center justify-center text-slate-600 hover:bg-slate-100 shadow-sm transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+
           <div className="rounded-2xl border border-slate-200 bg-white p-4">
             <div className="font-extrabold text-slate-900">
               {t('cards.notFoundTitle', { defaultValue: 'Karte nicht gefunden' })}
@@ -131,6 +143,18 @@ const isModal = Boolean((state as any)?.backgroundLocation);
               })}
             </div>
           </div>
+
+          {/* ── CLOSE (bottom) ── */}
+          <div className="mt-5 flex justify-center">
+            <button
+              type="button"
+              onClick={goBack}
+              className="rounded-2xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 shadow-sm transition-colors"
+            >
+              ← {t('cards.backToCards', { defaultValue: 'Zurück' })}
+            </button>
+          </div>
+          <div className="h-6" />
         </div>
       </Layout>
     );
@@ -221,7 +245,7 @@ return (
             onClick={goBack}
             className="rounded-2xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 shadow-sm transition-colors"
           >
-            ← {t('cards.backToCards', { defaultValue: 'Zurück zum Freundebuch' })}
+            ← {t('cards.backToCards', { defaultValue: 'Zurück' })}
           </button>
         </div>
         <div className="h-6" />

@@ -763,7 +763,7 @@ const c08 = C('s1e01c08', 7, 'Amic', 'The Picture Wasn’t Real', [
     m(ch.chioma, 'What?? 😳', '18:33'),
     m(ch.yasmin, 'I was really scared.', '18:33'),
     m(ch.yasmin, 'The water was way too wild. And…', '18:34'),
-    m(ch.lisa, 'But the photo—', '18:34'),
+    m(ch.lisa, 'But the photo', '18:34'),
     m(ch.yasmin, 'I only wanted a picture. A… cool picture… like that too.', '18:34'),
     m(ch.lisa, '?', '18:35'),
     m(ch.yasmin, 'In the photo, that is me… but at the pool.', '18:35'),

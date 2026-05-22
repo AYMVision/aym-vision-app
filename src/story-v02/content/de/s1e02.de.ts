@@ -140,7 +140,7 @@ const c02 = C('s1e02c02', 1, 'Amic 2', 'Rausgeworfen', [
     m(ch.lisa, 'Dominik hat jetzt auch noch Amir und Farida rausgeworfen. Und keiner weiß, warum.', '10:19'),
     m(ch.chioma, 'Warum hast du nichts gesagt?', '10:20'),
     m(ch.lisa, 'Dann werfen die mich doch auch raus. Und dann?', '10:20'),
-    sysImg('/media/story/episodes/s1e02/s1e02c02-512.webp', 's1e02c02-img-01'),
+    sysImg('/media/story/episodes/s1e02/s1e02c02_1-512.webp', 's1e02c02-img-01'),
   ], ['reflect-understand', 'talk-act', 'fairness']),
 
   S('s1e02c02_story_switch_to_amy', [
@@ -203,6 +203,8 @@ const c02 = C('s1e02c02', 1, 'Amic 2', 'Rausgeworfen', [
     m(ch.lisa, 'Fake-Nachricht: Foto von Schlägerei auf dem Schulhof.', '10:35'),
     m(ch.yasmin, 'Echt jetzt?? Ist ja krass!', '10:36'),
     m(ch.lisa, 'Quatsch, das Bild ist mit KI generiert. Die finden das witzig!', '10:36'),
+    m(ch.chioma, 'Woher weißt du das?', '10:36'),
+    m(ch.lisa, 'Hab kurz eine [[reverse-image-search]] gemacht. Bild hochladen, fertig. Das Original taucht in einem völlig anderen Kontext auf — hat mit unserer Schule null zu tun.', '10:37'),
     m(ch.chioma, 'Oder Dominik will von sich ablenken?', '10:37'),
     m(ch.yasmin, 'Komisch, unsere Klasse.', '10:37'),
     m(ch.lisa, 'Alles war irgendwie gut, bis dieser Klassenchat angefangen hat. Irgendwie denken manche, sie könnten jeden Müll dort abladen. Die einzige Regel im Klassenchat: Gehirn bleibt draußen 🙈', '10:38'),
@@ -349,8 +351,6 @@ const c04 = C('s1e02c04', 3, 'Amic 4', 'Die Schülerzeitung', [
 
   S('s1e02c04_story_switch_to_amy', [
     amyChat(),
-    m(ch.amy, 'Chioma hat direkt eine Idee und will etwas beitragen.', '12:13'),
-    m(ch.amy, 'Und du? Was für einen Beitrag würdest du gern mal machen?', '12:13'),
   ], ['creative', 'talk-act']),
 
   OR('s1e02c04_reflection_own_contribution',
@@ -366,8 +366,6 @@ const c04 = C('s1e02c04', 3, 'Amic 4', 'Die Schülerzeitung', [
   AR('s1e02c04_amy_reaction_own_contribution', 's1e02c04_reflection_own_contribution'),
 
   S('s1e02c04_story_amy_challenge', [
-    m(ch.amy, 'Eine kleine Challenge für dich:', '12:15'),
-    m(ch.amy, 'Wenn du Lust hast, nimm dir gleich einen Block und einen Stift und setze deine Idee um.', '12:15'),
   ], ['creative', 'problem-solving']),
 
   CH('s1e02c04_challenge_write_idea',

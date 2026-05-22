@@ -570,7 +570,7 @@ function isUnlockedByChain(
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold text-slate-900 leading-snug line-clamp-2">
                   {amyHint.type === 'newspaper'
-                    ? (amyHint.titleKey ? tBonus(amyHint.titleKey.replace('bonus:', '')) : 'Neues in der Sch\u00fclerzeitung')
+                    ? (amyHint.titleKey ? tBonus(amyHint.titleKey.replace('bonus:', '')) : 'Neues aus der Sch\u00fclerzeitung')
                     : tCommon('nudge.diary.text')}
                 </p>
                 <p className="mt-0.5 text-xs text-slate-400">

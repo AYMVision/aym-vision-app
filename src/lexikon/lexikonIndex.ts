@@ -132,7 +132,7 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     title: 'Google Earth',
     teaser: 'Die ganze Erde auf dem Bildschirm — bis zum einzelnen Haus.',
     body: 'Google Earth ist ein Computerprogramm von Google, mit dem man sich die Erde von oben anschauen kann. Also wirklich die ganze Erde. Man kann hineinzoomen bis zu einzelnen Häusern, durch Straßen „fahren" und sich Orte ansehen, an denen man noch nie war.',
-    didYouKnow: 'Die Satellitenbilder in Google Earth sind nicht immer aktuell — manche Aufnahmen sind mehrere Jahre alt. Aber die Auflösung ist trotzdem so gut, dass man einzelne Autos erkennen kann.',
+    didYouKnow: 'Die Satellitenbilder in Google Earth sind nicht immer aktuell. Manche Aufnahmen sind mehrere Jahre alt. Aber die Auflösung ist trotzdem so gut, dass man einzelne Autos erkennen kann.',
   },
   {
     id: 'grooming',
@@ -159,7 +159,7 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     id: 'ki',
     title: 'KI (Künstliche Intelligenz)',
     teaser: 'Systeme, die Muster erkennen und daraus Entscheidungen ableiten.',
-    body: 'KI steht für Künstliche Intelligenz — Programme, die aus Beispielen "lernen", statt nach festen Regeln zu handeln. Sie erkennen Muster in riesigen Datenmengen und können zum Beispiel Bilder beschreiben, Texte übersetzen oder vorhersagen, was du als nächstes kaufen oder ansehen willst. KI trifft keine Entscheidungen wie ein Mensch — sie rechnet Wahrscheinlichkeiten aus, was am wahrscheinlichsten passt.',
+    body: 'KI steht für Künstliche Intelligenz — Programme, die aus Beispielen "lernen", statt nach festen Regeln zu handeln. Sie erkennen Muster in riesigen Datenmengen und können zum Beispiel Bilder beschreiben, Texte übersetzen oder vorhersagen, was du als nächstes kaufen oder ansehen willst. KI trifft keine Entscheidungen wie ein Mensch. Sie rechnet Wahrscheinlichkeiten aus, was am wahrscheinlichsten passt.',
     didYouKnow: 'KI-Systeme machen Fehler — oft auf vorhersehbare Weise. Wenn die Trainingsdaten einseitig sind, sind es die Ergebnisse auch.',
     firstAppearance: 's1e03c03',
   },
@@ -256,6 +256,14 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     teaser: 'Die Anweisung, die man einer KI gibt, damit sie etwas tut.',
     body: 'Ein Prompt ist die Anweisung oder Frage, die man einer KI eingibt, damit sie etwas macht. Zum Beispiel ein Text, eine Idee oder eine Beschreibung für ein Bild. Je genauer der Prompt ist, desto besser versteht die KI, was gemeint ist. Ein kurzer oder unklarer Prompt führt oft zu überraschenden Ergebnissen.',
     didYouKnow: '"Prompt Engineering" ist inzwischen ein echter Beruf — Menschen werden dafür bezahlt, besonders gute Anweisungen für KI-Systeme zu entwickeln.',
+  },
+  {
+    id: 'reverse-image-search',
+    title: 'Reverse Image Search',
+    teaser: 'Ein Bild als Suchbegriff nutzen — und herausfinden, ob es echt ist.',
+    body: 'Bei einer Reverse Image Search (auf Deutsch: Rückwärtsbildsuche) lädst du kein Wort hoch, sondern ein Bild. Die Suchmaschine sucht dann im ganzen Internet nach demselben oder ähnlichen Bildern. So kannst du herausfinden: Kommt dieses Foto wirklich von hier? Wurde es schon früher benutzt? Und: Ist der Kontext überhaupt der richtige? Besonders bei Falschmeldungen werden echte Fotos aus einem völlig anderen Zusammenhang recycelt — zum Beispiel ein Bild von einer alten Schlägerei, das plötzlich als Beweis für etwas aktuelles kursiert. Mit einer Reverse Image Search lässt sich das oft in Sekunden aufdecken. Tools: Google Bilder (images.google.com → Kamera-Symbol), TinEye oder die Google-Lens-Funktion auf dem Handy.',
+    didYouKnow: 'Die Methode wird von Journalist:innen und Faktenprüfern täglich genutzt — zum Beispiel beim bekannten Faktencheck-Projekt "Bellingcat". Auch du kannst damit in Sekunden einen Fake entlarven.',
+    firstAppearance: 's1e02c02',
   },
   {
     id: 'rueckwaertssuche',

@@ -564,10 +564,20 @@ function hasStoryMigrationDone(key: string): boolean {
           }
         }
 
-        dispatch({ type: 'RESTORE_SNAPSHOT', payload: amicSnap });
+        // Reconcile stepIndex0 with activeStepId in case story content was modified
+        // (e.g. a new step was inserted earlier in the chapter, shifting all indices).
+        let reconciledAmicSnap = amicSnap;
+        if (amicSnap.activeStepId && targetChapter) {
+          const correctIndex = targetChapter.steps.findIndex((s) => s.id === amicSnap.activeStepId);
+          if (correctIndex >= 0 && correctIndex !== amicSnap.stepIndex0) {
+            reconciledAmicSnap = { ...amicSnap, stepIndex0: correctIndex };
+          }
+        }
+
+        dispatch({ type: 'RESTORE_SNAPSHOT', payload: reconciledAmicSnap });
 
         // Show amic-done card if chapter is finished
-        if (amicSnap.phase === 'chapter_finished') {
+        if (reconciledAmicSnap.phase === 'chapter_finished') {
           const gateState = getNextChapterGateState({
             courseId,
             course: { script: episode.chapters },
@@ -631,9 +641,21 @@ function hasStoryMigrationDone(key: string): boolean {
         }
       }
 
-      dispatch({ type: 'RESTORE_SNAPSHOT', payload: snap });
+      // Reconcile stepIndex0 with activeStepId in case story content was modified.
+      let reconciledSnap = snap;
+      if (snap.activeStepId && snap.chapterId) {
+        const snapChapter = episode.chapters.find((c) => c.id === snap.chapterId) ?? null;
+        if (snapChapter) {
+          const correctIndex = snapChapter.steps.findIndex((s) => s.id === snap.activeStepId);
+          if (correctIndex >= 0 && correctIndex !== snap.stepIndex0) {
+            reconciledSnap = { ...snap, stepIndex0: correctIndex };
+          }
+        }
+      }
 
-      if (snap.phase === 'chapter_finished') {
+      dispatch({ type: 'RESTORE_SNAPSHOT', payload: reconciledSnap });
+
+      if (reconciledSnap.phase === 'chapter_finished') {
         const gateState = getNextChapterGateState({
           courseId,
           course: { script: episode.chapters },
@@ -879,6 +901,7 @@ function hasStoryMigrationDone(key: string): boolean {
       chapterIndex0: chapter.chapterIndex0,
       seen: true,
       timestamp: new Date().toISOString(),
+      promptText: challengeText,
     });
 
     markTopicsSeen({
@@ -1160,7 +1183,12 @@ function hasStoryMigrationDone(key: string): boolean {
       saveAmicSession(courseId, state.chapterId, snapshotPayload);
     }
 
-    navigate(payload.linkTo);
+    navigate(payload.linkTo, {
+      state: {
+        backgroundLocation: location,
+        backTo: location.pathname + location.search,
+      },
+    });
   }
 
   function goToNextStep() {
@@ -1367,7 +1395,7 @@ function hasStoryMigrationDone(key: string): boolean {
       case 'challenge':
         return (
           <div key={entry.id} data-story-entry-id={entry.id}>
-            <ChallengeStepCard challengeId={entry.stepId} text={entry.text} />
+            <ChallengeStepCard challengeId={entry.stepId} text={entry.text} courseId={courseId ?? ''} />
           </div>
         );
 
@@ -1674,7 +1702,7 @@ function hasStoryMigrationDone(key: string): boolean {
         currentStep.prompt ?? t(currentStep.promptKey ?? '', { defaultValue: '' });
 
       return (
-        <ChallengeStepCard challengeId={currentStep.id} text={challengeText} />
+        <ChallengeStepCard challengeId={currentStep.id} text={challengeText} courseId={courseId ?? ''} />
       );
     }
 

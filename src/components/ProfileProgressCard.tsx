@@ -53,10 +53,10 @@ export default function ProfileProgressCard({
         />
         <div>
           <div className="text-sm font-extrabold text-slate-900 leading-snug">
-            Los geht's →
+            {t('profile:progress.noProgressTitle', { defaultValue: 'Los geht\'s' })}
           </div>
           <div className="mt-1 text-xs text-slate-500 leading-relaxed">
-            Starte deine erste Story, um hier deinen Fortschritt zu sehen.
+            {t('profile:progress.noProgressHint', { defaultValue: 'Dein Fortschritt erscheint hier, sobald du loslegst.' })}
           </div>
         </div>
         {!compact && (
@@ -64,7 +64,7 @@ export default function ProfileProgressCard({
             to={firstStoryPath}
             className="mt-1 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-extrabold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
           >
-            Jetzt starten →
+            {t('profile:progress.startCta', { defaultValue: 'Jetzt starten →' })}
           </Link>
         )}
       </div>

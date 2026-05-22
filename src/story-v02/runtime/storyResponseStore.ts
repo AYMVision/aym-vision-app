@@ -41,6 +41,11 @@ export type StoredChallengeStatus = {
   chapterIndex0: number;
   seen: boolean;
   timestamp: string;
+  // extended fields
+  promptText?: string;
+  decision?: 'accepted' | 'deferred';
+  completed?: boolean;
+  completedAt?: string;
 };
 
 const INPUT_KEY = 'aym_story_v02_input_responses';
@@ -113,6 +118,30 @@ export function saveChallengeStatus(status: StoredChallengeStatus): void {
     (x) => !(x.courseId === status.courseId && x.challengeId === status.challengeId)
   );
   saveJsonArray(CHALLENGE_KEY, [...filtered, status]);
+}
+
+export function updateChallengeDecision(
+  challengeId: string,
+  courseId: string,
+  decision: 'accepted' | 'deferred'
+): void {
+  const all = loadChallengeStatuses();
+  const updated = all.map((x) =>
+    x.challengeId === challengeId && x.courseId === courseId
+      ? { ...x, decision }
+      : x
+  );
+  saveJsonArray(CHALLENGE_KEY, updated);
+}
+
+export function markChallengeCompleted(challengeId: string, courseId: string): void {
+  const all = loadChallengeStatuses();
+  const updated = all.map((x) =>
+    x.challengeId === challengeId && x.courseId === courseId
+      ? { ...x, completed: true, completedAt: new Date().toISOString() }
+      : x
+  );
+  saveJsonArray(CHALLENGE_KEY, updated);
 }
 
 export function clearAllStoryV02Responses(): void {

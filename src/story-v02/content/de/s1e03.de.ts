@@ -1327,7 +1327,7 @@ const c10 = C('s1e03c10', 9, 'Amic 10', 'Entscheiden kannst du selbst', [
          sysImg('/media/story/episodes/s1e03/s1e03c10_b-512.webp', 's1e03c10_b-img-01'),
     m(ch.dominik, 'Was glotzt ihr alle so auf eure Handys?', '14:20'),
     m(ch.dominik, 'Ich denk, ihr seid abstinent?', '14:20'),
-    m(ch.igor, 'Neue Artikel in der Schülerzeitung.', '14:20'),
+    m(ch.igor, 'Neue Artikel aus der Schülerzeitung.', '14:20'),
     m(ch.finn, 'aylins artikel ist echt gut', '14:21'),
     m(ch.mia, '😊', '14:21'),
     m(ch.dominik, 'Wow. Finn liest jetzt Zeitung.', '14:21'),

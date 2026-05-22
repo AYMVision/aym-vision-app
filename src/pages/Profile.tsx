@@ -18,6 +18,7 @@ import TransferStaleWarning from '../components/TransferStaleWarning';
 import { STICKER_CATALOG } from '../progress/rewardCatalog';
 import AvatarLookCircle from '../components/AvatarLookCircle';
 import { THEME_META, THEME_ORDER } from '../competencies/themeMeta';
+import ChallengeJournal from '../components/ChallengeJournal';
 
 // ✅ typed location state (kein any)
 type ProfileLocationState = {
@@ -260,6 +261,9 @@ export default function Profile() {
             </div>
           </div>
         )}
+
+        {/* Challenge-Journal */}
+        <ChallengeJournal />
 
         {/* Story-Welt — volle Breite unter den beiden Kästen */}
         <div className="mt-4 p-4 rounded-2xl border border-black/5 bg-white shadow-sm">
