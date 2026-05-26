@@ -64,7 +64,7 @@ Vergleiche mit anderen sind ein natürlicher Teil des Aufwachsens. Digitale Medi
 
 ### 1. Gefühle nicht kleinreden
 
-Wie immer gilt , dass Sätze wie: „Das ist doch nicht schlimm.“ helfen Kindern meist wenig. Denn das Gefühl ist für sie in diesem Moment real.
+Wie immer gilt, dass Sätze wie „Das ist doch nicht schlimm.“ Kindern meist nicht helfen. Denn das Gefühl ist für sie in diesem Moment real.
 
 ### 2. Den Blick wieder auf das eigene Leben lenken
 
@@ -78,43 +78,27 @@ Zum Beispiel:
 - sich irgendwo zugehörig zu fühlen
 
 Denn Kinder entwickeln Selbstwert nicht durch perfekte Bilder oder viele Reaktionen im Chat.
-Sondern durch echte Erfahrungen:
-gehört werden,
-Freundschaften erleben,
-ernst genommen werden,
-etwas schaffen,
-gebraucht werden.
+Sondern durch echte Erfahrungen: gehört werden, Freundschaften erleben, ernst genommen werden, etwas schaffen, gebraucht werden.
 
-So lernen Kinder, sich selbst auch unabhängig von Likes, Bildern oder Aufmerksamkeit als wertvoll zu erleben.
+So lernen Kinder, sich selbst als wertvoll zu erleben.
 
 ### 3. Gespräche nebenbei entstehen lassen
 
-Die wichtigsten Gespräche entstehen selten durch direkte Fragen wie:
-> „Gab es Probleme im Chat?“
+Die wichtigsten Gespräche entstehen selten durch direkte Fragen wie: „Gab es Probleme im Chat?“
 
 Oft funktionieren beiläufige Momente besser:
 - im Auto
 - beim Abendessen
 - beim Spazierengehen
-
-Oder wenn Eltern selbst erzählen, wann sie sich früher ausgeschlossen oder „weniger“ gefühlt haben.
+- Oder wenn Eltern selbst erzählen, wann sie sich früher z.B. ausgeschlossen gefühlt haben.
 
 ## Es geht um mehr als nur Klassenchats
 
 Solche Situationen lassen sich leider nicht komplett vermeiden.
-Aber genau in solchen Momenten lernen Kinder auch:
-- Gefühle wahrzunehmen
-- Vergleiche einzuordnen
-- ihren eigenen Wert nicht von Aufmerksamkeit abhängig zu machen
-- mit sozialen Dynamiken umzugehen
+Aber genau in solchen Momenten lernen Kinder auch Gefühle wahrzunehmen, Vergleiche einzuordnen oder ihren eigenen Wert nicht von Aufmerksamkeit abhängig zu machen.
 
 Also genau die Fähigkeiten, die sie in der digitalen Welt langfristig brauchen.
 
-## Fazit
-
-Oft sind es kleine Vergleiche, die Kinder verunsichern.
-
-Und genau deshalb brauchen Kinder Erwachsene, die zuhören, einordnen und sie dabei begleiten, ihren eigenen Wert nicht von Bildern, Reaktionen oder Aufmerksamkeit abhängig zu machen.
 
 ---
 

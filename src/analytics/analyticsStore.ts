@@ -47,7 +47,7 @@ export function loadStore(): AnalyticsStore {
     // ignore — storage unavailable or corrupt
   }
 
-  return {
+  const newStore: AnalyticsStore = {
     schemaVersion: ANALYTICS_SCHEMA_VERSION,
     meta: {
       pseudoId: generatePseudoId(),
@@ -58,6 +58,8 @@ export function loadStore(): AnalyticsStore {
     },
     decisions: [],
   };
+  saveStore(newStore);
+  return newStore;
 }
 
 function saveStore(store: AnalyticsStore): void {

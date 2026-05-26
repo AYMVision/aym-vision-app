@@ -50,6 +50,19 @@
     "locked": "This section is protected. Please unlock it in your profile.",
     "lockNow": "Lock now"
   },
+  "reminders": {
+    "title": "Reminders",
+    "toggle": "Toggle reminders",
+    "statusOn": "Reminders active",
+    "statusOff": "Reminders disabled",
+    "denied": "Notifications have been blocked by the browser. Please allow them in browser settings.",
+    "deniedHint": "To enable reminders, allow notifications for this site in your browser settings and then reload."
+  },
+
+  "transfer": {
+    "title": "Transfer progress"
+  },
+
   "ai": {
     "title": "AI settings",
     "moreInfo": "More info for parents →",
@@ -60,7 +73,8 @@
       "label": "Amy mode",
       "on": "Always with AI",
       "auto": "Automatic",
-      "off": "Without AI"
+      "off": "Without AI",
+      "scope": "Applies only to reflection questions — not to free text inputs or the chat."
     },
     "modes": {
       "on": {

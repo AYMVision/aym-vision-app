@@ -15,7 +15,7 @@ function normalizeLang(lng: string): 'de' | 'en' {
 }
 
 export function LanguageSelector({ className }: LanguageSelectorProps) {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation('navigation');
 
   const current = normalizeLang(i18n.resolvedLanguage ?? i18n.language);
 
@@ -25,7 +25,7 @@ export function LanguageSelector({ className }: LanguageSelectorProps) {
         value={current}
         onChange={(e) => i18n.changeLanguage(normalizeLang(e.target.value))}
         className="appearance-none px-4 py-1 rounded border border-gold-600 text-gold-600 bg-white hover:bg-gold-50 transition focus:outline-none"
-        aria-label="Sprache wählen / Select language"
+        aria-label={t('selectLanguage', { defaultValue: 'Sprache wählen / Select language' })}
       >
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>

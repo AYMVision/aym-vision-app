@@ -116,6 +116,28 @@
     }
   },
 
+  "challenges": {
+    "title": "Meine Challenges",
+    "stateAccepted": "Angenommen 🌱",
+    "stateCompleted": "Gemeistert!",
+    "stateDeferred": "Vielleicht später",
+    "markDone": "Hab's gemacht! ✓",
+    "tryNow": "Jetzt ausprobieren →",
+    "celebrationText": "Wow, du bist großartig!"
+  },
+
+  "progress": {
+    "title": "Dein Fortschritt",
+    "chapterLabel": "Amic",
+    "continue": "Weiterlesen →",
+    "startCta": "Jetzt starten →",
+    "doneTeaser": "Wow! Folge geschafft 🎉",
+    "oneLeft": "Noch 1 Amic bis zum Sticker ✨",
+    "noProgressTitle": "Noch nichts hier",
+    "noProgressHint": "Dein Fortschritt erscheint hier, sobald du loslegst.",
+    "debugTitle": "Dein Fortschritt (Debug)"
+  },
+
   "rewards": {
     "title": "Besondere Belohnungen",
     "subtitle": "Deine besonderen Erfolge findest du im Album.",

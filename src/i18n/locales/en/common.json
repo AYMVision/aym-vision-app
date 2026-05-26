@@ -24,5 +24,12 @@
       "text": "Yasmin wrote something last night. Want to read it?",
       "cta": "Open diary \u2192"
     }
-  }
+  },
+  "landscape": {
+    "title": "Please rotate your device",
+    "hint": "Amy Surfwing is designed for portrait mode."
+  },
+  "close": "Close",
+  "remove": "Remove",
+  "add": "Add"
 }

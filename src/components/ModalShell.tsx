@@ -1,6 +1,7 @@
 // src/components/ModalShell.tsx
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function ModalShell({
   title,
@@ -10,6 +11,7 @@ export default function ModalShell({
   children: React.ReactNode;
 }) {
   const navigate = useNavigate();
+  const { t } = useTranslation('common');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ export default function ModalShell({
         type="button"
         className="absolute inset-0 bg-black/40"
         onClick={() => navigate(-1)}
-        aria-label="Schließen"
+        aria-label={t('close', { defaultValue: 'Schließen' })}
       />
 
       {/* Panel */}

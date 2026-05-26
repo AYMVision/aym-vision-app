@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function UnlockedToast({
   title,
@@ -15,6 +16,7 @@ export default function UnlockedToast({
   primaryLabel?: string;
   secondaryLabel?: string;
 }) {
+  const { t } = useTranslation('common');
   return (
     <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50">
       <div className="mx-auto max-w-md rounded-3xl border border-slate-200 bg-white shadow-lg overflow-hidden">
@@ -31,7 +33,7 @@ export default function UnlockedToast({
               type="button"
               onClick={onDismiss}
               className="shrink-0 rounded-xl px-2 py-1 text-sm border border-slate-200 hover:bg-slate-50"
-              aria-label="Schließen"
+              aria-label={t('close', { defaultValue: 'Schließen' })}
             >
               ✕
             </button>

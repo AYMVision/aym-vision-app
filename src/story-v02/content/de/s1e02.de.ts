@@ -418,9 +418,14 @@ const c05 = C('s1e02c05', 4, 'Amic 5', 'Die Debatte', [
 
   S('s1e02c05_story_lisa_forwarded', [
     divider('Später'),
-    privateChat('Du', 'Chioma', 'Lisa'),
+    privateChat('Markus', 'Dominik'),
     m(ch.dominik, 'Chioma will mit mir über Regeln labern 😂 Die hat doch zero chance! Klickt rein und voted für mich 🔥', '13:40', { forwarded: { fromChatLabel: 'Klassenchat' } }),
     m(ch.markus, 'Ich bring Popcorn mit! 😂🍿 Klare Sache, kannst auf mich zählen.', '13:40', { forwarded: { fromChatLabel: 'Klassenchat' } }),
+  ], ['reflect-understand', 'talk-act']),
+
+    S('s1e02c05_story_lisa_forwarded', [
+    divider('Später'),
+    privateChat('Du', 'Chioma', 'Lisa'),
     m(ch.lisa, 'Was hast du vor?', '13:41'),
     m(ch.lisa, 'Ich weiß nicht, ob das eine gute Idee ist. Glaubst du echt, du hast eine Chance gegen den?', '13:41'),
   ], ['reflect-understand', 'talk-act']),

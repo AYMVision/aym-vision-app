@@ -2,9 +2,11 @@
 // Shown on Welcome page in standalone PWA mode when no progress exists yet.
 
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { usePwaContext } from '../common/usePwaContext';
 
 export default function PwaTransferBanner() {
+  const { t } = useTranslation('common');
   const { showTransferHint, dismiss } = usePwaContext();
 
   if (!showTransferHint) return null;
@@ -43,7 +45,7 @@ export default function PwaTransferBanner() {
         <button
           type="button"
           onClick={dismiss}
-          aria-label="Schließen"
+          aria-label={t('close', { defaultValue: 'Schließen' })}
           className="shrink-0 text-sky-400 hover:text-sky-600 text-lg leading-none mt-0.5"
         >
           ✕

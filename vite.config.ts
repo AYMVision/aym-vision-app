@@ -24,6 +24,9 @@ export default defineConfig(({ command }) => {
       react(),
       tailwindcss(),
       VitePWA({
+        strategies: 'injectManifest',
+        srcDir: 'src',
+        filename: 'sw.ts',
         registerType: 'autoUpdate',
         injectRegister: 'auto',
         includeAssets: [
@@ -40,6 +43,7 @@ export default defineConfig(({ command }) => {
           description: 'Die Lern-App für Medienreife',
           start_url: '/',
           display: 'standalone',
+          orientation: 'portrait',
           background_color: '#ffffff',
           theme_color: '#0f766e',
           lang: 'de',
@@ -50,31 +54,8 @@ export default defineConfig(({ command }) => {
             { src: '/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
           ],
         },
-        workbox: {
-          maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // 4 MB (große Sticker-PNGs)
-          // Cache-Strategie: Network-first für HTML (immer aktuell), Cache-first für Assets
-          navigateFallback: 'index.html',
-          // PDFs und andere Nicht-SPA-Ressourcen vom Fallback ausschließen,
-          // damit der SW nicht index.html statt der echten Datei serviert.
-          navigateFallbackDenylist: [/^\/api\//, /\.pdf$/i, /^\/blog/],
-          runtimeCaching: [
-            {
-              // Bilder & Medien: Cache-first (ändern sich selten)
-              urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|avif|woff2?|mp3|mp4|wasm)$/i,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'aym-assets-v1',
-                expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 60 }, // 60 Tage
-              },
-            },
-            {
-              // JS/CSS: StaleWhileRevalidate (lädt frische Version im Hintergrund)
-              urlPattern: /\.(?:js|css)$/i,
-              handler: 'StaleWhileRevalidate',
-              options: { cacheName: 'aym-code-v1' },
-            },
-          ],
-          // Alle Build-Assets precachen (JS, CSS, Fonts)
+        injectManifest: {
+          maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,pdf,md}'],
         },
       }),

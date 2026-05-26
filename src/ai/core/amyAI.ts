@@ -78,7 +78,27 @@ const ACTION_STEP_KEYWORDS = [
   "eltern",
   "informieren",
   "hilfe",
-  "blockieren"
+  "blockieren",
+  // 🎨 KI / Transparenz / Kennzeichnung
+  "kennzeichnen",
+  "kenntlich",
+  "dazuschreiben",
+  "dazu schreiben",
+  "markieren",
+  "beschriften",
+  "hinweisen",
+  "erlaubnis",
+  "einverstanden",
+  "zustimmung",
+  "einwilligung",
+  // EN equivalents
+  "label",
+  "mark",
+  "indicate",
+  "disclose",
+  "mention",
+  "permission",
+  "consent"
 ];
 
 const FEELING_MARKERS = [

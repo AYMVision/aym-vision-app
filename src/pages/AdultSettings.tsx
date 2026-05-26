@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
 
 import { loadSettings, saveSettings, type OwlMode } from '../settings/appSettings';
+import { enableReminders, disableReminders, getReminderCapability, getReminderHint } from '../notifications/reminderService';
 import {
   hasParentPasscode,
   isParentUnlocked,
@@ -207,19 +208,17 @@ export default function AdultSettings() {
   }, [remindersEnabled]);
 
   async function handleToggleReminders() {
-    if (notifPermission === 'unsupported') return;
-
-    if (!remindersEnabled) {
-      // Einschalten: ggf. Browser-Erlaubnis anfragen
-      if (notifPermission === 'default') {
-        const result = await Notification.requestPermission();
-        setNotifPermission(result);
-        if (result !== 'granted') return;
-      }
-      if (notifPermission === 'denied') return;
-      setRemindersEnabled(true);
-    } else {
+    if (remindersEnabled) {
+      await disableReminders();
       setRemindersEnabled(false);
+    } else {
+      const ok = await enableReminders();
+      if (ok) {
+        setRemindersEnabled(true);
+        if ('Notification' in window) setNotifPermission(Notification.permission);
+      } else {
+        if ('Notification' in window) setNotifPermission(Notification.permission);
+      }
     }
   }
 
@@ -841,6 +840,7 @@ export default function AdultSettings() {
                       {t('adult:ai.title', { defaultValue: 'AI / Owl Mode' })}
                     </h3>
                     <div className="mt-1 text-sm text-slate-600">{t('adult:ai.owlMode.help')}</div>
+                    <div className="mt-1 text-xs text-slate-400">{t('adult:ai.owlMode.scope', { defaultValue: 'Gilt nur für Reflexionsfragen — nicht für freie Eingaben oder den Chat.' })}</div>
                   </div>
 
                   <span className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
@@ -920,48 +920,52 @@ export default function AdultSettings() {
                   })}
                 </p>
 
-                <div className="mt-4 flex items-center justify-between gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4">
-                  <div className="min-w-0">
-                    <div className="text-sm font-semibold text-slate-900">
-                      {remindersEnabled
-                        ? t('adult:reminders.statusOn', { defaultValue: 'Erinnerungen aktiv' })
-                        : t('adult:reminders.statusOff', { defaultValue: 'Erinnerungen deaktiviert' })}
-                    </div>
-                    <div className="mt-0.5 text-xs text-slate-500">
-                      {notifPermission === 'unsupported'
-                        ? t('adult:reminders.unsupported', { defaultValue: 'Dieses Gerät unterstützt keine Benachrichtigungen.' })
-                        : notifPermission === 'denied'
-                        ? t('adult:reminders.denied', { defaultValue: 'Benachrichtigungen wurden im Browser blockiert. Bitte in den Browser-Einstellungen erlauben.' })
-                        : remindersEnabled
-                        ? t('adult:reminders.hintOn', { defaultValue: 'Dein Kind bekommt eine Erinnerung, wenn ein neuer Amic bereit ist.' })
-                        : t('adult:reminders.hintOff', { defaultValue: 'Dein Kind bekommt keine Erinnerungen.' })}
-                    </div>
+                {getReminderCapability() === 'none' ? (
+                  <div className="mt-4 rounded-xl border border-slate-100 bg-slate-50 p-4 text-xs text-slate-500">
+                    Erinnerungen werden auf diesem Gerät nicht unterstützt.
                   </div>
+                ) : (
+                  <>
+                    <div className="mt-4 flex items-center justify-between gap-4 rounded-xl border border-slate-100 bg-slate-50 p-4">
+                      <div className="min-w-0">
+                        <div className="text-sm font-semibold text-slate-900">
+                          {remindersEnabled
+                            ? t('adult:reminders.statusOn', { defaultValue: 'Erinnerungen aktiv' })
+                            : t('adult:reminders.statusOff', { defaultValue: 'Erinnerungen deaktiviert' })}
+                        </div>
+                        <div className="mt-0.5 text-xs text-slate-500">
+                          {notifPermission === 'denied'
+                            ? t('adult:reminders.denied', { defaultValue: 'Benachrichtigungen wurden im Browser blockiert. Bitte in den Browser-Einstellungen erlauben.' })
+                            : getReminderHint(remindersEnabled)}
+                        </div>
+                      </div>
 
-                  <button
-                    type="button"
-                    disabled={notifPermission === 'unsupported' || notifPermission === 'denied'}
-                    onClick={handleToggleReminders}
-                    className={[
-                      'shrink-0 relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none disabled:opacity-40',
-                      remindersEnabled ? 'bg-[var(--color-teal-600)]' : 'bg-slate-300',
-                    ].join(' ')}
-                    aria-pressed={remindersEnabled}
-                    aria-label={t('adult:reminders.toggle', { defaultValue: 'Erinnerungen umschalten' })}
-                  >
-                    <span
-                      className={[
-                        'inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform',
-                        remindersEnabled ? 'translate-x-6' : 'translate-x-1',
-                      ].join(' ')}
-                    />
-                  </button>
-                </div>
+                      <button
+                        type="button"
+                        disabled={notifPermission === 'denied'}
+                        onClick={handleToggleReminders}
+                        className={[
+                          'shrink-0 relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none disabled:opacity-40',
+                          remindersEnabled ? 'bg-[var(--color-teal-600)]' : 'bg-slate-300',
+                        ].join(' ')}
+                        aria-pressed={remindersEnabled}
+                        aria-label={t('adult:reminders.toggle', { defaultValue: 'Erinnerungen umschalten' })}
+                      >
+                        <span
+                          className={[
+                            'inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform',
+                            remindersEnabled ? 'translate-x-6' : 'translate-x-1',
+                          ].join(' ')}
+                        />
+                      </button>
+                    </div>
 
-                {notifPermission === 'denied' && (
-                  <p className="mt-3 text-xs text-amber-700">
-                    {t('adult:reminders.deniedHint', { defaultValue: 'Um Erinnerungen zu aktivieren, Benachrichtigungen für diese Seite in den Browser-Einstellungen erlauben und dann neu laden.' })}
-                  </p>
+                    {notifPermission === 'denied' && (
+                      <p className="mt-3 text-xs text-amber-700">
+                        {t('adult:reminders.deniedHint', { defaultValue: 'Um Erinnerungen zu aktivieren, Benachrichtigungen für diese Seite in den Browser-Einstellungen erlauben und dann neu laden.' })}
+                      </p>
+                    )}
+                  </>
                 )}
               </section>
 

@@ -18,6 +18,8 @@ import CoinOverlay from './progress/CoinOverlay';
 import RouteI18nLoader from './i18n/RouteI18nLoader';
 import ScrollToHash from './common/utils.ts';
 import ModalShell from './components/ModalShell';
+import LandscapeOverlay from './components/LandscapeOverlay';
+import { clearAmicBadge } from './notifications/reminderService';
 
 // Eager — always needed immediately
 import Welcome from './pages/Welcome.tsx';
@@ -170,6 +172,9 @@ function App() {
   const [needRefresh, setNeedRefresh] = useState(false);
   const updateSWRef = useRef<((reloadPage?: boolean) => Promise<void>) | null>(null);
 
+  // Badge beim App-Öffnen löschen
+  useEffect(() => { clearAmicBadge() }, [])
+
   useEffect(() => {
     updateSWRef.current = registerSW({
       onNeedRefresh() {
@@ -183,6 +188,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <LandscapeOverlay />
       <ProfileProvider>
         <RewardFxProvider>
           <Router>

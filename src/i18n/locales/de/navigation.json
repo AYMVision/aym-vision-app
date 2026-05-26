@@ -1,4 +1,7 @@
 {
+  "selectLanguage": "Sprache wählen",
+  "back": "Zurück",
+  "menu": "Menü",
   "home": "Home",
   "stories": "Amy Surfwing",
   "about": "About us",
@@ -29,6 +32,10 @@
     "openDiaries": "Tagebuch öffnen",
     "openNewspaper": "Schülerzeitung öffnen",
     "openAlbum": "Sticker-Album öffnen",
-    "openProfile": "Profil öffnen"
+    "openProfile": "Profil öffnen",
+    "continueStory": "Story weitermachen",
+    "startStory": "Story starten",
+    "continue": "Weiter",
+    "start": "Start"
   }
 }

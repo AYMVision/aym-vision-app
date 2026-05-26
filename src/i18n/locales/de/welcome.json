@@ -11,6 +11,9 @@
     "badgeAge": "Für Kinder ab 9 Jahren",
     "badgeTime": "5 min täglich",
     "badgeAmy": "Chat-Story & mehr",
+    "badgeBeta": "Beta",
+    "ctaStart": "Story starten →",
+    "ctaContinue": "Weiterlesen →",
     "parentHint": "Elternteil?",
     "parentHintLink": "Hier informieren & App einrichten →",
     "introCta": "Amy Surfwing entdecken →",
@@ -49,7 +52,7 @@
     "info": {
       "title": "So läuft's ab",
       "amicTitle": "Ein Amic ist…",
-      "amicExplain": "Ein kurzer Chat-Verlauf — 5 Minuten täglich.",
+      "amicExplain": "Ein interaktives Kapitel in unserer Chat-Story zum Mitdenken — 5 Minuten täglich.",
       "feature0title": "Echte Themen",
       "feature0body": "Fake News, KI, Cybermobbing — was Yasmin & Co. erleben, passiert auch im echten Leben.",
       "feature1title": "Du bist dabei!",
@@ -72,8 +75,16 @@
       "remindersLabel": "Erinnere mich, wenn ein neues Amic wartet",
       "ctaStart": "Los geht's →",
       "ctaOverview": "Weitere Infos →",
-      "ctaParents": "Für Eltern →"
+      "ctaParents": "Für Eltern →",
+      "installTitle": "App zum Home-Bildschirm hinzufügen",
+      "installHint": "So läuft Amy Surfwing wie eine richtige App – schneller und immer griffbereit.",
+      "installCta": "Anleitung ansehen →"
     }
+  },
+
+  "teaser": {
+    "soundOn": "Ton einschalten",
+    "soundOff": "Ton ausschalten"
   },
 
   "entries": {

@@ -173,7 +173,7 @@ aOutroByType: {
   ACTION: [
     'Das ist ein starker Gedanke. 🦉',
     'Das passt zur Situation. 🦉',
-    'Das hast du gut zusammenfassen. 🦉',
+    'Das hast du gut zusammengefasset. 🦉',
       'Deine Antwort trifft den Punkt. 🦉',
   'Du greifst den Kern gut auf. 🦉',
   'Das klingt stimmig. 🦉',
@@ -197,7 +197,7 @@ aOutroByType: {
   'Da hast du einen starken Gedanken formuliert. 🦉',
   'Das ist ein starker Gedanke. 🦉',
   'Das passt zur Situation. 🦉',
-  'Das hast du gut zusammenfassen. 🦉',
+  'Das hast du gut zusammengefasst. 🦉',
     'Deine Antwort trifft den Punkt. 🦉',
   'Du greifst den Kern gut auf. 🦉',
   'Das klingt stimmig. 🦉',
@@ -210,7 +210,7 @@ aOutroByType: {
   ],
   KNOWLEDGE: [
     'Das ist ein starker Gedanke. 🦉',
-    'Das hast du gut zusammenfassen. 🦉',
+    'Das hast du gut zusammengefasst. 🦉',
       'Deine Antwort trifft den Punkt. 🦉',
   'Du greifst den Kern gut auf. 🦉',
   'Das klingt stimmig. 🦉',

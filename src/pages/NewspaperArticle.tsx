@@ -72,6 +72,7 @@ export default function NewspaperArticle() {
   description?: string;
   author?: string;
   date?: string;
+  aiTranslated?: boolean;
 } | null>(null);
 
   const item = useMemo(() => {
@@ -103,10 +104,12 @@ export default function NewspaperArticle() {
       if (!item.bodySrc) return;
 
       const urlLang = assetUrl(`${item.bodySrc}.${lang}.md`);
+      const urlDeFallback = lang !== 'de' ? assetUrl(`${item.bodySrc}.de.md`) : null;
       const urlPlain = assetUrl(`${item.bodySrc}.md`);
 
       try {
         let res = await fetch(urlLang);
+        if (!res.ok && urlDeFallback) res = await fetch(urlDeFallback);
         if (!res.ok) res = await fetch(urlPlain);
         if (!res.ok) throw new Error();
 
@@ -188,7 +191,14 @@ export default function NewspaperArticle() {
 {/* AUDIO PLAYER */}
 {unlocked && item.audioSrc ? (
   <div className="mb-5 rounded-[28px] border border-slate-200 bg-white shadow-sm p-4">
-    <div className="text-xs font-extrabold text-slate-500 mb-3">🎧 Jetzt anhören</div>
+    <div className="flex items-center justify-between mb-3">
+      <div className="text-xs font-extrabold text-slate-500">🎧 {t('newspaper.audioListen')}</div>
+      {lang === 'en' && (
+        <div className="inline-flex items-center gap-1 text-xs text-slate-400 bg-slate-100 rounded-full px-2.5 py-0.5">
+          🇩🇪 {t('newspaper.audioDeOnly', { defaultValue: 'Audio in German only' })}
+        </div>
+      )}
+    </div>
     <MiniAudioPlayer src={assetUrl(item.audioSrc)} />
   </div>
 ) : null}
@@ -196,10 +206,18 @@ export default function NewspaperArticle() {
 {/* ARTICLE BODY — nur wenn bodySrc vorhanden und kein Ladefehler */}
 {unlocked && item.bodySrc && !bodyError && (
   <div className="rounded-[32px] bg-white/90 backdrop-blur shadow-sm px-4 sm:px-6 py-5 border border-black/5">
-    {bodyText ? (
+    {meta?.aiTranslated && (
+      <div className="inline-flex items-center gap-1.5 text-xs text-slate-400 bg-slate-100 rounded-full px-3 py-1 mb-4">
+        <span>🤖</span>
+        <span>{t('newspaper.aiTranslated', { defaultValue: 'AI-translated · May contain errors' })}</span>
+      </div>
+    )}
+    {bodyText === null ? (
+      <div className="text-slate-600">{t('newspaper.loading')}</div>
+    ) : bodyText ? (
       <ArticleReader text={bodyText} bonusId={item.bonusId} requireAudioConfirm={!!item.audioSrc} />
     ) : (
-      <div className="text-slate-600">Lädt…</div>
+      <ArticleReader text={meta?.description ?? ''} bonusId={item.bonusId} requireAudioConfirm={!!item.audioSrc} />
     )}
   </div>
 )}

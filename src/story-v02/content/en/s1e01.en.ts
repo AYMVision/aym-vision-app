@@ -87,7 +87,7 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Summer Holidays', [
 
   S('s1e01c01_story_switch_to_amy_chat', [
     amyChat(),
-    m(ch.amy, 'Don\'t worry — just answer honestly. I\'m curious what you think.'),
+    m(ch.amy, 'I\'m curious what you think.'),
   ], ['reflect-understand']),
 
   IT('s1e01c01_item_yasmin_feeling',
@@ -840,7 +840,7 @@ const c08 = C('s1e01c08', 7, 'Amic 8', 'The Picture Wasn’t Real', [
   ], ['reflect-understand', 'talk-act']),
 
   OR('s1e01c08_reflection_ai_image_post',
-    'If you create an image with AI yourself: what would be important to you?',
+    'What would you do before sharing an image made with AI?',
     { topics: ['reflect-understand', 'talk-act'] },
   ),
 

@@ -66,6 +66,15 @@
     },
     "header": {
       "online": "online"
+    },
+    "menu": {
+      "title": "Story-Menü",
+      "backToAmics": "Zu den Amics",
+      "backToAmicsHint": "Übersicht dieser Episode",
+      "coins": "Münzen",
+      "profile": "Profil & Coins",
+      "soundOnHint": "Tippen zum Ausschalten",
+      "soundOffHint": "Tippen zum Einschalten"
     }
   },
   "helpHint": {
@@ -430,6 +439,10 @@
   "overview": {
     "back": "Alle Storys",
     "season": "Staffel 1",
+    "aiTranslated": "Story mit KI übersetzt · Kann Fehler enthalten",
+    "timeLocked": {
+      "daily": "Morgen wieder verfügbar"
+    },
     "progress": "{{completed}} von {{total}} Amics",
     "allDone": "Alle Amics abgeschlossen ✓",
     "ctaContinue": "Weiterlesen →",
@@ -444,5 +457,16 @@
     "title": "Amic abgeschlossen ✓",
     "ctaNext": "Nächster Amic →",
     "ctaOverview": "Zur Übersicht"
+  },
+  "survey": {
+    "amyAsks": "Amy fragt",
+    "question": "Ich habe eine Frage an dich — was denkst du bisher?",
+    "body": "3 Minuten, anonym. Deine Meinung hilft uns, Amy Surfwing besser zu machen.",
+    "cta": "Zur Umfrage →",
+    "snooze": "Nicht jetzt",
+    "betaKicker": "Beta-Feedback",
+    "betaQuestion": "📝 Was denkst du über Amy Surfwing?",
+    "betaBody": "3 Minuten, anonym.",
+    "betaDisclaimer": "Du wirst zu Microsoft Forms weitergeleitet – deine Antworten werden anonym gespeichert, wir erhalten keine persönlichen Daten. Teilnahme freiwillig."
   }
 }

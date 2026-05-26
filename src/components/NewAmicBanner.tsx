@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import type { NextAmicInfo } from '../notifications/amicNotif';
 import { clearNextAmicInfo } from '../notifications/amicNotif';
 
@@ -13,6 +14,7 @@ interface NewAmicBannerProps {
 
 export default function NewAmicBanner({ info, onDismiss }: NewAmicBannerProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation('common');
 
   function handleOpen() {
     clearNextAmicInfo();
@@ -46,7 +48,7 @@ export default function NewAmicBanner({ info, onDismiss }: NewAmicBannerProps) {
         <button
           onClick={handleDismiss}
           className="shrink-0 text-slate-400 hover:text-slate-600 text-lg leading-none"
-          aria-label="Schließen"
+          aria-label={t('close', { defaultValue: 'Schließen' })}
         >
           ✕
         </button>

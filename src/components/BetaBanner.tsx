@@ -1,9 +1,11 @@
 // src/components/BetaBanner.tsx
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const DISMISSED_KEY = 'aym_beta_banner_dismissed';
 
 export default function BetaBanner() {
+  const { t } = useTranslation('common');
   const [dismissed, setDismissed] = useState(() => {
     try {
       return localStorage.getItem(DISMISSED_KEY) === '1';
@@ -37,7 +39,7 @@ export default function BetaBanner() {
         <button
           type="button"
           onClick={dismiss}
-          aria-label="Schließen"
+          aria-label={t('close', { defaultValue: 'Schließen' })}
           className="shrink-0 text-amber-500 hover:text-amber-700 transition-colors p-1"
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">

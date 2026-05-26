@@ -178,7 +178,7 @@ const isActive = (to: string) => {
             </div>
 
             {/* Center: Brand */}
-            <div className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
                 <SmartImage
   alt={tLayout('logoAlt')}
@@ -207,7 +207,7 @@ const isActive = (to: string) => {
                   {tLayout('brandTagline')}
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* Right spacer */}
             <div className="flex-1" />
@@ -217,7 +217,7 @@ const isActive = (to: string) => {
               <Link
                 to="/avatar"
                 state={{ backTo: location.pathname + location.search + location.hash, initialTab: 'shop' }}
-                aria-label="Shop öffnen"
+                aria-label={tLayout('openShop', { defaultValue: 'Shop öffnen' })}
               >
                 <div
                   ref={walletElRef}
@@ -289,7 +289,8 @@ const isActive = (to: string) => {
               </button>
             )}
 
-            <SmartImage
+            <Link to="/">
+              <SmartImage
   alt={tLayout('logoAlt')}
   className="h-10 w-auto"
   sizes="40px"
@@ -305,6 +306,7 @@ const isActive = (to: string) => {
   ]}
   fallback={assetUrl('media/ui/brand/logo-512.webp')}
 />
+            </Link>
 
           </div>
 
@@ -332,7 +334,7 @@ const isActive = (to: string) => {
             <Link
               to="/avatar"
               state={{ backTo: location.pathname + location.search + location.hash, initialTab: 'shop' }}
-              aria-label="Shop öffnen"
+              aria-label={tLayout('openShop', { defaultValue: 'Shop öffnen' })}
             >
               <div
                 ref={walletElRef}

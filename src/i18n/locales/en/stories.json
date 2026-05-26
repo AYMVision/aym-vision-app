@@ -72,6 +72,15 @@
     },
     "header": {
       "online": "online"
+    },
+    "menu": {
+      "title": "Story menu",
+      "backToAmics": "Go to Amics",
+      "backToAmicsHint": "Overview of this episode",
+      "coins": "Coins",
+      "profile": "Profile & Coins",
+      "soundOnHint": "Tap to turn off",
+      "soundOffHint": "Tap to turn on"
     }
   },
   "helpHint": {
@@ -430,6 +439,10 @@
   "overview": {
     "back": "All Stories",
     "season": "Season 1",
+    "aiTranslated": "Story translated with AI · May contain errors",
+    "timeLocked": {
+      "daily": "Available again tomorrow"
+    },
     "progress": "{{completed}} of {{total}} Amics",
     "allDone": "All Amics completed ✓",
     "ctaContinue": "Continue →",
@@ -444,5 +457,16 @@
     "title": "Amic completed ✓",
     "ctaNext": "Next Amic →",
     "ctaOverview": "Overview"
+  },
+  "survey": {
+    "amyAsks": "Amy asks",
+    "question": "I have a question for you — what do you think so far?",
+    "body": "3 minutes, anonymous. Your opinion helps us improve Amy Surfwing.",
+    "cta": "Take the survey →",
+    "snooze": "Not right now",
+    "betaKicker": "Beta Feedback",
+    "betaQuestion": "📝 What do you think of Amy Surfwing?",
+    "betaBody": "3 minutes, anonymous.",
+    "betaDisclaimer": "You'll be redirected to Microsoft Forms – your answers are stored anonymously, we receive no personal data. Participation is voluntary."
   }
 }

@@ -1006,7 +1006,7 @@ function MyDiarySection({ hasPin, onRequestPinSetup }: { hasPin: boolean; onRequ
                 </div>
               ) : (
                 <div className="flex justify-end px-4 pb-2">
-                  <button type="button" onClick={() => setDeletingEntryId(e.id)} aria-label="Seite löschen"
+                  <button type="button" onClick={() => setDeletingEntryId(e.id)} aria-label={t('diaries.me.deletePage', { defaultValue: 'Seite löschen' })}
                     className="text-slate-300 hover:text-red-400 transition-colors text-sm">🗑</button>
                 </div>
               )}
@@ -1213,6 +1213,7 @@ function StickerDraggable(props: {
   onRemove: () => void;
 }) {
   const { sticker, canvasRef, selected, onSelect, onMove, onResize, onRemove } = props;
+  const { t } = useTranslation('common');
   const divRef = useRef<HTMLDivElement>(null);
 
   const drag = useRef({
@@ -1384,7 +1385,7 @@ function StickerDraggable(props: {
       {selected && (
         <button
           type="button"
-          aria-label="Sticker entfernen"
+          aria-label={t('remove', { defaultValue: 'Entfernen' })}
           onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => { e.stopPropagation(); onRemove(); }}
           className="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs shadow-md hover:bg-red-600 transition-colors"

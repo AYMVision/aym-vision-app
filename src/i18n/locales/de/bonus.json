@@ -61,6 +61,10 @@
       "link": "Link"
     },
 
+    "loading": "Lädt…",
+    "audioListen": "Jetzt anhören",
+    "aiTranslated": "KI-Übersetzung · Kann Fehler enthalten",
+
     "badge": {
       "new": "Neu",
       "read": "Gelesen",
@@ -94,12 +98,14 @@
     "fallbackTitle": "Tagebuch",
     "fallbackDesc": "Ein neuer Eintrag…",
     "open": "Öffnen →",
+    "close": "Schließen",
     "locked": "Noch geheim",
+    "backToDiaries": "Zurück zur Übersicht",
         "my": {
       "badgeMain": "🙋 Dein Bereich",
       "badgePrivate": "🔒 privat"
     },
-  
+
     "unknownDiary": "Dieses Tagebuch gibt es nicht.",
     "backToList": "Zurück zur Übersicht",
     "backToStory": "Zurück zur Story",
@@ -150,7 +156,11 @@
       "forgotLink": "PIN vergessen?",
       "hintTitle": "Dein Hinweis:",
       "forgotHint": "Frag eine erwachsene Person, dir beim Zurücksetzen zu helfen.",
-      "parentNote": "Eltern können den PIN in den Einstellungen zurücksetzen."
+      "parentNote": "Eltern können den PIN in den Einstellungen zurücksetzen.",
+      "bannerTitle": "Tagebuch schützen?",
+      "bannerBody": "Andere Personen, die dieses Gerät nutzen, könnten deine Einträge lesen. Mit einem PIN gehört dein Tagebuch wirklich nur dir.",
+      "bannerYes": "Ja, PIN festlegen →",
+      "bannerSkip": "Später"
     },
 
 
@@ -196,6 +206,10 @@
       "pickPage": "Wähle links eine Seite aus.",
       "dragHint": "Sticker verschieben: einfach ziehen. Größe ändern: zwei Finger zusammen- oder auseinanderziehen. Entfernen: antippen, dann ✕.",
       "newPage": "Neue Seite",
+      "newPageHint": "Gedanken, Erlebnisse, Gefühle …",
+      "openEntry": "Öffnen →",
+      "backToList": "Alle Einträge",
+      "deletePage": "Seite löschen",
       "stickerLabel": "Sticker auf deine Seite kleben:",
       "stickerPositionLabel": "Sticker positionieren:",
       "stickerCount": "{{count}} Sticker ausgewählt",
@@ -236,6 +250,9 @@
 
   "cards": {
     "title": "Freundebuch",
+    "kicker": "Story-Welt",
+    "close": "Schließen",
+    "backToCards": "Zurück",
     "notFoundTitle": "Karte nicht gefunden",
     "notFoundBody": "Diese Sammelkarte existiert nicht (oder ist keine Charakterkarte)."
   },
@@ -243,6 +260,15 @@
   "common": { "back": "Zurück" },
 
 "charactersUi": {
+  "card": "Charakterkarte",
+  "new": "NEU",
+  "locked": "Gesperrt",
+  "lockedHint": "Wird später freigeschaltet.",
+  "collectedShort": "GESAMMELT",
+  "collectionTitle": "🎴 Sammelkarten",
+  "collectionHint": "Tippe auf eine freigeschaltete Karte, um sie zu öffnen.",
+  "view": "Ansehen →",
+  "viewHint": "Schon geöffnet – du kannst sie ansehen.",
   "labels": {
     "myName": "Mein Name"
   },
@@ -265,6 +291,7 @@
     },
         "myCard": {
       "title": "Meine Karte",
+      "defaultName": "Ich",
       "hint": "Hier kannst du deine eigene Karte gestalten.",
       "edit": "Bearbeiten →",
       "subtitle": "Schreib auf, was dich ausmacht."
@@ -295,7 +322,7 @@
           "Und ich gebe nicht so leicht auf."
         ],
         "hobbies": ["Lesen", "Texte schreiben", "Gute Gespräche führen" ],
-          "friends": ["Finn", "Chioma"],
+          "friends": ["Yasmin", "Lisa"],
         "colors": "Gelb und Orange – warm, nicht grell.",
         "happy": "Ein heißer Kakao zu einem spannenden Buch. Und wenn es sich gelohnt hat, für etwas zu kämpfen.",
         "netRule": "Erst nachdenken, dann posten. Und: Keine Likes für Gemeinheiten.",
@@ -482,7 +509,7 @@
         "alte Detektivgeschichten lesen",
         "kleine Puzzle-Programme schreiben"
       ],
-      "friends": ["Noah", "Jonas", "Chioma"],
+      "friends": ["Noah"],
       "colors": "Dunkelblau. Unauffällig, aber verlässlich.",
       "happy": "Wenn ein Plan aufgeht oder jemand sagt: „Daran hab ich gar nicht gedacht.“",
       "netRule": "Nur weil etwas oft geteilt wird, heißt das nicht, dass es auch stimmt.",
@@ -528,6 +555,23 @@
   "chatrules-chioma-dominik": {
     "title": "Chatregeln: Chioma & Dominik",
     "description": "Kurz erklärt, warum Regeln im Klassenchat helfen."
+  },
+
+  "articleReader": {
+    "sectionOf": "Abschnitt {{current}} von {{total}}",
+    "next": "Weiter →",
+    "audioQuestion": "Hast du den Audio-Beitrag gehört?",
+    "audioHint": "Danach kannst du deine Reaktion abgeben.",
+    "audioConfirm": "Gehört ✓",
+    "reactionPrompt": "Wie fandest du das?",
+    "doneTitle": "Gelesen!",
+    "doneBody": "Gut informiert. Du durchschaust, was passiert.",
+    "coinReward": "+1 Coin",
+    "reactions": {
+      "known": "Das kannte ich schon 🤙",
+      "interesting": "Interessant 🤔",
+      "useful": "Gut zu wissen ✅"
+    }
   }
 
 }

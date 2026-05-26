@@ -5,6 +5,7 @@ export type MdMeta = {
   author?: string;
   date?: string;
   tags?: string[];
+  aiTranslated?: boolean;
 };
 
 export function parseFrontmatter(md: string): { meta: MdMeta; body: string } {
@@ -30,6 +31,7 @@ export function parseFrontmatter(md: string): { meta: MdMeta; body: string } {
     else if (key === 'author') meta.author = val;
     else if (key === 'date') meta.date = val;
     else if (key === 'tags') meta.tags = val.split(',').map(s => s.trim()).filter(Boolean);
+    else if (key === 'aiTranslated') meta.aiTranslated = val === 'true';
   }
 
   return { meta, body };

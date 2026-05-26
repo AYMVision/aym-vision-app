@@ -50,6 +50,19 @@
     "locked": "Dieser Bereich ist geschützt. Bitte entsperre ihn im Profil.",
     "lockNow": "Jetzt sperren"
   },
+  "reminders": {
+    "title": "Erinnerungen",
+    "toggle": "Erinnerungen umschalten",
+    "statusOn": "Erinnerungen aktiv",
+    "statusOff": "Erinnerungen deaktiviert",
+    "denied": "Benachrichtigungen wurden im Browser blockiert. Bitte in den Browser-Einstellungen erlauben.",
+    "deniedHint": "Um Erinnerungen zu aktivieren, Benachrichtigungen für diese Seite in den Browser-Einstellungen erlauben und dann neu laden."
+  },
+
+  "transfer": {
+    "title": "Spielstand übertragen"
+  },
+
   "ai": {
     "title": "KI-Einstellungen",
     "moreInfo": "Mehr Infos für Eltern →",
@@ -60,7 +73,8 @@
       "label": "Amy-Modus",
       "on": "Immer mit KI",
       "auto": "Automatisch",
-      "off": "Ohne KI"
+      "off": "Ohne KI",
+      "scope": "Gilt nur für Reflexionsfragen — nicht für freie Eingaben oder den Chat."
     },
     "modes": {
       "on": {

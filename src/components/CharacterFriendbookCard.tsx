@@ -143,6 +143,7 @@ function PhotoTile({ src, alt, onClick }: { src: string | null | undefined; alt:
 }
 
 function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+  const { t } = useTranslation('common');
   return (
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
@@ -152,7 +153,7 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
         type="button"
         onClick={onClose}
         className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white text-xl font-bold transition-colors"
-        aria-label="Schließen"
+        aria-label={t('close', { defaultValue: 'Schließen' })}
       >
         ✕
       </button>

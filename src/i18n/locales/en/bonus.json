@@ -61,6 +61,11 @@
       "link": "Link"
     },
 
+    "loading": "Loading…",
+    "audioListen": "Listen now",
+    "aiTranslated": "AI-translated · May contain errors",
+    "audioDeOnly": "Audio in German only",
+
     "badge": {
       "new": "New",
       "read": "Read",
@@ -90,7 +95,9 @@
     "fallbackTitle": "Diary",
     "fallbackDesc": "A new entry…",
     "open": "Open →",
+    "close": "Close",
     "locked": "🔒 Still locked",
+    "backToDiaries": "Back to overview",
 
     "unknownDiary": "This diary does not exist.",
     "backToList": "Back to overview",
@@ -138,6 +145,10 @@
       "pickPage": "Select a page on the left.",
       "dragHint": "Move stickers: just drag. Resize: pinch with two fingers. Remove: tap, then ✕.",
       "newPage": "New page",
+      "newPageHint": "Thoughts, experiences, feelings …",
+      "openEntry": "Open →",
+      "backToList": "All entries",
+      "deletePage": "Delete page",
       "stickerLabel": "Stick stickers on your page:",
       "stickerPositionLabel": "Position stickers:",
       "stickerCount": "{{count}} sticker selected",
@@ -187,7 +198,11 @@
       "forgotLink": "Forgot PIN?",
       "hintTitle": "Your hint:",
       "forgotHint": "Ask a trusted adult to help you reset it.",
-      "parentNote": "Adults can reset the PIN in settings."
+      "parentNote": "Adults can reset the PIN in settings.",
+      "bannerTitle": "Protect your diary?",
+      "bannerBody": "Other people who use this device could read your entries. With a PIN, your diary truly belongs only to you.",
+      "bannerYes": "Yes, set a PIN →",
+      "bannerSkip": "Later"
     },
 
     "entries": {
@@ -206,7 +221,15 @@
         }
       },
       "mia": {
-        "s1e03c01_0004": {}
+        "s1e03c01_0004": {},
+        "s1e03c02_0005": {
+          "date": "Monday",
+          "body": "I'm acting like I don't care.\nBut I did.\n\nTom is annoying because he always looks at me like that. Like he understands more than everyone else. Maybe he noticed that I kept looking around to see if Finn would show up at the skatepark. Pretty embarrassing, actually. And then Finn writes stuff like that. Like I'm some pop-up window he can just click away. He doesn't care about anything.\nNo, not anything. He doesn't care about me.\nJust his games."
+        },
+        "s1e03c08_0006": {
+          "date": "Sunday",
+          "body": "Finn messaged me 😊\nWhat an idiot. Such a damn idiot. 😫\n\nWhat am I supposed to do?\n\nI wanted to be cold. Properly: serves you right.\nAlmost worked.\n\nAnd then he brings up the fairground. I think something's actually wrong with him. And he messages me. Of all people!\nThe lights, the spinning, the chaos. And suddenly I knew what he meant. Those weren't excuses.\n\nThe fact that he messaged me was really something.\nAnd I was just angry at him the whole time — for being late, being mean, not showing up. I never stopped to think that maybe he's going through something.\n\nI had seen it actually. But I was too wrapped up in myself.\nBecause I was angry.\n\nWhen he asked: \"Are you still there?\"\nI didn't know if he meant in the chat or as a friend.\n\nI hope he messages again."
+        }
       },
       "jonas": {}
     }
@@ -214,6 +237,9 @@
 
   "cards": {
     "title": "Collectible Cards",
+    "kicker": "Story World",
+    "close": "Close",
+    "backToCards": "Back",
     "notFoundTitle": "Card not found",
     "notFoundBody": "This collectible card does not exist (or is not a character card)."
   },
@@ -221,6 +247,15 @@
   "common": { "back": "Back" },
 
   "charactersUi": {
+    "card": "Character card",
+    "new": "NEW",
+    "locked": "Locked",
+    "lockedHint": "Will be unlocked later.",
+    "collectedShort": "COLLECTED",
+    "collectionTitle": "🎴 Collectible Cards",
+    "collectionHint": "Tap an unlocked card to open it.",
+    "view": "View →",
+    "viewHint": "Already opened – you can view it.",
     "labels": {
       "myName": "My name"
     },
@@ -244,6 +279,7 @@
 
     "myCard": {
       "title": "My Card",
+      "defaultName": "Me",
       "hint": "Here you can design your own card.",
       "edit": "Edit →",
       "subtitle": "Write down what makes you you."
@@ -444,6 +480,23 @@
         "secret": "I sometimes get anxious in situations that seem completely normal to others",
         "funFact": "I'm always humming some song while skating"
       }
+    }
+  },
+
+  "articleReader": {
+    "sectionOf": "Section {{current}} of {{total}}",
+    "next": "Next →",
+    "audioQuestion": "Have you listened to the audio?",
+    "audioHint": "You can share your reaction afterwards.",
+    "audioConfirm": "Listened ✓",
+    "reactionPrompt": "What did you think?",
+    "doneTitle": "Done!",
+    "doneBody": "Well informed. You see what's going on.",
+    "coinReward": "+1 Coin",
+    "reactions": {
+      "known": "I already knew that 🤙",
+      "interesting": "Interesting 🤔",
+      "useful": "Good to know ✅"
     }
   }
 }

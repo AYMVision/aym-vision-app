@@ -117,6 +117,28 @@
     }
   },
 
+  "challenges": {
+    "title": "My Challenges",
+    "stateAccepted": "Accepted 🌱",
+    "stateCompleted": "Mastered!",
+    "stateDeferred": "Maybe later",
+    "markDone": "Done it! ✓",
+    "tryNow": "Try it now →",
+    "celebrationText": "Wow, you're amazing!"
+  },
+
+  "progress": {
+    "title": "Your progress",
+    "chapterLabel": "Amic",
+    "continue": "Continue reading →",
+    "startCta": "Start now →",
+    "doneTeaser": "Wow! Episode done 🎉",
+    "oneLeft": "Just 1 Amic left until your sticker ✨",
+    "noProgressTitle": "Nothing here yet",
+    "noProgressHint": "Your progress will appear here once you get started.",
+    "debugTitle": "Your progress (Debug)"
+  },
+
   "rewards": {
     "title": "Special rewards",
     "subtitle": "Find your special achievements in the album.",

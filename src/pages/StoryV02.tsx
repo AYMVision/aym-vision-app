@@ -69,6 +69,7 @@ import EpisodeSummaryCard from '../story-v02/components/EpisodeSummaryCard';
 import { getLexikonEntry } from '../lexikon/lexikonIndex';
 import { LexikonTermModal } from './Lexikon';
 import { saveNextAmicInfo } from '../notifications/amicNotif';
+import { setAmicBadge } from '../notifications/reminderService';
 import { loadSettings } from '../settings/appSettings';
 
 type SceneTone = 'private' | 'class' | 'newsroom';
@@ -1094,6 +1095,8 @@ function hasStoryMigrationDone(key: string): boolean {
       if (firstSender) {
         saveNextAmicInfo({ senderName: firstSender, chapterId: nextChapter.id, courseId });
       }
+      // Badge auf App-Icon setzen → signalisiert "nächstes Amic wartet"
+      setAmicBadge();
     }
 
     // Rewards warten bis der letzte Eintrag im Viewport sichtbar ist

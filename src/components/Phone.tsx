@@ -5,6 +5,7 @@
 // - Auto-scroll behavior that respects user's scroll position
 
 import { useLayoutEffect, useRef, type PropsWithChildren } from 'react';
+import { useTranslation } from 'react-i18next';
 import { assetUrl } from '../common/assetUrl';
 
 type SceneTone = 'private' | 'class' | 'newsroom';
@@ -58,6 +59,7 @@ export default function Phone({
   sceneParticipants = [],
   scrollRef,
 }: PhoneProps) {
+  const { t } = useTranslation('navigation');
   const containerRef = useRef<HTMLDivElement>(null);
   const userTextRef = useRef<HTMLInputElement>(null);
 
@@ -132,7 +134,7 @@ export default function Phone({
               <button
                 className="shrink-0 p-[2%] -ml-[2%] rounded-full hover:bg-slate-100 active:bg-slate-200 transition-colors"
                 type="button"
-                aria-label="Zurück"
+                aria-label={t('back', { defaultValue: 'Zurück' })}
                 onClick={onBack}
               >
                 <svg
@@ -194,7 +196,7 @@ export default function Phone({
               <button
                 className="shrink-0 p-[2%] -mr-[2%] rounded-full hover:bg-slate-100 active:bg-slate-200 transition-colors"
                 type="button"
-                aria-label="Menü"
+                aria-label={t('menu', { defaultValue: 'Menü' })}
                 onClick={onMenu}
               >
                 <svg

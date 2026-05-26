@@ -54,7 +54,7 @@ export default function AvatarLookCircle({
         style={{
           width: stageSize,
           height: stageSize,
-          transform: `translate(${-size * 0.9}px, 0px) scale(1.55)`,
+          transform: `translate(${-size * 0.9}px, ${-size * offsetY}px) scale(1.55)`,
           transformOrigin: 'top left',
         }}
       >

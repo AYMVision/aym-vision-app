@@ -1,4 +1,7 @@
 {
+  "selectLanguage": "Select language",
+  "back": "Back",
+  "menu": "Menu",
   "home": "Home",
   "stories": "Amy Surfwing",
   "about": "About us",
@@ -29,6 +32,10 @@
     "openDiaries": "Open diary",
     "openNewspaper": "Open school newspaper",
     "openAlbum": "Open sticker album",
-    "openProfile": "Open profile"
+    "openProfile": "Open profile",
+    "continueStory": "Continue story",
+    "startStory": "Start story",
+    "continue": "Continue",
+    "start": "Start"
   }
 }

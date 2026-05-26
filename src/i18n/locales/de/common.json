@@ -24,5 +24,12 @@
       "text": "Yasmin hat heute Abend etwas aufgeschrieben. Willst du es lesen?",
       "cta": "Zum Tagebuch \u2192"
     }
-  }
+  },
+  "landscape": {
+    "title": "Bitte dreh dein Gerät",
+    "hint": "Amy Surfwing ist für das Hochformat gemacht."
+  },
+  "close": "Schließen",
+  "remove": "Entfernen",
+  "add": "Hinzufügen"
 }

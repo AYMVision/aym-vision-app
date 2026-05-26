@@ -224,6 +224,7 @@ export default function AvatarPicker() {
 
   const coins = profile.wallet?.coins ?? 0;
   const [confirmingItem, setConfirmingItem] = useState<(ItemDef & { shopPrice: number }) | null>(null);
+  const [showPurchaseToast, setShowPurchaseToast] = useState(false);
 
   const previewEquipment: Equipment = previewItem
     ? {
@@ -533,7 +534,10 @@ export default function AvatarPicker() {
                 type="button"
                 onClick={() => {
                   buyItem(confirmingItem);
+                  equipItem(confirmingItem.slot, confirmingItem.id);
                   setConfirmingItem(null);
+                  setShowPurchaseToast(true);
+                  setTimeout(() => setShowPurchaseToast(false), 3500);
                 }}
                 className="flex-1 rounded-2xl bg-[var(--color-teal-600)] py-3 text-sm font-bold text-white hover:bg-[var(--color-teal-700)]"
               >
@@ -543,6 +547,13 @@ export default function AvatarPicker() {
           </div>
         </div>
       ) : null}
+
+      {/* Kauf-Toast */}
+      {showPurchaseToast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[300] px-4 py-3 rounded-2xl bg-slate-900 text-white text-sm font-semibold shadow-xl whitespace-nowrap">
+          ✓ {t('avatar.shop.purchaseToast', { defaultValue: 'Sieht gut aus! Änderbar unter „Meine Sachen".' })}
+        </div>
+      )}
     </Layout>
   );
 }

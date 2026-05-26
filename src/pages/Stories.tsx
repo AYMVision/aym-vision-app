@@ -155,6 +155,7 @@ function SwipeRow({ children, className }: { children: React.ReactNode; classNam
 }
 
 function InfoBottomSheet({ onClose, children }: { onClose: () => void; children: React.ReactNode }) {
+  const { t } = useTranslation('common');
   const sheetRef = useRef<HTMLDivElement>(null);
   const touchStartY = useRef<number | null>(null);
 
@@ -199,7 +200,7 @@ function InfoBottomSheet({ onClose, children }: { onClose: () => void; children:
           <button
             type="button"
             onClick={onClose}
-            aria-label="Schließen"
+            aria-label={t('close', { defaultValue: 'Schließen' })}
             className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors text-slate-600 text-sm"
           >
             ✕
@@ -268,10 +269,12 @@ export default function Stories() {
   const [amicBannerVisible, setAmicBannerVisible] = useState(Boolean(amicBannerInfo));
   const [infoOpen, setInfoOpen] = useState(false);
 
-  // Survey-Banner: erscheint nach ≥3 Kapiteln + ≥3 Tagen, einmal wegklickbar
+  // Survey-Banner: erscheint nach ≥3 Kapiteln + ≥3 Tagen, einmal wegklickbar / snooze 7 Tage
   const [surveyBannerVisible, setSurveyBannerVisible] = useState(() => {
     if (typeof window === 'undefined') return false;
     if (localStorage.getItem('surveyDismissed')) return false;
+    const snoozeUntil = localStorage.getItem('surveySnoozeUntil');
+    if (snoozeUntil && new Date(snoozeUntil) > new Date()) return false;
     // Kapitelzahl über alle Courses
     const totalCompleted = getStoryCards().reduce(
       (sum, c) => sum + getCompletedChapterCount(c.id), 0
@@ -286,6 +289,13 @@ export default function Stories() {
 
   function dismissSurvey() {
     localStorage.setItem('surveyDismissed', '1');
+    setSurveyBannerVisible(false);
+  }
+
+  function snoozeSurvey() {
+    const until = new Date();
+    until.setDate(until.getDate() + 7);
+    localStorage.setItem('surveySnoozeUntil', until.toISOString().slice(0, 10));
     setSurveyBannerVisible(false);
   }
 
@@ -551,6 +561,12 @@ function isUnlockedByChain(
                 )}
 
                 {/* Alle Story-Kacheln */}
+                {lang === 'en' && (
+                  <div className="mt-3 inline-flex items-center gap-1.5 text-xs text-slate-400 bg-slate-100 rounded-full px-3 py-1">
+                    <span>🤖</span>
+                    <span>{tStories('overview.aiTranslated', { defaultValue: 'Story translated with AI · May contain errors' })}</span>
+                  </div>
+                )}
                 <div className="mt-4">
                   <SwipeRow className="-mx-4 px-4 lg:mx-0 lg:px-0">
                     {cardsForUI.map((card) => {
@@ -768,12 +784,12 @@ function isUnlockedByChain(
               className="w-12 h-12 rounded-full object-cover object-top flex-shrink-0 border-2 border-violet-200"
             />
             <div className="flex-1 min-w-0">
-              <div className="text-xs font-semibold text-violet-700 uppercase tracking-wide">Amy fragt</div>
+              <div className="text-xs font-semibold text-violet-700 uppercase tracking-wide">{tStories('survey.amyAsks')}</div>
               <div className="mt-0.5 font-semibold text-slate-900 text-sm">
-                Ich habe eine Frage an dich — was denkst du bisher?
+                {tStories('survey.question')}
               </div>
               <p className="mt-1 text-xs text-slate-500">
-                3 Minuten, anonym. Deine Meinung hilft uns, Amy Surfwing besser zu machen.
+                {tStories('survey.body')}
               </p>
               <div className="mt-3 flex items-center gap-3">
                 <a
@@ -783,14 +799,14 @@ function isUnlockedByChain(
                   onClick={dismissSurvey}
                   className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-xs"
                 >
-                  Zur Umfrage →
+                  {tStories('survey.cta')}
                 </a>
                 <button
                   type="button"
-                  onClick={dismissSurvey}
+                  onClick={snoozeSurvey}
                   className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
                 >
-                  Nicht jetzt
+                  {tStories('survey.snooze')}
                 </button>
               </div>
             </div>
@@ -800,14 +816,14 @@ function isUnlockedByChain(
         {/* SURVEY – Beta-Feedback Banner */}
         <div className="rounded-2xl border border-teal-100 bg-gradient-to-r from-teal-50 to-white p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
           <div className="flex-1 min-w-0">
-            <div className="text-xs font-semibold text-teal-700 uppercase tracking-wide">Beta-Feedback</div>
+            <div className="text-xs font-semibold text-teal-700 uppercase tracking-wide">{tStories('survey.betaKicker')}</div>
             <div className="mt-0.5 font-semibold text-slate-900 text-sm sm:text-base">
-              📝 Was denkst du über Amy Surfwing?
+              {tStories('survey.betaQuestion')}
             </div>
             <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-snug">
-              3 Minuten, anonym.{' '}
+              {tStories('survey.betaBody')}{' '}
               <span className="text-slate-400">
-                Du wirst zu Microsoft Forms weitergeleitet – deine Antworten werden anonym gespeichert, wir erhalten keine persönlichen Daten. Teilnahme freiwillig.
+                {tStories('survey.betaDisclaimer')}
               </span>
             </p>
           </div>
@@ -817,7 +833,7 @@ function isUnlockedByChain(
             rel="noopener noreferrer"
             className="shrink-0 inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-sm"
           >
-            Zur Umfrage →
+            {tStories('survey.cta')}
           </a>
         </div>
 

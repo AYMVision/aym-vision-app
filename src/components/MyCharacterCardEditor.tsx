@@ -100,6 +100,7 @@ function TagListField({
   itemEmoji: string;
   placeholder?: string;
 }) {
+  const { t } = useTranslation('common');
   const [draft, setDraft] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -128,7 +129,7 @@ function TagListField({
               <button
                 type="button"
                 onClick={() => removeItem(i)}
-                aria-label="Entfernen"
+                aria-label={t('remove', { defaultValue: 'Entfernen' })}
                 className="shrink-0 w-6 h-6 rounded-full bg-slate-100 text-slate-500 hover:bg-red-100 hover:text-red-600 flex items-center justify-center text-xs transition-colors"
               >
                 ✕
@@ -155,7 +156,7 @@ function TagListField({
         <button
           type="button"
           onClick={addItem}
-          aria-label="Hinzufügen"
+          aria-label={t('add', { defaultValue: 'Hinzufügen' })}
           className="shrink-0 w-10 h-10 rounded-2xl bg-[var(--color-teal-600)] text-white flex items-center justify-center text-lg font-bold hover:bg-[var(--color-teal-700)] transition-colors"
         >
           +

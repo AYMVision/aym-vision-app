@@ -9,7 +9,13 @@ import { useProfile } from '../profile/useProfile';
 import { AVATAR_BASES } from '../data/avatars';
 import { assetUrl } from '../common/assetUrl';
 import { markFirstRunDone } from '../common/firstRun';
-import { saveSettings, loadSettings } from '../settings/appSettings';
+import { loadSettings } from '../settings/appSettings';
+import {
+  enableReminders,
+  disableReminders,
+  getReminderCapability,
+  getReminderHint,
+} from '../notifications/reminderService';
 import AvatarLookCircle from '../components/AvatarLookCircle';
 import { useTranslation as useI18n } from 'react-i18next';
 
@@ -246,17 +252,15 @@ function AvatarStep({ onNext }: { onNext: () => void }) {
 function ReadyStep({ onFinish }: { onFinish: (destination: 'story' | 'overview') => void }) {
   const { t } = useTranslation('welcome');
   const [remindersOn, setRemindersOn] = useState(loadSettings().remindersEnabled);
+  const reminderCap = getReminderCapability();
 
-  function handleToggleReminders() {
-    const next = !remindersOn;
-    setRemindersOn(next);
-    if (next && 'Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission().then(perm => {
-        if (perm !== 'granted') setRemindersOn(false);
-        else saveSettings({ remindersEnabled: true });
-      });
+  async function handleToggleReminders() {
+    if (remindersOn) {
+      await disableReminders();
+      setRemindersOn(false);
     } else {
-      saveSettings({ remindersEnabled: next });
+      const ok = await enableReminders();
+      setRemindersOn(ok);
     }
   }
 
@@ -278,12 +282,19 @@ function ReadyStep({ onFinish }: { onFinish: (destination: 'story' | 'overview')
       </p>
 
       {/* Reminders-Toggle */}
-      <div className="flex items-center justify-between w-full max-w-xs bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 mb-5">
-        <span className="text-sm font-semibold text-slate-700 text-left leading-snug">
-          {t('onboarding.ready.remindersLabel')}
-        </span>
-        <Toggle on={remindersOn} onToggle={handleToggleReminders} />
-      </div>
+      {reminderCap !== 'none' && (
+        <div className="w-full max-w-xs bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 mb-5">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-sm font-semibold text-slate-700 text-left leading-snug">
+              {t('onboarding.ready.remindersLabel')}
+            </span>
+            <Toggle on={remindersOn} onToggle={handleToggleReminders} />
+          </div>
+          <p className="mt-1.5 text-xs text-slate-500 text-left leading-snug">
+            {getReminderHint(remindersOn)}
+          </p>
+        </div>
+      )}
 
       <div className="flex flex-col gap-3 w-full max-w-xs">
         <button
@@ -355,6 +366,7 @@ function LangPills() {
 
 export default function Onboarding() {
   const navigate = useNavigate();
+  const { t } = useTranslation('navigation');
   const [step, setStep] = useState<Step>('welcome');
 
   function handleFinish(destination: 'story' | 'overview') {
@@ -378,7 +390,7 @@ export default function Onboarding() {
       {step !== 'welcome' && (
         <button
           onClick={handleBack}
-          aria-label="Zurück"
+          aria-label={t('back', { defaultValue: 'Zurück' })}
           className="fixed top-4 left-4 z-50 w-9 h-9 flex items-center justify-center rounded-full bg-white/80 backdrop-blur border border-slate-200 text-slate-500 hover:text-slate-800 shadow-sm transition-colors"
         >
           ←

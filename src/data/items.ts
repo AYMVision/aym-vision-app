@@ -25,7 +25,7 @@ export const ITEMS: ItemDef[] = [
   {
     id: 'item_ballet-pointe-shoes',
     slot: 'featured',
-    shopPrice: 15,
+    shopPrice: 12,
     labelKey: 'items.balletPointeShoes',
   },
   {
@@ -49,7 +49,7 @@ export const ITEMS: ItemDef[] = [
   {
     id: 'item_e-guitar',
     slot: 'featured',
-    shopPrice: 25,
+    shopPrice: 18,
     labelKey: 'items.eGuitar',
   },
   {
@@ -61,25 +61,25 @@ export const ITEMS: ItemDef[] = [
   {
     id: 'item_guitar',
     slot: 'featured',
-    shopPrice: 25,
+    shopPrice: 20,
     labelKey: 'items.guitar',
   },
   {
     id: 'item_headphones',
     slot: 'featured',
-    shopPrice: 18,
+    shopPrice: 13,
     labelKey: 'items.headphones',
   },
   {
     id: 'item_ice-scates_white',
     slot: 'featured',
-    shopPrice: 20,
+    shopPrice: 15,
     labelKey: 'items.iceScatesWhite',
   },
   {
     id: 'item_ice-skates_black',
     slot: 'featured',
-    shopPrice: 20,
+    shopPrice: 15,
     labelKey: 'items.iceSkatesBlack',
   },
   {
@@ -91,19 +91,19 @@ export const ITEMS: ItemDef[] = [
   {
     id: 'item_mountain-bike',
     slot: 'featured',
-    shopPrice: 25,
+    shopPrice: 18,
     labelKey: 'items.mountainBike',
   },
   {
     id: 'item_pet-cat',
     slot: 'featured',
-    shopPrice: 18,
+    shopPrice: 15,
     labelKey: 'items.petCat',
   },
   {
     id: 'item_pet-dog',
     slot: 'featured',
-    shopPrice: 18,
+    shopPrice: 15,
     labelKey: 'items.petDog',
   },
   {
@@ -121,7 +121,7 @@ export const ITEMS: ItemDef[] = [
   {
     id: 'item_rollerblades',
     slot: 'featured',
-    shopPrice: 20,
+    shopPrice: 18,
     labelKey: 'items.rollerblades',
   },
   {
@@ -151,13 +151,13 @@ export const ITEMS: ItemDef[] = [
   {
     id: 'item_tennis-racket_purple',
     slot: 'featured',
-    shopPrice: 20,
+    shopPrice: 15,
     labelKey: 'items.tennisRacketPurple',
   },
   {
     id: 'item_violin',
     slot: 'featured',
-    shopPrice: 25,
+    shopPrice: 18,
     labelKey: 'items.violin',
   },
 
