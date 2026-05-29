@@ -57,10 +57,10 @@ Vielleicht kennst du auch solche Antworten:
 
 Oft wissen Kinder selbst nicht genau, wie sie darüber sprechen sollen. Manche wechseln schnell das Thema oder ziehen sich zurück, weil sie ihre Gefühle selbst noch nicht richtig einordnen können oder sie ihnen sogar unangenehm sind.
 
-Vergleiche mit anderen sind ein natürlicher Teil des Aufwachsens. Digitale Medien verstärken diesen Effekt aber noch. Denn im Klassenchat wirken Bilder, Reaktionen und Aufmerksamkeit oft wie eine Art soziale Bewertung, auch wenn das niemand bewusst so meint. Wir können Kinder helfen solche Situationen besser einzuordnen. Oft hilft Kindern dabei schon ehrliches Interesse und das Gefühl, ernst genommen zu werden.
+Vergleiche mit anderen sind ein natürlicher Teil des Aufwachsens. Digitale Medien verstärken diesen Effekt aber noch. Denn im Klassenchat wirken Bilder, Reaktionen und Aufmerksamkeit oft wie eine Art soziale Bewertung, auch wenn das niemand bewusst so meint. Wir können Kindern helfen solche Situationen besser einzuordnen. Oft hilft Kindern dabei schon ehrliches Interesse und das Gefühl, ernst genommen zu werden.
 
 
-## Was Eltern konkret helfen kann
+## Wie Eltern konkret helfen können
 
 ### 1. Gefühle nicht kleinreden
 
@@ -76,9 +76,11 @@ Zum Beispiel:
 - gemeinsame Familienmomente
 - etwas geschafft oder gelernt zu haben
 - sich irgendwo zugehörig zu fühlen
+- ein Ziel zu verfolgen oder auf etwas hinzuarbeiten
+- etwas zu entdecken, das neugierig macht oder Freude bereitet
 
 Denn Kinder entwickeln Selbstwert nicht durch perfekte Bilder oder viele Reaktionen im Chat.
-Sondern durch echte Erfahrungen: gehört werden, Freundschaften erleben, ernst genommen werden, etwas schaffen, gebraucht werden.
+Sondern durch echte Erfahrungen: gehört werden, Freundschaften erleben, ernst genommen werden, etwas schaffen, gebraucht werden. Es stärkt Kinder, wenn sie etwas haben, worauf sie sich freuen können, und Ziele, die ihnen Orientierung geben.
 
 So lernen Kinder, sich selbst als wertvoll zu erleben.
 
