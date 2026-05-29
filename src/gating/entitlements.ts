@@ -2,7 +2,8 @@
 
 export type Entitlements = {
   bypassAll?: boolean;
-  bypassUntil?: string; // YYYY-MM-DD
+  bypassUntil?: string;       // YYYY-MM-DD — bypasses ALL gates (paywall + daily)
+  unlockAllEpisodes?: boolean; // bypasses paywall only, daily pacing stays
   unlockedEpisodes?: string[];
 };
 
@@ -61,12 +62,28 @@ export function isEpisodeUnlockedByEntitlement(courseId?: string): boolean {
   return (e.unlockedEpisodes ?? []).includes(courseId);
 }
 
+export function isAllEpisodesUnlocked(): boolean {
+  const e = getEntitlements();
+  return e.unlockAllEpisodes === true;
+}
+
+export function setUnlockAllEpisodes(active: boolean) {
+  const current = getEntitlements();
+  setEntitlements({ ...current, unlockAllEpisodes: active });
+}
+
+/** Full bypass — paywall AND daily gate */
 export function shouldBypassAll(courseId?: string): boolean {
   return (
     isBypassAllActive() ||
     isBypassUntilActive() ||
     isEpisodeUnlockedByEntitlement(courseId)
   );
+}
+
+/** Paywall bypass only — daily pacing stays intact */
+export function shouldBypassPaywall(courseId?: string): boolean {
+  return shouldBypassAll(courseId) || isAllEpisodesUnlocked();
 }
 
 export function setBypassAll(active: boolean) {

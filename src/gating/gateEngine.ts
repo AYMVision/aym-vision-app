@@ -87,18 +87,40 @@ function todayKeyLocal(): string {
 }
 
 
-const DAILY_KEY = 'aym-gate-last-completed-day';
+const DAILY_KEY = 'aym-gate-last-completed-ts';
+const FAST_GATE_KEY = 'aym_fast_gate';
 
-export function getDailyCompletionKey(): string | null {
+export function isFastGateActive(): boolean {
   try {
-    return localStorage.getItem(DAILY_KEY);
+    return localStorage.getItem(FAST_GATE_KEY) === 'true';
   } catch {
-    return null;
+    return false;
+  }
+}
+
+export function setFastGateActive(active: boolean): void {
+  try {
+    if (active) {
+      localStorage.setItem(FAST_GATE_KEY, 'true');
+    } else {
+      localStorage.removeItem(FAST_GATE_KEY);
+    }
+  } catch {
+    // ignore
   }
 }
 
 export function hasCompletedNewChapterToday(): boolean {
-  return getDailyCompletionKey() === todayKeyLocal();
+  try {
+    const raw = localStorage.getItem(DAILY_KEY);
+    if (!raw) return false;
+    const ts = Number(raw);
+    if (!Number.isFinite(ts)) return false;
+    const interval = isFastGateActive() ? 30_000 : 24 * 60 * 60 * 1000;
+    return Date.now() - ts < interval;
+  } catch {
+    return false;
+  }
 }
 
 export function recordNewChapterCompletion(args?: {
@@ -106,11 +128,8 @@ export function recordNewChapterCompletion(args?: {
   chapterIndex0?: number;
 }): void {
   void args;
-
-  const today = todayKeyLocal();
-
   try {
-    localStorage.setItem(DAILY_KEY, today);
+    localStorage.setItem(DAILY_KEY, String(Date.now()));
   } catch {
     // ignore storage errors
   }

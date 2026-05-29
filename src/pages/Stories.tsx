@@ -18,6 +18,8 @@ import NewAmicBanner from '../components/NewAmicBanner';
 import { loadNextAmicInfo } from '../notifications/amicNotif';
 import { loadSettings } from '../settings/appSettings';
 import { loadStore } from '../analytics/analyticsStore';
+import { BETA_ACTIVE, isBetaTester, isBetaPartialDismissed, markBetaPartialDismissed } from '../beta/betaConfig';
+import { shareOrDownloadAnalytics } from '../analytics/analyticsExport';
 
 function Panel({
   title,
@@ -297,6 +299,40 @@ export default function Stories() {
     until.setDate(until.getDate() + 7);
     localStorage.setItem('surveySnoozeUntil', until.toISOString().slice(0, 10));
     setSurveyBannerVisible(false);
+  }
+
+  // Beta: Partial-Data Banner nach 7 Tagen für Nicht-Abschließer
+  const [betaPartialVisible, setBetaPartialVisible] = useState(() => {
+    if (!BETA_ACTIVE || !isBetaTester()) return false;
+    if (isBetaPartialDismissed()) return false;
+    const s1e01Complete = getProgress('s1e01')?.finished ?? false;
+    if (s1e01Complete) return false;
+    const totalCompleted = getStoryCards().reduce(
+      (sum, c) => sum + getCompletedChapterCount(c.id), 0
+    );
+    if (totalCompleted < 3) return false;
+    const firstSeenStr = loadStore().meta?.firstSeen ?? '';
+    if (!firstSeenStr) return false;
+    const daysSince = (Date.now() - new Date(firstSeenStr).getTime()) / (1000 * 60 * 60 * 24);
+    return daysSince >= 7;
+  });
+  const [betaPartialSendState, setBetaPartialSendState] = useState<'idle' | 'loading' | 'success'>('idle');
+
+  async function handleBetaPartialSend() {
+    setBetaPartialSendState('loading');
+    await shareOrDownloadAnalytics({
+      chaptersCompleted: Object.entries(profile.progress?.completedChapters ?? {})
+        .filter(([, v]) => v)
+        .map(([k]) => k),
+      themePoints: profile.progress?.themePoints ?? {},
+    });
+    setBetaPartialSendState('success');
+    markBetaPartialDismissed();
+  }
+
+  function dismissBetaPartial() {
+    markBetaPartialDismissed();
+    setBetaPartialVisible(false);
   }
 
   // ✅ Reihenfolge: genau so wie Content Index es liefert
@@ -807,6 +843,46 @@ function isUnlockedByChain(
                   className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
                 >
                   {tStories('survey.snooze')}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* BETA – Partial-Data Banner (7 days, not finished s1e01) */}
+        {betaPartialVisible && (
+          <div className="rounded-2xl border border-violet-100 bg-gradient-to-r from-violet-50 to-white p-4 flex items-start gap-3">
+            <img
+              src={assetUrl('media/story/characters/amy-256.webp')}
+              alt="Amy"
+              className="w-10 h-10 rounded-full object-cover object-top flex-shrink-0 border-2 border-violet-200"
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-slate-700 font-semibold leading-snug mb-2">
+                {tStories('beta.partial.text')}
+              </p>
+              <div className="flex items-center gap-3">
+                {betaPartialSendState === 'idle' && (
+                  <button
+                    type="button"
+                    onClick={handleBetaPartialSend}
+                    className="text-xs font-bold text-violet-700 hover:underline"
+                  >
+                    {tStories('beta.partial.cta')}
+                  </button>
+                )}
+                {betaPartialSendState === 'loading' && (
+                  <span className="text-xs text-slate-400">{tStories('beta.completion.sendPreparing')}</span>
+                )}
+                {betaPartialSendState === 'success' && (
+                  <span className="text-xs text-emerald-600 font-semibold">✓</span>
+                )}
+                <button
+                  type="button"
+                  onClick={dismissBetaPartial}
+                  className="text-xs text-slate-400 hover:text-slate-600"
+                >
+                  {tStories('beta.partial.dismiss')}
                 </button>
               </div>
             </div>

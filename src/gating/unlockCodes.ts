@@ -4,8 +4,10 @@ import {
   resetEntitlements,
   setBypassAll,
   setBypassUntil,
+  setUnlockAllEpisodes,
   unlockEpisode,
 } from './entitlements';
+import { setFastGateActive } from './gateEngine';
 
 import { grantTestAccess, clearTestAccess } from '../settings/testAccess';
 
@@ -17,7 +19,8 @@ type NamedCodeAction =
   | { type: 'test-access'; message: string }
   | { type: 'bypass-all'; message: string }
   | { type: 'unlock-episode'; episodeId: string; message: string }
-  | { type: 'bypass-until'; date: string; message: string };
+  | { type: 'bypass-until'; date: string; message: string }
+  | { type: 'unlock-all-episodes'; message: string };
 
 const NAMED_CODES: Record<string, NamedCodeAction> = {
   // ===== Sichtbarer Standard-Testcode =====
@@ -54,6 +57,13 @@ const NAMED_CODES: Record<string, NamedCodeAction> = {
     date: '2026-04-12',
     message: 'Freischaltung bis 2026-04-12 aktiviert.',
   },
+
+  // ===== Beta-Tester: Erste Welle =====
+  // unlock-all-episodes: alle Kapitel zugänglich, aber 1 Amic/Tag bleibt
+  'ERSTEWELLE': {
+    type: 'unlock-all-episodes',
+    message: 'Beta-Zugang aktiviert. Willkommen in der ersten Welle!',
+  },
 };
 
 function applyNamedCode(action: NamedCodeAction): ApplyUnlockCodeResult {
@@ -74,6 +84,11 @@ function applyNamedCode(action: NamedCodeAction): ApplyUnlockCodeResult {
 
   if (action.type === 'bypass-until') {
     setBypassUntil(action.date);
+    return { ok: true, message: action.message };
+  }
+
+  if (action.type === 'unlock-all-episodes') {
+    setUnlockAllEpisodes(true);
     return { ok: true, message: action.message };
   }
 
@@ -102,7 +117,14 @@ export function applyUnlockCode(rawCode: string): ApplyUnlockCodeResult {
   if (code === 'AMY-RESET') {
     resetEntitlements();
     clearTestAccess();
+    setFastGateActive(false);
     return { ok: true, message: 'Freischaltungen wurden entfernt.' };
+  }
+
+  // ===== Geheimer Entwickler-Code: 30-Sekunden-Gate =====
+  if (code === 'AMY-FASTGATE') {
+    setFastGateActive(true);
+    return { ok: true, message: 'Fast-Gate aktiviert: Sperre läuft nach 30 Sekunden ab.' };
   }
 
   if (code === 'AMY-TEST') {

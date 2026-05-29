@@ -71,6 +71,8 @@ import { LexikonTermModal } from './Lexikon';
 import { saveNextAmicInfo } from '../notifications/amicNotif';
 import { setAmicBadge } from '../notifications/reminderService';
 import { loadSettings } from '../settings/appSettings';
+import { BETA_ACTIVE, isBetaTester, isBetaCompletionShown } from '../beta/betaConfig';
+import BetaCompletionModal from '../beta/BetaCompletionModal';
 
 type SceneTone = 'private' | 'class' | 'newsroom';
 type Lang = 'de' | 'en';
@@ -1402,7 +1404,19 @@ function hasStoryMigrationDone(key: string): boolean {
           </div>
         );
 
-      case 'episode_summary':
+      case 'episode_summary': {
+        const showBetaModal =
+          BETA_ACTIVE &&
+          isBetaTester() &&
+          !isBetaCompletionShown() &&
+          courseId === 's1e01';
+        const betaSnapshot = {
+          chaptersCompleted: Object.entries(profile.progress?.completedChapters ?? {})
+            .filter(([, v]) => v)
+            .map(([k]) => k),
+          currentEpisodeId: courseId,
+          themePoints: profile.progress?.themePoints ?? {},
+        };
         return (
           <div key={entry.id} data-story-entry-id={entry.id}>
             <EpisodeSummaryCard
@@ -1416,8 +1430,10 @@ function hasStoryMigrationDone(key: string): boolean {
               onContinue={() => navigate('/stories')}
               onProfile={() => navigate('/profile')}
             />
+            {showBetaModal && <BetaCompletionModal profileSnapshot={betaSnapshot} />}
           </div>
         );
+      }
 
       default:
         return null;

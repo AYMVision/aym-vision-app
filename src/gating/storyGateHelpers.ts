@@ -1,6 +1,6 @@
 import { canStartChapter, canStartNextNewChapterToday } from './gateEngine';
 import { getProgress, hasCompletedChapter } from '../progress/storyProgress';
-import { shouldBypassAll } from './entitlements';
+import { shouldBypassAll, shouldBypassPaywall } from './entitlements';
 
 type CourseLike = {
   script: Array<unknown>;
@@ -48,8 +48,10 @@ const {
   bypassAll = false,
 } = args;
 
-const entitlementBypass = shouldBypassAll(courseId);
-const effectiveBypass = bypassAll || entitlementBypass;
+// Full bypass: paywall + daily gate (bypassAll/bypassUntil codes)
+const effectiveBypass = bypassAll || shouldBypassAll(courseId);
+// Paywall-only bypass: structural gate only, daily pacing stays (beta codes)
+const paywallBypass = bypassAll || shouldBypassPaywall(courseId);
 
   const nextChapterIndex0 = currentChapterIndex0 + 1;
   const hasNext = !!course && typeof course.script[nextChapterIndex0] !== 'undefined';
@@ -75,7 +77,7 @@ const effectiveBypass = bypassAll || entitlementBypass;
     chapterIndex0: nextChapterIndex0,
     highestPlayableChapterIndex0,
     isAlreadyCompleted: nextAlreadyCompleted,
-    bypassAll: effectiveBypass,
+    bypassAll: paywallBypass, // paywall bypass (includes beta codes)
   });
 
   if (!structuralGate.allowed) {
@@ -106,7 +108,7 @@ const effectiveBypass = bypassAll || entitlementBypass;
   }
 
   const timeGate = canStartNextNewChapterToday({
-    bypassAll: effectiveBypass,
+    bypassAll: effectiveBypass, // daily gate only bypassed by full bypass codes
   });
 
   if (!timeGate.allowed) {

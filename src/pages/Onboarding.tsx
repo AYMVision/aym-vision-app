@@ -9,6 +9,9 @@ import { useProfile } from '../profile/useProfile';
 import { AVATAR_BASES } from '../data/avatars';
 import { assetUrl } from '../common/assetUrl';
 import { markFirstRunDone } from '../common/firstRun';
+import { BETA_ACTIVE, getPendingBetaCode, setBetaCodeApplied, clearPendingBetaCode, BETA_END_DATE_DISPLAY, BETA_CONTACT_EMAIL } from '../beta/betaConfig';
+import { applyUnlockCode } from '../gating/unlockCodes';
+import { setConsent } from '../analytics/consent';
 import { loadSettings } from '../settings/appSettings';
 import {
   enableReminders,
@@ -19,10 +22,12 @@ import {
 import AvatarLookCircle from '../components/AvatarLookCircle';
 import { useTranslation as useI18n } from 'react-i18next';
 
-type Step = 'welcome' | 'info' | 'avatar' | 'ready';
+type Step = 'welcome' | 'info' | 'avatar' | 'ready' | 'beta';
 
-function ProgressDots({ step }: { step: Step }) {
-  const steps: Step[] = ['welcome', 'info', 'avatar', 'ready'];
+function ProgressDots({ step, isBeta }: { step: Step; isBeta: boolean }) {
+  const steps: Step[] = isBeta
+    ? ['welcome', 'info', 'avatar', 'ready', 'beta']
+    : ['welcome', 'info', 'avatar', 'ready'];
   return (
     <div className="flex justify-center gap-2 pb-6">
       {steps.map(s => (
@@ -30,7 +35,9 @@ function ProgressDots({ step }: { step: Step }) {
           key={s}
           className={[
             'h-2 rounded-full transition-all duration-300',
-            s === step ? 'bg-teal-500 w-5' : 'bg-slate-200 w-2',
+            s === step
+              ? (s === 'beta' ? 'bg-violet-500 w-5' : 'bg-teal-500 w-5')
+              : 'bg-slate-200 w-2',
           ].join(' ')}
         />
       ))}
@@ -59,8 +66,9 @@ function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   );
 }
 
-function WelcomeStep({ onNext }: { onNext: () => void }) {
+function WelcomeStep({ onNext, isBeta }: { onNext: () => void; isBeta: boolean }) {
   const { t } = useTranslation('welcome');
+  const { t: tStories } = useTranslation('stories');
   return (
     <div className="flex flex-col">
       {/* Hero — gleiche Grafik wie Stories-Seite */}
@@ -87,6 +95,19 @@ function WelcomeStep({ onNext }: { onNext: () => void }) {
 
       {/* Body */}
       <div className="px-6 pt-5 pb-4 flex flex-col gap-4">
+        {isBeta && (
+          <div className="flex items-center gap-2 bg-violet-50 border border-violet-200 rounded-2xl px-4 py-3">
+            <span className="text-base">🧪</span>
+            <div>
+              <div className="text-xs font-extrabold text-violet-600 uppercase tracking-widest leading-none mb-0.5">
+                {tStories('beta.welcome.kicker')}
+              </div>
+              <div className="text-xs text-violet-700 leading-snug">
+                {tStories('beta.welcome.subline')}
+              </div>
+            </div>
+          </div>
+        )}
         <p className="text-base text-slate-700 leading-relaxed">
           {t('onboarding.welcome.lead')}
         </p>
@@ -249,8 +270,9 @@ function AvatarStep({ onNext }: { onNext: () => void }) {
   );
 }
 
-function ReadyStep({ onFinish }: { onFinish: (destination: 'story' | 'overview') => void }) {
+function ReadyStep({ onFinish, isBeta }: { onFinish: (destination: 'story' | 'overview') => void; isBeta: boolean }) {
   const { t } = useTranslation('welcome');
+  const { t: tStories } = useTranslation('stories');
   const [remindersOn, setRemindersOn] = useState(loadSettings().remindersEnabled);
   const reminderCap = getReminderCapability();
 
@@ -281,8 +303,8 @@ function ReadyStep({ onFinish }: { onFinish: (destination: 'story' | 'overview')
         {t('onboarding.ready.lead')}
       </p>
 
-      {/* Reminders-Toggle */}
-      {reminderCap !== 'none' && (
+      {/* Reminders-Toggle — nur in installierter PWA sinnvoll */}
+      {isStandalonePwa() && reminderCap !== 'none' && (
         <div className="w-full max-w-xs bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 mb-5">
           <div className="flex items-center justify-between gap-3">
             <span className="text-sm font-semibold text-slate-700 text-left leading-snug">
@@ -301,20 +323,24 @@ function ReadyStep({ onFinish }: { onFinish: (destination: 'story' | 'overview')
           onClick={() => onFinish('story')}
           className="w-full bg-[var(--color-teal-600)] hover:bg-[var(--color-teal-700)] active:scale-[0.98] text-white font-bold rounded-2xl py-3.5 text-base shadow-md transition-all"
         >
-          {t('onboarding.ready.ctaStart', { defaultValue: 'Los geht\'s →' })}
+          {isBeta ? tStories('beta.ready.cta', { defaultValue: 'Weiter →' }) : t('onboarding.ready.ctaStart', { defaultValue: 'Los geht\'s →' })}
         </button>
-        <button
-          onClick={() => onFinish('overview')}
-          className="w-full bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-700 font-semibold rounded-2xl py-3 text-base border border-slate-200 transition-all"
-        >
-          {t('onboarding.ready.ctaOverview')}
-        </button>
-        <Link
-          to="/parents"
-          className="w-full text-center text-sm text-teal-600 hover:text-teal-700 font-medium py-2 transition-colors"
-        >
-          {t('onboarding.ready.ctaParents')}
-        </Link>
+        {!isBeta && (
+          <>
+            <button
+              onClick={() => onFinish('overview')}
+              className="w-full bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-700 font-semibold rounded-2xl py-3 text-base border border-slate-200 transition-all"
+            >
+              {t('onboarding.ready.ctaOverview')}
+            </button>
+            <Link
+              to="/parents"
+              className="w-full text-center text-sm text-teal-600 hover:text-teal-700 font-medium py-2 transition-colors"
+            >
+              {t('onboarding.ready.ctaParents')}
+            </Link>
+          </>
+        )}
       </div>
 
       {/* Install hint — only when not already in PWA mode */}
@@ -337,6 +363,94 @@ function ReadyStep({ onFinish }: { onFinish: (destination: 'story' | 'overview')
           </Link>
         </div>
       )}
+    </div>
+  );
+}
+
+function BetaStep({ onComplete }: { onComplete: () => void }) {
+  const { t } = useTranslation('stories');
+  const [agreed, setAgreed] = useState(false);
+
+  return (
+    <div className="flex flex-col px-6 pt-8 pb-5">
+      <div className="flex flex-col items-center gap-3 mb-5 text-center">
+        <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-violet-200 shadow-lg">
+          <img
+            src={assetUrl('media/story/characters/amy-256.webp')}
+            alt="Amy"
+            className="w-full h-full object-cover object-top"
+          />
+        </div>
+        <div className="text-xs font-extrabold text-violet-500 uppercase tracking-widest">
+          {t('beta.welcome.kicker')}
+        </div>
+        <h2 className="text-xl font-bold text-slate-900 leading-snug">
+          {t('beta.welcome.headline')}
+        </h2>
+      </div>
+
+      {/* Rahmenbedingungen */}
+      <div className="flex flex-col gap-2 mb-5">
+        <div className="flex items-center gap-2 bg-violet-50 border border-violet-100 rounded-xl px-3 py-2.5">
+          <span className="text-base">📅</span>
+          <span className="text-xs text-violet-800 leading-snug">
+            {t('beta.welcome.accessUntil', { date: BETA_END_DATE_DISPLAY })}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 bg-violet-50 border border-violet-100 rounded-xl px-3 py-2.5">
+          <span className="text-base">⏱️</span>
+          <span className="text-xs text-violet-800 leading-snug">
+            {t('beta.welcome.pacing')}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 bg-violet-50 border border-violet-100 rounded-xl px-3 py-2.5">
+          <span className="text-base">💬</span>
+          <span className="text-xs text-violet-800 leading-snug">
+            {t('beta.welcome.contactHint')}{' '}
+            <a
+              href={`mailto:${BETA_CONTACT_EMAIL}`}
+              className="font-semibold underline"
+            >
+              {BETA_CONTACT_EMAIL}
+            </a>
+          </span>
+        </div>
+      </div>
+
+      {/* Consent */}
+      <label className="flex items-start gap-3 bg-slate-50 rounded-2xl border border-slate-200 p-4 cursor-pointer mb-4">
+        <input
+          type="checkbox"
+          checked={agreed}
+          onChange={e => setAgreed(e.target.checked)}
+          className="mt-0.5 w-4 h-4 accent-violet-600 flex-shrink-0"
+        />
+        <span className="text-xs text-slate-600 leading-relaxed">
+          {t('beta.welcome.consentLabel')}
+        </span>
+      </label>
+
+      <button
+        type="button"
+        onClick={onComplete}
+        disabled={!agreed}
+        className={[
+          'w-full py-3.5 rounded-2xl font-bold text-base transition-all mb-3',
+          agreed
+            ? 'bg-violet-600 text-white shadow-md hover:bg-violet-700 active:scale-[0.98]'
+            : 'bg-slate-200 text-slate-400 cursor-not-allowed',
+        ].join(' ')}
+      >
+        {t('beta.welcome.cta')}
+      </button>
+
+      {/* Mehr Infos für Eltern */}
+      <Link
+        to="/parents"
+        className="w-full text-center text-xs text-slate-400 hover:text-violet-600 transition-colors py-1"
+      >
+        {t('beta.welcome.parentsLink')}
+      </Link>
     </div>
   );
 }
@@ -367,10 +481,20 @@ function LangPills() {
 export default function Onboarding() {
   const navigate = useNavigate();
   const { t } = useTranslation('navigation');
+  const [pendingCode] = useState<string | null>(() => BETA_ACTIVE ? getPendingBetaCode() : null);
+  const isBeta = !!pendingCode;
   const [step, setStep] = useState<Step>('welcome');
+
+  const stepOrder: Step[] = isBeta
+    ? ['welcome', 'info', 'avatar', 'ready', 'beta']
+    : ['welcome', 'info', 'avatar', 'ready'];
 
   function handleFinish(destination: 'story' | 'overview') {
     markFirstRunDone();
+    if (isBeta) {
+      setStep('beta');
+      return;
+    }
     if (destination === 'story') {
       navigate('/stories-v02/s1e01/s1e01c01', { replace: true });
     } else {
@@ -378,7 +502,14 @@ export default function Onboarding() {
     }
   }
 
-  const stepOrder: Step[] = ['welcome', 'info', 'avatar', 'ready'];
+  function handleBetaComplete() {
+    applyUnlockCode(pendingCode!);
+    setConsent(true);
+    setBetaCodeApplied(pendingCode!);
+    clearPendingBetaCode();
+    navigate('/stories-v02/s1e01/s1e01c01', { replace: true });
+  }
+
   function handleBack() {
     const idx = stepOrder.indexOf(step);
     if (idx > 0) setStep(stepOrder[idx - 1]);
@@ -386,8 +517,8 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-start justify-center relative">
-      {/* Zurück-Pfeil — ab Schritt 2 */}
-      {step !== 'welcome' && (
+      {/* Zurück-Pfeil — ab Schritt 2, nicht auf Beta-Step */}
+      {step !== 'welcome' && step !== 'beta' && (
         <button
           onClick={handleBack}
           aria-label={t('back', { defaultValue: 'Zurück' })}
@@ -401,11 +532,12 @@ export default function Onboarding() {
         <LangPills />
       </div>
       <div className="w-full max-w-sm bg-white rounded-3xl shadow-xl mt-8 mb-8 mx-4 overflow-hidden">
-        {step === 'welcome' && <WelcomeStep onNext={() => setStep('info')} />}
+        {step === 'welcome' && <WelcomeStep onNext={() => setStep('info')} isBeta={isBeta} />}
         {step === 'info' && <InfoStep onNext={() => setStep('avatar')} />}
         {step === 'avatar' && <AvatarStep onNext={() => setStep('ready')} />}
-        {step === 'ready' && <ReadyStep onFinish={handleFinish} />}
-        <ProgressDots step={step} />
+        {step === 'ready' && <ReadyStep onFinish={handleFinish} isBeta={isBeta} />}
+        {step === 'beta' && <BetaStep onComplete={handleBetaComplete} />}
+        <ProgressDots step={step} isBeta={isBeta} />
       </div>
     </div>
   );

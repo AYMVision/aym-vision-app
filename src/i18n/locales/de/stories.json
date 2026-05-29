@@ -468,5 +468,42 @@
     "betaQuestion": "📝 Was denkst du über Amy Surfwing?",
     "betaBody": "3 Minuten, anonym.",
     "betaDisclaimer": "Du wirst zu Microsoft Forms weitergeleitet – deine Antworten werden anonym gespeichert, wir erhalten keine persönlichen Daten. Teilnahme freiwillig."
+  },
+  "beta": {
+    "welcome": {
+      "kicker": "Erste Welle",
+      "headline": "Dein Feedback macht Amy Surfwing besser.",
+      "subline": "Du kannst Amy Surfwing vor allen anderen ausprobieren.",
+      "accessUntil": "Dein Zugang läuft bis {{date}}.",
+      "pacing": "1 Amic pro Tag — wie für alle anderen auch.",
+      "contactHint": "Fragen oder Feedback? Schreib uns:",
+      "consentLabel": "Ich bin einverstanden, dass meine Nutzung anonymisiert erfasst wird. Keine persönlichen Daten. Freiwillig.",
+      "cta": "Los geht's →",
+      "parentsLink": "Für Eltern: Mehr Infos →"
+    },
+    "completion": {
+      "kicker": "Erste Welle",
+      "headline": "Du hast Amy Surfwing mitgeformt, bevor alle anderen es kannten.",
+      "sendTitle": "Magst du uns deine Testergebnisse schicken?",
+      "sendBody": "Deine Daten helfen uns, Amy Surfwing weiterzuentwickeln. Anonym, freiwillig.",
+      "sendCta": "Ergebnisse senden →",
+      "sendPreparing": "Wird vorbereitet …",
+      "sendSuccess": "✓ Erfolgreich geteilt oder heruntergeladen.",
+      "sendError": "Fehler. Bitte nochmal versuchen.",
+      "s2Kicker": "Nächste Welle",
+      "s2Text": "Möchtest du auch s1e02 als Erstes testen? Melde dich bei uns.",
+      "s2Cta": "Kontakt aufnehmen →",
+      "dismiss": "Zur Story-Liste"
+    },
+    "partial": {
+      "text": "Du bist mittendrin — deine bisherigen Eindrücke sind auch schon wertvoll.",
+      "cta": "Jetzt senden →",
+      "dismiss": "Später"
+    },
+    "banner": {
+      "text": "Du testest eine frühe Version von Amy Surfwing – dein Feedback hilft uns weiter.",
+      "cta": "Feedback schreiben →",
+      "close": "Schließen"
+    }
   }
 }
