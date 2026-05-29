@@ -46,7 +46,6 @@ Zum Beispiel:
 - 🌤 Schatten
 - 🪟 Spiegelungen
 
-Wenn man diese Spuren bewusst auswertet, nennt man das **Kontextanalyse**.
 
 Für die Suche kann man Bilder auch in eine Suchmaschine hochladen.  
 Dann findet man manchmal ähnliche Bilder im Netz.

@@ -1,0 +1,1 @@
+const o="Amy Surfwing",t="Interactive story world for digital confidence",n="App logo",e="AYM VISION",l="Open shop",r={brandTitle:o,brandTagline:t,logoAlt:n,drawerTitle:e,openShop:l};export{t as brandTagline,o as brandTitle,r as default,e as drawerTitle,n as logoAlt,l as openShop};

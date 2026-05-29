@@ -40,7 +40,8 @@ Wenn du staunst, passiert etwas Besonderes:
 Du denkst weniger an dich – und mehr an das, was gerade da ist.
 
 [[callout kind="tip"]]
-## 🌿 So funktioniert es
+🌿 So funktioniert es
+
 Wenn dich ein Foto im Internet ärgert:
 - Leg das Handy weg.  
 - Geh nach draußen oder ans Fenster.  

@@ -1,1 +1,0 @@
-const n="Amy Surfwing",o="Check was online wirklich abgeht ✨",t="App-Logo",a="Amy Surfwing",e={brandTitle:n,brandTagline:o,logoAlt:t,drawerTitle:a};export{o as brandTagline,n as brandTitle,e as default,a as drawerTitle,t as logoAlt};

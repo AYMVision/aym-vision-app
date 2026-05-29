@@ -8,6 +8,16 @@
       "topicTags": [
         "self-control"
       ]
+    },
+    "en": {
+      "title": "Always online? Tom shows there's another way",
+      "description": "Finn is always on his phone and keeps missing meetups with friends. Tom does things differently. Jonas asks him: how does he manage it?",
+      "author": "Jonas",
+      "date": "2026-05-11",
+      "topicTags": [
+        "self-control"
+      ],
+      "aiTranslated": "true"
     }
   },
   "chatrules-chioma-dominik": {
@@ -16,6 +26,13 @@
       "description": "\"Heute geht es um eine Frage, die fast jede Klasse kennt: Brauchen wir Regeln im Klassenchat oder nerven die nur? Dazu habe ich mit Dominik diskutiert...\"",
       "author": "\"chioma\"",
       "date": "\"2026-01-29\""
+    },
+    "en": {
+      "title": "Rules in the class chat",
+      "description": "\"Today we tackle a question almost every class knows: Do we need rules in the class chat — or are they just annoying? I discussed it with Dominik...\"",
+      "author": "\"chioma\"",
+      "date": "\"2026-01-29\"",
+      "aiTranslated": "true"
     }
   },
   "chioma-news-david-goliath-audio": {
@@ -24,12 +41,29 @@
       "description": "Du wolltest nur kurz ein Video schauen und plötzlich ist eine halbe Stunde weg 😅 Hier erfährst du, warum dein Feed so stark ist … und wie du ihn austricksen kannst.",
       "author": "Chioma",
       "date": "2026-04-17"
+    },
+    "en": {
+      "title": "You vs. your phone: Who wins?",
+      "description": "You just wanted to watch one quick video and suddenly half an hour is gone 😅 Find out why your feed is so powerful … and how you can outsmart it.",
+      "author": "Chioma",
+      "date": "2026-04-17",
+      "aiTranslated": "true"
     }
   },
   "chioma-news-ki-hausaufgaben": {
     "de": {
       "title": "KI bei den Hausaufgaben – Hilfe oder Schummeln?",
       "description": "Lukas sagt „Ich hab mir nur helfen lassen.\" Chioma fragt „Oder doch geschummelt?\" Wo ist die Grenze – und wann macht KI dich wirklich besser?",
+      "author": "Chioma",
+      "date": "2026-05-14",
+      "topicTags": [
+        "reflect",
+        "infoCheck"
+      ]
+    },
+    "en": {
+      "title": "AI and Homework – Help or Cheating?",
+      "description": "Lukas says \"I just got some help.\" Chioma asks \"Or did you cheat?\" Where's the line – and when does AI actually make you better?",
       "author": "Chioma",
       "date": "2026-05-14",
       "topicTags": [
@@ -48,6 +82,17 @@
         "reflect",
         "create"
       ]
+    },
+    "en": {
+      "title": "Done in seconds – but is it still yours?",
+      "description": "AI creates images and texts in seconds. But the easier everything becomes, the more important one question gets — what's actually still coming from you?",
+      "author": "Chioma",
+      "date": "2026-05-14",
+      "topicTags": [
+        "reflect",
+        "create"
+      ],
+      "aiTranslated": "true"
     }
   },
   "chioma-news-school-ai": {
@@ -56,6 +101,13 @@
       "description": "Chioma schaut darauf, warum gerade so viele über KI bei Hausaufgaben und Referaten sprechen.",
       "author": "Chioma",
       "date": "2026-03-29"
+    },
+    "en": {
+      "title": "AI at school – helpful or unfair?",
+      "description": "Chioma looks at why so many people are talking about AI for homework and presentations right now.",
+      "author": "Chioma",
+      "date": "2026-03-29",
+      "aiTranslated": "true"
     }
   },
   "chioma-news-school-social-media": {
@@ -64,6 +116,13 @@
       "description": "Einige Länder wollen Social Media für Kinder verbieten. Chioma und Lukas diskutieren darüber.",
       "author": "Chioma",
       "date": "2026-04-10"
+    },
+    "en": {
+      "title": "Too young for social media?",
+      "description": "Some countries want to ban social media for children. Chioma and Lukas discuss the issue.",
+      "author": "Chioma",
+      "date": "2026-04-10",
+      "aiTranslated": "true"
     }
   },
   "tip-amy-staunen": {
@@ -75,6 +134,16 @@
       "topicTags": [
         "reflect"
       ]
+    },
+    "en": {
+      "title": "Bad mood from your phone? Try wonder.",
+      "description": "Sometimes the internet makes you angry, jealous or sad? Here's a simple trick that brings you back down. No phone needed.",
+      "author": "Carlos",
+      "date": "2026-02-11",
+      "topicTags": [
+        "reflect"
+      ],
+      "aiTranslated": "true"
     }
   },
   "tip-aylin-kileitfaden": {
@@ -86,6 +155,16 @@
       "topicTags": [
         "reflect"
       ]
+    },
+    "en": {
+      "title": "Aylin's AI Guide: Stay safe",
+      "description": "What can you tell an AI and what should you keep to yourself? These simple rules keep you on the safe side.",
+      "author": "Aylin",
+      "date": "2026-05-11",
+      "topicTags": [
+        "reflect"
+      ],
+      "aiTranslated": "true"
     }
   },
   "tip-carlos-audio-howto": {
@@ -97,6 +176,16 @@
       "topicTags": [
         "create"
       ]
+    },
+    "en": {
+      "title": "Your own audio piece – here's how",
+      "description": "Carlos shows you step by step how easy it is to record your own audio piece.",
+      "author": "Carlos",
+      "date": "2026-05-11",
+      "topicTags": [
+        "create"
+      ],
+      "aiTranslated": "true"
     }
   },
   "tip-carlos-game-tricks": {
@@ -108,6 +197,16 @@
       "topicTags": [
         "reflect"
       ]
+    },
+    "en": {
+      "title": "Carlos checks – The tricks of online games",
+      "description": "Carlos shows why \"just a quick look\" sometimes turns into much more time, and which gaming tricks are behind it.",
+      "author": "Carlos",
+      "date": "2026-01-27",
+      "topicTags": [
+        "reflect"
+      ],
+      "aiTranslated": "true"
     }
   },
   "tip-carlos-geodaten": {
@@ -121,6 +220,18 @@
         "teamTalk",
         "safe"
       ]
+    },
+    "en": {
+      "title": "Traces in a photo – how to read images properly",
+      "description": "You post a photo – but what does the photo post about you? Find out what hidden information is inside.",
+      "author": "Carlos",
+      "date": "2026-01-27",
+      "topicTags": [
+        "create",
+        "teamTalk",
+        "safe"
+      ],
+      "aiTranslated": "true"
     }
   },
   "tip-chioma-groupchats": {
