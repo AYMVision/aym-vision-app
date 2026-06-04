@@ -23,6 +23,7 @@ import album from './i18n/locales/de/album.json';
 import parents from './i18n/locales/de/parents.json';
 import concept from './i18n/locales/de/concept.json';
 import themes from './i18n/locales/de/themes.json';
+import studio from './i18n/locales/de/studio.json';
 
 
 declare module 'i18next' {
@@ -49,6 +50,7 @@ declare module 'i18next' {
       parents: typeof parents;
       concept: typeof concept;
       themes: typeof themes;
+      studio: typeof studio;
     };
   }
 }

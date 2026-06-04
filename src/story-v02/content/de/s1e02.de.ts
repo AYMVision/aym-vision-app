@@ -645,7 +645,7 @@ const c08 = C('s1e02c08', 7, 'Amic 8', 'Regeln gelten auch hier', [
     m(ch.carlos, 'Auf dem großen Wandplakat steht’s: „Keine [[fake-news]]!”', '14:50'),
     m(ch.carlos, 'Ohne Regeln müssten wir alles jedes Mal neu ausdiskutieren.', '14:51'),
     m(ch.chioma, 'Das leuchtet ein. Aber…', '14:51'),
-    m(ch.aylin, 'So können wir das leider nicht veröffentlichen, tut mir leid. Aber dein Artikel kann ja in die Ausgabe vom nächsten Monat 📅', '14:52'),
+    m(ch.aylin, 'So können wir das leider nicht veröffentlichen, tut mir leid. Aber dein Artikel kann ja in die Ausgabe vom nächsten Monat', '14:52'),
     m(ch.chioma, 'Was?? Das ist noch viel zu lange hin. Könnt ihr nicht noch bis morgen mit der Veröffentlichung warten? 🙏', '14:52'),
     m(ch.aylin, 'Das geht leider nicht. Sorry!', '14:53'),
     m(ch.aylin, 'Worüber ist dein Artikel eigentlich, Chioma?', '14:53'),

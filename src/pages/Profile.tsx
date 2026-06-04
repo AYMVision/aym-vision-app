@@ -43,7 +43,7 @@ export default function Profile() {
     coins >= 50
       ? 'Amy ist beeindruckt. Was g\u00f6nnst du dir?'
       : coins >= 25
-      ? 'M\u00f6chtest du schon etwas? Schau mal im Shop vorbei.'
+      ? 'M\u00f6chtest du schon etwas? Schau mal bei Belohnungen vorbei.'
       : coins > 0
       ? 'Noch ein paar bis zum ersten neuen Look.'
       : null;
@@ -145,13 +145,24 @@ export default function Profile() {
                     )}
                   </div>
                 </Link>
-                <Link
-                  to="/avatar"
-                  state={{ backTo: '/profile' }}
-                  className="mt-3 inline-flex items-center justify-center w-full rounded-xl px-3 py-2 text-xs font-extrabold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
-                >
-                  {t('shop.openCta')}
-                </Link>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  <Link
+                    to="/avatar"
+                    state={{ backTo: '/profile', initialTab: 'items' }}
+                    className="flex items-center gap-1.5 rounded-xl px-3 py-2.5 bg-violet-50 border border-violet-100 hover:bg-violet-100 active:scale-[0.97] transition-all"
+                  >
+                    <span className="text-base leading-none">🎒</span>
+                    <span className="text-xs font-bold text-violet-700 leading-tight">Meine Sachen</span>
+                  </Link>
+                  <Link
+                    to="/avatar"
+                    state={{ backTo: '/profile', initialTab: 'shop' }}
+                    className="flex items-center gap-1.5 rounded-xl px-3 py-2.5 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100 active:scale-[0.97] transition-all"
+                  >
+                    <span className="text-base leading-none">✨</span>
+                    <span className="text-xs font-bold text-emerald-700 leading-tight">Belohnungen</span>
+                  </Link>
+                </div>
 
                 {/* Sound-Toggle */}
                 <button

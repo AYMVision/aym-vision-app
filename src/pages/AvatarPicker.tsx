@@ -344,7 +344,7 @@ export default function AvatarPicker() {
             ].join(' ')}
           >
             <span className="mr-1">✨</span>
-            {t('avatar.tabs.shop', { defaultValue: 'Neue Sachen' })}
+            {t('avatar.tabs.shop', { defaultValue: 'Belohnungen' })}
           </button>
         </div>
 

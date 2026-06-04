@@ -50,6 +50,9 @@ const Onboarding       = lazy(() => import('./pages/Onboarding'));
 const TransferPage     = lazy(() => import('./pages/TransferPage'));
 const InstallGuide     = lazy(() => import('./pages/InstallGuide'));
 const BetaPage         = lazy(() => import('./pages/BetaPage'));
+const StudioPage         = lazy(() => import('./pages/StudioPage'));
+const StudioViewPage     = lazy(() => import('./pages/StudioViewPage'));
+const StudioStoriesPage  = lazy(() => import('./pages/StudioStoriesPage'));
 const TestSettings   = import.meta.env.DEV ? lazy(() => import('./pages/TestSettings')) : null;
 const DevLab         = import.meta.env.DEV ? lazy(() => import('./pages/DevLab')) : null;
 
@@ -109,6 +112,10 @@ function AppRoutes() {
         <Route path="/transfer/:data" element={<TransferPage />} />
         <Route path="/install" element={<InstallGuide />} />
         <Route path="/beta/:code" element={<BetaPage />} />
+
+        <Route path="/studio" element={<StudioPage />} />
+        <Route path="/studio/view/:encoded" element={<StudioViewPage />} />
+        <Route path="/studio/stories" element={<StudioStoriesPage />} />
 
         {import.meta.env.DEV && TestSettings && (
           <Route path="/test-settings" element={<TestSettings />} />

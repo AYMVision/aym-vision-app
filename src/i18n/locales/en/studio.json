@@ -1,0 +1,111 @@
+{
+  "title": "Amic Creator",
+  "subtitle": "Write your own Amic story",
+  "step1": {
+    "heading": "Topic & Title",
+    "amyIntro": "What is your story about?",
+    "tagLabel": "Choose a topic",
+    "tagFree": "Free topic",
+    "tagLocked": "Topic set by educator",
+    "titleLabel": "Title (optional)",
+    "titlePlaceholder": "e.g. The Screenshot",
+    "cta": "Continue →"
+  },
+  "step2": {
+    "heading": "Characters",
+    "amyIntro": "Who is in the chat?",
+    "amyFixed": "Amy is always included",
+    "hint": "Choose 1–4 more characters.",
+    "more": "More characters",
+    "less": "Less",
+    "cta": "Continue →",
+    "back": "← Back"
+  },
+  "step3": {
+    "heading": "Write your story",
+    "addLabel": "New message",
+    "charPlaceholder": "Choose character",
+    "msgPlaceholder": "What does {{name}} write?",
+    "addCta": "Add",
+    "emptyHint": "No messages yet. Start writing!",
+    "amySection": "Amy – Closing (required)",
+    "amyQuestionLabel": "Amy asks:",
+    "amyQuestionPlaceholder": "What would you do in this situation?",
+    "amyTipLabel": "Amy's tip:",
+    "amyTipPlaceholder": "Remember: ...",
+    "editSave": "Save",
+    "editCancel": "Cancel",
+    "cta": "Done & Share →",
+    "back": "← Back"
+  },
+  "step4": {
+    "heading": "Share & Print",
+    "qrHint": "Other device: scan QR code",
+    "qrScanHint": "Open the camera on the other device.",
+    "copyLink": "Copy link",
+    "copied": "✓ Copied!",
+    "print": "Print as PDF",
+    "workshopHeading": "Workshop link for educators",
+    "workshopHint": "This link opens the studio with a pre-selected topic.",
+    "workshopCopy": "Copy workshop link",
+    "back": "← Keep writing",
+    "newStory": "New story"
+  },
+  "view": {
+    "by": "Amy Surfwing",
+    "share": "Share",
+    "print": "Print",
+    "create": "Create your own story →",
+    "amyAsks": "Amy asks",
+    "amyTip": "Amy's tip",
+    "saveImage": "Save as image",
+    "saveImageLoading": "Creating..."
+  },
+  "workshop": {
+    "heading": "Today you write your own Amic story!",
+    "hint": "Choose characters, write a chat – and Amy asks a question at the end.",
+    "step1hint": "Choose characters",
+    "step2hint": "Write the chat story",
+    "step3hint": "Share & print",
+    "cta": "Let's go →"
+  },
+  "landing": {
+    "amyIntro": "Write your own chat story!",
+    "cta": "Write a new story",
+    "draftCta": "Continue unfinished story →",
+    "storiesCta": "My stories →",
+    "storiesCtaCount": "My stories ({{count}}) →",
+    "workshopTitle": "Workshop links for educators",
+    "workshopHint": "Tap a topic → copy link for students",
+    "workshopCustomHint": "Enter a custom topic:",
+    "workshopCustomPlaceholder": "e.g. Cyberbullying"
+  },
+  "draft": {
+    "found": "You have an unfinished story.",
+    "continue": "Continue writing",
+    "discard": "Start fresh"
+  },
+  "errors": {
+    "noTag": "Please choose a topic.",
+    "noCharacters": "Choose at least one character.",
+    "noMessages": "Write at least one message.",
+    "noAmyQuestion": "Amy needs a question.",
+    "noAmyTip": "Amy needs a tip.",
+    "invalidLink": "This link is invalid or corrupted."
+  },
+  "myStories": {
+    "title": "My Stories",
+    "empty": "No stories yet.",
+    "emptyHint": "Write your first Amic story!",
+    "emptyCta": "Get started →",
+    "open": "Open →",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this story?",
+    "deleteYes": "Yes",
+    "noTitle": "Untitled",
+    "dateToday": "today",
+    "dateYesterday": "yesterday",
+    "daysAgo": "{{count}} days ago",
+    "newStoryBtn": "+ New Story"
+  }
+}

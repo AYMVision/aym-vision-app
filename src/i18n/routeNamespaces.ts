@@ -35,6 +35,9 @@ export function namespacesForPath(pathname: string): I18nNamespace[] {
   if (pathname.startsWith('/kids')) return [...base, 'welcome'];
   if (pathname.startsWith('/start')) return [...base, 'welcome', 'stories'];
 
+  // Studio
+  if (pathname.startsWith('/studio')) return [...base, 'studio', 'bonus'];
+
   // Beta
   if (pathname.startsWith('/beta')) return [...base, 'stories'];
 

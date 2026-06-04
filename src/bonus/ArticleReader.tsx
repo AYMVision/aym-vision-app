@@ -194,14 +194,29 @@ export function ArticleReader({
   const totalSections = sections.length;
   const progressPercent = Math.round(((currentSection + 1) / totalSections) * 100);
 
+  function scrollToArticleTop() {
+    if (!containerRef.current) return;
+    // Scroll the nearest scrollable ancestor (modal container) or the window
+    let el: HTMLElement | null = containerRef.current.parentElement;
+    while (el) {
+      const { overflowY } = getComputedStyle(el);
+      if ((overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight) {
+        el.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      el = el.parentElement;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   function handleNext() {
     setCurrentSection((s) => s + 1);
-    containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToArticleTop();
   }
 
   function handleBack() {
     setCurrentSection((s) => Math.max(0, s - 1));
-    containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToArticleTop();
   }
 
   function handleReaction(id: string) {

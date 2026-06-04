@@ -1,4 +1,11 @@
 {
+  "s1e03": {
+    "c03": {
+      "input": {
+        "afterChallenge": "Wie lief dein Algorithmus-Duell? Ist dir das Aussteigen gelungen?"
+      }
+    }
+  },
   "s1e01": {
     "c04": {
       "input": {

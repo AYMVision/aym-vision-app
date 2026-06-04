@@ -88,6 +88,10 @@ export default function NewspaperArticle() {
     : false;
 
   useEffect(() => {
+    if (!isModal) window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+  }, [id, isModal]);
+
+  useEffect(() => {
     if (!item || !unlocked) return;
     markBonusSeen(item.bonusId);
   }, [item, unlocked]);

@@ -138,8 +138,6 @@ const c01 = C('s1e03c01', 0, 'Amic 1', 'Finn on Fire', [
 
   S('s1e03c01_story_switch_to_amy', [
     amyChat(),
-    m(ch.amy, 'Finn muss eigentlich los, bleibt dann aber trotzdem noch im Spiel.'),
-    m(ch.amy, 'Was würdest du in so einem Moment machen?'),
   ], ['reflect-understand']),
 
   IT('s1e03c01_item_interrupt_impulse_game',
@@ -252,8 +250,6 @@ const c02 = C('s1e03c02', 1, 'Amic 2', 'Immer noch online', [
 
   S('s1e03c02_story_switch_to_amy', [
     amyChat(),
-    m(ch.amy, 'Tom macht sich Sorgen um Finn. Mia denkt eher: „So ist er halt.“'),
-    m(ch.amy, 'Was könnte hinter Finns Verhalten stecken?'),
   ], ['reflect-understand']),
 
   IT('s1e03c02_item_finn_behavior_perspective',
@@ -354,8 +350,6 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
   S('s1e03c03_story_switch_to_amy', [
     amyChat(),
     m(ch.amy, 'Jetzt hast du gesehen, wie Apps auswählen, was du zuerst siehst.'),
-    m(ch.amy, 'Woran merkst du bei dir selbst, dass dich das beeinflusst?'),
-    m(ch.amy, 'Du kannst mehrere Antworten auswählen.'),
   ], ['info-check', 'reflect-understand']),
 
   MIT('s1e03c03_item_algorithm_influence',
@@ -379,17 +373,12 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
   ),
 
   S('s1e03c03_story_challenge_intro', [
-    m(ch.amy, 'Lust auf ein kleines Duell? 💪 Du gegen den Algorithmus: Er will, dass du weiterscrollst.'),
+    m(ch.amy, 'Ich hab noch eine Challenge für dich. 💪'),
   ], ['problem-solving']),
 
   CH('s1e03c03_challenge_algorithm_exit',
-    '👉 Schaffst du es, trotzdem einfach auszusteigen?',
+    'Algorithmus-Duell 💪 Öffne heute eine App, bei der du oft länger scrollst als geplant – und steige bewusst aus, sobald du merkst: Eigentlich hab ich schon genug gesehen.',
   ),
-
-  inp('s1e03c03_input_after_challenge', 'stories:s1e03.c03.input.afterChallenge', {
-    topics: ['talk-act'],
-    promptSpeakerId: 'amy',
-  }),
 
   S('s1e03c03_story_newsroom_audio', [
     privateChat('Aylin', 'Carlos', 'Jonas', 'Chioma'),
@@ -397,6 +386,11 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
     bonusLink('chioma-news-david-goliath-audio', 'Chiomas Weekly: David gegen Goliath (Audio)', '/newspaper/chioma-news-david-goliath-audio', 'Anhören →'),
     m(ch.jonas, 'Oh nice. Direkt liefern. 👌', '15:50', { reactions: [R('🎧')] }),
   ], ['talk-act', 'info-check']),
+
+  inp('s1e03c03_input_after_challenge', 'stories:s1e03.c03.input.afterChallenge', {
+    topics: ['talk-act'],
+    promptSpeakerId: 'amy',
+  }),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────

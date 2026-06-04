@@ -6,6 +6,7 @@ import {
   setBypassUntil,
   setUnlockAllEpisodes,
   unlockEpisode,
+  unlockEpisodeUntil,
 } from './entitlements';
 import { setFastGateActive } from './gateEngine';
 
@@ -19,6 +20,7 @@ type NamedCodeAction =
   | { type: 'test-access'; message: string }
   | { type: 'bypass-all'; message: string }
   | { type: 'unlock-episode'; episodeId: string; message: string }
+  | { type: 'unlock-episode-until'; episodeId: string; date: string; message: string }
   | { type: 'bypass-until'; date: string; message: string }
   | { type: 'unlock-all-episodes'; message: string };
 
@@ -58,6 +60,14 @@ const NAMED_CODES: Record<string, NamedCodeAction> = {
     message: 'Freischaltung bis 2026-04-12 aktiviert.',
   },
 
+  // ===== Individuelle Trainer-Codes =====
+  'TRAINER-KEMAL': {
+    type: 'unlock-episode-until',
+    episodeId: 's1e01',
+    date: '2026-06-30',
+    message: 'Trainer-Zugang für S1E01 aktiviert (bis 30.06.2026).',
+  },
+
   // ===== Beta-Tester: Erste Welle =====
   // unlock-all-episodes: alle Kapitel zugänglich, aber 1 Amic/Tag bleibt
   'ERSTEWELLE': {
@@ -79,6 +89,11 @@ function applyNamedCode(action: NamedCodeAction): ApplyUnlockCodeResult {
 
   if (action.type === 'unlock-episode') {
     unlockEpisode(action.episodeId);
+    return { ok: true, message: action.message };
+  }
+
+  if (action.type === 'unlock-episode-until') {
+    unlockEpisodeUntil(action.episodeId, action.date);
     return { ok: true, message: action.message };
   }
 
