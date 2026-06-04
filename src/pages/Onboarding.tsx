@@ -173,7 +173,7 @@ function InfoStep({ onNext }: { onNext: () => void }) {
           className="w-12 h-12 rounded-full object-cover object-top flex-shrink-0 border-2 border-teal-100 shadow-sm"
         />
         <div className="bg-teal-50 border border-teal-100 rounded-2xl px-4 py-2.5 text-sm font-semibold text-teal-800 leading-snug">
-          „Ich erkläre dir kurz, wie es läuft."
+          {t('onboarding.info.amyIntro')}
         </div>
       </div>
 

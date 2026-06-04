@@ -25,7 +25,7 @@
   "about": {
     "whatTitle": "Was ist Amy Surfwing?",
     "whatBody1": "Die neue Chat-Serie für Kids in einer interaktiven Story-Welt.",
-    "whatBody2": "Die Lern-App für Medienreife, in der Kids Online-Situationen durchdenken.",
+    "whatBody2": "Amy Surfwing ist eine interaktive Chat-Serie für Kids ab 9 Jahren. In einer Story-Welt erleben sie zusammen mit Yasmin, Carlos und Co spannende Situationen aus dem digitalen Alltag – fünf Minuten pro Tag.",
 "uspTitle": "Was Amy Surfwing besonders macht:",
     "principles": {
       "0": "📖 Story statt Unterricht",
@@ -43,7 +43,7 @@
       "badge": "Amy Surfwing",
       "imageAlt": "Yasmin, Carlos & Co",
       "title": "Willkommen bei\nAmy Surfwing!",
-      "lead": "Entdecke die Geheimnisse von Yasmin, Carlos & Co. Mit Amy Surfwing meisterst du Challenges. Die Online Abenteuer warten auf dich.",
+      "lead": "Entdecke die Geheimnisse von Yasmin, Carlos & Co. Die Online Abenteuer warten auf dich.",
       "badge0": "⏱️ 5 min täglich",
       "badge1": "🎓 ab 9 Jahre",
       "badge2": "💬 Chat & mehr",
@@ -51,6 +51,7 @@
     },
     "info": {
       "title": "So läuft's ab",
+      "amyIntro": "Ich erkläre dir kurz, wie es läuft.",
       "amicTitle": "Ein Amic ist…",
       "amicExplain": "Ein interaktives Kapitel in unserer Chat-Story zum Mitdenken — 5 Minuten täglich.",
       "feature0title": "Echte Themen",

@@ -24,13 +24,14 @@ import {
 } from '../studio/studioEncoding';
 import { getSavedStories, saveStoryToList } from '../studio/studioStorage';
 import type { StudioMessage, StudioStory, StudioTopicId } from '../studio/studioTypes';
+import {
+  STUDIO_TOPICS,
+  TOPIC_ICONS,
+  buildCustomWorkshopUrl,
+  copyToClipboard,
+} from '../studio/studioTopics';
 
 // --------------- Constants ---------------
-
-const TOPIC_ICONS: Record<string, string> = {
-  infoCheck: '🕵️', teamTalk: '🤝', create: '🎨',
-  safe: '🔒', solve: '💡', reflect: '🪞', fair: '⚖️', free: '🌈',
-};
 
 const IMPULSES: Partial<Record<StudioTopicId, string[]>> = {
   infoCheck: [
@@ -67,22 +68,12 @@ const IMPULSES: Partial<Record<StudioTopicId, string[]>> = {
   ],
 };
 
-const STUDIO_TOPICS = ['infoCheck', 'teamTalk', 'create', 'safe', 'solve', 'reflect', 'fair', 'free'] as const;
-
 function genId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2);
 }
 
 function buildShareUrl(encoded: string): string {
   return `${window.location.origin}${window.location.pathname}#/studio/view/${encoded}`;
-}
-
-function buildWorkshopUrl(tag: StudioTopicId): string {
-  return `${window.location.origin}${window.location.pathname}#/studio?tag=${tag}`;
-}
-
-function buildCustomWorkshopUrl(label: string): string {
-  return `${window.location.origin}${window.location.pathname}#/studio?label=${encodeURIComponent(label.trim())}`;
 }
 
 // --------------- ProgressDots (onboarding style) ---------------
@@ -833,27 +824,6 @@ function StudioLanding({
   onContinueDraft: () => void;
 }) {
   const { t } = useTranslation('studio');
-  const { t: tBonus } = useTranslation('bonus');
-  const [copiedTag, setCopiedTag] = useState<string | null>(null);
-  const [customLabel, setCustomLabel] = useState('');
-  const [customCopied, setCustomCopied] = useState(false);
-
-  function copyWorkshopLink(topicId: string) {
-    const url = `${window.location.origin}${window.location.pathname}#/studio?tag=${topicId}`;
-    navigator.clipboard.writeText(url).then(() => {
-      setCopiedTag(topicId);
-      setTimeout(() => setCopiedTag(null), 2000);
-    }).catch(() => {});
-  }
-
-  function copyCustomWorkshopLink() {
-    if (!customLabel.trim()) return;
-    const url = buildCustomWorkshopUrl(customLabel);
-    navigator.clipboard.writeText(url).then(() => {
-      setCustomCopied(true);
-      setTimeout(() => setCustomCopied(false), 2000);
-    }).catch(() => {});
-  }
 
   return (
     <div className="flex flex-col px-5 pt-6 pb-5 gap-4">
@@ -899,63 +869,14 @@ function StudioLanding({
           : t('landing.storiesCta')}
       </Link>
 
-      {/* Workshop section */}
-      <div className="border-t border-slate-100 pt-4 mt-1">
-        <p className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-0.5">
-          {t('landing.workshopTitle')}
-        </p>
-        <p className="text-xs text-slate-400 mb-3">{t('landing.workshopHint')}</p>
-        <div className="grid grid-cols-2 gap-1.5">
-          {(STUDIO_TOPICS as readonly string[]).map((topicId) => {
-            const label = topicId === 'free'
-              ? t('step1.tagFree')
-              : tBonus(`newspaper.topics.${topicId}`);
-            const copied = copiedTag === topicId;
-            return (
-              <button
-                key={topicId}
-                type="button"
-                onClick={() => copyWorkshopLink(topicId)}
-                className={`flex items-center gap-1.5 px-2.5 py-2 rounded-xl border text-xs font-medium transition-all text-left ${
-                  copied
-                    ? 'border-teal-300 bg-teal-50 text-teal-700'
-                    : 'border-slate-200 bg-white text-slate-600 hover:border-violet-200 hover:bg-violet-50'
-                }`}
-              >
-                <span>{TOPIC_ICONS[topicId]}</span>
-                <span className="leading-tight truncate">{copied ? '✓ Kopiert!' : label}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Custom topic */}
-        <div className="mt-3 pt-3 border-t border-slate-100">
-          <p className="text-xs text-slate-400 mb-2">{t('landing.workshopCustomHint', { defaultValue: 'Eigenes Thema eingeben:' })}</p>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={customLabel}
-              onChange={(e) => { setCustomLabel(e.target.value); setCustomCopied(false); }}
-              onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); copyCustomWorkshopLink(); } }}
-              placeholder={t('landing.workshopCustomPlaceholder', { defaultValue: 'z.B. Cybermobbing' })}
-              className="flex-1 px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-violet-300 bg-white"
-              maxLength={60}
-            />
-            <button
-              type="button"
-              onClick={copyCustomWorkshopLink}
-              disabled={!customLabel.trim()}
-              className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all disabled:opacity-40 ${
-                customCopied
-                  ? 'bg-teal-50 border border-teal-300 text-teal-700'
-                  : 'bg-violet-50 border border-violet-200 text-violet-700 hover:bg-violet-100'
-              }`}
-            >
-              {customCopied ? '✓' : '🔗'}
-            </button>
-          </div>
-        </div>
+      {/* Educator link */}
+      <div className="border-t border-slate-100 pt-4 mt-1 text-center">
+        <Link
+          to="/studio/educators"
+          className="text-sm text-slate-400 hover:text-violet-600 transition-colors font-medium"
+        >
+          🏫 {t('landing.educatorsCta')}
+        </Link>
       </div>
     </div>
   );
@@ -1158,7 +1079,7 @@ export default function StudioPage() {
 
   // Step 2 validation
   function handleStep2Next() {
-    if (selectedChars.length === 0) {
+    if (selectedChars.length < 2) {
       setErrors({ characters: t('errors.noCharacters') });
       return;
     }
@@ -1185,7 +1106,7 @@ export default function StudioPage() {
   function handleToggleChar(id: string) {
     setSelectedChars((prev) => {
       if (prev.includes(id)) return prev.filter((c) => c !== id);
-      if (prev.length >= 4) return prev; // max 4
+      if (prev.length >= 6) return prev; // max 6
       return [...prev, id];
     });
   }

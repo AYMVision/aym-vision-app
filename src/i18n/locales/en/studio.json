@@ -15,7 +15,7 @@
     "heading": "Characters",
     "amyIntro": "Who is in the chat?",
     "amyFixed": "Amy is always included",
-    "hint": "Choose 1–4 more characters.",
+    "hint": "Choose 2–6 more characters.",
     "more": "More characters",
     "less": "Less",
     "cta": "Continue →",
@@ -75,10 +75,23 @@
     "draftCta": "Continue unfinished story →",
     "storiesCta": "My stories →",
     "storiesCtaCount": "My stories ({{count}}) →",
-    "workshopTitle": "Workshop links for educators",
-    "workshopHint": "Tap a topic → copy link for students",
-    "workshopCustomHint": "Enter a custom topic:",
-    "workshopCustomPlaceholder": "e.g. Cyberbullying"
+    "educatorsCta": "For educators →"
+  },
+  "educators": {
+    "title": "Studio for Educators",
+    "amyIntro": "Workshop links for your class",
+    "explanation": "Copy a link and share it with your group. Participants open the Studio with your chosen topic and write their own chat story together.",
+    "howItWorks": "How it works",
+    "step1": "Copy a link for a topic",
+    "step2": "Share the link with your group",
+    "step3": "Participants write their own chat story",
+    "topicsTitle": "Choose a topic",
+    "topicsHint": "Tap → link is copied",
+    "customTitle": "Custom topic",
+    "customHint": "Enter your own topic:",
+    "customPlaceholder": "e.g. Cyberbullying",
+    "customCopy": "🔗",
+    "backToStudio": "← Back to Studio"
   },
   "draft": {
     "found": "You have an unfinished story.",
@@ -87,7 +100,7 @@
   },
   "errors": {
     "noTag": "Please choose a topic.",
-    "noCharacters": "Choose at least one character.",
+    "noCharacters": "Choose at least 2 characters.",
     "noMessages": "Write at least one message.",
     "noAmyQuestion": "Amy needs a question.",
     "noAmyTip": "Amy needs a tip.",

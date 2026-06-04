@@ -174,10 +174,33 @@ function ActionBar({ story, chatAreaRef }: ActionBarProps) {
   }, [shareUrl]);
 
   function handleCopy() {
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    });
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(shareUrl)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2500);
+        })
+        .catch(() => {
+          // Fallback: prompt mit URL zum manuellen Kopieren
+          window.prompt('Link kopieren (Strg+C / Cmd+C):', shareUrl);
+        });
+    } else {
+      // Ältere Browser: execCommand-Fallback
+      try {
+        const el = document.createElement('textarea');
+        el.value = shareUrl;
+        el.style.position = 'fixed';
+        el.style.opacity = '0';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+      } catch {
+        window.prompt('Link kopieren (Strg+C / Cmd+C):', shareUrl);
+      }
+    }
   }
 
   function handleShare() {
@@ -203,15 +226,15 @@ function ActionBar({ story, chatAreaRef }: ActionBarProps) {
       const blob = await new Promise<Blob | null>((resolve) =>
         canvas.toBlob(resolve, 'image/png')
       );
-      if (!blob) return;
-      const file = new File([blob], 'amic-story.png', { type: 'image/png' });
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file] }).catch(() => triggerDownload(blob));
-      } else {
-        triggerDownload(blob);
+      if (!blob) {
+        alert('Bild konnte nicht erstellt werden. Bitte versuche es erneut.');
+        return;
       }
+      // Erst Download versuchen (zuverlässiger als File-Share)
+      triggerDownload(blob);
     } catch (err) {
       console.error('Image export error:', err);
+      alert('Bild konnte nicht gespeichert werden. Tipp: Versuche einen Screenshot.');
     } finally {
       setImageLoading(false);
     }

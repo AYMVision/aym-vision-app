@@ -16,8 +16,10 @@ import { shouldBypassAll } from '../gating/entitlements';
 import { shouldSkipOnboarding } from '../common/firstRun';
 import { loadStore } from '../analytics/analyticsStore';
 import { BONUS_INDEX } from '../bonus/bonusIndex';
-import { isBonusMarkerUnlocked, isBonusSeen } from '../bonus/bonusSeen';
-import { DIARY_ENTRIES } from '../bonus/diaryEntries';
+import { loadSeenBonusIds } from '../bonus/bonusSeen';
+import { isBonusUnlocked } from '../bonus/bonusUnlock';
+import type { BonusProgressSnapshot } from '../bonus/bonusUnlock';
+import { CHARACTERS } from '../content/characters';
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
@@ -209,39 +211,132 @@ function isUnlockedByChain(
     return 'Hallo! Ich bin Amy. Ich freue mich auf dich.';
   })();
 
-  // Option B: single Amy nudge — highest priority wins
-  const amyHint = useMemo(() => {
+  // BonusProgressSnapshot aus Profil (identisch zu Cards.tsx)
+  const bonusProgress = useMemo<BonusProgressSnapshot>(() => {
+    const completed = profile.progress?.completedChapters ?? {};
+    const seen = new Set<string>();
+    for (const [key, done] of Object.entries(completed)) {
+      if (!done) continue;
+      const parts = key.split(':');
+      if (parts.length !== 3) continue;
+      const episodeId = parts[1];
+      const match = /^c(\d{2})$/.exec(parts[2]);
+      if (!match) continue;
+      seen.add(`${episodeId}c${match[1]}`);
+    }
+    const cur = profile.progress?.current;
+    if (cur?.episodeId && typeof cur.chapterIndex === 'number') {
+      const c = String(cur.chapterIndex).padStart(2, '0');
+      seen.add(`${cur.episodeId}c${c}`);
+    }
+    return { seenChapterIds: Array.from(seen) };
+  }, [profile]);
+
+  // Freigeschaltete Charakterkreise (Story-Circles-Stil)
+  const unlockedCharCircles = useMemo(() => {
+    if (isFirstTime) return [];
+    const seenIds = new Set(loadSeenBonusIds());
+    return BONUS_INDEX
+      .filter((item) => item.category === 'characters' && isBonusUnlocked(item, bonusProgress))
+      .map((item) => {
+        const charId = item.characterId as keyof typeof CHARACTERS | undefined;
+        const char = charId ? CHARACTERS[charId] : undefined;
+        if (!char?.card?.portrait) return null;
+        return {
+          bonusId: item.bonusId,
+          name: char.name,
+          portrait: char.card.portrait,
+          isNew: !seenIds.has(item.bonusId),
+        };
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null);
+  }, [isFirstTime, bonusProgress]);
+
+  // Tägliche Content-Kachel (rotiert einmal pro Tag, nur freigeschaltete Inhalte)
+  const dailyContentCard = useMemo(() => {
     if (isFirstTime) return null;
+    const seenIds = new Set(loadSeenBonusIds());
 
-    // 1. Most recent unread newspaper article (highest order = newest)
-    //    released: true is enough — newspaper page itself handles chapter-lock display
-    const newestUnread = BONUS_INDEX
-      .filter((item) => item.category === 'newspaper' && item.released && !isBonusSeen(item.bonusId))
+    type CardCandidate = {
+      path: string;
+      portrait: string;
+      label: string;
+      title: string;
+      accent: string;
+    };
+
+    const candidates: CardCandidate[] = [];
+
+    // 1. Neuester ungelesener Zeitungsartikel (freigeschaltet)
+    const unreadPaper = BONUS_INDEX
+      .filter((item) =>
+        item.category === 'newspaper' &&
+        item.released &&
+        isBonusUnlocked(item, bonusProgress) &&
+        !seenIds.has(item.bonusId)
+      )
       .sort((a, b) => b.order - a.order)[0];
-    if (newestUnread) {
-      return {
-        type: 'newspaper' as const,
-        titleKey: newestUnread.titleKey,
-        path: '/newspaper',
-      };
+    if (unreadPaper) {
+      candidates.push({
+        path: `/newspaper/${unreadPaper.bonusId}`,
+        portrait: 'media/story/characters/chioma-256.webp',
+        label: 'Chioma · Schülerzeitung',
+        title: unreadPaper.titleKey
+          ? tBonus(unreadPaper.titleKey.replace(/^bonus:/, ''))
+          : 'Neues aus der Schülerzeitung',
+        accent: 'bg-rose-400',
+      });
     }
 
-    // 2. Unread diary entry
-    const allDiaryEntries = Object.values(DIARY_ENTRIES).flat();
-    const hasUnreadDiary = allDiaryEntries.some(
-      (e) => isBonusMarkerUnlocked(e.bonusId) && !isBonusSeen(e.bonusId)
-    );
-    if (hasUnreadDiary) {
-      return {
-        type: 'diary' as const,
-        titleKey: undefined,
-        path: '/diaries',
-      };
+    // 2. Ungelesenes Tagebuch (freigeschaltet)
+    const unreadDiary = BONUS_INDEX
+      .filter((item) =>
+        item.category === 'diaries' &&
+        item.released &&
+        isBonusUnlocked(item, bonusProgress) &&
+        !seenIds.has(item.bonusId)
+      )[0];
+    if (unreadDiary) {
+      const diaryCharId = unreadDiary.bonusId.replace('diary_', '');
+      const diaryChar = (CHARACTERS as Record<string, { name: string }>)[diaryCharId];
+      const diaryName = diaryChar?.name ?? 'Yasmin';
+      candidates.push({
+        path: `/diaries/${unreadDiary.bonusId}`,
+        portrait: unreadDiary.coverImage ?? 'media/story/characters/yasmin-256.webp',
+        label: `${diaryName} · Tagebuch`,
+        title: 'Schau rein – ein neuer Tagebucheintrag wartet auf dich.',
+        accent: 'bg-violet-400',
+      });
     }
 
-    return null;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFirstTime]);
+    // 3. Neu freigeschaltete Charakterkarte (noch nicht gesehen)
+    const newChar = BONUS_INDEX
+      .filter((item) =>
+        item.category === 'characters' &&
+        isBonusUnlocked(item, bonusProgress) &&
+        !seenIds.has(item.bonusId)
+      )[0];
+    if (newChar) {
+      const charId = newChar.characterId as keyof typeof CHARACTERS | undefined;
+      const char = charId ? CHARACTERS[charId] : undefined;
+      if (char?.card?.portrait) {
+        candidates.push({
+          path: `/cards/${newChar.bonusId}`,
+          portrait: char.card.portrait,
+          label: `${char.name} · Sammelkarte`,
+          title: `${char.name}s Karte ist neu freigeschaltet!`,
+          accent: 'bg-amber-400',
+        });
+      }
+    }
+
+    if (candidates.length === 0) return null;
+
+    // Tagesbasierte Rotation — jeden Tag dieselbe Karte, morgen eine andere
+    const today = new Date();
+    const day = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+    return candidates[day % candidates.length];
+  }, [isFirstTime, bonusProgress, tBonus]);
 
   return (
     <Layout>
@@ -551,35 +646,69 @@ function isUnlockedByChain(
           ) : null}
         </div>
 
-        {/* Chioma/Yasmin-Nudge: kontextueller Hinweis für Rückkehrer */}
-        {amyHint && (
+        {/* Story-Circles: freigeschaltete Charakterkarten */}
+        {unlockedCharCircles.length > 0 && (
           <div className="mt-4">
-            <Link
-              to={amyHint.path}
-              className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm hover:shadow-md transition-shadow"
+            <div
+              className="flex gap-3 overflow-x-auto pb-1"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}
             >
+              {unlockedCharCircles.map(({ bonusId, name, portrait, isNew }) => (
+                <Link
+                  key={bonusId}
+                  to={`/cards/${bonusId}`}
+                  className="flex flex-col items-center gap-1 flex-shrink-0"
+                >
+                  <div
+                    className={`w-14 h-14 rounded-full p-0.5 ${
+                      isNew
+                        ? 'ring-2 ring-[var(--color-teal-500)] ring-offset-1'
+                        : 'ring-1 ring-slate-200'
+                    }`}
+                  >
+                    <img
+                      src={assetUrl(portrait)}
+                      alt={name}
+                      className="w-full h-full rounded-full object-cover object-top"
+                    />
+                  </div>
+                  <span className="text-[10px] text-slate-500 font-medium text-center max-w-[56px] truncate">
+                    {name}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Tägliche Content-Kachel: rotiert zwischen Zeitung, Tagebuch, Sammelkarte */}
+        {dailyContentCard && (
+          <div className="mt-3">
+            <Link
+              to={dailyContentCard.path}
+              className="relative flex items-center gap-4 rounded-2xl border border-slate-100 bg-white px-5 py-4 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+            >
+              {/* Farbiger Akzentstreifen links */}
+              <div className={`absolute left-0 top-0 bottom-0 w-1 ${dailyContentCard.accent}`} />
               <img
-                src={assetUrl(
-                  amyHint.type === 'newspaper'
-                    ? 'media/story/characters/chioma-256.webp'
-                    : 'media/story/characters/yasmin-256.webp'
-                )}
-                alt={amyHint.type === 'newspaper' ? 'Chioma' : 'Yasmin'}
-                className="w-12 h-12 rounded-full object-cover object-top flex-shrink-0 border-2 border-rose-100"
+                src={assetUrl(dailyContentCard.portrait)}
+                alt=""
+                className="w-16 h-16 rounded-full object-cover object-top border-2 border-white shadow-sm flex-shrink-0"
               />
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 pl-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] font-bold text-white bg-rose-500 rounded-full px-2 py-0.5 leading-tight">
+                    NEU
+                  </span>
+                  <span className="text-xs text-slate-400">{dailyContentCard.label}</span>
+                </div>
                 <p className="text-sm font-bold text-slate-900 leading-snug line-clamp-2">
-                  {amyHint.type === 'newspaper'
-                    ? (amyHint.titleKey ? tBonus(amyHint.titleKey.replace('bonus:', '')) : 'Neues aus der Sch\u00fclerzeitung')
-                    : tCommon('nudge.diary.text')}
+                  {dailyContentCard.title}
                 </p>
-                <p className="mt-0.5 text-xs text-slate-400">
-                  {amyHint.type === 'newspaper'
-                    ? 'Chioma \u00b7 Sch\u00fclerzeitung'
-                    : 'Yasmin \u00b7 Tagebuch'}
+                <p className="mt-1.5 text-xs font-semibold text-[var(--color-teal-600)]">
+                  Jetzt lesen →
                 </p>
               </div>
-              <span className="text-slate-300 text-xl flex-shrink-0">&rsaquo;</span>
             </Link>
           </div>
         )}
