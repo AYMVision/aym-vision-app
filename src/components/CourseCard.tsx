@@ -124,11 +124,11 @@ const effectiveFallback = imageFallback ?? image;
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 {/* Title always visible (1 line) */}
-                <div className="text-base sm:text-lg font-extrabold text-slate-900 leading-snug truncate">
+                <div className={`text-base sm:text-lg font-extrabold leading-snug truncate ${locked ? 'text-slate-400' : 'text-slate-900'}`}>
                   {title}
                 </div>
                 {/* Description visible (2 lines) */}
-                <div className="mt-1 text-sm text-slate-600 leading-snug line-clamp-4">
+                <div className={`mt-1 text-sm leading-snug line-clamp-4 ${locked ? 'text-slate-400' : 'text-slate-600'}`}>
                   {description}
                 </div>
               </div>

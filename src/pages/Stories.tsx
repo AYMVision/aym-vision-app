@@ -612,10 +612,8 @@ function isUnlockedByChain(
                       const locked = !isReleasedAndPlayable || !isChainUnlocked;
                       const coverPath = card.cover?.trim() ? card.cover : 'media/ui/locked-512.webp';
                       const title = locked ? `🔒 ${tStories(card.titleKey)}` : tStories(card.titleKey);
-                      const lockedDescription = locked
-                        ? (!isReleasedAndPlayable
-                            ? tStories('list.locked.comingSoon', { defaultValue: 'Kommt bald ✨' })
-                            : tStories('list.locked.completeFirst', { defaultValue: 'Schließe zuerst die vorherige Folge ab.' }))
+                      const lockedDescription = locked && !isReleasedAndPlayable
+                        ? tStories('list.locked.comingSoon', { defaultValue: 'Kommt bald ✨' })
                         : null;
                       const description = lockedDescription ?? tStories(card.descriptionKey);
                       const epNum = parseInt(card.episodeId.replace(/.*e(\d+)$/i, '$1'));
