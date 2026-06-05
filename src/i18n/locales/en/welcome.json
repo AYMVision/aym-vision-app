@@ -79,7 +79,8 @@
       "ctaParents": "For parents →",
       "installTitle": "Add app to home screen",
       "installHint": "This makes Amy Surfwing work like a real app – faster and always within reach.",
-      "installCta": "View guide →"
+      "installCta": "View guide →",
+      "betaCodeHint": "Opening the app directly from your home screen? Enter your beta code in your profile:"
     }
   },
 

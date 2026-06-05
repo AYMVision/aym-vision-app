@@ -376,6 +376,15 @@ export default function StoryV02() {
   // undefined = Karte noch nicht zeigen; null = letzter Amic (keine Weiter-Option); string = nächster Amic
 
   const [storyMenuOpen, setStoryMenuOpen] = useState(false);
+  const [showBetaCompletionModal, setShowBetaCompletionModal] = useState(false);
+
+  const betaProfileSnapshot = {
+    chaptersCompleted: Object.entries(profile.progress?.completedChapters ?? {})
+      .filter(([, v]) => v)
+      .map(([k]) => k),
+    currentEpisodeId: courseId ?? '',
+    themePoints: profile.progress?.themePoints ?? {},
+  };
 
   function fireRewardToast(opts: {
     stickerIds?: string[];
@@ -1405,18 +1414,11 @@ function hasStoryMigrationDone(key: string): boolean {
         );
 
       case 'episode_summary': {
-        const showBetaModal =
+        const shouldShowBetaOnContinue =
           BETA_ACTIVE &&
           isBetaTester() &&
           !isBetaCompletionShown() &&
           courseId === 's1e01';
-        const betaSnapshot = {
-          chaptersCompleted: Object.entries(profile.progress?.completedChapters ?? {})
-            .filter(([, v]) => v)
-            .map(([k]) => k),
-          currentEpisodeId: courseId,
-          themePoints: profile.progress?.themePoints ?? {},
-        };
         return (
           <div key={entry.id} data-story-entry-id={entry.id}>
             <EpisodeSummaryCard
@@ -1427,10 +1429,15 @@ function hasStoryMigrationDone(key: string): boolean {
               characterImg="media/story/characters/yasmin-256.webp"
               characterSays="Danke, dass du dabei warst."
               onViewSticker={() => navigate('/album')}
-              onContinue={() => navigate('/stories')}
+              onContinue={() => {
+                if (shouldShowBetaOnContinue) {
+                  setShowBetaCompletionModal(true);
+                } else {
+                  navigate('/stories');
+                }
+              }}
               onProfile={() => navigate('/profile')}
             />
-            {showBetaModal && <BetaCompletionModal profileSnapshot={betaSnapshot} />}
           </div>
         );
       }
@@ -1868,10 +1875,59 @@ function hasStoryMigrationDone(key: string): boolean {
                   {t('stories:amicDone.ctaOverview', { defaultValue: 'Zur Übersicht' })}
                 </button>
               </div>
+
+              {/* Beta: Umfrage nach dem 3. Kapitel */}
+              {BETA_ACTIVE && isBetaTester() && !localStorage.getItem('surveyDismissed') && (() => {
+                const totalCompleted = Object.values(profile.progress?.completedChapters ?? {}).filter(Boolean).length;
+                return totalCompleted === 3;
+              })() && (
+                <div className="mt-4 rounded-xl border border-violet-200 bg-violet-50 p-3">
+                  <div className="flex items-start gap-2.5">
+                    <img
+                      src="/media/story/characters/amy-256.webp"
+                      alt="Amy"
+                      className="w-8 h-8 rounded-full object-cover object-top flex-shrink-0"
+                    />
+                    <div className="min-w-0">
+                      <div className="text-xs font-extrabold text-violet-600 uppercase tracking-widest mb-0.5">
+                        {t('stories:survey.amyAsks', { defaultValue: 'Amy fragt' })}
+                      </div>
+                      <p className="text-xs text-violet-900 font-semibold leading-snug">
+                        {t('stories:survey.question', { defaultValue: 'Ich habe eine Frage an dich — was denkst du bisher?' })}
+                      </p>
+                      <p className="mt-0.5 text-xs text-violet-700 leading-snug">
+                        {t('stories:survey.body', { defaultValue: '3 Minuten, anonym.' })}
+                      </p>
+                      <div className="mt-2 flex gap-2">
+                        <a
+                          href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__tVBf5hUQlM2V0k0OFdWMEQzNVhaUVhSNzU2STdBSC4u"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => localStorage.setItem('surveyDismissed', '1')}
+                          className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-bold bg-violet-600 text-white hover:bg-violet-700 transition-colors"
+                        >
+                          {t('stories:survey.cta', { defaultValue: 'Zur Umfrage →' })}
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => localStorage.setItem('surveyDismissed', '1')}
+                          className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-semibold text-violet-600 hover:text-violet-800 transition-colors"
+                        >
+                          {t('stories:survey.snooze', { defaultValue: 'Nicht jetzt' })}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ) : null}
         </Phone>
       </div>
+
+      {showBetaCompletionModal && (
+        <BetaCompletionModal profileSnapshot={betaProfileSnapshot} />
+      )}
 
       {unlockedToast ? (
         <UnlockedToast

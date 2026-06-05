@@ -82,8 +82,16 @@ export default function BetaCompletionModal({ profileSnapshot }: Props) {
             </div>
           )}
           {sendState === 'success' && (
-            <div className="text-center text-sm text-emerald-600 font-semibold py-2">
-              {t('beta.completion.sendSuccess')}
+            <div className="flex flex-col gap-2">
+              <div className="text-center text-sm text-emerald-600 font-semibold py-1">
+                {t('beta.completion.sendSuccess')}
+              </div>
+              <a
+                href={`mailto:${CONTACT_EMAIL}?subject=Beta Feedback`}
+                className="w-full py-2.5 rounded-2xl border border-emerald-200 bg-emerald-50 text-sm font-semibold text-emerald-700 text-center hover:bg-emerald-100 transition-colors"
+              >
+                📧 {CONTACT_EMAIL}
+              </a>
             </div>
           )}
           {sendState === 'error' && (

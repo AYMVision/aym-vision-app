@@ -69,9 +69,10 @@ const NAMED_CODES: Record<string, NamedCodeAction> = {
   },
 
   // ===== Beta-Tester: Erste Welle =====
-  // unlock-all-episodes: alle Kapitel zugänglich, aber 1 Amic/Tag bleibt
+  // bypass-until: alle Kapitel + Daily Gate aufgehoben bis Beta-Ende
   'ERSTEWELLE': {
-    type: 'unlock-all-episodes',
+    type: 'bypass-until',
+    date: '2026-06-30',
     message: 'Beta-Zugang aktiviert. Willkommen in der ersten Welle!',
   },
 };

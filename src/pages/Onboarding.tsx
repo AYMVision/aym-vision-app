@@ -270,7 +270,7 @@ function AvatarStep({ onNext }: { onNext: () => void }) {
   );
 }
 
-function ReadyStep({ onFinish, isBeta }: { onFinish: (destination: 'story' | 'overview') => void; isBeta: boolean }) {
+function ReadyStep({ onFinish, isBeta, betaCode }: { onFinish: (destination: 'story' | 'overview') => void; isBeta: boolean; betaCode?: string }) {
   const { t } = useTranslation('welcome');
   const { t: tStories } = useTranslation('stories');
   const [remindersOn, setRemindersOn] = useState(loadSettings().remindersEnabled);
@@ -361,6 +361,15 @@ function ReadyStep({ onFinish, isBeta }: { onFinish: (destination: 'story' | 'ov
           >
             {t('onboarding.ready.installCta', { defaultValue: 'Anleitung ansehen →' })}
           </Link>
+          {isBeta && betaCode && (
+            <div className="mt-3 pt-3 border-t border-slate-200">
+              <p className="text-xs text-slate-500 leading-relaxed">
+                {t('onboarding.ready.betaCodeHint', { defaultValue: 'Öffnest du die App direkt vom Home-Bildschirm? Dann gib deinen Beta-Code im Profil ein:' })}
+                {' '}
+                <span className="font-bold text-violet-700 tracking-wide">{betaCode}</span>
+              </p>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -392,15 +401,9 @@ function BetaStep({ onComplete }: { onComplete: () => void }) {
       {/* Rahmenbedingungen */}
       <div className="flex flex-col gap-2 mb-5">
         <div className="flex items-center gap-2 bg-violet-50 border border-violet-100 rounded-xl px-3 py-2.5">
-          <span className="text-base">📅</span>
+          <span className="text-base">🗓️</span>
           <span className="text-xs text-violet-800 leading-snug">
             {t('beta.welcome.accessUntil', { date: BETA_END_DATE_DISPLAY })}
-          </span>
-        </div>
-        <div className="flex items-center gap-2 bg-violet-50 border border-violet-100 rounded-xl px-3 py-2.5">
-          <span className="text-base">⏱️</span>
-          <span className="text-xs text-violet-800 leading-snug">
-            {t('beta.welcome.pacing')}
           </span>
         </div>
         <div className="flex items-center gap-2 bg-violet-50 border border-violet-100 rounded-xl px-3 py-2.5">
@@ -535,7 +538,7 @@ export default function Onboarding() {
         {step === 'welcome' && <WelcomeStep onNext={() => setStep('info')} isBeta={isBeta} />}
         {step === 'info' && <InfoStep onNext={() => setStep('avatar')} />}
         {step === 'avatar' && <AvatarStep onNext={() => setStep('ready')} />}
-        {step === 'ready' && <ReadyStep onFinish={handleFinish} isBeta={isBeta} />}
+        {step === 'ready' && <ReadyStep onFinish={handleFinish} isBeta={isBeta} betaCode={pendingCode ?? undefined} />}
         {step === 'beta' && <BetaStep onComplete={handleBetaComplete} />}
         <ProgressDots step={step} isBeta={isBeta} />
       </div>
