@@ -146,31 +146,23 @@ export default function Profile() {
                   </div>
                 </Link>
 
-                {/* 3 Kacheln: Coins-Shop · Meine Sachen · Belohnungen */}
-                <div className="grid grid-cols-3 gap-1.5 mb-2">
-                  <Link
-                    to="/avatar"
-                    state={{ backTo: '/profile', initialTab: 'shop' }}
-                    className="flex flex-col items-center gap-0.5 rounded-xl px-1 py-2 bg-amber-50 border border-amber-100 hover:bg-amber-100 active:scale-[0.97] transition-all text-center"
-                  >
-                    <span className="text-base leading-none">🛍️</span>
-                    <span className="text-[9px] font-bold text-amber-700 leading-tight">Shop</span>
-                  </Link>
+                {/* 2 Kacheln: Meine Sachen · Belohnungen */}
+                <div className="grid grid-cols-2 gap-1.5 mb-2">
                   <Link
                     to="/avatar"
                     state={{ backTo: '/profile', initialTab: 'items' }}
-                    className="flex flex-col items-center gap-0.5 rounded-xl px-1 py-2 bg-violet-50 border border-violet-100 hover:bg-violet-100 active:scale-[0.97] transition-all text-center"
+                    className="flex items-center gap-1.5 rounded-xl px-2 py-2 bg-violet-50 border border-violet-100 hover:bg-violet-100 active:scale-[0.97] transition-all"
                   >
                     <span className="text-base leading-none">🎒</span>
-                    <span className="text-[9px] font-bold text-violet-700 leading-tight">Meine Sachen</span>
+                    <span className="text-[10px] font-bold text-violet-700 leading-tight">Meine Sachen</span>
                   </Link>
                   <Link
                     to="/avatar"
                     state={{ backTo: '/profile', initialTab: 'shop' }}
-                    className="flex flex-col items-center gap-0.5 rounded-xl px-1 py-2 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100 active:scale-[0.97] transition-all text-center"
+                    className="flex items-center gap-1.5 rounded-xl px-2 py-2 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100 active:scale-[0.97] transition-all"
                   >
                     <span className="text-base leading-none">✨</span>
-                    <span className="text-[9px] font-bold text-emerald-700 leading-tight">Belohnungen</span>
+                    <span className="text-[10px] font-bold text-emerald-700 leading-tight">Belohnungen</span>
                   </Link>
                 </div>
 
