@@ -89,13 +89,15 @@ export default function Profile() {
         <div className="grid gap-4 lg:grid-cols-2 items-stretch">
           {/* Kasten 1: Avatar + Coins */}
           <div className="p-4 rounded-2xl border border-black/5 bg-white shadow-sm h-full">
-            <div className="flex items-start gap-4">
-              {/* Avatar */}
-              <div className="flex flex-col items-center gap-2 self-start">
+            {/* Mobile: Avatar zentriert oben, dann Name + 3 Kacheln  |  Desktop: side-by-side */}
+            <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+
+              {/* Avatar — zentriert auf Mobile */}
+              <div className="flex justify-center sm:justify-start flex-shrink-0">
                 <Link
                   to="/avatar"
                   state={{ backTo: '/profile' }}
-                  className="w-36 h-36 rounded-full border border-slate-200 bg-white overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity"
+                  className="w-28 h-28 sm:w-36 sm:h-36 rounded-full border border-slate-200 bg-white overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity"
                 >
                   <AvatarLookCircle
                     avatarBaseId={profile.avatarBaseId}
@@ -105,10 +107,10 @@ export default function Profile() {
                 </Link>
               </div>
 
-              {/* Name + Coins */}
-              <div className="flex-1 min-w-0">
+              {/* Info: Name + 3-Kacheln + Sound */}
+              <div className="flex-1 min-w-0 flex flex-col gap-3">
                 {/* Name field */}
-                <div className="mb-3">
+                <div>
                   <div className="text-xs font-extrabold text-slate-400 uppercase tracking-wide mb-1">
                     Wie soll Amy dich nennen?
                   </div>
@@ -126,43 +128,43 @@ export default function Profile() {
                   />
                 </div>
 
-                {/* Coins */}
-                <Link
-                  to="/avatar"
-                  state={{ backTo: '/profile', initialTab: 'shop' }}
-                  className="mt-1 flex items-center gap-3 hover:opacity-80 transition-opacity"
-                >
-                  <img
-                    src={assetUrl('media/story/ui/coin-128.webp')}
-                    alt=""
-                    className="w-12 h-12"
-                    loading="lazy"
-                  />
-                  <div>
-                    <div className="text-3xl font-extrabold">{coins}</div>
-                    {coinHint && (
-                      <div className="text-xs text-slate-500 leading-tight">{coinHint}</div>
-                    )}
-                  </div>
-                </Link>
-                <div className="mt-3 grid grid-cols-2 gap-2">
+                {/* 3 Kacheln: Coins · Meine Sachen · Belohnungen */}
+                <div className="grid grid-cols-3 gap-2">
+                  <Link
+                    to="/avatar"
+                    state={{ backTo: '/profile', initialTab: 'shop' }}
+                    className="flex flex-col items-center gap-1 rounded-xl px-2 py-3 bg-amber-50 border border-amber-100 hover:bg-amber-100 active:scale-[0.97] transition-all text-center"
+                  >
+                    <img
+                      src={assetUrl('media/story/ui/coin-128.webp')}
+                      alt=""
+                      className="w-7 h-7"
+                      loading="lazy"
+                    />
+                    <span className="text-lg font-extrabold text-slate-900 leading-none">{coins}</span>
+                    <span className="text-[10px] font-semibold text-amber-700 leading-tight">Coins</span>
+                  </Link>
                   <Link
                     to="/avatar"
                     state={{ backTo: '/profile', initialTab: 'items' }}
-                    className="flex items-center gap-1.5 rounded-xl px-3 py-2.5 bg-violet-50 border border-violet-100 hover:bg-violet-100 active:scale-[0.97] transition-all"
+                    className="flex flex-col items-center gap-1 rounded-xl px-2 py-3 bg-violet-50 border border-violet-100 hover:bg-violet-100 active:scale-[0.97] transition-all text-center"
                   >
-                    <span className="text-base leading-none">🎒</span>
-                    <span className="text-xs font-bold text-violet-700 leading-tight">Meine Sachen</span>
+                    <span className="text-2xl leading-none">🎒</span>
+                    <span className="text-[10px] font-bold text-violet-700 leading-tight mt-0.5">Meine Sachen</span>
                   </Link>
                   <Link
                     to="/avatar"
                     state={{ backTo: '/profile', initialTab: 'shop' }}
-                    className="flex items-center gap-1.5 rounded-xl px-3 py-2.5 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100 active:scale-[0.97] transition-all"
+                    className="flex flex-col items-center gap-1 rounded-xl px-2 py-3 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100 active:scale-[0.97] transition-all text-center"
                   >
-                    <span className="text-base leading-none">✨</span>
-                    <span className="text-xs font-bold text-emerald-700 leading-tight">Belohnungen</span>
+                    <span className="text-2xl leading-none">✨</span>
+                    <span className="text-[10px] font-bold text-emerald-700 leading-tight mt-0.5">Belohnungen</span>
                   </Link>
                 </div>
+
+                {coinHint && (
+                  <p className="text-xs text-slate-400 leading-snug -mt-1">{coinHint}</p>
+                )}
 
                 {/* Sound-Toggle */}
                 <button
@@ -174,7 +176,7 @@ export default function Profile() {
                       updatedAt: Date.now(),
                     }))
                   }
-                  className="mt-2 inline-flex items-center justify-center gap-2 w-full rounded-xl px-3 py-2 text-xs font-semibold border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 w-full rounded-xl px-3 py-2 text-xs font-semibold border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors"
                   aria-label={profile.soundEnabled === false ? t('sound.enable') : t('sound.disable')}
                 >
                   <span>{profile.soundEnabled === false ? '🔕' : '🔔'}</span>

@@ -104,7 +104,7 @@ export default function BetaCompletionModal({ profileSnapshot }: Props) {
               </div>
             )}
 
-            {/* downloaded → show email + confirmation */}
+            {/* downloaded → show email to copy, then send manually */}
             {sendState === 'downloaded' && (
               <div className="flex flex-col gap-2">
                 <div className="text-sm text-emerald-700 font-semibold">
@@ -113,6 +113,7 @@ export default function BetaCompletionModal({ profileSnapshot }: Props) {
                 <p className="text-xs text-slate-600 leading-relaxed">
                   {t('beta.completion.downloadedHint')}
                 </p>
+                {/* Copyable email address */}
                 <button
                   type="button"
                   onClick={handleCopyEmail}
@@ -120,15 +121,8 @@ export default function BetaCompletionModal({ profileSnapshot }: Props) {
                 >
                   {copied
                     ? t('beta.completion.emailCopied')
-                    : `📧 ${CONTACT_EMAIL}`}
+                    : `📧 ${CONTACT_EMAIL} — kopieren`}
                 </button>
-                <a
-                  href={`mailto:${CONTACT_EMAIL}?subject=Beta Feedback Erste Welle`}
-                  className="w-full py-2.5 rounded-2xl bg-emerald-600 text-white font-bold text-sm text-center hover:bg-emerald-700 transition-colors"
-                  onClick={() => setTimeout(() => setSendState('sent'), 500)}
-                >
-                  {t('beta.completion.sendMailCta')}
-                </a>
                 <button
                   type="button"
                   onClick={() => setSendState('sent')}
