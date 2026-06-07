@@ -223,6 +223,14 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     didYouKnow: 'Über 300 Milliarden E-Mails werden täglich weltweit verschickt — ein großer Teil davon sind Newsletter und Werbemails.',
   },
   {
+    id: 'offline-zeit',
+    title: 'Offline-Zeit',
+    teaser: 'Bewusste Pausen vom Handy und Internet — um wieder Abstand zu gewinnen.',
+    body: 'Eine Offline-Zeit ist eine freiwillige Pause vom Handy, Chat oder Internet. Keine Strafe, kein Verbot — sondern ein bewusstes Experiment: Wie fühlt es sich an, eine Stunde, einen Abend oder einen ganzen Tag nicht erreichbar zu sein? Viele merken dabei erst, wie oft sie automatisch zum Handy greifen. Offline-Zeiten helfen, das eigene Nutzungsverhalten besser zu verstehen und bewusster mit Technik umzugehen.',
+    didYouKnow: 'Studien zeigen, dass schon kurze Offline-Zeiten das Stresslevel senken können — weil man nicht mehr auf jede Benachrichtigung wartet.',
+    firstAppearance: 's1e03c06',
+  },
+  {
     id: 'offline-challenge',
     title: 'Offline-Challenge',
     teaser: 'Bewusst eine Zeit lang ohne Handy oder Internet auskommen.',

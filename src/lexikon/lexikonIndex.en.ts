@@ -222,6 +222,14 @@ export const LEXIKON_ENTRIES_EN: LexikonEntry[] = [
     didYouKnow: 'Over 300 billion emails are sent worldwide every day — a large proportion of these are newsletters and advertising emails.',
   },
   {
+    id: 'offline-zeit',
+    title: 'Offline Time',
+    teaser: 'Intentional breaks from your phone and the internet — to regain perspective.',
+    body: 'Offline time is a voluntary break from your phone, chat, or the internet. Not a punishment or a ban — but a conscious experiment: What does it feel like to be unreachable for an hour, an evening, or a whole day? Many people notice for the first time how automatically they reach for their phone. Offline time helps you understand your own usage habits better and engage with technology more intentionally.',
+    didYouKnow: 'Studies show that even short periods of offline time can lower stress levels — because you stop waiting for the next notification.',
+    firstAppearance: 's1e03c06',
+  },
+  {
     id: 'offline-challenge',
     title: 'Offline Challenge',
     teaser: 'Deliberately going without your phone or internet for a while.',

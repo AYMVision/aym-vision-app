@@ -704,7 +704,7 @@ const c06 = C('s1e03c06', 5, 'Amic 6', 'Offline-Zeit', [
     m(ch.tom, 'Sonst merkt man gar nicht mehr, was man eigentlich alles online macht.', '7:18'),
     m(ch.chioma, 'Hm.', '7:19'),
     m(ch.chioma, 'Vielleicht sollten wir das alle mal ausprobieren.', '7:19'),
-    m(ch.chioma, 'So eine freiwillige Offline-Zeit.', '7:19'),
+    m(ch.chioma, 'So eine freiwillige [[offline-zeit]].', '7:19'),
     m(ch.chioma, 'Ich habe davon gelesen. Ist gerade voll der Trend.', '7:20'),
     m(ch.tom, 'Alle in der Klasse meinst du? 🤔', '7:20'),
     m(ch.tom, 'Könnte funktionieren.', '7:21'),
@@ -746,8 +746,6 @@ const c06 = C('s1e03c06', 5, 'Amic 6', 'Offline-Zeit', [
 
   S('s1e03c06_story_switch_to_amy', [
     amyChat(),
-    m(ch.amy, 'Tom sagt: „Es geht darum, ob wir noch selbst entscheiden.“'),
-    m(ch.amy, 'Woran merkst du bei dir selbst, ob du gerade wirklich selbst entscheidest oder einfach weitermachst, ohne nachzudenken?'),
   ], ['reflect-understand']),
 
   IT('s1e03c06_item_self_deciding',
