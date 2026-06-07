@@ -89,8 +89,8 @@ export default function Profile() {
         <div className="grid gap-4 lg:grid-cols-2 items-stretch">
           {/* Kasten 1: Avatar + Coins */}
           <div className="p-4 rounded-2xl border border-black/5 bg-white shadow-sm h-full">
-            <div className="flex items-start gap-4">
-              {/* Avatar */}
+            {/* Oben: Avatar links, Name + Coins rechts */}
+            <div className="flex items-start gap-4 mb-3">
               <div className="flex-shrink-0">
                 <Link
                   to="/avatar"
@@ -105,7 +105,6 @@ export default function Profile() {
                 </Link>
               </div>
 
-              {/* Name + Coins + Buttons */}
               <div className="flex-1 min-w-0">
                 {/* Name field */}
                 <div className="mb-3">
@@ -130,7 +129,7 @@ export default function Profile() {
                 <Link
                   to="/avatar"
                   state={{ backTo: '/profile', initialTab: 'shop' }}
-                  className="flex items-center gap-2 hover:opacity-80 transition-opacity mb-3"
+                  className="flex items-center gap-2 hover:opacity-80 transition-opacity"
                 >
                   <img
                     src={assetUrl('media/story/ui/coin-128.webp')}
@@ -145,45 +144,43 @@ export default function Profile() {
                     )}
                   </div>
                 </Link>
-
-                {/* 2 Kacheln: Meine Sachen · Belohnungen */}
-                <div className="grid grid-cols-2 gap-1.5 mb-2">
-                  <Link
-                    to="/avatar"
-                    state={{ backTo: '/profile', initialTab: 'items' }}
-                    className="flex items-center gap-1.5 rounded-xl px-2 py-2 bg-violet-50 border border-violet-100 hover:bg-violet-100 active:scale-[0.97] transition-all"
-                  >
-                    <span className="text-base leading-none">🎒</span>
-                    <span className="text-[10px] font-bold text-violet-700 leading-tight">Meine Sachen</span>
-                  </Link>
-                  <Link
-                    to="/avatar"
-                    state={{ backTo: '/profile', initialTab: 'shop' }}
-                    className="flex items-center gap-1.5 rounded-xl px-2 py-2 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100 active:scale-[0.97] transition-all"
-                  >
-                    <span className="text-base leading-none">✨</span>
-                    <span className="text-[10px] font-bold text-emerald-700 leading-tight">Belohnungen</span>
-                  </Link>
-                </div>
-
-                {/* Sound-Toggle */}
-                <button
-                  type="button"
-                  onClick={() =>
-                    updateProfile((prev) => ({
-                      ...prev,
-                      soundEnabled: prev.soundEnabled === false ? true : false,
-                      updatedAt: Date.now(),
-                    }))
-                  }
-                  className="inline-flex items-center justify-center gap-2 w-full rounded-xl px-3 py-2 text-xs font-semibold border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors"
-                  aria-label={profile.soundEnabled === false ? t('sound.enable') : t('sound.disable')}
-                >
-                  <span>{profile.soundEnabled === false ? '🔕' : '🔔'}</span>
-                  <span>{profile.soundEnabled === false ? t('sound.off') : t('sound.on')}</span>
-                </button>
               </div>
             </div>
+
+            {/* Unten (volle Kartenbreite): 2 Buttons + Sound */}
+            <div className="grid grid-cols-2 gap-2 mb-2">
+              <Link
+                to="/avatar"
+                state={{ backTo: '/profile', initialTab: 'items' }}
+                className="flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 bg-violet-50 border border-violet-100 hover:bg-violet-100 active:scale-[0.97] transition-all"
+              >
+                <span className="text-base leading-none">🎒</span>
+                <span className="text-xs font-bold text-violet-700">Meine Sachen</span>
+              </Link>
+              <Link
+                to="/avatar"
+                state={{ backTo: '/profile', initialTab: 'shop' }}
+                className="flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100 active:scale-[0.97] transition-all"
+              >
+                <span className="text-base leading-none">✨</span>
+                <span className="text-xs font-bold text-emerald-700">Belohnungen</span>
+              </Link>
+            </div>
+            <button
+              type="button"
+              onClick={() =>
+                updateProfile((prev) => ({
+                  ...prev,
+                  soundEnabled: prev.soundEnabled === false ? true : false,
+                  updatedAt: Date.now(),
+                }))
+              }
+              className="inline-flex items-center justify-center gap-2 w-full rounded-xl px-3 py-2 text-xs font-semibold border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors"
+              aria-label={profile.soundEnabled === false ? t('sound.enable') : t('sound.disable')}
+            >
+              <span>{profile.soundEnabled === false ? '🔕' : '🔔'}</span>
+              <span>{profile.soundEnabled === false ? t('sound.off') : t('sound.on')}</span>
+            </button>
           </div>
 
           {/* Kasten 2: Fortschritt */}
