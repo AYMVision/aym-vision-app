@@ -915,6 +915,10 @@ function hasStoryMigrationDone(key: string): boolean {
       seen: true,
       timestamp: new Date().toISOString(),
       promptText: challengeText,
+      linkBonusId: currentStep.linkBonusId,
+      linkTo: currentStep.linkTo,
+      linkLabel: currentStep.linkLabel,
+      linkContent: currentStep.linkContent,
     });
 
     markTopicsSeen({

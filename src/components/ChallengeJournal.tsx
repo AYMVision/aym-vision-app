@@ -4,6 +4,8 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { markBonusUnlocked } from '../bonus/bonusSeen';
 import {
   loadChallengeStatuses,
   updateChallengeDecision,
@@ -14,6 +16,7 @@ import { getEpisodeMeta } from '../content/contentIndex';
 
 export default function ChallengeJournal() {
   const { t } = useTranslation(['profile', 'stories']);
+  const navigate = useNavigate();
 
   const [challenges, setChallenges] = useState<StoredChallengeStatus[]>(() =>
     loadChallengeStatuses().filter((c) => c.seen)
@@ -132,6 +135,24 @@ export default function ChallengeJournal() {
                   </span>
                 )}
               </div>
+
+              {/* Bonus-Link */}
+              {c.linkTo && (
+                <div className="mt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (c.linkBonusId) markBonusUnlocked(c.linkBonusId);
+                      navigate(c.linkTo!);
+                    }}
+                    className="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-extrabold text-slate-800 hover:bg-slate-50 active:scale-95 transition-transform"
+                  >
+                    {c.linkContent && <span className="text-slate-500 font-semibold">{c.linkContent}</span>}
+                    {c.linkContent && <span className="text-slate-300 mx-1">·</span>}
+                    {c.linkLabel ?? 'Öffnen →'}
+                  </button>
+                </div>
+              )}
 
               {/* Feier-Moment */}
               {isJustDone && (

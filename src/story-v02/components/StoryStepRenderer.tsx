@@ -61,7 +61,17 @@ export default function StoryStepRenderer({
       const challengeText = step.type === 'challenge'
         ? (step.prompt ?? '')
         : '';
-      return <ChallengeStepCard challengeId={step.id} text={challengeText} />;
+      return (
+        <ChallengeStepCard
+          challengeId={step.id}
+          text={challengeText}
+          linkBonusId={step.linkBonusId}
+          linkTo={step.linkTo}
+          linkLabel={step.linkLabel}
+          linkContent={step.linkContent}
+          onOpenBonusLink={onOpenBonusLink}
+        />
+      );
     }
 
     default:

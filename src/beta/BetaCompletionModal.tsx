@@ -1,5 +1,6 @@
 // src/beta/BetaCompletionModal.tsx
 // Shown after completing s1e01 as a beta tester.
+// Two-step flow: 1) share results  2) sign up for next wave
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,12 +17,14 @@ interface Props {
 }
 
 type SendState = 'idle' | 'loading' | 'downloaded' | 'shared' | 'sent' | 'error';
+type FlowStep = 'send' | 'next-wave';
 
 export default function BetaCompletionModal({ profileSnapshot }: Props) {
   const { t } = useTranslation('stories');
   const navigate = useNavigate();
   const [sendState, setSendState] = useState<SendState>('idle');
   const [copied, setCopied] = useState(false);
+  const [flowStep, setFlowStep] = useState<FlowStep>('send');
 
   async function handleSend() {
     setSendState('loading');
@@ -43,7 +46,7 @@ export default function BetaCompletionModal({ profileSnapshot }: Props) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // fallback: just open mailto
+      // ignore
     }
   }
 
@@ -75,126 +78,143 @@ export default function BetaCompletionModal({ profileSnapshot }: Props) {
 
         <div className="px-6 py-5 flex flex-col gap-4">
 
-          {/* ── Send section ── */}
-          <div className="flex flex-col gap-3">
-            <div>
-              <div className="font-semibold text-sm text-slate-900 mb-1">
-                {t('beta.completion.sendTitle')}
-              </div>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                {t('beta.completion.sendBody')}
-              </p>
-            </div>
-
-            {/* idle */}
-            {sendState === 'idle' && (
-              <button
-                type="button"
-                onClick={handleSend}
-                className="w-full py-3 rounded-2xl bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-colors"
-              >
-                {t('beta.completion.sendCta')}
-              </button>
-            )}
-
-            {/* loading */}
-            {sendState === 'loading' && (
-              <div className="text-center text-sm text-slate-400 py-2">
-                {t('beta.completion.sendPreparing')}
-              </div>
-            )}
-
-            {/* downloaded → show email to copy, then send manually */}
-            {sendState === 'downloaded' && (
-              <div className="flex flex-col gap-2">
-                <div className="text-sm text-emerald-700 font-semibold">
-                  {t('beta.completion.downloadedTitle')}
+          {/* ── SCHRITT 1: Ergebnisse senden ── */}
+          {flowStep === 'send' && (
+            <>
+              <div className="flex flex-col gap-3">
+                <div>
+                  <div className="font-semibold text-sm text-slate-900 mb-1">
+                    {t('beta.completion.sendTitle')}
+                  </div>
+                  <p className="text-xs text-slate-500 leading-relaxed">
+                    {t('beta.completion.sendBody')}
+                  </p>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  {t('beta.completion.downloadedHint')}
-                </p>
-                {/* Copyable email address */}
+
+                {/* E-Mail immer sichtbar */}
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="w-full py-2.5 rounded-2xl border border-emerald-200 bg-emerald-50 text-sm font-semibold text-emerald-700 text-center hover:bg-emerald-100 transition-colors"
+                  className="w-full py-2.5 rounded-2xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-700 text-center hover:bg-slate-100 transition-colors"
                 >
                   {copied
                     ? t('beta.completion.emailCopied')
                     : `📧 ${CONTACT_EMAIL} — kopieren`}
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setSendState('sent')}
-                  className="text-xs text-slate-400 hover:text-slate-600 text-center py-1 transition-colors"
+
+                {/* idle */}
+                {sendState === 'idle' && (
+                  <button
+                    type="button"
+                    onClick={handleSend}
+                    className="w-full py-3 rounded-2xl bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-colors"
+                  >
+                    {t('beta.completion.sendCta')}
+                  </button>
+                )}
+
+                {/* loading */}
+                {sendState === 'loading' && (
+                  <div className="text-center text-sm text-slate-400 py-2">
+                    {t('beta.completion.sendPreparing')}
+                  </div>
+                )}
+
+                {/* downloaded */}
+                {sendState === 'downloaded' && (
+                  <div className="flex flex-col gap-2">
+                    <div className="text-sm text-emerald-700 font-semibold">
+                      {t('beta.completion.downloadedTitle')}
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      {t('beta.completion.downloadedHint')}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setSendState('sent')}
+                      className="text-xs text-slate-400 hover:text-slate-600 text-center py-1 transition-colors"
+                    >
+                      {t('beta.completion.alreadySent')}
+                    </button>
+                  </div>
+                )}
+
+                {/* shared */}
+                {sendState === 'shared' && (
+                  <div className="rounded-2xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-center">
+                    <div className="text-sm font-bold text-emerald-700">
+                      {t('beta.completion.sharedSuccess')}
+                    </div>
+                  </div>
+                )}
+
+                {/* sent */}
+                {sendState === 'sent' && (
+                  <div className="rounded-2xl bg-violet-50 border border-violet-200 px-4 py-3 text-center">
+                    <div className="text-sm font-bold text-violet-700">
+                      {t('beta.completion.sentThanks')}
+                    </div>
+                  </div>
+                )}
+
+                {/* error */}
+                {sendState === 'error' && (
+                  <div className="flex flex-col gap-2">
+                    <div className="text-center text-sm text-red-500">
+                      {t('beta.completion.sendError')}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSendState('idle')}
+                      className="w-full py-2.5 rounded-2xl border border-slate-200 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+                    >
+                      {t('beta.completion.tryAgain')}
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Weiter → Schritt 2 */}
+              <button
+                type="button"
+                onClick={() => setFlowStep('next-wave')}
+                className="w-full py-2.5 rounded-2xl border border-slate-200 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+              >
+                {t('beta.completion.nextStep', { defaultValue: 'Weiter →' })}
+              </button>
+            </>
+          )}
+
+          {/* ── SCHRITT 2: Nächste Welle ── */}
+          {flowStep === 'next-wave' && (
+            <>
+              <div className="rounded-2xl bg-teal-50 border border-teal-200 px-4 py-4">
+                <div className="text-xs font-extrabold text-teal-600 uppercase tracking-widest mb-1">
+                  {t('beta.completion.s2Kicker')}
+                </div>
+                <p className="text-sm font-semibold text-teal-900 leading-snug mb-1">
+                  {t('beta.completion.s2Title')}
+                </p>
+                <p className="text-xs text-teal-700 leading-relaxed mb-3">
+                  {t('beta.completion.s2Text')}
+                </p>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}?subject=Alarm im Klassenchat – Zweite Welle`}
+                  className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2 bg-teal-600 text-white text-xs font-bold hover:bg-teal-700 transition-colors"
                 >
-                  {t('beta.completion.alreadySent')}
-                </button>
+                  ✉️ {t('beta.completion.s2Cta')}
+                </a>
               </div>
-            )}
 
-            {/* shared → done immediately */}
-            {sendState === 'shared' && (
-              <div className="rounded-2xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-center">
-                <div className="text-sm font-bold text-emerald-700">
-                  {t('beta.completion.sharedSuccess')}
-                </div>
-              </div>
-            )}
-
-            {/* sent → thank you */}
-            {sendState === 'sent' && (
-              <div className="rounded-2xl bg-violet-50 border border-violet-200 px-4 py-3 text-center">
-                <div className="text-sm font-bold text-violet-700">
-                  {t('beta.completion.sentThanks')}
-                </div>
-              </div>
-            )}
-
-            {/* error */}
-            {sendState === 'error' && (
-              <div className="flex flex-col gap-2">
-                <div className="text-center text-sm text-red-500">
-                  {t('beta.completion.sendError')}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setSendState('idle')}
-                  className="w-full py-2.5 rounded-2xl border border-slate-200 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
-                >
-                  {t('beta.completion.tryAgain')}
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* ── s1e02 / Alarm im Klassenchat ── */}
-          <div className="rounded-2xl bg-teal-50 border border-teal-200 px-4 py-4">
-            <div className="text-xs font-extrabold text-teal-600 uppercase tracking-widest mb-1">
-              {t('beta.completion.s2Kicker')}
-            </div>
-            <p className="text-sm font-semibold text-teal-900 leading-snug mb-1">
-              {t('beta.completion.s2Title')}
-            </p>
-            <p className="text-xs text-teal-700 leading-relaxed mb-3">
-              {t('beta.completion.s2Text')}
-            </p>
-            <a
-              href={`mailto:${CONTACT_EMAIL}?subject=Alarm im Klassenchat – Zweite Welle`}
-              className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2 bg-teal-600 text-white text-xs font-bold hover:bg-teal-700 transition-colors"
-            >
-              ✉️ {t('beta.completion.s2Cta')}
-            </a>
-          </div>
-
-          {/* ── Dismiss ── */}
-          <button
-            type="button"
-            onClick={handleDismiss}
-            className="w-full py-2.5 rounded-2xl border border-slate-200 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
-          >
-            {t('beta.completion.dismiss')}
-          </button>
+              <button
+                type="button"
+                onClick={handleDismiss}
+                className="w-full py-2.5 rounded-2xl border border-slate-200 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+              >
+                {t('beta.completion.dismiss')}
+              </button>
+            </>
+          )}
 
         </div>
       </div>

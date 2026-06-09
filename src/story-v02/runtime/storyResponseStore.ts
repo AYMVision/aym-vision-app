@@ -46,6 +46,10 @@ export type StoredChallengeStatus = {
   decision?: 'accepted' | 'deferred';
   completed?: boolean;
   completedAt?: string;
+  linkBonusId?: string;
+  linkTo?: string;
+  linkLabel?: string;
+  linkContent?: string;
 };
 
 const INPUT_KEY = 'aym_story_v02_input_responses';

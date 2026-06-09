@@ -170,6 +170,10 @@ export type ChallengeStep = StoryStepBase & {
   prompt?: string;
   promptKey?: string;
   storeSeen?: boolean;
+  linkBonusId?: string;
+  linkTo?: string;
+  linkLabel?: string;
+  linkContent?: string;
 };
 
 export type StoryStep =

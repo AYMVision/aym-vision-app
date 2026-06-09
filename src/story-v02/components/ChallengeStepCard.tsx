@@ -2,18 +2,35 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { STORY_CHARACTERS as characters } from '../../content/characters';
 import ChatMessage from '../../components/ChatMessage';
 import { updateChallengeDecision } from '../runtime/storyResponseStore';
+import { markBonusUnlocked } from '../../bonus/bonusSeen';
 
 type Props = {
   challengeId: string;
   text: string;
   courseId: string;
+  linkBonusId?: string;
+  linkTo?: string;
+  linkLabel?: string;
+  linkContent?: string;
+  onOpenBonusLink?: (payload: { linkTo: string; bonusId?: string }) => void;
 };
 
-export default function ChallengeStepCard({ challengeId, text, courseId }: Props) {
+export default function ChallengeStepCard({
+  challengeId,
+  text,
+  courseId,
+  linkBonusId,
+  linkTo,
+  linkLabel,
+  linkContent,
+  onOpenBonusLink,
+}: Props) {
   const { t } = useTranslation('stories');
+  const navigate = useNavigate();
   const [reaction, setReaction] = useState<'accept' | 'skip' | null>(null);
 
   function handleDecision(decision: 'accepted' | 'deferred') {
@@ -58,6 +75,28 @@ export default function ChallengeStepCard({ challengeId, text, courseId }: Props
         ) : (
           <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600">
             {t('challenge.reactionSkip', { defaultValue: '😊 Kein Problem! Du findest sie in deinem Profil, wenn du Lust bekommst.' })}
+          </div>
+        )}
+
+        {/* Bonus-Link */}
+        {linkTo && (
+          <div className="mt-2 flex justify-end">
+            <button
+              type="button"
+              onClick={() => {
+                if (onOpenBonusLink) {
+                  onOpenBonusLink({ linkTo, bonusId: linkBonusId });
+                } else {
+                  if (linkBonusId) markBonusUnlocked(linkBonusId);
+                  navigate(linkTo);
+                }
+              }}
+              className="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-extrabold text-slate-800 hover:bg-slate-50 active:scale-95 transition-transform"
+            >
+              {linkContent && <span className="text-slate-500 font-semibold">{linkContent}</span>}
+              {linkContent && <span className="text-slate-300 mx-1">·</span>}
+              {linkLabel ?? 'Öffnen →'}
+            </button>
           </div>
         )}
       </div>

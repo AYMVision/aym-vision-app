@@ -1,7 +1,7 @@
 ---
 title: "Warum manche Kinder digitalen Reizen kaum widerstehen können"
 description: "Warum reagieren manche Kinder so stark auf digitale Reize? Zara erzählt, wie ihre Familie aufgehört hat, nur über Bildschirmzeit zu streiten und was wirklich hilft."
-date: 2026-07-09
+date: 2026-06-09
 author: "Amy Surfwing"
 image: "/images/digitale-reize-kinder.webp"
 tags: ["Selbststeuerung", "Bildschirmzeit", "Für Eltern", "Dopamin"]

@@ -326,28 +326,24 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
   ], ['reflect-understand']),
 
   IT('s1e01c03_item_judgement_posts',
-    'Yasmin hatte eigentlich schon entschieden, zu Hause zu bleiben. Jetzt bringen sie die Nachrichten von Igor, Lukas und Lisa durcheinander. Was könnte sie darüber denken?',
+    'Yasmin hatte eigentlich schon entschieden, zu Hause zu bleiben. Jetzt bringen sie die Nachrichten von Igor, Lukas und Lisa durcheinander. Was könnte sie denken?',
     'judgement', 'judgement_explain',
     [
-      optSegs('a', 'Die sind vor Ort, das ist schon ein Unterschied… aber ich bin mir trotzdem nicht sicher.', 2,
-        'Yasmin merkt: Igor und Lukas sind wirklich dort und berichten aus erster Hand.',
-        '👉 Gleichzeitig bleibt dieses „Hm… ich weiß nicht so recht" bei ihr bestehen.',
-        '💡 Genau solche Momente sind spannend. Da beginnt Yasmin zu überlegen, was sie selbst wirklich möchte.',
+      optSegs('a', 'Mir ist egal, was die anderen sagen.', 0,
+        'Yasmin bleibt bei ihrer Meinung und berücksichtigt die Meinungen der anderen nicht.',
+        '💡 Je mehr Seiten du betrachtest, desto besser kannst du eine Entscheidung treffen.',
       ),
-      optSegs('b', 'Klingt schon gut… vielleicht lohnt es sich ja doch.', 1,
-        'Yasmin merkt: Das klingt schon ziemlich gut und plötzlich fühlt sich ihre Entscheidung gar nicht mehr so sicher an.',
-        '👉 Gerade wenn einem langweilig ist, wirkt das, was die anderen machen, oft noch spannender.',
-        '💡 Man kann sich in so einem Moment kurz fragen: Will ich das wirklich oder will ich nur nichts verpassen?',
+      optSegs('b', 'Wenn ich gehe, kann ich morgen mitreden.', 1,
+        'Yasmin lässt sich von Lisa beeinflussen.',
+        '💡 Je mehr Seiten du betrachtest, desto besser kannst du eine Entscheidung treffen.',
       ),
-      optSegs('c', 'Wenn Igor und Lukas sagen, dass es gut ist, wird es schon stimmen.', 0,
-        'Yasmin übernimmt hier einfach, was Igor und Lukas sagen.',
-        '👉 Das wirkt erstmal logisch, weil sie vor Ort sind. Dabei geht aber leicht unter, was Yasmin selbst eigentlich will.',
-        '💡 Es hilft, kurz zu überlegen: Was denke ich eigentlich selbst dazu?',
+      optSegs('c', 'Wenn Igor und Lukas sagen, dass es gut ist, stimmt es meistens.', 2,
+        'Yasmin verlässt sich auf Igor und Lukas.',
+        '💡 Je mehr Seiten du betrachtest, desto besser kannst du eine Entscheidung treffen.',
       ),
-      optSegs('d', 'Igor und Lukas sind wirklich dort. Lisa denkt eher daran, was die anderen sagen werden. Und ich muss entscheiden, was für mich passt.', 3,
-        'Yasmin erkennt, dass hier verschiedene Einflüsse zusammenkommen.',
-        '👉 Igor und Lukas erzählen von ihrer Erfahrung. Lisa denkt eher daran, was die anderen später sagen könnten.',
-        '💡 Wenn man merkt, warum man etwas denkt oder fühlt, wird Entscheiden oft leichter.',
+      optSegs('d', 'Igor und Lukas haben Spaß. Lisa denkt daran, was die anderen sagen werden. Und ich wollte doch eigentlich zu Hause bleiben.', 3,
+        'Yasmin wägt alle Meinungen ab.',
+        '💡 Je mehr Seiten du betrachtest, desto besser kannst du eine Entscheidung treffen.',
       ),
     ],
     ['reflect-understand'],
@@ -356,7 +352,7 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
   AF('s1e01c03_amy_feedback_judgement_posts', 's1e01c03_item_judgement_posts'),
 
   S('s1e01c03_story_amy_wrapup', [
-    m(ch.amy, 'Mal sehen, wie Yasmin sich entscheidet – und auf welche Idee sie plötzlich kommt.'),
+    m(ch.amy, 'Mal sehen, wie Yasmin sich entscheidet und auf welche Idee sie plötzlich kommt.'),
   ], ['reflect-understand']),
 
   S('s1e01c03_story_lukas_friendbook', [
@@ -472,10 +468,7 @@ const c05 = C('s1e01c05', 4, 'Amic 5', 'Das Bild', [
   S('s1e01c05_story_class_chat_escalation', [
     classChat(),
     img(ch.yasmin, '/media/story/episodes/s1e01/s1e01c05-512.webp', '16:02', { reactions: [R('🤩')] }),
-    m(ch.dominik, 'Krass.', '16:03'),
-    m(ch.lisa, 'Wow', '16:03'),
-    m(ch.igor, 'Geiles Bild🔥💦 Da will ich auch rein. 😎', '16:03'),
-  ], ['reflect-understand', 'talk-act']),
+      ], ['reflect-understand', 'talk-act']),
 
   inp('s1e01c05_input', 'stories:s1e01.c01.input.introReply', {
     topics: ['talk-act'], promptSpeakerId: 'yasmin',
@@ -483,6 +476,9 @@ const c05 = C('s1e01c05', 4, 'Amic 5', 'Das Bild', [
 
   S('s1e01c05_story_class_chat_escalation_2', [
     classChat(),
+    m(ch.dominik, 'Krass.', '16:03'),
+    m(ch.lisa, 'Wow', '16:03'),
+    m(ch.igor, 'Geiles Bild🔥💦 Da will ich auch rein. 😎', '16:03'),
     m(ch.lukas, '😳', '16:04'),
     m(ch.lukas, 'Baden ist dort ausdrücklich nicht gestattet. Du solltest doch warten.', '16:04'),
     m(ch.lukas, 'Und zwar aus gutem Grund. Es ist äußerst gefährlich.', '16:05'),
@@ -520,6 +516,10 @@ const c05 = C('s1e01c05', 4, 'Amic 5', 'Das Bild', [
   ),
 
   AR('s1e01c05_amy_reaction_trust', 's1e01c05_reflection_trust'),
+
+  S('s1e01c05_story_amy_tip_trust', [
+    m(ch.amy, '💡 Wer gute Gründe nennt, ist oft glaubwürdiger als jemand, der nur sicher klingt.'),
+  ], ['reflect-understand']),
 
   S('s1e01c05_story_class_chat_escalation_3', [
     classChat(),
@@ -652,7 +652,8 @@ const c06 = C('s1e01c06', 5, 'Amic 6', 'Spuren im Bild', [
   ], ['problem-solving']),
 
   CH('s1e01c06_challenge_metadata',
-    '👉 Schau dir heute ein Foto an. Weißt du, welche unsichtbaren Infos darin stecken könnten?',
+    '👉 Schau dir ein Foto an. Weißt du, welche unsichtbaren Infos darin stecken könnten?',
+    { bonusId: 'tip-carlos-geodaten', content: 'Artikel: Geodaten', linkTo: '/newspaper/tip-carlos-geodaten', linkLabel: 'Artikel öffnen →' },
   ),
 ]);
 
@@ -734,7 +735,7 @@ const c07 = C('s1e01c07', 6, 'Amic 7', 'Zweifel', [
   ], ['problem-solving']),
 
   CH('s1e01c07_challenge_info_check',
-    '👉 Such heute eine Info, der du normalerweise einfach glauben würdest – und prüf nach, ob sie noch aktuell ist.',
+    '👉 Such heute eine Info, der du normalerweise einfach glauben würdest und prüf nach, ob sie wirklich stimmt.',
   ),
 
 ]);
@@ -821,7 +822,7 @@ const c08 = C('s1e01c08', 7, 'Amic 8', 'Nächster Tag', [
   ], ['reflect-understand', 'talk-act']),
 
   OR('s1e01c08_reflection_ai_image_post',
-    'Was würdest du tun, bevor du ein KI-Bild teilst?',
+    'Was würdest du beachten, wenn du ein KI-Bild teilst?',
     { topics: ['reflect-understand', 'talk-act'] },
   ),
 

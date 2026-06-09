@@ -364,7 +364,7 @@ function ReadyStep({ onFinish, isBeta, betaCode }: { onFinish: (destination: 'st
           {isBeta && betaCode && (
             <div className="mt-3 pt-3 border-t border-slate-200">
               <p className="text-xs text-slate-500 leading-relaxed">
-                {t('onboarding.ready.betaCodeHint', { defaultValue: 'Öffnest du die App direkt vom Home-Bildschirm? Dann gib deinen Beta-Code im Profil ein:' })}
+                {t('onboarding.ready.betaCodeHint', { defaultValue: 'Öffnest du die App direkt vom Home-Bildschirm? Dann gib deinen Beta-Code in Eltern-Einstellungen ein:' })}
                 {' '}
                 <span className="font-bold text-violet-700 tracking-wide">{betaCode}</span>
               </p>

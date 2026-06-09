@@ -380,8 +380,24 @@ export const AR = (id: string, sourceStepId: string): AmyReactionStep =>
   ({ id, type: 'amy_reaction', sourceStepId });
 
 /** Challenge-Step */
-export const CH = (id: string, prompt: string): ChallengeStep =>
-  ({ id, type: 'challenge', prompt, storeSeen: true });
+export function CH(
+  id: string,
+  prompt: string,
+  link?: { bonusId: string; content: string; linkTo: string; linkLabel?: string },
+): ChallengeStep {
+  return {
+    id,
+    type: 'challenge',
+    prompt,
+    storeSeen: true,
+    ...(link && {
+      linkBonusId: link.bonusId,
+      linkTo: link.linkTo,
+      linkLabel: link.linkLabel ?? 'Öffnen →',
+      linkContent: link.content,
+    }),
+  };
+}
 
 // ─── CHAPTER ─────────────────────────────────────────────────────────────────
 
