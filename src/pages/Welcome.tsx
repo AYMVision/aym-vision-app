@@ -17,7 +17,7 @@ import { shouldSkipOnboarding } from '../common/firstRun';
 import { loadStore } from '../analytics/analyticsStore';
 import { BONUS_INDEX } from '../bonus/bonusIndex';
 import { loadSeenBonusIds } from '../bonus/bonusSeen';
-import { isBonusUnlocked } from '../bonus/bonusUnlock';
+import { isBonusUnlocked, isCharacterUnlockedByProgress } from '../bonus/bonusUnlock';
 import type { BonusProgressSnapshot } from '../bonus/bonusUnlock';
 import { CHARACTERS } from '../content/characters';
 
@@ -232,21 +232,39 @@ function isUnlockedByChain(
     return { seenChapterIds: Array.from(seen) };
   }, [profile]);
 
-  // Freigeschaltete Charakterkreise (Story-Circles-Stil)
-  const unlockedCharCircles = useMemo(() => {
+  // Nur abgeschlossene Kapitel — für Charakterfreischaltung (kein current-Chapter)
+  const completedChapterProgress = useMemo<BonusProgressSnapshot>(() => {
+    const completed = profile.progress?.completedChapters ?? {};
+    const seen = new Set<string>();
+    for (const [key, done] of Object.entries(completed)) {
+      if (!done) continue;
+      const parts = key.split(':');
+      if (parts.length !== 3) continue;
+      const episodeId = parts[1];
+      const match = /^c(\d{2})$/.exec(parts[2]);
+      if (!match) continue;
+      seen.add(`${episodeId}c${match[1]}`);
+    }
+    return { seenChapterIds: Array.from(seen) };
+  }, [profile]);
+
+  // Charakterkreise (alle außer Amy — freigeschaltete klickbar, gesperrte gedimmt)
+  const charCircles = useMemo(() => {
     if (isFirstTime) return [];
     const seenIds = new Set(loadSeenBonusIds());
     return BONUS_INDEX
-      .filter((item) => item.category === 'characters' && isBonusUnlocked(item, bonusProgress))
+      .filter((item) => item.category === 'characters')
       .map((item) => {
         const charId = item.characterId as keyof typeof CHARACTERS | undefined;
         const char = charId ? CHARACTERS[charId] : undefined;
         if (!char?.card?.portrait) return null;
+        const unlocked = isCharacterUnlockedByProgress(item, completedChapterProgress);
         return {
           bonusId: item.bonusId,
           name: char.name,
           portrait: char.card.portrait,
-          isNew: !seenIds.has(item.bonusId),
+          isNew: unlocked && !seenIds.has(item.bonusId),
+          unlocked,
         };
       })
       .filter((x): x is NonNullable<typeof x> => x !== null);
@@ -646,37 +664,54 @@ function isUnlockedByChain(
           ) : null}
         </div>
 
-        {/* Story-Circles: freigeschaltete Charakterkarten */}
-        {unlockedCharCircles.length > 0 && (
+        {/* Story-Circles: alle Charaktere, gesperrte gedimmt */}
+        {charCircles.length > 0 && (
           <div className="mt-4">
             <div
               className="flex gap-3 overflow-x-auto pb-1"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}
             >
-              {unlockedCharCircles.map(({ bonusId, name, portrait, isNew }) => (
-                <Link
-                  key={bonusId}
-                  to={`/cards/${bonusId}`}
-                  className="flex flex-col items-center gap-1 flex-shrink-0"
-                >
-                  <div
-                    className={`w-14 h-14 rounded-full p-0.5 ${
-                      isNew
-                        ? 'ring-2 ring-[var(--color-teal-500)] ring-offset-1'
-                        : 'ring-1 ring-slate-200'
-                    }`}
+              {charCircles.map(({ bonusId, name, portrait, isNew, unlocked }) => {
+                const inner = (
+                  <>
+                    <div
+                      className={`w-14 h-14 rounded-full p-0.5 ${
+                        !unlocked
+                          ? 'ring-1 ring-slate-200'
+                          : isNew
+                          ? 'ring-2 ring-[var(--color-teal-500)] ring-offset-1'
+                          : 'ring-1 ring-slate-300'
+                      }`}
+                    >
+                      <div className="relative w-full h-full">
+                        <img
+                          src={assetUrl(portrait)}
+                          alt={name}
+                          className={`w-full h-full rounded-full object-cover object-top ${
+                            unlocked ? '' : 'opacity-60'
+                          }`}
+                        />
+                        </div>
+                    </div>
+                    <span className={`text-[10px] font-medium text-center max-w-[56px] truncate ${unlocked ? 'text-slate-500' : 'text-slate-300'}`}>
+                      {name}
+                    </span>
+                  </>
+                );
+                return unlocked ? (
+                  <Link
+                    key={bonusId}
+                    to={`/cards/${bonusId}`}
+                    className="flex flex-col items-center gap-1 flex-shrink-0"
                   >
-                    <img
-                      src={assetUrl(portrait)}
-                      alt={name}
-                      className="w-full h-full rounded-full object-cover object-top"
-                    />
+                    {inner}
+                  </Link>
+                ) : (
+                  <div key={bonusId} className="flex flex-col items-center gap-1 flex-shrink-0 cursor-default">
+                    {inner}
                   </div>
-                  <span className="text-[10px] text-slate-500 font-medium text-center max-w-[56px] truncate">
-                    {name}
-                  </span>
-                </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

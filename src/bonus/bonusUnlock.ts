@@ -45,6 +45,21 @@ export function isBonusUnlocked(item: BonusItem, progress: BonusProgressSnapshot
   return false;
 }
 
+/**
+ * Prüft ob eine Charakterkarte durch echten Story-Fortschritt freigeschaltet ist.
+ * Ignoriert bewusst shouldBypassAll() — damit sehen auch Beta-Nutzer nur
+ * Charaktere, die sie in der Story wirklich schon getroffen haben.
+ */
+export function isCharacterUnlockedByProgress(item: BonusItem, progress: BonusProgressSnapshot): boolean {
+  if (item.characterId === 'amy') return true;
+  if (!item.released) return false;
+  if (!item.unlockedBy || item.unlockedBy.id === '__never__') return false;
+  if (item.unlockedBy.type === 'chapter') {
+    return progress.seenChapterIds.includes(item.unlockedBy.id);
+  }
+  return false;
+}
+
 export function sortBonus(items: BonusItem[]) {
   return [...items].sort((a, b) => a.order - b.order);
 }

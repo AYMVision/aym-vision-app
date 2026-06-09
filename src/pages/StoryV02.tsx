@@ -377,6 +377,7 @@ export default function StoryV02() {
 
   const [storyMenuOpen, setStoryMenuOpen] = useState(false);
   const [showBetaCompletionModal, setShowBetaCompletionModal] = useState(false);
+  const [showSurveyConsent, setShowSurveyConsent] = useState(false);
 
   const betaProfileSnapshot = {
     chaptersCompleted: Object.entries(profile.progress?.completedChapters ?? {})
@@ -1428,6 +1429,7 @@ function hasStoryMigrationDone(key: string): boolean {
               chatName={profile.chatName ?? undefined}
               characterImg="media/story/characters/yasmin-256.webp"
               characterSays="Danke, dass du dabei warst."
+              betaMode={shouldShowBetaOnContinue}
               onViewSticker={() => navigate('/album')}
               onContinue={() => {
                 if (shouldShowBetaOnContinue) {
@@ -1888,34 +1890,63 @@ function hasStoryMigrationDone(key: string): boolean {
                       alt="Amy"
                       className="w-8 h-8 rounded-full object-cover object-top flex-shrink-0"
                     />
-                    <div className="min-w-0">
-                      <div className="text-xs font-extrabold text-violet-600 uppercase tracking-widest mb-0.5">
-                        {t('stories:survey.amyAsks', { defaultValue: 'Amy fragt' })}
-                      </div>
-                      <p className="text-xs text-violet-900 font-semibold leading-snug">
-                        {t('stories:survey.question', { defaultValue: 'Ich habe eine Frage an dich — was denkst du bisher?' })}
-                      </p>
-                      <p className="mt-0.5 text-xs text-violet-700 leading-snug">
-                        {t('stories:survey.body', { defaultValue: '3 Minuten, anonym.' })}
-                      </p>
-                      <div className="mt-2 flex gap-2">
-                        <a
-                          href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__tVBf5hUQlM2V0k0OFdWMEQzNVhaUVhSNzU2STdBSC4u"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => localStorage.setItem('surveyDismissed', '1')}
-                          className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-bold bg-violet-600 text-white hover:bg-violet-700 transition-colors"
-                        >
-                          {t('stories:survey.cta', { defaultValue: 'Zur Umfrage →' })}
-                        </a>
-                        <button
-                          type="button"
-                          onClick={() => localStorage.setItem('surveyDismissed', '1')}
-                          className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-semibold text-violet-600 hover:text-violet-800 transition-colors"
-                        >
-                          {t('stories:survey.snooze', { defaultValue: 'Nicht jetzt' })}
-                        </button>
-                      </div>
+                    <div className="min-w-0 w-full">
+                      {!showSurveyConsent ? (
+                        <>
+                          <div className="text-xs font-extrabold text-violet-600 uppercase tracking-widest mb-0.5">
+                            {t('stories:survey.amyAsks', { defaultValue: 'Amy fragt' })}
+                          </div>
+                          <p className="text-xs text-violet-900 font-semibold leading-snug">
+                            {t('stories:survey.question', { defaultValue: 'Ich habe eine Frage an dich — was denkst du bisher?' })}
+                          </p>
+                          <p className="mt-0.5 text-xs text-violet-700 leading-snug">
+                            {t('stories:survey.body', { defaultValue: '3 Minuten, anonym.' })}
+                          </p>
+                          <div className="mt-2 flex gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setShowSurveyConsent(true)}
+                              className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-bold bg-violet-600 text-white hover:bg-violet-700 transition-colors"
+                            >
+                              {t('stories:survey.cta', { defaultValue: 'Zur Umfrage →' })}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => localStorage.setItem('surveyDismissed', '1')}
+                              className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-semibold text-violet-600 hover:text-violet-800 transition-colors"
+                            >
+                              {t('stories:survey.snooze', { defaultValue: 'Nicht jetzt' })}
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-xs text-violet-900 font-semibold leading-snug">
+                            {t('stories:survey.consentTitle', { defaultValue: 'Du wirst zu Microsoft Forms weitergeleitet.' })}
+                          </p>
+                          <p className="mt-1 text-xs text-violet-700 leading-snug">
+                            {t('stories:survey.consentBody', { defaultValue: 'Dort gelten die Datenschutzbestimmungen von Microsoft. Die Umfrage ist anonym.' })}
+                          </p>
+                          <div className="mt-2 flex gap-2">
+                            <a
+                              href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__tVBf5hUQlM2V0k0OFdWMEQzNVhaUVhSNzU2STdBSC4u"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => localStorage.setItem('surveyDismissed', '1')}
+                              className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-bold bg-violet-600 text-white hover:bg-violet-700 transition-colors"
+                            >
+                              {t('stories:survey.consentCta', { defaultValue: 'OK, weiter →' })}
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => setShowSurveyConsent(false)}
+                              className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-semibold text-violet-600 hover:text-violet-800 transition-colors"
+                            >
+                              {t('stories:survey.consentCancel', { defaultValue: 'Abbrechen' })}
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

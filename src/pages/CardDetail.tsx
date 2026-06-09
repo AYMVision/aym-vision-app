@@ -172,6 +172,10 @@ const extraImages = character?.card?.extraImages ?? [];
 
   // Mark as seen as soon as the card is viewed
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (!unlocked) return;
     if (opened) return;
     unlockBonusById(item.bonusId);

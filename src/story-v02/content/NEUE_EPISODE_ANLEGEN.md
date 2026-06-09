@@ -418,7 +418,7 @@ CH(id, prompt)
 
 ```ts
 CH('s1e02c02_challenge_video',
-  '👉 Schaffst du es heute, einmal ein Video NICHT zu schauen, obwohl du draufklicken willst?',
+  '👉 Schaffst du es, einmal ein Video NICHT zu schauen, obwohl du draufklicken willst?',
 )
 ```
 

@@ -158,6 +158,21 @@ lisa: {
     bioKey: 'characters.jonas.bio',
   },
 
+  schubert: {
+  id: 'schubert',
+  name: 'Mrs. schubert',
+  avatar: 'schubert',
+  card: {
+    portrait: portraitPath('schubert'),
+    detailImage: detailImagePath('schubert'),
+    extraImages: [
+      `${ROOT}/schubert-extra-1-512.webp`,
+      `${ROOT}/schubert-extra-2-512.webp`,
+    ],
+  },
+  bioKey: 'characters.schubert.bio',
+},
+
     carlos: {
     id: 'carlos',
     name: 'Carlos',
@@ -294,21 +309,6 @@ alvarez: {
     ],
   },
   bioKey: 'characters.alvarez.bio',
-},
-
-schubert: {
-  id: 'schubert',
-  name: 'Mrs. schubert',
-  avatar: 'schubert',
-  card: {
-    portrait: portraitPath('schubert'),
-    detailImage: detailImagePath('schubert'),
-    extraImages: [
-      `${ROOT}/schubert-extra-1-512.webp`,
-      `${ROOT}/schubert-extra-2-512.webp`,
-    ],
-  },
-  bioKey: 'characters.schubert.bio',
 },
 
 emma: {

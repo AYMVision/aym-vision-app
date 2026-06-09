@@ -106,27 +106,38 @@ const CHARACTER_UNLOCKS_BY_CHAPTER: Record<string, CharacterId[]> = {
   s1e03c08: ['finn'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
 };
 
+  // s1e04
+  // s1e04c02: ['schubert'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
+  // s1e04c08: ['finn'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
+//};
+
+  // s1e03
+    // s1e05c02: ['schubert'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
+    // s1e05c08: ['finn'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
+  // };
+
 /**
  * Optional: fixe Reihenfolge der Karten im Album.
  * Alles nicht gesetzte wird alphabetisch stabil einsortiert (nach den gesetzten).
  */
 const CHARACTER_ORDER: Partial<Record<CharacterId, number>> = {
   amy: 1,
-  lukas: 2,
-  yasmin: 3,
-  dominik: 4,
-  alvarez: 5,
-  chioma: 6,
-  carlos: 7,
-  igor: 8,
-  lisa: 9,
-  finn: 10,
-  mia: 11,
-  jonas: 12,
-  aylin: 13,
-  markus: 14,
-  tom: 15,
-  elsa: 16,
+  yasmin: 2,
+  lukas: 3,
+  alvarez: 4,
+  chioma: 5,
+  carlos: 6,
+  schubert: 7,
+  finn: 8,
+  igor: 9,
+  dominik: 10,
+  lisa: 11,
+  mia: 12,
+  jonas: 13,
+  aylin: 14,
+  markus: 15,
+  tom: 16,
+  elsa: 17,
 };
 
 const ALL_CHARACTER_IDS: CharacterId[] = Object.keys(CHARACTERS) as CharacterId[];

@@ -155,6 +155,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"2026-07-10-digitale-reize-kinder-widerstehen.md": {
+	id: "2026-07-10-digitale-reize-kinder-widerstehen.md";
+  slug: "2026-07-10-digitale-reize-kinder-widerstehen";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 };
 
 	};

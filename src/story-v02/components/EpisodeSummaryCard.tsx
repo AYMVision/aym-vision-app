@@ -58,6 +58,7 @@ type Props = {
   onViewSticker: () => void;
   onContinue: () => void;
   onProfile?: () => void;
+  betaMode?: boolean;
 };
 
 export default function EpisodeSummaryCard({
@@ -70,6 +71,7 @@ export default function EpisodeSummaryCard({
   onViewSticker,
   onContinue,
   onProfile,
+  betaMode = false,
 }: Props) {
   const { t } = useTranslation('common');
   const name = chatName?.trim();
@@ -173,28 +175,40 @@ export default function EpisodeSummaryCard({
 
           {/* Buttons */}
           <div className="flex flex-col gap-2.5 w-full mt-1">
-            <button
-              type="button"
-              onClick={onViewSticker}
-              className="w-full rounded-2xl bg-white px-5 py-3 text-sm font-extrabold text-violet-900 shadow-md hover:bg-violet-50 active:scale-95 transition-transform"
-            >
-              Sticker ansehen ✨
-            </button>
-            <button
-              type="button"
-              onClick={onContinue}
-              className="w-full rounded-2xl border-2 border-violet-400 bg-transparent px-5 py-3 text-sm font-semibold text-violet-100 hover:bg-violet-800/50 active:scale-95 transition-transform"
-            >
-              Zur Story-Liste →
-            </button>
-            {onProfile && (
+            {betaMode ? (
               <button
                 type="button"
-                onClick={onProfile}
-                className="w-full rounded-2xl border border-violet-400/40 bg-transparent px-5 py-2 text-xs font-semibold text-violet-300 hover:bg-violet-800/30 active:scale-95 transition-transform"
+                onClick={onContinue}
+                className="w-full rounded-2xl bg-white px-5 py-3 text-sm font-extrabold text-violet-900 shadow-md hover:bg-violet-50 active:scale-95 transition-transform"
               >
-                Profil &amp; Story-Welt →
+                Weiter →
               </button>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={onViewSticker}
+                  className="w-full rounded-2xl bg-white px-5 py-3 text-sm font-extrabold text-violet-900 shadow-md hover:bg-violet-50 active:scale-95 transition-transform"
+                >
+                  Sticker ansehen ✨
+                </button>
+                <button
+                  type="button"
+                  onClick={onContinue}
+                  className="w-full rounded-2xl border-2 border-violet-400 bg-transparent px-5 py-3 text-sm font-semibold text-violet-100 hover:bg-violet-800/50 active:scale-95 transition-transform"
+                >
+                  Zur Story-Liste →
+                </button>
+                {onProfile && (
+                  <button
+                    type="button"
+                    onClick={onProfile}
+                    className="w-full rounded-2xl border border-violet-400/40 bg-transparent px-5 py-2 text-xs font-semibold text-violet-300 hover:bg-violet-800/30 active:scale-95 transition-transform"
+                  >
+                    Profil &amp; Story-Welt →
+                  </button>
+                )}
+              </>
             )}
           </div>
         </div>
