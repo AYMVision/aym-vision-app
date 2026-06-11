@@ -1,5 +1,5 @@
 ---
-title: "Warum manche Kinder digitalen Reizen kaum widerstehen können"
+title: "Warum können manche Kinder digitalen Reizen kaum widerstehen?"
 description: "Warum reagieren manche Kinder so stark auf digitale Reize? Zara erzählt, wie ihre Familie aufgehört hat, nur über Bildschirmzeit zu streiten und was wirklich hilft."
 date: 2026-06-09
 author: "Amy Surfwing"
@@ -12,7 +12,7 @@ Sie weint.
 Heimlich hat sie das iPad ihres Vaters geholt, um Videogames zu spielen. Leonie selbst ist verzweifelt, sagt, dass sie das nie wieder machen wolle.
 Für ihre Eltern ist das der Moment, in dem sie beginnen zu verstehen:
 Das Problem ist nicht einfach fehlende Disziplin. Es ist der Sog, der von diesen Plattformen ausgelöst wird.
-Im Gespräch erzählt Leonies Mutter Zara, warum ihre Familie irgendwann aufgehört hat, nur über Bildschirmzeit zu sprechen — und stattdessen begonnen hat, sich mit Selbststeuerung, digitalen Reizen und dem Gehirn von Kindern auseinanderzusetzen.
+Im Gespräch erzählt Leonies Mutter Zara, warum ihre Familie irgendwann aufgehört hat, nur über Bildschirmzeit zu sprechen und stattdessen begonnen hat, sich mit Selbststeuerung, digitalen Reizen und dem Gehirn von Kindern auseinanderzusetzen.
 
 ---
 

@@ -14,7 +14,6 @@ import AvatarStage from '../components/AvatarStage';
 import { BONUS_INDEX } from '../bonus/bonusIndex';
 import { useProfile } from '../profile/useProfile';
 import type { BonusProgressSnapshot } from '../bonus/bonusUnlock';
-import { shouldBypassAll } from '../gating/entitlements';
 import { DIARY_ENTRIES, type DiaryId, type DiaryEntry } from '../bonus/diaryEntries';
 import { isBonusSeen, markBonusSeen } from '../bonus/bonusSeen';
 import { CHARACTERS, type CharacterEx } from '../content/characters';
@@ -98,9 +97,8 @@ function normalizeChapterIdMaybe(id: string): string[] {
 }
 
 
-// ✅ unlocked = bypass (AMY-DEV) OR chapter done OR clicked (bonusSeen)
+// ✅ unlocked = chapter done OR clicked (bonusSeen) — bypass intentionally excluded
 function isEntryUnlocked(entry: DiaryEntry, progress: BonusProgressSnapshot): boolean {
-  if (shouldBypassAll()) return true;
   const ids = normalizeChapterIdMaybe(entry.unlock.afterChapterId);
   const byChapter = ids.some((id) => progress.seenChapterIds.includes(id));
   return byChapter || isBonusSeen(entry.bonusId);

@@ -7,6 +7,7 @@ import {
   setUnlockAllEpisodes,
   unlockEpisode,
   unlockEpisodeUntil,
+  unlockEpisodePaywallOnly,
 } from './entitlements';
 import { setFastGateActive } from './gateEngine';
 
@@ -22,7 +23,8 @@ type NamedCodeAction =
   | { type: 'unlock-episode'; episodeId: string; message: string }
   | { type: 'unlock-episode-until'; episodeId: string; date: string; message: string }
   | { type: 'bypass-until'; date: string; message: string }
-  | { type: 'unlock-all-episodes'; message: string };
+  | { type: 'unlock-all-episodes'; message: string }
+  | { type: 'unlock-episode-paywall-only'; episodeId: string; message: string };
 
 const NAMED_CODES: Record<string, NamedCodeAction> = {
   // ===== Sichtbarer Standard-Testcode =====
@@ -69,10 +71,10 @@ const NAMED_CODES: Record<string, NamedCodeAction> = {
   },
 
   // ===== Beta-Tester: Erste Welle =====
-  // bypass-until: alle Kapitel + Daily Gate aufgehoben bis Beta-Ende
+  // unlock-episode-paywall-only: Nur s1e01 zugänglich, Daily Gate aktiv, s1e02+ gesperrt
   'ERSTEWELLE': {
-    type: 'bypass-until',
-    date: '2026-06-30',
+    type: 'unlock-episode-paywall-only',
+    episodeId: 's1e01',
     message: 'Beta-Zugang aktiviert. Willkommen in der ersten Welle!',
   },
 };
@@ -105,6 +107,11 @@ function applyNamedCode(action: NamedCodeAction): ApplyUnlockCodeResult {
 
   if (action.type === 'unlock-all-episodes') {
     setUnlockAllEpisodes(true);
+    return { ok: true, message: action.message };
+  }
+
+  if (action.type === 'unlock-episode-paywall-only') {
+    unlockEpisodePaywallOnly(action.episodeId);
     return { ok: true, message: action.message };
   }
 

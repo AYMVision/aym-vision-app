@@ -6,6 +6,7 @@ export type Entitlements = {
   unlockAllEpisodes?: boolean;      // bypasses paywall only, daily pacing stays
   unlockedEpisodes?: string[];
   unlockedEpisodesUntil?: Record<string, string>; // { 's1e01': 'YYYY-MM-DD' } — bypass all gates, time-limited per episode
+  paywallOnlyEpisodes?: string[];   // bypasses paywall only for specific episodes, daily pacing stays
 };
 
 const ENTITLEMENTS_KEY = 'aym-entitlements';
@@ -93,9 +94,24 @@ export function shouldBypassAll(courseId?: string): boolean {
   );
 }
 
+export function isEpisodePaywallOnlyUnlocked(courseId?: string): boolean {
+  if (!courseId) return false;
+  const e = getEntitlements();
+  return (e.paywallOnlyEpisodes ?? []).includes(courseId);
+}
+
+export function unlockEpisodePaywallOnly(courseId: string) {
+  const normalized = courseId.trim();
+  if (!normalized) return;
+  const current = getEntitlements();
+  const unlocked = new Set(current.paywallOnlyEpisodes ?? []);
+  unlocked.add(normalized);
+  setEntitlements({ ...current, paywallOnlyEpisodes: Array.from(unlocked) });
+}
+
 /** Paywall bypass only — daily pacing stays intact */
 export function shouldBypassPaywall(courseId?: string): boolean {
-  return shouldBypassAll(courseId) || isAllEpisodesUnlocked();
+  return shouldBypassAll(courseId) || isAllEpisodesUnlocked() || isEpisodePaywallOnlyUnlocked(courseId);
 }
 
 export function setBypassAll(active: boolean) {

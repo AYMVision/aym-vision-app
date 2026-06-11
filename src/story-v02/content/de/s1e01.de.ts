@@ -475,7 +475,6 @@ const c05 = C('s1e01c05', 4, 'Amic 5', 'Das Bild', [
   }),
 
   S('s1e01c05_story_class_chat_escalation_2', [
-    classChat(),
     m(ch.dominik, 'Krass.', '16:03'),
     m(ch.lisa, 'Wow', '16:03'),
     m(ch.igor, 'Geiles Bild🔥💦 Da will ich auch rein. 😎', '16:03'),
@@ -500,7 +499,6 @@ const c05 = C('s1e01c05', 4, 'Amic 5', 'Das Bild', [
     m(ch.chioma, 'Was soll das heißen?', '16:12'),
     m(ch.lukas, 'Das soll heißen, dass wir keine Zeit verlieren dürfen.', '16:12'),
     m(ch.lukas, 'Das Wasser könnte sie wegreißen. Sicher gibt es versteckte Strömungen.', '16:13'),
-    m(ch.lukas, 'Jemand muss Hilfe organisieren.', '16:13'),
   ], ['reflect-understand', 'talk-act']),
 
   S('s1e01c05_story_switch_to_amy_trust', [
@@ -523,6 +521,7 @@ const c05 = C('s1e01c05', 4, 'Amic 5', 'Das Bild', [
 
   S('s1e01c05_story_class_chat_escalation_3', [
     classChat(),
+    m(ch.lukas, 'Jemand muss Hilfe organisieren.', '16:13'),
     m(ch.chioma, 'Das machen wir.', '16:14'),
     m(ch.lukas, 'Ich fürchte, Igor und ich könnten zu spät kommen. 😰', '16:14'),
     m(ch.lukas, 'Wir geben jetzt alles. Los!', '16:15'),
@@ -544,6 +543,7 @@ const c05 = C('s1e01c05', 4, 'Amic 5', 'Das Bild', [
   S('s1e01c05_story_my_diary_bonus', [
     bonusLink('diary-me', 'Mein Tagebuch',
       '/diaries/diary_me', 'Tagebuch öffnen →'),
+    m(ch.amy, 'Das Tagebuch findest du jederzeit auch in deinem Profil.'),
   ]),
 ]);
 
@@ -822,14 +822,14 @@ const c08 = C('s1e01c08', 7, 'Amic 8', 'Nächster Tag', [
   ], ['reflect-understand', 'talk-act']),
 
   OR('s1e01c08_reflection_ai_image_post',
-    'Was würdest du beachten, wenn du ein KI-Bild teilst?',
-    { topics: ['reflect-understand', 'talk-act'] },
+    'Was ist wichtig zu beachten, wenn man ein KI-Bild teilt?',
+    { topics: ['reflect-understand', 'talk-act'], category: 'ACTION' },
   ),
 
   AR('s1e01c08_amy_reaction_ai_image_post', 's1e01c08_reflection_ai_image_post'),
 
   S('s1e01c08_story_amy_wrapup_bonus', [
-    m(ch.amy, 'Mein Tipp für dich: Sei fair zu anderen und sag dazu, wenn dein Bild mit KI gemacht ist.'),
+  m(ch.amy, 'Gleich erscheint dazu ein Artikel von Aylin. Lies ihn dir unbedingt durch.'), 
   ], ['reflect-understand', 'talk-act']),
 
   S('s1e01c08_story_outro_private', [

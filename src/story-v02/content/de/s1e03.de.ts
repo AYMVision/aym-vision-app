@@ -58,10 +58,13 @@ const c01 = C('s1e03c01', 0, 'Amic 1', 'Finn on Fire', [
     m(ch.finn, 'passt schon', '19:54'),
   ], ['talk-act', 'self-regulation' as any]),
 
-  inp('s1e03c01_input_classchat_reply', 'stories:s1e03.c01.input.classchatReply', {
-    topics: ['talk-act'],
-    promptSpeakerId: 'finn',
-  }),
+  S('s1e03c01_story_challenge_intro', [
+    m(ch.amy, 'Hast du Lust auf eine kleine Challange 💪'),
+  ], ['problem-solving']),
+
+  CH('s1e03c01_challenge_wait_massage',
+    'Wenn eine Nachricht auf deinem Gerät erscheint, warte einmal absichtlich 10 Minuten, bevor du nachschaust.',
+  ),
 
   S('s1e03c01_story_tom_mia_private_day2', [
     divider('Nächster Tag'),
@@ -188,6 +191,18 @@ const c02 = C('s1e03c02', 1, 'Amic 2', 'Immer noch online', [
     m(ch.igor, 'Dominik, lass sie einfach in Ruhe.', '19:14'),
     m(ch.markus, 'Abends wird’s doch erst spannend.', '19:14'),
     m(ch.tom, 'Leute. Schlafen ist auch nice.', '19:20'),
+      ], ['talk-act', 'reflect-understand']),
+
+      S('s1e03c02_story_challenge_intro', [
+    m(ch.amy, 'Hast du Lust auf eine kleine Challange 💪'),
+  ], ['problem-solving']),
+
+  CH('s1e03c02_challenge_wait_massage',
+    'Versuch heute, dein Handy oder Tablet etwas früher wegzulegen als gestern. Schaffst du einen neuen persönlichen Rekord? Das kannst du auch in deinem Tagebuch notieren.',
+  ),
+
+    S('s1e03c02_story_classchat_evening', [
+    classChat(),
     m(ch.dominik, 'Opa.', '19:21', { reactions: [R('😂')] }),
     m(ch.markus, '@ Tom: Du musst wohl nach dem Sandmännchen ins Bett? 😂', '19:21'),
     m(ch.dominik, '@ Tom: Darauf hast du keine Antwort mehr? 😅', '19:22'),
@@ -373,7 +388,7 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
   ),
 
   S('s1e03c03_story_challenge_intro', [
-    m(ch.amy, 'Ich hab noch eine Challenge für dich. 💪'),
+    m(ch.amy, 'Lust auf ein kleines Duell? 💪'),
   ], ['problem-solving']),
 
   CH('s1e03c03_challenge_algorithm_exit',
@@ -1240,9 +1255,23 @@ const c10 = C('s1e03c10', 9, 'Amic 10', 'Entscheiden kannst du selbst', [
     m(ch.chioma, 'Aromatischer oder?', '15:17'),
     m(ch.igor, 'Ja, genau. Irgendwie special.', '15:17'),
     m(ch.elsa, 'Klingt ja unfassbar spannend 🙄', '15:17'),
-    m(ch.mia, "Ich hab's gestern auch Nachmittag dann auch noch probiert.", '15:18'),
+    m(ch.mia, "Ich hab's gestern Nachmittag dann auch noch probiert.", '15:18'),
     m(ch.tom, 'Und?', '15:18'),
     m(ch.mia, 'War erst komisch. Wenn ich irgendwo warte, gucke ich sonst immer ins Handy.', '15:18'),
+      ], ['talk-act', 'reflect-understand']),
+
+
+  S('s1e03c01_story_challenge_intro', [
+    m(ch.amy, 'Hast du Lust auf eine kleine Challange 💪'),
+  ], ['problem-solving']),
+
+  CH('s1e03c01_challenge_outside_time',
+    '👉 Geh für 3 Minuten nach draußen. Ohne Handy. Ohne Musik. Ohne Aufgabe. Schau bewusst, was du bemerkst.',
+  ),
+
+    S('s1e03c10_story_classchat_offline_effect', [
+    divider('Tag 10'),
+    classChat(),
     m(ch.mia, 'Aber war gut. Hab stattdessen dem Regen zugeguckt.', '15:19'),
     m(ch.dominik, '😂😂😂', '15:19'),
     m(ch.finn, 'heute skatepark?', '15:19'),
