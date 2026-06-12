@@ -113,16 +113,16 @@ export default function Phone({
   }, [children, autoScroll]);
 
   return (
-    <div className="relative w-full h-full min-h-0 flex flex-col sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[440px]">
+    <div className="relative w-full h-full min-h-0 flex flex-col lg:max-w-[400px] xl:max-w-[440px]">
 
-      <div className="flex flex-1 min-h-0 relative sm:p-[0.5rem] sm:shadow-2xl sm:bg-gray-950 sm:rounded-[2.5rem]">
-        <div className="bg-gray-50 w-full h-full min-h-0 sm:h-auto sm:aspect-[9/19.5] flex flex-col overflow-hidden relative sm:rounded-[2.2rem]">
-          <div className="hidden sm:block absolute top-0 left-1/2 transform -translate-x-1/2 w-[35%] h-[3.5%] bg-gray-950 rounded-b-2xl z-10" />
+      <div className="flex flex-1 min-h-0 relative lg:p-[0.5rem] lg:shadow-2xl lg:bg-gray-950 lg:rounded-[2.5rem]">
+        <div className="bg-gray-50 w-full h-full min-h-0 lg:h-auto lg:aspect-[9/19.5] flex flex-col overflow-hidden relative lg:rounded-[2.2rem]">
+          <div className="hidden lg:block absolute top-0 left-1/2 transform -translate-x-1/2 w-[35%] h-[3.5%] bg-gray-950 rounded-b-2xl z-10" />
 
-          <div className="h-[6%] hidden sm:flex items-end px-[6%] pb-[0.5%] text-[0.6rem] sm:text-xs font-medium text-gray-800">
+          <div className="h-[6%] hidden lg:flex items-end px-[6%] pb-[0.5%] text-[0.6rem] lg:text-xs font-medium text-gray-800">
             <span>9:41</span>
             <div className="ml-auto flex items-center gap-[2%]">
-              <div className="w-5 h-2.5 sm:w-6 sm:h-3 border border-gray-800 rounded-sm">
+              <div className="w-5 h-2.5 lg:w-6 lg:h-3 border border-gray-800 rounded-sm">
                 <div className="w-full h-full bg-gray-800 rounded-sm scale-x-[0.7] origin-left" />
               </div>
             </div>
@@ -298,7 +298,7 @@ export default function Phone({
             </div>
           )}
 
-          <div className="h-[4%] hidden sm:flex items-center justify-center pb-[1%]">
+          <div className="h-[4%] hidden lg:flex items-center justify-center pb-[1%]">
             <div className="w-[35%] h-[0.5%] min-h-[3px] bg-gray-800 rounded-full" />
           </div>
         </div>

@@ -581,7 +581,7 @@ const c06 = C('s1e01c06', 5, 'Amic 6', 'Spuren im Bild', [
     m(ch.carlos, 'Genau.', '16:29'),
     m(ch.chioma, 'Und das reicht?', '16:30'),
     m(ch.lisa, 'Also ich kenne den Ort nicht.', '16:30'),
-    m(ch.carlos, 'Ich auch nicht. Aber ich probier Reverse Image Search. 🔍', '16:30'),
+    m(ch.carlos, 'Ich auch nicht. Aber ich probier [[reverse-image-search]]. 🔍', '16:30'),
     m(ch.lisa, 'Reverse Image Search? Und was soll das sein?', '16:31'),
     m(ch.carlos, 'Statt in der Suchmaschine nach Worten zu suchen, gebe ich Yasmins Foto ein.', '16:31'),
     m(ch.chioma, 'Nicht schlecht. Das hör ich zum ersten Mal.', '16:32'),

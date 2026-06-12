@@ -1758,7 +1758,7 @@ function hasStoryMigrationDone(key: string): boolean {
     <Layout fullHeight hideHeader>
       <div
         className="ios-anti-zoom flex flex-col w-full flex-1 min-h-0 overflow-hidden
-                   sm:items-center sm:justify-center sm:w-[420px] md:w-[480px] sm:p-4"
+                   lg:items-center lg:justify-center lg:w-[480px] lg:p-4"
       >
         <Phone
           showHeader

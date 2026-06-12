@@ -597,7 +597,7 @@ const c06 = C('s1e01c06', 5, 'Amic 6', 'Clues in the Picture', [
     m(ch.carlos, 'Exactly.', '16:29'),
     m(ch.chioma, 'And that\'s enough?', '16:30'),
     m(ch.lisa, 'Well, I don\'t know the place.', '16:30'),
-    m(ch.carlos, 'Neither do I. But I\'ll try reverse image search. 🔍', '16:30'),
+    m(ch.carlos, 'Neither do I. But I\'ll try [[reverse-image-search]]. 🔍', '16:30'),
     m(ch.lisa, 'Reverse image search? And what is that supposed to be?', '16:31'),
     m(ch.carlos, 'Instead of searching with words in a search engine, I upload Yasmin\'s photo.', '16:31'),
     m(ch.chioma, 'Not bad. First time I\'ve heard of that.', '16:32'),
