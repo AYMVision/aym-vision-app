@@ -300,7 +300,7 @@ function DetailsBlock({ title, body }: { title: string; body: string }) {
   );
 }
 
-export function ArticleBody({ text, blocks: blocksProp }: { text?: string; blocks?: ArticleBlock[] }) {
+export function ArticleBody({ text, blocks: blocksProp, author }: { text?: string; blocks?: ArticleBlock[]; author?: string }) {
   const parsedBlocks = useMemo(() => (text ? parseArticleBlocks(text) : []), [text]);
   const blocks = blocksProp ?? parsedBlocks;
   const firstH1 = blocks.find((b) => b.type === 'h1') as { type: 'h1'; text: string } | undefined;
@@ -318,11 +318,17 @@ export function ArticleBody({ text, blocks: blocksProp }: { text?: string; block
       {/* Titelkarte */}
       {firstH1 ? (
         <div className="rounded-[32px] bg-gradient-to-br from-white via-white to-[var(--color-teal-50)] shadow-md p-6 sm:p-8">
-          <div className="text-sm font-extrabold text-[var(--color-teal-600)]">
-            📚 Mini-Artikel
-          </div>
-
-          <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
+          {author && (
+            <div className="flex items-center gap-2 mb-3">
+              <img
+                src={assetUrl(`media/story/characters/${author.toLowerCase()}-512.webp`)}
+                alt={author}
+                className="w-8 h-8 rounded-full object-cover border border-slate-200 bg-slate-100"
+              />
+              <span className="text-sm font-semibold text-slate-500">{author}</span>
+            </div>
+          )}
+          <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
             {firstH1.text}
           </div>
         </div>

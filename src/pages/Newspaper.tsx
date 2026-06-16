@@ -463,7 +463,7 @@ function CurrentNewsCard({
               : t('newspaper.format.text', { defaultValue: 'Text' })}
           </span>
           <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-amber-200 bg-amber-50 text-amber-900">
-            ✨ Für alle frei
+            {t('newspaper.sections.currentNewsFreeLabel', { defaultValue: '✨ Für alle frei' })}
           </span>
           <span className="inline-flex items-center rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-extrabold border border-slate-200 bg-white text-slate-700">
             🗞️ Chioma
@@ -659,7 +659,7 @@ function NewspaperHero({
   freshText: string;
   readText: string;
 }) {
-  const { t } = useTranslation('bonus');
+  const { t, i18n } = useTranslation('bonus');
 
   return (
     <section className="overflow-hidden rounded-3xl border-2 border-[var(--color-teal-900)] bg-white shadow-md">
@@ -669,7 +669,7 @@ function NewspaperHero({
           {t('newspaper.mastheadMeta', { defaultValue: 'Amy Surfwing · Newsroom' })}
         </span>
         <span className="text-[10px] text-white/50">
-          {new Date().toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })}
+          {new Date().toLocaleDateString(i18n.language, { day: '2-digit', month: 'long', year: 'numeric' })}
         </span>
       </div>
 
@@ -739,7 +739,7 @@ export default function Newspaper() {
 const unlockedMap = useMemo(() => {
   const m = new Map<string, boolean>();
   for (const it of allItems) {
-    m.set(it.bonusId, isCurrentNewsItem(it) ? true : isBonusUnlocked(it, progress));
+    m.set(it.bonusId, (isCurrentNewsItem(it) || it.freeForAll) ? true : isBonusUnlocked(it, progress));
   }
   return m;
 }, [allItems, progress]);
@@ -863,22 +863,19 @@ const unlockedMap = useMemo(() => {
 
         {/* CURRENT NEWS */}
         <Panel
-          kicker="🗞️ Aktuelle Nachrichten"
-          title="Chiomas aktuelle Themen"
+          kicker={t('newspaper.sections.currentNewsKicker', { defaultValue: '🗞️ Aktuelle Nachrichten' })}
+          title={t('newspaper.sections.currentNewsTitle', { defaultValue: 'Chiomas aktuelle Themen' })}
           right={
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold border border-amber-200 bg-amber-50 text-amber-900">
-                ✨ Für alle frei
+                {t('newspaper.sections.currentNewsFreeLabel', { defaultValue: '✨ Für alle frei' })}
               </span>
               <span className="text-xs font-semibold text-slate-400 hidden sm:inline">
-                Wische →
+                {t('newspaper.sections.currentNewsSwipe', { defaultValue: 'Wische →' })}
               </span>
             </div>
           }
         >
-          <div className="text-sm text-slate-700">
-            Aktuelle Beiträge von Chioma zu Themen, über die gerade viele sprechen.
-          </div>
 
           {currentNewsItems.length > 0 ? (
             <SwipeRow className="-mx-4 px-4 lg:mx-0 lg:px-0 mt-4">
@@ -888,7 +885,7 @@ const unlockedMap = useMemo(() => {
             </SwipeRow>
           ) : (
             <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-              Hier erscheint bald Chiomas erster aktueller Beitrag.
+              {t('newspaper.sections.currentNewsEmpty', { defaultValue: 'Hier erscheint bald Chiomas erster aktueller Beitrag.' })}
             </div>
           )}
         </Panel>
@@ -990,7 +987,7 @@ const unlockedMap = useMemo(() => {
         >
           {feed.length === 0 ? (
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-700">
-              Keine passenden Beiträge gefunden.
+              {t('newspaper.noResults', { defaultValue: 'Keine passenden Beiträge gefunden.' })}
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

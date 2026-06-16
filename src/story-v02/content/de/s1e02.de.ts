@@ -609,7 +609,13 @@ audio(ch.carlos, 'media/newspaper/articles/chatrules-chioma-dominik/audio.mp3', 
 
   OR('s1e02c07_reflection_rules_why',
     'Warum?',
-    { topics: ['reflect-understand', 'fairness'], category: 'PERSPECTIVE' },
+    {
+      topics: ['reflect-understand', 'fairness'],
+      category: 'PERSPECTIVE',
+      bypassAi: true,
+      fixedAmyReply: 'Gute Regeln schützen alle — und sie helfen, dass sich niemand ausgeschlossen fühlt.',
+      fixedAmyReplyVague: 'Magst du noch einen Satz dazu schreiben?',
+    },
   ),
 
   AR('s1e02c07_amy_reaction_rules_why', 's1e02c07_reflection_rules_why'),

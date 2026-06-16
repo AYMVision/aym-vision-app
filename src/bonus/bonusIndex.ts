@@ -52,6 +52,8 @@ export interface BonusItem {
 
   released: boolean;
   unlockedBy?: BonusUnlockRef;
+  /** Artikel ist ohne Story-Fortschritt für alle zugänglich */
+  freeForAll?: boolean;
 
   // Sortierung innerhalb der Kategorie
   order: number;
@@ -302,11 +304,12 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
   },
 
   {
-  bonusId: 'chioma-news-school-ai',
+  bonusId: 'tip-aylin-ki-schule',
   category: 'newspaper',
   released: true,
   order: 5,
   mediaType: 'text',
+  freeForAll: true,
   coverImage: 'media/newspaper/articles/chioma-news-school-ai/cover-1024.webp',
   bodySrc: 'media/newspaper/articles/chioma-news-school-ai/article',
   bodyKind: 'md',
@@ -320,8 +323,9 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     category: 'newspaper',
     released: true,
     order: 9,
-    mediaType: 'text',
+    mediaType: 'audio',
     coverImage: 'media/newspaper/articles/chioma-news-schnell-gemacht/cover-1024.webp',
+    audioSrc: 'media/newspaper/articles/chioma-news-schnell-gemacht/audio.mp3',
     bodySrc: 'media/newspaper/articles/chioma-news-schnell-gemacht/article',
     bodyKind: 'md',
     unlockedBy: { type: 'chapter', id: 's1e01c01' },

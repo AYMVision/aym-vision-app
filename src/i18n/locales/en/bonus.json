@@ -41,7 +41,13 @@
 
       "feedKicker": "📰 Feed",
       "feedTitle": "All posts",
-      "feedCount": "{{count}} posts"
+      "feedCount": "{{count}} posts",
+
+      "currentNewsKicker": "🗞️ Current News",
+      "currentNewsTitle": "Chioma's current topics",
+      "currentNewsFreeLabel": "✨ Free for all",
+      "currentNewsSwipe": "Swipe →",
+      "currentNewsEmpty": "Chioma's first current post is coming soon."
     },
 
     "topics": {
@@ -72,6 +78,7 @@
       "locked": "Locked"
     },
 
+    "noResults": "No matching posts found.",
     "open": "Open →",
     "readMore": "Read more →",
     "lockHint": "Continue the story to unlock this.",

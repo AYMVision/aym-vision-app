@@ -219,7 +219,7 @@
   "title": "Story und Reflexion",
   "body": "Kinder lernen besonders wirksam, wenn sie Situationen nicht nur erklärt bekommen, sondern erleben und darüber nachdenken. Genau hier setzt Amy Surfwing an: Digitale Alltagssituationen werden über Figuren in einer fortlaufenden Story erlebbar gemacht.",
   "body2": "Ein „Amic” verbindet dabei eine konkrete Situation aus der Chat-Story mit einer kurzen Reflexion. Kinder übertragen das Geschehen auf ihr eigenes Leben, formulieren eigene Gedanken und setzen sich aktiv mit möglichen Handlungen auseinander. So entsteht Lernen nicht durch Vorgaben, sondern durch eigenes Mitdenken.",
-  "aiNote": "Amy begleitet die Reflexionsmomente mit einem lokalen, offline-fähigen KI-Modell. Es klassifiziert Antworten und gibt passende Rückmeldungen — ohne Cloud, ohne Datenweitergabe."
+  "aiNote": "Amy begleitet die Reflexionsmomente lokal und offline. Ein eingebettetes KI-Modell analysiert dabei den Inhalt der Antworten. Ein Sicherheitssystem erkennt kritische Inhalte. Alle Rückmeldungen bleiben auf dem Gerät — ohne Cloud, ohne Datenweitergabe."
 },
 "learningSpiral": {
   "kicker": "Vertiefung",

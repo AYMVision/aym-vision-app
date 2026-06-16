@@ -36,7 +36,8 @@
     "gotIt": "Got it",
     "continue": "Continue",
     "send": "Send",
-    "amyThinking": "Amy is thinking…"
+    "amyThinking": "Amy is thinking…",
+    "replyVague": "Just write whatever is going through your head right now. 🦉"
   },
   "chapterDivider": "Amic {{number}}",
   "hero": {

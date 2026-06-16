@@ -159,16 +159,16 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
   {
     id: 'ki',
     title: 'KI (Künstliche Intelligenz)',
-    teaser: 'Systeme, die Muster erkennen und daraus Entscheidungen ableiten.',
-    body: 'KI steht für Künstliche Intelligenz — Programme, die aus Beispielen "lernen", statt nach festen Regeln zu handeln. Sie erkennen Muster in riesigen Datenmengen und können zum Beispiel Bilder beschreiben, Texte übersetzen oder vorhersagen, was du als nächstes kaufen oder ansehen willst. KI trifft keine Entscheidungen wie ein Mensch. Sie rechnet Wahrscheinlichkeiten aus, was am wahrscheinlichsten passt.',
-    didYouKnow: 'KI-Systeme machen Fehler — oft auf vorhersehbare Weise. Wenn die Trainingsdaten einseitig sind, sind es die Ergebnisse auch.',
+    teaser: 'Ein Programm, das aus Millionen Beispielen lernt und dann selbst Bilder malt, Texte schreibt oder Fragen beantwortet.',
+    body: 'KI steht für Künstliche Intelligenz. Wenn du Siri etwas fragst, wenn TikTok dir immer ähnliche Videos zeigt, wenn Google Fotos automatisch Gesichter erkennt — das ist KI. Aber wie funktioniert das? Stell dir vor, du schaust dir tausend Fotos von Hunden an und tausend von Katzen. Irgendwann erkennst du den Unterschied sofort, ohne nachdenken zu müssen. Genau so lernt KI: aus riesigen Mengen an Beispielen. Wichtig: KI denkt nicht wirklich nach. Sie berechnet, was am wahrscheinlichsten passt. Wie eine sehr schnelle Ratesmaschine mit unglaublich vielen Daten.',
+    didYouKnow: 'ChatGPT hatte in den ersten 5 Tagen mehr Nutzer als Instagram in einem ganzen Jahr. Kein Programm vorher wurde so schnell von so vielen Menschen ausprobiert.',
     firstAppearance: 's1e03c03',
   },
   {
     id: 'ki-bilder',
     title: 'KI-Bilder',
-    teaser: 'Bilder, die kein Mensch gemacht hat — sondern ein Computerprogramm.',
-    body: 'KI-Bilder sind Bilder, die nicht von einer Kamera gemacht werden und auch nicht von einem Menschen gezeichnet sind, sondern von einem Computerprogramm erzeugt werden. Sie können sehr echt aussehen. Das macht es schwerer zu erkennen, was wirklich passiert ist und was erfunden wurde. Manche KI-Bilder zeigen Personen, Orte oder Ereignisse, die es nie gegeben hat — aber täuschend echt wirken.',
+    teaser: 'Bilder, die kein Mensch gemacht hat, sondern ein Computerprogramm.',
+    body: 'KI-Bilder sind Bilder, die nicht von einer Kamera gemacht werden und auch nicht von einem Menschen gezeichnet sind, sondern von einem Computerprogramm erzeugt werden. Sie können sehr echt aussehen. Das macht es schwerer zu erkennen, was wirklich passiert ist und was erfunden wurde. Manche KI-Bilder zeigen Personen, Orte oder Ereignisse, die es nie gegeben hat, aber täuschend echt wirken.',
     didYouKnow: 'Manche KI-Bilder sind so realistisch, dass selbst Experten sie kaum von echten Fotos unterscheiden können. Deshalb ist die Rückwärtssuche so wichtig.',
   },
   {
@@ -181,7 +181,7 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
   {
     id: 'like',
     title: 'Like',
-    teaser: 'Ein Klick, der Zustimmung zeigt — aber nicht immer echtes Interesse bedeutet.',
+    teaser: 'Ein Klick, der Zustimmung zeigt, aber nicht immer echtes Interesse bedeutet.',
     body: 'Ein Like ist ein Klick, der Zustimmung zeigt. Bedeutet nicht automatisch, dass jemand sich wirklich mit dem Inhalt beschäftigt hat. Viele Menschen liken Beiträge nach wenigen Sekunden — ohne sie wirklich gelesen oder angeschaut zu haben. Trotzdem wirken Likes auf viele Menschen wie eine Art Bewertung: viele Likes = gut, wenige Likes = schlecht. Das kann ganz schön unter Druck setzen.',
     didYouKnow: 'Facebook wollte ursprünglich auch einen "Dislike"-Button einführen. Daraus wurde stattdessen das System mit verschiedenen Reaktionen — weil ein reiner Dislike zu viel Negativität erzeugt hätte.',
   },

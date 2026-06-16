@@ -218,7 +218,7 @@
     "title": "Story and reflection",
     "body": "Children learn most effectively when they don't just have situations explained to them, but experience them and reflect on them. This is exactly where Amy Surfwing comes in: real digital situations are made tangible through characters in an ongoing story.",
     "body2": "An \"Amic\" connects a concrete situation from the chat story with a short reflection. Children transfer what happens to their own lives, put their own thoughts into words, and actively engage with possible courses of action. Learning happens not through instructions, but through active thinking.",
-    "aiNote": "Amy supports reflection moments with a local, offline-capable AI model. It classifies responses and provides appropriate feedback — without cloud connectivity, without data sharing."
+    "aiNote": "Amy supports reflection moments locally and offline. An embedded AI model analyses the content of responses. A safety system detects critical content. All feedback stays on the device — without cloud connectivity, without data sharing."
   },
   "learningSpiral": {
     "kicker": "In depth",

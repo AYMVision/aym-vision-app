@@ -84,7 +84,7 @@ export default function NewspaperArticle() {
   const isCurrentNewsItem = (bonusId: string) =>
     bonusId.includes('current-news') || bonusId.includes('chioma-news') || bonusId.includes('weekly-news');
   const unlocked = item
-    ? isCurrentNewsItem(item.bonusId) || isBonusUnlocked(item, progress)
+    ? isCurrentNewsItem(item.bonusId) || item.freeForAll || isBonusUnlocked(item, progress)
     : false;
 
   useEffect(() => {
@@ -219,9 +219,9 @@ export default function NewspaperArticle() {
     {bodyText === null ? (
       <div className="text-slate-600">{t('newspaper.loading')}</div>
     ) : bodyText ? (
-      <ArticleReader text={bodyText} bonusId={item.bonusId} requireAudioConfirm={!!item.audioSrc} />
+      <ArticleReader text={bodyText} bonusId={item.bonusId} requireAudioConfirm={!!item.audioSrc} author={meta?.author} givesCoins={!!item.unlockedBy} />
     ) : (
-      <ArticleReader text={meta?.description ?? ''} bonusId={item.bonusId} requireAudioConfirm={!!item.audioSrc} />
+      <ArticleReader text={meta?.description ?? ''} bonusId={item.bonusId} requireAudioConfirm={!!item.audioSrc} author={meta?.author} givesCoins={!!item.unlockedBy} />
     )}
   </div>
 )}

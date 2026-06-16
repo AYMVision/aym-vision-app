@@ -6,6 +6,7 @@ import type { ReflectionStep } from '../types/storyTypes';
 import { STORY_CHARACTERS as characters } from '../../content/characters';
 import ChatMessage from '../../components/ChatMessage';
 import { runAmy } from '../../ai/orchestrator/runAmy';
+import type { AmyQuestionType } from '../../ai/core/amyQuestionType';
 import { isCriticalSafety } from '../../ai/core/contentFlags';
 import { isTrivialInput } from '../utils/isTrivialInput';
 import { trackReflectionStep } from '../../analytics/analyticsEvents';
@@ -47,7 +48,7 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
     if (isTrivialInput(trimmed) && attemptCount === 0) {
       const vagueReply =
         step.fixedAmyReplyVague ??
-        'Magst du noch etwas mehr schreiben? Auch kurze Gedanken sind willkommen! 😊';
+        t('common.replyVague', { defaultValue: 'Schreib einfach, was dir gerade durch den Kopf geht. 🦉' });
       setAmyReply(vagueReply);
       setAttemptCount(1);
       setText('');
@@ -75,10 +76,11 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       const result = await runAmy({
         userAnswer: trimmed,
         questionText: step.prompt ?? t(step.promptKey ?? '', { defaultValue: '' }),
-        tipText: '',
+        tipText: step.prompt ?? t(step.promptKey ?? '', { defaultValue: '' }),
         language: i18n.language,
         attemptCount,
         reflectionMode: true,
+        questionTypeHint: step.reflectionCategory as AmyQuestionType | undefined,
       });
 
       const critical = isCriticalSafety(result.contentFlags);

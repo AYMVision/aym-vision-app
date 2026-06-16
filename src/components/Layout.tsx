@@ -162,7 +162,7 @@ const isActive = (to: string) => {
   <header className="w-full sticky top-0 z-50 bg-white shadow-md">
         <div className="flex items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20">
           {/* ===== Mobile Header ===== */}
-          <div className="flex md:hidden w-full items-center justify-between">
+          <div className="flex lg:hidden w-full items-center justify-between">
             {/* Left: Back (optional) */}
             <div className="flex-1">
               {showBack && (
@@ -277,7 +277,7 @@ const isActive = (to: string) => {
           </div>
 
           {/* ===== Desktop Brand (left) ===== */}
-          <div className="hidden md:flex items-center mr-4 gap-3">
+          <div className="hidden lg:flex items-center mr-4 gap-3">
             {showBack && (
               <button
                 type="button"
@@ -311,7 +311,7 @@ const isActive = (to: string) => {
           </div>
 
 {/* ===== Desktop Nav ===== */}
-<nav className="hidden md:flex items-center space-x-1">
+<nav className="hidden lg:flex items-center space-x-1">
   {desktopLinks.map((link) => (
     <Link
       key={link.to}
@@ -329,7 +329,7 @@ const isActive = (to: string) => {
 </nav>
 
           {/* ===== Desktop Right ===== */}
-          <div className="hidden md:flex flex-1 justify-end items-center gap-4">
+          <div className="hidden lg:flex flex-1 justify-end items-center gap-4">
             {/* Wallet target for Coin-Fly */}
             <Link
               to="/avatar"
@@ -492,7 +492,7 @@ const isActive = (to: string) => {
         className={cn(
           'flex-1 flex flex-col items-center justify-start z-0',
           fullHeight && 'min-h-0',
-          showBottomNav ? 'pb-24 md:pb-0' : ''
+          showBottomNav ? 'pb-24 lg:pb-0' : ''
         )}
       >
         {children}

@@ -26,8 +26,7 @@ export const AMY_PHRASES_DE = {
 
     generic: [
       'Ergänzend möchte ich dir noch etwas mitgeben.',
-      'Da kann man noch einen Aspekt dazunehmen.',
-      'Ich knüpfe daran an und ordne es ein.',
+      'Ich knüpfe daran an.',
       'Ich bleib bei deinem Gedanken und ergänze eine Sache.',
         'Ich bring dazu noch einen anderen Gedanken rein.',
      'Ich ergänze das um einen weiteren Gedanken.',
@@ -36,10 +35,8 @@ export const AMY_PHRASES_DE = {
     'Zum Schluss noch ein kleiner Impuls.',
     'Ein Gedanke, der das abrundet:',
     'Ich geb dir dazu noch einen weiteren Gedanken mit.',
-      'Ich setz da noch etwas daneben.',
       'Ich ergänze das mit einem Impuls.',
       'Dazu noch ein Gedanke.',
-      'Ich ergänze noch:'
 
     ],
 
@@ -288,19 +285,13 @@ bOutroByType: {
 
   ],
   ACTION: [
-     'Das passt für den Moment. 🦉',
-     'Das ist okay so. Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
      'Das ist ein valider Punkt. 🦉',
      'Das ist eine passende Kurzfassung. 🦉',
-     'Eine passende Kurzfassung! 🦉',
-     'Damit triffst du schon einen Aspekt. 🦉',
      'Das klingt stimmig. 🦉',
 
     
   ],
   CHALLENGE: [
-     'Das passt für den Moment. 🦉',
-     'Das ist okay so. Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
      'Das ist ein valider Punkt. 🦉',
      'Das ist eine passende Kurzfassung. 🦉',
      'Das ist verständlich. 🦉',
@@ -308,32 +299,21 @@ bOutroByType: {
 
   ],
   PERSPECTIVE: [
-     'Das passt für den Moment. 🦉',
-     'Das ist okay so. Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
      'Das ist ein valider Punkt. 🦉',
      'Das ist eine passende Kurzfassung. 🦉',
      'Das ist verständlich. 🦉',
-     'Damit triffst du schon einen Aspekt. 🦉',
-     'Da berührst du einen Teil der Situation. 🦉',
-     'Das passt zu einem Teil der Situation. 🦉',
      'Das klingt stimmig. 🦉',
 
   ],
   KNOWLEDGE: [
-     'Das passt für den Moment. 🦉',
-     'Das ist okay so. Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
      'Das ist ein valider Punkt. 🦉',
      'Das ist eine passende Kurzfassung. 🦉',
      'Das ist verständlich. 🦉',
-     'Damit triffst du schon einen Aspekt. 🦉',
-     'Damit schaust du auf einen Aspekt der Frage. 🦉',
      'Das klingt stimmig. 🦉',
 
 
   ],
       GENERAL: [
-          'Das passt für den Moment. Wenn du magst, kannst du mir morgen auch noch mehr erzählen. 🦉',
-    'Das ist okay so.',
     'Das ist ein valider Punkt. 🦉',
     'Das ist verständlich. 🦉',
     ],

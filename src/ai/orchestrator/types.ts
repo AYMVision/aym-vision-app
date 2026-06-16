@@ -32,6 +32,8 @@ export type AmyRunInput = {
    * negatives caused by domain-specific keyword lists designed for item scoring.
    */
   reflectionMode?: boolean;
+  /** Kategorie direkt vom OR-Step (überspringt auto-detectQuestionType) */
+  questionTypeHint?: AmyQuestionType;
 };
 
 export type AmyDebugInfo = {

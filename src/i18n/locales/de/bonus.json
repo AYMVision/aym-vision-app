@@ -41,7 +41,13 @@
 
       "feedKicker": "📰 Feed",
       "feedTitle": "Alle Beiträge",
-      "feedCount": "{{count}} Beiträge"
+      "feedCount": "{{count}} Beiträge",
+
+      "currentNewsKicker": "🗞️ Aktuelle Nachrichten",
+      "currentNewsTitle": "Chiomas aktuelle Themen",
+      "currentNewsFreeLabel": "✨ Für alle frei",
+      "currentNewsSwipe": "Wische →",
+      "currentNewsEmpty": "Hier erscheint bald Chiomas erster aktueller Beitrag."
     },
 
     "topics": {
@@ -86,6 +92,7 @@
       }
     },
 
+    "noResults": "Keine passenden Beiträge gefunden.",
     "open": "Öffnen →",
     "readMore": "Weiterlesen →",
     "lockHint": "Lies weiter in der Story, um das freizuschalten.",
@@ -427,18 +434,18 @@
     "yasmin": {
       "name": "Yasmin",
       "friendbook": {
-        "mostly": "Ich liebe Aufmerksamkeit – und merke sofort, wenn sie fehlt.",
+        "mostly": "Ich liebe Aufmerksamkeit und merke sofort, wenn sie fehlt.",
         "othersLike": ["Ich bring Stimmung rein.", "Ich habe immer neue Ideen."],
         "annoys": [
           "Ich kann manchmal ganz schön eingeschnappt sein.",
           "Ich muss mich ständig mit anderen vergleichen."
         ],
         "hobbies": ["Kurzvideos drehen", "Outfits kombinieren", "Clips schneiden", "alles, was glänzt"],
-          "friends": ["Finn", "Chioma", "Lisa"],
+          "friends": ["Chioma", "Aylin", "Lisa"],
         "colors": "Pink. Oder Silber. Oder beides – je nach Stimmung.",
         "happy": "Viele Reaktionen und Komplimente.",
-        "netRule": "Wenn ich etwas poste, soll es niemanden verletzen – sonst ist es kein guter Clip.",
-        "mistake": "Ich sage erst „War nicht so gemeint“ – aber wenn ich ehrlich bin, muss ich danach trotzdem sorry sagen.",
+        "netRule": "Wenn ich etwas poste, soll es niemanden verletzen, sonst ist es kein guter Clip.",
+        "mistake": "Ich sage erst „War nicht so gemeint“, aber wenn ich ehrlich bin, muss ich danach trotzdem sorry sagen.",
         "secret": "Ich bearbeite fast alle Fotos, bevor ich sie poste.",
         "funFact": "Mein Handy-Speicher ist voller Entwürfe, die ich dann doch nicht poste."
       }

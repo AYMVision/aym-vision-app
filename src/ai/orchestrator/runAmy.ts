@@ -64,8 +64,9 @@ function clampAttempt(n: unknown) {
 export async function runAmy(input: AmyRunInput): Promise<AmyRunOutput> {
   // (0) Input normalisieren
   const userAnswer = safeTrim(input.userAnswer);
-  const tipText = safeTrim(input.tipText);
   const questionText = safeTrim(input.questionText);
+  // tipText: Fallback auf questionText damit extractKeyIdea etwas zu verarbeiten hat
+  const tipText = safeTrim(input.tipText) || questionText;
   const attemptCount = clampAttempt(input.attemptCount);
 
   // (0b) Sprache setzen (damit i18n / Phrases stimmen)
@@ -95,8 +96,8 @@ export async function runAmy(input: AmyRunInput): Promise<AmyRunOutput> {
 
   const mlAllowed = wantsLocalMl && !mlDisabled && !critical && !norm;
 
-  // (3) QuestionType: basiert auf QuestionText + TipText
-  const questionType = detectQuestionType({ questionText, tipText });
+  // (3) QuestionType: hint vom Step bevorzugt, sonst auto-detect
+  const questionType = input.questionTypeHint ?? detectQuestionType({ questionText, tipText });
 
   // (4) Relation Answer ↔ Question (Tone Anchor für Bridge: aligned/generic/off-topic)
   const tipRelation: TipRelationV2 = getAnswerQuestionRelation(userAnswer, questionText);
@@ -105,10 +106,22 @@ export async function runAmy(input: AmyRunInput): Promise<AmyRunOutput> {
   let label: AmyLabel = 'C';
   let confidence = 0.6;
 
+  if (input.reflectionMode) {
+    // Engagement-Gate für OR-Schritte: prüft Engagement, nicht Korrektheit.
+    // Safety läuft immer davor (Schritt 1). bypassAi-Steps erreichen diesen Pfad nie.
+    const wc = userAnswer.trim().split(/\s+/).filter(Boolean).length;
+    if (wc < 3) {
+      label = 'C'; // zu kurz → einmal Nudge
+    } else {
+      const hasReason = /weil|deshalb|wegen|dadurch|because|therefore/i.test(userAnswer);
+      label = hasReason ? 'A' : 'B'; // ≥3 Wörter → pass
+    }
+    confidence = label === 'A' ? 0.85 : label === 'B' ? 0.75 : 0.6;
+  } else {
   try {
     label = await amyAI.classifyAnswer(userAnswer, {
       questionType,
-      reflectionMode: input.reflectionMode ?? false,
+      reflectionMode: false,
     });
     confidence =
       label === 'A' ? 0.85 :
@@ -119,6 +132,7 @@ export async function runAmy(input: AmyRunInput): Promise<AmyRunOutput> {
     label = 'UNSICHER';
     confidence = 0.55;
   }
+  } // end !reflectionMode
 
   // (5b) UNSICHER Reason (für Clarify-Auswahl)
   const unsicherReason: UnsicherReason | null =

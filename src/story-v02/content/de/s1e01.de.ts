@@ -81,7 +81,7 @@ const c01 = C('s1e01c01', 0, 'Amic 1', 'Sommerferien', [
     m(ch.lisa, 'Mit mir? ☺️', '11:24', {
       replyTo: { speakerName: 'Igor', text: 'Hier regnet es. In Frankreich wär ich jetzt auch gern.' },
     }),
-    m(ch.lisa, 'Yasmin? Du bist heute so still 🤔 Ist was?', '11:25'),
+    m(ch.lisa, 'Yasmin? Du bist heute so still. 🤔 Ist was?', '11:25'),
     typing('Yasmin tippt ...'),
     typing('Yasmin löscht'),
     typing('Yasmin tippt ...'),
@@ -212,8 +212,6 @@ const c02 = C('s1e01c02', 1, 'Amic 2', 'Coole Stunts', [
 
   S('s1e01c02_story_amy_wrapup', [
     m(ch.amy, 'Schauen wir uns an, wie Yasmin reagiert.'),
-    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
-    m(ch.amy, '👉 Schaffst du es, einmal ein Video NICHT zu schauen, obwohl du draufklicken willst?'),
   ]),
 
   S('s1e01c02_story_switch_back_igor', [
@@ -326,7 +324,7 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
   ], ['reflect-understand']),
 
   IT('s1e01c03_item_judgement_posts',
-    'Yasmin hatte eigentlich schon entschieden, zu Hause zu bleiben. Jetzt bringen sie die Nachrichten von Igor, Lukas und Lisa durcheinander. Was könnte sie denken?',
+    'Yasmin hatte eigentlich schon entschieden, zu Hause zu bleiben. Jetzt bringen sie die Nachrichten von Igor, Lukas und Lisa durcheinander. Was würdest du denken?',
     'judgement', 'judgement_explain',
     [
       optSegs('a', 'Mir ist egal, was die anderen sagen.', 0,
@@ -357,7 +355,6 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
 
   S('s1e01c03_story_lukas_friendbook', [
     privateChat('Du', 'Yasmin'),
-    m(ch.yasmin, 'Ja, wirklich, ich weiß nicht…', '14:20'),
     m(ch.yasmin, 'Übrigens... Ich hab Lukas auch gefragt, ob er dir ins Freundebuch schreibt. Er hat schon angefangen...', '14:21'),
   ], ['talk-act']),
 ]);
@@ -407,6 +404,7 @@ const c04 = C('s1e01c04', 3, 'Amic 4', 'Am Wasserfall', [
 
   S('s1e01c04_story_private_yasmin_aylin_before_item', [
     privateChat('Yasmin', 'Aylin'),
+    m(ch.yasmin, 'Hi, Aylin!', '15:31'),
     m(ch.yasmin, 'Sieht krass aus hier. Der Wasserfall ist beeindruckend. Umwerfend.', '15:31'),
     img(ch.yasmin, '/media/story/episodes/s1e01/s1e01c04-512.webp', '15:31'),
     m(ch.yasmin, 'Aber zum Baden? Ungemütlich und kalt am Wasser. 😰 Sieht komplett anders aus als auf den Bildern im Internet mit den badenden Leuten.', '15:32'),
@@ -449,7 +447,7 @@ const c04 = C('s1e01c04', 3, 'Amic 4', 'Am Wasserfall', [
   S('s1e01c04_story_back_to_yasmin_aylin', [
     privateChat('Yasmin', 'Aylin'),
     m(ch.yasmin, 'Jetzt bin ich schon mal hier… Aber… sieht gar nicht nach Badesee aus.', '15:36'),
-    m(ch.yasmin, 'Eher nach Wildwasser-Abenteuer. Was mach ich bloß?', '15:36'),
+    m(ch.yasmin, 'Eher nach Wildwasser-Abenteuer. Aylin, was mach ich bloß?', '15:36'),
     m(ch.yasmin, 'Warte… Ich habe ´ne Idee. Vielleicht kannst du mir kurz helfen. Du kennst dich doch gut mit [[ki]] aus.', '15:37'),
     m(ch.yasmin, 'Aylin? Bist du online?', '15:37'),
   ], ['reflect-understand', 'talk-act']),
@@ -806,7 +804,7 @@ const c08 = C('s1e01c08', 7, 'Amic 8', 'Nächster Tag', [
 
   S('s1e01c08_story_diary_bonus', [
     amyChat(),
-    m(ch.amy, 'Yasmin denkt noch lange darüber nach. Möchtest du wissen was sie denkt?.'),
+    m(ch.amy, 'Yasmin denkt noch lange darüber nach. Möchtest du wissen was sie denkt?'),
     bonusLink('diary-yasmin-entry2', 'Tagebucheintrag Yasmin – 2. Eintrag',
       '/diaries/diary_yasmin?entry=s1e01c08_0002', 'Eintrag öffnen →'),
   ]),

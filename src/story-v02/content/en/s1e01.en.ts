@@ -531,17 +531,15 @@ const c05 = C('s1e01c05', 4, 'Amic 5', 'The Picture Causes Alarm', [
     m(ch.amy, 'The situation is escalating. Yasmin isn\'t answering anymore, and nobody knows exactly what happened.'),
   ], ['reflect-understand']),
 
-  OR('s1e01c05_reflection_emergency_help',
-    'What should someone in the group do now?',
+  OR('s1e01c05_reflection_trust',
+    'Who would you believe and why?',
     {
-      topics: ['reflect-understand', 'talk-act'],
-      category: 'ACTION',
-      bypassAi: true,
-      fixedAmyReply: 'In a situation like this, every minute counts. Getting help is the most important thing you can do.',
+      topics: ['reflect-understand'],
+      category: 'PERSPECTIVE',
     },
   ),
 
-  AR('s1e01c05_amy_reaction_emergency_help', 's1e01c05_reflection_emergency_help'),
+  AR('s1e01c05_amy_reaction_trust', 's1e01c05_reflection_trust'),
 
   S('s1e01c05_story_amy_tip_emergency_help', [
     amyChat(),
@@ -841,7 +839,7 @@ const c08 = C('s1e01c08', 7, 'Amic 8', 'The Picture Wasn’t Real', [
 
   OR('s1e01c08_reflection_ai_image_post',
     'What would you do before sharing an image made with AI?',
-    { topics: ['reflect-understand', 'talk-act'] },
+    { topics: ['reflect-understand', 'talk-act'], category: 'ACTION' },
   ),
 
   AR('s1e01c08_amy_reaction_ai_image_post', 's1e01c08_reflection_ai_image_post'),

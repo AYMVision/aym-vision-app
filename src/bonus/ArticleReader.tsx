@@ -172,10 +172,14 @@ export function ArticleReader({
   text,
   bonusId,
   requireAudioConfirm = false,
+  author,
+  givesCoins = false,
 }: {
   text: string;
   bonusId: string;
   requireAudioConfirm?: boolean;
+  author?: string;
+  givesCoins?: boolean;
 }) {
   const { t } = useTranslation('bonus');
   const { updateProfile } = useProfile();
@@ -226,10 +230,12 @@ export function ArticleReader({
 
     if (!alreadyRead) {
       markArticleRead(bonusId);
-      updateProfile((p) => earnCoins(p, 1, 'ARTICLE_READ'));
-      setRewarded(true);
-      setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3500);
+      if (givesCoins) {
+        updateProfile((p) => earnCoins(p, 1, 'ARTICLE_READ'));
+        setRewarded(true);
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 3500);
+      }
     }
   }
 
@@ -260,7 +266,7 @@ export function ArticleReader({
       )}
 
       {/* Inhalt der aktuellen Sektion */}
-      <ArticleBody blocks={sections[currentSection]} />
+      <ArticleBody blocks={sections[currentSection]} author={currentSection === 0 ? author : undefined} />
 
       {/* Navigation / Abschluss */}
       <div className="mt-6">

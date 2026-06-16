@@ -82,23 +82,19 @@ Zum Beispiel:
 
 ## Wann es riskant wird
 
-Problematisch wird es, wenn zu viele Infos zusammenkommen.
+Problematisch wird es, wenn zu viele Infos zusammenkommen. Dann kann man über ein Bild manchmal mehr herausfinden, als dir lieb ist.
 
-Dann kann man über ein Bild manchmal mehr herausfinden, als dir lieb ist.
-
-[[details title="⚠️ Was kann dadurch sichtbar werden?"]]
+[[details title="Was kann dadurch sichtbar werden?"]]
 - dein Gesicht
 - dein Ort
 - die Zeit
 - deine Gewohnheiten
 
-Erst die Kombination macht es oft schwierig.
 [[/details]]
 
 [[callout kind="warn"]]
-Nicht nur ein einzelnes Detail ist wichtig.
 
-Riskant wird es oft dann, wenn **Gesicht + Ort + Zeit + Gewohnheit** zusammenpassen.
+Riskant wird es oft dann, wenn Gesicht + Ort + Zeit + Gewohnheit zusammenpassen.
 [[/callout]]
 
 ## Gesichtserkennung – warum das wichtig ist

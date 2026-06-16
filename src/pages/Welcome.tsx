@@ -67,7 +67,7 @@ function EmmaTeaserVideo() {
   }
 
   return (
-    <div className="mt-6 md:hidden">
+    <div className="mt-6 lg:hidden">
       {/* Nur Mobile */}
       <div className="relative w-full rounded-2xl overflow-hidden shadow-xl bg-black"
         style={{ aspectRatio: '9/16' }}>

@@ -167,6 +167,18 @@ const c03 = C('s1e02c03', 2, 'Amic 3', 'Chioma unter Druck', [
 
   AF('s1e02c03_amy_feedback_selfcontrol', 's1e02c03_item_selfcontrol'),
 
+  OR('s1e02c03_reflection_belonging',
+    'Why does it feel bad for Chioma not to be in the class chat anymore – even though there is a lot of arguing there?',
+    {
+      topics: ['reflect-understand'],
+      category: 'PERSPECTIVE',
+      bypassAi: true,
+      fixedAmyReply: 'Belonging matters to a lot of people. But you don\'t have to pretend to be someone else just to fit in. There are other places where you can belong too.',
+    },
+  ),
+
+  AR('s1e02c03_amy_reaction_belonging', 's1e02c03_reflection_belonging'),
+
 ]);
 
 // ─────────────────────────────────────────────────────────────
@@ -183,8 +195,13 @@ const c04 = C('s1e02c04', 3, 'Amic 4', 'Die Idee', [
   ]),
 
   OR('s1e02c04_reflection',
-    'Was würdest du gern mal für einen Beitrag machen?',
-    { topics: ['creative'] },
+    'Chioma immediately has an idea and wants to contribute. What about you? What kind of contribution would you like to make?',
+    {
+      topics: ['creative', 'talk-act'],
+      category: 'ACTION',
+      bypassAi: true,
+      fixedAmyReply: 'Creative contributions make a school newspaper come alive.',
+    },
   ),
 
   AR('s1e02c04_amy_reaction', 's1e02c04_reflection'),
@@ -225,6 +242,13 @@ const c05 = C('s1e02c05', 4, 'Amic 5', 'Der Plan', [
 
   AF('s1e02c05_amy_feedback_action', 's1e02c05_item_action'),
 
+  OR('s1e02c05_reflection_both_sides',
+    'Why is it important to show both sides and not just your own opinion?',
+    { topics: ['reflect-understand', 'fairness'], category: 'PERSPECTIVE' },
+  ),
+
+  AR('s1e02c05_amy_reaction_both_sides', 's1e02c05_reflection_both_sides'),
+
 ]);
 
 // ─────────────────────────────────────────────────────────────
@@ -256,6 +280,19 @@ const c07 = C('s1e02c07', 6, 'Amic 7', 'Ergebnis', [
     m(ch.chioma, 'Hat geklappt 😊', '16:01'),
   ]),
 
+  OR('s1e02c07_reflection_rules_why',
+    'Why?',
+    {
+      topics: ['reflect-understand', 'fairness'],
+      category: 'PERSPECTIVE',
+      bypassAi: true,
+      fixedAmyReply: 'Good rules protect everyone — and help make sure no one feels left out.',
+      fixedAmyReplyVague: 'Would you like to write a sentence about that?',
+    },
+  ),
+
+  AR('s1e02c07_amy_reaction_rules_why', 's1e02c07_reflection_rules_why'),
+
 ]);
 
 // ─────────────────────────────────────────────────────────────
@@ -265,8 +302,13 @@ const c07 = C('s1e02c07', 6, 'Amic 7', 'Ergebnis', [
 const c08 = C('s1e02c08', 7, 'Amic 8', 'Reflexion', [
 
   OR('s1e02c08_reflection',
-    'Was wäre dir in einem Klassenchat besonders wichtig?',
-    { topics: ['reflect-understand'] },
+    'Now that you\'ve read the story: what would matter most to you in a class chat?',
+    {
+      topics: ['reflect-understand', 'fairness', 'talk-act'],
+      category: 'PERSPECTIVE',
+      bypassAi: true,
+      fixedAmyReply: 'A good chat doesn\'t happen by itself. What matters is how users treat each other and what they agree on together.',
+    },
   ),
 
   AR('s1e02c08_amy_reaction', 's1e02c08_reflection'),

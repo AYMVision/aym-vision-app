@@ -158,9 +158,9 @@ export const LEXIKON_ENTRIES_EN: LexikonEntry[] = [
   {
     id: 'ki',
     title: 'AI (Artificial Intelligence)',
-    teaser: 'Systems that recognise patterns and derive decisions from them.',
-    body: 'AI stands for Artificial Intelligence — programmes that "learn" from examples instead of following fixed rules. They recognise patterns in huge amounts of data and can, for example, describe images, translate texts, or predict what you\'ll want to buy or watch next. AI doesn\'t make decisions like a human. It calculates probabilities — what is most likely to fit.',
-    didYouKnow: 'AI systems make mistakes — often in predictable ways. If the training data is one-sided, the results will be too.',
+    teaser: 'A programme that learns from millions of examples — and then paints images, writes texts, or answers questions by itself.',
+    body: 'AI stands for Artificial Intelligence. When you ask Siri something, when TikTok keeps showing you similar videos, when Google Photos automatically recognises faces — that\'s AI. But how does it work? Imagine looking at a thousand photos of dogs and a thousand of cats. After a while, you recognise the difference instantly — without having to think about it. That\'s exactly how AI learns: from huge amounts of examples. Important: AI doesn\'t really think. It calculates what is most likely to fit — like a very fast guessing machine with an incredible amount of data.',
+    didYouKnow: 'ChatGPT had more users in its first 5 days than Instagram did in an entire year. No programme before had been tried by so many people so quickly.',
     firstAppearance: 's1e03c03',
   },
   {
