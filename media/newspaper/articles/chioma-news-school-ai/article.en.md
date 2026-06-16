@@ -1,7 +1,7 @@
 ---
 title: AI at school – helpful or unfair?
-description: Chioma looks at why so many people are talking about AI for homework and presentations right now.
-author: Chioma
+description: Aylin looks at why so many people are talking about AI for homework and presentations right now – and what it really means.
+author: Aylin
 date: 2026-03-29
 aiTranslated: true
 ---

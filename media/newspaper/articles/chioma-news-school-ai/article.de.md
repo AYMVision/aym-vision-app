@@ -1,7 +1,7 @@
 ---
 title: KI in der Schule – hilfreich oder unfair?
-description: Chioma schaut darauf, warum gerade so viele über KI bei Hausaufgaben und Referaten sprechen.
-author: Chioma
+description: Aylin schaut darauf, warum gerade so viele über KI bei Hausaufgaben und Referaten sprechen – und was das wirklich bedeutet.
+author: Aylin
 date: 2026-03-29
 ---
 
@@ -41,10 +41,10 @@ Schwierig wird es, wenn jemand so tut, als wäre alles komplett selbst gemacht.
 
 ## Was ich wichtig finde
 
-- Ehrlich sein
-- Selbst mitdenken
-- Quellen prüfen
-- Nicht alles blind übernehmen
+- Sei ehrlich. 
+- Denke immer selbst mit. 
+- Prüfe die Quellen. 
+- Übernehme keine Informationen der KI blind.
 
 > KI kann helfen. Denken musst du trotzdem selbst.
 

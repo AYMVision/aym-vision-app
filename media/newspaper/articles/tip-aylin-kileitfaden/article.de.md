@@ -73,7 +73,7 @@ Alles, was du Fremden nicht erzählen würdest, gehört auch nicht in die KI.
 
 ## 🧠 Du entscheidest
 
-Die KI stellt die Fragen.  
+Die KI stellt manchmal Fragen.  
 Aber du entscheidest, ob du antwortest.
 
 Du darfst:
