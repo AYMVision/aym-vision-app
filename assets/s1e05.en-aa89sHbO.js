@@ -1,0 +1,1 @@
+import{r as s}from"./index-BzwbdjsD.js";import{C as e,S as o,f as a,m as i}from"./storyBuilder-BsTe1KW7.js";import"./vendor-react-DlCurzhd.js";const r=e("s1e05c01",0,"Amic 1","Coming soon",[o("s1e05c01_story_placeholder",[a(),i(s.amy,"This episode will be available soon.")])]),d={id:"s1e05",seasonId:"s1",episodeId:"s1e05",courseId:"s1e05",chapters:[r]};export{d as default};
