@@ -1261,16 +1261,15 @@ const c10 = C('s1e03c10', 9, 'Amic 10', 'Entscheiden kannst du selbst', [
       ], ['talk-act', 'reflect-understand']),
 
 
-  S('s1e03c01_story_challenge_intro', [
-    m(ch.amy, 'Hast du Lust auf eine kleine Challange 💪'),
+  S('s1e03c10_story_challenge_intro', [
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge 💪'),
   ], ['problem-solving']),
 
-  CH('s1e03c01_challenge_outside_time',
+  CH('s1e03c10_challenge_outside_time',
     '👉 Geh für 3 Minuten nach draußen. Ohne Handy. Ohne Musik. Ohne Aufgabe. Schau bewusst, was du bemerkst.',
   ),
 
-    S('s1e03c10_story_classchat_offline_effect', [
-    divider('Tag 10'),
+  S('s1e03c10_story_classchat_offline_effect_cont', [
     classChat(),
     m(ch.mia, 'Aber war gut. Hab stattdessen dem Regen zugeguckt.', '15:19'),
     m(ch.dominik, '😂😂😂', '15:19'),
