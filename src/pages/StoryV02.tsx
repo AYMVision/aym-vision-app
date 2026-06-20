@@ -820,7 +820,7 @@ function hasStoryMigrationDone(key: string): boolean {
   // Story-Step-Kaskade fertig ist (currentStep ist kein 'story'-Typ mehr).
   useLayoutEffect(() => {
     if (!scrollAnchorIdRef.current) return;
-    if (currentStep?.type === 'story') return; // Kaskade läuft noch
+    if (currentStep?.type === 'story' || currentStep?.type === 'challenge') return;
 
     const scrollEl = scrollRef.current;
     if (!scrollEl) return;

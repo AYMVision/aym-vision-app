@@ -160,7 +160,7 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     id: 'ki',
     title: 'KI (Künstliche Intelligenz)',
     teaser: 'Ein Programm, das aus Millionen Beispielen lernt und dann selbst Bilder malt, Texte schreibt oder Fragen beantwortet.',
-    body: 'KI steht für Künstliche Intelligenz. Wenn du Siri etwas fragst, wenn TikTok dir immer ähnliche Videos zeigt, wenn Google Fotos automatisch Gesichter erkennt — das ist KI. Aber wie funktioniert das? Stell dir vor, du schaust dir tausend Fotos von Hunden an und tausend von Katzen. Irgendwann erkennst du den Unterschied sofort, ohne nachdenken zu müssen. Genau so lernt KI: aus riesigen Mengen an Beispielen. Wichtig: KI denkt nicht wirklich nach. Sie berechnet, was am wahrscheinlichsten passt. Wie eine sehr schnelle Ratesmaschine mit unglaublich vielen Daten.',
+    body: 'KI steht für Künstliche Intelligenz. Wenn du Siri etwas fragst, wenn TikTok dir immer ähnliche Videos zeigt, wenn Google Fotos automatisch Gesichter erkennt — das ist KI. Aber wie funktioniert das? Stell dir vor, du schaust dir tausend Fotos von Hunden an und tausend von Katzen. Irgendwann erkennst du den Unterschied sofort, ohne nachdenken zu müssen. Genau so lernt KI: aus riesigen Mengen an Beispielen. Wichtig: KI denkt nicht wirklich nach. Sie berechnet, was am wahrscheinlichsten passt. Sie rät blitzschnell, was am besten passt — mit unglaublich vielen Daten.',
     didYouKnow: 'ChatGPT hatte in den ersten 5 Tagen mehr Nutzer als Instagram in einem ganzen Jahr. Kein Programm vorher wurde so schnell von so vielen Menschen ausprobiert.',
     firstAppearance: 's1e03c03',
   },

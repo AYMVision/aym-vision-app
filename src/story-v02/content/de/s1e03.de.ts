@@ -201,7 +201,7 @@ const c02 = C('s1e03c02', 1, 'Amic 2', 'Immer noch online', [
     'Versuch heute, dein Handy oder Tablet etwas früher wegzulegen als gestern. Schaffst du einen neuen persönlichen Rekord? Das kannst du auch in deinem Tagebuch notieren.',
   ),
 
-    S('s1e03c02_story_classchat_evening', [
+    S('s1e03c02_story_classchat_evening2', [
     classChat(),
     m(ch.dominik, 'Opa.', '19:21', { reactions: [R('😂')] }),
     m(ch.markus, '@ Tom: Du musst wohl nach dem Sandmännchen ins Bett? 😂', '19:21'),
