@@ -3,8 +3,8 @@
 // Set BETA_ACTIVE = false to deactivate all beta UI.
 
 export const BETA_ACTIVE = true;
-export const BETA_END_DATE = '2026-06-30';
-export const BETA_END_DATE_DISPLAY = '30. Juni 2026';
+export const BETA_END_DATE = '2026-07-31';
+export const BETA_END_DATE_DISPLAY = '31. Juli 2026';
 export const BETA_CONTACT_EMAIL = 'hello@amysurfwing.de';
 
 const BETA_CODE_KEY = 'aym_beta_code';

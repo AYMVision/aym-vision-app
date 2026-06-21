@@ -8,7 +8,7 @@ Alles, was du für eine neue Story-Episode brauchst: Dateistruktur, Builder-API,
 
 ### Pfad
 ```
-src/story-v02/content/de/s1e02_de.ts   ← neue Datei (Beispiel für Episode 2)
+src/story-v02/content/de/s1e02.de.ts   ← neue Datei (Beispiel für Episode 2)
 ```
 
 ### Datei-Grundstruktur
@@ -43,7 +43,12 @@ export default s1e02De;
 ```
 
 ### Episode registrieren
-Die neue Episode muss noch in den Content-Index eingetragen werden (dort, wo s1e01 bereits registriert ist).
+In `src/story-v02/content/getPlayableEpisodeV02.ts` zwei Stellen ergänzen:
+
+1. Im `AVAILABLE`-Record die neue Episode-ID eintragen (z.B. `'s1e03'` in `de: ['s1e01', 's1e02', 's1e03']`)
+2. Den dynamic import hinzufügen (analog zu den bestehenden Einträgen)
+
+> Für s1e04 ist beides bereits erledigt.
 
 ---
 
@@ -90,6 +95,11 @@ m(ch.lisa, 'Sieht mega aus 😍', '13:15', { reactions: [R('❤️')] })
 m(ch.finn, 'du warst in schottland?', '11:15', {
   replyTo: { speakerName: 'Yasmin', text: 'Ja, in Schottland.' },
 })
+
+// Weitergeleitete Nachricht (forwarded-Styling):
+m(ch.yasmin, 'Hier ist der Link', '10:31', {
+  forwarded: { fromChatLabel: 'Klassenchat' },
+})
 ```
 - Amy als Speaker → `type: 'main'` (blaue Blase)
 - Alle anderen → `type: 'other'`
@@ -102,6 +112,11 @@ img(ch.lukas, '/media/story/episodes/s1e02/s1e02c01-512.webp', '13:12', {
 })
 img(ch.lisa, '/media/.../foto.webp', '14:19', { content: 'Weitergeleitet:' })
 img(ch.igor, '/media/.../foto.webp', '16:56', { content: 'Entwarnung!' })
+
+// Weitergeleitetes Bild (forwarded-Styling):
+img(ch.finn, '/media/.../foto.webp', '18:39', {
+  forwarded: { fromName: 'Yasmin', fromChatLabel: 'Klassenchat' },
+})
 ```
 
 ### Audio / Sprachnachricht
@@ -118,6 +133,14 @@ divider('Zeitlich später')      // Zeitlicher Trenner im Chat
 amyTip('Du kannst deinen Namen jederzeit im Profil ändern.')  // Amy-Hinweis-Karte
 sysMsg('Lisa hinzugefügt.', '20:08')  // Einfache System-Info (kein Icon)
 ```
+
+### System-Bild (`sysImg`)
+Eigenständiges Bild ohne Sprecher-Bubble — z.B. für Einstiegsbilder eines Kapitels.
+```ts
+sysImg('/media/story/episodes/s1e02/s1e02c01-512.webp')
+sysImg('/media/story/episodes/s1e02/s1e02c01-512.webp', 's1e02c01-img-01')  // mit optionaler ID
+```
+Wird wie eine normale Nachricht in den Step eingebaut. Import: `sysImg` aus `storyBuilder`.
 
 ### Bonus-Link-Karten
 ```ts
@@ -388,9 +411,41 @@ OR('s1e02c04_reflection_own_contribution',
 )
 ```
 
+Es gibt drei Varianten für Amy's Reply bei `bypassAi: true`:
+
+| Feld | Wann nutzen | Ergebnis |
+|---|---|---|
+| `fixedAmyReply: 'Text...'` | PERSPECTIVE / ACTION — konkreter Bestätigungstext | Amy antwortet mit diesem Text |
+| `fixedAmyReplyVague: 'Text...'` | FEELING — offene, nicht wertende Reaktion | Amy antwortet mit diesem Text |
+| `fixedAmyReply: ''` | Amy soll schweigen | AR-Step bleibt leer / stumm |
+
+```ts
+// FEELING → fixedAmyReplyVague (offene Reaktion, nicht zu konkret):
+OR('s1e01c03_reflection_feeling',
+  'Wie hättest du dich in dieser Situation gefühlt?',
+  {
+    topics: ['reflect-understand'],
+    category: 'FEELING',
+    bypassAi: true,
+    fixedAmyReplyVague: 'Danke fürs Teilen. Solche Momente können sich sehr unterschiedlich anfühlen.',
+  },
+)
+
+// Amy schweigt (kein Feedback-Block):
+OR('s1e03c07_reflection_silent',
+  'Was würdest du jetzt tun?',
+  {
+    topics: ['reflect-understand', 'problem-solving'],
+    category: 'ACTION',
+    bypassAi: true,
+    fixedAmyReply: '',
+  },
+)
+```
+
 **Regeln für `bypassAi: true`:**
-- Immer `fixedAmyReply` angeben — sonst zeigt der nachfolgende `AR`-Step nichts an
-- `fixedAmyReply` ist unabhängig von der Antwort des Kindes (generischer Bestätigungstext)
+- Immer `fixedAmyReply` oder `fixedAmyReplyVague` angeben — sonst zeigt der nachfolgende `AR`-Step nichts an (Ausnahme: bewusster Leerstring)
+- Der Reply-Text ist unabhängig von der Antwort des Kindes (generischer Bestätigungstext)
 - Nur für Fragen verwenden, bei denen **jede ehrliche Antwort richtig ist**
 - Für Selbstreflexionsfragen (z.B. "Wie hättest du reagiert?") weiterhin Standard-OR ohne `bypassAi` nutzen
 
@@ -413,12 +468,23 @@ AR('s1e02c04_amy_reaction_ai_image', 's1e02c04_reflection_ai_image')
 Kurzer Impuls für den Alltag. Keine Bewertung.
 
 ```ts
-CH(id, prompt)
+CH(id, prompt, link?)
 ```
 
 ```ts
 CH('s1e02c02_challenge_video',
   '👉 Schaffst du es, einmal ein Video NICHT zu schauen, obwohl du draufklicken willst?',
+)
+
+// Mit optionalem Bonus-Link (dritter Parameter):
+CH('s1e01c06_challenge_metadata',
+  '👉 Schau dir das nächste Foto an, das du teilen willst: Welche Metadaten stecken drin?',
+  {
+    bonusId: 'tip-carlos-geodaten',   // Bonus als "gesehen" markieren
+    content: 'Artikel: Geodaten',     // Label vor dem Link
+    linkTo: '/newspaper/tip-carlos-geodaten',
+    linkLabel: 'Artikel öffnen →',    // optional, Default: 'Öffnen →'
+  },
 )
 ```
 
@@ -539,6 +605,8 @@ Dies wird vom Runtime automatisch gehandhabt, solange alle Step-IDs stabil bleib
 
 ## 11. Vollständiges Minimal-Beispiel (eine Episode, zwei Kapitel)
 
+> Hinweis: Dieses Beispiel ist bewusst reduziert. Die vollständige Import-Liste steht in Section 1.
+
 ```ts
 import type { Reaction } from '../../../common/types';
 import { STORY_CHARACTERS as ch } from '../../../content/characters';
@@ -550,7 +618,7 @@ import {
   S, inp, IT, AF, GR, AR, C,
 } from '../storyBuilder';
 
-const R = (emoji: string): Reaction => ({ emoji });
+const R = (emoji: string, type?: string): Reaction => ({ emoji, type });
 
 // ── Kapitel 1 ────────────────────────────────────────────────────────────────
 

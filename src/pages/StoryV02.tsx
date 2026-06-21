@@ -37,6 +37,7 @@ import {
 import {
   saveAmicSession,
   loadAmicSession,
+  clearAmicSession,
 } from '../story-v02/runtime/amicSessionStore';
 import {
   saveChallengeStatus,
@@ -550,6 +551,14 @@ function hasStoryMigrationDone(key: string): boolean {
       saveStoryMigrationDone(migrationKey);
     }
 
+    // Einmalige Reset von s1e04c02: veraltete Snapshots mit alten Kapitel-Headern
+    // und falschem privateChat('Carlos', 'Jonas', 'Du') bereinigen.
+    const amicMigrationKey = 'reset-amic-s1e04c02-v1';
+    if (!hasStoryMigrationDone(amicMigrationKey)) {
+      clearAmicSession('s1e04', 's1e04c02');
+      saveStoryMigrationDone(amicMigrationKey);
+    }
+
     // --- Per-Amic resume (chapter-specific URL) ---
     // When a specific chapterId is in the route, load only that chapter's session.
     // Never auto-advance — the user navigated here intentionally.
@@ -897,6 +906,16 @@ function hasStoryMigrationDone(key: string): boolean {
     dispatch({ type: 'COMPLETE_STORY_STEP', payload: { step: currentStep } });
     dispatch({ type: 'GO_TO_NEXT_STEP', payload: { chapter } });
   }, [currentStep, state.completedStepIds, state.transcript, chapter, courseId, state.courseId]);
+
+  // Heilt gespeicherte Snapshots: Challenge war abgeschlossen aber GO_TO_NEXT_STEP
+  // wurde nie gefeuert (alter Bug). Erkennt stuck state und rückt automatisch vor.
+  useEffect(() => {
+    if (state.phase !== 'showing_challenge') return;
+    if (!chapter) return;
+    const step = chapter.steps[state.stepIndex0];
+    if (!step || !state.completedStepIds.includes(step.id)) return;
+    dispatch({ type: 'GO_TO_NEXT_STEP', payload: { chapter } });
+  }, [state.phase, state.stepIndex0, state.completedStepIds, chapter]);
 
   useEffect(() => {
     if (!courseId || !chapter || !currentStep) return;

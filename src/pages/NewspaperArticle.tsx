@@ -161,20 +161,6 @@ export default function NewspaperArticle() {
     <Layout backPath={isModal ? undefined : backPath} hideHeader={isModal} hideFooter>
       <div className="max-w-2xl mx-auto px-5 sm:px-8 py-6">
 
-        {/* ── CLOSE (top) ── */}
-        {isModal && (
-          <div className="flex justify-end mb-3">
-            <button
-              type="button"
-              onClick={goBack}
-              aria-label={t('cards.close', { defaultValue: 'Schließen' })}
-              className="w-9 h-9 rounded-full bg-white/80 border border-black/10 flex items-center justify-center text-slate-600 hover:bg-slate-100 shadow-sm transition-colors"
-            >
-              ✕
-            </button>
-          </div>
-        )}
-
         {/* LOCK */}
         {!unlocked && (
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 mb-4">

@@ -396,4 +396,7 @@ export const STORY_CHARACTERS: Record<string, Character> = {
   elsa: CHARACTERS.elsa,
   igor: CHARACTERS.igor,
   alvarez: CHARACTERS.alvarez,
+  emma: CHARACTERS.emma,
+  farida: CHARACTERS.farida,
+  amir: CHARACTERS.amir,
 };
