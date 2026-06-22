@@ -76,7 +76,26 @@ export const DIARY_ENTRIES: Record<DiaryId, DiaryEntry[]> = {
   ],
 
   diary_jonas: [
-    // später…
+    {
+      entryId: 's1e04c04_0001',
+      bonusId: 'diary-jonas-entry1',
+      order: 1,
+      dateKey: 'diaries.entries.jonas.s1e04c04_0001.date',
+      titleKey: 'diaries.entries.jonas.s1e04c04_0001.title',
+      bodyKey: 'diaries.entries.jonas.s1e04c04_0001.body',
+      unlock: { afterChapterId: 's1e04c04' },
+      decor: { moodEmoji: '💭', tape: true, marker: true, accent: 'sky' },
+    },
+    {
+      entryId: 's1e04c07_0002',
+      bonusId: 'diary-jonas-entry2',
+      order: 2,
+      dateKey: 'diaries.entries.jonas.s1e04c07_0002.date',
+      titleKey: 'diaries.entries.jonas.s1e04c07_0002.title',
+      bodyKey: 'diaries.entries.jonas.s1e04c07_0002.body',
+      unlock: { afterChapterId: 's1e04c07' },
+      decor: { moodEmoji: '😔', tape: true, marker: true, accent: 'sky' },
+    },
   ],
     diary_me: [
     // später…

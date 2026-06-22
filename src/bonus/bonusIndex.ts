@@ -104,19 +104,13 @@ const CHARACTER_UNLOCKS_BY_CHAPTER: Record<string, CharacterId[]> = {
   s1e02c09: ['carlos'],  // bonusLink in c09 (Carlos schreibt Freundebuch)
 
   // s1e03
-  s1e03c02: ['schubert'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
-  s1e03c08: ['finn'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
-};
+  s1e03c02: ['schubert'],
+  s1e03c08: ['finn'],
 
   // s1e04
-  // s1e04c02: ['schubert'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
-  // s1e04c08: ['finn'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
-//};
-
-  // s1e03
-    // s1e05c02: ['schubert'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
-    // s1e05c08: ['finn'], // bonusLink in c04 (Chioma: "Hier der Link, viel Spaß!")
-  // };
+  s1e04c02: ['jonas'],  // bonusLink in c02 (Jonas schreibt Freundebuch)
+  s1e04c06: ['amir'],
+};
 
 /**
  * Optional: fixe Reihenfolge der Karten im Album.
@@ -140,6 +134,9 @@ const CHARACTER_ORDER: Partial<Record<CharacterId, number>> = {
   markus: 15,
   tom: 16,
   elsa: 17,
+  amir: 18,
+  farida: 19,
+  emma: 20,
 };
 
 const ALL_CHARACTER_IDS: CharacterId[] = Object.keys(CHARACTERS) as CharacterId[];
@@ -360,6 +357,30 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
   },
 
 
+  // --- s1e04c02: Amy Mini-Challenge – Raus aus der Vergleichs-Falle ---
+  {
+    bonusId: 'vergleichs-falle',
+    category: 'newspaper',
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/vergleichs-falle/article',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 's1e04c02' },
+    order: 55,
+  },
+
+  // --- s1e04c09: Amy Challenge – Was steckt hinter dem ersten Eindruck? ---
+  {
+    bonusId: 'urteilen-ueber-andere',
+    category: 'newspaper',
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/urteilen-ueber-andere/article',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 's1e04c09' },
+    order: 56,
+  },
+
   // --- s1e03c07: Carlos – Die Tricks der Spiele ---
   {
     bonusId: 'tip-carlos-game-tricks',
@@ -384,6 +405,32 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     released: true,
     unlockedBy: { type: 'chapter', id: 's1e03c10' },
     order: 58,
+  },
+
+  // --- s1e04c03: Chioma Weekly5 – Du denkst, du kennst jemanden? ---
+  {
+    bonusId: 'chioma-news-denkst-du-kennst-jemanden',
+    category: 'newspaper',
+    released: true,
+    order: 10,
+    mediaType: 'audio',
+    audioSrc: 'media/newspaper/articles/chioma-news-denkst-du-kennst-jemanden/audio.mp3',
+    bodySrc: 'media/newspaper/articles/chioma-news-denkst-du-kennst-jemanden/article',
+    bodyKind: 'md',
+    unlockedBy: { type: 'chapter', id: 's1e04c03' },
+  },
+
+  // --- s1e04c10: Jonas interviewt Amir ---
+  {
+    bonusId: 'article-jonas-amir-interview',
+    category: 'newspaper',
+    released: true,
+    order: 59,
+    mediaType: 'audio',
+    audioSrc: 'media/newspaper/articles/article-jonas-amir-int/audio.mp3',
+    bodySrc: 'media/newspaper/articles/article-jonas-amir-int/article',
+    bodyKind: 'md',
+    unlockedBy: { type: 'chapter', id: 's1e04c10' },
   },
 
 //_________________________________________________________
@@ -423,7 +470,7 @@ descriptionKey: 'diaries.books.mia.desc',
 descriptionKey: 'diaries.books.jonas.desc',
   coverImage: 'media/story/characters/jonas-512.webp',
   released: true,
-  unlockedBy: { type: 'chapter', id: 's1e??c??' }, // wenn du weißt, wann es starten soll
+  unlockedBy: { type: 'chapter', id: 's1e04c04' },
   order: 62,
 },
 

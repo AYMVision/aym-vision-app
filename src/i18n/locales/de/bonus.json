@@ -196,7 +196,18 @@
         "body": "Finn hat mir geschrieben 😊\nSo ein Idiot. So ein verdammter Idiot. 😫\n\nWas soll ich bloß tun?\n\nIch wollte kalt sein. So richtig: Selber schuld.\nHat fast geklappt.\n\nUnd dann fängt er von diesem Jahrmarkt an. Ich glaub jetzt, ihm geht's echt nicht gut. Und da schreibt er mir. Ausgerechnet mir! \nDie Lichter, das Drehen, das Durcheinander. Und plötzlich wusste ich, was er meint. Das waren keine Ausreden.\n\nDass er mir schreibt, war echt besonders.\nUnd ich war die ganze Zeit nur sauer auf ihn, dass er zu spät kommt, fies ist, nicht auftaucht. Ich hab gar nicht gesehen, dass er vielleicht Probleme hat.\n\nIch hab's eigentlich schon gesehen. Aber ich war mit mir selbst beschäftigt.\nWeil ich sauer war.\n\nAls er gefragt hat: „Bist du noch da?”\nWusste ich gar nicht, ob er meinte im Chat oder als Freundin.\n\nHoffentlich meldet er sich nochmal."
       }
     },
-    "jonas": {}
+    "jonas": {
+      "s1e04c04_0001": {
+        "date": "Dienstag",
+        "title": "Wackelkontakt",
+        "body": "Hallo liebes Tagebuch, kannst du mir mal den Stecker ziehen? Ich glaub ich hab einen Wackelkontakt.\nDas scheiß Kribbeln hört einfach nicht mehr auf.\nIch mache mich so was von zum Affen. Jedes Mal, wenn ich sie sehe.\nTschüss Gehirn, hallo Vollidiot.\n\nWenn sie in der Redaktion neben mir sitzt, will ich ihre Hand nehmen.\nUnd dann starr ich sie an, wie ein Roboter. Super Taktik!\nBei jedem Bling am Handy check ich, ob sie es ist. Mensch Jonas, was erwartest du? Dass Chioma schreibt: „Hallo Jonas, ich find dich total toll. Möchtest du mein Freund sein, für immer und ewig? \nJoke der Woche.\nUnd ich hör mir ihr Weekly wie ein kompletter Psycho dreimal nacheinander an. \n\nAber…\nmanchmal denke ich, dass sie auch wartet, dass ich ihre Hand nehme.\n\nWas mach ich bloß? Sag ich was?\nIm Film sieht das so einfach aus."
+      },
+      "s1e04c07_0002": {
+        "date": "Donnerstag",
+        "title": "Nett.",
+        "body": "Ich werd einfach im Boden versinken. Ja, jetzt gleich.\nSo ein Idiot. Jetzt ist es offiziell. Ich hab komplett den Verstand verloren.\nSowas von lächerlich. Wie konnte ich mir einbilden, dass Chioma mich mag.\nNeben ihr wirke ich wie jemand, der im Hintergrund versehentlich mitgefilmt wurde.\nSie findet mich nett. NNNNNEEEEEEEEETTTTTTTTTTTTTTT.\nNett ist der kleine Bruder von Scheiße.\n\nAuch im Traum sehe ich sie vor mir.\nIch lieg noch im Bett.\nChioma kommt rein mit 'nem Silbertablett:\nEin goldenes Etikett?\nDarauf steht: „Danke. Doch du bist nur nett. \nNa toll! Wir singen im Duett:\n„Wow, ist der nett!, ich hatte mich gerade getäuscht."
+      }
+    }
   },
 
 
@@ -526,6 +537,58 @@
     }
 },
 
+"jonas": {
+  "name": "Jonas",
+  "friendbook": {
+    "mostly": "Verträumt. In meiner Musik vertieft.\nIch sage nicht viel – aber ich meine, was ich sage. Mit Musik kann ich mich besser ausdrücken.",
+    "othersLike": [
+      "Ich höre zu und bin keiner, der sofort seine Kommentare raushaut.",
+      "Man kann sich auf mich verlassen."
+    ],
+    "annoys": [
+      "Ich sage zu selten, was ich wirklich will.",
+      "Ich brauche lange, um mich zu entscheiden."
+    ],
+    "hobbies": [
+      "Gitarre spielen",
+      "Eigene Songs schreiben",
+      "Musik hören und dabei nachdenken"
+    ],
+    "friends": ["Noah", "Carlos"],
+    "colors": "Blau.",
+    "happy": "Wenn jemand meine Musik hört, ohne viel dazu zu sagen.",
+    "netRule": "Hinter Musik steckt Arbeit – die gehört jemandem, auch im Internet.",
+    "mistake": "Wenn ich einen Fehler mache, verkrieche ich mich und denke lange darüber nach.",
+    "secret": "Dass mir die Meinung anderer zu wichtig ist, und ich immer gefallen möchte.",
+    "funFact": "Ich schreibe Songtexte, die ich dann unter der Dusche singe."
+  }
+},
+
+"amir": {
+  "name": "Amir",
+  "friendbook": {
+    "mostly": "Ich rede nicht viel.\nWenn ich etwas sage, dann mit Grund.\nUnd nicht, damit es anderen gefällt.",
+    "othersLike": [
+      "Ich rede nicht hinter dem Rücken von anderen.\nWenn ich ein Problem habe, sage ich es direkt."
+    ],
+    "annoys": [
+      "Ich vertraue anderen nicht so schnell."
+    ],
+    "hobbies": [
+      "Mit Sprache arbeiten (Texte, Formulierungen, Worte sammeln)",
+      "Zeichnen und Ideen skizzieren",
+      "Nachdenken und Dinge beobachten"
+    ],
+    "friends": ["-"],
+    "colors": "Dunkelgrün.",
+    "happy": "Wenn mich jemand ernst nimmt, ohne mich zu beurteilen.",
+    "netRule": "Schreib nichts, was du jemandem nicht auch direkt sagen würdest.",
+    "mistake": "Wenn ich einen Fehler mache, sage ich erst mal nichts und versuche, es selbst zu klären. Ich bin sehr kritisch mit mir.",
+    "secret": "Dass ich oft das Gefühl habe, für meine Familie stark sein zu müssen, auch wenn ich es gerade nicht bin.",
+    "funFact": "Ich esse so scharfes Essen, dass andere schon beim Zuschauen schwitzen."
+  }
+},
+
 "finn": {
   "name": "Finn",
   "friendbook": {
@@ -535,7 +598,7 @@
       "mit mir kann man einfach chillen"
     ],
     "annoys": [
-      "ich sag oft „passt schon“, auch wenn’s nicht passt",
+      "ich sag oft „passt schon”, auch wenn’s nicht passt",
       "ich weich stress lieber aus, statt ihn anzusprechen"
     ],
     "hobbies": [

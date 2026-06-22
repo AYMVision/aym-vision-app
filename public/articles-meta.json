@@ -1,4 +1,16 @@
 {
+  "article-jonas-amir-int": {
+    "de": {
+      "title": "Im Zweifel gegen den Angeklagten",
+      "description": "Vor ein paar Tagen wurde Amir beschuldigt, Sportsachen geklaut zu haben. Viele waren sich schnell sicher. Am Ende kam raus: Es war ganz anders. Jonas hat nachgefragt.",
+      "author": "Jonas",
+      "date": "2026-05-26",
+      "topicTags": [
+        "reflect",
+        "fair"
+      ]
+    }
+  },
   "article-jonas-tom-offline-inseln": {
     "de": {
       "title": "Immer online? Tom zeigt, wie's auch anders geht",
@@ -48,6 +60,18 @@
       "author": "Chioma",
       "date": "2026-04-17",
       "aiTranslated": "true"
+    }
+  },
+  "chioma-news-denkst-du-kennst-jemanden": {
+    "de": {
+      "title": "Du denkst, du kennst jemanden?",
+      "description": "Ein paar Nachrichten im Chat – und alle haben eine Meinung. Aber was, wenn du gar nicht alles gesehen hast?",
+      "author": "Chioma",
+      "date": "2026-06-01",
+      "topicTags": [
+        "reflect",
+        "fair"
+      ]
     }
   },
   "chioma-news-ki-hausaufgaben": {
@@ -250,6 +274,30 @@
       "author": "Chioma",
       "date": "2026-01-27",
       "tags": "chat, rules, class"
+    }
+  },
+  "urteilen-ueber-andere": {
+    "de": {
+      "title": "Was steckt wirklich hinter dem ersten Eindruck?",
+      "description": "Unser Gehirn liebt Abkürzungen – aber manchmal liegen wir daneben. Amys Challenge hilft dir, genauer hinzuschauen, bevor du urteilst.",
+      "author": "Amy",
+      "date": "2026-06-10",
+      "topicTags": [
+        "reflect",
+        "fair"
+      ]
+    }
+  },
+  "vergleichs-falle": {
+    "de": {
+      "title": "Raus aus der Vergleichs-Falle",
+      "description": "Unser Gehirn vergleicht ständig – aber sehen wir dabei wirklich die ganze Wahrheit? Amys Mini-Challenge hilft dir, die Vergleichs-Falle zu erkennen und gegenzusteuern.",
+      "author": "Amy",
+      "date": "2026-06-01",
+      "topicTags": [
+        "reflect",
+        "fair"
+      ]
     }
   }
 }
