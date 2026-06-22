@@ -1,0 +1,1 @@
+import{r as e}from"./index-oGK30M8Y.js";import{C as s,S as o,f as r,m as a}from"./storyBuilder-BsTe1KW7.js";import"./vendor-react-DlCurzhd.js";const t=s("s1e04c01",0,"Amic 1","Bald verfügbar",[o("s1e04c01_story_placeholder",[r(),a(e.amy,"Neue Episode jeden Freitag.")])]),i={id:"s1e04",seasonId:"s1",episodeId:"s1e04",courseId:"s1e04",chapters:[t]};export{i as default};
