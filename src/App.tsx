@@ -1,4 +1,4 @@
-import { createContext, lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { createContext, lazy, Suspense, useEffect, useRef } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HashRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import type { Location } from 'react-router-dom';
@@ -8,7 +8,6 @@ import type { Location } from 'react-router-dom';
 export const BackgroundLocationContext = createContext<Location | null | undefined>(undefined);
 
 import { registerSW } from 'virtual:pwa-register';
-import PwaUpdateBanner from './components/PwaUpdateBanner';
 import { ProfileProvider } from './profile/useProfile';
 import { initSoundPlayer } from './common/soundPlayer';
 
@@ -180,7 +179,6 @@ function AppRoutes() {
 
 
 function App() {
-  const [needRefresh, setNeedRefresh] = useState(false);
   const updateSWRef = useRef<((reloadPage?: boolean) => Promise<void>) | null>(null);
 
   // Badge beim App-Öffnen löschen
@@ -189,7 +187,9 @@ function App() {
   useEffect(() => {
     updateSWRef.current = registerSW({
       onNeedRefresh() {
-        setNeedRefresh(true);
+        // Neue Version sofort anwenden — kein Banner, kein User-Klick nötig.
+        // Stellt sicher dass Fixes (z.B. Challenge-Bug) alle Nutzer sofort erreichen.
+        updateSWRef.current?.(true);
       },
       onOfflineReady() {
         console.info('[PWA] App ist jetzt offline verfügbar.');
@@ -212,12 +212,6 @@ function App() {
           </Router>
         </RewardFxProvider>
       </ProfileProvider>
-      {needRefresh && (
-        <PwaUpdateBanner
-          onUpdate={() => updateSWRef.current?.(true)}
-          onDismiss={() => setNeedRefresh(false)}
-        />
-      )}
     </QueryClientProvider>
   );
 }

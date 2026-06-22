@@ -218,11 +218,15 @@ function buildTranscriptGroups(transcript: TranscriptEntry[]): TranscriptGroup[]
       const msg = entry.message;
 
       if (msg.kind === 'chapter-divider') {
-        pendingChapterDivider = {
-          id: entry.id,
-          title: msg.chapterMeta?.title ?? msg.content ?? '',
-          subtitle: msg.chapterMeta?.subtitle,
-        };
+        const dividerTitle = msg.chapterMeta?.title ?? msg.content ?? '';
+        // Nur echte Titel speichern — reine Pause-Marker ("…", "...") werden ignoriert
+        if (dividerTitle && !/^\.{2,}$/.test(dividerTitle.trim()) && dividerTitle.trim() !== '…') {
+          pendingChapterDivider = {
+            id: entry.id,
+            title: dividerTitle,
+            subtitle: msg.chapterMeta?.subtitle,
+          };
+        }
         continue;
       }
 
@@ -1476,6 +1480,7 @@ function hasStoryMigrationDone(key: string): boolean {
     if (!courseId || !chapter || !currentStep) return null;
 
     if (currentStep.type === 'input') {
+      if (state.completedStepIds.includes(currentStep.id)) return null;
       return (
         <InputStepCard
           step={currentStep}
@@ -1641,6 +1646,7 @@ function hasStoryMigrationDone(key: string): boolean {
     }
 
     if (currentStep.type === 'amy_feedback') {
+      if (state.completedStepIds.includes(currentStep.id)) return null;
       const lines = findAmyFeedbackLines(state.transcript, currentStep.sourceStepId);
 
       return (
