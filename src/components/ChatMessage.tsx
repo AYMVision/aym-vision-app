@@ -290,19 +290,22 @@ interface ChatMessageProps {
   onOpenLexikonTerm?: (termId: string) => void;
 }
 
-/** Parse [[termId]] tokens in text and return mixed array of strings + term spans */
+/** Parse [[termId]] and @Name tokens in text and return mixed array of strings + spans */
 function renderWithLexikonTerms(
   text: string,
   onOpenLexikonTerm?: (termId: string) => void,
   lang?: string
 ): React.ReactNode {
-  if (!onOpenLexikonTerm || !text.includes('[[')) return text;
+  const hasTerm = onOpenLexikonTerm && text.includes('[[');
+  const hasMention = /@[A-ZÄÖÜ][a-zA-ZäöüÄÖÜ]+/.test(text);
 
-  const parts = text.split(/(\[\[[\w-]+\]\])/g);
+  if (!hasTerm && !hasMention) return text;
+
+  const parts = text.split(/(\[\[[\w-]+\]\]|@[A-ZÄÖÜ][a-zA-ZäöüÄÖÜ]+)/g);
   return parts.map((part, i) => {
-    const match = part.match(/^\[\[([\w-]+)\]\]$/);
-    if (match) {
-      const termId = match[1];
+    const termMatch = part.match(/^\[\[([\w-]+)\]\]$/);
+    if (termMatch && onOpenLexikonTerm) {
+      const termId = termMatch[1];
       const entry = getLexikonEntry(termId, lang);
       const rawTitle = entry?.title ?? termId.replace(/-/g, ' ');
       const displayText = rawTitle.replace(/\s*\([^)]*\)$/, '');
@@ -315,6 +318,9 @@ function renderWithLexikonTerms(
           {displayText}
         </button>
       );
+    }
+    if (/^@[A-ZÄÖÜ][a-zA-ZäöüÄÖÜ]+$/.test(part)) {
+      return <span key={i} className="italic">{part}</span>;
     }
     return part;
   });

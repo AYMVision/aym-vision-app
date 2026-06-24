@@ -163,8 +163,8 @@ const isActive = (to: string) => {
         <div className="flex items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20">
           {/* ===== Mobile Header ===== */}
           <div className="flex lg:hidden w-full items-center justify-between">
-            {/* Left: Back (optional) */}
-            <div className="flex-1">
+            {/* Left: Logo (+ optional Back) */}
+            <div className="flex items-center gap-2 pl-2">
               {showBack && (
                 <button
                   type="button"
@@ -175,15 +175,11 @@ const isActive = (to: string) => {
                   ← {tCommon('back')}
                 </button>
               )}
-            </div>
-
-            {/* Center: Brand */}
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+              <Link to="/">
                 <SmartImage
   alt={tLayout('logoAlt')}
-  className="w-10 h-10 object-contain object-center"
-  sizes="40px"
+  className="h-12 w-auto"
+  sizes="146px"
   avif={[
     { src: assetUrl('media/ui/brand/logo-256.avif'), w: 256 },
     { src: assetUrl('media/ui/brand/logo-512.avif'), w: 512 },
@@ -196,24 +192,11 @@ const isActive = (to: string) => {
   ]}
   fallback={assetUrl('media/ui/brand/logo-512.webp')}
 />
+              </Link>
+            </div>
 
-              </div>
-
-              <div>
-                <div className="font-semibold text-[var(--color-teal-900)] text-sm">
-                  {tLayout('brandTitle')}
-                </div>
-                <div className="text-xs text-[var(--color-teal-500)]">
-                  {tLayout('brandTagline')}
-                </div>
-              </div>
-            </Link>
-
-            {/* Right spacer */}
-            <div className="flex-1" />
-
-            {/* Mobile: Coins → Shop, Avatar → Profile */}
-            <div className="flex items-center gap-2 p-1 shrink-0">
+            {/* Right: Coins, Avatar, Menu */}
+            <div className="flex items-center gap-2 shrink-0">
               <Link
                 to="/avatar"
                 state={{ backTo: location.pathname + location.search + location.hash, initialTab: 'shop' }}
@@ -250,30 +233,29 @@ const isActive = (to: string) => {
                   />
                 </div>
               </Link>
-            </div>
 
-            {/* Mobile: Menu Button */}
-            <button
-              type="button"
-              onClick={() => setIsMenuOpen(true)}
-              className="p-2 text-[var(--color-teal-900)] hover:text-[var(--color-teal-400)]"
-              aria-label={tNav('openMenu')}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
+              <button
+                type="button"
+                onClick={() => setIsMenuOpen(true)}
+                className="p-2 text-[var(--color-teal-900)] hover:text-[var(--color-teal-400)]"
+                aria-label={tNav('openMenu')}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* ===== Desktop Brand (left) ===== */}
@@ -385,12 +367,11 @@ const isActive = (to: string) => {
         <div className="flex items-center justify-end p-4 bg-[var(--color-teal-500)] shadow-sm h-16 sm:h-20">
           <div className="flex-1" />
 
-          <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm overflow-hidden">
-              <SmartImage
+          <div className="flex items-center">
+            <SmartImage
   alt={tLayout('logoAlt')}
-  className="w-10 h-10 object-contain object-center"
-  sizes="40px"
+  className="h-12 w-auto"
+  sizes="146px"
   avif={[
     { src: assetUrl('media/ui/brand/logo-256.avif'), w: 256 },
     { src: assetUrl('media/ui/brand/logo-512.avif'), w: 512 },
@@ -403,13 +384,6 @@ const isActive = (to: string) => {
   ]}
   fallback={assetUrl('media/ui/brand/logo-512.webp')}
 />
-
-            </div>
-            <div>
-              <div className="font-semibold text-white text-lg">
-                {tLayout('drawerTitle')}
-              </div>
-            </div>
           </div>
 
           <div className="flex-1" />

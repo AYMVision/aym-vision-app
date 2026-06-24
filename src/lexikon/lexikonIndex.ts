@@ -270,8 +270,8 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     id: 'reverse-image-search',
     title: 'Reverse Image Search',
     teaser: 'Ein Bild als Suchbegriff nutzen — und herausfinden, ob es echt ist.',
-    body: 'Bei einer Reverse Image Search (auf Deutsch: Rückwärtsbildsuche) lädst du kein Wort hoch, sondern ein Bild. Die Suchmaschine sucht dann im ganzen Internet nach demselben oder ähnlichen Bildern. So kannst du herausfinden: Kommt dieses Foto wirklich von hier? Wurde es schon früher benutzt? Und: Ist der Kontext überhaupt der richtige? Besonders bei Falschmeldungen werden echte Fotos aus einem völlig anderen Zusammenhang recycelt — zum Beispiel ein Bild von einer alten Schlägerei, das plötzlich als Beweis für etwas aktuelles kursiert. Mit einer Reverse Image Search lässt sich das oft in Sekunden aufdecken. Tools: Google Bilder (images.google.com → Kamera-Symbol), TinEye oder die Google-Lens-Funktion auf dem Handy.',
-    didYouKnow: 'Die Methode wird von Journalist:innen und Faktenprüfern täglich genutzt — zum Beispiel beim bekannten Faktencheck-Projekt "Bellingcat". Auch du kannst damit in Sekunden einen Fake entlarven.',
+    body: 'Bei einer Reverse Image Search (auf Deutsch: Rückwärtsbildsuche) lädst du kein Wort hoch, sondern ein Bild. Die Suchmaschine sucht dann im ganzen Internet nach demselben oder ähnlichen Bildern. So kannst du herausfinden: Kommt dieses Foto wirklich von hier? Wurde es schon früher benutzt? Und: Ist der Kontext überhaupt der richtige? Besonders bei Falschmeldungen werden echte Fotos aus einem völlig anderen Zusammenhang recycelt — zum Beispiel ein Bild von einer alten Schlägerei, das plötzlich als Beweis für etwas Aktuelles kursiert. Mit einer Reverse Image Search lässt sich das oft in Sekunden aufdecken. Tools: Google Bilder (images.google.com → Kamera-Symbol), TinEye oder die Google-Lens-Funktion auf dem Handy.',
+    didYouKnow: 'Die Methode wird von Journalist:innen und Faktenprüfern täglich genutzt — zum Beispiel beim bekannten Faktencheck-Projekt "Bellingcat". Auch du kannst damit vielleicht in Sekunden einen Fake aufdecken.',
     firstAppearance: 's1e02c02',
   },
   {

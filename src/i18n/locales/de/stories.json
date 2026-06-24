@@ -464,7 +464,7 @@
       "subline": "Du kannst Amy Surfwing vor allen anderen ausprobieren.",
       "accessUntil": "Dein Zugang läuft bis {{date}}.",
       "contactHint": "Fragen oder Feedback? Schreib uns:",
-      "consentLabel": "Ich möchte Amy Surfwing testen und stimme zu, dass meine Nutzung anonymisiert gespeichert wird, um die App zu verbessern. Freiwillig.",
+      "consentLabel": "Ich möchte Amy Surfwing testen. Meine Nutzung wird lokal auf diesem Gerät gespeichert. Ich kann sie freiwillig teilen, um die App zu verbessern.",
       "cta": "Los geht's →",
       "parentsLink": "Für Eltern: Mehr Infos →"
     },

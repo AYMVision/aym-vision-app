@@ -116,8 +116,14 @@ export function hasCompletedNewChapterToday(): boolean {
     if (!raw) return false;
     const ts = Number(raw);
     if (!Number.isFinite(ts)) return false;
-    const interval = isFastGateActive() ? 30_000 : 24 * 60 * 60 * 1000;
-    return Date.now() - ts < interval;
+
+    if (isFastGateActive()) {
+      return Date.now() - ts < 30_000;
+    }
+
+    const d = new Date(ts);
+    const completionDateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    return completionDateKey === todayKeyLocal();
   } catch {
     return false;
   }

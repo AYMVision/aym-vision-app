@@ -1,7 +1,7 @@
 // src/pages/StoryV02.tsx
 
 import { useContext, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BackgroundLocationContext } from '../App';
 import { useTranslation } from 'react-i18next';
 
@@ -383,6 +383,14 @@ export default function StoryV02() {
   const [storyMenuOpen, setStoryMenuOpen] = useState(false);
   const [showBetaCompletionModal, setShowBetaCompletionModal] = useState(false);
   const [showSurveyConsent, setShowSurveyConsent] = useState(false);
+  const [installHintDismissed, setInstallHintDismissed] = useState(() => {
+    try { return !!localStorage.getItem('aym-install-hint-dismissed'); } catch { return false; }
+  });
+
+  function dismissInstallHint() {
+    try { localStorage.setItem('aym-install-hint-dismissed', '1'); } catch { /* ignore */ }
+    setInstallHintDismissed(true);
+  }
 
   const betaProfileSnapshot = {
     chaptersCompleted: Object.entries(profile.progress?.completedChapters ?? {})
@@ -1977,6 +1985,31 @@ function hasStoryMigrationDone(key: string): boolean {
                         </>
                       )}
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Install-Hinweis: einmalig nach s1e01c01 */}
+              {courseId === 's1e01' && chapterIndex0 === 0 && !installHintDismissed && (
+                <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3">
+                  <div className="flex items-start gap-2">
+                    <p className="text-xs text-slate-600 leading-relaxed flex-1">
+                      Du kannst Amy Surfwing als App auf deinem Handy speichern – dann findest du sie morgen direkt auf dem Startbildschirm. Das ist freiwillig, im Browser läuft alles genauso.{' '}
+                      <Link
+                        to="/install"
+                        className="font-semibold text-[var(--color-teal-700)] underline underline-offset-2 hover:text-[var(--color-teal-800)]"
+                      >
+                        Wie das geht →
+                      </Link>
+                    </p>
+                    <button
+                      type="button"
+                      onClick={dismissInstallHint}
+                      aria-label="Hinweis schließen"
+                      className="shrink-0 text-slate-400 hover:text-slate-600 transition-colors text-base leading-none mt-0.5"
+                    >
+                      ✕
+                    </button>
                   </div>
                 </div>
               )}

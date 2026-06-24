@@ -811,7 +811,7 @@ const c08 = C('s1e01c08', 7, 'Amic 8', 'Nächster Tag', [
 
   S('s1e01c08_story_private_yasmin_igor', [
     privateChat('Yasmin', 'Igor'),
-    m(ch.igor, 'Hi Yasmin, hast du morgen schon was vor?', '19:03'),
+    m(ch.igor, 'Hi Yasmin, hast du morgen schon was vor?', '18:46'),
     typing('Yasmin tippt ...'),
   ], ['talk-act']),
 
@@ -840,14 +840,14 @@ const c08 = C('s1e01c08', 7, 'Amic 8', 'Nächster Tag', [
   S('s1e01c08_story_epilogue', [
     divider('Epilog'),
     privateChat('Yasmin', 'Chioma'),
-    m(ch.yasmin, 'Lisa ist endlich zurück.', '20:05'),
-    m(ch.yasmin, 'Weniger top-gestylte Selfies aus Rom und Paris.', '20:06'),
-    m(ch.yasmin, 'Dafür mehr interessante Storys über andere und mehr Drama.', '20:06'),
-    m(ch.chioma, '🙈 Klatsch und Tratsch bringen fast immer Ärger…', '20:07'),
-    sysMsg('Lisa hinzugefügt.', '20:08'),
-    m(ch.yasmin, 'Und? Sag schon: Was gibt\'s Neues aus der Gerüchteküche?', '20:08'),
-    m(ch.lisa, 'Kann gerade echt nicht 🙈 bin schon auf dem Weg zum Sushi.', '20:09'),
-    m(ch.lisa, 'Das mit Dominik heute Morgen hab ich dir ja schon erzählt.', '20:09'),
+    m(ch.yasmin, 'Lisa ist endlich zurück.', '18:50'),
+    m(ch.yasmin, 'Weniger top-gestylte Selfies aus Rom und Paris.', '18:50'),
+    m(ch.yasmin, 'Dafür mehr interessante Storys über andere und mehr Drama.', '18:51'),
+    m(ch.chioma, '🙈 Klatsch und Tratsch bringen fast immer Ärger…', '18:51'),
+    sysMsg('Lisa hinzugefügt.', '18:51'),
+    m(ch.yasmin, 'Und? Sag schon: Was gibt\'s Neues aus der Gerüchteküche?', '18:52'),
+    m(ch.lisa, 'Kann gerade echt nicht 🙈 bin schon auf dem Weg zum Sushi.', '18:52'),
+    m(ch.lisa, 'Das mit Dominik heute Morgen hab ich dir ja schon erzählt.', '18:53'),
   ]),
 ]);
 
