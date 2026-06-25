@@ -360,7 +360,7 @@ function MessageBody({
   );
 
   return (
-    <p className={`text-lg min-w-0 break-words leading-relaxed ${isMain ? mainTextClass : 'text-anthracite-800'}`}>
+    <p className={`text-lg min-w-0 break-words leading-relaxed whitespace-pre-line ${isMain ? mainTextClass : 'text-anthracite-800'}`}>
       {renderWithLexikonTerms(resolvedContent, onOpenLexikonTerm, lang)}
     </p>
   );

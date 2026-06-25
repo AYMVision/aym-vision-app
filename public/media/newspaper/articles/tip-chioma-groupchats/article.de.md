@@ -134,6 +134,8 @@ Wichtig ist, wie man damit umgeht.
 [[/checklist]]
 
 👉 Ziel ist nicht: jemanden fertig machen.  
+
+
 👉 Ziel ist: fair bleiben.
 
 

@@ -328,7 +328,7 @@
     "chioma": {
       "name": "Chioma",
       "friendbook": {
-        "mostly": "Ich denke nach, bevor ich etwas sage – und hätte gern, dass auch andere das tun.",
+        "mostly": "Ich denke nach, bevor ich etwas sage und hätte gern, dass auch andere das tun.",
         "othersLike": [
           "Ich höre zu.",
           "Ich bleibe fair.",
@@ -339,12 +339,12 @@
           "Ich gehe gegen die an, die andere unfair behandeln.",
           "Und ich gebe nicht so leicht auf."
         ],
-        "hobbies": ["Lesen", "Texte schreiben", "Gute Gespräche führen" ],
+        "hobbies": ["Lesen", "Texte schreiben", "gute Gespräche führen" ],
           "friends": ["Yasmin", "Lisa"],
-        "colors": "Gelb und Orange – warm, nicht grell.",
+        "colors": "Gelb und Orange, warm, nicht grell.",
         "happy": "Ein heißer Kakao zu einem spannenden Buch. Und wenn es sich gelohnt hat, für etwas zu kämpfen.",
         "netRule": "Erst nachdenken, dann posten. Und: Keine Likes für Gemeinheiten.",
-        "mistake": "Ich atme einmal durch, sage ehrlich „Okay, das war nicht gut“ – und versuche es zu reparieren.",
+        "mistake": "Ich atme einmal durch, sage ehrlich „Okay, das war nicht gut“ und versuche es zu reparieren.",
         "secret": "Manchmal verstehe ich selbst nicht, warum ich immer denke, dass ich die Probleme anderer lösen muss.",
         "funFact": "Schon in der ersten Klasse stand in meinem Zeugnis, ich sei die „Streit-Stopperin“. Leider ist das jetzt nicht mehr so einfach."
       }
