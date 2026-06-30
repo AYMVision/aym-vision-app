@@ -205,7 +205,7 @@ const c02 = C('s1e04c02', 1, 'Amic 2', 'Kommt Finn noch?', [
   ], ['reflect-understand']),
 
   CH('s1e04c02_challenge_comparison',
-    '👉 Achte heute darauf, wann du dich mit anderen vergleichst. Sage dann eine Sache, die du an dir magst. Nimmst du die Herausforderung an?',
+    '👉 Wenn du dich mit jemandem vergleichst: Sage eine Sache, die du an dir magst. Nimmst du die Herausforderung an?',
   ),
 
   S('s1e04c02_story_bonus_article', [
@@ -672,10 +672,11 @@ const c06 = C('s1e04c06', 5, 'Amic 6', 'Der Sportbeutel', [
     m(ch.dominik, '3 Mal darfst du raten, wer ihn hatte. 💀', '09:43'),
     m(ch.elsa, 'Amir?', '09:43'),
     m(ch.dominik, 'Bingo 🏆', '09:43'),
+    m(ch.markus, 'Hier ist das Beweisfoto', '09:46'),
     img(ch.markus, 'media/story/episodes/s1e04/s1e04c04_3-512.webp', '09:43'),
-    m(ch.dominik, 'Er hat ihn geklaut.', '09:44'),
+    m(ch.dominik, 'Amir hat ihn geklaut.', '09:44'),
     m(ch.amir, 'Ich hab nichts geklaut.', '09:44'),
-    m(ch.dominik, 'Klar hast du.', '09:44'),
+    m(ch.dominik, 'Klar! Hast du.', '09:44'),
     m(ch.dominik, 'Markus und ich haben dich doch grad auf frischer Tat ertappt.', '09:45'),
     m(ch.dominik, 'Genau vor der Klasse, mit Finns Sportbeutel.', '09:45'),
     sysImg('media/story/episodes/s1e04/s1e04c06_2-512.webp', '09:45'),
@@ -765,7 +766,7 @@ const c07 = C('s1e04c07', 6, 'Amic 7', 'Mehr als Stress', [
     m(ch.carlos, 'Ich war gestern mit meiner Mutter beim Amt.', '18:00'),
     m(ch.aylin, 'Und?', '18:01'),
     m(ch.carlos, 'Da hab ich Amir gesehen.', '18:01'),
-    img(ch.carlos, 'media/story/episodes/s1e04/s1e04c07-512.webp', '18:01'),
+    sysImg('media/story/episodes/s1e04/s1e04c07-512.webp'),
     m(ch.jonas, 'Hattest du ihn nicht neulich schon mit seinen Eltern bei der Bank gesehen?', '18:02'),
     m(ch.carlos, 'Ja, richtig.', '18:03'),
     m(ch.carlos, 'Er hat wieder die ganze Zeit für seine Eltern übersetzt.', '18:03'),
@@ -986,7 +987,7 @@ const c09 = C('s1e04c09', 8, 'Amic 9', 'Im Park', [
   ]),
 
   OR('s1e04c09_reflection_amir_explanation',
-    'Welche verschiedenen Erklärungen fallen dir für Amirs Antwort ein?',
+    'Was denkst du ist im Park passiert?',
     {
       topics: ['reflect-understand', 'info-check'],
       category: 'PERSPECTIVE',
@@ -1061,12 +1062,12 @@ const c09 = C('s1e04c09', 8, 'Amic 9', 'Im Park', [
 
   S('s1e04c09_story_amy_insight', [
     amyChat(),
-    m(ch.amy, 'Hast du Amir auch kurz verdächtigt? Das wäre ganz normal.'),
-    m(ch.amy, 'Denn es ist normal, dass unser Gehirn aus den vorhandenen Informationen nur die eine plausibelste Lösung schlussfolgert. Damit liegen wir aber nicht immer richtig. Wenn wir dann weitere Informationen kennenlernen, erscheint die Lösung plötzlich völlig logisch – und doch ganz anders, als erwartet.'),
+    m(ch.amy, 'Hast du Amir auch kurz verdächtigt?'),
+    m(ch.amy, 'Unser Gehirn reimt sich eine plausible Lösung zusammen, wenn Informationen fehlen. Das ist ganz normal. Erst wenn weitere Fakten dazukommen, zeigt sich, ob die Vermutung stimmte. Da sollten wir also vorsichtig sein.'),
   ], ['reflect-understand']),
 
   CH('s1e04c09_challenge_firstimpression',
-    '👉 Suche heute bei einer Person, die du nicht so gut kennst, eine positive Eigenschaft.',
+    '👉 Denke über eine Person, die du nicht so gut kennst, zuerst etwas Nettes.',
   ),
 
   S('s1e04c09_story_amy_challenge_bonus', [
@@ -1121,9 +1122,7 @@ const c10 = C('s1e04c10', 9, 'Amic 10', 'Das Interview', [
     img(ch.jonas, 'media/story/episodes/s1e04/s1e04c10_2-512.webp', '17:36'),
     audio(ch.chioma, 'media/story/episodes/s1e04/s1e04c10_chioma_cooles-foto.m4a', '17:37', 'Sprachnachricht'),
     m(ch.jonas, 'Danke. ☺️', '17:38'),
-    img(ch.aylin, 'media/story/episodes/s1e04/s1e04c10_2-512.webp', '17:38'),
     m(ch.aylin, 'Genug geflirtet. 😊', '17:39'),
-    img(ch.yasmin, 'media/story/episodes/s1e04/s1e04c10_1-512.webp', '17:40', { reactions: [R('❤️'), R('👍')] }),
     sysMsg('1 Woche später'),
     m(ch.amir, 'Du meintest es echt ernst. Jetzt muss ich auch nicht mehr ständig in der Schule fehlen. 😊', '20:06'),
     m(ch.amir, 'Danke.', '20:06'),
@@ -1140,14 +1139,14 @@ const c10 = C('s1e04c10', 9, 'Amic 10', 'Das Interview', [
       topics: ['reflect-understand', 'fairness'],
       category: 'PERSPECTIVE',
       bypassAi: true,
-      fixedAmyReply: 'Es ist viel leichter, als man denkt, plötzlich die schlechte Stimmung aufzugeben und nett zu sein.',
+      fixedAmyReply: 'Übrigens: Es ist viel leichter, als man denkt, plötzlich die schlechte Stimmung aufzugeben und nett zu sein.',
     },
   ),
 
   AR('s1e04c10_amy_reaction_markus', 's1e04c10_reflection_markus_amir'),
 
   CH('s1e04c10_challenge_mood',
-    '👉 Hast du auch manchmal schlechte Laune? Stelle dir in Gedanken ein Stopp-Schild vor, atme einmal tief durch und fange noch einmal mit guter Laune an.',
+    '👉 Wenn du gerade schlechte Laune hast: Stelle dir in Gedanken ein Stopp-Schild vor, atme einmal tief durch und fange noch einmal mit guter Laune an.',
   ),
 
 ]);

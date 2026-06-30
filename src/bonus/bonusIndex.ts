@@ -365,7 +365,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     bodyKind: 'md',
     bodySrc: 'media/newspaper/articles/vergleichs-falle/article',
     released: true,
-    unlockedBy: { type: 'chapter', id: 's1e04c02' },
+    unlockedBy: { type: 'marker', id: 's1e04c02-vergleichs-falle' },
     order: 55,
   },
 

@@ -366,7 +366,7 @@ export function OR(
     reflectionKind: 'open_text',
     reflectionCategory: opts.category ?? 'ACTION',
     placeholderKey: opts.placeholderKey ?? 'stories:common.replyPlaceholder',
-    maxLength: opts.maxLength ?? 280,
+    maxLength: opts.maxLength ?? 500,
     storeResponse: true,
     topicIds: opts.topics ?? [],
     bypassAi: opts.bypassAi,

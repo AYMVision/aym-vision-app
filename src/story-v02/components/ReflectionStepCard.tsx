@@ -202,7 +202,7 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
-              maxLength={step.maxLength ?? 220}
+              maxLength={step.maxLength ?? 500}
               placeholder={
                 step.placeholderKey
                   ? t(step.placeholderKey, { defaultValue: 'Deine Antwort…' })
@@ -211,7 +211,10 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
               className="w-full min-h-[110px] rounded-xl border border-violet-200 bg-white px-3 py-2 text-base text-slate-900 outline-none focus:border-violet-400"
             />
 
-            <div className="mt-3 flex justify-end">
+            <div className="mt-3 flex items-center justify-between">
+              <span className="text-xs text-slate-400">
+                {text.length} / {step.maxLength ?? 500}
+              </span>
               <button
                 type="button"
                 onClick={step.bypassAi ? handleBypassSubmit : handleOpenTextSubmit}
