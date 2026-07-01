@@ -181,16 +181,14 @@ const isActive = (to: string) => {
   className="h-12 w-auto"
   sizes="146px"
   avif={[
-    { src: assetUrl('media/ui/brand/logo-256.avif'), w: 256 },
-    { src: assetUrl('media/ui/brand/logo-512.avif'), w: 512 },
-    { src: assetUrl('media/ui/brand/logo-1024.avif'), w: 1024 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-256.avif'), w: 256 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-512.avif'), w: 512 },
   ]}
   webp={[
-    { src: assetUrl('media/ui/brand/logo-256.webp'), w: 256 },
-    { src: assetUrl('media/ui/brand/logo-512.webp'), w: 512 },
-    { src: assetUrl('media/ui/brand/logo-1024.webp'), w: 1024 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-256.webp'), w: 256 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-512.webp'), w: 512 },
   ]}
-  fallback={assetUrl('media/ui/brand/logo-512.webp')}
+  fallback={assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-512.webp')}
 />
               </Link>
             </div>
@@ -277,16 +275,14 @@ const isActive = (to: string) => {
   className="h-10 w-auto"
   sizes="40px"
   avif={[
-    { src: assetUrl('media/ui/brand/logo-256.avif'), w: 256 },
-    { src: assetUrl('media/ui/brand/logo-512.avif'), w: 512 },
-    { src: assetUrl('media/ui/brand/logo-1024.avif'), w: 1024 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-256.avif'), w: 256 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-512.avif'), w: 512 },
   ]}
   webp={[
-    { src: assetUrl('media/ui/brand/logo-256.webp'), w: 256 },
-    { src: assetUrl('media/ui/brand/logo-512.webp'), w: 512 },
-    { src: assetUrl('media/ui/brand/logo-1024.webp'), w: 1024 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-256.webp'), w: 256 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-512.webp'), w: 512 },
   ]}
-  fallback={assetUrl('media/ui/brand/logo-512.webp')}
+  fallback={assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-512.webp')}
 />
             </Link>
 
@@ -373,16 +369,14 @@ const isActive = (to: string) => {
   className="h-12 w-auto"
   sizes="146px"
   avif={[
-    { src: assetUrl('media/ui/brand/logo-256.avif'), w: 256 },
-    { src: assetUrl('media/ui/brand/logo-512.avif'), w: 512 },
-    { src: assetUrl('media/ui/brand/logo-1024.avif'), w: 1024 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-256.avif'), w: 256 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-512.avif'), w: 512 },
   ]}
   webp={[
-    { src: assetUrl('media/ui/brand/logo-256.webp'), w: 256 },
-    { src: assetUrl('media/ui/brand/logo-512.webp'), w: 512 },
-    { src: assetUrl('media/ui/brand/logo-1024.webp'), w: 1024 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-256.webp'), w: 256 },
+    { src: assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-512.webp'), w: 512 },
   ]}
-  fallback={assetUrl('media/ui/brand/logo-512.webp')}
+  fallback={assetUrl('media/ui/brand/Logo_AmySurfwing_ohneEule-512.webp')}
 />
           </div>
 
