@@ -639,7 +639,12 @@ function hasStoryMigrationDone(key: string): boolean {
 
       // No amic session yet — check time gate before starting fresh
       const isAlreadyCompleted = hasCompletedChapter(courseId, targetChapter.chapterIndex0);
-      if (!isAlreadyCompleted && !shouldBypassAll(courseId)) {
+      if (isAlreadyCompleted) {
+        // Session was lost (storage cleared, new device, migration) — redirect instead of restarting
+        navigate(`/stories-v02/${courseId}`, { replace: true });
+        return;
+      }
+      if (!shouldBypassAll(courseId)) {
         const timeGate = canStartNextNewChapterToday();
         if (!timeGate.allowed) {
           setShowNextChapterLockedHint(true);

@@ -273,6 +273,9 @@ export default function Profile() {
           </div>
         )}
 
+        {/* Challenge-Journal */}
+        <ChallengeJournal />
+
         {/* Story-Welt — volle Breite unter den beiden Kästen */}
         <div className="mt-4 p-4 rounded-2xl border border-black/5 bg-white shadow-sm">
           <div className="flex items-center gap-3 mb-4">
@@ -350,9 +353,6 @@ export default function Profile() {
           </div>
         </div>
 
-
-        {/* Challenge-Journal */}
-        <ChallengeJournal />
 
         {/* Transfer stale warning (only in PWA mode when link is old) */}
         <div className="mt-4">

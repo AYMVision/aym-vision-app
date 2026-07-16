@@ -837,9 +837,11 @@ const unlockedMap = useMemo(() => {
             kicker={t('newspaper.sections.freshKicker', { defaultValue: '✨ Neu freigeschaltet' })}
             title={t('newspaper.sections.freshTitle', { defaultValue: 'Für dich freigeschaltet' })}
             right={
-              <div className="text-xs font-semibold text-slate-500">
-                {t('newspaper.sections.freshHint', { defaultValue: 'Wische nach rechts →' })}
-              </div>
+              freshUnlocked.slice(0, 10).length > 1 ? (
+                <div className="text-xs font-semibold text-slate-500">
+                  {t('newspaper.sections.freshHint', { defaultValue: 'Wische nach rechts →' })}
+                </div>
+              ) : undefined
             }
           >
             <SwipeRow className="-mx-4 px-4 lg:mx-0 lg:px-0">
@@ -870,9 +872,11 @@ const unlockedMap = useMemo(() => {
               <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold border border-amber-200 bg-amber-50 text-amber-900">
                 {t('newspaper.sections.currentNewsFreeLabel', { defaultValue: '✨ Für alle frei' })}
               </span>
-              <span className="text-xs font-semibold text-slate-400 hidden sm:inline">
-                {t('newspaper.sections.currentNewsSwipe', { defaultValue: 'Wische →' })}
-              </span>
+              {currentNewsItems.length > 1 && (
+                <span className="text-xs font-semibold text-slate-400 hidden sm:inline">
+                  {t('newspaper.sections.currentNewsSwipe', { defaultValue: 'Wische →' })}
+                </span>
+              )}
             </div>
           }
         >

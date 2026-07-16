@@ -16,7 +16,7 @@ const c01 = C('s1e04c01', 0, 'Amic 1', 'Am Skatepark', [
 
   S('s1e04c01_story_classChat_skatepark', [
     classChat(),
-    m(ch.mia, '@ Finn Wir waren doch um 15:00 verabredet.', '15:15'),
+    m(ch.mia, '@Finn Wir waren doch um 15:00 verabredet.', '15:15'),
     m(ch.mia, 'Wo bist du?', '15:15'),
     m(ch.tom, 'Sag bitte nicht wieder „bin gleich da"…', '15:15'),
     m(ch.finn, 'bin gleich da 😉', '15:16'),
@@ -105,7 +105,7 @@ const c01 = C('s1e04c01', 0, 'Amic 1', 'Am Skatepark', [
 
   S('s1e04c01_story_farida_user', [
     privateChat('Farida', 'Du'),
-    m(ch.farida, '@ {{chatName}} Würdest du an meiner Stelle gehen?', '15:39'),
+    m(ch.farida, '@{{chatName}} Würdest du an meiner Stelle gehen?', '15:39'),
   ], ['reflect-understand']),
 
   inp('s1e04c01_input_farida_user', 'stories:s1e04.c01.input.farida_user', {
