@@ -149,6 +149,41 @@
       "aiTranslated": "true"
     }
   },
+  "gute-entschuldigung": {
+    "de": {
+      "title": "Wie funktioniert eigentlich eine gute Entschuldigung?",
+      "description": "Carlos erklärt in 5 Schritten, wie eine echte Entschuldigung aussieht – und was keine ist.",
+      "author": "Carlos",
+      "date": "2026-07-20",
+      "topicTags": [
+        "reflect",
+        "fair"
+      ]
+    }
+  },
+  "schneeballsystem": {
+    "de": {
+      "title": "Schneeballsystem",
+      "description": "Was hat der Schneeballeffekt mit Stickern und Nachrichten im Internet zu tun?",
+      "author": "Amy",
+      "date": "2026-07-20",
+      "topicTags": [
+        "communication",
+        "infoCheck"
+      ]
+    }
+  },
+  "sticker-rechte-schutz": {
+    "de": {
+      "title": "Ist es eigentlich erlaubt, Sticker von anderen zu verschicken?",
+      "description": "Chioma erklärt dir, wie du mit Stickern von echten Menschen am besten umgehst.",
+      "author": "Chioma",
+      "date": "2026-07-20",
+      "topicTags": [
+        "communication"
+      ]
+    }
+  },
   "tip-amy-staunen": {
     "de": {
       "title": "Schlechte Laune vom Handy? Probier´s mal mit Staunen.",
