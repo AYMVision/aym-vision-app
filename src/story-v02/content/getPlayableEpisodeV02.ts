@@ -8,8 +8,8 @@ type Lang = 'de' | 'en';
 
 /** Synchronous availability check — no content loaded. */
 const AVAILABLE: Record<Lang, readonly string[]> = {
-  de: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05', 's1e06'],
-  en: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05', 's1e06'],
+  de: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05'],
+  en: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05'],
 };
 
 export function isEpisodeAvailable(courseId: string, lang: Lang): boolean {
@@ -29,7 +29,6 @@ export async function getPlayableEpisodeV02(
         case 's1e03': return (await import('./de/s1e03.de')).default;
         case 's1e04': return (await import('./de/s1e04.de')).default;
         case 's1e05': return (await import('./de/s1e05.de')).default;
-        case 's1e06': return (await import('./de/s1e06.de')).default;
         default: return null;
       }
     }
@@ -40,7 +39,6 @@ export async function getPlayableEpisodeV02(
         case 's1e03': return (await import('./en/s1e03.en')).default;
         case 's1e04': return (await import('./en/s1e04.en')).default;
         case 's1e05': return (await import('./en/s1e05.en')).default;
-        case 's1e06': return (await import('./en/s1e06.en')).default;
         default: return null;
       }
     }

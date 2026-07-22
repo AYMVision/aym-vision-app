@@ -183,7 +183,11 @@
       },
   "s1e02c02_0003": {
     "date": "Montag",
-    "body": "Was. War. Das. Bitte.\n\nErst macht Dominik mich vor allen fertig. \nDann raste ich aus. \nDann gibt’s Ärger für Lisa. \nDann fliegt Chioma raus. \nUnd jetzt tun alle so, als wär das normal?\n\nIch dachte echt, ich wär schlagfertig.\n„Soll ich dir auf die Sprünge helfen?“ \nNur so ein Spruch halt. \nDer übertreibt doch komplett. \n\nUnd Lisa tut jetzt so, als hätte ich sie verraten. \nSorry, aber dieses „Yasmin, bitte!“ im Klassenchat? \nAuffälliger geht’s ja kaum. \nWenn sich jemand selbst ins Spotlight stellt, bin ich das wohl nicht gewesen. \n\nJetzt ist sie mal nicht die Queen.\nUnd ich soll schuld sein? Pff.\nSeh ich anders."
+    "body": "Was. War. Das. Bitte.\n\nErst macht Dominik mich vor allen fertig. \nDann raste ich aus. \nDann gibt’s Ärger für Lisa. \nDann fliegt Chioma raus. \nUnd jetzt tun alle so, als wär das normal?\n\nIch dachte echt, ich wär schlagfertig.\n„Soll ich dir auf die Sprünge helfen?” \nNur so ein Spruch halt. \nDer übertreibt doch komplett. \n\nUnd Lisa tut jetzt so, als hätte ich sie verraten. \nSorry, aber dieses „Yasmin, bitte!” im Klassenchat? \nAuffälliger geht’s ja kaum. \nWenn sich jemand selbst ins Spotlight stellt, bin ich das wohl nicht gewesen. \n\nJetzt ist sie mal nicht die Queen.\nUnd ich soll schuld sein? Pff.\nSeh ich anders."
+  },
+  "s1e05c10_0004": {
+    "date": "Freitag",
+    "body": "Dumme Ziege.\nIch soll mich nicht für sie freuen? Hat Lisa den Verstand verloren?\nIch freu mich doch immer für sie!\nWenn sie…\nOder wenn sie…\nNaja, wenn sie… mal was nicht weiß.\nOder…, wenn sie im Schlabber-Look fotografiert wird.\n\nUps."
   }
     },
     "mia": {
@@ -206,6 +210,11 @@
         "date": "Donnerstag",
         "title": "Nett.",
         "body": "Ich werd einfach im Boden versinken. Ja, jetzt gleich.\nSo ein Idiot. Jetzt ist es offiziell. Ich hab komplett den Verstand verloren.\nSowas von lächerlich. Wie konnte ich mir einbilden, dass Chioma mich mag.\nNeben ihr wirke ich wie jemand, der im Hintergrund versehentlich mitgefilmt wurde.\nSie findet mich nett. NNNNNEEEEEEEEETTTTTTTTTTTTTTT.\nNett ist der kleine Bruder von Scheiße.\n\nAuch im Traum sehe ich sie vor mir.\nIch lieg noch im Bett.\nChioma kommt rein mit 'nem Silbertablett:\nEin goldenes Etikett?\nDarauf steht: „Danke. Doch du bist nur nett. \nNa toll! Wir singen im Duett:\n„Wow, ist der nett!”"
+      },
+      "s1e05c09_0003": {
+        "date": "Freitag",
+        "title": "Quellen",
+        "body": "Hallo liebes Tagebuch!\nEs wird einfach nicht besser.\n\nIch bin doch immer so vorsichtig. Wie konnte mir das nur passieren?\nWir haben doch extra nach einer zweiten Quelle gesucht. Verdammt.\n\nIch hätte merken müssen, dass beide Infos von derselben Person kommen.\n\nChioma hätte das sofort geschnallt. Hätte ich sie bloß gefragt 😭"
       }
     }
   },
@@ -537,30 +546,57 @@
     }
 },
 
+"lisa": {
+  "name": "Lisa",
+  "friendbook": {
+    "mostly": "Fröhlich. Neugierig. Gut informiert.\nIch weiß gern, was läuft – und am liebsten ein bisschen mehr als die anderen.",
+    "othersLike": [
+      "Ich bin offen.",
+      "Ich interessiere mich für andere.",
+      "Mit mir fühlt man sich schnell 'dabei'."
+    ],
+    "annoys": [
+      "Ich will alles wissen.",
+      "Ich erzähle Dinge weiter, die vielleicht nicht für alle gedacht waren. Ups.",
+      "Und ich merke manchmal zu spät, dass Neugier auch Grenzen hat."
+    ],
+    "hobbies": ["Reiten", "DIY-Ideen sammeln", "Nachforschen (auch, wenn ich das so nicht nennen würde)"],
+    "friends": ["Yasmin", "Chioma", "Dominik", "Emma", "Carlos"],
+    "colors": "Pastell",
+    "happy": "Wenn andere sagen: \"Woher weißt du das eigentlich alles?\"",
+    "netRule": "Nur weil ich etwas weiß, heißt das noch lange nicht, dass ich es online teilen sollte.",
+    "mistake": "Ich hasse Fehler. Wenn ich etwas falsch mache, versuche ich schnell drei Sachen gut zu machen, dass sich bloß niemand mehr an meinen Fehler erinnert.",
+    "secret": "Ich fürchte mich davor, selbst mal ein Geheimnis zu haben, dass andere im Internet teilen.",
+    "funFact": "Ich sage oft 'Ich hab das nur zufällig gesehen' – und weiß dabei ziemlich genau, dass es kein Zufall war."
+  }
+},
+
 "jonas": {
   "name": "Jonas",
   "friendbook": {
-    "mostly": "Verträumt. In meiner Musik vertieft.\nIch sage nicht viel – aber ich meine, was ich sage. Mit Musik kann ich mich besser ausdrücken.",
+    "mostly": "Entspannt. Kreativ. Hilfsbereit.\nIch arbeite gern kreativ, in der Gruppe oder auch allein.",
     "othersLike": [
-      "Ich höre zu und bin keiner, der sofort seine Kommentare raushaut.",
-      "Man kann sich auf mich verlassen."
+      "Ich kann gut zuhören.",
+      "Ich bleibe auch in stressigen Situationen ruhig.",
+      "Mir kann man Sachen erzählen, ohne dass sie gleich jeder weiß."
     ],
     "annoys": [
-      "Ich sage zu selten, was ich wirklich will.",
-      "Ich brauche lange, um mich zu entscheiden."
+      "Ich bin manchmal zu vorsichtig.",
+      "Konflikten gehe ich lieber aus dem Weg.",
+      "Ich sage nicht immer sofort, was ich wirklich denke."
     ],
     "hobbies": [
       "Gitarre spielen",
-      "eigene Songs schreiben",
-      "Musik hören und dabei nachdenken"
+      "Songs schreiben",
+      "Musik hören"
     ],
-    "friends": ["Noah", "Carlos"],
-    "colors": "Blau.",
-    "happy": "Wenn jemand meine Musik hört, ohne viel dazu zu sagen.",
-    "netRule": "Hinter Musik steckt Arbeit – die gehört jemandem, auch im Internet.",
-    "mistake": "Wenn ich einen Fehler mache, verkrieche ich mich und denke lange darüber nach.",
-    "secret": "Dass mir die Meinung anderer zu wichtig ist, und ich immer gefallen möchte.",
-    "funFact": "Ich schreibe Songtexte, die ich dann unter der Dusche singe."
+    "friends": ["Lukas", "Noah", "Amir"],
+    "colors": "Schwarz und weiß",
+    "happy": "Mit anderen Musik machen.",
+    "netRule": "Ich will niemandem den Tag versauen.",
+    "mistake": "Dann versuche ich, den Fehler ehrlich zuzugeben.",
+    "secret": "Ich wirke oft gelassen, mache mir aber viele Gedanken über alles mögliche.",
+    "funFact": "Ich klopfe oft unbewusst den Rhythmus von Liedern auf den Tisch. Auch im Unterricht."
   }
 },
 

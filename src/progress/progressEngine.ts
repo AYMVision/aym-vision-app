@@ -235,8 +235,8 @@ export function applyChapterReward(profile: UserProfile, meta: ChapterMeta) {
     if (res.awarded) newMilestoneStickerIds.push('milestone-10-chapters');
   }
 
-  // erste Staffel (pragmatisch: 8 abgeschlossene Episoden)
-  if (totalCompletedEpisodesOverall >= 8) {
+  // erste Staffel (Staffel 1 = 5 Episoden)
+  if (totalCompletedEpisodesOverall >= 5) {
     const res = awardMilestoneSticker(next, 'milestone-first-season');
     next = res.profile;
     if (res.awarded) newMilestoneStickerIds.push('milestone-first-season');

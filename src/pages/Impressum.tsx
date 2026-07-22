@@ -82,6 +82,14 @@ const MEDIA_CREDITS = [
     usedFor: 'Diskussion zwischen Chioma und Dominik; Weeklys mit Chioma',
   },
   {
+    type: 'Musik',
+    title: '„Happy Kids Background Music" von BombinSound',
+    source: 'Pixabay',
+    license: 'Pixabay Content License',
+    licenseUrl: 'https://pixabay.com/service/license-summary/',
+    usedFor: 'Staffel-1-Finale',
+  },
+  {
     type: 'Hintergrundgeräusche',
     title: '„school break noise outdoor.wav" von Libra222',
     source: 'Freesound',

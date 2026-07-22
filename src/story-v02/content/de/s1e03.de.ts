@@ -421,7 +421,7 @@ const c04 = C('s1e03c04', 3, 'Amic 4', 'Schülerzeitung', [
     m(ch.jonas, 'Ja, könnten wir echt öfter machen.', '15:20'),
     m(ch.chioma, 'War schön, aber…', '15:21'),
     m(ch.aylin, 'Aber was?', '15:21'),
-    m(ch.chioma, 'Aber, wenn wir wirklich eine Schülerzeitung machen wollen, brauchen wir auch eine klare Struktur.', '15:21'),
+    m(ch.chioma, 'Aber, vielleicht ist es an der Zeit, die Schülerzeit mal neu zu strukturieren.', '15:21'),
     m(ch.chioma, 'Davon haben wir gar nicht gesprochen.', '15:22'),
     m(ch.aylin, 'Wenn ich mich richtig erinnere, bist du gerade erst neu oder?', '15:22'),
     m(ch.carlos, 'Ich finde, Chioma hat Recht.', '15:22'),

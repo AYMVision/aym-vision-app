@@ -31,5 +31,20 @@
   },
   "close": "Schließen",
   "remove": "Entfernen",
-  "add": "Hinzufügen"
+  "add": "Hinzufügen",
+  "seasonFinale": {
+    "badge": "Staffel 1: Doppelklick · Abschluss",
+    "headline": "Ihr habt es geschafft!",
+    "subline": "Alle fünf Folgen. Alle Herausforderungen. Durchgedacht.",
+    "yourStickers": "Deine Sticker dieser Staffel",
+    "amyMessage": "Ich bin stolz auf dich, {{name}}. 🦉 Du hast nachgedacht, bevor du geklickt hast. Das ist seltener als du denkst.",
+    "amyMessageNoName": "Ich bin stolz auf dich. 🦉 Du hast nachgedacht, bevor du geklickt hast. Das ist seltener als du denkst.",
+    "teaserLabel": "Was kommt als Nächstes?",
+    "teaserQuestion": "Welche Geheimnisse haben Yasmin, Carlos & Co. noch?",
+    "teaserSub": "Ihre Geschichte hat gerade erst begonnen.",
+    "ctaAlbum": "Alle Sticker ansehen ✨",
+    "ctaStories": "Zur Übersicht →",
+    "musicCredit": "Musik: 'Happy Kids Background Music' von BombinSound · Pixabay Content License",
+    "continueButtonLabel": "Zum großen Finale →"
+  }
 }

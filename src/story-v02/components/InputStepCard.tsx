@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import type { InputStep } from '../types/storyTypes';
 import { STORY_CHARACTERS as characters } from '../../content/characters';
 import ChatMessage from '../../components/ChatMessage';
+import { detectContentFlags, isCriticalSafety } from '../../ai/core/contentFlags';
+import { CRISIS_MESSAGE, CRISIS_AMY_REPLY } from '../../ai/core/safetyMessages';
 
 type Props = {
   step: InputStep;
@@ -14,6 +16,8 @@ type Props = {
 export default function InputStepCard({ step, onSubmit }: Props) {
   const { t } = useTranslation('stories');
   const [text, setText] = useState('');
+  const [crisis, setCrisis] = useState(false);
+  const [capturedText, setCapturedText] = useState('');
 
   const shouldShowPromptBubble = step.showPromptBubble !== false;
 
@@ -21,6 +25,42 @@ export default function InputStepCard({ step, onSubmit }: Props) {
     step.promptSpeakerId && characters[step.promptSpeakerId]
       ? characters[step.promptSpeakerId]
       : characters.yasmin;
+
+  // Crisis state — zeigt Krisenhinweis, story geht erst nach Bestätigung weiter
+  if (crisis) {
+    return (
+      <div className="w-full">
+        {shouldShowPromptBubble && (
+          <ChatMessage
+            message={{
+              id: `${step.id}-prompt`,
+              type: speaker.id === 'amy' ? 'main' : 'other',
+              speaker,
+              content: step.prompt ?? t(step.promptKey ?? '', { defaultValue: '' }),
+              timestamp: '',
+            }}
+          />
+        )}
+        {capturedText && (
+          <ChatMessage
+            message={{ id: `${step.id}-user-crisis`, type: 'user', content: capturedText, timestamp: '' }}
+          />
+        )}
+        <ChatMessage
+          message={{ id: `${step.id}-crisis-msg`, type: 'main', speaker: characters.amy, content: CRISIS_MESSAGE, timestamp: '' }}
+        />
+        <div className="mx-auto mt-2 mb-3 max-w-[560px] flex justify-end">
+          <button
+            type="button"
+            onClick={() => onSubmit({ text: capturedText || undefined })}
+            className="rounded-xl bg-violet-700 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-600 active:scale-95 transition-transform"
+          >
+            Ich hab's gelesen →
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
@@ -63,6 +103,15 @@ export default function InputStepCard({ step, onSubmit }: Props) {
                   const trimmed = text.trim();
 
                   if (!trimmed && !step.emptySubmitsAllowed && step.required) return;
+
+                  if (trimmed) {
+                    const flags = detectContentFlags(trimmed);
+                    if (isCriticalSafety(flags)) {
+                      setCapturedText(trimmed);
+                      setCrisis(true);
+                      return;
+                    }
+                  }
 
                   onSubmit({ text: trimmed || undefined });
                 }}

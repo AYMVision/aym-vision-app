@@ -23,6 +23,7 @@ export type ContentFlags = {
   misinformationIntent: boolean;
 
   illegalHarmIntent: boolean; // optional später (v2: konservativ false)
+  languageWarning: boolean;   // Schimpfwörter / Beleidigungen (Stufe 3, kein Block)
 };
 
 // --- Self-harm / Suicide (sehr konservativ, DE/EN) ---
@@ -125,6 +126,19 @@ const HATE_PATTERNS: RegExp[] = [
   /\b(i)\b[\s\S]{0,10}\b(hate)\b[\s\S]{0,20}\b(all|them)\b/i,
 ];
 
+// --- Language Warning — Schimpfwörter / einfache Beleidigungen (Stufe 3) ---
+// Kein Block, nur ein freundlicher Nudge; nach einem Retry wird durchgelassen.
+const LANGUAGE_WARNING_PATTERNS: RegExp[] = [
+  // DE
+  /\bschei(ss|ss)\w*/i,
+  /\bfick\w*\b/i,
+  /\b(wichser|arschloch|hurensohn|vollidiot|depp)\b/i,
+  /\bidiot(in)?\b/i,
+  /\bverpisss?\b/i,
+  // EN
+  /\b(fuck|shit|asshole|bitch|bastard|crap|damn)\b/i,
+];
+
 // --- Misinformation intent (Fake News absichtlich verbreiten) ---
 const MISINFO_PATTERNS: RegExp[] = [
   // DE
@@ -159,6 +173,8 @@ export function detectContentFlags(
   // optional später
   const illegalHarmIntent = false;
 
+  const languageWarning = t ? LANGUAGE_WARNING_PATTERNS.some((r) => r.test(t)) : false;
+
   return {
     selfHarm,
     sexualContent,
@@ -167,6 +183,7 @@ export function detectContentFlags(
     hateOrDegrading,
     misinformationIntent,
     illegalHarmIntent,
+    languageWarning,
   };
 }
 

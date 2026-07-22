@@ -13,6 +13,28 @@
       }
     }
   },
+  "s1e05": {
+    "c02": {
+      "input": {
+        "lisa_user_sticker": "Schreib Lisa deine Antwort …"
+      }
+    },
+    "c05": {
+      "input": {
+        "lisa_user_response": "Was schreibst du Lisa zurück?"
+      }
+    },
+    "c08": {
+      "input": {
+        "jonas_user": "Schreib Jonas deine Antwort …"
+      }
+    },
+    "c09": {
+      "input": {
+        "jonas_user_ratschlag": "Was würdest du Jonas raten?"
+      }
+    }
+  },
   "s1e02": {
     "c01": {
       "input": {
@@ -165,10 +187,12 @@
     "cta": "Viel Spaß mit Amy Surfwing! 💬🦉"
   },
   "list": {
-    "kicker": "Amy Surfwing",
-    "title": "Starte dein Amic",
+    "kicker": "Staffel 1",
+    "title": "Doppelklick",
+    "description": "Yasmin tippt. Carlos leitet weiter. Finn ist mal wieder nicht offline. Und ein Sticker, den niemand hätte weiterschicken sollen, hat gerade die halbe Schule erreicht. Was als kleiner Spaß begann, wird für die ganze Klasse zum echten Test — für Freundschaften, für Vertrauen, für das, was wirklich zählt. Du bist mittendrin.",
     "lead": "Ein Klick und du bist mitten im Abenteuer.",
-    "searchPlaceholder": "Story suchen…"
+    "searchPlaceholder": "Story suchen…",
+    "seasonBadge": "Staffel 1 · Doppelklick"
   },
   "trust": {
     "kicker": "Denkraum",
@@ -274,8 +298,8 @@
       "description": "Ein verschwundener Sportbeutel sorgt für Ärger. Zwischen Gerüchten und Missverständnissen wird die Klasse auf die Probe gestellt."
     },
     "s1e05": {
-      "title": "Chaos auf Sendung",
-      "description": "Zwischen Likes, Filtern und waghalsigen Videos stellt sich eine Frage: Wer bist du wirklich?"
+      "title": "Wolf im Chat",
+      "description": "Aus einem kleinen Spaß wird großes Durcheinander. Freundschaften werden auf die Probe gestellt – haben sie noch eine Chance?"
     }
   },
   "chatSwitch": {
@@ -426,7 +450,7 @@
   },
   "overview": {
     "back": "Alle Storys",
-    "season": "Staffel 1",
+    "season": "Staffel 1 · Doppelklick",
     "aiTranslated": "Story mit KI übersetzt · Kann Fehler enthalten",
     "timeLocked": {
       "daily": "Morgen wieder verfügbar"

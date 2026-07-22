@@ -38,6 +38,9 @@ export function namespacesForPath(pathname: string): I18nNamespace[] {
   // Studio
   if (pathname.startsWith('/studio')) return [...base, 'studio', 'bonus'];
 
+  // Season Finale
+  if (pathname.startsWith('/season-finale')) return [...base];
+
   // Beta
   if (pathname.startsWith('/beta')) return [...base, 'stories'];
 

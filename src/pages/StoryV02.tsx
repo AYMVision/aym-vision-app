@@ -1393,7 +1393,8 @@ function hasStoryMigrationDone(key: string): boolean {
       case 'amy_feedback':
         if (
           currentStep?.type === 'amy_feedback' &&
-          currentStep.sourceStepId === entry.stepId
+          currentStep.sourceStepId === entry.stepId &&
+          !state.completedStepIds.includes(currentStep.id)
         ) {
           return null;
         }
@@ -1436,7 +1437,8 @@ function hasStoryMigrationDone(key: string): boolean {
       case 'amy_reaction':
         if (
           currentStep?.type === 'amy_reaction' &&
-          currentStep.sourceStepId === entry.stepId
+          currentStep.sourceStepId === entry.stepId &&
+          !state.completedStepIds.includes(currentStep.id)
         ) {
           return null;
         }
@@ -1460,6 +1462,7 @@ function hasStoryMigrationDone(key: string): boolean {
           isBetaTester() &&
           !isBetaCompletionShown() &&
           courseId === 's1e01';
+        const isSeasonFinale = courseId === 's1e05';
         return (
           <div key={entry.id} data-story-entry-id={entry.id}>
             <EpisodeSummaryCard
@@ -1470,10 +1473,13 @@ function hasStoryMigrationDone(key: string): boolean {
               characterImg="media/story/characters/yasmin-256.webp"
               characterSays="Danke, dass du dabei warst."
               betaMode={shouldShowBetaOnContinue}
+              continueLabel={isSeasonFinale ? t('common:seasonFinale.continueButtonLabel', { defaultValue: 'Zum großen Finale →' }) : undefined}
               onViewSticker={() => navigate('/album')}
               onContinue={() => {
                 if (shouldShowBetaOnContinue) {
                   setShowBetaCompletionModal(true);
+                } else if (isSeasonFinale) {
+                  navigate('/season-finale/s1');
                 } else {
                   navigate('/stories');
                 }
@@ -1746,6 +1752,9 @@ function hasStoryMigrationDone(key: string): boolean {
     }
 
     if (currentStep.type === 'amy_reaction') {
+      // Once completed (chapter_finished), let the transcript entry render in the correct position.
+      if (state.completedStepIds.includes(currentStep.id)) return null;
+
       const lines = findAmyReactionLines(state.transcript, currentStep.sourceStepId);
 
       return (

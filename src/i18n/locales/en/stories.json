@@ -165,10 +165,12 @@
     "cta": "Have fun with Amy Surfwing! 💬🦉"
   },
   "list": {
-    "kicker": "Amy Surfwing",
-    "title": "Start your Amic",
+    "kicker": "Season 1",
+    "title": "Doppelklick",
+    "description": "Yasmin types. Carlos forwards it. Finn is offline — again, not really. And a sticker nobody should have sent is now all over school. What started as a joke becomes a real test for the whole class — friendships, trust, and what actually matters. You’re right in the middle of it.",
     "lead": "One tap and you’re right in the adventure.",
-    "searchPlaceholder": "Search story…"
+    "searchPlaceholder": "Search story…",
+    "seasonBadge": "Season 1 · Doppelklick"
   },
   "trust": {
     "kicker": "Thinking space",
@@ -274,12 +276,8 @@
       "description": "..."
     },
     "s1e05": {
-      "title": "S1 E05",
-      "description": "..."
-    },
-    "s1e06": {
-      "title": "S1 E06",
-      "description": "..."
+      "title": "Wolf in the Chat",
+      "description": "A small prank turns into big chaos. Friendships are put to the test – can they survive?"
     },
     "s1e07": {
       "title": "S1 E07",
@@ -439,7 +437,7 @@
   },
   "overview": {
     "back": "All Stories",
-    "season": "Season 1",
+    "season": "Season 1 · Doppelklick",
     "aiTranslated": "Story translated with AI · May contain errors",
     "timeLocked": {
       "daily": "Available again tomorrow"

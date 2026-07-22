@@ -7,9 +7,15 @@ import { STORY_CHARACTERS as characters } from '../../content/characters';
 import ChatMessage from '../../components/ChatMessage';
 import { runAmy } from '../../ai/orchestrator/runAmy';
 import type { AmyQuestionType } from '../../ai/core/amyQuestionType';
-import { isCriticalSafety } from '../../ai/core/contentFlags';
+import { detectContentFlags, isCriticalSafety, isNormViolation } from '../../ai/core/contentFlags';
 import { isTrivialInput } from '../utils/isTrivialInput';
 import { trackReflectionStep } from '../../analytics/analyticsEvents';
+import {
+  CRISIS_MESSAGE,
+  CRISIS_AMY_REPLY,
+  NORM_VIOLATION_MESSAGE,
+  LANGUAGE_WARNING_MESSAGE,
+} from '../../ai/core/safetyMessages';
 
 // ---------------------------------------------------------------------------
 // Phase state machine
@@ -17,14 +23,16 @@ import { trackReflectionStep } from '../../analytics/analyticsEvents';
 //  idle ──► loading ──► unlocked           (A / B)
 //                   ──► retry              (C / UNSICHER / safety attempt 0–1)
 //                   ──► support_required   (forcedUnlock + critical, OR forcedUnlock + C)
+//       ──► crisis                         (bypassAi: selfHarm/sexual/violence — zeigt Kriseninfo)
 //
+// crisis: Story pausiert bis "Ich hab's gelesen" bestätigt wird.
 // support_required: AI check still runs on every Senden.
 //   - pass (A/B, non-critical) → unlocked (amyReply cleared — no double display in amy_reaction)
 //   - fail (C / critical)      → stay in support_required, NO new Amy hint shown
 //
 // The adult hint stays visible until a genuine answer unlocks progress.
 // ---------------------------------------------------------------------------
-type Phase = 'idle' | 'loading' | 'retry' | 'unlocked' | 'support_required';
+type Phase = 'idle' | 'loading' | 'retry' | 'unlocked' | 'support_required' | 'crisis';
 
 type Props = {
   step: ReflectionStep;
@@ -43,6 +51,34 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
   function handleBypassSubmit() {
     const trimmed = text.trim();
     if (!trimmed) return;
+
+    // --- Safety gate (runs before everything else, no AI needed) ---
+    const flags = detectContentFlags(trimmed);
+
+    if (isCriticalSafety(flags)) {
+      setLastSubmitted(trimmed);
+      setPhase('crisis');
+      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'crisis', topicIds: step.topicIds, attemptCount });
+      return;
+    }
+
+    if (isNormViolation(flags) && attemptCount === 0) {
+      setAmyReply(NORM_VIOLATION_MESSAGE);
+      setAttemptCount(1);
+      setText('');
+      setPhase('retry');
+      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'norm_violation', topicIds: step.topicIds, attemptCount: 1 });
+      return;
+    }
+
+    if (flags.languageWarning && attemptCount === 0) {
+      setAmyReply(LANGUAGE_WARNING_MESSAGE);
+      setAttemptCount(1);
+      setText('');
+      setPhase('retry');
+      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'language_warning', topicIds: step.topicIds, attemptCount: 1 });
+      return;
+    }
 
     // First trivial attempt: show a gentle nudge and reopen textarea
     if (isTrivialInput(trimmed) && attemptCount === 0) {
@@ -142,6 +178,41 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
   // ---------------------------------------------------------------------------
   if (step.reflectionKind === 'open_text') {
     const promptText = step.prompt ?? t(step.promptKey ?? '', { defaultValue: '' });
+
+    // Crisis phase — zeigt Krisenhinweis, story geht erst nach Bestätigung weiter
+    if (phase === 'crisis') {
+      return (
+        <div className="w-full">
+          <ChatMessage
+            message={{ id: `${step.id}-prompt`, type: 'main', speaker: characters.amy, content: promptText, timestamp: '' }}
+          />
+          {lastSubmitted && (
+            <ChatMessage
+              message={{ id: `${step.id}-user-crisis`, type: 'user', content: lastSubmitted, timestamp: '' }}
+            />
+          )}
+          <ChatMessage
+            message={{ id: `${step.id}-crisis-msg`, type: 'main', speaker: characters.amy, content: CRISIS_MESSAGE, timestamp: '' }}
+          />
+          <div className="mx-auto mt-2 mb-3 max-w-[560px] flex justify-end">
+            <button
+              type="button"
+              onClick={() => {
+                // Krisentext bleibt als Amy-Bubble sichtbar (via retry + amyReply).
+                // Textarea öffnet sich wieder → User beantwortet die Frage noch.
+                // Beim nächsten Submit läuft der normale Bypass-Pfad → fixedAmyReply + Tipp.
+                setAmyReply(CRISIS_MESSAGE);
+                setText('');
+                setPhase('retry');
+              }}
+              className="rounded-xl bg-violet-700 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-600 active:scale-95 transition-transform"
+            >
+              Ich hab's gelesen →
+            </button>
+          </div>
+        </div>
+      );
+    }
 
     const showUserBubble = phase !== 'idle';
     // Amy's reply is shown inline only during retry/support_required (as guidance to improve).

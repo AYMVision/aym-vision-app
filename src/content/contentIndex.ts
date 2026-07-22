@@ -38,6 +38,7 @@ export type EpisodeMeta = {
 export type SeasonMeta = {
   seasonId: string;
   seasonTitle: string;
+  seasonName?: string;
   badgeImage?: string;
   episodes: EpisodeMeta[];
 };
@@ -46,6 +47,7 @@ export const CONTENT_INDEX: SeasonMeta[] = [
   {
     seasonId: 's1',
     seasonTitle: 'Staffel 1',
+    seasonName: 'Doppelklick',
     badgeImage: '/media/stickers/seasons/s1-badge-512.webp',
     episodes: [
       {
@@ -191,7 +193,7 @@ chapterTopicTags: {
         coverImage: '/media/story/episodes/s1e05/s1e05-512.webp',
         stickerImage: '/media/stickers/episodes/s1e05-512.webp',
 
-        chapterCount: 10,
+        chapterCount: 11,
         released: true,
         order: 5,
         storyEngine: 'v2',

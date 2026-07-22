@@ -61,13 +61,6 @@ export const EPISODE_STICKERS: StickerDef[] = [
     category: 'episode',
   },
   {
-    id: 's1:s1e06',
-    titleKey: 'episodes.s1e06',
-    title: 'Episode 6 abgeschlossen',
-    image: 'media/stickers/episodes/s1e06-512.webp',
-    category: 'episode',
-  },
-  {
     id: 's1:s1e07',
     titleKey: 'episodes.s1e07',
     title: 'Episode 7 abgeschlossen',

@@ -86,6 +86,14 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     firstAppearance: 's1e03c03',
   },
   {
+    id: 'fake-sticker',
+    title: 'Fake-Sticker',
+    teaser: 'Ein Bild oder Sticker von einer echten Person — aber in einer Situation, die nie passiert ist.',
+    body: 'Ein Fake-Sticker ist ein digitales Bild, das aussieht wie ein echter Sticker oder ein echtes Foto — aber in Wirklichkeit zusammengebaut oder von einer KI erstellt wurde. Oft zeigt es echte Personen in erfundenen Situationen. Mit KI-Programmen kann das heute sehr schnell gehen. Das Problem: Solche Bilder können sehr verletzend sein, besonders wenn die gezeigte Person nicht gefragt wurde. Wer ein Bild von jemandem bearbeitet oder weiterleitet, trägt Mitverantwortung dafür, wie es ankommt.',
+    didYouKnow: 'Bilder, die so realistisch wirken, dass man sie kaum von echten unterscheiden kann, nennt man auch „Deepfakes". Der Begriff kommt von „deep learning" (eine Methode, mit der KI lernt) und „fake" (englisch für falsch).',
+    firstAppearance: 's1e05c01',
+  },
+  {
     id: 'feed',
     title: 'Feed',
     teaser: 'Der endlose Strom an Inhalten, den ein Algorithmus für dich auswählt.',
@@ -267,6 +275,30 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     didYouKnow: '"Prompt Engineering" ist inzwischen ein echter Beruf — Menschen werden dafür bezahlt, besonders gute Anweisungen für KI-Systeme zu entwickeln.',
   },
   {
+    id: 'quelle',
+    title: 'Quelle',
+    teaser: 'Woher eine Information kommt — und wie verlässlich das ist.',
+    body: 'Eine Quelle ist das, woher eine Information stammt. Wer hat das geschrieben? Wer hat das gesagt? Und kann man dieser Person oder diesem Medium vertrauen? Nicht alle Quellen sind gleich gut. Eine Zeitung, die Fakten prüft und mehrere Personen befragt, ist verlässlicher als ein Gerücht aus dem Chat. Und ein privater Blog ist schwerer einzuschätzen als ein offizieller Bericht. Deshalb lohnt es sich bei wichtigen Infos zu fragen: Wer sagt das — und warum?',
+    didYouKnow: 'Journalist:innen haben eine Faustregel: Eine Quelle ist keine Quelle. Erst wenn mindestens zwei unabhängige Quellen dieselbe Information bestätigen, gilt sie als gesichert.',
+    firstAppearance: 's1e05c08',
+  },
+  {
+    id: 'recherche',
+    title: 'Recherche',
+    teaser: 'Informationen gezielt suchen, prüfen und bewerten — bevor man sie glaubt oder weitererzählt.',
+    body: 'Recherchieren bedeutet, einer Information auf den Grund zu gehen. Wer recherchiert, fragt nach: Stimmt das wirklich? Woher kommt das? Gibt es weitere Belege? Journalist:innen recherchieren immer, bevor sie etwas veröffentlichen — sie befragen Personen, suchen Dokumente und prüfen Quellen. Aber auch im Alltag lohnt sich kurze Recherche: Bevor du etwas weitererzählst oder weiterleitest, kannst du kurz prüfen, ob es tatsächlich stimmt.',
+    didYouKnow: 'Das Wort kommt aus dem Französischen: „rechercher" bedeutet „suchen" oder „erforschen". Professionelle Recherche kann manchmal Wochen oder sogar Monate dauern.',
+    firstAppearance: 's1e05c07',
+  },
+  {
+    id: 'redaktion',
+    title: 'Redaktion',
+    teaser: 'Das Team, das Artikel vorbereitet, prüft und entscheidet, was veröffentlicht wird.',
+    body: 'Eine Redaktion ist das Team, das Texte, Artikel oder Beiträge zusammenstellt, prüft und veröffentlicht. Bei einer Zeitung oder Schülerzeitung entscheidet die Redaktion, welche Themen wichtig sind, wer worüber schreibt — und ob ein Artikel so veröffentlicht werden darf. Oft gibt es eine Chefredaktion, die das letzte Wort hat. Eine gute Redaktion prüft Informationen, bevor sie nach draußen gehen.',
+    didYouKnow: 'Das Wort „Redaktion" kommt vom lateinischen „redigere" — ordnen, zusammenstellen. Eine Redaktion ist also im wörtlichen Sinn ein Ort, an dem Informationen geordnet und überprüft werden.',
+    firstAppearance: 's1e05c09',
+  },
+  {
     id: 'reverse-image-search',
     title: 'Reverse Image Search',
     teaser: 'Ein Bild als Suchbegriff nutzen — und herausfinden, ob es echt ist.',
@@ -281,6 +313,14 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     body: 'Bei einer normalen Suche gibst du Wörter ein. Bei einer Rückwärtsbildsuche (englisch: Reverse Image Search) gibst du stattdessen ein Bild ein — und die Suchmaschine findet heraus, wo dieses Bild sonst noch im Internet auftaucht. Das ist nützlich, um Fake-Bilder zu entlarven oder den Ursprung eines Fotos zu finden. Aber auch für den Alltag: Wie heißt dieses Tier? Welche Pflanze ist das? Bei welchem Geschäft gibt es diesen Rucksack? Google Bilder und TinEye bieten das an.',
     didYouKnow: 'Viele Falschmeldungen im Netz nutzen echte Fotos aus einem anderen Kontext. Mit einer Rückwärtssuche lässt sich das oft in Sekunden aufdecken.',
     firstAppearance: 's1e03c03',
+  },
+  {
+    id: 'schneeballeffekt',
+    title: 'Schneeballeffekt',
+    teaser: 'Wenn etwas durch Weitergabe immer größer wird — wie ein rollender Schneeball.',
+    body: 'Ein Schneeball, der einen Hang hinunterrollt, wird immer größer. Genau so kann es im Internet passieren: Eine Nachricht, ein Bild oder ein Gerücht wird an ein paar Personen weitergeleitet. Jede von ihnen leitet es weiter. Und so verbreitet es sich immer schneller und weiter. Was mit ein paar Klicks angefangen hat, kann in kurzer Zeit tausende oder sogar Millionen Menschen erreichen. Das kann harmlos sein — bei peinlichen Bildern oder falschen Informationen wird es aber schnell zum Problem.',
+    didYouKnow: 'Im Marketing heißt diese Art der Verbreitung „virales Marketing" — wenn Inhalte sich fast von selbst weitergeben. Das Prinzip ist dasselbe wie beim Schneeballeffekt: Jede Person trägt ein kleines bisschen zur Verbreitung bei.',
+    firstAppearance: 's1e05c03',
   },
   {
     id: 'screen-time',
@@ -370,6 +410,14 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     teaser: 'Wenn sich etwas extrem schnell im Internet verbreitet.',
     body: 'Wenn etwas sich extrem schnell im Internet verbreitet, nennt man das "viral gehen". Hat nichts mit Erkältung zu tun. Ein Beitrag, Video oder Meme kann innerhalb von Stunden Millionen Menschen erreichen — weil es geteilt, kommentiert und weitergeleitet wird. Nicht immer ist das, was viral geht, wahr oder wichtig.',
     didYouKnow: 'Der Begriff kommt von "Virus" — weil sich Inhalte ähnlich wie ein Virus verbreiten: von Person zu Person, immer weiter, immer schneller.',
+  },
+  {
+    id: 'weiterleiten',
+    title: 'Weiterleiten',
+    teaser: 'Eine Nachricht oder ein Bild an weitere Personen schicken — mit mehr Konsequenzen als man denkt.',
+    body: 'Weiterleiten bedeutet, eine Nachricht, ein Bild oder ein Video an andere Personen zu schicken, die es ursprünglich nicht erhalten haben. Das geht in Sekunden und lässt sich danach nicht mehr rückgängig machen. Wer etwas weiterleitet, ist mitverantwortlich dafür, dass es sich verbreitet. Auch wenn man es „nur kurz zeigen" wollte. Deshalb hilft es, vorher eine Sekunde innezuhalten: Würde die Person auf dem Bild oder die Person, die die Nachricht geschrieben hat, das wollen?',
+    didYouKnow: 'Eine Nachricht, die jeder nur an zwei Freunde weiterleitet, kennen nach 10 Schritten schon über 1.000 Menschen. Das nennt man den Schneeballeffekt.',
+    firstAppearance: 's1e05c01',
   },
 ];
 

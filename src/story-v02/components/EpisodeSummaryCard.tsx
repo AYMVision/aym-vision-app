@@ -32,7 +32,7 @@ function StickerReveal({ src }: { src?: string }) {
         <img
           src={src}
           alt="Sticker"
-          className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl drop-shadow-xl"
+          className="w-28 h-28 sm:w-32 sm:h-32 object-contain drop-shadow-xl"
           onError={(e) => {
             (e.currentTarget as HTMLImageElement).style.display = 'none';
           }}
@@ -59,6 +59,7 @@ type Props = {
   onContinue: () => void;
   onProfile?: () => void;
   betaMode?: boolean;
+  continueLabel?: string;
 };
 
 export default function EpisodeSummaryCard({
@@ -72,6 +73,7 @@ export default function EpisodeSummaryCard({
   onContinue,
   onProfile,
   betaMode = false,
+  continueLabel,
 }: Props) {
   const { t } = useTranslation('common');
   const name = chatName?.trim();
@@ -197,7 +199,7 @@ export default function EpisodeSummaryCard({
                   onClick={onContinue}
                   className="w-full rounded-2xl border-2 border-violet-400 bg-transparent px-5 py-3 text-sm font-semibold text-violet-100 hover:bg-violet-800/50 active:scale-95 transition-transform"
                 >
-                  Zur Story-Liste →
+                  {continueLabel ?? 'Zur Story-Liste →'}
                 </button>
                 {onProfile && (
                   <button

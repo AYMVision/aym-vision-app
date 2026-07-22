@@ -52,6 +52,15 @@ export const DIARY_ENTRIES: Record<DiaryId, DiaryEntry[]> = {
       unlock: { afterChapterId: 's1e02c02' },
       decor: { moodEmoji: '✨', tape: true, marker: true, accent: 'rose' },
     },
+    {
+      entryId: 's1e05c10_0004',
+      bonusId: 'diary-yasmin-entry4',
+      order: 4,
+      dateKey: 'diaries.entries.yasmin.s1e05c10_0004.date',
+      bodyKey: 'diaries.entries.yasmin.s1e05c10_0004.body',
+      unlock: { afterChapterId: 's1e05c10' },
+      decor: { moodEmoji: '😤', tape: true, marker: true, accent: 'rose' },
+    },
   ],
 
   diary_mia: [
@@ -95,6 +104,16 @@ export const DIARY_ENTRIES: Record<DiaryId, DiaryEntry[]> = {
       bodyKey: 'diaries.entries.jonas.s1e04c07_0002.body',
       unlock: { afterChapterId: 's1e04c07' },
       decor: { moodEmoji: '😔', tape: true, marker: true, accent: 'sky' },
+    },
+    {
+      entryId: 's1e05c09_0003',
+      bonusId: 'diary-jonas-entry3',
+      order: 3,
+      dateKey: 'diaries.entries.jonas.s1e05c09_0003.date',
+      titleKey: 'diaries.entries.jonas.s1e05c09_0003.title',
+      bodyKey: 'diaries.entries.jonas.s1e05c09_0003.body',
+      unlock: { afterChapterId: 's1e05c09' },
+      decor: { moodEmoji: '😳', tape: true, marker: true, accent: 'sky' },
     },
   ],
     diary_me: [

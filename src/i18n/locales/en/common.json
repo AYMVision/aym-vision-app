@@ -31,5 +31,20 @@
   },
   "close": "Close",
   "remove": "Remove",
-  "add": "Add"
+  "add": "Add",
+  "seasonFinale": {
+    "badge": "Season 1: Doppelklick · Finale",
+    "headline": "You did it!",
+    "subline": "All five episodes. Every challenge. Thought through.",
+    "yourStickers": "Your stickers this season",
+    "amyMessage": "I'm proud of you, {{name}}. 🦉 You thought before you clicked. That's rarer than you think.",
+    "amyMessageNoName": "I'm proud of you. 🦉 You thought before you clicked. That's rarer than you think.",
+    "teaserLabel": "What's next?",
+    "teaserQuestion": "What secrets do Yasmin, Carlos & Co. still have?",
+    "teaserSub": "Their story is only just beginning.",
+    "ctaAlbum": "View all stickers ✨",
+    "ctaStories": "Back to overview →",
+    "musicCredit": "Music: \"Happy Kids Background Music\" by BombinSound · Pixabay Content License",
+    "continueButtonLabel": "To the big finale →"
+  }
 }

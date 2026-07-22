@@ -110,6 +110,9 @@ const CHARACTER_UNLOCKS_BY_CHAPTER: Record<string, CharacterId[]> = {
   // s1e04
   s1e04c02: ['jonas'],  // bonusLink in c02 (Jonas schreibt Freundebuch)
   s1e04c06: ['amir'],
+
+  // s1e05
+  s1e05c05: ['lisa'],   // bonusLink in c05 (Lisa schreibt Freundebuch)
 };
 
 /**
@@ -271,7 +274,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     bodySrc: 'media/newspaper/articles/tip-aylin-kileitfaden/article',
     coverImage: 'media/newspaper/articles/tip-aylin-kileitfaden/cover-1024.webp',
     released: true,
-    unlockedBy: { type: 'marker', id: 's1e01c08-tip-aylin-kileitfaden' },
+    unlockedBy: { type: 'chapter', id: 's1e01c08' },
     order: 52,
   },
 
@@ -431,6 +434,54 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     bodySrc: 'media/newspaper/articles/article-jonas-amir-int/article',
     bodyKind: 'md',
     unlockedBy: { type: 'chapter', id: 's1e04c10' },
+  },
+
+  // --- s1e05c01: Chioma – Sticker-Rechte und Schutz ---
+  {
+    bonusId: 'sticker-rechte-schutz',
+    category: 'newspaper',
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/sticker-rechte-schutz/article',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 's1e05c01' },
+    order: 63,
+  },
+
+  // --- s1e05c02: Chioma Weekly – Für jemanden einsetzen (Audio) ---
+  {
+    bonusId: 'chioma-news-fuer-jemanden-einsetzen',
+    category: 'newspaper',
+    released: true,
+    order: 11,
+    mediaType: 'audio',
+    bodySrc: 'media/newspaper/articles/chioma-news-fuer-jemanden-einsetzen/article',
+    bodyKind: 'md',
+    unlockedBy: { type: 'chapter', id: 's1e05c02' },
+  },
+
+  // --- s1e05c03: Amy – Schneeballsystem ---
+  {
+    bonusId: 'schneeballsystem',
+    category: 'newspaper',
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/schneeballsystem/article',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 's1e05c03' },
+    order: 64,
+  },
+
+  // --- s1e05c11: Carlos – Gute Entschuldigung ---
+  {
+    bonusId: 'gute-entschuldigung',
+    category: 'newspaper',
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/gute-entschuldigung/article',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 's1e05c11' },
+    order: 65,
   },
 
 //_________________________________________________________

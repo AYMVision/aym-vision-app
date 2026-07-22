@@ -317,6 +317,7 @@ export default function Stories() {
     return daysSince >= 7;
   });
   const [betaPartialSendState, setBetaPartialSendState] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [descExpanded, setDescExpanded] = useState(false);
 
   async function handleBetaPartialSend() {
     setBetaPartialSendState('loading');
@@ -517,8 +518,8 @@ function isUnlockedByChain(
 
         return (
           <Panel
-            kicker={tStories('list.kicker', { defaultValue: 'Amy Surfwing' })}
-            title={tStories('list.title', { defaultValue: 'Starte dein Amic' })}
+            kicker={tStories('list.kicker', { defaultValue: 'Staffel 1' })}
+            title={tStories('list.title', { defaultValue: 'Doppelklick' })}
             right={
               <button
                 type="button"
@@ -534,8 +535,24 @@ function isUnlockedByChain(
 
             {/* Serienkontext */}
             <p className="text-xs text-slate-500 -mt-1">
-              📱 Chat-Serie&nbsp;&nbsp;·&nbsp;&nbsp;{seasonLabel}&nbsp;&nbsp;·&nbsp;&nbsp;{totalEpisodes} Folgen
+              📱 Chat-Serie&nbsp;&nbsp;·&nbsp;&nbsp;{totalEpisodes} Folgen
             </p>
+
+            {/* Staffel-Beschreibung */}
+            <div className="mt-2">
+              <p className={cn('text-sm text-slate-600 leading-relaxed', !descExpanded && 'line-clamp-2')}>
+                {tStories('list.description', { defaultValue: 'Yasmin tippt. Carlos leitet weiter. Finn ist mal wieder nicht offline. Und ein Sticker, den niemand hätte weiterschicken sollen, hat gerade die halbe Schule erreicht. Du bist mittendrin.' })}
+              </p>
+              <button
+                type="button"
+                onClick={() => setDescExpanded((v) => !v)}
+                className="mt-1 text-xs font-semibold text-[var(--color-teal-600)] hover:text-[var(--color-teal-800)] transition-colors"
+              >
+                {descExpanded
+                  ? tStories('list.descriptionCollapse', { defaultValue: 'Weniger ↑' })
+                  : tStories('list.descriptionExpand', { defaultValue: 'Mehr lesen ↓' })}
+              </button>
+            </div>
 
             {noAvailableStories ? (
               <p className="mt-3 text-sm text-slate-500">

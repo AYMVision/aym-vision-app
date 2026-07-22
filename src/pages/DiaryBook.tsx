@@ -15,7 +15,7 @@ import { BONUS_INDEX } from '../bonus/bonusIndex';
 import { useProfile } from '../profile/useProfile';
 import type { BonusProgressSnapshot } from '../bonus/bonusUnlock';
 import { DIARY_ENTRIES, type DiaryId, type DiaryEntry } from '../bonus/diaryEntries';
-import { isBonusSeen, markBonusSeen } from '../bonus/bonusSeen';
+import { isBonusSeen, markBonusSeen, isBonusMarkerUnlocked } from '../bonus/bonusSeen';
 import { CHARACTERS, type CharacterEx } from '../content/characters';
 import { assetUrl } from '../common/assetUrl';
 
@@ -97,11 +97,11 @@ function normalizeChapterIdMaybe(id: string): string[] {
 }
 
 
-// ✅ unlocked = chapter done OR clicked (bonusSeen) — bypass intentionally excluded
+// ✅ unlocked = chapter done OR story marker set (unlockBonusById) OR clicked (bonusSeen)
 function isEntryUnlocked(entry: DiaryEntry, progress: BonusProgressSnapshot): boolean {
   const ids = normalizeChapterIdMaybe(entry.unlock.afterChapterId);
   const byChapter = ids.some((id) => progress.seenChapterIds.includes(id));
-  return byChapter || isBonusSeen(entry.bonusId);
+  return byChapter || isBonusMarkerUnlocked(entry.bonusId) || isBonusSeen(entry.bonusId);
 }
 
 function safeDiaryId(v: string | undefined): DiaryId | null {
