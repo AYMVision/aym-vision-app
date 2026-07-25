@@ -162,7 +162,7 @@ export default function SeasonFinale() {
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight">
-            {t('seasonFinale.headline', { defaultValue: 'Ihr habt es geschafft!' })}
+            {t('seasonFinale.headline', { defaultValue: 'Du hast es geschafft!' })}
           </h1>
           <p className="mt-2 text-sm sm:text-base text-violet-300 leading-relaxed">
             {t('seasonFinale.subline', { defaultValue: 'Alle fünf Folgen. Alle Herausforderungen. Durchgedacht.' })}
@@ -196,7 +196,7 @@ export default function SeasonFinale() {
             opacity: mounted ? 1 : 0,
           }}
         >
-          ⭐ ⭐ ⭐
+          ⭐ ⭐ ⭐ ⭐ ⭐
         </div>
 
         {/* Sticker-Collage */}

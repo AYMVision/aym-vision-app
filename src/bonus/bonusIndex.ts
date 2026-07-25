@@ -113,6 +113,7 @@ const CHARACTER_UNLOCKS_BY_CHAPTER: Record<string, CharacterId[]> = {
 
   // s1e05
   s1e05c05: ['lisa'],   // bonusLink in c05 (Lisa schreibt Freundebuch)
+  s1e05c08: ['noah'],   // bonusLink in c08 (Noah schreibt Freundebuch)
 };
 
 /**
@@ -140,6 +141,7 @@ const CHARACTER_ORDER: Partial<Record<CharacterId, number>> = {
   amir: 18,
   farida: 19,
   emma: 20,
+  noah: 21,
 };
 
 const ALL_CHARACTER_IDS: CharacterId[] = Object.keys(CHARACTERS) as CharacterId[];

@@ -414,7 +414,7 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
   {
     id: 'weiterleiten',
     title: 'Weiterleiten',
-    teaser: 'Eine Nachricht oder ein Bild an weitere Personen schicken — mit mehr Konsequenzen als man denkt.',
+    teaser: 'Eine Nachricht oder ein Bild an weitere Personen schicken. Das kann mehr Folgen haben, als man erstmal denkt.',
     body: 'Weiterleiten bedeutet, eine Nachricht, ein Bild oder ein Video an andere Personen zu schicken, die es ursprünglich nicht erhalten haben. Das geht in Sekunden und lässt sich danach nicht mehr rückgängig machen. Wer etwas weiterleitet, ist mitverantwortlich dafür, dass es sich verbreitet. Auch wenn man es „nur kurz zeigen" wollte. Deshalb hilft es, vorher eine Sekunde innezuhalten: Würde die Person auf dem Bild oder die Person, die die Nachricht geschrieben hat, das wollen?',
     didYouKnow: 'Eine Nachricht, die jeder nur an zwei Freunde weiterleitet, kennen nach 10 Schritten schon über 1.000 Menschen. Das nennt man den Schneeballeffekt.',
     firstAppearance: 's1e05c01',

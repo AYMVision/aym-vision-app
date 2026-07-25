@@ -515,7 +515,7 @@ onClick={() => {
           ) : (
             <>
               {message.content ? (
-                <div className="text-xs text-slate-500">{message.content}</div>
+                <div className="text-xs text-slate-500 whitespace-pre-line">{message.content}</div>
               ) : null}
             </>
           )}

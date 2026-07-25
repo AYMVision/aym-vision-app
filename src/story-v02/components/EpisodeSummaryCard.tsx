@@ -132,7 +132,7 @@ export default function EpisodeSummaryCard({
           </p>
 
           {/* Stars */}
-          <div className="text-2xl select-none tracking-widest">⭐ ⭐ ⭐</div>
+          <div className="text-2xl select-none tracking-widest">⭐ ⭐ ⭐ ⭐ ⭐</div>
 
           {/* Sticker mit Übergabe-Label */}
           <div className="text-xs font-semibold text-violet-300 uppercase tracking-wide -mb-2">

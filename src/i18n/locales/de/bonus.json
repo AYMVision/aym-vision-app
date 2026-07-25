@@ -653,9 +653,38 @@
     "secret": "ich hab manchmal angst in situationen, die für andere völlig normal sind",
     "funFact": "beim skaten summe ich immer irgendwelche lieder"
   }
+},
+
+"noah": {
+  "name": "Noah",
+  "friendbook": {
+    "mostly": "Sportlich, aktiv.\nWas liegt an? Ich bin dabei!",
+    "othersLike": [
+      "Ich versuche immer alles positiv zu sehen.",
+      "Ich bin es gewohnt, auch in schwierigen Situationen einen Ausweg zu finden.",
+      "Ich verlier nicht so schnell die Geduld."
+    ],
+    "annoys": [
+      "Ich werd unruhig, wenn ich mich nicht auspowern kann.",
+      "Ich reagiere manchmal etwas ironisch, wenn sich jemand wegen Kleinigkeiten anstellt.",
+      "Ich bin sehr direkt, auch bei heiklen Themen."
+    ],
+    "hobbies": [
+      "Basketball",
+      "Eigentlich alles, was Tempo hat und auf Rädern funktioniert.",
+      "Mit Freunden abhängen"
+    ],
+    "friends": ["Lukas", "Jonas"],
+    "colors": "blau",
+    "happy": "Mit meiner Mannschaft zu gewinnen.",
+    "netRule": "Immer fair bleiben.",
+    "mistake": "Dann bleib ich ruhig und seh zu, wie ich das wieder gerade biegen kann.",
+    "secret": "Ich reg mich nicht ständig auf, sondern nehme die Dinge so, wie sie sind. Und versuche, das Beste daraus zu machen.",
+    "funFact": "Ich habe meinem Rollstuhl einen Namen gegeben. Ich nenne ihn Swish — nach einem perfekten Wurf im Basketball, der direkt durchs Netz geht."
+  }
 }
 
-    
+
   },
 
   "chatrules-chioma-dominik": {

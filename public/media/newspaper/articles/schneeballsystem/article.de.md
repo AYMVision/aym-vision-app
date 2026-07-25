@@ -8,6 +8,8 @@ topicTags: [communication, infoCheck]
 
 # Was hat der Schneeballeffekt mit Stickern zu tun?
 
+Du verrätst ein Geheimnis nur 2 Freunden. Jeder von ihnen sagt es 2 weiteren — und die wiederum 2. Nach 3 Runden kennen es schon **15 Menschen**. Wie das passiert, zeigt ein Schneeball.
+
 Es ist Winter. Alles um dich herum ist weiß und endlich liegt genug Schnee, um Schlitten zu fahren. Voller Vorfreude läufst du zum nächsten Hügel. Oben angekommen formst du aus einer Handvoll Schnee einen kleinen Schneeball.
 
 Du gibst ihm einen kleinen Schubs und schaust zu, wie er den Hang hinunterrollt. Mit jeder Umdrehung bleibt mehr Schnee an ihm hängen. Aus dem kleinen Schneeball wird ein immer größerer Ball. Quasi ganz von allein.

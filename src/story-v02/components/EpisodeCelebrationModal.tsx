@@ -170,7 +170,7 @@ export default function EpisodeCelebrationModal({
           style={{ animation: 'celebration-slide-up 0.5s ease both' }}
         >
           {/* Stars decoration */}
-          <div className="text-3xl select-none">⭐ ⭐ ⭐</div>
+          <div className="text-3xl select-none">⭐ ⭐ ⭐ ⭐ ⭐</div>
 
           {/* Sticker */}
           <StickerReveal src={stickerSrc} fallbackEmoji="🏆" />

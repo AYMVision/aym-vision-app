@@ -21,6 +21,7 @@ const c01 = C('s1e05c01', 0, 'Amic 1', 'Nur ein Sticker', [
   S('s1e05c01_story_groupchat_sticker', [
     privateChat('Dominik', 'Markus', 'Lisa', 'Elsa'),
     m(ch.elsa, '@Lisa: Ich denk du bist mit Yasmin verabredet?', '15:16'),
+   m(ch.lisa, 'Sie hat abgesagt.', '15:16'),
     m(ch.lisa, '😕', '15:16'),
     m(ch.elsa, 'Was hat sie denn so Wichtiges vor?', '15:17'),
     m(ch.lisa, 'Keine Ahnung.', '15:17'),
@@ -34,7 +35,7 @@ const c01 = C('s1e05c01', 0, 'Amic 1', 'Nur ein Sticker', [
     m(ch.dominik, 'Ein süßer kleiner Sticker von den beiden.', '15:20'),
     m(ch.lisa, 'Lass Yasmin da raus, ich krieg nur noch mehr Ärger.', '15:21'),
     m(ch.dominik, 'Och menno. Langweilig.', '15:21'),
-    m(ch.dominik, 'Na gut, dann vielleicht jemand, der sich immer so richtig schön aufregt. 😈', '15:21'),
+    m(ch.dominik, 'Na gut, dann Noah mit einer, die sich immer so richtig schön aufregt. 😈', '15:21'),
     m(ch.dominik, '@Markus: Erstell mal irgendwas... du weißt schon.', '15:21'),
     m(ch.markus, 'Ich?', '15:21'),
     m(ch.dominik, 'Natürlich du. Mach schon!', '15:21'),
@@ -124,7 +125,7 @@ const c02 = C('s1e05c02', 1, 'Amic 2', 'Sagen oder schweigen?', [
     m(ch.lisa, 'Hast du kurz Zeit?', '15:32'),
     m(ch.yasmin, 'Wieso?', '15:32'),
     m(ch.lisa, 'Ich muss dir was erzählen.', '15:32'),
-    m(ch.yasmin, 'Lass mich raten, heute Abend gehts zum Sushi? ... Nein, du hast einen Traum-Urlaub geplant! Oder kriegst du ein neues Pferdchen? 🤨', '15:33'),
+    m(ch.yasmin, 'Lass mich raten, heute Abend geht´s zum Sushi? ... Nein, du hast einen Traum-Urlaub geplant! Oder kriegst du ein neues Pferdchen? 🤨', '15:33'),
     m(ch.lisa, 'Nee...', '15:33'),
     m(ch.lisa, 'Also...', '15:33'),
     m(ch.yasmin, 'Ich muss gleich los.', '15:34'),
@@ -189,7 +190,6 @@ const c02 = C('s1e05c02', 1, 'Amic 2', 'Sagen oder schweigen?', [
   AF('s1e05c02_af_lisa_handeln', 's1e05c02_item_lisa_handeln'),
 
   S('s1e05c02_story_amy_chioma_weekly', [
-    m(ch.amy, 'So wie Lisa geht es vielen Jugendlichen. Würde sie im Archiv der Schülerzeitung suchen, könnte sie dazu diesen Audio-Beitrag hören.'),
     bonusLink('chioma-news-fuer-jemanden-einsetzen',
       'Wie setze ich mich für jemanden im Chat ein?',
       '/newspaper/chioma-news-fuer-jemanden-einsetzen',
@@ -231,8 +231,8 @@ const c03 = C('s1e05c03', 2, 'Amic 3', 'Nur an einen', [
     m(ch.dominik, '😂', '15:45'),
     m(ch.dominik, 'Musst du sehen.', '15:45'),
     img(ch.dominik, 'media/story/episodes/s1e05/s1e05c01-512.webp', '15:45'),
-    m(ch.dominik, 'Aber nicht [[weiterleiten]].', '15:45'),
     m(ch.finn, '😂', '15:46'),
+    m(ch.dominik, 'Aber nicht [[weiterleiten]].', '15:45'),
     m(ch.finn, 'Niemals.', '15:46'),
   ], ['fairness', 'info-check']),
 
@@ -371,7 +371,7 @@ const c04 = C('s1e05c04', 3, 'Amic 4', 'Gar nicht lustig', [
     m(ch.dominik, 'Was regt ihr euch denn so auf?', '16:01'),
     m(ch.markus, 'Ist doch bloß Spaß.', '16:01'),
     m(ch.emma, 'Spaß??', '16:01'),
-    m(ch.mia, 'Was war denn nun genau? Ich kenne nichts.', '16:02'),
+    m(ch.mia, 'Was war denn nun genau? Was ist denn das nun für ein Sticker.', '16:02'),
     img(ch.finn, 'media/story/episodes/s1e05/s1e05c01-512.webp', '16:02'),
     m(ch.emma, 'Finn! Lass das gefälligst!!!', '16:02'),
     m(ch.chioma, 'Der Sticker soll doch gerade nicht mehr geteilt werden!', '16:02'),
@@ -523,6 +523,7 @@ const c06 = C('s1e05c06', 5, 'Amic 6', 'Jetzt sind sie schon hier', [
 
   S('s1e05c06_story_emma_lisa_wolf', [
     privateChat('Emma', 'Lisa'),
+    m(ch.lisa, 'Krass, das ist ja ein Wolf!', '7:32'),
     m(ch.lisa, 'Wo ist das??', '7:33'),
     m(ch.emma, 'Im Hain hinter der Schule.', '7:33'),
     m(ch.lisa, 'Echt???', '7:33'),
@@ -556,7 +557,7 @@ const c06 = C('s1e05c06', 5, 'Amic 6', 'Jetzt sind sie schon hier', [
 
   S('s1e05c06_story_groupchat_wolf_weitergabe', [
     privateChat('Lisa', 'Dominik', 'Markus', 'Igor', 'Lukas', 'Elsa'),
-    m(ch.lisa, 'Guckt mal. Seid bloß vorsichtig, wenn ihr mal spät draußen seid. Das hier gleich vor der Schule. Im Hain.', '7:53'),
+    m(ch.lisa, 'Guckt mal. Seid bloß vorsichtig, wenn ihr mal spät draußen seid. Das ist hier gleich vor der Schule. Im Hain.', '7:53'),
     img(ch.lisa, 'media/story/episodes/s1e05/s1e05c06-512.webp', '7:53'),
     m(ch.dominik, '😳', '7:53'),
     m(ch.markus, 'Alter...', '7:54'),
@@ -673,19 +674,19 @@ const c07 = C('s1e05c07', 6, 'Amic 7', 'Alle reden darüber', [
 const c08 = C('s1e05c08', 7, 'Amic 8', 'Zwei Quellen', [
 
   S('s1e05c08_story_jonas_user_freundebuch', [
-    privateChat('Jonas', 'Du'),
-    m(ch.jonas, 'Hi {{chatName}}, wie geht\'s?', '16:30'),
+    privateChat('Noah', 'Du'),
+    m(ch.noah, 'Hi {{chatName}}, wie geht\'s?', '16:30'),
   ], ['reflect-understand']),
 
   inp('s1e05c08_inp_jonas_user', 'stories:s1e05.c08.input.jonas_user', {
     topics: ['talk-act'],
-    promptSpeakerId: 'jonas',
+    promptSpeakerId: 'noah',
     emptySubmitsAllowed: true,
   }),
 
   S('s1e05c08_story_jonas_karte', [
-    m(ch.jonas, 'Ich hab dir in dein Freundebuch geschrieben.', '16:31'),
-    bonusLink('char-jonas', 'Charakterkarte Jonas', '/cards/char-jonas', 'Karte ansehen →'),
+    m(ch.noah, 'Ich hab dir in dein Freundebuch geschrieben.', '16:31'),
+    bonusLink('char-noah', 'Charakterkarte Noah', '/cards/char-noah', 'Karte ansehen →'),
   ], ['reflect-understand']),
 
   S('s1e05c08_story_aylin_jonas_recherche', [
@@ -732,6 +733,7 @@ const c08 = C('s1e05c08', 7, 'Amic 8', 'Zwei Quellen', [
     sysMsg('✅ Artikel veröffentlicht.', '19:57'),
     m(ch.jonas, '😳', '19:57'),
     m(ch.aylin, 'Wir waren die Ersten!!', '20:34'),
+    m(ch.jonas, 'Cool 😎.', '19:57'),
   ], ['info-check', 'reflect-understand']),
 
   S('s1e05c08_story_switch_amy', [
@@ -779,7 +781,7 @@ const c09 = C('s1e05c09', 8, 'Amic 9', 'Chioma', [
     m(ch.jonas, 'Wir haben dich gestern vermisst. Bei der Besprechung für die [[redaktion]].', '12:03'),
     m(ch.chioma, 'Das glaub ich sofort. 😠', '12:04'),
     m(ch.chioma, 'Ihr habt meine Abwesenheit ja gleich für einen Riesen-Knaller genutzt.', '12:04'),
-    m(ch.jonas, 'Der Wolfs-Artikel kommt super an. Hast du ihn gelesen?', '12:04'),
+    m(ch.jonas, 'Der Wolf-Artikel kommt super an. Hast du ihn gelesen?', '12:04'),
     m(ch.chioma, '…', '12:05'),
     m(ch.jonas, 'Bist du sauer?', '12:05'),
     m(ch.chioma, 'Das wäre untertrieben!!', '12:05'),
@@ -927,8 +929,7 @@ const c10 = C('s1e05c10', 9, 'Amic 10', 'Das war gar kein Wolf', [
     m(ch.yasmin, 'Das ist doch was ganz anderes.', '14:54'),
     m(ch.lisa, 'Nein!', '14:55'),
     m(ch.lisa, 'Als ich geschwiegen habe, war ich feige.', '14:55'),
-    m(ch.lisa, 'Jetzt hab ich etwas gesagt.', '14:55'),
-    m(ch.lisa, 'Jetzt bin ich auch wieder die Dumme.', '14:55'),
+    m(ch.lisa, 'Jetzt hab ich etwas gesagt und bin auch wieder die Dumme.', '14:55'),
     m(ch.lisa, 'IMMER! Immer gibst du mir die Schuld an allem. 😭', '14:56'),
     m(ch.lisa, 'Egal, was ich mache...', '14:56'),
     m(ch.lisa, 'Für dich ist es immer falsch.', '14:56'),
@@ -948,7 +949,7 @@ const c10 = C('s1e05c10', 9, 'Amic 10', 'Das war gar kein Wolf', [
   ]),
 
   CH('s1e05c10_challenge_mitfreuen',
-    '👉 Freu dich einmal bewusst für jemanden.\nSag dann auch:\n„Super." oder „Da freue ich mich für dich."\nDas macht den anderen glücklicher.\nUnd meistens sogar dich selbst. 😊',
+    '👉 Freu dich einmal bewusst für jemanden.\nSag dann auch:\n„Super." oder „Da freue ich mich für dich."\nDas macht den anderen glücklicher.\nUnd meistens sogar dich selbst. 😊\nNimmst du die Challenge an?',
   ),
 
   S('s1e05c10_story_lisa_schluss', [
