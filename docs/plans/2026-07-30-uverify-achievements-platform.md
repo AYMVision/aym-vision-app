@@ -1,0 +1,860 @@
+# UVerify Achievements & User Profile Platform — Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Give every AYM Vision user a self-custodied Cardano identity whose purchases (voucher or Stripe), course progress, and achievements are anchored on Cardano via UVerify — rendered as a public, verifiable profile/achievements certificate page.
+
+**Architecture:** The AYM Vision PWA generates a 24-word Cardano keypair in localStorage and authenticates against a new **AYM UVerify backend extension** with an Ed25519 signature handshake (modeled after UVerify's user-state endpoint). The extension owns the source of truth (owned content, finished courses) in a **Merkle Patricia Forestry (MPF)** built with Cardano Client Lib; its root is notarized on UVerify every 48 h by the AYM master wallet. A custom UVerify certificate template (`aymProfile`) renders the profile by querying the extension (never from its own on-chain metadata) and verifying the MPF proof client-side.
+
+**Tech Stack:** React 19 + Vite 7 + TypeScript (PWA) · `@scure/bip39` + `@stricahq/bip32ed25519` (frontend keys) · UVerify backend (Java 17 / Spring Boot) extension · Cardano Client Lib MPF + BouncyCastle Ed25519 · `stripe-java` · UVerify Java SDK (anchoring) · `@uverify/core` + `@aiken-lang/merkle-patricia-forestry` (template) · Vitest / JUnit 5.
+
+## Global Constraints
+
+- **No personal data on-chain, ever.** On-chain: only hashes (MPF roots, `sha256(publicKey + salt)`). Names etc. travel via URL params (UVerify URL-split pattern) or the extension API.
+- **Keys never leave the device.** The mnemonic/private key is only in localStorage; the backend sees only the public key and signatures.
+- **24-word backup is mandatory before first ownership.** The backup prompt (write down 24 words + confirm randomly sampled words) MUST complete before the first voucher redeem or Stripe purchase finishes.
+- **Redeem/purchase are idempotent and ownership-guarded.** Backend rejects redeeming/buying content the user already owns; frontend hides buy/redeem for owned content (double protection).
+- **Anchoring cadence:** MPF root goes on UVerify at most every 48 h and only if the root changed, signed by the AYM master wallet configured in the extension.
+- **Template rule:** the `aymProfile` certificate template renders data fetched from the extension endpoint + MPF proof — not from its own certificate metadata. `uverify_template_id` values start lowercase (`aymProfile`, `aymAnchor`).
+- **Signature handshake** mirrors the UVerify user-state pattern: server-issued single-use nonce (120 s TTL), Ed25519 signature over a canonical payload, verified server-side against the presented public key.
+- **Existing app conventions:** course/content ids are episode ids like `s1e01` (see `src/gating/entitlements.ts`); profile persists under localStorage key `aym_user_profile`; purchases sit behind the existing parent lock (`src/settings/parentLock.ts`).
+- **Kid safety / GDPR:** Stripe checkout and voucher creation are adult actions (parent-lock gated); certificate URLs containing names/salts are shareable secrets held by the user.
+
+---
+
+## 1. Architecture Overview
+
+### 1.1 System context
+
+```mermaid
+flowchart LR
+    subgraph Device["User device (PWA)"]
+        APP["AYM Vision App<br/>React PWA"]
+        LS[("localStorage<br/>mnemonic + keypair<br/>profile + entitlements")]
+        IDB[("IndexedDB<br/>course material cache")]
+        APP --- LS
+        APP --- IDB
+    end
+
+    subgraph UV["UVerify backend (self-hosted)"]
+        EXT["AYM extension<br/>/api/v1/aym/*"]
+        CORE["UVerify core<br/>/api/v1/verify, /transaction"]
+        DB[("PostgreSQL<br/>users, vouchers,<br/>purchases, mpf_state")]
+        MPF["MPF service<br/>(Cardano Client Lib)"]
+        SCHED["Anchor scheduler<br/>every 48h if root changed"]
+        EXT --- DB
+        EXT --- MPF
+        SCHED --- MPF
+        SCHED -->|"issue anchor cert<br/>(master wallet)"| CORE
+    end
+
+    STRIPE["Stripe API"]
+    REPO["Private AYM content repo<br/>(GitHub, token access)"]
+    CARDANO["Cardano blockchain"]
+    TPL["aymProfile template<br/>app.uverify.io/verify/#hash"]
+
+    APP -->|"signature handshake<br/>(Ed25519 + nonce)"| EXT
+    EXT -->|verify checkout session| STRIPE
+    EXT -->|pull + cache material| REPO
+    CORE --> CARDANO
+    TPL -->|"profile + MPF proof"| EXT
+    TPL -->|certificate lookup| CORE
+    APP -->|"Stripe Payment Link<br/>client_reference_id = pubKeyHash"| STRIPE
+```
+
+### 1.2 Signature handshake (used by every authenticated call)
+
+Identical shape for users and the AYM master key — only the key differs.
+
+```mermaid
+sequenceDiagram
+    participant App as App / Admin CLI
+    participant Ext as AYM extension
+
+    App->>Ext: POST /api/v1/aym/challenge { publicKey }
+    Ext->>Ext: nonce = random 32B, store (publicKey, nonce, exp = now+120s)
+    Ext-->>App: { nonce }
+    App->>App: payload = "AYM1|METHOD|PATH|nonce|sha256(body)"
+    App->>App: signature = Ed25519.sign(privateKey, payload)
+    App->>Ext: METHOD PATH<br/>X-Aym-Public-Key, X-Aym-Nonce, X-Aym-Signature
+    Ext->>Ext: nonce valid + unused? signature valid? (BouncyCastle Ed25519)
+    Ext->>Ext: mark nonce used
+    Ext-->>App: 200 result / 401 invalid handshake
+```
+
+### 1.3 Voucher lifecycle
+
+```mermaid
+sequenceDiagram
+    participant Admin as AYM admin (master key)
+    participant Ext as AYM extension
+    participant User as App (user key)
+
+    Admin->>Ext: POST /voucher/create { contentId } (master handshake)
+    Ext->>Ext: uuid = UUIDv4, INSERT vouchers(uuid, contentId)
+    Ext-->>Admin: { uuid } → printed as QR code
+
+    User->>User: scan QR / type uuid
+    User->>Ext: POST /voucher/redeem { uuid } (user handshake)
+    Ext->>Ext: TX: voucher exists? user already owns contentId? → 409
+    Ext->>Ext: TX: DELETE voucher, INSERT redeemed_vouchers,<br/>add contentId to user's content list, update MPF leaf
+    Ext-->>User: { contentId, ownedContent[] }
+    User->>User: unlockEpisodePaywallOnly(contentId), first time → backup prompt done? → registration certificate
+```
+
+### 1.4 Stripe purchase
+
+```mermaid
+sequenceDiagram
+    participant App as App
+    participant Stripe as Stripe
+    participant Ext as AYM extension
+
+    App->>App: parent lock + backup prompt completed
+    App->>Stripe: open Payment Link<br/>?client_reference_id=pubKeyHash
+    Stripe-->>App: redirect success_url?session_id={CHECKOUT_SESSION_ID}
+    App->>Ext: POST /purchase/stripe { sessionId } (user handshake)
+    Ext->>Stripe: GET /v1/checkout/sessions/{id} (expand line_items)
+    Ext->>Ext: payment_status == "paid"?<br/>client_reference_id == pubKeyHash(handshake key)?<br/>sessionId unused? user not already owner?
+    Ext->>Ext: TX: INSERT purchases, add contentId, update MPF leaf
+    Ext-->>App: { contentId, ownedContent[] }
+```
+
+### 1.5 MPF anchoring & certificate verification
+
+```mermaid
+sequenceDiagram
+    participant Sched as Anchor scheduler (48h)
+    participant MPF as MPF service
+    participant UV as UVerify core API
+    participant Chain as Cardano
+    participant Tpl as aymProfile template
+    participant Ext as AYM extension
+
+    Sched->>MPF: currentRoot()
+    alt root != lastAnchoredRoot
+        Sched->>UV: issueCertificates(hash=root,<br/>metadata: aymAnchor, treeVersion) via master wallet
+        UV->>Chain: submit tx
+        Sched->>Sched: store (root, treeVersion, txHash)
+    else unchanged
+        Sched->>Sched: skip
+    end
+
+    Note over Tpl: visitor opens /verify/#sha256(pubKey+salt)?pk=…&salt=…&name=…
+    Tpl->>Tpl: sha256(pk + salt) == certificate hash?
+    Tpl->>Ext: GET /profile/{pubKeyHash}
+    Ext-->>Tpl: { profileData, mpfProof, root, treeVersion, anchorTxHash | null }
+    Tpl->>Tpl: verify MPF proof against root<br/>(@aiken-lang/merkle-patricia-forestry)
+    Tpl->>UV: verify(root) → anchor certificate on-chain?
+    Tpl->>Tpl: render badges, courses, coins + "anchored on-chain ✓ / pending ⏳"
+```
+
+### 1.6 Course material delivery
+
+```mermaid
+sequenceDiagram
+    participant App as App
+    participant Ext as AYM extension
+    participant Repo as Private content repo
+
+    App->>Ext: GET /material/{courseId} (user handshake)
+    Ext->>Ext: owns courseId? → 403
+    alt cache miss or TTL expired
+        Ext->>Repo: fetch bundle (token auth)
+        Ext->>Ext: cache (courseId, version, payload)
+    end
+    Ext-->>App: { courseId, version, payload }
+    App->>App: store in IndexedDB
+    loop periodically (TanStack Query, e.g. every 6h)
+        App->>Ext: GET /material/{courseId}/version
+        Ext-->>App: { version } → refetch if newer
+    end
+```
+
+### 1.7 Backend data model
+
+```mermaid
+erDiagram
+    AYM_USER {
+        varchar public_key PK "hex, 32-byte Ed25519"
+        varchar salt "hex, 32 random bytes"
+        varchar registration_cert_hash "sha256(publicKey+salt), null until first ownership"
+        varchar registration_tx_hash
+        timestamp created_at
+    }
+    AYM_USER_CONTENT {
+        varchar public_key FK
+        varchar content_id "e.g. s1e01"
+        varchar source "VOUCHER | STRIPE"
+        timestamp acquired_at
+    }
+    AYM_USER_COURSE_STATE {
+        varchar public_key FK
+        varchar course_id
+        varchar status "FINISHED"
+        timestamp reported_at
+    }
+    AYM_VOUCHER {
+        uuid id PK
+        varchar content_id
+        timestamp created_at
+    }
+    AYM_REDEEMED_VOUCHER {
+        uuid id PK
+        varchar content_id
+        varchar redeemed_by FK
+        timestamp redeemed_at
+    }
+    AYM_STRIPE_PURCHASE {
+        varchar session_id PK
+        varchar public_key FK
+        varchar content_id
+        timestamp verified_at
+    }
+    AYM_MPF_ANCHOR {
+        bigint tree_version PK
+        varchar root "hex"
+        varchar uverify_tx_hash
+        timestamp anchored_at
+    }
+    AYM_NONCE {
+        varchar nonce PK
+        varchar public_key
+        timestamp expires_at
+        boolean used
+    }
+    AYM_USER ||--o{ AYM_USER_CONTENT : owns
+    AYM_USER ||--o{ AYM_USER_COURSE_STATE : reports
+    AYM_USER ||--o{ AYM_REDEEMED_VOUCHER : redeemed
+    AYM_USER ||--o{ AYM_STRIPE_PURCHASE : bought
+```
+
+**MPF leaf convention:** key = `blake2b-224(publicKey)` (hex), value = `sha256(canonicalJson({ ownedContent: sorted[], finishedCourses: sorted[] }))`. Canonical JSON = sorted keys, no whitespace. The extension rebuilds/updates the tree on every ownership or course-state change; `tree_version` increments per change batch.
+
+### 1.8 API contract (extension, all under `/api/v1/aym`)
+
+| Endpoint | Auth | Request | Response |
+|---|---|---|---|
+| `POST /challenge` | none | `{ publicKey }` | `{ nonce, expiresAt }` |
+| `GET /content` | user handshake | — | `{ ownedContent: string[], finishedCourses: string[] }` — `404` if user unknown |
+| `GET /content/{contentId}` | user handshake | — | `{ owned: boolean }` (`false` if user unknown or not owner) |
+| `POST /course-state` | user handshake | `{ courseId, status: "FINISHED" }` | `{ finishedCourses }` |
+| `POST /voucher/create` | **master** handshake | `{ contentId, count? }` | `{ vouchers: [{ id, contentId }] }` |
+| `POST /voucher/redeem` | user handshake | `{ voucherId }` | `{ contentId, ownedContent, registrationCertificate? }` · `404` unknown voucher · `409` already owner |
+| `POST /purchase/stripe` | user handshake | `{ sessionId }` | `{ contentId, ownedContent, registrationCertificate? }` · `402` unpaid · `409` already owner / session reused · `422` key mismatch |
+| `GET /material/{courseId}` | user handshake | — | `{ courseId, version, payload }` · `403` not owner |
+| `GET /material/{courseId}/version` | user handshake | — | `{ version }` |
+| `GET /profile/{pubKeyHash}` | none (public) | — | `{ profile: { ownedContent, finishedCourses, badgeCount }, mpf: { proof, root, treeVersion, anchorTxHash, anchoredAt } }` |
+| `GET /mpf/root` | none | — | `{ root, treeVersion, anchorTxHash, anchoredAt }` |
+
+`registrationCertificate` (returned once, on first ownership): `{ hash, salt, verifyUrl }` where `hash = sha256(publicKeyHex + saltHex)` and `verifyUrl = https://<ui>/verify/<hash>?pk=<publicKeyHex>&salt=<saltHex>`. The app appends `&name=<chatName>` locally (name never reaches the backend).
+
+### 1.9 Repositories touched
+
+| Repo | Role | Phases |
+|---|---|---|
+| `aym-vision-app` (this repo) | identity, backup UX, voucher/Stripe UX, material cache, entitlement sync | A, D |
+| `uverify-backend` fork/PR | AYM extension (handshake, vouchers, Stripe, MPF, scheduler, material proxy) | B |
+| `aym-profile-template` (new, via `npx @uverify/cli init`) | `aymProfile` certificate template | C |
+| `aym-vision-app/tools` | master-key admin CLI for voucher creation | E |
+
+Each phase is independently shippable; B has no dependency on A besides the agreed API contract above (§1.8), which is the single source of truth for both sides.
+
+---
+
+## 2. Phase A — Frontend identity & backup (aym-vision-app)
+
+### Task A1: Vitest setup
+
+**Files:**
+- Modify: `package.json` (add `vitest`, `@vitest/ui`, `jsdom`, `@testing-library/react`, script `"test": "vitest run"`)
+- Create: `vitest.config.ts`
+
+**Steps:**
+
+- [ ] **Step 1: Install and configure**
+
+```bash
+npm i -D vitest jsdom @testing-library/react @testing-library/jest-dom
+```
+
+```ts
+// vitest.config.ts
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: { environment: 'jsdom', globals: true },
+});
+```
+
+Add to `package.json` scripts: `"test": "vitest run"`.
+
+- [ ] **Step 2: Smoke test** — create `src/identity/__tests__/smoke.test.ts` with `expect(1 + 1).toBe(2)`, run `npm test`, expect PASS, then delete the smoke test in the same commit as Task A2's real tests (or keep until then).
+
+- [ ] **Step 3: Commit** — `git commit -m "chore: add vitest test setup"`
+
+### Task A2: Key generation, derivation, signing (`src/identity/keys.ts`)
+
+**Files:**
+- Create: `src/identity/keys.ts`
+- Test: `src/identity/__tests__/keys.test.ts`
+
+**Interfaces (Produces):**
+
+```ts
+export type AymIdentity = {
+  mnemonic: string;          // 24 words, space-separated
+  publicKeyHex: string;      // 32-byte Ed25519 public key, hex
+};
+export function generateIdentity(): AymIdentity;
+export function restoreIdentity(mnemonic: string): AymIdentity;   // throws on invalid mnemonic
+export function signPayload(mnemonic: string, payload: string): string; // 64-byte sig, hex
+export function publicKeyHash(publicKeyHex: string): string;      // blake2b-224 hex (28 bytes)
+```
+
+Derivation: CIP-1852 path `m/1852'/1815'/0'/0/0` from the BIP39 entropy (Icarus). Dependencies: `@scure/bip39`, `@stricahq/bip32ed25519`, `@noble/hashes` (sha256, blake2b). **Before implementing, verify the exact `@stricahq/bip32ed25519` API via `npx ctx7@latest library "@stricahq/bip32ed25519" "derive CIP-1852 key from mnemonic entropy and sign"`.**
+
+**Steps:**
+
+- [ ] **Step 1: Write the failing tests**
+
+```ts
+// src/identity/__tests__/keys.test.ts
+import { describe, it, expect } from 'vitest';
+import { generateIdentity, restoreIdentity, signPayload, publicKeyHash } from '../keys';
+
+describe('identity keys', () => {
+  it('generates a 24-word mnemonic and 32-byte public key', () => {
+    const id = generateIdentity();
+    expect(id.mnemonic.split(' ')).toHaveLength(24);
+    expect(id.publicKeyHex).toMatch(/^[0-9a-f]{64}$/);
+  });
+
+  it('restores the same public key from the same mnemonic', () => {
+    const id = generateIdentity();
+    expect(restoreIdentity(id.mnemonic).publicKeyHex).toBe(id.publicKeyHex);
+  });
+
+  it('throws on an invalid mnemonic', () => {
+    expect(() => restoreIdentity('foo bar baz')).toThrow();
+  });
+
+  it('produces deterministic 64-byte signatures', () => {
+    const id = generateIdentity();
+    const sig = signPayload(id.mnemonic, 'AYM1|GET|/api/v1/aym/content|abc|d41d8c');
+    expect(sig).toMatch(/^[0-9a-f]{128}$/);
+    expect(signPayload(id.mnemonic, 'AYM1|GET|/api/v1/aym/content|abc|d41d8c')).toBe(sig);
+  });
+
+  it('computes a 28-byte blake2b public key hash', () => {
+    const id = generateIdentity();
+    expect(publicKeyHash(id.publicKeyHex)).toMatch(/^[0-9a-f]{56}$/);
+  });
+});
+```
+
+- [ ] **Step 2: Run** `npm test -- keys` — expect FAIL (module not found).
+
+- [ ] **Step 3: Implement**
+
+```bash
+npm i @scure/bip39 @stricahq/bip32ed25519 @noble/hashes buffer
+```
+
+```ts
+// src/identity/keys.ts
+import { generateMnemonic, mnemonicToEntropy, validateMnemonic } from '@scure/bip39';
+import { wordlist } from '@scure/bip39/wordlists/english';
+import { Bip32PrivateKey } from '@stricahq/bip32ed25519';
+import { blake2b } from '@noble/hashes/blake2b';
+import { bytesToHex, hexToBytes } from '@noble/hashes/utils';
+import { Buffer } from 'buffer';
+
+export type AymIdentity = { mnemonic: string; publicKeyHex: string };
+
+const HARDENED = 0x80000000;
+
+function deriveKey(mnemonic: string) {
+  const entropy = mnemonicToEntropy(mnemonic, wordlist);
+  const root = Bip32PrivateKey.fromEntropy(Buffer.from(entropy));
+  return root
+    .derive(HARDENED + 1852)
+    .derive(HARDENED + 1815)
+    .derive(HARDENED + 0)
+    .derive(0)
+    .derive(0)
+    .toPrivateKey();
+}
+
+export function generateIdentity(): AymIdentity {
+  const mnemonic = generateMnemonic(wordlist, 256); // 256 bits → 24 words
+  return restoreIdentity(mnemonic);
+}
+
+export function restoreIdentity(mnemonic: string): AymIdentity {
+  if (!validateMnemonic(mnemonic.trim(), wordlist)) throw new Error('Invalid mnemonic');
+  const key = deriveKey(mnemonic.trim());
+  return { mnemonic: mnemonic.trim(), publicKeyHex: bytesToHex(key.toPublicKey().toBytes()) };
+}
+
+export function signPayload(mnemonic: string, payload: string): string {
+  const key = deriveKey(mnemonic);
+  return bytesToHex(key.sign(Buffer.from(payload, 'utf8')));
+}
+
+export function publicKeyHash(publicKeyHex: string): string {
+  return bytesToHex(blake2b(hexToBytes(publicKeyHex), { dkLen: 28 }));
+}
+```
+
+(Adjust method names to the verified `@stricahq/bip32ed25519` API — e.g. `toPublicKey().toBytes()` vs `.pubKey`. The tests above are API-agnostic.)
+
+- [ ] **Step 4: Run** `npm test -- keys` — expect PASS.
+- [ ] **Step 5: Commit** — `git commit -m "feat: Cardano identity keypair generation and signing"`
+
+### Task A3: Identity storage & hook (`src/identity/storage.ts`, `useIdentity.tsx`)
+
+**Files:**
+- Create: `src/identity/storage.ts`, `src/identity/useIdentity.tsx`
+- Test: `src/identity/__tests__/storage.test.ts`
+
+**Interfaces (Produces):**
+
+```ts
+// storage.ts — localStorage key 'aym_identity'
+export type StoredIdentity = AymIdentity & { backupConfirmedAt: number | null; createdAt: number };
+export function loadIdentity(): StoredIdentity | null;
+export function ensureIdentity(): StoredIdentity;      // creates + persists on first call (app start)
+export function markBackupConfirmed(): StoredIdentity; // sets backupConfirmedAt = Date.now()
+// useIdentity.tsx
+export function useIdentity(): { identity: StoredIdentity; needsBackup: boolean; confirmBackup(): void };
+```
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests** — `ensureIdentity()` persists under `aym_identity` and returns the same key on the second call; `markBackupConfirmed()` sets a timestamp; corrupted JSON in storage regenerates instead of crashing (match the defensive try/catch style of `src/gating/entitlements.ts`).
+
+```ts
+import { describe, it, expect, beforeEach } from 'vitest';
+import { ensureIdentity, loadIdentity, markBackupConfirmed } from '../storage';
+
+describe('identity storage', () => {
+  beforeEach(() => localStorage.clear());
+
+  it('creates once and is stable across calls', () => {
+    const a = ensureIdentity();
+    const b = ensureIdentity();
+    expect(b.publicKeyHex).toBe(a.publicKeyHex);
+    expect(JSON.parse(localStorage.getItem('aym_identity')!)).toMatchObject({ publicKeyHex: a.publicKeyHex });
+  });
+
+  it('starts without backup confirmation and can confirm it', () => {
+    expect(ensureIdentity().backupConfirmedAt).toBeNull();
+    expect(markBackupConfirmed().backupConfirmedAt).toBeTypeOf('number');
+  });
+
+  it('recovers from corrupted storage', () => {
+    localStorage.setItem('aym_identity', '{not json');
+    expect(loadIdentity()).toBeNull();
+    expect(() => ensureIdentity()).not.toThrow();
+  });
+});
+```
+
+- [ ] **Step 2: Run — FAIL.** **Step 3: Implement** (plain functions + a thin React hook wrapping them with `useSyncExternalStore` or state; call `ensureIdentity()` once in `src/App.tsx` bootstrap so the keypair exists from first launch). **Step 4: Run — PASS.**
+- [ ] **Step 5: Commit** — `git commit -m "feat: persist app identity in localStorage, create on first launch"`
+
+### Task A4: Backup prompt with word confirmation (`src/identity/BackupPrompt.tsx`)
+
+**Files:**
+- Create: `src/identity/BackupPrompt.tsx`, `src/identity/backupQuiz.ts`
+- Test: `src/identity/__tests__/backupQuiz.test.ts`
+
+**Interfaces (Produces):**
+
+```ts
+// backupQuiz.ts
+export function pickQuizIndices(rng: () => number, count?: number): number[]; // 3 distinct indices 0..23
+export function checkQuizAnswers(mnemonic: string, indices: number[], answers: string[]): boolean;
+// BackupPrompt.tsx — modal flow: (1) show 24 numbered words, (2) ask for the 3 sampled words,
+// (3) on success call markBackupConfirmed() and onDone(). Blocks voucher/purchase flows (Task D-gates).
+export function BackupPrompt(props: { onDone(): void; onCancel(): void }): JSX.Element;
+```
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests** for `backupQuiz.ts`: 3 distinct indices in range; `checkQuizAnswers` is case/whitespace-insensitive and rejects a wrong word.
+- [ ] **Step 2: Run — FAIL.** **Step 3: Implement** quiz logic (inject `rng` for testability), then the `BackupPrompt` UI (two-step modal, i18n keys under `identity.backup.*` in `src/i18n`, kid-appropriate copy, print/write-down warning, no clipboard button for the full phrase). **Step 4: Run — PASS**; manually verify the modal with `npm run dev`.
+- [ ] **Step 5: Commit** — `git commit -m "feat: 24-word backup prompt with word confirmation quiz"`
+
+### Task A5: Handshake client (`src/identity/handshake.ts`)
+
+**Files:**
+- Create: `src/identity/handshake.ts`
+- Test: `src/identity/__tests__/handshake.test.ts`
+
+**Interfaces (Produces):**
+
+```ts
+export function canonicalPayload(method: string, path: string, nonce: string, body?: string): string;
+// "AYM1|" + METHOD + "|" + path + "|" + nonce + "|" + sha256Hex(body ?? "")
+export async function aymFetch(path: string, init?: RequestInit): Promise<Response>;
+// 1) POST {base}/api/v1/aym/challenge {publicKey} → nonce
+// 2) sign canonicalPayload, 3) fetch with X-Aym-Public-Key / X-Aym-Nonce / X-Aym-Signature
+// base URL from import.meta.env.VITE_AYM_BACKEND_URL
+```
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests**: `canonicalPayload('POST','/api/v1/aym/voucher/redeem','n1','{"voucherId":"x"}')` equals the exact expected string (hard-code the sha256 of the body in the test); `aymFetch` performs challenge-then-request (mock `fetch` with `vi.stubGlobal`, assert both calls and headers).
+- [ ] **Step 2–4: Run FAIL → implement → PASS.**
+- [ ] **Step 5: Commit** — `git commit -m "feat: signed handshake fetch client for AYM extension"`
+
+---
+
+## 3. Phase B — UVerify backend extension (uverify-backend fork)
+
+> Follow the layout of the existing `tokenizable-certificate` extension in `uverify-backend` so the module registers in `GET /api/v1/extensions` as `"aym-vision"` and can be toggled via config. Package root: `io.uverify.extension.aymvision`. All tables prefixed `aym_` (Flyway migration). Config (`application.yml`): `aym.master-public-key`, `aym.stripe.api-key`, `aym.stripe.products` (map price/product id → contentId), `aym.content-repo.url/token/cache-ttl`, `aym.anchor.interval-hours: 48`, `aym.anchor.wallet-mnemonic`, `aym.ui-base-url`.
+
+### Task B1: Handshake filter + nonce store
+
+**Files:**
+- Create: `.../aymvision/auth/ChallengeController.java`, `HandshakeService.java`, `NonceEntity.java`, `NonceRepository.java`
+- Test: `.../aymvision/auth/HandshakeServiceTest.java`
+
+**Interfaces (Produces):**
+
+```java
+public record HandshakeResult(String publicKeyHex) {}
+public class HandshakeService {
+    /** Throws InvalidHandshakeException (→ 401) on any failure. Marks nonce used. */
+    public HandshakeResult verify(String publicKeyHex, String nonce, String signatureHex,
+                                  String method, String path, byte[] body);
+    public String issueNonce(String publicKeyHex); // 32B random hex, TTL 120s
+    public boolean isMasterKey(String publicKeyHex); // equals aym.master-public-key
+}
+```
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests** (JUnit 5): valid signature accepted (generate an in-test Ed25519 keypair with BouncyCastle, sign `"AYM1|GET|/api/v1/aym/content|<nonce>|<sha256(empty)>"`); expired nonce rejected; reused nonce rejected; tampered payload rejected; `isMasterKey` matches config.
+- [ ] **Step 2: Run** `mvn -pl <extension-module> test` — FAIL.
+- [ ] **Step 3: Implement** with `org.bouncycastle.crypto.signers.Ed25519Signer` / `Ed25519PublicKeyParameters`; nonce in `aym_nonce` table (or Caffeine cache) with used-flag; scheduled cleanup of expired rows.
+
+```java
+public boolean verifySignature(byte[] publicKey, byte[] payload, byte[] signature) {
+    var verifier = new Ed25519Signer();
+    verifier.init(false, new Ed25519PublicKeyParameters(publicKey, 0));
+    verifier.update(payload, 0, payload.length);
+    return verifier.verifySignature(signature);
+}
+```
+
+- [ ] **Step 4: PASS.** **Step 5: Commit** — `feat(aym): nonce challenge + Ed25519 handshake verification`
+
+### Task B2: User registry + content endpoints
+
+**Files:**
+- Create: `.../aymvision/user/AymUserEntity.java`, `AymUserContentEntity.java`, repositories, `ContentService.java`, `ContentController.java`; Flyway `V<next>__aym_tables.sql` (all §1.7 tables)
+- Test: `ContentServiceTest.java`, `ContentControllerIT.java`
+
+**Interfaces (Produces):**
+
+```java
+public class ContentService {
+    public Optional<UserContent> getContent(String publicKeyHex);         // owned + finished
+    public boolean owns(String publicKeyHex, String contentId);
+    public UserContent grantContent(String publicKeyHex, String contentId, Source source);
+        // creates user row (with random 32B salt) if absent; throws AlreadyOwnedException (→409)
+    public UserContent reportCourseState(String publicKeyHex, String courseId, String status);
+}
+```
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests**: unknown user → `GET /content` 404 and `GET /content/{id}` returns `{"owned": false}`; grant then `owns` true; double-grant throws `AlreadyOwnedException`; grant creates user with 32-byte salt.
+- [ ] **Step 2–4: FAIL → implement (controller guarded by `HandshakeService.verify`) → PASS.**
+- [ ] **Step 5: Commit** — `feat(aym): user registry and signed content endpoints`
+
+### Task B3: Voucher create/redeem
+
+**Files:**
+- Create: `.../aymvision/voucher/VoucherEntity.java`, `RedeemedVoucherEntity.java`, repositories, `VoucherService.java`, `VoucherController.java`
+- Test: `VoucherServiceTest.java`
+
+**Interfaces (Produces):**
+
+```java
+public class VoucherService {
+    public List<Voucher> create(String contentId, int count);      // master-only at controller level
+    /** @Transactional: delete voucher, insert redeemed row, grantContent, bump MPF. */
+    public RedeemResult redeem(String publicKeyHex, UUID voucherId);
+        // VoucherNotFoundException (→404), AlreadyOwnedException (→409)
+}
+public record RedeemResult(String contentId, List<String> ownedContent,
+                           RegistrationCertificate registrationCertificate /* null unless first ownership */) {}
+```
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests**: create returns UUIDs persisted with contentId; redeem moves the row (`aym_voucher` empty, `aym_redeemed_voucher` has it) and grants content; redeeming twice → 404; redeeming a second voucher for owned content → 409 **and** the voucher row survives (rollback); controller rejects non-master `create` (403).
+- [ ] **Step 2–4: FAIL → implement → PASS.** **Step 5: Commit** — `feat(aym): voucher creation (master) and atomic redemption`
+
+### Task B4: Stripe purchase verification
+
+**Files:**
+- Create: `.../aymvision/stripe/StripePurchaseService.java`, `StripePurchaseController.java`, `StripePurchaseEntity.java` + repository
+- Test: `StripePurchaseServiceTest.java` (mock `com.stripe.model.checkout.Session` retrieval behind a seam `StripeGateway`)
+
+**Interfaces (Produces):**
+
+```java
+public interface StripeGateway { CheckoutInfo retrieveSession(String sessionId); }
+public record CheckoutInfo(String sessionId, String paymentStatus, String clientReferenceId, String productId) {}
+public class StripePurchaseService {
+    /** Validates paid + clientReferenceId == blake2b224(publicKey) + session unused + product mapped + not owner. */
+    public RedeemResult verifyAndGrant(String publicKeyHex, String sessionId);
+        // PaymentRequiredException (→402), KeyMismatchException (→422),
+        // SessionAlreadyUsedException / AlreadyOwnedException (→409)
+}
+```
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests**: happy path grants mapped contentId and stores session id; `payment_status != paid` → 402; `client_reference_id` ≠ caller's pubKeyHash → 422; same session id twice → 409; unmapped product → 422.
+- [ ] **Step 2–4: FAIL → implement (`stripe-java`, product→contentId map from `aym.stripe.products`) → PASS.**
+- [ ] **Step 5: Commit** — `feat(aym): Stripe checkout session verification and content grant`
+
+### Task B5: MPF service (Cardano Client Lib)
+
+**Files:**
+- Create: `.../aymvision/mpf/MpfService.java`, `MpfLeaf.java`, `AymMpfAnchorEntity.java` + repository
+- Test: `MpfServiceTest.java`
+
+> **Verify the exact CCL MPF artifact/API first** (`npx ctx7@latest library "cardano-client-lib" "merkle patricia forestry insert proof root"`). Wrap it entirely behind `MpfService` so the rest of the extension is insulated from API details.
+
+**Interfaces (Produces):**
+
+```java
+public class MpfService {
+    /** Rebuild leaf for user: key = blake2b224(publicKey), value = sha256(canonicalJson(owned, finished)). */
+    public synchronized long upsertLeaf(String publicKeyHex, List<String> owned, List<String> finished);
+        // returns new treeVersion (increments only when root changes)
+    public String currentRoot();          // hex
+    public long currentTreeVersion();
+    public MpfProof proofFor(String publicKeyHash);   // serialized proof steps for JS verification
+}
+public record MpfProof(String proofJson, String root, long treeVersion) {}
+```
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests**: inserting a leaf changes the root; same data twice keeps root and version stable; proof for an included key verifies against the root (round-trip through CCL's own verifier); canonical JSON is order-independent (`["b","a"]` input → same value hash as `["a","b"]`).
+- [ ] **Step 2–4: FAIL → implement (persist leaves in DB, rebuild tree on boot; serialize proofs in the aiken MPF JSON step format so `@aiken-lang/merkle-patricia-forestry` can verify them) → PASS.**
+- [ ] **Step 5: Commit** — `feat(aym): MPF over user content state with proofs`
+- [ ] **Step 6: Wire** `ContentService.grantContent` / `reportCourseState` → `MpfService.upsertLeaf` (adjust B2/B3/B4 tests to assert the tree version bumps). Commit — `feat(aym): keep MPF in sync with ownership changes`
+
+### Task B6: Anchor scheduler + registration certificates (UVerify Java SDK)
+
+**Files:**
+- Create: `.../aymvision/anchor/AnchorScheduler.java`, `UVerifyIssuer.java`, `.../aymvision/user/RegistrationCertificateService.java`
+- Test: `AnchorSchedulerTest.java`, `RegistrationCertificateServiceTest.java` (mock `UVerifyIssuer`)
+
+**Interfaces (Produces):**
+
+```java
+public interface UVerifyIssuer { String issue(String hashHex, Map<String, Object> metadata); } // returns txHash
+public class AnchorScheduler {
+    @Scheduled(fixedDelayString = "${aym.anchor.interval-ms:172800000}") // 48h
+    public void anchorIfChanged();
+    // if currentRoot != last AymMpfAnchor.root → issue cert:
+    //   hash = root, metadata = { uverify_template_id: "aymAnchor", tree_version, previous_root }
+    //   store AymMpfAnchor(treeVersion, root, txHash, now)
+}
+public class RegistrationCertificateService {
+    /** Called on first ownership: hash = sha256(publicKeyHex + saltHex),
+        metadata = { uverify_template_id: "aymProfile", uverify_update_policy: "first" }.
+        Returns { hash, salt, verifyUrl } for RedeemResult.registrationCertificate. */
+    public RegistrationCertificate register(String publicKeyHex);
+}
+```
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests**: scheduler issues exactly once when root changed and never when unchanged; anchor row persisted with txHash; registration cert hash equals `sha256(pk + salt)` recomputed in test; `verifyUrl` = `{aym.ui-base-url}/verify/{hash}?pk={pk}&salt={salt}`; second grant does not re-register.
+- [ ] **Step 2–4: FAIL → implement `UVerifyIssuer` with `io.uverify:uverify-sdk` (`UVerifyClient` with `signTx` from a CCL `Account(aym.anchor.wallet-mnemonic)`, `baseUrl` = own backend) → PASS.**
+- [ ] **Step 5: Commit** — `feat(aym): 48h MPF root anchoring and first-ownership registration certificates`
+
+### Task B7: Public profile endpoint + material proxy
+
+**Files:**
+- Create: `.../aymvision/profile/ProfileController.java`, `.../aymvision/material/MaterialService.java`, `MaterialController.java`
+- Test: `ProfileControllerIT.java`, `MaterialServiceTest.java`
+
+**Interfaces (Produces):** the `GET /profile/{pubKeyHash}` and `GET /material/*` contracts from §1.8. `MaterialService` caches repo bundles (Caffeine, TTL `aym.content-repo.cache-ttl`) and fetches `{aym.content-repo.url}/{courseId}/bundle.json` with `Authorization: Bearer {token}`.
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests**: profile of unknown hash → 404; known user → profile + proof + anchor info (anchorTxHash null when tree version newer than last anchor); material for non-owner → 403; cache hit does not re-fetch (mock HTTP seam, verify single call); expired TTL re-fetches; `/version` returns bundle version without payload.
+- [ ] **Step 2–4: FAIL → implement → PASS.** **Step 5: Commit** — `feat(aym): public profile endpoint and cached course material proxy`
+- [ ] **Step 6: End-to-end sandbox check** (uverify-examples): `uv run sandbox.py start`, run the extension against the devnet, walk voucher create → redeem → profile → anchor via Swagger. Document the walkthrough in the extension README. Commit.
+
+---
+
+## 4. Phase C — `aymProfile` certificate template
+
+### Task C1: Scaffold + profile rendering
+
+**Files:**
+- Create (new repo `aym-profile-template` via `npx @uverify/cli init aym-profile-template`): `src/Certificate.tsx`, `src/profileApi.ts`
+- Test: dev preview + unit tests for pure helpers (`src/verifyParams.ts`)
+
+**Interfaces (Consumes):** §1.8 `GET /profile/{pubKeyHash}`; UVerify `Template` API (`render(hash, metadata, certificate, pagination, extra)`).
+
+**Steps:**
+
+- [ ] **Step 1: Failing test** for `verifyParams.ts`: `matchesCertificate(hash, pk, salt)` returns true iff `sha256(pk + salt) === hash` (fixture vector precomputed in the test); returns false for missing params.
+- [ ] **Step 2–3: FAIL → implement template:**
+
+```tsx
+export default class AymProfile extends Template {
+  public name = 'AymProfile';
+  public defaultUpdatePolicy = 'first' as const;
+
+  constructor() {
+    super();
+    this.theme = { background: 'bg-gradient-to-br from-violet-900 to-sky-700' };
+    this.layoutMetadata = {}; // intentionally empty — data comes from the extension, not metadata
+  }
+
+  public render(hash, metadata, certificate, pagination, extra) {
+    // 1. guard: extra.isLoading / extra.serverError
+    // 2. read pk, salt, name from UVerifyConfig.searchParams
+    // 3. matchesCertificate(hash, pk, salt) — else render "invalid link" state
+    // 4. useQuery → GET {backendUrl}/api/v1/aym/profile/{blake2b224(pk)}
+    // 5. verify proof with @aiken-lang/merkle-patricia-forestry against returned root
+    // 6. render: name (URL param only), badges/coins summary, owned courses,
+    //    finished courses, anchor status: "✓ anchored <date> (tx …)" or "⏳ pending next anchor"
+    //    + link to the aymAnchor certificate page for the root
+  }
+}
+```
+
+- [ ] **Step 4:** Register in sandbox: `uv run sandbox.py template add AymProfile && uv run sandbox.py restart`; open a redeemed user's `verifyUrl` and confirm all six render states (loading, server error, invalid link, unverified proof, pending anchor, anchored).
+- [ ] **Step 5: Commit.** For production later: PR to `UVerify-io/uverify-ui` `additional-templates.json` (repository entry, pinned commit).
+
+### Task C2: `aymAnchor` template (minimal)
+
+Same repo. Renders an anchor certificate: tree version, root (monospace), issued-by master wallet card, link back to docs. One task: failing snapshot-ish test for its params parsing → implement → sandbox check → commit.
+
+---
+
+## 5. Phase D — Frontend commerce & sync (aym-vision-app)
+
+### Task D1: Ownership store + entitlement sync
+
+**Files:**
+- Create: `src/shop/ownership.ts`
+- Test: `src/shop/__tests__/ownership.test.ts`
+
+**Interfaces (Produces / Consumes):**
+
+```ts
+export async function refreshOwnership(): Promise<string[]>;
+// aymFetch GET /content → for each contentId: unlockEpisodePaywallOnly(contentId)  (existing fn, gating/entitlements.ts)
+// persists last-known list under localStorage 'aym_owned_content' for offline
+export function isOwnedLocally(contentId: string): boolean;
+```
+
+**Steps:** failing tests (mock `aymFetch`: 404 → empty + no entitlement writes; owned list → entitlements updated, cache written; offline (fetch throws) → falls back to cached list) → implement → PASS → commit `feat: sync owned content into episode entitlements`.
+
+### Task D2: Voucher redeem UI (QR + manual)
+
+**Files:**
+- Create: `src/shop/RedeemVoucher.tsx`, `src/shop/qrScanner.ts`
+- Modify: route in `src/App.tsx`, entry point on `src/pages/Profile.tsx`
+
+**Steps:**
+
+- [ ] **Step 1:** `qrScanner.ts`: prefer native `BarcodeDetector`; fallback `npm i @zxing/browser`. Unit-test the UUID extraction/validation (`parseVoucherInput` accepts a raw UUID or a URL containing one; rejects garbage) — failing test first.
+- [ ] **Step 2:** Implement `RedeemVoucher.tsx`: gate on `useIdentity().needsBackup` → show `BackupPrompt` first (Global Constraint); then camera scan or text input → `aymFetch POST /voucher/redeem` → success: coin-style celebration (reuse `src/progress/rewardFx.tsx`), `refreshOwnership()`; 409 → friendly "already yours" message; if response contains `registrationCertificate`, store `{hash, salt, verifyUrl}` under localStorage `aym_registration_cert` and show a "your profile certificate" share card (append `&name=<chatName>` client-side).
+- [ ] **Step 3:** Manual verification via `npm run dev` (camera + manual path). Commit — `feat: voucher redemption with QR scanner and backup gate`.
+
+### Task D3: Stripe purchase flow
+
+**Files:**
+- Create: `src/shop/BuyContent.tsx`, `src/shop/stripe.ts`
+- Test: `src/shop/__tests__/stripe.test.ts`
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests** for `stripe.ts`: `paymentLinkFor(contentId, pubKeyHash)` builds `{VITE_STRIPE_LINK_BASE[contentId]}?client_reference_id={pubKeyHash}`; `extractSessionId(returnUrl)` parses `session_id` from the success redirect; both reject unknown content ids.
+- [ ] **Step 2: Implement** `BuyContent.tsx`: hidden behind parent lock (`src/settings/parentLock.ts`) **and** `BackupPrompt` gate; disabled with "already owned" when `isOwnedLocally(contentId)` (double-purchase prevention, frontend side); opens the payment link; on return route (`/shop/return?session_id=…`) posts `{sessionId}` via `aymFetch POST /purchase/stripe`, then `refreshOwnership()`; handles 402/409/422 with distinct i18n messages.
+- [ ] **Step 3: PASS + manual dev check → commit** — `feat: Stripe checkout flow with signed receipt verification`.
+
+### Task D4: Course material cache + update polling
+
+**Files:**
+- Create: `src/shop/materialCache.ts`, `src/shop/useCourseMaterial.ts`
+- Test: `src/shop/__tests__/materialCache.test.ts`
+
+**Steps:**
+
+- [ ] **Step 1: Failing tests** (`fake-indexeddb` dev-dep): `getMaterial(courseId)` returns cached bundle without network when present; fetches + stores on miss; `checkForUpdate(courseId)` refetches only when server version > cached version.
+- [ ] **Step 2: Implement**: IndexedDB store `aym-material` (idb-keyval or raw API); `useCourseMaterial` = TanStack Query wrapper (`staleTime: 6h`) calling `GET /material/{id}/version` and refetching the bundle on change; 403 clears local entitlement for that course and triggers `refreshOwnership()`.
+- [ ] **Step 3: PASS → commit** — `feat: offline course material cache with version polling`.
+
+### Task D5: Profile page integration
+
+**Files:**
+- Modify: `src/pages/Profile.tsx`
+
+**Steps:** show (when `aym_registration_cert` exists) a "Blockchain profile" card: QR (`qrcode` dep) + link to `verifyUrl&name=…`, anchor status via `GET /mpf/root` vs profile tree version, and a "finished course" reporter that calls `POST /course-state` when an episode completes (hook into `src/progress/progressEngine.ts` completion path). Manual verification + commit — `feat: profile page shows blockchain certificate and reports finished courses`.
+
+---
+
+## 6. Phase E — Master tooling (voucher admin)
+
+### Task E1: Voucher creation CLI
+
+**Files:**
+- Create: `tools/aym-admin/create-vouchers.ts` (+ `tools/aym-admin/package.json`, reuses `src/identity/keys.ts` logic via a small copy or workspace import)
+- Test: `tools/aym-admin/__tests__/cli.test.ts`
+
+**Steps:**
+
+- [ ] **Step 1: Failing test**: given `--content s1e04 --count 3`, the CLI calls challenge + create with a master-key signature and writes `vouchers-s1e04.csv` plus one QR PNG per UUID (mock the HTTP layer; assert canonical payload format matches Task A5's).
+- [ ] **Step 2: Implement**: master mnemonic from `AYM_MASTER_MNEMONIC` env (never a file), `qrcode` for PNGs, prints redeem URLs (`https://<app>/redeem?voucher=<uuid>`).
+- [ ] **Step 3: PASS → commit** — `feat: master-key voucher creation CLI with QR export`.
+
+---
+
+## 7. Rollout order & verification matrix
+
+1. **B1–B7** against the local sandbox (`uverify-examples`, `baseUrl http://localhost:9090`) — backend is testable standalone via Swagger.
+2. **A1–A5** in parallel (pure frontend, only A5 needs the running extension).
+3. **C1–C2** once B7's profile endpoint returns real proofs.
+4. **D1–D5**, then **E1**, then an end-to-end dress rehearsal on the sandbox: create voucher (E1) → redeem (D2) → certificate page (C1) → finish course (D5) → wait/force anchor (B6) → certificate shows "anchored ✓".
+
+| Requirement (spec) | Covered by |
+|---|---|
+| Keypair at app start in localStorage, pubkey tied to user data | A2, A3 |
+| Extension endpoint: "is there additional material for me?" (false if unknown/not owned) | B2 (`GET /content/{id}` → `{owned:false}`) |
+| Signature handshake like UVerify user-state | A5, B1 |
+| 24-word prompt + random-word confirmation before first voucher/purchase | A4, D2, D3 gates |
+| Master-key voucher creation (uuid → contentId) | B3, E1 |
+| Redeem via QR/manual, atomic move, no double-ownership | B3, D2 |
+| Stripe: pubkey in extra field, receipt sent to backend, key match check | B4, D3 |
+| Frontend double-purchase prevention | D1, D3 |
+| First ownership → certificate `sha256(pubkey+salt)`, url params, data from endpoint | B6, C1 |
+| 48 h MPF root anchoring via master wallet, only on change | B6 |
+| CCL MPF for user course info; user queries data + on-chain status | B5, B7, C1 |
+| Material delivery: handshake, backend cache ← private repo, client cache, update polling | B7, D4 |
+
+## 8. Open decisions & risks (resolve before/while implementing)
+
+- **CCL MPF API surface** — the exact artifact name/version and proof serialization must be confirmed against current Cardano Client Lib docs (B5 step 0). `MpfService` isolates the risk; if the Java proof format diverges from `@aiken-lang/merkle-patricia-forestry`'s JSON steps, add a small translation layer in B5, not in the template.
+- **`@stricahq/bip32ed25519` exact API** (A2 step 0) — alternative: `@emurgo/cardano-serialization-lib-browser` (heavier WASM; avoid unless stricahq is unmaintained).
+- **Stripe Payment Links vs Checkout Sessions** — plan assumes Payment Links support `client_reference_id` via URL param and a `session_id` success redirect; if a link type doesn't, switch D3/B4 to server-created Checkout Sessions (backend gains `POST /purchase/stripe/session`).
+- **localStorage key loss** = lost purchases unless the 24 words were written down — exactly why the backup gate is a hard constraint. Consider an additional "restore from 24 words" screen (restoreIdentity exists in A2) reachable from settings; recommended as a fast follow.
+- **Extension upstreaming** — decide whether the AYM extension lives in a fork or behind UVerify's extension SPI upstream; affects only repo/CI wiring, not the code structure above.
