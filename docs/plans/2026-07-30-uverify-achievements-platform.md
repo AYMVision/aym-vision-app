@@ -19,6 +19,7 @@
 - **Signature handshake** mirrors the UVerify user-state pattern: server-issued single-use nonce (120 s TTL), Ed25519 signature over a canonical payload, verified server-side against the presented public key.
 - **Existing app conventions:** course/content ids are episode ids like `s1e01` (see `src/gating/entitlements.ts`); profile persists under localStorage key `aym_user_profile`; purchases sit behind the existing parent lock (`src/settings/parentLock.ts`).
 - **Kid safety / GDPR:** Stripe checkout and voucher creation are adult actions (parent-lock gated); certificate URLs containing names/salts are shareable secrets held by the user.
+- **Operator guide is a required deliverable (Phase F).** Every env var, secret, third-party account (Stripe, GitHub PAT, Cardano wallet, UVerify), and manual human step must be documented in `docs/aym-operator-guide.md`. Any task that introduces new config MUST add it to the guide **in the same commit** — the guide can never lag the code.
 
 ---
 
@@ -253,7 +254,7 @@ erDiagram
 
 | Repo | Role | Phases |
 |---|---|---|
-| `aym-vision-app` (this repo) | identity, backup UX, voucher/Stripe UX, material cache, entitlement sync | A, D |
+| `aym-vision-app` (this repo) | identity, backup UX, voucher/Stripe UX, material cache, entitlement sync, operator guide | A, D, F |
 | `uverify-backend` fork/PR | AYM extension (handshake, vouchers, Stripe, MPF, scheduler, material proxy) | B |
 | `aym-profile-template` (new, via `npx @uverify/cli init`) | `aymProfile` certificate template | C |
 | `aym-vision-app/tools` | master-key admin CLI for voucher creation | E |
@@ -514,7 +515,7 @@ export async function aymFetch(path: string, init?: RequestInit): Promise<Respon
 
 ## 3. Phase B — UVerify backend extension (uverify-backend fork)
 
-> Follow the layout of the existing `tokenizable-certificate` extension in `uverify-backend` so the module registers in `GET /api/v1/extensions` as `"aym-vision"` and can be toggled via config. Package root: `io.uverify.extension.aymvision`. All tables prefixed `aym_` (Flyway migration). Config (`application.yml`): `aym.master-public-key`, `aym.stripe.api-key`, `aym.stripe.products` (map price/product id → contentId), `aym.content-repo.url/token/cache-ttl`, `aym.anchor.interval-hours: 48`, `aym.anchor.wallet-mnemonic`, `aym.ui-base-url`.
+> Follow the layout of the existing `tokenizable-certificate` extension in `uverify-backend` so the module registers in `GET /api/v1/extensions` as `"aym-vision"` and can be toggled via config. Package root: `io.uverify.extension.aymvision`. All tables prefixed `aym_` (Flyway migration). Config (`application.yml`): `aym.master-public-key`, `aym.stripe.api-key`, `aym.stripe.products` (map price/product id → contentId), `aym.content-repo.url/token/cache-ttl`, `aym.mpf.db-path`, `aym.anchor.interval-hours: 48`, `aym.anchor.wallet-mnemonic`, `aym.ui-base-url`. Every key added here must land in the operator guide (Phase F) in the same commit.
 
 ### Task B1: Handshake filter + nonce store
 
@@ -631,7 +632,14 @@ public class StripePurchaseService {
 - Create: `.../aymvision/mpf/MpfService.java`, `MpfLeaf.java`, `AymMpfAnchorEntity.java` + repository
 - Test: `MpfServiceTest.java`
 
-> **Verify the exact CCL MPF artifact/API first** (`npx ctx7@latest library "cardano-client-lib" "merkle patricia forestry insert proof root"`). Wrap it entirely behind `MpfService` so the rest of the extension is insulated from API details.
+> **CCL MPF — use these exact coordinates** (docs: <https://cardano-client.dev/docs/preview/mpftrie/overview>):
+>
+> ```gradle
+> implementation 'com.bloxbean.cardano:merkle-patricia-forestry:0.8.0-preview1'
+> implementation 'com.bloxbean.cardano:merkle-patricia-forestry-rocksdb:0.8.0-preview1'
+> ```
+>
+> Primary API: `com.bloxbean.cardano.vds.mpf.MpfTrie` — `put(byte[] key, byte[] value)`, `get`, `delete`, `getRootHash()`, `getProofPlutusData(byte[] key)` (Plutus `ListPlutusData` proofs, verifiable by Aiken's on-chain MPF library), `getProofWire(byte[] key)` (wire format). Persistence: `com.bloxbean.cardano.vds.mpf.rocksdb.RocksDbNodeStore` (embedded RocksDB, atomic `withBatch`). Hashing is Blake2b-256, compatible with `aiken-lang/merkle-patricia-forestry`. Still wrap everything behind `MpfService` so the rest of the extension is insulated from the preview API.
 
 **Interfaces (Produces):**
 
@@ -650,7 +658,7 @@ public record MpfProof(String proofJson, String root, long treeVersion) {}
 **Steps:**
 
 - [ ] **Step 1: Failing tests**: inserting a leaf changes the root; same data twice keeps root and version stable; proof for an included key verifies against the root (round-trip through CCL's own verifier); canonical JSON is order-independent (`["b","a"]` input → same value hash as `["a","b"]`).
-- [ ] **Step 2–4: FAIL → implement (persist leaves in DB, rebuild tree on boot; serialize proofs in the aiken MPF JSON step format so `@aiken-lang/merkle-patricia-forestry` can verify them) → PASS.**
+- [ ] **Step 2–4: FAIL → implement → PASS.** Use `MpfTrie` over `RocksDbNodeStore` (RocksDB path from config `aym.mpf.db-path`); additionally persist leaves in the SQL DB so the trie can be rebuilt from scratch on boot or store migration. Serve proofs from `getProofWire` (plus `getProofPlutusData` hex for on-chain use); confirm the JS `@aiken-lang/merkle-patricia-forestry` verifier consumes the wire format — if not, add the translation in `MpfService` (never in the template).
 - [ ] **Step 5: Commit** — `feat(aym): MPF over user content state with proofs`
 - [ ] **Step 6: Wire** `ContentService.grantContent` / `reportCourseState` → `MpfService.upsertLeaf` (adjust B2/B3/B4 tests to assert the tree version bumps). Commit — `feat(aym): keep MPF in sync with ownership changes`
 
@@ -829,12 +837,56 @@ export function isOwnedLocally(contentId: string): boolean;
 
 ---
 
-## 7. Rollout order & verification matrix
+## 7. Phase F — Operator & setup guide (required deliverable)
+
+### Task F1: `docs/aym-operator-guide.md`
+
+**Files:**
+- Create: `docs/aym-operator-guide.md` (this repo) — started in Phase B's first task and extended by every task that adds config; finalized here.
+
+The guide is written for a human operator (the AYM Vision developer) with zero prior context. It MUST contain the three parts below. The executing agent collects the values it can and leaves clearly marked `⚠️ HUMAN STEP` boxes for everything only a human can do (account signup, payment details, secret provisioning).
+
+**Part 1 — Accounts & human steps (step-by-step, in order):**
+
+1. **Stripe** (<https://dashboard.stripe.com>): create/activate an account (business details, payout account — human step). Then per purchasable `contentId`: create a Product + Price, and a Payment Link whose success URL is `https://<app-domain>/shop/return?session_id={CHECKOUT_SESSION_ID}`; note that the app appends `?client_reference_id=<pubKeyHash>` when opening the link. Create a **restricted API key** (read access to Checkout Sessions only — never the full secret key). Record the product/price id → `contentId` mapping for `aym.stripe.products`.
+2. **GitHub private content repo**: create the private repo the extension crawls (course bundles at `/{courseId}/bundle.json`). Create a **fine-grained personal access token**: read-only, `Contents` permission, scoped to that single repo, with an expiry — document the rotation procedure (where it's deployed, how to swap it without downtime).
+3. **Cardano master wallet**: generate a 24-word mnemonic offline (human step, stored in a password manager / secret store, never in git). It serves both roles: anchor-signing wallet (`aym.anchor.wallet-mnemonic`) and master handshake key (its derived public key → `aym.master-public-key`, derivation path `m/1852'/1815'/0'/0/0` as in Task A2). Fund it: preprod faucet for staging, real ada on mainnet (budget note: one anchor tx every ≤48 h).
+4. **UVerify**: choose self-hosted backend (extension runs inside it) vs. app.uverify.io with a **Bootstrap Datum** (white-label fees/batches — request via hello@uverify.io or Discord, human step). Register the `aymProfile`/`aymAnchor` templates: sandbox via `sandbox.py template add`, production via PR to `UVerify-io/uverify-ui` `additional-templates.json`.
+5. **Hosting/domains**: final URLs for the app and the backend (feed `aym.ui-base-url`, `VITE_AYM_BACKEND_URL`, Stripe success URLs, CORS config).
+
+**Part 2 — Complete configuration reference (one table, no omissions):**
+
+| Variable | Component | Secret | Source |
+|---|---|---|---|
+| `aym.master-public-key` | backend | no | derived from master mnemonic (step 3) |
+| `aym.anchor.wallet-mnemonic` | backend | **yes** | master wallet (step 3), inject via env/secret store |
+| `aym.anchor.interval-ms` | backend | no | default `172800000` (48 h) |
+| `aym.stripe.api-key` | backend | **yes** | restricted key (step 1) |
+| `aym.stripe.products` | backend | no | product→contentId map (step 1) |
+| `aym.content-repo.url` | backend | no | private repo raw base URL (step 2) |
+| `aym.content-repo.token` | backend | **yes** | GitHub fine-grained PAT (step 2) |
+| `aym.content-repo.cache-ttl` | backend | no | e.g. `PT6H` |
+| `aym.mpf.db-path` | backend | no | RocksDB directory (persistent volume!) |
+| `aym.ui-base-url` | backend | no | UVerify UI base for `verifyUrl`s (step 4/5) |
+| `VITE_AYM_BACKEND_URL` | app build | no | backend URL (step 5) |
+| `VITE_STRIPE_LINK_BASE` | app build | no | contentId → Payment Link map (step 1) |
+| `AYM_MASTER_MNEMONIC` | admin CLI | **yes** | master wallet (step 3), env only, never a file |
+
+**Part 3 — Verification walkthrough:** the sandbox dress rehearsal from §8 written as copy-pasteable operator commands (start sandbox, boot extension, create voucher, redeem, open certificate, force an anchor run, confirm "anchored ✓").
+
+**Steps:**
+
+- [ ] **Step 1 (test):** audit script/grep check — every `aym.*` key in `application.yml` and every `VITE_`/`AYM_` env var referenced in code appears in the guide's table: `grep -rhoE "aym\.[a-z.-]+|VITE_[A-Z_]+|AYM_[A-Z_]+" <repos> | sort -u` diffed against the table. Run it; it fails if the guide is incomplete.
+- [ ] **Step 2:** complete the guide until the audit passes; mark unresolved human steps as `⚠️ HUMAN STEP` checkboxes at the top of the guide so the operator sees outstanding work first.
+- [ ] **Step 3: Commit** — `docs: operator & setup guide (accounts, env vars, human steps)`
+
+## 8. Rollout order & verification matrix
 
 1. **B1–B7** against the local sandbox (`uverify-examples`, `baseUrl http://localhost:9090`) — backend is testable standalone via Swagger.
 2. **A1–A5** in parallel (pure frontend, only A5 needs the running extension).
 3. **C1–C2** once B7's profile endpoint returns real proofs.
 4. **D1–D5**, then **E1**, then an end-to-end dress rehearsal on the sandbox: create voucher (E1) → redeem (D2) → certificate page (C1) → finish course (D5) → wait/force anchor (B6) → certificate shows "anchored ✓".
+5. **F1** finalizes the operator guide (started alongside B and grown with every config-introducing task) and runs the completeness audit.
 
 | Requirement (spec) | Covered by |
 |---|---|
@@ -850,10 +902,11 @@ export function isOwnedLocally(contentId: string): boolean;
 | 48 h MPF root anchoring via master wallet, only on change | B6 |
 | CCL MPF for user course info; user queries data + on-chain status | B5, B7, C1 |
 | Material delivery: handshake, backend cache ← private repo, client cache, update polling | B7, D4 |
+| Operator guide: all env vars, accounts to create (Stripe), API keys incl. GitHub PAT for the private repo, human steps | F1 |
 
-## 8. Open decisions & risks (resolve before/while implementing)
+## 9. Open decisions & risks (resolve before/while implementing)
 
-- **CCL MPF API surface** — the exact artifact name/version and proof serialization must be confirmed against current Cardano Client Lib docs (B5 step 0). `MpfService` isolates the risk; if the Java proof format diverges from `@aiken-lang/merkle-patricia-forestry`'s JSON steps, add a small translation layer in B5, not in the template.
+- **CCL MPF proof interop** — API and coordinates are pinned in Task B5 (docs: <https://cardano-client.dev/docs/preview/mpftrie/overview>); the remaining risk is the JS-side verifier: confirm `@aiken-lang/merkle-patricia-forestry` accepts `getProofWire` output, otherwise translate in `MpfService` (never in the template). Note the artifact is a `0.8.0-preview1` — pin the version and re-check the changelog before upgrading.
 - **`@stricahq/bip32ed25519` exact API** (A2 step 0) — alternative: `@emurgo/cardano-serialization-lib-browser` (heavier WASM; avoid unless stricahq is unmaintained).
 - **Stripe Payment Links vs Checkout Sessions** — plan assumes Payment Links support `client_reference_id` via URL param and a `session_id` success redirect; if a link type doesn't, switch D3/B4 to server-created Checkout Sessions (backend gains `POST /purchase/stripe/session`).
 - **localStorage key loss** = lost purchases unless the 24 words were written down — exactly why the backup gate is a hard constraint. Consider an additional "restore from 24 words" screen (restoreIdentity exists in A2) reachable from settings; recommended as a fast follow.
