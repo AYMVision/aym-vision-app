@@ -163,7 +163,7 @@ setChapters(ep?.chapters ?? []);
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 p-4">
               <div className="text-xs font-semibold text-white/80 mb-0.5">
-                {t('overview.season', { defaultValue: 'Staffel 1' })}
+                {t('overview.season', { defaultValue: 'Doppelklick' })}
               </div>
               <h1 className="text-lg sm:text-xl font-extrabold text-white leading-snug">
                 {t(episodeMeta.titleKey)}

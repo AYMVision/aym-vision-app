@@ -158,7 +158,7 @@ export default function SeasonFinale() {
         >
           <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/40 bg-violet-900/50 px-3 py-1 mb-3">
             <span className="text-xs font-extrabold tracking-widest text-violet-300 uppercase">
-              {t('seasonFinale.badge', { defaultValue: 'Staffel 1 · Abschluss' })}
+              {t('seasonFinale.badge', { defaultValue: 'Doppelklick · Abschluss' })}
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight">

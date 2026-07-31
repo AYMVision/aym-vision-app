@@ -187,12 +187,12 @@
     "cta": "Viel Spaß mit Amy Surfwing! 💬🦉"
   },
   "list": {
-    "kicker": "Staffel 1",
+    "kicker": "",
     "title": "Doppelklick",
     "description": "Yasmin tippt. Dominik klopft Sprüche. Tom ist mal wieder nicht online - Finn dafür immer. Und ein Sticker, den niemand hätte weiterschicken sollen, hat gerade die halbe Schule erreicht. Was als kleiner Spaß begann, wird für die ganze Klasse zum echten Test — für Freundschaften, für Vertrauen, für das, was wirklich zählt. Du bist mittendrin.",
     "lead": "Ein Klick und du bist mitten im Abenteuer.",
     "searchPlaceholder": "Story suchen…",
-    "seasonBadge": "Staffel 1 · Doppelklick"
+    "seasonBadge": "Doppelklick"
   },
   "trust": {
     "kicker": "Denkraum",
@@ -450,7 +450,7 @@
   },
   "overview": {
     "back": "Alle Storys",
-    "season": "Staffel 1 · Doppelklick",
+    "season": "Doppelklick",
     "aiTranslated": "Story mit KI übersetzt · Kann Fehler enthalten",
     "timeLocked": {
       "daily": "Morgen wieder verfügbar"

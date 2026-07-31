@@ -1126,7 +1126,6 @@ const c10 = C('s1e04c10', 9, 'Amic 10', 'Das Interview', [
     sysMsg('1 Woche später'),
     m(ch.amir, 'Du meintest es echt ernst. Jetzt muss ich auch nicht mehr ständig in der Schule fehlen. 😊', '20:06'),
     m(ch.amir, 'Danke.', '20:06'),
-    img(ch.amir, 'media/story/episodes/s1e04/s1e04c10_2-512.webp', '20:05'),
   ], ['fairness', 'reflect-understand']),
 
   S('s1e04c10_story_switch_amy', [

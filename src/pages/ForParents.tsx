@@ -270,12 +270,12 @@ export default function ForParents() {
 
     {/* STAFFEL 1: DOPPELKLICK */}
     <div className="rounded-2xl border border-violet-100 bg-violet-50 p-5 sm:p-6">
-      <div className="text-xs font-semibold text-violet-600 uppercase tracking-wide">Staffel 1 · Doppelklick</div>
+      <div className="text-xs font-semibold text-violet-600 uppercase tracking-wide">Doppelklick</div>
       <h2 className="mt-1 text-base sm:text-lg font-semibold text-violet-900">
         Was dein Kind in dieser Staffel erlebt
       </h2>
       <p className="mt-3 text-sm text-slate-600 leading-relaxed">
-        Staffel 1 „Doppelklick" begleitet Kinder in fünf Alltagssituationen durch die digitale Welt ihrer Generation:
+        „Doppelklick" begleitet Kinder in fünf Alltagssituationen durch die digitale Welt ihrer Generation:
       </p>
       <div className="mt-4 space-y-3">
 

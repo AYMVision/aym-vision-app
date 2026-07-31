@@ -165,12 +165,12 @@
     "cta": "Have fun with Amy Surfwing! 💬🦉"
   },
   "list": {
-    "kicker": "Season 1",
+    "kicker": "",
     "title": "Doppelklick",
     "description": "Yasmin types. Carlos forwards it. Finn is offline — again, not really. And a sticker nobody should have sent is now all over school. What started as a joke becomes a real test for the whole class — friendships, trust, and what actually matters. You’re right in the middle of it.",
     "lead": "One tap and you’re right in the adventure.",
     "searchPlaceholder": "Search story…",
-    "seasonBadge": "Season 1 · Doppelklick"
+    "seasonBadge": "Doppelklick"
   },
   "trust": {
     "kicker": "Thinking space",
@@ -272,27 +272,27 @@
       "description": "The chat never sleeps. One person can’t keep up anymore. Who decides when it stops – the phone or us?"
     },
     "s1e04": {
-      "title": "S1 E04",
-      "description": "..."
+      "title": "Trouble at the Skatepark",
+      "description": "A missing sports bag stirs up rumours. Between quick judgements and misunderstandings, the whole class is put to the test."
     },
     "s1e05": {
       "title": "Wolf in the Chat",
       "description": "A small prank turns into big chaos. Friendships are put to the test – can they survive?"
     },
     "s1e07": {
-      "title": "S1 E07",
+      "title": "E07",
       "description": "..."
     },
     "s1e08": {
-      "title": "S1 E08",
+      "title": "E08",
       "description": "..."
     },
     "s1e09": {
-      "title": "S1 E09",
+      "title": "E09",
       "description": "..."
     },
     "s1e10": {
-      "title": "S1 E10",
+      "title": "E10",
       "description": "..."
     }
   },
@@ -437,7 +437,7 @@
   },
   "overview": {
     "back": "All Stories",
-    "season": "Season 1 · Doppelklick",
+    "season": "Doppelklick",
     "aiTranslated": "Story translated with AI · May contain errors",
     "timeLocked": {
       "daily": "Available again tomorrow"

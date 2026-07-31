@@ -513,12 +513,11 @@ function isUnlockedByChain(
       {(() => {
         const seasons = CONTENT_INDEX;
         const firstSeason = seasons[0];
-        const seasonLabel = firstSeason?.seasonTitle ?? 'Staffel 1';
         const totalEpisodes = cardsForUI.length;
 
         return (
           <Panel
-            kicker={tStories('list.kicker', { defaultValue: 'Staffel 1' })}
+            kicker={tStories('list.kicker', { defaultValue: '' })}
             title={tStories('list.title', { defaultValue: 'Doppelklick' })}
             right={
               <button

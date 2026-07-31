@@ -36,6 +36,7 @@ const c01 = C('s1e05c01', 0, 'Amic 1', 'Nur ein Sticker', [
     m(ch.lisa, 'Lass Yasmin da raus, ich krieg nur noch mehr Ärger.', '15:21'),
     m(ch.dominik, 'Och menno. Langweilig.', '15:21'),
     m(ch.dominik, 'Na gut, dann Noah mit einer, die sich immer so richtig schön aufregt. 😈', '15:21'),
+    m(ch.markus, '😂 Dann unbedingt Emma.', '15:21'),
     m(ch.dominik, '@Markus: Erstell mal irgendwas... du weißt schon.', '15:21'),
     m(ch.markus, 'Ich?', '15:21'),
     m(ch.dominik, 'Natürlich du. Mach schon!', '15:21'),

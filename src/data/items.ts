@@ -237,6 +237,12 @@ export const ITEMS: ItemDef[] = [
     labelKey: 'items.herzen1',
   },
   {
+    id: 'firework_1',
+    slot: 'effect',
+    shopPrice: 6,
+    labelKey: 'items.firework1',
+  },
+    {
     id: 'sparkling_1',
     slot: 'effect',
     shopPrice: 6,
@@ -264,6 +270,11 @@ export const ITEM_STYLE: Partial<Record<string, string>> = {
   // 🎒 BASIS / STANDARD
   // fallback (implizit)
   // transform scale-[0.55] translate-x-[0%] translate-y-[20%]
+
+  // ✨ Effekt Feuerwerk 1
+  'effect:firework_1':
+    'transform scale-[1.00] translate-x-[0%] translate-y-[-5%]',
+
 
   // 🎒 Rucksäcke
   'featured:item_backpack_amy':
