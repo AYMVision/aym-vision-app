@@ -1,6 +1,9 @@
 // src/pages/Profile.tsx
 
 import { useState } from 'react';
+import ProfileSwitcherModal from '../components/ProfileSwitcherModal';
+import { loadProfilesIndex, setProfilePin } from '../profile/profileIndex';
+import { getActiveProfileId, setActiveProfileId } from '../profile/profileStorage';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -27,10 +30,18 @@ type ProfileLocationState = {
 
 export default function Profile() {
   const { t } = useTranslation(['profile', 'themes']);
-  const { profile, updateProfile } = useProfile();
+  const { profile, updateProfile, reloadProfile } = useProfile();
 
   const navigate = useNavigate();
   const [parentGateOpen, setParentGateOpen] = useState(false);
+  const [switcherOpen, setSwitcherOpen] = useState(false);
+  const [pinPhase, setPinPhase] = useState<'idle' | 'enter' | 'confirm'>('idle');
+  const [kidPin, setKidPin] = useState('');
+  const [kidPinFirst, setKidPinFirst] = useState('');
+  const [kidPinMismatch, setKidPinMismatch] = useState(false);
+  const profiles = loadProfilesIndex();
+  const activeProfileId = getActiveProfileId();
+  const activeProfile = profiles.find((p) => p.id === activeProfileId);
 
   const lp = useLongPress(() => setParentGateOpen(true), 1200);
 
@@ -379,6 +390,196 @@ export default function Profile() {
             <TransferExportPanel />
           </div>
         </details>
+
+        {/* Profil wechseln */}
+        {profiles.length > 0 && (
+          <div className="mt-2 rounded-2xl border border-slate-100 bg-white shadow-sm px-5 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <AvatarLookCircle
+                  avatarBaseId={activeProfile?.avatarBaseId ?? profile.avatarBaseId ?? 'kid_01'}
+                  size={40}
+                  alt={activeProfile?.displayName ?? ''}
+                  className="flex-shrink-0 border-2 border-slate-100"
+                />
+                <div>
+                  <div className="text-sm font-semibold text-slate-900">
+                    {activeProfile?.displayName || profile.chatName || 'Mein Profil'}
+                  </div>
+                  {profiles.length > 1 && (
+                    <div className="text-xs text-slate-400">{profiles.length} Profile auf diesem Gerät</div>
+                  )}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSwitcherOpen(true)}
+                className="rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-200 transition-colors"
+              >
+                {profiles.length > 1 ? 'Wechseln' : '+ Profil'}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {switcherOpen && (
+          <ProfileSwitcherModal
+            onClose={() => setSwitcherOpen(false)}
+            onSwitched={() => setSwitcherOpen(false)}
+          />
+        )}
+
+        {/* PIN-Karte */}
+        <div className="mt-2 rounded-2xl border border-slate-100 bg-white shadow-sm px-5 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="text-xl">{activeProfile?.pinHash ? '🔒' : '🔑'}</span>
+              <div>
+                <div className="text-sm font-semibold text-slate-900">{t('pinSetup.profileTitle')}</div>
+                <div className="text-xs text-slate-400">
+                  {activeProfile?.pinHash ? t('pinSetup.profileActive') : t('pinSetup.profileNone')}
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setKidPin(''); setKidPinFirst(''); setKidPinMismatch(false); setPinPhase('enter'); }}
+              className="rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-200 transition-colors"
+            >
+              {activeProfile?.pinHash ? t('pinSetup.profileCtaChange') : t('pinSetup.profileCta')}
+            </button>
+          </div>
+        </div>
+
+        {/* PIN-Setup-Modal */}
+        {pinPhase !== 'idle' && (
+          <div className="fixed inset-0 z-50 flex items-end justify-center">
+            <div className="absolute inset-0 bg-black/40" onClick={() => setPinPhase('idle')} />
+            <div className="relative w-full max-w-md bg-white rounded-t-3xl px-5 pt-5 pb-10 shadow-2xl">
+              <div className="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-5" />
+              <div className="text-center space-y-5">
+                <div>
+                  <div className="text-lg font-bold text-slate-900">
+                    {pinPhase === 'confirm' ? t('pinSetup.confirmTitle') : t('pinSetup.enterTitle')}
+                  </div>
+                  <div className="text-sm text-slate-500 mt-1">
+                    {pinPhase === 'confirm' ? t('pinSetup.confirmSubtitle') : t('pinSetup.enterSubtitle')}
+                  </div>
+                </div>
+
+                <div className="flex gap-3 justify-center">
+                  {[0, 1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      className={`w-4 h-4 rounded-full border-2 transition-colors ${
+                        kidPin.length > i
+                          ? kidPinMismatch ? 'bg-red-400 border-red-400' : 'bg-violet-500 border-violet-500'
+                          : 'border-slate-300 bg-white'
+                      }`}
+                    />
+                  ))}
+                </div>
+                {kidPinMismatch && <div className="text-sm text-red-500">{t('pinSetup.mismatch')}</div>}
+
+                <div className="grid grid-cols-3 gap-2">
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
+                    <button
+                      key={n}
+                      type="button"
+                      onClick={() => {
+                        if (kidPin.length >= 4) return;
+                        const next = kidPin + String(n);
+                        setKidPin(next);
+                        setKidPinMismatch(false);
+                        if (next.length === 4) {
+                          if (pinPhase === 'enter') {
+                            setTimeout(() => { setKidPinFirst(next); setKidPin(''); setPinPhase('confirm'); }, 150);
+                          } else {
+                            setTimeout(async () => {
+                              if (next === kidPinFirst) {
+                                if (activeProfileId) await setProfilePin(activeProfileId, next);
+                                setPinPhase('idle');
+                              } else {
+                                setKidPinMismatch(true);
+                                setKidPin('');
+                                setPinPhase('enter');
+                                setKidPinFirst('');
+                              }
+                            }, 150);
+                          }
+                        }
+                      }}
+                      className="h-12 rounded-xl bg-slate-50 border border-slate-200 text-lg font-semibold text-slate-800 hover:bg-slate-100 active:scale-95 transition-transform"
+                    >
+                      {n}
+                    </button>
+                  ))}
+                  <div />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (kidPin.length >= 4) return;
+                      const next = kidPin + '0';
+                      setKidPin(next);
+                      setKidPinMismatch(false);
+                      if (next.length === 4) {
+                        if (pinPhase === 'enter') {
+                          setTimeout(() => { setKidPinFirst(next); setKidPin(''); setPinPhase('confirm'); }, 150);
+                        } else {
+                          setTimeout(async () => {
+                            if (next === kidPinFirst) {
+                              if (activeProfileId) await setProfilePin(activeProfileId, next);
+                              setPinPhase('idle');
+                            } else {
+                              setKidPinMismatch(true);
+                              setKidPin('');
+                              setPinPhase('enter');
+                              setKidPinFirst('');
+                            }
+                          }, 150);
+                        }
+                      }
+                    }}
+                    className="h-12 rounded-xl bg-slate-50 border border-slate-200 text-lg font-semibold text-slate-800 hover:bg-slate-100 active:scale-95 transition-transform"
+                  >
+                    0
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setKidPin((p) => p.slice(0, -1)); setKidPinMismatch(false); }}
+                    className="h-12 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 hover:bg-slate-100 active:scale-95 transition-transform"
+                  >
+                    ⌫
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setPinPhase('idle')}
+                  className="text-sm text-slate-400 hover:text-slate-600"
+                >
+                  {t('back')}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Profil sperren — nur bei mehreren Profilen oder gesetztem PIN */}
+        {(profiles.length > 1 || !!activeProfile?.pinHash) && (
+          <button
+            type="button"
+            onClick={() => {
+              setActiveProfileId(null);
+              reloadProfile();
+              navigate('/');
+            }}
+            className="mt-2 w-full flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors"
+          >
+            <span>🔒</span>
+            <span>Profil sperren</span>
+          </button>
+        )}
 
         {/* Hidden entry (kid-safe, low attention) */}
         <div

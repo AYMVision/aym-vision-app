@@ -14,6 +14,9 @@ import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile';
 import { shouldBypassAll } from '../gating/entitlements';
 import { shouldSkipOnboarding } from '../common/firstRun';
+import { loadProfilesIndex } from '../profile/profileIndex';
+import { getActiveProfileId } from '../profile/profileStorage';
+import ProfileSwitcherModal from '../components/ProfileSwitcherModal';
 import { loadStore } from '../analytics/analyticsStore';
 import { BONUS_INDEX } from '../bonus/bonusIndex';
 import { loadSeenBonusIds } from '../bonus/bonusSeen';
@@ -185,6 +188,11 @@ function isUnlockedByChain(
 
   // Reaktiv: neu berechnen wenn sich das aktive Profil ändert (z.B. nach Profilwechsel)
   const isFirstTime = useMemo(() => !shouldSkipOnboarding(), [profile]);
+
+  // Gesperrter Zustand: Profile existieren, aber keines ist aktiv → Auswahl zeigen
+  const [showLockSwitcher, setShowLockSwitcher] = useState(
+    () => loadProfilesIndex().length > 0 && !getActiveProfileId()
+  );
 
   // Personalisierte Begrüßung
   const greeting = (() => {
@@ -749,6 +757,14 @@ function isUnlockedByChain(
         )}
 
       </div>
+
+      {/* Gesperrtes Profil: Auswahl automatisch anzeigen */}
+      {showLockSwitcher && (
+        <ProfileSwitcherModal
+          onClose={() => setShowLockSwitcher(false)}
+          onSwitched={() => setShowLockSwitcher(false)}
+        />
+      )}
     </Layout>
   );
 }
