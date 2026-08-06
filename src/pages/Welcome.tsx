@@ -183,8 +183,8 @@ function isUnlockedByChain(
   const hasStarted = currentPct > 0;
   const noAvailableStories = availableCards.length === 0;
 
-  // Einmal berechnen — ändert sich nie innerhalb einer Session
-  const [isFirstTime] = useState(() => !shouldSkipOnboarding());
+  // Reaktiv: neu berechnen wenn sich das aktive Profil ändert (z.B. nach Profilwechsel)
+  const isFirstTime = useMemo(() => !shouldSkipOnboarding(), [profile]);
 
   // Personalisierte Begrüßung
   const greeting = (() => {

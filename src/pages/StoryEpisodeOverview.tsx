@@ -13,6 +13,11 @@ import { shouldBypassAll } from '../gating/entitlements';
 import { canStartNextNewChapterToday } from '../gating/gateEngine';
 import type { StoryChapterV02 } from '../story-v02/types/storyTypes';
 import { assetUrl } from '../common/assetUrl';
+import { useProfile } from '../profile/useProfile';
+import { loadProfilesIndex } from '../profile/profileIndex';
+import { getActiveProfileId } from '../profile/profileStorage';
+import AvatarLookCircle from '../components/AvatarLookCircle';
+import ProfileSwitcherModal from '../components/ProfileSwitcherModal';
 
 type Lang = 'de' | 'en';
 
@@ -89,6 +94,25 @@ export default function StoryEpisodeOverview() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation('stories');
   const lang: Lang = (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
+
+  // "Wer spielt?" — einmal pro Session bei Mehrfachprofilen
+  const { profile } = useProfile();
+  const [showWhoPlays, setShowWhoPlays] = useState(() => {
+    if (loadProfilesIndex().length <= 1) return false;
+    return !sessionStorage.getItem('aym_who_plays_confirmed');
+  });
+  const [showSwitcher, setShowSwitcher] = useState(false);
+
+  // Aktuelles aktives Profil — wird bei jedem Re-render (nach reloadProfile) neu gelesen
+  const activeProfileId = getActiveProfileId();
+  const activeProfileMeta = loadProfilesIndex().find((p) => p.id === activeProfileId) ?? null;
+  const overlayAvatarId = activeProfileMeta?.avatarBaseId ?? profile.avatarBaseId ?? 'kid_01';
+  const overlayName = activeProfileMeta?.displayName ?? profile.chatName ?? 'du';
+
+  function handleConfirmProfile() {
+    sessionStorage.setItem('aym_who_plays_confirmed', '1');
+    setShowWhoPlays(false);
+  }
 
   const episodeMeta = courseId ? getEpisodeMetaByCourseId(courseId) : null;
   const [chapters, setChapters] = useState<StoryChapterV02[] | null>(null);
@@ -281,6 +305,54 @@ setChapters(ep?.chapters ?? []);
         </section>
 
       </div>
+
+      {/* "Wer spielt?" — Bottom-Sheet bei Mehrfachprofilen, einmal pro Session */}
+      {showWhoPlays && (
+        <>
+          <div className="fixed inset-0 z-40 bg-black/40" />
+          <div className="fixed inset-x-0 bottom-0 z-50 flex justify-center">
+            <div className="w-full max-w-md bg-white rounded-t-3xl px-5 pt-5 pb-10 shadow-2xl">
+              <div className="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-5" />
+              <div className="text-center space-y-4">
+                <AvatarLookCircle
+                  avatarBaseId={overlayAvatarId}
+                  size={72}
+                  alt={overlayName}
+                  className="mx-auto"
+                />
+                <div>
+                  <div className="text-lg font-bold text-slate-900">
+                    Spielst du als {overlayName}?
+                  </div>
+                  <div className="text-sm text-slate-500 mt-1">
+                    Tippe auf "Ja" oder wechsle dein Profil.
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleConfirmProfile}
+                  className="w-full rounded-2xl bg-[var(--color-teal-600)] px-4 py-3 text-sm font-semibold text-white hover:bg-[var(--color-teal-700)] transition-colors"
+                >
+                  Ja, los! →
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowSwitcher(true)}
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+                >
+                  Jemand anderes
+                </button>
+              </div>
+            </div>
+          </div>
+          {showSwitcher && (
+            <ProfileSwitcherModal
+              onClose={() => setShowSwitcher(false)}
+              onSwitched={() => setShowSwitcher(false)}
+            />
+          )}
+        </>
+      )}
     </Layout>
   );
 }

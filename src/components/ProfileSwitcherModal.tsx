@@ -12,6 +12,7 @@ import {
   setProfilePin,
   type ProfileMeta,
 } from '../profile/profileIndex';
+import { useProfile } from '../profile/useProfile';
 
 type Phase =
   | 'list'
@@ -28,6 +29,7 @@ type Props = {
 
 export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
   const navigate = useNavigate();
+  const { reloadProfile } = useProfile();
   const profiles = loadProfilesIndex();
   const [phase, setPhase] = useState<Phase>('list');
   const [selectedProfile, setSelectedProfile] = useState<ProfileMeta | null>(null);
@@ -49,8 +51,8 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
       setPhase('pin');
     } else {
       switchToProfile(p.id);
+      reloadProfile();
       onSwitched();
-      window.location.reload();
     }
   }
 
@@ -64,8 +66,8 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
         const ok = await verifyProfilePin(selectedProfile.id, next);
         if (ok) {
           switchToProfile(selectedProfile.id);
+          reloadProfile();
           onSwitched();
-          window.location.reload();
         } else {
           setPinError(true);
           setPin('');
@@ -89,6 +91,7 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
   }
 
   function handleSkipPin() {
+    reloadProfile();
     onSwitched();
     navigate('/');
   }
@@ -109,6 +112,7 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
         setTimeout(async () => {
           if (next === newPinFirst) {
             await setProfilePin(newCreatedId, next);
+            reloadProfile();
             onSwitched();
             navigate('/');
           } else {
