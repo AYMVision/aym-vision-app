@@ -10,6 +10,7 @@ export const BackgroundLocationContext = createContext<Location | null | undefin
 import { registerSW } from 'virtual:pwa-register';
 import { ProfileProvider } from './profile/useProfile';
 import { initSoundPlayer } from './common/soundPlayer';
+import { needsMigration, migrateToMultiProfile } from './profile/profileIndex';
 
 initSoundPlayer();
 import { RewardFxProvider } from './progress/rewardFx';
@@ -181,6 +182,11 @@ function AppRoutes() {
 }
 
 
+// Einmalige Migration + Multi-Profil-Start: läuft synchron vor dem ersten Render.
+if (needsMigration()) {
+  migrateToMultiProfile();
+}
+
 function App() {
   const updateSWRef = useRef<((reloadPage?: boolean) => Promise<void>) | null>(null);
 
@@ -191,7 +197,6 @@ function App() {
     updateSWRef.current = registerSW({
       onNeedRefresh() {
         // Neue Version sofort anwenden — kein Banner, kein User-Klick nötig.
-        // Stellt sicher dass Fixes (z.B. Challenge-Bug) alle Nutzer sofort erreichen.
         updateSWRef.current?.(true);
       },
       onOfflineReady() {
