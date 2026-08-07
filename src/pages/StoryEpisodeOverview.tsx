@@ -10,6 +10,7 @@ import { getPlayableEpisodeV02 } from '../story-v02/content/getPlayableEpisodeV0
 import { hasCompletedChapter, getCompletedChapterCount } from '../progress/storyProgress';
 import { getHighestPlayableChapterIndex0 } from '../gating/storyGateHelpers';
 import { shouldBypassAll } from '../gating/entitlements';
+import { shouldSkipOnboarding } from '../common/firstRun';
 import { canStartNextNewChapterToday } from '../gating/gateEngine';
 import type { StoryChapterV02 } from '../story-v02/types/storyTypes';
 import { assetUrl } from '../common/assetUrl';
@@ -155,6 +156,7 @@ setChapters(ep?.chapters ?? []);
   function handleAmicClick(chapter: StoryChapterV02) {
     const s = chapterStatus(chapter, courseId!, highestPlayable, timeGateAllowed);
     if (s === 'locked' || s === 'time-locked') return;
+    if (!shouldSkipOnboarding()) { navigate('/start'); return; }
     navigate(`/stories-v02/${courseId}/${chapter.id}`);
   }
 
@@ -222,7 +224,10 @@ setChapters(ep?.chapters ?? []);
             {currentChapter && !allDone && (
               <button
                 type="button"
-                onClick={() => navigate(`/stories-v02/${courseId}/${currentChapter.id}`)}
+                onClick={() => {
+                  if (!shouldSkipOnboarding()) { navigate('/start'); return; }
+                  navigate(`/stories-v02/${courseId}/${currentChapter.id}`);
+                }}
                 className="shrink-0 inline-flex items-center gap-1.5 rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-sm"
               >
                 {completedCount > 0
