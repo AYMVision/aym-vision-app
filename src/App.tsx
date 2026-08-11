@@ -11,6 +11,7 @@ import { registerSW } from 'virtual:pwa-register';
 import { ProfileProvider } from './profile/useProfile';
 import { initSoundPlayer } from './common/soundPlayer';
 import { needsMigration, migrateToMultiProfile } from './profile/profileIndex';
+import { initIdentity } from './identity/useIdentity';
 
 initSoundPlayer();
 import { RewardFxProvider } from './progress/rewardFx';
@@ -186,6 +187,9 @@ function AppRoutes() {
 if (needsMigration()) {
   migrateToMultiProfile();
 }
+
+// Keypair erzeugen oder laden — fire-and-forget, kein Render-Block.
+initIdentity();
 
 function App() {
   const updateSWRef = useRef<((reloadPage?: boolean) => Promise<void>) | null>(null);
