@@ -180,5 +180,34 @@
     "newTitle": "New stickers for you!",
     "open": "In album →",
     "empty": "Special stickers and badges will appear here soon."
+  },
+
+  "identity": {
+    "backup": {
+      "headline": "Your data belongs to you alone.",
+      "congrats": "Congratulations on your unlock!",
+      "whyTitle": "Your progress — secured forever",
+      "whyText": "So you always have access to what's yours, write down these 24 words now and keep them safe. They are your only key.",
+      "writeDownTitle": "Your 24 security words",
+      "writeDownHint": "Write them on paper — not as a screenshot.",
+      "quizTitle": "Verify your backup",
+      "quizPrompt": "What word is at position {{number}}?",
+      "quizPlaceholder": "Enter word …",
+      "quizError": "That word doesn't match. Please check again.",
+      "confirm": "Confirm backup",
+      "skip": "Later",
+      "skipHint": "Tip: Write down your 24 words so you never lose your progress.",
+      "done": "Backup confirmed ✓"
+    },
+    "restore": {
+      "title": "Restore identity",
+      "subtitle": "Enter your 24 security words to access your progress.",
+      "warning": "This replaces the current identity on this device. Make sure you enter the correct 24 words.",
+      "placeholder": "24 words, separated by spaces …",
+      "confirm": "Restore",
+      "cancel": "Cancel",
+      "error": "Invalid words. Please check all 24 words.",
+      "success": "Identity successfully restored."
+    }
   }
 }

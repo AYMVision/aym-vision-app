@@ -179,5 +179,34 @@
     "newTitle": "Neue Sticker für dich!",
     "open": "Im Album →",
     "empty": "Hier erscheinen bald besondere Sticker und Badges."
+  },
+
+  "identity": {
+    "backup": {
+      "headline": "Deine Daten gehören dir allein.",
+      "congrats": "Glückwunsch zur Freischaltung!",
+      "whyTitle": "Dein Fortschritt – gesichert für immer",
+      "whyText": "Damit du immer Zugriff auf das hast, was dir gehört, schreib diese 24 Wörter jetzt auf – und bewahre sie sicher auf. Sie sind dein einziger Schlüssel.",
+      "writeDownTitle": "Deine 24 Sicherheitswörter",
+      "writeDownHint": "Schreib sie auf Papier – nicht als Screenshot.",
+      "quizTitle": "Überprüfe deine Sicherung",
+      "quizPrompt": "Welches Wort steht an Stelle {{number}}?",
+      "quizPlaceholder": "Wort eingeben …",
+      "quizError": "Das Wort stimmt nicht. Bitte nochmal prüfen.",
+      "confirm": "Sicherung bestätigen",
+      "skip": "Später",
+      "skipHint": "Tipp: Schreibe deine 24 Wörter auf, damit du deinen Fortschritt nie verlierst.",
+      "done": "Sicherung abgeschlossen ✓"
+    },
+    "restore": {
+      "title": "Identität wiederherstellen",
+      "subtitle": "Gib deine 24 Sicherheitswörter ein, um auf deinen Fortschritt zuzugreifen.",
+      "warning": "Das ersetzt die aktuelle Identität auf diesem Gerät. Stelle sicher, dass du die richtigen 24 Wörter eingibst.",
+      "placeholder": "24 Wörter, durch Leerzeichen getrennt …",
+      "confirm": "Wiederherstellen",
+      "cancel": "Abbrechen",
+      "error": "Ungültige Wörter. Bitte alle 24 Wörter prüfen.",
+      "success": "Identität erfolgreich wiederhergestellt."
+    }
   }
 }
