@@ -11,7 +11,8 @@
     "build": "npm run build:images && vite build",
     "images": "npm run build:images",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.83.0",
@@ -33,6 +34,8 @@
   "devDependencies": {
     "@eslint/js": "^9.31.0",
     "@tailwindcss/vite": "^4.1.11",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.2",
     "@types/lz-string": "^1.3.34",
     "@types/node": "^24.10.13",
     "@types/react": "^19.1.8",
@@ -42,11 +45,13 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "jsdom": "^29.1.1",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.11",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.37.0",
     "vite": "^7.0.5",
-    "vite-plugin-pwa": "^1.2.0"
+    "vite-plugin-pwa": "^1.2.0",
+    "vitest": "^4.1.10"
   }
 }
