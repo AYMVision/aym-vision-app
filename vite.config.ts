@@ -76,6 +76,16 @@ export default defineConfig(({ command }) => {
       },
     },
 
+    // Polyfills für Node.js-Bibliotheken (z.B. @stricahq/bip32ed25519 → pbkdf2 → Buffer/global)
+    define: {
+      global: 'globalThis',
+    },
+    resolve: {
+      alias: {
+        buffer: 'buffer',
+      },
+    },
+
     // gut für wasm assets (lassen wir drin)
     assetsInclude: ['**/*.wasm'],
 

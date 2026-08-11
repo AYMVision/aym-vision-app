@@ -7,6 +7,11 @@ import { sha256 } from '@noble/hashes/sha2.js';
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils.js';
 import { Buffer } from 'buffer';
 
+// Make Buffer available globally for @stricahq/bip32ed25519 (Node.js library used in browser)
+if (typeof (globalThis as Record<string, unknown>).Buffer === 'undefined') {
+  (globalThis as Record<string, unknown>).Buffer = Buffer;
+}
+
 export type AymIdentity = { mnemonic: string; publicKeyHex: string };
 
 async function deriveKey(mnemonic: string) {
