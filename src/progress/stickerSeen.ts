@@ -1,8 +1,10 @@
+import { pStorage } from '../profile/profileStorage';
+
 const KEY = 'aym_seen_stickers_v1';
 
 export function loadSeenStickers(): Record<string, true> {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = pStorage.getItem(KEY);
     if (!raw) return {};
     const arr = JSON.parse(raw);
     if (!Array.isArray(arr)) return {};
@@ -19,7 +21,7 @@ export function markStickerSeen(id: string) {
     const seen = loadSeenStickers();
     if (seen[id]) return;
     const next = Object.keys({ ...seen, [id]: true });
-    localStorage.setItem(KEY, JSON.stringify(next));
+    pStorage.setItem(KEY, JSON.stringify(next));
   } catch {
     // ignore
   }

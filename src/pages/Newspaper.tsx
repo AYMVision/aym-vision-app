@@ -324,7 +324,7 @@ function FreshCard({
   const coverSrc = item.coverImage ? assetUrl(item.coverImage) : '';
   const fallback = pickFallbackEmoji(item, metaById);
   const hasContent = !!metaById[item.bonusId];
-  const canOpen = unlocked && (hasContent || isCurrentNewsItem(item) || shouldBypassAll());
+  const canOpen = unlocked && (hasContent || !!item.freeForAll || shouldBypassAll());
 
   const badgeText = !unlocked
     ? t('newspaper.badge.locked', { defaultValue: 'Gesperrt' })
@@ -541,7 +541,7 @@ function FeedCard({
   const audioHref = item.audioSrc ? assetUrl(item.audioSrc) : '';
   const topicTags = resolveTopicTags(item, metaById);
   const hasContent = !!metaById[item.bonusId];
-  const canOpen = unlocked && (hasContent || isCurrentNewsItem(item) || shouldBypassAll());
+  const canOpen = unlocked && (hasContent || !!item.freeForAll || shouldBypassAll());
 
   const badgeText = !unlocked
     ? t('newspaper.badge.locked', { defaultValue: 'Gesperrt' })
@@ -739,7 +739,7 @@ export default function Newspaper() {
 const unlockedMap = useMemo(() => {
   const m = new Map<string, boolean>();
   for (const it of allItems) {
-    m.set(it.bonusId, (isCurrentNewsItem(it) || it.freeForAll) ? true : isBonusUnlocked(it, progress));
+    m.set(it.bonusId, (it.freeForAll) ? true : isBonusUnlocked(it, progress));
   }
   return m;
 }, [allItems, progress]);
@@ -757,11 +757,11 @@ const unlockedMap = useMemo(() => {
   }, [allItems, metaById]);
 
   const currentNewsItems = useMemo(() => {
-    return allItems.filter(isCurrentNewsItem);
+    return allItems.filter((item) => isCurrentNewsItem(item) && !!item.freeForAll);
   }, [allItems]);
 
   const regularItems = useMemo(() => {
-    return allItems.filter((item) => !isCurrentNewsItem(item));
+    return allItems.filter((item) => !isCurrentNewsItem(item) || !item.freeForAll);
   }, [allItems]);
 
   const filteredItems = useMemo(() => {

@@ -93,7 +93,7 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
   function handleSkipPin() {
     reloadProfile();
     onSwitched();
-    navigate('/');
+    navigate('/stories');
   }
 
   function handleNewPinDigit(digit: string) {
@@ -114,7 +114,7 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
             await setProfilePin(newCreatedId, next);
             reloadProfile();
             onSwitched();
-            navigate('/');
+            navigate('/stories');
           } else {
             setPinMismatch(true);
             setNewPin('');

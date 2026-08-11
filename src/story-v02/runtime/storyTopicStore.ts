@@ -1,6 +1,7 @@
 // src/story-v02/runtime/storyTopicStore.ts
 
 import type { ThemeId } from '../../competencies/themeMeta';
+import { pStorage } from '../../profile/profileStorage';
 
 export type StoredTopicSeen = {
   topicId: ThemeId;
@@ -15,7 +16,7 @@ const TOPIC_KEY = 'aym_story_v02_topic_seen';
 
 function loadAll(): StoredTopicSeen[] {
   try {
-    const raw = localStorage.getItem(TOPIC_KEY);
+    const raw = pStorage.getItem(TOPIC_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
@@ -26,7 +27,7 @@ function loadAll(): StoredTopicSeen[] {
 
 function saveAll(data: StoredTopicSeen[]): void {
   try {
-    localStorage.setItem(TOPIC_KEY, JSON.stringify(data));
+    pStorage.setItem(TOPIC_KEY, JSON.stringify(data));
   } catch {
     // ignore
   }
@@ -74,7 +75,7 @@ export function loadTopicSeen(): StoredTopicSeen[] {
 
 export function clearTopicSeen(): void {
   try {
-    localStorage.removeItem(TOPIC_KEY);
+    pStorage.removeItem(TOPIC_KEY);
   } catch {
     // ignore
   }

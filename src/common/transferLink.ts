@@ -1,5 +1,6 @@
 // src/common/transferLink.ts
 import LZString from 'lz-string';
+import { pStorage } from '../profile/profileStorage';
 
 export const TRANSFER_SCHEMA_VERSION = 1;
 
@@ -57,7 +58,7 @@ export function buildTransferPayload(): TransferPayload {
   const keys: Record<string, unknown> = {};
 
   for (const key of FULL_TRANSFER_KEYS) {
-    const raw = localStorage.getItem(key);
+    const raw = pStorage.getItem(key);
     if (raw !== null) {
       try {
         keys[key] = JSON.parse(raw);
@@ -67,7 +68,7 @@ export function buildTransferPayload(): TransferPayload {
     }
   }
 
-  const profileRaw = localStorage.getItem(PROFILE_KEY);
+  const profileRaw = pStorage.getItem(PROFILE_KEY);
   let profile: object | undefined;
   if (profileRaw) {
     try {
@@ -187,7 +188,7 @@ const LAST_EXPORT_KEY = 'aym_transfer_last_export_v1';
 
 export function getLastTransferExportTime(): number | null {
   try {
-    const raw = localStorage.getItem(LAST_EXPORT_KEY);
+    const raw = pStorage.getItem(LAST_EXPORT_KEY);
     return raw ? parseInt(raw, 10) : null;
   } catch {
     return null;
@@ -196,7 +197,7 @@ export function getLastTransferExportTime(): number | null {
 
 function markTransferExport(): void {
   try {
-    localStorage.setItem(LAST_EXPORT_KEY, String(Date.now()));
+    pStorage.setItem(LAST_EXPORT_KEY, String(Date.now()));
   } catch { /* */ }
 }
 

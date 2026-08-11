@@ -168,19 +168,20 @@ function ThemeRow({
             </div>
             <div className="text-xs text-slate-500">
               {tStickers('album.collected', {
-                defaultValue: '{{count}} von 3 Stickern gesammelt',
+                defaultValue: '{{count}} von {{total}} Stickern gesammelt',
                 count: earnedCount,
+                total: sorted.length,
               })}
             </div>
           </div>
         </div>
 
         <div className="px-2.5 py-1 rounded-full bg-white border border-slate-100 text-[11px] font-bold text-slate-500 shrink-0">
-          {earnedCount}/3
+          {earnedCount}/{sorted.length}
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-3 sm:gap-4 mb-4">
+      <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-4">
         {sorted.map((s) => {
           const earned = themePoints >= (s.themeThreshold ?? Number.POSITIVE_INFINITY);
           const isNew = earned && !seen[s.id];
@@ -254,10 +255,10 @@ function ThemeStickerCircle({
   const title = stickerTitle(t, sticker);
 
   return (
-    <div className="relative flex-1 max-w-[150px]" title={title}>
+    <div className="relative w-full" title={title}>
       <div
         className={[
-          'relative aspect-square rounded-3xl border overflow-hidden flex items-center justify-center shadow-sm transition-all duration-300',
+          'relative h-24 sm:h-28 rounded-3xl border overflow-hidden flex items-center justify-center shadow-sm transition-all duration-300',
           earned
             ? 'border-teal-200 bg-white'
             : 'border-slate-200 bg-slate-100',
@@ -267,9 +268,9 @@ function ThemeStickerCircle({
           <SmartImage
             alt={title}
             className={[
-              'w-full h-full object-contain p-0 sm:p-0.5 transition duration-700',
-              earned ? 'opacity-100' : 'opacity-[0.16] grayscale',
-              isNew && !reveal ? 'scale-75 opacity-60' : '',
+              'w-full h-full object-contain transition duration-700',
+              earned ? 'opacity-100 scale-[1.4]' : 'opacity-[0.16] grayscale scale-[1.4]',
+              isNew && !reveal ? '!scale-75 opacity-60' : '',
               isNew && reveal ? 'animate-[pop_700ms_cubic-bezier(0.2,1,0.2,1)]' : '',
             ].join(' ')}
             avif={candidates.avif}

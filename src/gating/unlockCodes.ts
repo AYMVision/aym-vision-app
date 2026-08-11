@@ -70,6 +70,13 @@ const NAMED_CODES: Record<string, NamedCodeAction> = {
     message: 'Trainer-Zugang für S1E01 aktiviert (bis 30.06.2026).',
   },
 
+  // ===== Individuelle Pilot-Codes =====
+  'PILOT-FELIX': {
+    type: 'unlock-episode',
+    episodeId: 's1e02',
+    message: 'Episode 2 wurde freigeschaltet. Viel Spaß, Felix!',
+  },
+
   // ===== Beta-Tester: Erste Welle =====
   // unlock-episode-paywall-only: Nur s1e01 zugänglich, Daily Gate aktiv, s1e02+ gesperrt
   'ERSTEWELLE': {

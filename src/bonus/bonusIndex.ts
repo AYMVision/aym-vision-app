@@ -237,7 +237,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
   audioSrc: 'media/newspaper/articles/chioma-news-school-social-media/audio.mp3',
   bodySrc: 'media/newspaper/articles/chioma-news-school-social-media/article',
   bodyKind: 'md',
-  unlockedBy: { type: 'chapter', id: 's1e01c01' },
+  freeForAll: true,
 },
 
 //_________________________________________________________
@@ -306,16 +306,16 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
   },
 
   {
-  bonusId: 'tip-aylin-ki-schule',
-  category: 'newspaper',
-  released: true,
-  order: 5,
-  mediaType: 'text',
-  freeForAll: true,
-  coverImage: 'media/newspaper/articles/chioma-news-school-ai/cover-1024.webp',
-  bodySrc: 'media/newspaper/articles/chioma-news-school-ai/article',
-  bodyKind: 'md',
-},
+    bonusId: 'chioma-news-school-ai',
+    category: 'newspaper',
+    released: true,
+    order: 5,
+    mediaType: 'text',
+    freeForAll: true,
+    coverImage: 'media/newspaper/articles/chioma-news-school-ai/cover-1024.webp',
+    bodySrc: 'media/newspaper/articles/chioma-news-school-ai/article',
+    bodyKind: 'md',
+  },
 
 
 
@@ -330,7 +330,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     audioSrc: 'media/newspaper/articles/chioma-news-schnell-gemacht/audio.mp3',
     bodySrc: 'media/newspaper/articles/chioma-news-schnell-gemacht/article',
     bodyKind: 'md',
-    unlockedBy: { type: 'chapter', id: 's1e01c01' },
+    freeForAll: true,
   },
 
   // --- Chioma Weekly #2: KI bei den Hausaufgaben ---
@@ -344,7 +344,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     audioSrc: 'media/newspaper/articles/chioma-news-ki-hausaufgaben/audio.mp3',
     bodySrc: 'media/newspaper/articles/chioma-news-ki-hausaufgaben/article',
     bodyKind: 'md',
-    unlockedBy: { type: 'chapter', id: 's1e01c01' },
+    freeForAll: true,
   },
 
   // --- Chioma Weekly #4: Du gegen dein Handy – Wer gewinnt? (Audio) ---
@@ -369,6 +369,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     mediaType: 'text',
     bodyKind: 'md',
     bodySrc: 'media/newspaper/articles/vergleichs-falle/article',
+    coverImage: 'media/newspaper/articles/vergleichs-falle/hero-1024.webp',
     released: true,
     unlockedBy: { type: 'marker', id: 's1e04c02-vergleichs-falle' },
     order: 55,
@@ -381,6 +382,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     mediaType: 'text',
     bodyKind: 'md',
     bodySrc: 'media/newspaper/articles/urteilen-ueber-andere/article',
+    coverImage: 'media/newspaper/articles/urteilen-ueber-andere/hero-1024.webp',
     released: true,
     unlockedBy: { type: 'chapter', id: 's1e04c09' },
     order: 56,
@@ -446,6 +448,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     mediaType: 'text',
     bodyKind: 'md',
     bodySrc: 'media/newspaper/articles/sticker-rechte-schutz/article',
+    coverImage: 'media/newspaper/articles/sticker-rechte-schutz/cover-1024.webp',
     released: true,
     unlockedBy: { type: 'chapter', id: 's1e05c01' },
     order: 63,
@@ -470,6 +473,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     mediaType: 'text',
     bodyKind: 'md',
     bodySrc: 'media/newspaper/articles/schneeballsystem/article',
+    coverImage: 'media/newspaper/articles/schneeballsystem/cover-1024.webp',
     released: true,
     unlockedBy: { type: 'chapter', id: 's1e05c03' },
     order: 64,
@@ -482,6 +486,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     mediaType: 'text',
     bodyKind: 'md',
     bodySrc: 'media/newspaper/articles/gute-entschuldigung/article',
+    coverImage: 'media/newspaper/articles/gute-entschuldigung/cover-1024.webp',
     released: true,
     unlockedBy: { type: 'chapter', id: 's1e05c11' },
     order: 65,

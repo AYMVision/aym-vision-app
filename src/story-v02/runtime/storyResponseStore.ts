@@ -52,6 +52,8 @@ export type StoredChallengeStatus = {
   linkContent?: string;
 };
 
+import { pStorage } from '../../profile/profileStorage';
+
 const INPUT_KEY = 'aym_story_v02_input_responses';
 const ITEM_KEY = 'aym_story_v02_item_responses';
 const REFLECTION_KEY = 'aym_story_v02_reflection_responses';
@@ -59,7 +61,7 @@ const CHALLENGE_KEY = 'aym_story_v02_challenge_status';
 
 function loadJsonArray<T>(key: string): T[] {
   try {
-    const raw = localStorage.getItem(key);
+    const raw = pStorage.getItem(key);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
@@ -70,7 +72,7 @@ function loadJsonArray<T>(key: string): T[] {
 
 function saveJsonArray<T>(key: string, data: T[]): void {
   try {
-    localStorage.setItem(key, JSON.stringify(data));
+    pStorage.setItem(key, JSON.stringify(data));
   } catch {
     // ignore
   }
@@ -90,6 +92,17 @@ export function saveInputResponse(response: StoredInputResponse): void {
 
 export function loadItemResponses(): StoredItemResponse[] {
   return loadJsonArray<StoredItemResponse>(ITEM_KEY);
+}
+
+export function loadItemResponsesForProfileId(profileId: string): StoredItemResponse[] {
+  try {
+    const raw = localStorage.getItem(`aym_p_${profileId}__${ITEM_KEY}`);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
 }
 
 export function saveItemResponse(response: StoredItemResponse): void {
@@ -150,10 +163,10 @@ export function markChallengeCompleted(challengeId: string, courseId: string): v
 
 export function clearAllStoryV02Responses(): void {
   try {
-    localStorage.removeItem(INPUT_KEY);
-    localStorage.removeItem(ITEM_KEY);
-    localStorage.removeItem(REFLECTION_KEY);
-    localStorage.removeItem(CHALLENGE_KEY);
+    pStorage.removeItem(INPUT_KEY);
+    pStorage.removeItem(ITEM_KEY);
+    pStorage.removeItem(REFLECTION_KEY);
+    pStorage.removeItem(CHALLENGE_KEY);
   } catch {
     // ignore
   }

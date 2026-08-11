@@ -1,4 +1,5 @@
 // src/gating/gateEngine.ts
+import { pStorage } from '../profile/profileStorage';
 
 type GateReason =
   | 'ok'
@@ -92,7 +93,7 @@ const FAST_GATE_KEY = 'aym_fast_gate';
 
 export function isFastGateActive(): boolean {
   try {
-    return localStorage.getItem(FAST_GATE_KEY) === 'true';
+    return pStorage.getItem(FAST_GATE_KEY) === 'true';
   } catch {
     return false;
   }
@@ -101,9 +102,9 @@ export function isFastGateActive(): boolean {
 export function setFastGateActive(active: boolean): void {
   try {
     if (active) {
-      localStorage.setItem(FAST_GATE_KEY, 'true');
+      pStorage.setItem(FAST_GATE_KEY, 'true');
     } else {
-      localStorage.removeItem(FAST_GATE_KEY);
+      pStorage.removeItem(FAST_GATE_KEY);
     }
   } catch {
     // ignore
@@ -112,7 +113,7 @@ export function setFastGateActive(active: boolean): void {
 
 export function hasCompletedNewChapterToday(): boolean {
   try {
-    const raw = localStorage.getItem(DAILY_KEY);
+    const raw = pStorage.getItem(DAILY_KEY);
     if (!raw) return false;
     const ts = Number(raw);
     if (!Number.isFinite(ts)) return false;
@@ -135,7 +136,7 @@ export function recordNewChapterCompletion(args?: {
 }): void {
   void args;
   try {
-    localStorage.setItem(DAILY_KEY, String(Date.now()));
+    pStorage.setItem(DAILY_KEY, String(Date.now()));
   } catch {
     // ignore storage errors
   }

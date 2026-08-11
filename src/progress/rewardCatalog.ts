@@ -192,41 +192,24 @@ export const STREAK_STICKERS: StickerDef[] = [
 // ID-Format: 'theme-[themeId]-[level]'
 
 export const THEME_STICKER_THRESHOLDS_BY_THEME: Record<ThemeId, Record<1 | 2 | 3, number>> = {
-  'talk-act': {
-      1: 10,
-    2: 20,
-    3: 30,
-  },
-  'reflect-understand': {
-    1: 10,
-    2: 20,
-    3: 30,
-  },
-  'info-check': {
-    1: 10,
-    2: 20,
-    3: 30,
-  },
-  'safe-online': {
-     1: 10,
-    2: 20,
-    3: 30,
-  },
-  'creative': {
-    1: 10,
-    2: 20,
-    3: 30,
-  },
-  'fairness': {
-    1: 10,
-    2: 20,
-    3: 30,
-  },
-  'problem-solving': {
-    1: 10,
-    2: 20,
-    3: 30,
-  },
+  'talk-act':           { 1: 8,  2: 18, 3: 999 }, // S1 max 26 → Level 3 erst ab S2
+  'reflect-understand': { 1: 10, 2: 22, 3: 32  }, // S1 max 34 → alle 3 erreichbar
+  'info-check':         { 1: 5,  2: 12, 3: 999 }, // S1 max 14 → Level 3 erst ab S2
+  'safe-online':        { 1: 5,  2: 12, 3: 999 }, // S1 max 14 → Level 3 erst ab S2
+  'creative':           { 1: 4,  2: 999, 3: 999 }, // S1 max 8  → nur Level 1 in S1
+  'fairness':           { 1: 10, 2: 22, 3: 32  }, // S1 max 34 → alle 3 erreichbar
+  'problem-solving':    { 1: 2,  2: 999, 3: 999 }, // S1 max 4  → nur Level 1 in S1
+};
+
+// Max erreichbare Punkte pro Thema in Staffel 1 — bestimmt welche Sticker im Album sichtbar sind
+const THEME_SEASON1_MAX: Record<ThemeId, number> = {
+  'talk-act':           26,
+  'reflect-understand': 34,
+  'info-check':         14,
+  'safe-online':        14,
+  'creative':           8,
+  'fairness':           34,
+  'problem-solving':    4,
 };
 
 // Backward-compat / allgemeine Default-Schwellen, falls anderswo noch genutzt
@@ -241,16 +224,18 @@ export function getThemeStickerThreshold(themeId: ThemeId, level: 1 | 2 | 3): nu
 }
 
 export const THEME_STICKERS: StickerDef[] = THEME_ORDER.flatMap((themeId) =>
-  ([1, 2, 3] as const).map((level) => ({
-    id: `theme-${themeId}-${level}` as string,
-    titleKey: `themes.${themeId}.${level}`,
-    title: `${themeId} ${level}`,
-    image: `media/stickers/themes/${themeId}-${level}-512.webp`,
-    category: 'theme' as StickerCategory,
-    themeId,
-    themeLevel: level,
-    themeThreshold: getThemeStickerThreshold(themeId, level),
-  }))
+  ([1, 2, 3] as const)
+    .filter((level) => getThemeStickerThreshold(themeId, level) <= THEME_SEASON1_MAX[themeId])
+    .map((level) => ({
+      id: `theme-${themeId}-${level}` as string,
+      titleKey: `themes.${themeId}.${level}`,
+      title: `${themeId} ${level}`,
+      image: `media/stickers/themes/${themeId}-${level}-512.webp`,
+      category: 'theme' as StickerCategory,
+      themeId,
+      themeLevel: level,
+      themeThreshold: getThemeStickerThreshold(themeId, level),
+    }))
 );
 
 // ─── GESAMTKATALOG ────────────────────────────────────────────────────────────

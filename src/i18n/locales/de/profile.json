@@ -138,6 +138,41 @@
     "debugTitle": "Dein Fortschritt (Debug)"
   },
 
+  "profileSelect": {
+    "title": "Hey! Wer bist du?",
+    "subtitle": "Tippe auf dein Profil",
+    "pinPrompt": "Bitte PIN eingeben",
+    "pinError": "Falscher PIN. Nochmal versuchen.",
+    "back": "← Zurück",
+    "newProfile": {
+      "title": "Neues Profil",
+      "subtitle": "Wie heißt du?",
+      "placeholder": "Dein Name",
+      "cta": "Weiter →"
+    },
+    "addProfile": "+ Neues Profil",
+    "pinProtected": "PIN geschützt"
+  },
+
+  "pinSetup": {
+    "askTitle": "Möchtest du einen PIN?",
+    "askSubtitle": "Damit kommt niemand anderes in dein Profil.",
+    "askHint": "Deine Eltern können deinen PIN jederzeit einsehen und anpassen.",
+    "ctaSet": "PIN setzen",
+    "ctaSkip": "Jetzt nicht",
+    "enterTitle": "Wähle deinen PIN",
+    "enterSubtitle": "4 Ziffern eingeben",
+    "confirmTitle": "PIN bestätigen",
+    "confirmSubtitle": "Noch einmal eingeben",
+    "mismatch": "Die PINs stimmen nicht überein. Nochmal versuchen.",
+    "onboardingHint": "Du kannst in deinem Profil jederzeit einen PIN einrichten.",
+    "profileTitle": "Mein PIN",
+    "profileActive": "PIN aktiv 🔒",
+    "profileNone": "Kein PIN gesetzt",
+    "profileCta": "PIN einrichten",
+    "profileCtaChange": "PIN ändern"
+  },
+
   "rewards": {
     "title": "Besondere Belohnungen",
     "subtitle": "Deine besonderen Erfolge findest du im Album.",

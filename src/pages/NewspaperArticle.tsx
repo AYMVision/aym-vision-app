@@ -80,11 +80,8 @@ export default function NewspaperArticle() {
     return BONUS_INDEX.find((x) => x.bonusId === id && x.category === 'newspaper') ?? null;
   }, [id]);
 
-  // currentNews articles (chioma-news-*, current-news-*, weekly-news-*) are always free
-  const isCurrentNewsItem = (bonusId: string) =>
-    bonusId.includes('current-news') || bonusId.includes('chioma-news') || bonusId.includes('weekly-news');
   const unlocked = item
-    ? isCurrentNewsItem(item.bonusId) || item.freeForAll || isBonusUnlocked(item, progress)
+    ? item.freeForAll || isBonusUnlocked(item, progress)
     : false;
 
   useEffect(() => {

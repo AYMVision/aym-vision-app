@@ -1,6 +1,7 @@
 // src/story-v02/runtime/storyScoreAggregator.ts
 
-import { loadItemResponses } from './storyResponseStore';
+import { loadItemResponses, loadItemResponsesForProfileId } from './storyResponseStore';
+import type { StoredItemResponse } from './storyResponseStore';
 import type { StoryDimensionId } from '../types/measurementTypes';
 
 export type DimensionLevel = 'growing' | 'visible' | 'frequent';
@@ -18,9 +19,7 @@ function scoreToLevel(avg: number): DimensionLevel {
   return 'growing';
 }
 
-export function aggregateDimensionScores(): DimensionScore[] {
-  const responses = loadItemResponses();
-
+function computeDimensionScores(responses: StoredItemResponse[]): DimensionScore[] {
   const byDimension: Partial<Record<StoryDimensionId, { total: number; count: number }>> = {};
 
   for (const r of responses) {
@@ -35,16 +34,23 @@ export function aggregateDimensionScores(): DimensionScore[] {
   return (Object.entries(byDimension) as [StoryDimensionId, { total: number; count: number }][])
     .map(([dimension, { total, count }]) => {
       const avgScore = total / count;
-      return {
-        dimension,
-        count,
-        avgScore,
-        level: scoreToLevel(avgScore),
-      };
+      return { dimension, count, avgScore, level: scoreToLevel(avgScore) };
     })
     .sort((a, b) => b.avgScore - a.avgScore);
 }
 
+export function aggregateDimensionScores(): DimensionScore[] {
+  return computeDimensionScores(loadItemResponses());
+}
+
+export function aggregateDimensionScoresForProfileId(profileId: string): DimensionScore[] {
+  return computeDimensionScores(loadItemResponsesForProfileId(profileId));
+}
+
 export function totalItemResponseCount(): number {
   return loadItemResponses().length;
+}
+
+export function totalItemResponseCountForProfileId(profileId: string): number {
+  return loadItemResponsesForProfileId(profileId).length;
 }

@@ -3,6 +3,10 @@ import i18n, { type Resource } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+// Synchron gebündelt — wird vor dem Router benötigt (ProfileSelect)
+import profileDE from './i18n/locales/de/profile.json';
+import profileEN from './i18n/locales/en/profile.json';
+
 // ✅ Alle Namespaces, die es gibt (nur Liste, noch nicht laden)
 export const I18N_NAMESPACES = [
   'common',
@@ -74,6 +78,12 @@ i18n
     debug: true,
 
     defaultNS: 'common',
+
+    // profile ist synchron gebündelt, damit ProfileSelect (vor dem Router) sofort übersetzen kann
+    resources: {
+      de: { profile: profileDE },
+      en: { profile: profileEN },
+    },
 
     // ✅ Wichtig: keine Http-Backend Namespaces-Liste hier “hart laden”.
     // Wir laden per ensureNamespace()

@@ -5,6 +5,8 @@
 //   - aym_seen_bonus_v1   → User hat geklickt/gelesen
 //   - aym_bonus_markers_v1 → Story hat freigeschaltet (Marker)
 
+import { pStorage } from '../profile/profileStorage';
+
 const KEY = 'aym_seen_bonus_v1';
 const MARKER_KEY = 'aym_bonus_markers_v1';
 
@@ -14,7 +16,7 @@ const MARKER_KEY = 'aym_bonus_markers_v1';
 
 export function loadUnlockedMarkers(): Set<string> {
   try {
-    const raw = localStorage.getItem(MARKER_KEY);
+    const raw = pStorage.getItem(MARKER_KEY);
     if (!raw) return new Set();
     const parsed = JSON.parse(raw);
     return new Set(Array.isArray(parsed) ? parsed.filter((x) => typeof x === 'string') : []);
@@ -29,7 +31,7 @@ export function markBonusUnlocked(bonusId: string): boolean {
   if (current.has(bonusId)) return false;
   current.add(bonusId);
   try {
-    localStorage.setItem(MARKER_KEY, JSON.stringify(Array.from(current)));
+    pStorage.setItem(MARKER_KEY, JSON.stringify(Array.from(current)));
   } catch {
     // ignore
   }
@@ -42,7 +44,7 @@ export function isBonusMarkerUnlocked(bonusId: string): boolean {
 
 export function loadSeenBonusIds(): string[] {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = pStorage.getItem(KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed.filter((x) => typeof x === 'string') : [];
@@ -60,7 +62,7 @@ export function markBonusSeen(bonusId: string) {
 
   current.add(bonusId);
   try {
-    localStorage.setItem(KEY, JSON.stringify(Array.from(current)));
+    pStorage.setItem(KEY, JSON.stringify(Array.from(current)));
   } catch {
     // ignore
   }
@@ -72,7 +74,7 @@ export function isBonusSeen(bonusId: string): boolean {
 
 export function clearSeenBonusIds() {
   try {
-    localStorage.removeItem(KEY);
+    pStorage.removeItem(KEY);
   } catch {
     // ignore
   }

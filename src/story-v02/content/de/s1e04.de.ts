@@ -389,7 +389,7 @@ const c03 = C('s1e04c03', 2, 'Amic 3', 'Gut gemeint', [
     amyChat(),
     m(ch.amy, 'Nachdem einige aus der Klasse auf dem Skatepark waren, hat sich Chioma mit Lukas getroffen. Hör doch mal rein.'),
     bonusLink('chioma-news-denkst-du-kennst-jemanden',
-      'Chiomas Weekly: „Du denkst, du kennst jemanden?" (Audio)',
+      'Du denkst, du kennst jemanden? (Audio)',
       '/newspaper/chioma-news-denkst-du-kennst-jemanden',
       'Anhören →',
     ),

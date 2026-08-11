@@ -59,7 +59,7 @@ const c01 = C('s1e03c01', 0, 'Amic 1', 'Finn on Fire', [
   ], ['talk-act', 'self-regulation' as any]),
 
   S('s1e03c01_story_challenge_intro', [
-    m(ch.amy, 'Hast du Lust auf eine kleine Challange 💪'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge 💪'),
   ], ['problem-solving']),
 
   CH('s1e03c01_challenge_wait_massage',
@@ -194,7 +194,7 @@ const c02 = C('s1e03c02', 1, 'Amic 2', 'Immer noch online', [
       ], ['talk-act', 'reflect-understand']),
 
       S('s1e03c02_story_challenge_intro', [
-    m(ch.amy, 'Hast du Lust auf eine kleine Challange 💪'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge 💪'),
   ], ['problem-solving']),
 
   CH('s1e03c02_challenge_wait_massage',

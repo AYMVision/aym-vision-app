@@ -139,6 +139,41 @@
     "debugTitle": "Your progress (Debug)"
   },
 
+  "profileSelect": {
+    "title": "Hey! Who are you?",
+    "subtitle": "Tap your profile",
+    "pinPrompt": "Please enter your PIN",
+    "pinError": "Wrong PIN. Try again.",
+    "back": "← Back",
+    "newProfile": {
+      "title": "New profile",
+      "subtitle": "What's your name?",
+      "placeholder": "Your name",
+      "cta": "Continue →"
+    },
+    "addProfile": "+ New profile",
+    "pinProtected": "PIN protected"
+  },
+
+  "pinSetup": {
+    "askTitle": "Would you like a PIN?",
+    "askSubtitle": "This keeps your profile private.",
+    "askHint": "Your parents can always view and change your PIN.",
+    "ctaSet": "Set PIN",
+    "ctaSkip": "Not now",
+    "enterTitle": "Choose your PIN",
+    "enterSubtitle": "Enter 4 digits",
+    "confirmTitle": "Confirm PIN",
+    "confirmSubtitle": "Enter it again",
+    "mismatch": "The PINs don't match. Please try again.",
+    "onboardingHint": "You can set a PIN for your profile at any time.",
+    "profileTitle": "My PIN",
+    "profileActive": "PIN active 🔒",
+    "profileNone": "No PIN set",
+    "profileCta": "Set PIN",
+    "profileCtaChange": "Change PIN"
+  },
+
   "rewards": {
     "title": "Special rewards",
     "subtitle": "Find your special achievements in the album.",

@@ -758,10 +758,10 @@ function isUnlockedByChain(
 
       </div>
 
-      {/* Gesperrtes Profil: Auswahl automatisch anzeigen */}
+      {/* Gesperrtes Profil: Auswahl automatisch anzeigen — nicht schließbar, Profil muss gewählt werden */}
       {showLockSwitcher && (
         <ProfileSwitcherModal
-          onClose={() => setShowLockSwitcher(false)}
+          onClose={() => {}}
           onSwitched={() => setShowLockSwitcher(false)}
         />
       )}

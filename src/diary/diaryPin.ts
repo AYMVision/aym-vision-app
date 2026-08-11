@@ -1,4 +1,6 @@
 // src/diary/diaryPin.ts
+import { pStorage } from '../profile/profileStorage';
+
 const KEY_HASH = 'aym_diary_pin_hash_v1';
 const KEY_HINT = 'aym_diary_pin_hint_v1';
 
@@ -14,7 +16,7 @@ async function sha256Hex(input: string) {
 }
 
 export function hasDiaryPin(): boolean {
-  return Boolean(localStorage.getItem(KEY_HASH));
+  return Boolean(pStorage.getItem(KEY_HASH));
 }
 
 /** Setzt den Tagebuch-PIN. Mindestens 4 Zeichen. */
@@ -22,28 +24,28 @@ export async function setDiaryPin(pin: string, hint = ''): Promise<boolean> {
   const p = String(pin ?? '').trim();
   if (p.length < 4) return false;
   const h = await sha256Hex(p);
-  localStorage.setItem(KEY_HASH, h);
+  pStorage.setItem(KEY_HASH, h);
   if (hint.trim()) {
-    localStorage.setItem(KEY_HINT, hint.trim());
+    pStorage.setItem(KEY_HINT, hint.trim());
   } else {
-    localStorage.removeItem(KEY_HINT);
+    pStorage.removeItem(KEY_HINT);
   }
   return true;
 }
 
 export async function verifyDiaryPin(pin: string): Promise<boolean> {
-  const stored = localStorage.getItem(KEY_HASH);
+  const stored = pStorage.getItem(KEY_HASH);
   if (!stored) return false;
   const h = await sha256Hex(String(pin ?? '').trim());
   return h === stored;
 }
 
 export function getDiaryPinHint(): string | null {
-  return localStorage.getItem(KEY_HINT);
+  return pStorage.getItem(KEY_HINT);
 }
 
 /** Wird vom Elternbereich aufgerufen – löscht PIN + Hint, Einträge bleiben erhalten. */
 export function resetDiaryPin(): void {
-  localStorage.removeItem(KEY_HASH);
-  localStorage.removeItem(KEY_HINT);
+  pStorage.removeItem(KEY_HASH);
+  pStorage.removeItem(KEY_HINT);
 }

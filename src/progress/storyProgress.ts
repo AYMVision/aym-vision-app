@@ -10,12 +10,14 @@ export type StoredProgress = {
   finished: boolean;
 };
 
+import { pStorage } from '../profile/profileStorage';
+
 const PROGRESS_VERSION = 'v2';
 const keyFor = (courseId: string) => `aym_story_progress_${PROGRESS_VERSION}_${courseId}`;
 
 export function getProgress(courseId: string): StoredProgress | null {
   try {
-    const raw = localStorage.getItem(keyFor(courseId));
+    const raw = pStorage.getItem(keyFor(courseId));
     return raw ? (JSON.parse(raw) as StoredProgress) : null;
   } catch {
     return null;
@@ -24,13 +26,13 @@ export function getProgress(courseId: string): StoredProgress | null {
 
 export function setProgress(courseId: string, data: StoredProgress) {
   try {
-    localStorage.setItem(keyFor(courseId), JSON.stringify(data));
+    pStorage.setItem(keyFor(courseId), JSON.stringify(data));
   } catch {}
 }
 
 export function clearProgress(courseId: string) {
   try {
-    localStorage.removeItem(keyFor(courseId));
+    pStorage.removeItem(keyFor(courseId));
   } catch {}
 }
 

@@ -4,6 +4,7 @@
 // Each chapter stores its own step position independently.
 
 import type { StorySessionSnapshot } from '../types/storyRuntimeTypes';
+import { pStorage } from '../../profile/profileStorage';
 
 function amicKey(courseId: string, chapterId: string): string {
   return `story-v02-amic-${courseId}-${chapterId}`;
@@ -18,7 +19,7 @@ export function saveAmicSession(
     const full: StorySessionSnapshot = { ...snapshot, updatedAt: Date.now() };
     const value = JSON.stringify(full);
     const key = amicKey(courseId, chapterId);
-    localStorage.setItem(key, value);
+    pStorage.setItem(key, value);
     try { sessionStorage.setItem(key, value); } catch { /* ignore */ }
   } catch { /* ignore */ }
 }
@@ -30,7 +31,7 @@ export function loadAmicSession(
   const key = amicKey(courseId, chapterId);
   const sources = [
     () => sessionStorage.getItem(key),
-    () => localStorage.getItem(key),
+    () => pStorage.getItem(key),
   ];
   for (const getItem of sources) {
     try {
@@ -47,5 +48,5 @@ export function loadAmicSession(
 export function clearAmicSession(courseId: string, chapterId: string): void {
   const key = amicKey(courseId, chapterId);
   try { sessionStorage.removeItem(key); } catch { /* ignore */ }
-  try { localStorage.removeItem(key); } catch { /* ignore */ }
+  pStorage.removeItem(key);
 }

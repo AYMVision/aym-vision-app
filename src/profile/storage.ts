@@ -2,6 +2,8 @@ import type { Equipment, Inventory, ItemSlot, UserProfile } from './types';
 import { createDefaultProfile } from './defaultProfile';
 import { getStarterInventory } from '../data/items';
 
+import { pStorage } from './profileStorage';
+
 const STORAGE_KEY = 'aym_user_profile';
 
 const ALL_SLOTS: ItemSlot[] = ['featured', 'background', 'effect'];
@@ -252,7 +254,17 @@ const friendbookRaw = isObject(progRaw.friendbook) ? progRaw.friendbook : {};
 
 export function loadProfile(): UserProfile {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = pStorage.getItem(STORAGE_KEY);
+    if (!raw) return createDefaultProfile();
+    return normalizeProfile(JSON.parse(raw));
+  } catch {
+    return createDefaultProfile();
+  }
+}
+
+export function loadProfileForId(profileId: string): UserProfile {
+  try {
+    const raw = localStorage.getItem(`aym_p_${profileId}__${STORAGE_KEY}`);
     if (!raw) return createDefaultProfile();
     return normalizeProfile(JSON.parse(raw));
   } catch {
@@ -262,7 +274,7 @@ export function loadProfile(): UserProfile {
 
 export function saveProfile(profile: UserProfile) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+    pStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
   } catch {
     // ignore
   }
@@ -270,7 +282,7 @@ export function saveProfile(profile: UserProfile) {
 
 export function clearProfile() {
   try {
-    localStorage.removeItem(STORAGE_KEY);
+    pStorage.removeItem(STORAGE_KEY);
   } catch {
     // ignore
   }

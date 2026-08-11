@@ -138,9 +138,11 @@ type MeEntry = { id: string; createdAt: number; text: string; stickers: MeSticke
 
 const ME_KEY = 'aym_diary_me_v1';
 
+import { pStorage } from '../profile/profileStorage';
+
 function loadMeDiary(): MeEntry[] {
   try {
-    const raw = localStorage.getItem(ME_KEY);
+    const raw = pStorage.getItem(ME_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
@@ -152,7 +154,7 @@ function loadMeDiary(): MeEntry[] {
 
 function saveMeDiary(entries: MeEntry[]) {
   try {
-    localStorage.setItem(ME_KEY, JSON.stringify(entries));
+    pStorage.setItem(ME_KEY, JSON.stringify(entries));
   } catch {
     // ignore
   }

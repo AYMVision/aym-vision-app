@@ -17,11 +17,13 @@ import { assetUrl } from '../common/assetUrl';
 // Persistenz: gelesene Artikel
 // ---------------------------------------------------------------------------
 
+import { pStorage } from '../profile/profileStorage';
+
 const ARTICLE_READ_KEY = 'aym_article_read_v1';
 
 function isArticleRead(bonusId: string): boolean {
   try {
-    const raw = localStorage.getItem(ARTICLE_READ_KEY);
+    const raw = pStorage.getItem(ARTICLE_READ_KEY);
     const ids: string[] = raw ? JSON.parse(raw) : [];
     return ids.includes(bonusId);
   } catch {
@@ -31,11 +33,11 @@ function isArticleRead(bonusId: string): boolean {
 
 function markArticleRead(bonusId: string): void {
   try {
-    const raw = localStorage.getItem(ARTICLE_READ_KEY);
+    const raw = pStorage.getItem(ARTICLE_READ_KEY);
     const ids: string[] = raw ? JSON.parse(raw) : [];
     if (!ids.includes(bonusId)) {
       ids.push(bonusId);
-      localStorage.setItem(ARTICLE_READ_KEY, JSON.stringify(ids));
+      pStorage.setItem(ARTICLE_READ_KEY, JSON.stringify(ids));
     }
   } catch {}
 }
@@ -54,14 +56,13 @@ export type ArticleReactionEntry = {
 
 function saveArticleReaction(bonusId: string, reaction: string): void {
   try {
-    const raw = localStorage.getItem(ARTICLE_REACTIONS_KEY);
+    const raw = pStorage.getItem(ARTICLE_REACTIONS_KEY);
     const entries: ArticleReactionEntry[] = raw ? JSON.parse(raw) : [];
-    // Vorhandenen Eintrag updaten oder neuen anhängen
     const idx = entries.findIndex((e) => e.bonusId === bonusId);
     const entry: ArticleReactionEntry = { bonusId, reaction, readAt: Date.now() };
     if (idx >= 0) entries[idx] = entry;
     else entries.push(entry);
-    localStorage.setItem(ARTICLE_REACTIONS_KEY, JSON.stringify(entries));
+    pStorage.setItem(ARTICLE_REACTIONS_KEY, JSON.stringify(entries));
   } catch {}
 }
 

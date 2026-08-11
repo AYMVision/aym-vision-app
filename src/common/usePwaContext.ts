@@ -1,5 +1,6 @@
 // src/common/usePwaContext.ts
 // Detects PWA standalone mode and first PWA launch.
+import { pStorage } from '../profile/profileStorage';
 
 import { useEffect, useState } from 'react';
 
@@ -65,7 +66,7 @@ export function usePwaContext(): PwaContext {
 
   function hasExistingProgress(): boolean {
     try {
-      const raw = localStorage.getItem('aym_user_profile');
+      const raw = pStorage.getItem('aym_user_profile');
       if (!raw) return false;
       const p = JSON.parse(raw);
       const chapters = p?.progress?.completedChapters ?? {};

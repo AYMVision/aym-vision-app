@@ -202,9 +202,7 @@ export function clearProfilePin(id: string): void {
 // ---------------------------------------------------------------------------
 
 export function needsMigration(): boolean {
-  const profiles = loadProfilesIndex();
-  const activeId = getActiveProfileId();
-  return profiles.length === 0 || !activeId || !profiles.some((p) => p.id === activeId);
+  return loadProfilesIndex().length === 0;
 }
 
 /** Einmalige Migration: bestehende Daten → profil-gebundene Keys */

@@ -1,5 +1,6 @@
 // src/pages/AdultSettings.tsx
 import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from 'react';
+import AvatarLookCircle from '../components/AvatarLookCircle';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -21,7 +22,15 @@ import {
 import { getEntitlements } from '../gating/entitlements';
 import { applyUnlockCode } from '../gating/unlockCodes';
 import { canOpenTestSettings } from '../settings/testAccess';
-import { resetChildData, deleteAllData } from '../common/resetAym';
+import { resetChildData, deleteAllData, resetProfileById } from '../common/resetAym';
+import {
+  loadProfilesIndex,
+  clearProfilePin,
+  setProfilePin,
+  type ProfileMeta,
+} from '../profile/profileIndex';
+import { getActiveProfileId } from '../profile/profileStorage';
+import { loadProfileForId } from '../profile/storage';
 import { exportBackup, importBackup } from '../common/backupRestore';
 import TransferExportPanel from '../components/TransferExportPanel';
 import { hasDiaryPin, resetDiaryPin } from '../diary/diaryPin';
@@ -30,8 +39,8 @@ import { getDecisionCount, clearAnalytics } from '../analytics/analyticsStore';
 import { shareOrDownloadAnalytics } from '../analytics/analyticsExport';
 
 import {
-  aggregateDimensionScores,
-  totalItemResponseCount,
+  aggregateDimensionScoresForProfileId,
+  totalItemResponseCountForProfileId,
 } from '../story-v02/runtime/storyScoreAggregator';
 import { DIMENSION_META } from '../story-v02/types/dimensionMeta';
 import { clearAllStoryV02Responses } from '../story-v02/runtime/storyResponseStore';
@@ -125,11 +134,119 @@ function AccordionSection({
   );
 }
 
+function ProfileManagementSection() {
+  const [profiles, setProfiles] = useState<ProfileMeta[]>(() => loadProfilesIndex());
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [pinTarget, setPinTarget] = useState<string | null>(null);
+  const [newPin, setNewPin] = useState('');
+  const [pinMsg, setPinMsg] = useState('');
+  const activeId = getActiveProfileId();
+
+
+  function handleDeleteProfile(id: string) {
+    resetProfileById(id);
+    setProfiles(loadProfilesIndex());
+    setDeletingId(null);
+  }
+
+  function handleClearPin(id: string) {
+    clearProfilePin(id);
+    setProfiles(loadProfilesIndex());
+  }
+
+  async function handleSetPin(id: string) {
+    if (newPin.length < 4) { setPinMsg('Mindestens 4 Ziffern.'); return; }
+    await setProfilePin(id, newPin);
+    setProfiles(loadProfilesIndex());
+    setPinTarget(null);
+    setNewPin('');
+    setPinMsg('');
+  }
+
+  if (profiles.length === 0) return null;
+
+  return (
+    <div className="rounded-2xl border border-violet-100 bg-violet-50 p-5 space-y-4">
+      <h3 className="text-base font-semibold text-violet-900">Profile verwalten</h3>
+      <p className="text-sm text-slate-600">
+        Hier kannst du die Kinder-Profile auf diesem Gerät verwalten, PINs zurücksetzen oder Profile löschen.
+      </p>
+      <div className="space-y-3">
+        {profiles.map((p) => (
+          <div key={p.id} className="rounded-xl border border-violet-100 bg-white p-4">
+            <div className="flex items-center gap-3">
+              <AvatarLookCircle avatarBaseId={p.avatarBaseId} size={40} alt={p.displayName} className="border border-slate-100 flex-shrink-0" />
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                  {p.displayName}
+                  {p.id === activeId && (
+                    <span className="text-xs font-normal text-violet-600 bg-violet-100 rounded-full px-2 py-0.5">aktiv</span>
+                  )}
+                </div>
+                {p.pinHash && <div className="text-xs text-slate-400">🔒 PIN gesetzt</div>}
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2 mt-3">
+              {p.pinHash ? (
+                <button
+                  type="button"
+                  onClick={() => handleClearPin(p.id)}
+                  className="text-xs rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-slate-600 hover:bg-slate-100"
+                >
+                  PIN zurücksetzen
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => { setPinTarget(p.id); setNewPin(''); setPinMsg(''); }}
+                  className="text-xs rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-slate-600 hover:bg-slate-100"
+                >
+                  PIN setzen
+                </button>
+              )}
+              {deletingId === p.id ? (
+                <div className="flex gap-2 items-center">
+                  <span className="text-xs text-red-600">Wirklich löschen?</span>
+                  <button type="button" onClick={() => handleDeleteProfile(p.id)} className="text-xs rounded-lg bg-red-100 border border-red-200 px-3 py-1.5 text-red-700 hover:bg-red-200">Ja, löschen</button>
+                  <button type="button" onClick={() => setDeletingId(null)} className="text-xs text-slate-400 hover:text-slate-600">Abbrechen</button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setDeletingId(p.id)}
+                  className="text-xs rounded-lg border border-red-100 bg-red-50 px-3 py-1.5 text-red-600 hover:bg-red-100"
+                >
+                  Profil löschen
+                </button>
+              )}
+            </div>
+
+            {pinTarget === p.id && (
+              <div className="mt-3 flex gap-2 items-center">
+                <input
+                  type="number"
+                  value={newPin}
+                  onChange={(e) => { setNewPin(e.target.value.slice(0, 6)); setPinMsg(''); }}
+                  placeholder="4–6 Ziffern"
+                  className="w-32 rounded-lg border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-300"
+                />
+                <button type="button" onClick={() => handleSetPin(p.id)} className="text-xs rounded-lg bg-violet-600 px-3 py-1.5 text-white hover:bg-violet-700">Setzen</button>
+                <button type="button" onClick={() => setPinTarget(null)} className="text-xs text-slate-400 hover:text-slate-600">Abbrechen</button>
+                {pinMsg && <span className="text-xs text-red-500">{pinMsg}</span>}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function AdultSettings() {
   const { t } = useTranslation(['adult', 'parents', 'stories', 'themes']);
   const location = useLocation();
   const { profile } = useProfile();
-  const themePoints = profile.progress?.themePoints ?? {};
 
   const locationState = (location.state as LocationState) ?? null;
   const backTo = locationState?.backTo || '/parents';
@@ -151,6 +268,14 @@ export default function AdultSettings() {
   const [passcodeError, setPasscodeError] = useState('');
   const [unlockBusy, setUnlockBusy] = useState(false);
   const [learningTraceTick, setLearningTraceTick] = useState(0);
+  const [wirkungProfiles] = useState<ProfileMeta[]>(() => loadProfilesIndex());
+  const [wirkungProfileId, setWirkungProfileId] = useState<string>(
+    () => getActiveProfileId() ?? loadProfilesIndex()[0]?.id ?? ''
+  );
+  const themePoints = useMemo(
+    () => loadProfileForId(wirkungProfileId).progress?.themePoints ?? {},
+    [wirkungProfileId]
+  );
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
 
   const [showForgotFlow, setShowForgotFlow] = useState(false);
@@ -228,8 +353,14 @@ export default function AdultSettings() {
     return t('adult:sections.ai.modes.off.title');
   }, [owlMode, t]);
 
-  const dimensionScores = useMemo(() => aggregateDimensionScores(), [learningTraceTick]);
-  const itemCount = useMemo(() => totalItemResponseCount(), [learningTraceTick]);
+  const dimensionScores = useMemo(
+    () => aggregateDimensionScoresForProfileId(wirkungProfileId),
+    [learningTraceTick, wirkungProfileId]
+  );
+  const itemCount = useMemo(
+    () => totalItemResponseCountForProfileId(wirkungProfileId),
+    [learningTraceTick, wirkungProfileId]
+  );
 
   const DIMENSION_ICONS: Record<StoryDimensionId, string> = {
     perspective: '👁️',
@@ -621,6 +752,26 @@ export default function AdultSettings() {
             onToggle={() => toggleSection('overview')}
           >
             <div className="space-y-6">
+              {wirkungProfiles.length > 1 && (
+                <div className="flex flex-wrap gap-2 pb-1">
+                  <span className="self-center text-xs font-semibold text-slate-500 mr-1">Kind:</span>
+                  {wirkungProfiles.map((p) => (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => setWirkungProfileId(p.id)}
+                      className={`rounded-xl px-3 py-1.5 text-sm font-semibold transition-colors border ${
+                        wirkungProfileId === p.id
+                          ? 'bg-violet-600 text-white border-violet-600'
+                          : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                      }`}
+                    >
+                      {p.displayName || 'Kind'}
+                    </button>
+                  ))}
+                </div>
+              )}
+
               <section className="rounded-2xl border border-slate-200 bg-white p-5">
                 <h3 className="text-lg font-semibold text-slate-900">
                   {t('adult:mediaSkills.title', { defaultValue: 'Lern- und Erfahrungsmomente zur Medienkompetenz' })}
@@ -1477,6 +1628,9 @@ export default function AdultSettings() {
               </section>
             </div>
           </AccordionSection>
+
+          {/* Profile Management */}
+          <ProfileManagementSection />
 
           <AccordionSection
             title={t('adult:accordions.danger.title', { defaultValue: 'Zurücksetzen & Löschen' })}

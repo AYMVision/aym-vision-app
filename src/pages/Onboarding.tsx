@@ -273,6 +273,7 @@ function AvatarStep({ onNext }: { onNext: () => void }) {
 function ReadyStep({ onFinish, isBeta, betaCode }: { onFinish: (destination: 'story' | 'overview') => void; isBeta: boolean; betaCode?: string }) {
   const { t } = useTranslation('welcome');
   const { t: tStories } = useTranslation('stories');
+  const { t: tProfile } = useTranslation('profile');
   const [remindersOn, setRemindersOn] = useState(loadSettings().remindersEnabled);
   const reminderCap = getReminderCapability();
 
@@ -342,6 +343,10 @@ function ReadyStep({ onFinish, isBeta, betaCode }: { onFinish: (destination: 'st
           </>
         )}
       </div>
+
+      <p className="mt-3 text-xs text-slate-400 text-center max-w-xs">
+        🔑 {tProfile('pinSetup.onboardingHint')}
+      </p>
 
       {/* Install hint — only when not already in PWA mode */}
       {!isStandalonePwa() && (

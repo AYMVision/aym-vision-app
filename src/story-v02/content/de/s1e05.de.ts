@@ -899,7 +899,7 @@ const c09 = C('s1e05c09', 8, 'Amic 9', 'Chioma', [
 
 // ── Kapitel 10 — Amic 10 · Freitag Nachmittag ────────────────────────────────
 
-const c10 = C('s1e05c10', 9, 'Amic 10', 'Das war gar kein Wolf', [
+const c10 = C('s1e05c10', 9, 'Amic 10', 'Hast du den Wolf inzwischen eingefangen?', [
 
   S('s1e05c10_story_yasmin_lisa_wolf', [
     privateChat('Yasmin', 'Lisa'),
