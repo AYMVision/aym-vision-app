@@ -1,7 +1,7 @@
 // src/common/transferLink.ts
 import LZString from 'lz-string';
 import { gcm } from '@noble/ciphers/aes.js';
-import { randomBytes } from '@noble/ciphers/webcrypto';
+import { randomBytes } from '@noble/ciphers/utils.js';
 import { pStorage } from '../profile/profileStorage';
 import { deriveLinkEncryptionKey } from '../identity/keys';
 
