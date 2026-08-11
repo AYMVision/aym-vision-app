@@ -33,6 +33,7 @@ import { getActiveProfileId } from '../profile/profileStorage';
 import { loadProfileForId } from '../profile/storage';
 import { exportBackup, importBackup } from '../common/backupRestore';
 import TransferExportPanel from '../components/TransferExportPanel';
+import { RestoreIdentityModal } from '../identity/RestoreIdentityModal';
 import { hasDiaryPin, resetDiaryPin } from '../diary/diaryPin';
 import { getConsentStatus, setConsent } from '../analytics/consent';
 import { getDecisionCount, clearAnalytics } from '../analytics/analyticsStore';
@@ -250,6 +251,8 @@ export default function AdultSettings() {
 
   const locationState = (location.state as LocationState) ?? null;
   const backTo = locationState?.backTo || '/parents';
+
+  const [showRestoreModal, setShowRestoreModal] = useState(false);
 
   const [owlMode, setOwlMode] = useState<OwlMode>(() => loadSettings().owlMode);
   const [remindersEnabled, setRemindersEnabled] = useState(() => loadSettings().remindersEnabled);
@@ -1552,6 +1555,20 @@ export default function AdultSettings() {
               </section>
 
               <section className="rounded-2xl border border-slate-200 bg-white p-5">
+                <h3 className="text-lg font-semibold text-slate-900">Identität wiederherstellen</h3>
+                <p className="mt-1 text-sm text-slate-600">
+                  Falls du das Gerät gewechselt hast oder die App neu installiert wurde: Stell deine Identität mit den 24 Sicherheitswörtern wieder her, damit dein Fortschritt und deine freigeschalteten Inhalte wieder verfügbar sind.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setShowRestoreModal(true)}
+                  className="mt-4 rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-100"
+                >
+                  Aus 24 Wörtern wiederherstellen
+                </button>
+              </section>
+
+              <section className="rounded-2xl border border-slate-200 bg-white p-5">
                 <h3 className="text-lg font-semibold text-slate-900">
                   {t('adult:backup.title', { defaultValue: 'Backup & Wiederherstellen' })}
                 </h3>
@@ -1790,6 +1807,12 @@ export default function AdultSettings() {
           </button>
         </div>
       </div>
+      {showRestoreModal && (
+        <RestoreIdentityModal
+          onDone={() => setShowRestoreModal(false)}
+          onCancel={() => setShowRestoreModal(false)}
+        />
+      )}
     </Layout>
   );
 }
