@@ -2,6 +2,8 @@ import { generateMnemonic, mnemonicToEntropy, validateMnemonic } from '@scure/bi
 import { wordlist } from '@scure/bip39/wordlists/english.js';
 import { Bip32PrivateKey } from '@stricahq/bip32ed25519';
 import { blake2b } from '@noble/hashes/blake2.js';
+import { hkdf } from '@noble/hashes/hkdf.js';
+import { sha256 } from '@noble/hashes/sha2.js';
 import { bytesToHex, hexToBytes } from '@noble/hashes/utils.js';
 import { Buffer } from 'buffer';
 
@@ -38,4 +40,9 @@ export async function signPayload(mnemonic: string, payload: string): Promise<st
 
 export function publicKeyHash(publicKeyHex: string): string {
   return bytesToHex(blake2b(hexToBytes(publicKeyHex), { dkLen: 28 }));
+}
+
+export function deriveLinkEncryptionKey(mnemonic: string): Uint8Array {
+  const entropy = mnemonicToEntropy(mnemonic.trim(), wordlist);
+  return hkdf(sha256, entropy, undefined, 'aym-link-encryption', 32);
 }

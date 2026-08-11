@@ -15,6 +15,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@noble/ciphers": "^2.3.0",
     "@noble/hashes": "^2.3.0",
     "@scure/bip39": "^2.3.0",
     "@stricahq/bip32ed25519": "^1.1.2",

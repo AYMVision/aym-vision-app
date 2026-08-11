@@ -1,6 +1,9 @@
 // src/common/transferLink.ts
 import LZString from 'lz-string';
+import { gcm } from '@noble/ciphers/aes.js';
+import { randomBytes } from '@noble/ciphers/webcrypto';
 import { pStorage } from '../profile/profileStorage';
+import { deriveLinkEncryptionKey } from '../identity/keys';
 
 export const TRANSFER_SCHEMA_VERSION = 1;
 
@@ -89,8 +92,30 @@ export type DecodeResult =
   | { ok: true; payload: TransferPayload }
   | { ok: false; error: string };
 
-export function decodeTransferPayload(encoded: string): DecodeResult {
+export function decodeTransferPayload(encoded: string, mnemonic?: string): DecodeResult {
   try {
+    if (encoded.startsWith('v2:')) {
+      const rawB64 = encoded.slice(3).replace(/-/g, '+').replace(/_/g, '/');
+      const rawBin = Uint8Array.from(atob(rawB64), c => c.charCodeAt(0));
+      const iv = rawBin.slice(0, 12);
+      const ciphertext = rawBin.slice(12);
+      const resolvedMnemonic = mnemonic ?? (
+        (() => {
+          try { return JSON.parse(localStorage.getItem('aym_identity') ?? '').mnemonic as string; } catch { return null; }
+        })()
+      );
+      if (!resolvedMnemonic) return { ok: false, error: 'Verschlüsselter Link: Bitte zuerst Identität wiederherstellen.' };
+      const key = deriveLinkEncryptionKey(resolvedMnemonic);
+      const plaintext = gcm(key, iv).decrypt(ciphertext);
+      const json = new TextDecoder().decode(plaintext);
+      const parsed = JSON.parse(json) as TransferPayload;
+      if (typeof parsed.v !== 'number') return { ok: false, error: 'Ungültiges Transfer-Format.' };
+      if (parsed.v !== TRANSFER_SCHEMA_VERSION) {
+        return { ok: false, error: `Inkompatible Version (erwartet ${TRANSFER_SCHEMA_VERSION}, erhalten ${parsed.v}).` };
+      }
+      return { ok: true, payload: parsed };
+    }
+
     const json = LZString.decompressFromEncodedURIComponent(encoded);
     if (!json) return { ok: false, error: 'Ungültiger Transfer-Link (Entschlüsselung fehlgeschlagen).' };
     const parsed = JSON.parse(json) as TransferPayload;
@@ -201,9 +226,18 @@ function markTransferExport(): void {
   } catch { /* */ }
 }
 
-export function buildTransferLink(): string {
+export function buildTransferLink(mnemonic: string): string {
   const payload = buildTransferPayload();
-  const encoded = encodeTransferPayload(payload);
+  const json = JSON.stringify(payload);
+  const key = deriveLinkEncryptionKey(mnemonic);
+  const iv = randomBytes(12);
+  const ciphertext = gcm(key, iv).encrypt(new TextEncoder().encode(json));
+  const combined = new Uint8Array(iv.length + ciphertext.length);
+  combined.set(iv);
+  combined.set(ciphertext, iv.length);
+  const b64url = btoa(String.fromCharCode(...combined))
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+  const encoded = `v2:${b64url}`;
   markTransferExport();
   const base = window.location.origin + window.location.pathname;
   return `${base}#/transfer/${encoded}`;

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import QRCode from 'qrcode';
 import { buildTransferLink } from '../common/transferLink';
 import { isStandalonePwa } from '../common/usePwaContext';
+import { loadIdentity } from '../identity/storage';
 
 type CopyState = 'idle' | 'copied' | 'error';
 type ShareState = 'idle' | 'sharing' | 'done' | 'error';
@@ -19,7 +20,9 @@ export default function TransferExportPanel() {
   const canShare = typeof navigator.share === 'function';
 
   function handleGenerate() {
-    const generated = buildTransferLink();
+    const identity = loadIdentity();
+    if (!identity) return;
+    const generated = buildTransferLink(identity.mnemonic);
     setLink(generated);
     setCopyState('idle');
     setShareState('idle');
