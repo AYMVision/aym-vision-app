@@ -3,7 +3,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 export default defineConfig(({ command }) => {
   const isDev = command === 'serve';
@@ -22,7 +21,6 @@ export default defineConfig(({ command }) => {
   return {
     base: isDev ? '/' : './',
     plugins: [
-      nodePolyfills({ include: ['buffer', 'process', 'events', 'util', 'stream'] }),
       react(),
       tailwindcss(),
       VitePWA({
@@ -76,6 +74,22 @@ export default defineConfig(({ command }) => {
           },
         },
       },
+    },
+
+    define: {
+      global: 'globalThis',
+    },
+    resolve: {
+      alias: {
+        buffer: 'buffer',
+        process: 'process/browser',
+        events: 'events',
+        util: 'util',
+        stream: 'stream-browserify',
+      },
+    },
+    optimizeDeps: {
+      include: ['buffer', 'process', 'events', 'util'],
     },
 
     // gut für wasm assets (lassen wir drin)

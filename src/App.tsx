@@ -1,3 +1,4 @@
+import './polyfills';
 import { createContext, lazy, Suspense, useEffect, useRef } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HashRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
