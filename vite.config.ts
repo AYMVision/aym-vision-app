@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 export default defineConfig(({ command }) => {
   const isDev = command === 'serve';
@@ -21,6 +22,7 @@ export default defineConfig(({ command }) => {
   return {
     base: isDev ? '/' : './',
     plugins: [
+      nodePolyfills({ include: ['buffer', 'process', 'events', 'util', 'stream'] }),
       react(),
       tailwindcss(),
       VitePWA({
@@ -73,16 +75,6 @@ export default defineConfig(({ command }) => {
             }
           },
         },
-      },
-    },
-
-    // Polyfills für Node.js-Bibliotheken (z.B. @stricahq/bip32ed25519 → pbkdf2 → Buffer/global)
-    define: {
-      global: 'globalThis',
-    },
-    resolve: {
-      alias: {
-        buffer: 'buffer',
       },
     },
 
