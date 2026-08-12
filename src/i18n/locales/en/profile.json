@@ -182,6 +182,24 @@
     "empty": "Special stickers and badges will appear here soon."
   },
 
+  "shop": {
+    "buy": {
+      "button": "Buy now",
+      "owned": "Already unlocked ✓",
+      "parentRequired": "Purchase requires parent unlock"
+    },
+    "return": {
+      "processing": "Confirming purchase …",
+      "successTitle": "Unlocked! 🎉",
+      "successText": "Your new content is now available.",
+      "errorUnpaid": "Payment not completed. Please try again.",
+      "errorMismatch": "Purchase assignment failed. Please contact support.",
+      "errorOwned": "You already own this content.",
+      "errorGeneral": "Purchase could not be confirmed.",
+      "toProfile": "Go to profile"
+    }
+  },
+
   "identity": {
     "voucher": {
       "title": "Redeem voucher",

@@ -181,6 +181,24 @@
     "empty": "Hier erscheinen bald besondere Sticker und Badges."
   },
 
+  "shop": {
+    "buy": {
+      "button": "Jetzt kaufen",
+      "owned": "Bereits freigeschaltet ✓",
+      "parentRequired": "Kauf erfordert Eltern-Freischaltung"
+    },
+    "return": {
+      "processing": "Kauf wird bestätigt …",
+      "successTitle": "Freigeschaltet! 🎉",
+      "successText": "Dein neuer Inhalt ist jetzt verfügbar.",
+      "errorUnpaid": "Zahlung nicht abgeschlossen. Bitte versuche es nochmal.",
+      "errorMismatch": "Kaufzuordnung fehlgeschlagen. Bitte wende dich an den Support.",
+      "errorOwned": "Dieser Inhalt gehört dir schon.",
+      "errorGeneral": "Kauf konnte nicht bestätigt werden.",
+      "toProfile": "Zur Profilseite"
+    }
+  },
+
   "identity": {
     "voucher": {
       "title": "Gutschein einlösen",
