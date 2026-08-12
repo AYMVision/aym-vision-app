@@ -1,0 +1,9 @@
+{
+  "name": "aym-admin",
+  "private": true,
+  "type": "module",
+  "description": "AYM Vision admin CLI — voucher creation",
+  "scripts": {
+    "create-vouchers": "npx tsx create-vouchers.ts"
+  }
+}
