@@ -44,5 +44,5 @@ export function publicKeyHash(publicKeyHex: string): string {
 
 export function deriveLinkEncryptionKey(mnemonic: string): Uint8Array {
   const entropy = mnemonicToEntropy(mnemonic.trim(), wordlist);
-  return hkdf(sha256, entropy, undefined, 'aym-link-encryption', 32);
+  return hkdf(sha256, entropy, undefined, new TextEncoder().encode('aym-link-encryption'), 32);
 }
