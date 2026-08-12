@@ -107,7 +107,8 @@ export function decodeTransferPayload(encoded: string, mnemonic?: string): Decod
       if (!resolvedMnemonic) return { ok: false, error: 'Verschlüsselter Link: Bitte zuerst Identität wiederherstellen.' };
       const key = deriveLinkEncryptionKey(resolvedMnemonic);
       const plaintext = gcm(key, iv).decrypt(ciphertext);
-      const json = new TextDecoder().decode(plaintext);
+      const json = LZString.decompressFromUint8Array(plaintext);
+      if (!json) return { ok: false, error: 'Ungültiger Transfer-Link (Entschlüsselung fehlgeschlagen).' };
       const parsed = JSON.parse(json) as TransferPayload;
       if (typeof parsed.v !== 'number') return { ok: false, error: 'Ungültiges Transfer-Format.' };
       if (parsed.v !== TRANSFER_SCHEMA_VERSION) {
@@ -228,10 +229,10 @@ function markTransferExport(): void {
 
 export function buildTransferLink(mnemonic: string): string {
   const payload = buildTransferPayload();
-  const json = JSON.stringify(payload);
+  const compressed = LZString.compressToUint8Array(JSON.stringify(payload));
   const key = deriveLinkEncryptionKey(mnemonic);
   const iv = randomBytes(12);
-  const ciphertext = gcm(key, iv).encrypt(new TextEncoder().encode(json));
+  const ciphertext = gcm(key, iv).encrypt(compressed);
   const combined = new Uint8Array(iv.length + ciphertext.length);
   combined.set(iv);
   combined.set(ciphertext, iv.length);
