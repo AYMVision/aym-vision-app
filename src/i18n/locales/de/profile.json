@@ -182,6 +182,27 @@
   },
 
   "identity": {
+    "voucher": {
+      "title": "Gutschein einlösen",
+      "inputLabel": "Code eingeben",
+      "inputPlaceholder": "36-stelliger Code …",
+      "scanButton": "QR-Code scannen",
+      "invalidCode": "Ungültiger Code. Bitte prüfe den 36-stelligen Code.",
+      "confirmTitle": "Gutschein einlösen?",
+      "confirmText": "Möchtest du diesen Gutschein jetzt einlösen und den Inhalt freischalten?",
+      "confirm": "Ja, einlösen",
+      "cancel": "Abbrechen",
+      "successTitle": "Freigeschaltet! 🎉",
+      "successText": "Dein neuer Inhalt ist jetzt verfügbar.",
+      "alreadyOwned": "Dieser Inhalt gehört dir schon.",
+      "notFound": "Gutschein nicht gefunden.",
+      "error": "Einlösen fehlgeschlagen. Bitte versuche es nochmal.",
+      "certCardTitle": "Dein Blockchain-Zertifikat",
+      "certCopy": "Link kopieren",
+      "certCopied": "Kopiert ✓",
+      "back": "Zurück",
+      "done": "Fertig"
+    },
     "backup": {
       "headline": "Deine Daten gehören dir allein.",
       "congrats": "Glückwunsch zur Freischaltung!",

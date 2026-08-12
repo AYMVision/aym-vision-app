@@ -57,6 +57,7 @@ const StudioViewPage      = lazy(() => import('./pages/StudioViewPage'));
 const StudioStoriesPage   = lazy(() => import('./pages/StudioStoriesPage'));
 const StudioEducatorsPage = lazy(() => import('./pages/StudioEducatorsPage'));
 const SeasonFinale        = lazy(() => import('./pages/SeasonFinale'));
+const RedeemVoucher       = lazy(() => import('./shop/RedeemVoucher'));
 const TestSettings   = import.meta.env.DEV ? lazy(() => import('./pages/TestSettings')) : null;
 const DevLab         = import.meta.env.DEV ? lazy(() => import('./pages/DevLab')) : null;
 
@@ -123,6 +124,7 @@ function AppRoutes() {
         <Route path="/studio/stories" element={<StudioStoriesPage />} />
 
         <Route path="/season-finale/s1" element={<SeasonFinale />} />
+        <Route path="/redeem-voucher" element={<RedeemVoucher />} />
 
         {import.meta.env.DEV && TestSettings && (
           <Route path="/test-settings" element={<TestSettings />} />

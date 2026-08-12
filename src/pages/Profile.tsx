@@ -361,6 +361,16 @@ export default function Profile() {
                 {t('bonus.hub.lexikon.title')}
               </div>
             </Link>
+
+            <Link
+              to="/redeem-voucher"
+              className="rounded-2xl border border-black/5 bg-gradient-to-br from-amber-50 via-white to-yellow-50 p-4 hover:shadow-md transition col-span-2 sm:col-span-1"
+            >
+              <div className="text-3xl">🎟️</div>
+              <div className="mt-2 text-sm font-extrabold text-slate-900 leading-tight">
+                {t('identity.voucher.title')}
+              </div>
+            </Link>
           </div>
         </div>
 

@@ -183,6 +183,27 @@
   },
 
   "identity": {
+    "voucher": {
+      "title": "Redeem voucher",
+      "inputLabel": "Enter code",
+      "inputPlaceholder": "36-character code …",
+      "scanButton": "Scan QR code",
+      "invalidCode": "Invalid code. Please check the 36-character code.",
+      "confirmTitle": "Redeem voucher?",
+      "confirmText": "Do you want to redeem this voucher and unlock the content now?",
+      "confirm": "Yes, redeem",
+      "cancel": "Cancel",
+      "successTitle": "Unlocked! 🎉",
+      "successText": "Your new content is now available.",
+      "alreadyOwned": "You already own this content.",
+      "notFound": "Voucher not found.",
+      "error": "Redemption failed. Please try again.",
+      "certCardTitle": "Your blockchain certificate",
+      "certCopy": "Copy link",
+      "certCopied": "Copied ✓",
+      "back": "Back",
+      "done": "Done"
+    },
     "backup": {
       "headline": "Your data belongs to you alone.",
       "congrats": "Congratulations on your unlock!",
