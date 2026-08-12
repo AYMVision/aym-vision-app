@@ -199,6 +199,15 @@
     }
   },
 
+  "blockchain": {
+    "certCardTitle": "Mein Blockchain-Zertifikat",
+    "certCardSubtitle": "Dein digitaler Nachweis — verifizierbar auf der Cardano-Blockchain.",
+    "certCopy": "Link kopieren",
+    "certCopied": "Kopiert ✓",
+    "anchorPending": "⏳ Verankerung ausstehend — bis zu 48 Stunden",
+    "anchorDone": "✓ Auf der Blockchain gesichert"
+  },
+
   "identity": {
     "voucher": {
       "title": "Gutschein einlösen",

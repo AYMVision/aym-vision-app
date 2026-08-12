@@ -22,6 +22,7 @@ import { STICKER_CATALOG } from '../progress/rewardCatalog';
 import AvatarLookCircle from '../components/AvatarLookCircle';
 import { THEME_META, THEME_ORDER } from '../competencies/themeMeta';
 import ChallengeJournal from '../components/ChallengeJournal';
+import BlockchainCertCard from '../shop/BlockchainCertCard';
 
 // ✅ typed location state (kein any)
 type ProfileLocationState = {
@@ -283,6 +284,9 @@ export default function Profile() {
             </div>
           </div>
         )}
+
+        {/* Blockchain-Zertifikat-Karte */}
+        <BlockchainCertCard chatName={profile.chatName ?? undefined} />
 
         {/* Challenge-Journal */}
         <ChallengeJournal />

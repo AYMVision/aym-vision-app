@@ -200,6 +200,15 @@
     }
   },
 
+  "blockchain": {
+    "certCardTitle": "My Blockchain Certificate",
+    "certCardSubtitle": "Your digital proof — verifiable on the Cardano blockchain.",
+    "certCopy": "Copy link",
+    "certCopied": "Copied ✓",
+    "anchorPending": "⏳ Anchoring pending — up to 48 hours",
+    "anchorDone": "✓ Secured on the blockchain"
+  },
+
   "identity": {
     "voucher": {
       "title": "Redeem voucher",
