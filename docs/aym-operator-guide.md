@@ -15,6 +15,7 @@ Hake diese Punkte ab, bevor du live gehst:
 - [ ] Stripe Restricted API Key erstellen (Schritt 1)
 - [ ] Privates GitHub-Inhalts-Repository anlegen (Schritt 2)
 - [ ] GitHub Fine-Grained PAT erstellen (Schritt 2)
+- [ ] **Story-Inhalte aus dem öffentlichen PWA-Repo in das private Content-Repo migrieren (Schritt 2 — kritisch für Kopierschutz!)** *(D6 im Implementierungsplan)*
 - [ ] Cardano Master-Wallet offline generieren (Schritt 3)
 - [ ] Master Wallet auf Preprod faucen (Staging) / mit echtem ADA laden (Produktion) (Schritt 3)
 - [ ] Master Public Key ableiten und in Backend-Config eintragen (Schritt 3)
@@ -84,6 +85,31 @@ Hake diese Punkte ab, bevor du live gehst:
    https://raw.githubusercontent.com/<dein-github-user>/aym-vision-content/main
    ```
    → kommt in `AYM_CONTENT_REPO_URL`.
+
+4. **⚠️ HUMAN STEP — Story-Inhalte aus dem öffentlichen PWA-Repo migrieren (kritisch!)**
+
+   Aktuell liegen alle Episode-Inhalte als TypeScript-Dateien **im öffentlichen Repo** der PWA:
+   ```
+   src/story-v02/content/de/s1e01.de.ts  ← öffentlich lesbar!
+   src/story-v02/content/de/s1e02.de.ts
+   src/story-v02/content/en/s1e01.en.ts
+   … (alle Episoden)
+   ```
+   Das bedeutet: jeder kann die Inhalte lesen, ohne zu zahlen.
+
+   **Was muss passieren (Task D6 im Plan):**
+   - Die Inhalte werden als `bundle.json`-Dateien ins **private** Repo konvertiert und geladen
+   - Danach werden die `.ts`-Dateien aus dem öffentlichen Repo **gelöscht**
+   - Erst dann greift der Kopierschutz wirklich
+
+   Format pro Episode im privaten Repo:
+   ```
+   s1e01/bundle.json   ← enthält den serialisierten Episoden-Inhalt
+   s1e02/bundle.json
+   …
+   ```
+   Diese Migration erfolgt im Rahmen von **Task D6** (Implementierungsplan)
+   und erfordert Abstimmung mit dem Entwickler.
 
 ---
 
