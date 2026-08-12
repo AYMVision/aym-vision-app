@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode';
 import { getActiveProfileId } from '../profile/profileStorage';
+import { useQuery } from '@tanstack/react-query';
 
 type Cert = { hash: string; salt: string; verifyUrl: string };
 
@@ -23,10 +24,32 @@ function buildUrl(cert: Cert, name?: string): string {
   return name?.trim() ? `${base}&name=${encodeURIComponent(name.trim())}` : base;
 }
 
+type MpfRoot = { root: string; treeVersion: number; anchorTxHash: string | null; anchoredAt: string | null };
+
+function useAnchorStatus() {
+  const base = (import.meta.env.VITE_AYM_BACKEND_URL ?? '').replace(/\/$/, '');
+  return useQuery<MpfRoot | null>({
+    queryKey: ['mpf-root'],
+    queryFn: async () => {
+      if (!base) return null;
+      try {
+        const res = await fetch(`${base}/api/v1/aym/mpf/root`);
+        if (!res.ok) return null;
+        return await res.json() as MpfRoot;
+      } catch {
+        return null;
+      }
+    },
+    staleTime: 10 * 60 * 1000, // 10 min
+    enabled: !!base,
+  });
+}
+
 export default function BlockchainCertCard({ chatName }: Props) {
   const { t } = useTranslation('profile');
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const { data: mpfRoot } = useAnchorStatus();
 
   const profileId = getActiveProfileId();
   const cert = profileId ? loadCert(profileId) : null;
@@ -76,6 +99,23 @@ export default function BlockchainCertCard({ chatName }: Props) {
           </button>
         </div>
       </div>
+
+      {mpfRoot !== undefined && (
+        <div className="mt-3 pt-3 border-t border-teal-100 text-xs">
+          {mpfRoot?.anchorTxHash ? (
+            <span className="text-emerald-700 font-semibold">
+              {t('blockchain.anchorDone')}
+              {mpfRoot.anchoredAt && (
+                <span className="ml-1 text-emerald-600 font-normal">
+                  ({new Date(mpfRoot.anchoredAt).toLocaleDateString('de-DE')})
+                </span>
+              )}
+            </span>
+          ) : (
+            <span className="text-amber-700">{t('blockchain.anchorPending')}</span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
