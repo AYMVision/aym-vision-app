@@ -3,6 +3,8 @@ import { recordNewChapterCompletion } from '../../gating/gateEngine';
 import { unlockDiaryEntriesForChapter } from '../../bonus/unlockDiaryEntriesForChapter';
 import { autoCollectCharacterCardsForChapter } from '../../bonus/bonusAutoCollect';
 import { applyChapterReward } from '../../progress/progressEngine';
+import { aymFetch } from '../../identity/handshake';
+import { getActiveProfileId } from '../../profile/profileStorage';
 
 type EpisodeMetaLike = {
   seasonId: string;
@@ -107,6 +109,16 @@ export function completeStoryChapter<TProfile>(args: {
 
     return result.profile;
   });
+
+  if (episodeBonusAwarded) {
+    const profileId = getActiveProfileId();
+    if (profileId) {
+      void aymFetch('/api/v1/aym/course-state', {
+        method: 'POST',
+        body: JSON.stringify({ courseId, status: 'FINISHED', profileId }),
+      }).catch(() => {});
+    }
+  }
 
   let progressDebug: string | undefined;
   if (enableDebug) {
