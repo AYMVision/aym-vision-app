@@ -1,6 +1,7 @@
 // src/common/firstRun.ts
 // Tracks whether the active profile has completed onboarding.
 // Flag is profile-scoped (via pStorage). Legacy device-wide key is migrated on first read.
+// parentSetupDone is device-wide (not profile-scoped) — one parent setup covers all profiles.
 
 import { pStorage } from '../profile/profileStorage';
 
@@ -22,6 +23,16 @@ export function isFirstRunDone(): boolean {
   } catch {
     return false;
   }
+}
+
+const PARENT_SETUP_KEY = 'aym_parent_setup_done';
+
+export function isParentSetupDone(): boolean {
+  return localStorage.getItem(PARENT_SETUP_KEY) === 'true';
+}
+
+export function markParentSetupDone(): void {
+  localStorage.setItem(PARENT_SETUP_KEY, 'true');
 }
 
 export function markFirstRunDone(): void {

@@ -47,7 +47,6 @@ export const CONTENT_INDEX: SeasonMeta[] = [
   {
     seasonId: 's1',
     seasonTitle: 'Staffel 1',
-    seasonName: 'Doppelklick',
     badgeImage: '/media/stickers/seasons/s1-badge-512.webp',
     episodes: [
       {

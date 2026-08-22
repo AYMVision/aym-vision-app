@@ -1,7 +1,7 @@
 import Layout from '../components/Layout';
 import { cn } from '../common/utils';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { assetUrl } from '../common/assetUrl';
 import SmartImage from '../components/SmartImage';
 
@@ -475,9 +475,9 @@ const valueAccents = [
 
             {/* KOOPERATIONEN & FÖRDERUNG */}
             <section className="bg-white rounded-2xl shadow-md border border-slate-100 p-5 sm:p-6">
-              <div className="text-xs font-semibold text-[var(--color-teal-600)]">Kooperationen & Förderung</div>
+              <div className="text-xs font-semibold text-[var(--color-teal-600)]">{t('supporters.kicker')}</div>
               <h2 className="mt-1 text-base sm:text-lg font-semibold text-[var(--color-teal-900)]">
-                Unterstützt von
+                {t('supporters.title')}
               </h2>
 
               {/* Hafven */}
@@ -487,38 +487,59 @@ const valueAccents = [
                   target="_blank"
                   rel="noopener noreferrer"
                   className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
-                  aria-label="Hafven Impact Accelerator"
+                  aria-label={t('supporters.hafven.ariaLabel')}
                 >
                   <img
                     src={assetUrl('media/ui/HafvenImpactAccelerator_Logo_schwarz.png')}
-                    alt="Hafven Impact Accelerator"
+                    alt={t('supporters.hafven.imgAlt')}
                     className="h-10 w-auto"
                     loading="lazy"
                   />
                 </a>
                 <p className="text-sm text-slate-700 leading-relaxed">
-                  Amy Surfwing wird vom <strong>Hafven Impact Accelerator</strong> unterstützt — einem Programm für soziale Innovationen und gesellschaftlich wirksame Projekte in Hannover.
+                  <Trans i18nKey="supporters.hafven.text" t={t} components={{ bold: <strong /> }} />
                 </p>
               </div>
 
               {/* NBank Gründungsstipendium */}
-              <div className="mt-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="mt-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-5 border-b border-slate-100">
                 <a
                   href="https://www.nbank.de"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
-                  aria-label="NBank Gründungsstipendium"
+                  aria-label={t('supporters.nbank.ariaLabel')}
                 >
                   <img
                     src={assetUrl('media/ui/Siegel_Gründungsstipendium_Start-up_2024.png')}
-                    alt="Gründungsstipendium Start-up 2025/2026 – NBank"
+                    alt={t('supporters.nbank.imgAlt')}
                     className="h-20 w-auto"
                     loading="lazy"
                   />
                 </a>
                 <p className="text-sm text-slate-700 leading-relaxed">
-                  Amy Surfwing ist Trägerin des <strong>Gründungsstipendiums der NBank</strong> (2025/2026) — der Investitions- und Förderbank des Landes Niedersachsen. Das Stipendium fördert innovative Gründungsvorhaben mit besonderem gesellschaftlichem Mehrwert.
+                  <Trans i18nKey="supporters.nbank.text" t={t} components={{ bold: <strong /> }} />
+                </p>
+              </div>
+
+              {/* WIN Startup Academy Braunschweig */}
+              <div className="mt-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <a
+                  href="https://www.win-bs.de/startup-academy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
+                  aria-label={t('supporters.win.ariaLabel')}
+                >
+                  <img
+                    src={assetUrl('media/ui/300_WIN_Logo_2022_BS_Unterstuetzung.webp')}
+                    alt={t('supporters.win.imgAlt')}
+                    className="h-10 w-auto"
+                    loading="lazy"
+                  />
+                </a>
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  <Trans i18nKey="supporters.win.text" t={t} components={{ bold: <strong /> }} />
                 </p>
               </div>
             </section>

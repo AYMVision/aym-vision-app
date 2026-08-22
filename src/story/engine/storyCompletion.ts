@@ -116,6 +116,15 @@ export function completeStoryChapter<TProfile>(args: {
       void aymFetch('/api/v1/aym/course-state', {
         method: 'POST',
         body: JSON.stringify({ courseId, status: 'FINISHED', profileId }),
+      }).then(async (res) => {
+        if (!res.ok) return;
+        const data = await res.json().catch(() => null) as { completionCertificate?: { hash: string; verifyUrl: string } } | null;
+        if (data?.completionCertificate) {
+          localStorage.setItem(
+            `aym_p_${profileId}__aym_completion_cert`,
+            JSON.stringify(data.completionCertificate),
+          );
+        }
       }).catch(() => {});
     }
   }

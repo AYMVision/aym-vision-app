@@ -103,7 +103,7 @@
   },
   "start": {
     "kicker": "Start now",
-    "title": "One week free",
+    "title": "Try it for free",
     "label": "New for you",
     "hint": "No sign-up needed – just get started.",
     "cta": "Start now →"
@@ -166,11 +166,13 @@
   },
   "list": {
     "kicker": "",
-    "title": "Doppelklick",
+    "title": "Season 1",
     "description": "Yasmin types. Carlos forwards it. Finn is offline — again, not really. And a sticker nobody should have sent is now all over school. What started as a joke becomes a real test for the whole class — friendships, trust, and what actually matters. You’re right in the middle of it.",
     "lead": "One tap and you’re right in the adventure.",
     "searchPlaceholder": "Search story…",
-    "seasonBadge": "Doppelklick"
+    "seasonBadge": "Season 1",
+    "voucherHint": "Got a voucher code? Unlock now",
+    "owned": "Season 1 activated · A new chapter every day"
   },
   "trust": {
     "kicker": "Thinking space",
@@ -331,7 +333,11 @@
   "gate": {
     "nextTomorrowTitle": "You’re done for today ✨",
     "nextTomorrowBody": "The next Amic is waiting for you tomorrow. Until then, you can browse the school newspaper.",
-    "toNewspaper": "Go to the school newspaper →"
+    "toNewspaper": "Go to the school newspaper →",
+    "paywallCardTitle": "Chapter 4 is waiting for you! 🦉",
+    "paywallBody": "Your parents can unlock the next chapters for you.",
+    "paywallCtaParent": "Open parent area →",
+    "paywallCtaBack": "Back to overview"
   },
   "measurement": {
     "dimensions": {
@@ -437,7 +443,7 @@
   },
   "overview": {
     "back": "All Stories",
-    "season": "Doppelklick",
+    "season": "Season 1",
     "aiTranslated": "Story translated with AI · May contain errors",
     "timeLocked": {
       "daily": "Available again tomorrow"
@@ -455,7 +461,10 @@
   "amicDone": {
     "title": "Amic completed ✓",
     "ctaNext": "Next Amic →",
-    "ctaOverview": "Overview"
+    "ctaOverview": "Overview",
+    "installHint": "You can save Amy Surfwing as an app on your phone — then you'll find it right on your home screen tomorrow. This is optional; everything works the same in the browser.",
+    "installHintLink": "How to do it →",
+    "installHintDismiss": "Dismiss hint"
   },
   "survey": {
     "amyAsks": "Amy asks",

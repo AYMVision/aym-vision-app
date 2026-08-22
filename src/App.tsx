@@ -57,8 +57,11 @@ const StudioViewPage      = lazy(() => import('./pages/StudioViewPage'));
 const StudioStoriesPage   = lazy(() => import('./pages/StudioStoriesPage'));
 const StudioEducatorsPage = lazy(() => import('./pages/StudioEducatorsPage'));
 const SeasonFinale        = lazy(() => import('./pages/SeasonFinale'));
+const ParentSetupWizard     = lazy(() => import('./pages/ParentSetupWizard'));
 const RedeemVoucher         = lazy(() => import('./shop/RedeemVoucher'));
 const StripePurchaseReturn  = lazy(() => import('./shop/StripePurchaseReturn'));
+const VoucherAdmin          = lazy(() => import('./pages/VoucherAdmin'));
+const TommiAward            = lazy(() => import('./pages/TommiAward'));
 const TestSettings   = import.meta.env.DEV ? lazy(() => import('./pages/TestSettings')) : null;
 const DevLab         = import.meta.env.DEV ? lazy(() => import('./pages/DevLab')) : null;
 
@@ -99,6 +102,7 @@ function AppRoutes() {
         <Route path="/adult-settings" element={<AdultSettings />} />
 
         <Route path="/parents" element={<ForParents />} />
+        <Route path="/parent-setup" element={<ParentSetupWizard />} />
         <Route path="/concept" element={<Concept />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/impressum" element={<Impressum />} />
@@ -127,6 +131,8 @@ function AppRoutes() {
         <Route path="/season-finale/s1" element={<SeasonFinale />} />
         <Route path="/redeem-voucher" element={<RedeemVoucher />} />
         <Route path="/shop/return" element={<StripePurchaseReturn />} />
+        <Route path="/voucher-admin" element={<VoucherAdmin />} />
+        <Route path="/tommi-award" element={<TommiAward />} />
 
         {import.meta.env.DEV && TestSettings && (
           <Route path="/test-settings" element={<TestSettings />} />

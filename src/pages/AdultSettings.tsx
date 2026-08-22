@@ -2,7 +2,9 @@
 import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from 'react';
 import AvatarLookCircle from '../components/AvatarLookCircle';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useIdentity } from '../identity/useIdentity';
+import { BackupPrompt } from '../identity/BackupPrompt';
 
 import Layout from '../components/Layout';
 
@@ -21,6 +23,11 @@ import {
 
 import { getEntitlements } from '../gating/entitlements';
 import { applyUnlockCode } from '../gating/unlockCodes';
+import { isSeasonOwnedLocally, refreshOwnership } from '../shop/ownership';
+import { paymentLinkFor, computeProfileHash } from '../shop/stripe';
+import { aymFetch } from '../identity/handshake';
+import { parseVoucherInput } from '../shop/qrScanner';
+import { loadIdentity } from '../identity/storage';
 import { canOpenTestSettings } from '../settings/testAccess';
 import { resetChildData, deleteAllData, resetProfileById } from '../common/resetAym';
 import {
@@ -57,6 +64,7 @@ type LocationState = {
 
 type AccordionSectionId =
   | 'overview'
+  | 'purchase'
   | 'manage'
   | 'analytics'
   | 'transparency'
@@ -247,7 +255,9 @@ function ProfileManagementSection() {
 export default function AdultSettings() {
   const { t } = useTranslation(['adult', 'parents', 'stories', 'themes']);
   const location = useLocation();
+  const navigate = useNavigate();
   const { profile } = useProfile();
+  const { needsBackup, identity } = useIdentity();
 
   const locationState = (location.state as LocationState) ?? null;
   const backTo = locationState?.backTo || '/parents';
@@ -269,6 +279,7 @@ export default function AdultSettings() {
   const [passcode, setPasscode] = useState('');
   const [passcodeRepeat, setPasscodeRepeat] = useState('');
   const [passcodeError, setPasscodeError] = useState('');
+  const [legalConfirmed, setLegalConfirmed] = useState(false);
   const [unlockBusy, setUnlockBusy] = useState(false);
   const [learningTraceTick, setLearningTraceTick] = useState(0);
   const [wirkungProfiles] = useState<ProfileMeta[]>(() => loadProfilesIndex());
@@ -297,6 +308,13 @@ export default function AdultSettings() {
   const [deleteAllStep, setDeleteAllStep] = useState<'idle' | 'confirm'>('idle');
   const [deleteAllConfirmed, setDeleteAllConfirmed] = useState(false);
 
+  const [voucherCode, setVoucherCode] = useState('');
+  const [voucherBusy, setVoucherBusy] = useState(false);
+  const [voucherMsg, setVoucherMsg] = useState<{ text: string; tone: 'success' | 'error' } | null>(null);
+  const [voucherSuccess, setVoucherSuccess] = useState(false);
+  const [showVoucherBackup, setShowVoucherBackup] = useState(false);
+  const [showIdentityBackup, setShowIdentityBackup] = useState(false);
+
   const [diaryPinExists, setDiaryPinExists] = useState(() => hasDiaryPin());
   const [diaryPinResetDone, setDiaryPinResetDone] = useState(false);
 
@@ -307,6 +325,7 @@ export default function AdultSettings() {
 
   const [openSections, setOpenSections] = useState<Record<AccordionSectionId, boolean>>({
     overview: true,
+    purchase: false,
     manage: false,
     analytics: false,
     transparency: false,
@@ -503,6 +522,20 @@ export default function AdultSettings() {
               </div>
             ) : null}
 
+            {needsSetup && (
+              <label className="mt-4 flex items-start gap-3 cursor-pointer rounded-xl border border-slate-200 bg-slate-50 p-3">
+                <input
+                  type="checkbox"
+                  checked={legalConfirmed}
+                  onChange={e => setLegalConfirmed(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-slate-300 accent-teal-600 shrink-0"
+                />
+                <span className="text-xs text-slate-600 leading-snug">
+                  {t('adult:parent.legalConfirm', { defaultValue: 'Ich bin erziehungsberechtigt und richte dieses Gerät für mein Kind ein.' })}
+                </span>
+              </label>
+            )}
+
             {passcodeError ? (
               <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
                 {passcodeError}
@@ -513,7 +546,7 @@ export default function AdultSettings() {
               <button
                 type="button"
                 onClick={needsSetup ? handleSetupPasscode : handleUnlockWithPasscode}
-                disabled={unlockBusy}
+                disabled={unlockBusy || (needsSetup && !legalConfirmed)}
                 className="rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-60"
               >
                 {needsSetup
@@ -659,6 +692,47 @@ export default function AdultSettings() {
     }
   }
 
+  async function handleVoucherRedeem() {
+    const id = parseVoucherInput(voucherCode);
+    if (!id) {
+      setVoucherMsg({ text: 'Ungültiger Code – bitte prüfen.', tone: 'error' });
+      return;
+    }
+    const profileId = wirkungProfileId || getActiveProfileId();
+    if (!profileId) {
+      setVoucherMsg({ text: 'Kein aktives Profil gefunden.', tone: 'error' });
+      return;
+    }
+    setVoucherBusy(true);
+    setVoucherMsg(null);
+    try {
+      const body = JSON.stringify({ voucherId: id, profileId });
+      const res = await aymFetch('/api/v1/aym/voucher/redeem', { method: 'POST', body });
+      if (res.status === 409) {
+        await refreshOwnership(profileId);
+        setVoucherCode('');
+        setVoucherSuccess(true);
+        return;
+      }
+      if (res.status === 404) {
+        setVoucherMsg({ text: 'Code nicht gefunden. Bitte prüfen.', tone: 'error' });
+        return;
+      }
+      if (!res.ok) {
+        setVoucherMsg({ text: 'Fehler beim Einlösen. Bitte erneut versuchen.', tone: 'error' });
+        return;
+      }
+      await refreshOwnership(profileId);
+      setVoucherCode('');
+      setRefreshTick((v) => v + 1);
+      setVoucherSuccess(true);
+    } catch {
+      setVoucherMsg({ text: 'Verbindungsfehler. Bitte Internetverbindung prüfen.', tone: 'error' });
+    } finally {
+      setVoucherBusy(false);
+    }
+  }
+
   function handleResetWithMasterCode() {
     if (resetCodeInput.trim() !== MASTER_RESET_CODE) {
       setResetCodeError(
@@ -740,6 +814,50 @@ export default function AdultSettings() {
     setTimeout(() => setChangePassSuccess(false), 3000);
   }
 
+  if (showIdentityBackup) {
+    return (
+      <BackupPrompt
+        onDone={() => setShowIdentityBackup(false)}
+        onCancel={() => setShowIdentityBackup(false)}
+      />
+    );
+  }
+
+  if (voucherSuccess && showVoucherBackup) {
+    return (
+      <BackupPrompt
+        onDone={() => { setVoucherSuccess(false); setShowVoucherBackup(false); navigate('/stories'); }}
+        onCancel={() => { setVoucherSuccess(false); setShowVoucherBackup(false); navigate('/stories'); }}
+      />
+    );
+  }
+
+  if (voucherSuccess) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-white flex flex-col items-center justify-start px-4 py-10">
+        <div className="w-full max-w-md space-y-5">
+          <div className="text-6xl text-center">🎉</div>
+          <h2 className="text-2xl font-extrabold text-slate-900 text-center">Gutschein eingelöst!</h2>
+          <p className="text-sm text-slate-500 text-center">Staffel 1 ist jetzt für dein Kind freigeschaltet.</p>
+          <button
+            type="button"
+            onClick={() => {
+              if (needsBackup) {
+                setShowVoucherBackup(true);
+              } else {
+                setVoucherSuccess(false);
+                navigate('/stories');
+              }
+            }}
+            className="w-full py-3 rounded-2xl bg-teal-600 text-white font-extrabold text-sm hover:bg-teal-700 transition-colors"
+          >
+            Weiter →
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Layout backPath={backTo} hideFooter>
       <div className="w-full mx-auto max-w-3xl px-4 py-10">
@@ -774,6 +892,63 @@ export default function AdultSettings() {
                   ))}
                 </div>
               )}
+
+              {/* Staffel-Zugang — pro Profil */}
+              <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-sm">
+                <div>
+                  <div className="text-sm font-semibold text-slate-900">Staffel 1</div>
+                  <div className="text-xs text-slate-400">5 Episoden · 5 min pro Tag</div>
+                </div>
+                {isSeasonOwnedLocally(wirkungProfileId, 's1') ? (
+                  <span className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">
+                    ✓ Freigeschaltet
+                  </span>
+                ) : (
+                  <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-400">
+                    Nicht aktiviert
+                  </span>
+                )}
+              </div>
+
+              {/* Identitäts-Status */}
+              {(() => {
+                const hasPurchase = isSeasonOwnedLocally(wirkungProfileId, 's1');
+                return (
+                  <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-sm">
+                    <div>
+                      <div className="text-sm font-semibold text-slate-900">Identität & Sicherung</div>
+                      <div className="text-xs text-slate-400">
+                        {!needsBackup
+                          ? 'Kauf kann auf neuem Gerät wiederhergestellt werden'
+                          : hasPurchase
+                          ? 'Kauf noch nicht gesichert'
+                          : 'Kann in Schutz & Sicherung nachgeholt werden'}
+                      </div>
+                    </div>
+                    {!identity ? (
+                      <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-bold text-red-600">
+                        Fehlt
+                      </span>
+                    ) : !needsBackup ? (
+                      <span className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">
+                        ✓ Gesichert
+                      </span>
+                    ) : hasPurchase ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowIdentityBackup(true)}
+                        className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700 hover:bg-amber-100 transition-colors"
+                      >
+                        ⚠ Jetzt sichern
+                      </button>
+                    ) : (
+                      <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-400">
+                        Noch nicht gesichert
+                      </span>
+                    )}
+                  </div>
+                );
+              })()}
 
               <section className="rounded-2xl border border-slate-200 bg-white p-5">
                 <h3 className="text-lg font-semibold text-slate-900">
@@ -974,6 +1149,130 @@ export default function AdultSettings() {
             </div>
           </AccordionSection>
 
+          {/* ── Staffel freischalten ──────────────────────────────────────────── */}
+          <AccordionSection
+            title={t('adult:accordions.purchase.title', { defaultValue: 'Staffel 1 freischalten' })}
+            subtitle={t('adult:accordions.purchase.subtitle', { defaultValue: 'Kauf & Kontakt' })}
+            badge={isSeasonOwnedLocally(wirkungProfileId, 's1')
+              ? t('adult:accordions.purchase.badgeOwned', { defaultValue: 'Freigeschaltet ✓' })
+              : t('adult:accordions.purchase.badgeFree', { defaultValue: 'Verfügbar' })}
+            open={openSections.purchase}
+            onToggle={() => toggleSection('purchase')}
+          >
+            <div className="space-y-4">
+
+              {/* Angebot-Karte */}
+              <section className="rounded-2xl border border-teal-200 bg-teal-50 p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-base font-semibold text-teal-900">
+                      {t('adult:purchase.seasonTitle', { defaultValue: 'Staffel 1 — Zwischen Klassenchat, Fake News & KI' })}
+                    </h3>
+                    <p className="mt-1 text-sm text-teal-700">
+                      {t('adult:purchase.seasonDesc', { defaultValue: '5 Episoden · Amics, Bonus-Welt, Lernfortschritt' })}
+                    </p>
+                  </div>
+                </div>
+
+                <ul className="mt-3 space-y-1 text-sm text-teal-800">
+                  <li>✓ {t('adult:purchase.feature1', { defaultValue: '5 Episoden · 49 Spieltage à ca. 5 Min.' })}</li>
+                  <li>✓ {t('adult:purchase.feature2', { defaultValue: 'Bonus-Welt: Tagebücher, Schülerzeitung, Lexikon' })}</li>
+                  <li>✓ {t('adult:purchase.feature3', { defaultValue: 'einmaliger Kauf' })}</li>
+                  <li>✓ {t('adult:purchase.feature4', { defaultValue: 'Sicher lokal auf dem Gerät, kein Konto nötig' })}</li>
+                </ul>
+
+                <div className="mt-4 flex items-baseline gap-1.5">
+                  <span className="text-2xl font-bold text-teal-900">
+                    {t('adult:purchase.price', { defaultValue: '24 €' })}
+                  </span>
+                  <span className="text-sm text-teal-700">
+                    {t('adult:purchase.priceNote', { defaultValue: 'einmalig · pro Gerät' })}
+                  </span>
+                </div>
+
+                {(() => {
+                  const pid = getActiveProfileId();
+                  const owned = pid ? isSeasonOwnedLocally(pid, 's1') : false;
+                  if (owned) {
+                    return (
+                      <div className="mt-4 inline-flex items-center gap-2 rounded-xl bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-700">
+                        {t('adult:purchase.alreadyOwned', { defaultValue: 'Bereits freigeschaltet ✓' })}
+                      </div>
+                    );
+                  }
+                  return (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const identity = loadIdentity();
+                        const profileId = getActiveProfileId();
+                        if (!identity || !profileId) return;
+                        try {
+                          const hash = computeProfileHash(identity.publicKeyHex, profileId);
+                          const link = paymentLinkFor('s1', hash);
+                          window.open(link, '_blank', 'noopener,noreferrer');
+                        } catch {
+                          // no payment link configured
+                        }
+                      }}
+                      className="mt-4 rounded-xl bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-800 transition-colors"
+                    >
+                      {t('adult:purchase.cta', { defaultValue: 'Jetzt kaufen →' })}
+                    </button>
+                  );
+                })()}
+              </section>
+
+              {/* Gutschein einlösen */}
+              <section className="rounded-2xl border border-slate-200 bg-white p-5 space-y-3">
+                <h3 className="text-base font-semibold text-slate-900">
+                  {t('adult:purchase.voucherTitle', { defaultValue: 'Gutschein vorhanden?' })}
+                </h3>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={voucherCode}
+                    onChange={e => { setVoucherCode(e.target.value); setVoucherMsg(null); }}
+                    placeholder="Gutschein-Code eingeben"
+                    className="flex-1 rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-300"
+                    autoCapitalize="characters"
+                    onKeyDown={e => { if (e.key === 'Enter') handleVoucherRedeem(); }}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleVoucherRedeem}
+                    disabled={!voucherCode.trim() || voucherBusy}
+                    className="shrink-0 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 disabled:opacity-40 transition-colors"
+                  >
+                    {voucherBusy ? '…' : 'Einlösen'}
+                  </button>
+                </div>
+                {voucherMsg && (
+                  <p className={`text-sm font-medium ${voucherMsg.tone === 'success' ? 'text-teal-700' : 'text-red-600'}`}>
+                    {voucherMsg.text}
+                  </p>
+                )}
+              </section>
+
+              {/* Elternrabatt & Kontakt */}
+              <section className="rounded-2xl border border-slate-200 bg-white p-5">
+                <h3 className="text-base font-semibold text-slate-900">
+                  {t('adult:purchase.discountTitle', { defaultValue: 'Elternrabatt & Sammelbestellungen' })}
+                </h3>
+                <p className="mt-1 text-sm text-slate-600">
+                  {t('adult:purchase.discountBody', { defaultValue: 'Schulklassen, Vereine oder Gruppen? Wir freuen uns über eure Anfrage.' })}
+                </p>
+                <a
+                  href="mailto:hello@amysurfwing.de?subject=Elternrabatt%20%2F%20Sammelbestellung"
+                  className="mt-3 inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
+                >
+                  {t('adult:purchase.contactCta', { defaultValue: 'hello@amysurfwing.de →' })}
+                </a>
+              </section>
+
+            </div>
+          </AccordionSection>
+
           <AccordionSection
             title={t('adult:accordions.manage.title', { defaultValue: 'App verwalten' })}
             subtitle={t('adult:accordions.manage.subtitle', { defaultValue: 'Einstellungen und Freigaben' })}
@@ -1165,6 +1464,23 @@ export default function AdultSettings() {
                     {statusMessage}
                   </div>
                 ) : null}
+              </section>
+
+              <section className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5">
+                <h3 className="text-base font-semibold text-slate-800">
+                  Gutschein-Codes
+                </h3>
+                <p className="mt-1 text-sm text-slate-600">
+                  Codes erstellen und verwalten (nur auf dem Master-Gerät möglich).
+                </p>
+                <div className="mt-3">
+                  <Link
+                    to="/voucher-admin"
+                    className="text-sm font-semibold text-[var(--color-teal-700)] hover:text-[var(--color-teal-900)]"
+                  >
+                    Zur Code-Verwaltung →
+                  </Link>
+                </div>
               </section>
 
               {canOpenTestSettings() ? (
@@ -1551,6 +1867,35 @@ export default function AdultSettings() {
                   <Link to="/install" className="font-semibold text-[var(--color-teal-700)] hover:underline">
                     Anleitung ansehen →
                   </Link>
+                </div>
+              </section>
+
+              <section className="rounded-2xl border border-slate-200 bg-white p-5">
+                <h3 className="text-lg font-semibold text-slate-900">24 Sicherheitswörter sichern</h3>
+                <p className="mt-1 text-sm text-slate-600">
+                  Deine 24 Wörter sind der einzige Schlüssel zu deinen freigeschalteten Inhalten. Schreib sie auf und bewahre sie sicher auf — damit du deinen Kauf bei einem Gerätewechsel wiederherstellen kannst.
+                </p>
+                <div className="mt-3 flex items-center gap-2">
+                  {needsBackup ? (
+                    <button
+                      type="button"
+                      onClick={() => setShowIdentityBackup(true)}
+                      className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-2.5 text-sm font-semibold text-amber-800 hover:bg-amber-100"
+                    >
+                      Wörter jetzt sichern →
+                    </button>
+                  ) : (
+                    <>
+                      <span className="text-sm text-teal-700 font-semibold">✓ Bereits gesichert</span>
+                      <button
+                        type="button"
+                        onClick={() => setShowIdentityBackup(true)}
+                        className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-100"
+                      >
+                        Wörter nochmals anzeigen
+                      </button>
+                    </>
+                  )}
                 </div>
               </section>
 

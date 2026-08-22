@@ -125,6 +125,11 @@ setChapters(ep?.chapters ?? []);
     });
   }, [courseId, lang]);
 
+  if (!shouldSkipOnboarding()) {
+    navigate('/start', { replace: true });
+    return null;
+  }
+
   if (!courseId || !episodeMeta) {
     return (
       <Layout>
@@ -217,7 +222,7 @@ setChapters(ep?.chapters ?? []);
             </div>
 
             {!allDone && !timeGateAllowed && !currentChapter && (
-              <div className="shrink-0 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-2xl px-3 py-2 text-right leading-snug">
+              <div className="shrink-0 text-[11px] font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-2 py-1 text-right leading-snug">
                 {t('overview.timeLocked.daily', { defaultValue: 'Morgen wieder verfügbar' })}
               </div>
             )}

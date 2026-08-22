@@ -22,15 +22,17 @@ import {
 import AvatarLookCircle from '../components/AvatarLookCircle';
 import { useTranslation as useI18n } from 'react-i18next';
 
-type Step = 'welcome' | 'info' | 'avatar' | 'ready' | 'beta';
+type Step = 'landing' | 'welcome' | 'info' | 'avatar' | 'ready' | 'beta';
+
+const CHILD_STEPS: Step[] = ['welcome', 'info', 'avatar', 'ready'];
+const CHILD_STEPS_BETA: Step[] = ['welcome', 'info', 'avatar', 'ready', 'beta'];
 
 function ProgressDots({ step, isBeta }: { step: Step; isBeta: boolean }) {
-  const steps: Step[] = isBeta
-    ? ['welcome', 'info', 'avatar', 'ready', 'beta']
-    : ['welcome', 'info', 'avatar', 'ready'];
+  const childSteps = isBeta ? CHILD_STEPS_BETA : CHILD_STEPS;
+  if (!childSteps.includes(step)) return null;
   return (
     <div className="flex justify-center gap-2 pb-6">
-      {steps.map(s => (
+      {childSteps.map(s => (
         <div
           key={s}
           className={[
@@ -65,6 +67,79 @@ function Toggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
     </button>
   );
 }
+
+function LandingStep({ onStart, onParent }: { onStart: () => void; onParent: () => void }) {
+  const { t } = useI18n('welcome');
+  return (
+    <div className="flex flex-col">
+      <div className="relative overflow-hidden rounded-t-3xl min-h-[220px]">
+        <img
+          src={assetUrl('media/ui/stories/stories-hero-512.webp')}
+          alt={t('onboarding.welcome.imageAlt')}
+          className="w-full h-full object-cover object-top absolute inset-0"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-transparent" />
+        <div className="absolute bottom-4 left-4 right-4">
+          <h1 className="text-2xl font-extrabold text-white leading-tight whitespace-pre-line">
+            {t('onboarding.welcome.title')}
+          </h1>
+        </div>
+      </div>
+
+      <div className="px-6 pt-5 pb-6 flex flex-col gap-4">
+        <p className="text-base text-slate-700 leading-relaxed">
+          {t('onboarding.welcome.lead')}
+        </p>
+
+        <div className="flex items-end justify-between gap-1">
+          {[
+            { name: 'Mia',    id: 'mia'    },
+            { name: 'Chioma', id: 'chioma' },
+            { name: 'Carlos', id: 'carlos' },
+            { name: 'Yasmin', id: 'yasmin' },
+            { name: 'Igor',   id: 'igor'   },
+          ].map(c => (
+            <div key={c.id} className="flex flex-col items-center gap-1 flex-1">
+              <img
+                src={assetUrl(`media/story/characters/${c.id}-256.webp`)}
+                alt={c.name}
+                className="w-12 h-12 rounded-full object-cover object-top border-2 border-white shadow-sm"
+              />
+              <span className="text-[10px] font-semibold text-slate-500">{c.name}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {(['badge0', 'badge1', 'badge2'] as const).map(key => (
+            <span
+              key={key}
+              className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white border border-slate-200 text-slate-700"
+            >
+              {t(`onboarding.welcome.${key}`)}
+            </span>
+          ))}
+        </div>
+
+        <button
+          onClick={onStart}
+          className="w-full bg-[var(--color-teal-600)] hover:bg-[var(--color-teal-700)] active:scale-[0.98] text-white font-bold rounded-2xl py-3.5 text-base shadow-md transition-all mt-1"
+        >
+          {t('onboarding.landing.cta', { defaultValue: 'Jetzt spielen →' })}
+        </button>
+        <button
+          type="button"
+          onClick={onParent}
+          className="w-full text-center text-sm text-slate-400 hover:text-slate-600 transition-colors py-1"
+        >
+          {t('onboarding.landing.parentCta', { defaultValue: 'App einrichten — für Eltern' })}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+
 
 function WelcomeStep({ onNext, isBeta }: { onNext: () => void; isBeta: boolean }) {
   const { t } = useTranslation('welcome');
@@ -327,20 +402,12 @@ function ReadyStep({ onFinish, isBeta, betaCode }: { onFinish: (destination: 'st
           {isBeta ? tStories('beta.ready.cta', { defaultValue: 'Weiter →' }) : t('onboarding.ready.ctaStart', { defaultValue: 'Los geht\'s →' })}
         </button>
         {!isBeta && (
-          <>
-            <button
-              onClick={() => onFinish('overview')}
-              className="w-full bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-700 font-semibold rounded-2xl py-3 text-base border border-slate-200 transition-all"
-            >
-              {t('onboarding.ready.ctaOverview')}
-            </button>
-            <Link
-              to="/parents"
-              className="w-full text-center text-sm text-teal-600 hover:text-teal-700 font-medium py-2 transition-colors"
-            >
-              {t('onboarding.ready.ctaParents')}
-            </Link>
-          </>
+          <Link
+            to="/parents"
+            className="w-full text-center text-sm text-teal-600 hover:text-teal-700 font-medium py-2 transition-colors"
+          >
+            {t('onboarding.ready.ctaParents')}
+          </Link>
         )}
       </div>
 
@@ -491,9 +558,10 @@ export default function Onboarding() {
   const { t } = useTranslation('navigation');
   const [pendingCode] = useState<string | null>(() => BETA_ACTIVE ? getPendingBetaCode() : null);
   const isBeta = !!pendingCode;
-  const [step, setStep] = useState<Step>('welcome');
 
-  const stepOrder: Step[] = isBeta
+  const [step, setStep] = useState<Step>('landing');
+
+  const childStepOrder: Step[] = isBeta
     ? ['welcome', 'info', 'avatar', 'ready', 'beta']
     : ['welcome', 'info', 'avatar', 'ready'];
 
@@ -519,14 +587,23 @@ export default function Onboarding() {
   }
 
   function handleBack() {
-    const idx = stepOrder.indexOf(step);
-    if (idx > 0) setStep(stepOrder[idx - 1]);
+    const idx = childStepOrder.indexOf(step);
+    if (idx > 0) setStep(childStepOrder[idx - 1]);
+    else setStep('landing');
   }
+
+  function handleSkip() {
+    markFirstRunDone();
+    navigate('/stories', { replace: true });
+  }
+
+  const showBack = step !== 'landing' && step !== 'welcome' && step !== 'beta';
+  const showSkip = step !== 'landing' && step !== 'ready' && step !== 'beta';
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-start justify-center relative">
-      {/* Zurück-Pfeil — ab Schritt 2, nicht auf Beta-Step */}
-      {step !== 'welcome' && step !== 'beta' && (
+      {/* Zurück-Pfeil */}
+      {showBack && (
         <button
           onClick={handleBack}
           aria-label={t('back', { defaultValue: 'Zurück' })}
@@ -540,6 +617,12 @@ export default function Onboarding() {
         <LangPills />
       </div>
       <div className="w-full max-w-sm bg-white rounded-3xl shadow-xl mt-8 mb-8 mx-4 overflow-hidden">
+        {step === 'landing' && (
+          <LandingStep
+            onStart={() => setStep('info')}
+            onParent={() => navigate('/parent-setup')}
+          />
+        )}
         {step === 'welcome' && <WelcomeStep onNext={() => setStep('info')} isBeta={isBeta} />}
         {step === 'info' && <InfoStep onNext={() => setStep('avatar')} />}
         {step === 'avatar' && <AvatarStep onNext={() => setStep('ready')} />}
@@ -547,6 +630,15 @@ export default function Onboarding() {
         {step === 'beta' && <BetaStep onComplete={handleBetaComplete} />}
         <ProgressDots step={step} isBeta={isBeta} />
       </div>
+      {showSkip && (
+        <button
+          type="button"
+          onClick={handleSkip}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 text-xs text-slate-400 hover:text-slate-600 transition-colors"
+        >
+          {t('onboarding.skip', { defaultValue: 'Überspringen' })}
+        </button>
+      )}
     </div>
   );
 }

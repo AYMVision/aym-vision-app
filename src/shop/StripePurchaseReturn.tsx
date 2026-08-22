@@ -56,15 +56,6 @@ export default function StripePurchaseReturn() {
           return;
         }
 
-        const data = await res.json() as { registrationCertificate?: { hash: string; salt: string; verifyUrl: string } };
-
-        if (data.registrationCertificate) {
-          localStorage.setItem(
-            `aym_p_${profileId}__aym_registration_cert`,
-            JSON.stringify(data.registrationCertificate)
-          );
-        }
-
         await refreshOwnership(profileId);
         setScreen({ kind: 'success' });
       } catch {
@@ -77,8 +68,8 @@ export default function StripePurchaseReturn() {
   if (screen.kind === 'backup') {
     return (
       <BackupPrompt
-        onDone={() => navigate('/profile')}
-        onCancel={() => navigate('/profile')}
+        onDone={() => navigate('/stories')}
+        onCancel={() => navigate('/stories')}
       />
     );
   }
@@ -105,7 +96,7 @@ export default function StripePurchaseReturn() {
                 if (needsBackup) {
                   setScreen({ kind: 'backup' });
                 } else {
-                  navigate('/profile');
+                  navigate('/stories');
                 }
               }}
               className="w-full py-3 bg-teal-500 text-white font-bold rounded-xl hover:bg-teal-600 active:scale-[0.97] transition-all"
@@ -121,7 +112,7 @@ export default function StripePurchaseReturn() {
             <h1 className="text-xl font-extrabold text-slate-900">{t(screen.messageKey)}</h1>
             <button
               type="button"
-              onClick={() => navigate('/profile')}
+              onClick={() => navigate('/stories')}
               className="w-full py-3 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 active:scale-[0.97] transition-all"
             >
               {t('shop.return.toProfile')}

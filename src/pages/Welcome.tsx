@@ -193,6 +193,7 @@ function isUnlockedByChain(
   const [showLockSwitcher, setShowLockSwitcher] = useState(
     () => loadProfilesIndex().length > 0 && !getActiveProfileId()
   );
+  const [quickVoucher, setQuickVoucher] = useState('');
 
   // Personalisierte Begrüßung
   const greeting = (() => {
@@ -755,6 +756,36 @@ function isUnlockedByChain(
             </Link>
           </div>
         )}
+
+        {/* Code einlösen */}
+        <div className="mt-6 rounded-2xl border border-slate-200 bg-white shadow-sm p-4">
+          <div className="flex items-center gap-3">
+            <span className="text-xl shrink-0">🎟️</span>
+            <div className="flex-1 min-w-0">
+              <div className="text-sm font-semibold text-slate-900 mb-1.5">Code einlösen</div>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={quickVoucher}
+                  onChange={e => setQuickVoucher(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') navigate(`/parent-setup${quickVoucher.trim() ? `?code=${encodeURIComponent(quickVoucher.trim())}` : ''}`);
+                  }}
+                  placeholder="AYM-XXXX-XXXX"
+                  className="flex-1 min-w-0 border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-300"
+                  autoCapitalize="characters"
+                />
+                <button
+                  type="button"
+                  onClick={() => navigate(`/parent-setup${quickVoucher.trim() ? `?code=${encodeURIComponent(quickVoucher.trim())}` : ''}`)}
+                  className="shrink-0 rounded-xl bg-teal-600 px-4 py-2 text-sm font-extrabold text-white hover:bg-teal-700 transition-colors"
+                >
+                  →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
 

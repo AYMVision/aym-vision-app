@@ -36,7 +36,8 @@
   "motivation": {
     "kicker": "Our motivation",
     "title": "How it all began",
-    "copy": "AYM VISION emerged from many conversations between two sisters about children, the internet, and education. It quickly became clear to us: it is not enough to simply name digital risks. Children need an approach that takes them seriously, sparks curiosity, and strengthens them step by step. This led to the idea of a story world where digital situations are not explained abstractly, but can be explored in a concrete and thoughtful way."
+    "copy1": "Amy Surfwing grew out of many conversations between us – about our children, the internet, and how they learn to navigate it. It quickly became clear: naming digital risks alone is not enough. Children need something that truly reaches them – a format that sparks curiosity and strengthens them step by step.",
+    "copy2": "Conversations remain the most important part. That is why this blog is for parents who stand by their children as they navigate the digital world."
   },
 
   "positioning": {
@@ -246,6 +247,26 @@
         "answer2": "parent area",
         "answer3": "."
       }
+    }
+  },
+
+  "supporters": {
+    "kicker": "Cooperations & Funding",
+    "title": "Supported by",
+    "hafven": {
+      "text": "Amy Surfwing is supported by the <bold>Hafven Impact Accelerator</bold> — a programme for social innovations and projects with societal impact in Hanover, Germany.",
+      "ariaLabel": "Hafven Impact Accelerator",
+      "imgAlt": "Hafven Impact Accelerator"
+    },
+    "nbank": {
+      "text": "Amy Surfwing is a recipient of the <bold>NBank Gründungsstipendium</bold> (2025/2026) — the investment and development bank of Lower Saxony. The grant supports innovative start-up projects with exceptional societal value.",
+      "ariaLabel": "NBank Gründungsstipendium",
+      "imgAlt": "Gründungsstipendium Start-up 2025/2026 – NBank"
+    },
+    "win": {
+      "text": "Amy Surfwing is supported by the <bold>WIN Startup Academy Braunschweig</bold> — a programme by Zukunft Braunschweig supporting innovative start-ups in the region.",
+      "ariaLabel": "WIN Startup Academy Braunschweig",
+      "imgAlt": "Supported by WIN Startup Academy Braunschweig"
     }
   },
 

@@ -1,5 +1,5 @@
 import { aymFetch } from '../identity/handshake';
-import { unlockEpisodePaywallOnly } from '../gating/entitlements';
+import { unlockEpisodePaywallOnly, setBypassUntil } from '../gating/entitlements';
 
 const OWNED_CONTENT_KEY = 'aym_owned_content';
 
@@ -22,10 +22,16 @@ export async function refreshOwnership(profileId: string): Promise<string[]> {
     const res = await aymFetch(path);
     if (res.status === 404) return [];
     if (!res.ok) return readCached(profileId);
-    const data = await res.json() as { ownedContent: string[]; finishedCourses: string[] };
-    const owned = data.ownedContent ?? [];
+    // Backend returns ContentItemDto[]: [{contentId, source, grantedAt}]
+    const raw = await res.json() as { contentId: string }[];
+    const owned = Array.isArray(raw) ? raw.map(item => item.contentId) : [];
     for (const contentId of owned) {
-      unlockEpisodePaywallOnly(contentId);
+      if (contentId === 's1-full') {
+        unlockEpisodePaywallOnly('s1');
+        setBypassUntil('2026-10-31');
+      } else {
+        unlockEpisodePaywallOnly(contentId);
+      }
     }
     localStorage.setItem(cacheKey(profileId), JSON.stringify(owned));
     return owned;
@@ -36,4 +42,10 @@ export async function refreshOwnership(profileId: string): Promise<string[]> {
 
 export function isOwnedLocally(profileId: string, contentId: string): boolean {
   return readCached(profileId).includes(contentId);
+}
+
+/** True if the season (e.g. 's1') or any of its episodes (e.g. 's1e01') or full-access variant (e.g. 's1-full') is owned. */
+export function isSeasonOwnedLocally(profileId: string, season: string): boolean {
+  const cached = readCached(profileId);
+  return cached.some(id => id === season || id.startsWith(season + 'e') || id.startsWith(season + '-'));
 }

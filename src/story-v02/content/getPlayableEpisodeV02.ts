@@ -1,12 +1,10 @@
 // src/story-v02/content/getPlayableEpisodeV02.ts
-// Each episode is loaded on-demand via dynamic import so only the requested
-// episode file is included in the active chunk — not all 12 at once.
 
 import type { StoryEpisodeV02 } from '../types/storyTypes';
+import { getMaterial } from '../../shop/materialCache';
 
 type Lang = 'de' | 'en';
 
-/** Synchronous availability check — no content loaded. */
 const AVAILABLE: Record<Lang, readonly string[]> = {
   de: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05'],
   en: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05'],
@@ -16,11 +14,32 @@ export function isEpisodeAvailable(courseId: string, lang: Lang): boolean {
   return (AVAILABLE[lang] ?? []).includes(courseId);
 }
 
-/** Loads episode content lazily. Returns null if not found. */
+/**
+ * Lädt eine Episode — zuerst vom Backend (wenn profileId vorhanden),
+ * dann Fallback auf statische Dateien im Bundle (für Tests ohne Backend).
+ */
 export async function getPlayableEpisodeV02(
   courseId: string,
-  lang: Lang
+  lang: Lang,
+  profileId?: string,
 ): Promise<StoryEpisodeV02 | null> {
+  // ── Backend (D6 / Production) ────────────────────────────────────────────
+  if (profileId) {
+    try {
+      const material = await getMaterial(courseId, profileId);
+      if (material) {
+        const bundle = material.payload as Record<string, string>;
+        const encoded = bundle[lang];
+        if (encoded) {
+          return JSON.parse(atob(encoded)) as StoryEpisodeV02;
+        }
+      }
+    } catch {
+      // Backend nicht erreichbar — Fallback auf statische Dateien
+    }
+  }
+
+  // ── Statische Dateien (Dev / solange TS-Dateien noch im Bundle sind) ────
   try {
     if (lang === 'de') {
       switch (courseId) {

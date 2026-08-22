@@ -58,7 +58,8 @@ import ReflectionStepCard from '../story-v02/components/ReflectionStepCard';
 import AmyReactionStepCard from '../story-v02/components/AmyReactionStepCard';
 import ChallengeStepCard from '../story-v02/components/ChallengeStepCard';
 import { getNextChapterGateState, getHighestPlayableChapterIndex0 } from '../gating/storyGateHelpers';
-import { shouldBypassAll } from '../gating/entitlements';
+import { shouldBypassAll, shouldBypassPaywall } from '../gating/entitlements';
+import { isPaywallChapter } from '../gating/demoConfig';
 import { canStartNextNewChapterToday } from '../gating/gateEngine';
 import UnlockedToast from '../components/UnlockedToast';
 import RewardToast from '../components/RewardToast';
@@ -311,7 +312,7 @@ export default function StoryV02() {
     return getEpisodeMetaByCourseId(courseId);
   }, [courseId]);
 
-  const [episode, setEpisode] = useState<StoryEpisodeV02 | null>(null);
+const [episode, setEpisode] = useState<StoryEpisodeV02 | null>(null);
   useEffect(() => {
     if (!courseId) { setEpisode(null); return; }
     getPlayableEpisodeV02(courseId, lang).then(ep => {
@@ -353,7 +354,23 @@ export default function StoryV02() {
   courseIdRef.current = courseId;
 
   const [showNextChapterLockedHint, setShowNextChapterLockedHint] = useState(false);
+  const [showPaywallCard, setShowPaywallCard] = useState(false);
 
+  // Wenn Kauf in neuem Tab abgeschlossen wird, aktualisiert sich localStorage in diesem Tab
+  // automatisch via storage-Event — Paywall dann sofort ausblenden.
+  useEffect(() => {
+    function recheck() {
+      if (showPaywallCard && courseId && shouldBypassPaywall(courseId)) {
+        setShowPaywallCard(false);
+      }
+    }
+    window.addEventListener('storage', recheck);
+    document.addEventListener('visibilitychange', recheck);
+    return () => {
+      window.removeEventListener('storage', recheck);
+      document.removeEventListener('visibilitychange', recheck);
+    };
+  }, [showPaywallCard, courseId]);
 
   const [unlockedToast, setUnlockedToast] = useState<{
     title: string;
@@ -382,7 +399,6 @@ export default function StoryV02() {
 
   const [storyMenuOpen, setStoryMenuOpen] = useState(false);
   const [showBetaCompletionModal, setShowBetaCompletionModal] = useState(false);
-  const [showSurveyConsent, setShowSurveyConsent] = useState(false);
   const [installHintDismissed, setInstallHintDismissed] = useState(() => {
     try { return !!localStorage.getItem('aym-install-hint-dismissed'); } catch { return false; }
   });
@@ -620,6 +636,9 @@ function hasStoryMigrationDone(key: string): boolean {
           });
           if (!gateState.hasNext) {
             // Last chapter — no card needed (episode summary handled elsewhere)
+          } else if (gateState.isPaywallGated) {
+            setShowPaywallCard(true);
+            setAmicDoneNextChapterId(null);
           } else if (gateState.structuralAllowed && gateState.timeAllowed) {
             // Next chapter fully available — show navigation card
             const nextChapter = episode.chapters[gateState.nextChapterIndex0] ?? null;
@@ -642,6 +661,11 @@ function hasStoryMigrationDone(key: string): boolean {
       if (isAlreadyCompleted) {
         // Session was lost (storage cleared, new device, migration) — redirect instead of restarting
         navigate(`/stories-v02/${courseId}`, { replace: true });
+        return;
+      }
+      if (isPaywallChapter(courseId, targetChapter.chapterIndex0) && !shouldBypassPaywall(courseId)) {
+        setShowPaywallCard(true);
+        setAmicDoneNextChapterId(null);
         return;
       }
       if (!shouldBypassAll(courseId)) {
@@ -738,7 +762,10 @@ function hasStoryMigrationDone(key: string): boolean {
           }
         }
 
-        if (gateState.hasNext && !gateState.timeAllowed && gateState.shouldShowLockedHint) {
+        if (gateState.hasNext && gateState.isPaywallGated) {
+          setShowPaywallCard(true);
+          setAmicDoneNextChapterId(null);
+        } else if (gateState.hasNext && !gateState.timeAllowed && gateState.shouldShowLockedHint) {
           setShowNextChapterLockedHint(true);
           setAmicDoneNextChapterId(null);
         }
@@ -1881,14 +1908,21 @@ function hasStoryMigrationDone(key: string): boolean {
           )}
 
           {/* Amic-Abschluss-Karte */}
-          {amicDoneNextChapterId !== undefined && state.phase === 'chapter_finished' ? (
+          {(amicDoneNextChapterId !== undefined || showPaywallCard) && state.phase === 'chapter_finished' ? (
             <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-[var(--color-teal-200)] bg-[var(--color-teal-50)] p-4 shadow-sm">
               <div className="font-semibold text-sm text-[var(--color-teal-900)] mb-1">
-                {t('stories:amicDone.title', { defaultValue: 'Amic abgeschlossen ✓' })}
+                {showPaywallCard
+                  ? t('stories:gate.paywallCardTitle', { defaultValue: 'Kapitel 4 wartet auf dich! 🦉' })
+                  : t('stories:amicDone.title', { defaultValue: 'Amic abgeschlossen ✓' })}
               </div>
+              {showPaywallCard && (
+                <div className="mt-0.5 mb-3 text-xs text-[var(--color-teal-800)]">
+                  {t('stories:gate.paywallBody', { defaultValue: 'Deine Eltern können die nächsten Kapitel für dich freischalten.' })}
+                </div>
+              )}
 
               {/* Zeit-Sperre: "Für heute bist du fertig" */}
-              {showNextChapterLockedHint ? (
+              {!showPaywallCard && showNextChapterLockedHint ? (
                 <div className="mt-2 mb-3">
                   <div className="text-sm font-semibold text-[var(--color-teal-900)]">
                     {t('stories:gate.nextTomorrowTitle', { defaultValue: 'Für heute bist du fertig ✨' })}
@@ -1899,10 +1933,28 @@ function hasStoryMigrationDone(key: string): boolean {
                     })}
                   </div>
                 </div>
-              ) : <div className="mb-3" />}
+              ) : !showPaywallCard && <div className="mb-3" />}
 
               <div className="flex flex-wrap gap-2">
-                {amicDoneNextChapterId && !showNextChapterLockedHint && (
+                {showPaywallCard && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/parent-setup')}
+                      className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+                    >
+                      {t('stories:gate.paywallCtaParent', { defaultValue: 'Eltern-Bereich öffnen →' })}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/stories')}
+                      className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-white border border-[var(--color-teal-200)] text-[var(--color-teal-800)] hover:bg-[var(--color-teal-50)] transition-colors"
+                    >
+                      {t('stories:gate.paywallCtaBack', { defaultValue: 'Zur Übersicht' })}
+                    </button>
+                  </>
+                )}
+                {amicDoneNextChapterId && !showNextChapterLockedHint && !showPaywallCard && (
                   <button
                     type="button"
                     onClick={() => navigate(`/stories-v02/${courseId}/${amicDoneNextChapterId}`)}
@@ -1920,106 +1972,26 @@ function hasStoryMigrationDone(key: string): boolean {
                     {t('stories:gate.toNewspaper', { defaultValue: 'Zur Schülerzeitung →' })}
                   </button>
                 )}
-                <button
-                  type="button"
-                  onClick={() => navigate(`/stories-v02/${courseId}`)}
-                  className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-white border border-[var(--color-teal-200)] text-[var(--color-teal-800)] hover:bg-[var(--color-teal-50)] transition-colors"
-                >
-                  {t('stories:amicDone.ctaOverview', { defaultValue: 'Zur Übersicht' })}
-                </button>
               </div>
 
-              {/* Beta: Umfrage nach dem 3. Kapitel */}
-              {BETA_ACTIVE && isBetaTester() && !localStorage.getItem('surveyDismissed') && (() => {
-                const totalCompleted = Object.values(profile.progress?.completedChapters ?? {}).filter(Boolean).length;
-                return totalCompleted === 3;
-              })() && (
-                <div className="mt-4 rounded-xl border border-violet-200 bg-violet-50 p-3">
-                  <div className="flex items-start gap-2.5">
-                    <img
-                      src="/media/story/characters/amy-256.webp"
-                      alt="Amy"
-                      className="w-8 h-8 rounded-full object-cover object-top flex-shrink-0"
-                    />
-                    <div className="min-w-0 w-full">
-                      {!showSurveyConsent ? (
-                        <>
-                          <div className="text-xs font-extrabold text-violet-600 uppercase tracking-widest mb-0.5">
-                            {t('stories:survey.amyAsks', { defaultValue: 'Amy fragt' })}
-                          </div>
-                          <p className="text-xs text-violet-900 font-semibold leading-snug">
-                            {t('stories:survey.question', { defaultValue: 'Ich habe eine Frage an dich — was denkst du bisher?' })}
-                          </p>
-                          <p className="mt-0.5 text-xs text-violet-700 leading-snug">
-                            {t('stories:survey.body', { defaultValue: '3 Minuten, anonym.' })}
-                          </p>
-                          <div className="mt-2 flex gap-2">
-                            <button
-                              type="button"
-                              onClick={() => setShowSurveyConsent(true)}
-                              className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-bold bg-violet-600 text-white hover:bg-violet-700 transition-colors"
-                            >
-                              {t('stories:survey.cta', { defaultValue: 'Zur Umfrage →' })}
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => localStorage.setItem('surveyDismissed', '1')}
-                              className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-semibold text-violet-600 hover:text-violet-800 transition-colors"
-                            >
-                              {t('stories:survey.snooze', { defaultValue: 'Nicht jetzt' })}
-                            </button>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <p className="text-xs text-violet-900 font-semibold leading-snug">
-                            {t('stories:survey.consentTitle', { defaultValue: 'Du wirst zu Microsoft Forms weitergeleitet.' })}
-                          </p>
-                          <p className="mt-1 text-xs text-violet-700 leading-snug">
-                            {t('stories:survey.consentBody', { defaultValue: 'Dort gelten die Datenschutzbestimmungen von Microsoft. Die Umfrage ist anonym.' })}
-                          </p>
-                          <div className="mt-2 flex gap-2">
-                            <a
-                              href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__tVBf5hUQlM2V0k0OFdWMEQzNVhaUVhSNzU2STdBSC4u"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={() => localStorage.setItem('surveyDismissed', '1')}
-                              className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-bold bg-violet-600 text-white hover:bg-violet-700 transition-colors"
-                            >
-                              {t('stories:survey.consentCta', { defaultValue: 'OK, weiter →' })}
-                            </a>
-                            <button
-                              type="button"
-                              onClick={() => setShowSurveyConsent(false)}
-                              className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-semibold text-violet-600 hover:text-violet-800 transition-colors"
-                            >
-                              {t('stories:survey.consentCancel', { defaultValue: 'Abbrechen' })}
-                            </button>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {/* Install-Hinweis: einmalig nach s1e01c01 */}
               {courseId === 's1e01' && chapterIndex0 === 0 && !installHintDismissed && (
                 <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3">
                   <div className="flex items-start gap-2">
                     <p className="text-xs text-slate-600 leading-relaxed flex-1">
-                      Du kannst Amy Surfwing als App auf deinem Handy speichern – dann findest du sie morgen direkt auf dem Startbildschirm. Das ist freiwillig, im Browser läuft alles genauso.{' '}
+                      {t('stories:amicDone.installHint')}{' '}
                       <Link
                         to="/install"
                         className="font-semibold text-[var(--color-teal-700)] underline underline-offset-2 hover:text-[var(--color-teal-800)]"
                       >
-                        Wie das geht →
+                        {t('stories:amicDone.installHintLink')}
                       </Link>
                     </p>
                     <button
                       type="button"
                       onClick={dismissInstallHint}
-                      aria-label="Hinweis schließen"
+                      aria-label={t('stories:amicDone.installHintDismiss')}
                       className="shrink-0 text-slate-400 hover:text-slate-600 transition-colors text-base leading-none mt-0.5"
                     >
                       ✕

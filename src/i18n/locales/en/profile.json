@@ -186,12 +186,12 @@
     "buy": {
       "button": "Buy now",
       "owned": "Already unlocked ✓",
-      "parentRequired": "Purchase requires parent unlock"
+      "parentRequired": "Please ask an adult. Parents can start the purchase in the parent area (long-press the app logo)."
     },
     "return": {
       "processing": "Confirming purchase …",
-      "successTitle": "Unlocked! 🎉",
-      "successText": "Your new content is now available.",
+      "successTitle": "Season 1 unlocked! 🎉",
+      "successText": "5 episodes are waiting for you. A new chapter every day.",
       "errorUnpaid": "Payment not completed. Please try again.",
       "errorMismatch": "Purchase assignment failed. Please contact support.",
       "errorOwned": "You already own this content.",
@@ -220,8 +220,8 @@
       "confirmText": "Do you want to redeem this voucher and unlock the content now?",
       "confirm": "Yes, redeem",
       "cancel": "Cancel",
-      "successTitle": "Unlocked! 🎉",
-      "successText": "Your new content is now available.",
+      "successTitle": "Season 1 unlocked! 🎉",
+      "successText": "5 episodes are waiting for you. A new chapter every day.",
       "alreadyOwned": "You already own this content.",
       "notFound": "Voucher not found.",
       "error": "Redemption failed. Please try again.",
@@ -232,10 +232,10 @@
       "done": "Done"
     },
     "backup": {
-      "headline": "Your data belongs to you alone.",
+      "headline": "Secure your access",
       "congrats": "Congratulations on your unlock!",
-      "whyTitle": "Your progress — secured forever",
-      "whyText": "So you always have access to what's yours, write down these 24 words now and keep them safe. They are your only key.",
+      "whyTitle": "Your access — secured forever",
+      "whyText": "Your season is now unlocked. These 24 words are your only key — use them to restore your purchase at any time, even on a new device. Your game progress is backed up separately via the Transfer function.",
       "writeDownTitle": "Your 24 security words",
       "writeDownHint": "Write them on paper — not as a screenshot.",
       "quizTitle": "Verify your backup",
@@ -244,7 +244,7 @@
       "quizError": "That word doesn't match. Please check again.",
       "confirm": "Confirm backup",
       "skip": "Later",
-      "skipHint": "Tip: Write down your 24 words so you never lose your progress.",
+      "skipHint": "You can complete your backup anytime in your profile.",
       "done": "Backup confirmed ✓"
     },
     "restore": {

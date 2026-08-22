@@ -2,29 +2,26 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { aymFetch } from '../identity/handshake';
-import { getActiveProfileId } from '../profile/profileStorage';
+import { getActiveProfileId, setActiveProfileId } from '../profile/profileStorage';
+import { loadProfilesIndex, createProfile } from '../profile/profileIndex';
+import { ensureIdentity } from '../identity/storage';
 import { refreshOwnership } from './ownership';
 import { useIdentity } from '../identity/useIdentity';
 import { BackupPrompt } from '../identity/BackupPrompt';
 import { parseVoucherInput, scanFromVideo } from './qrScanner';
-import { useProfile } from '../profile/useProfile';
-
-const CERT_KEY_PREFIX = 'aym_p_';
-const CERT_KEY_SUFFIX = '__aym_registration_cert';
-
-type RegistrationCertificate = { hash: string; salt: string; verifyUrl: string };
+import { isParentUnlocked } from '../settings/parentLock';
+import ParentGateDialog from '../components/ParentGateDialog';
 
 type RedeemResponse = {
   contentId: string;
   ownedContent: string[];
-  registrationCertificate?: RegistrationCertificate;
 };
 
 type Screen =
   | { kind: 'input' }
   | { kind: 'confirming'; voucherId: string }
   | { kind: 'loading' }
-  | { kind: 'success'; contentId: string; cert?: RegistrationCertificate }
+  | { kind: 'success'; contentId: string }
   | { kind: 'alreadyOwned' }
   | { kind: 'notFound' }
   | { kind: 'error'; message?: string }
@@ -34,13 +31,13 @@ export default function RedeemVoucher() {
   const { t } = useTranslation('profile');
   const navigate = useNavigate();
   const { needsBackup } = useIdentity();
-  const { profile } = useProfile();
 
+  const [parentGateOpen, setParentGateOpen] = useState(!isParentUnlocked());
   const [screen, setScreen] = useState<Screen>({ kind: 'input' });
+
   const [inputValue, setInputValue] = useState('');
   const [inputError, setInputError] = useState('');
   const [scanning, setScanning] = useState(false);
-  const [certCopied, setCertCopied] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -91,13 +88,24 @@ export default function RedeemVoucher() {
   }
 
   async function handleConfirm(voucherId: string) {
-    const profileId = getActiveProfileId();
-    if (!profileId) {
-      setScreen({ kind: 'error' });
-      return;
-    }
-
     setScreen({ kind: 'loading' });
+
+    // Identität (Schlüsselpaar) automatisch erstellen falls noch nicht vorhanden
+    await ensureIdentity();
+
+    // Aktives Profil sicherstellen — erstes vorhandenes nehmen oder neu anlegen
+    let profileId = getActiveProfileId();
+    if (!profileId) {
+      const profiles = loadProfilesIndex();
+      if (profiles.length > 0) {
+        profileId = profiles[0].id;
+        setActiveProfileId(profileId);
+      } else {
+        const profile = createProfile('');
+        setActiveProfileId(profile.id);
+        profileId = profile.id;
+      }
+    }
 
     try {
       const body = JSON.stringify({ voucherId, profileId });
@@ -121,43 +129,28 @@ export default function RedeemVoucher() {
 
       const data = await res.json() as RedeemResponse;
 
-      if (data.registrationCertificate) {
-        localStorage.setItem(
-          `${CERT_KEY_PREFIX}${profileId}${CERT_KEY_SUFFIX}`,
-          JSON.stringify(data.registrationCertificate)
-        );
-      }
-
       await refreshOwnership(profileId);
-
-      if (needsBackup) {
-        setScreen({ kind: 'success', contentId: data.contentId, cert: data.registrationCertificate });
-      } else {
-        setScreen({ kind: 'success', contentId: data.contentId, cert: data.registrationCertificate });
-      }
+      setScreen({ kind: 'success', contentId: data.contentId });
     } catch {
       setScreen({ kind: 'error' });
     }
   }
 
-  function buildCertUrl(cert: RegistrationCertificate): string {
-    const name = profile?.chatName?.trim();
-    return name ? `${cert.verifyUrl}&name=${encodeURIComponent(name)}` : cert.verifyUrl;
-  }
-
-  async function copyCertLink(cert: RegistrationCertificate) {
-    try {
-      await navigator.clipboard.writeText(buildCertUrl(cert));
-      setCertCopied(true);
-      setTimeout(() => setCertCopied(false), 2000);
-    } catch { /* */ }
+  if (parentGateOpen) {
+    return (
+      <ParentGateDialog
+        open={true}
+        onUnlocked={() => setParentGateOpen(false)}
+        onClose={() => navigate(-1)}
+      />
+    );
   }
 
   if (screen.kind === 'backup') {
     return (
       <BackupPrompt
-        onDone={() => navigate('/profile')}
-        onCancel={() => navigate('/profile')}
+        onDone={() => navigate('/stories')}
+        onCancel={() => navigate('/stories')}
       />
     );
   }
@@ -267,28 +260,13 @@ export default function RedeemVoucher() {
             <div className="text-6xl">🎉</div>
             <h2 className="text-2xl font-extrabold text-slate-900">{t('identity.voucher.successTitle')}</h2>
             <p className="text-slate-600">{t('identity.voucher.successText')}</p>
-
-            {screen.cert && (
-              <div className="p-4 rounded-2xl border border-teal-200 bg-teal-50 space-y-3 text-left">
-                <p className="text-sm font-bold text-teal-800">{t('identity.voucher.certCardTitle')}</p>
-                <p className="text-xs text-teal-700 break-all">{buildCertUrl(screen.cert)}</p>
-                <button
-                  type="button"
-                  onClick={() => copyCertLink(screen.cert!)}
-                  className="w-full py-2 text-sm font-semibold bg-teal-100 text-teal-800 rounded-xl hover:bg-teal-200 transition-colors"
-                >
-                  {certCopied ? t('identity.voucher.certCopied') : t('identity.voucher.certCopy')}
-                </button>
-              </div>
-            )}
-
             <button
               type="button"
               onClick={() => {
-                if (needsBackup) {
+                if (needsBackup && screen.kind === 'success' && screen.contentId !== 's1-full') {
                   setScreen({ kind: 'backup' });
                 } else {
-                  navigate('/profile');
+                  navigate('/stories');
                 }
               }}
               className="w-full py-3 bg-teal-500 text-white font-bold rounded-xl hover:bg-teal-600 active:scale-[0.97] transition-all"
@@ -305,7 +283,7 @@ export default function RedeemVoucher() {
             <h2 className="text-xl font-extrabold text-slate-900">{t('identity.voucher.alreadyOwned')}</h2>
             <button
               type="button"
-              onClick={() => navigate('/profile')}
+              onClick={() => navigate('/stories')}
               className="w-full py-3 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 active:scale-[0.97] transition-all"
             >
               {t('identity.voucher.back')}

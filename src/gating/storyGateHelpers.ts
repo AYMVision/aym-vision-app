@@ -1,6 +1,7 @@
 import { canStartChapter, canStartNextNewChapterToday } from './gateEngine';
 import { getProgress, hasCompletedChapter } from '../progress/storyProgress';
 import { shouldBypassAll, shouldBypassPaywall } from './entitlements';
+import { isPaywallChapter } from './demoConfig';
 
 type CourseLike = {
   script: Array<unknown>;
@@ -19,6 +20,7 @@ export type NextChapterGateState = {
   timeAllowed: boolean;
   blockedReason?: 'need_previous' | 'daily_limit';
 
+  isPaywallGated: boolean;
   shouldShowLockedHint: boolean;
 };
 
@@ -49,8 +51,8 @@ const {
 } = args;
 
 // Full bypass: paywall + daily gate (bypassAll/bypassUntil codes)
-const effectiveBypass = bypassAll || shouldBypassAll(courseId);
-// Paywall-only bypass: structural gate only, daily pacing stays (beta codes)
+const effectiveBypassAll = bypassAll || shouldBypassAll(courseId);
+// Paywall-only bypass: structural gate only, daily pacing stays (ownership / beta codes)
 const paywallBypass = bypassAll || shouldBypassPaywall(courseId);
 
   const nextChapterIndex0 = currentChapterIndex0 + 1;
@@ -66,6 +68,22 @@ const paywallBypass = bypassAll || shouldBypassPaywall(courseId);
       structuralAllowed: false,
       nextAlreadyCompleted: false,
       timeAllowed: false,
+      isPaywallGated: false,
+      shouldShowLockedHint: false,
+    };
+  }
+
+  // Paywall gate: chapter is beyond the free demo and user hasn't purchased
+  if (isPaywallChapter(courseId, nextChapterIndex0) && !paywallBypass) {
+    return {
+      currentChapterIndex0,
+      nextChapterIndex0,
+      hasNext: true,
+      highestPlayableChapterIndex0,
+      structuralAllowed: false,
+      nextAlreadyCompleted: false,
+      timeAllowed: false,
+      isPaywallGated: true,
       shouldShowLockedHint: false,
     };
   }
@@ -77,7 +95,7 @@ const paywallBypass = bypassAll || shouldBypassPaywall(courseId);
     chapterIndex0: nextChapterIndex0,
     highestPlayableChapterIndex0,
     isAlreadyCompleted: nextAlreadyCompleted,
-    bypassAll: paywallBypass, // paywall bypass (includes beta codes)
+    bypassAll: paywallBypass,
   });
 
   if (!structuralGate.allowed) {
@@ -89,6 +107,7 @@ const paywallBypass = bypassAll || shouldBypassPaywall(courseId);
       structuralAllowed: false,
       nextAlreadyCompleted,
       timeAllowed: false,
+      isPaywallGated: false,
       blockedReason: structuralGate.reason,
       shouldShowLockedHint: false,
     };
@@ -103,12 +122,13 @@ const paywallBypass = bypassAll || shouldBypassPaywall(courseId);
       structuralAllowed: true,
       nextAlreadyCompleted: true,
       timeAllowed: true,
+      isPaywallGated: false,
       shouldShowLockedHint: false,
     };
   }
 
   const timeGate = canStartNextNewChapterToday({
-    bypassAll: effectiveBypass, // daily gate only bypassed by full bypass codes
+    bypassAll: effectiveBypassAll,
   });
 
   if (!timeGate.allowed) {
@@ -122,6 +142,7 @@ const paywallBypass = bypassAll || shouldBypassPaywall(courseId);
       structuralAllowed: true,
       nextAlreadyCompleted: false,
       timeAllowed: false,
+      isPaywallGated: false,
       blockedReason: timeGate.reason,
       shouldShowLockedHint,
     };
@@ -135,6 +156,7 @@ const paywallBypass = bypassAll || shouldBypassPaywall(courseId);
     structuralAllowed: true,
     nextAlreadyCompleted: false,
     timeAllowed: true,
+    isPaywallGated: false,
     shouldShowLockedHint: false,
   };
 }

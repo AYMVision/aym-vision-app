@@ -100,6 +100,15 @@ export function isEpisodePaywallOnlyUnlocked(courseId?: string): boolean {
   return (e.paywallOnlyEpisodes ?? []).includes(courseId);
 }
 
+/** Returns true if the season containing this episode is owned (e.g. 's1' unlocks 's1e01'). */
+export function isParentSeasonUnlocked(courseId?: string): boolean {
+  if (!courseId) return false;
+  const season = courseId.match(/^(s\d+)/)?.[1];
+  if (!season) return false;
+  const e = getEntitlements();
+  return (e.paywallOnlyEpisodes ?? []).includes(season);
+}
+
 export function unlockEpisodePaywallOnly(courseId: string) {
   const normalized = courseId.trim();
   if (!normalized) return;
@@ -111,7 +120,12 @@ export function unlockEpisodePaywallOnly(courseId: string) {
 
 /** Paywall bypass only — daily pacing stays intact */
 export function shouldBypassPaywall(courseId?: string): boolean {
-  return shouldBypassAll(courseId) || isAllEpisodesUnlocked() || isEpisodePaywallOnlyUnlocked(courseId);
+  return (
+    shouldBypassAll(courseId) ||
+    isAllEpisodesUnlocked() ||
+    isEpisodePaywallOnlyUnlocked(courseId) ||
+    isParentSeasonUnlocked(courseId)
+  );
 }
 
 export function setBypassAll(active: boolean) {

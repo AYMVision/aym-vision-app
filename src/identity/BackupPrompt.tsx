@@ -22,6 +22,7 @@ export function BackupPrompt({ onDone, onCancel }: { onDone(): void; onCancel():
   const [quizIndices] = useState(() => pickQuizIndices(Math.random));
   const [answers, setAnswers] = useState<string[]>(['', '', '']);
   const [quizError, setQuizError] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleAnswer = useCallback((i: number, value: string) => {
     setAnswers(prev => { const next = [...prev]; next[i] = value; return next; });
@@ -37,33 +38,11 @@ export function BackupPrompt({ onDone, onCancel }: { onDone(): void; onCancel():
     onDone();
   }
 
-  if (screen === 'congrats') {
+  if (screen === 'congrats' || screen === 'why') {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
         <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl space-y-4">
           <div className="text-2xl font-bold text-slate-900">{t('identity.backup.headline')}</div>
-          <div className="text-lg font-semibold text-emerald-700">{t('identity.backup.congrats')}</div>
-          <button
-            type="button"
-            onClick={() => setScreen('why')}
-            className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800"
-          >
-            Weiter →
-          </button>
-          <button type="button" onClick={onCancel} className="w-full text-center text-sm text-slate-500 hover:text-slate-700">
-            {t('identity.backup.skip')}
-          </button>
-          <p className="text-xs text-slate-400 text-center">{t('identity.backup.skipHint')}</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (screen === 'why') {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
-        <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl space-y-4">
-          <div className="text-lg font-bold text-slate-900">{t('identity.backup.whyTitle')}</div>
           <p className="text-sm text-slate-600 leading-relaxed">{t('identity.backup.whyText')}</p>
           <button
             type="button"
@@ -75,6 +54,7 @@ export function BackupPrompt({ onDone, onCancel }: { onDone(): void; onCancel():
           <button type="button" onClick={onCancel} className="w-full text-center text-sm text-slate-500 hover:text-slate-700">
             {t('identity.backup.skip')}
           </button>
+          <p className="text-xs text-slate-400 text-center">{t('identity.backup.skipHint')}</p>
         </div>
       </div>
     );
@@ -85,7 +65,6 @@ export function BackupPrompt({ onDone, onCancel }: { onDone(): void; onCancel():
       <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 px-4 pb-4 sm:items-center">
         <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
           <div className="text-lg font-bold text-slate-900">{t('identity.backup.writeDownTitle')}</div>
-          <p className="text-xs text-amber-700 font-medium">{t('identity.backup.writeDownHint')}</p>
           <div className="grid grid-cols-3 gap-2">
             {words.map((word, i) => (
               <div key={i} className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 text-center">
@@ -96,10 +75,25 @@ export function BackupPrompt({ onDone, onCancel }: { onDone(): void; onCancel():
           </div>
           <button
             type="button"
-            onClick={() => setScreen('quiz')}
+            onClick={() => {
+              navigator.clipboard.writeText(mnemonic);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 2500);
+            }}
+            className={`w-full rounded-xl border px-4 py-2.5 text-sm font-semibold transition-colors ${
+              copied
+                ? 'border-emerald-300 bg-emerald-50 text-emerald-700'
+                : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
+            }`}
+          >
+            {copied ? 'Kopiert ✓' : 'Wörter kopieren'}
+          </button>
+          <button
+            type="button"
+            onClick={() => { markBackupConfirmed(); onDone(); }}
             className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800"
           >
-            Ich habe sie aufgeschrieben →
+            Ich habe sie gesichert →
           </button>
           <button type="button" onClick={onCancel} className="w-full text-center text-sm text-slate-500 hover:text-slate-700">
             {t('identity.backup.skip')}

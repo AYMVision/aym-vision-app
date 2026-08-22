@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
 
       {/* Partner badges */}
       <div className="max-w-7xl mx-auto mt-5 pt-4 border-t border-slate-100 flex justify-center">
-        <div className="flex items-center gap-5 flex-wrap justify-center">
+        <div className="flex items-center gap-6 flex-wrap justify-center">
           <span className="text-xs text-slate-400">Gefördert &amp; unterstützt von</span>
           <a
             href="https://hafven.de/impact-accelerator"
@@ -78,6 +78,20 @@ const Footer: React.FC = () => {
             <img
               src={assetUrl('media/ui/Siegel_Gründungsstipendium_Start-up_2024.png')}
               alt="Gründungsstipendium Start-up 2025/2026 – NBank"
+              className="h-12 w-auto"
+              loading="lazy"
+            />
+          </a>
+          <a
+            href="https://www.win-bs.de/startup-academy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="opacity-60 hover:opacity-90 transition-opacity"
+            aria-label="WIN Startup Academy Braunschweig"
+          >
+            <img
+              src={assetUrl('media/ui/300_WIN_Logo_2022_BS_Unterstuetzung.webp')}
+              alt="Unterstützt von WIN Startup Academy Braunschweig"
               className="h-12 w-auto"
               loading="lazy"
             />

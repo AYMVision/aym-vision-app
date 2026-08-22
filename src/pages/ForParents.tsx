@@ -5,7 +5,7 @@ import SmartImage from '../components/SmartImage';
 import { assetUrl } from '../common/assetUrl';
 import { cn } from '../common/utils';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
@@ -105,8 +105,7 @@ function OverviewCard({ t }: { t: (key: string, opts?: any) => string }) {
         </Link>
         
         <Link
-  to="/adult-settings"
-  state={{ backTo: '/parents' }}
+  to="/parent-setup"
   className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
 >
   {t('sidebar.buttons.settings')}
@@ -164,8 +163,7 @@ export default function ForParents() {
         </Link>
 
         <Link
-          to="/adult-settings"
-          state={{ backTo: '/parents' }}
+          to="/parent-setup"
           className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
         >
           {t('hero.ctaSecondary')}
@@ -202,8 +200,7 @@ export default function ForParents() {
       </p>
       <div className="mt-4">
         <Link
-          to="/adult-settings"
-          state={{ backTo: '/parents' }}
+          to="/parent-setup"
           className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
         >
           {t('setup.cta', { defaultValue: 'App jetzt einrichten →' })}
@@ -268,164 +265,180 @@ export default function ForParents() {
       </div>
     </Panel>
 
-    {/* STAFFEL 1: DOPPELKLICK */}
+    {/* STAFFEL 1 */}
     <div className="rounded-2xl border border-violet-100 bg-violet-50 p-5 sm:p-6">
-      <div className="text-xs font-semibold text-violet-600 uppercase tracking-wide">Doppelklick</div>
+      <div className="text-xs font-semibold text-violet-600 uppercase tracking-wide">Staffel 1</div>
       <h2 className="mt-1 text-base sm:text-lg font-semibold text-violet-900">
         Was dein Kind in dieser Staffel erlebt
       </h2>
       <p className="mt-3 text-sm text-slate-600 leading-relaxed">
-        „Doppelklick" begleitet Kinder in fünf Alltagssituationen durch die digitale Welt ihrer Generation:
+        Die erste Staffel von Amy Surfwing begleitet Kinder in fünf Geschichten durch typische Situationen ihrer digitalen Lebenswelt. Dabei erleben sie ganz nebenbei, wie sie online cleverer, sicherer und selbstbestimmter unterwegs sein können.
       </p>
       <div className="mt-4 space-y-3">
 
         {/* Folge 1 */}
-        <details className="group rounded-xl bg-white border border-violet-100">
-          <summary className="flex items-start justify-between gap-2 cursor-pointer list-none px-4 py-3">
-            <div>
-              <div className="font-semibold text-slate-900 text-sm leading-snug">Folge 1: KI-generierte Bilder</div>
-              <p className="mt-0.5 text-xs text-slate-500 italic">Wie erkenne ich, was echt ist?</p>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold bg-violet-100 text-violet-700 border border-violet-200">🔍 Fake-Inhalte</span>
-              <span className="text-slate-400 text-xs group-open:rotate-180 transition-transform">▾</span>
-            </div>
-          </summary>
-          <ul className="px-4 pb-4 space-y-2 border-t border-violet-50 pt-3">
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">🕵️</span>
-              <span><strong className="text-slate-800">Quellen prüfen:</strong> Kinder lernen, KI-Bilder von echten Fotos zu unterscheiden — und warum man nicht alles teilen sollte, was überzeugend aussieht.</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">💡</span>
-              <span><strong className="text-slate-800">Medien verstehen:</strong> Was steckt hinter KI-Tools — und warum gibt es für manche Altersregeln?</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">🌍</span>
-              <span><strong className="text-slate-800">Folgen einschätzen:</strong> Auch das Weiterschicken eines KI-Bildes kann Konsequenzen haben — selbst wenn es „nur ein Spaß" war.</span>
-            </li>
-          </ul>
-        </details>
+        <div className="rounded-xl bg-white border border-violet-100 px-4 py-3">
+          <div className="font-semibold text-slate-900 text-sm leading-snug">Folge 1: Wirbel am Wasserfall</div>
+          <p className="mt-0.5 text-xs text-slate-500 italic">Was passiert, wenn der Wunsch nach dem perfekten Post plötzlich wichtiger wird als das, was um mich herum passiert?</p>
+          <div className="mt-3 space-y-1 divide-y divide-violet-50">
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>💪 Über das eigene Verhalten nachdenken</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Yasmin will unbedingt mitreden und etwas Cooles posten. Kinder erleben, was FOMO mit den eigenen Entscheidungen machen kann und wann es sich lohnt, kurz innezuhalten.</p>
+            </details>
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>🌍 Folgen des eigenen Handelns einschätzen</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Aus einem coolen KI Bild wird plötzlich eine ziemlich große Sache. Kinder erleben, warum es wichtig ist, vor dem Posten und Weiterleiten auch an andere zu denken.</p>
+            </details>
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>🕵️ Quellen bewerten, Fake News und Manipulation erkennen</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Ein Online Tipp passt nicht mehr zur Wirklichkeit und ein überzeugendes Bild erzählt nicht die ganze Wahrheit. Die Klasse nutzt unter anderem Bildersuche und digitale Hinweise, um herauszufinden, was wirklich los ist.</p>
+            </details>
+          </div>
+        </div>
 
         {/* Folge 2 */}
-        <details className="group rounded-xl bg-white border border-violet-100">
-          <summary className="flex items-start justify-between gap-2 cursor-pointer list-none px-4 py-3">
-            <div>
-              <div className="font-semibold text-slate-900 text-sm leading-snug">Folge 2: Chaos im Klassenchat</div>
-              <p className="mt-0.5 text-xs text-slate-500 italic">Was tue ich, wenn Fake-News und Drohungen die Runde machen?</p>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold bg-violet-100 text-violet-700 border border-violet-200">📲 Weiterleiten</span>
-              <span className="text-slate-400 text-xs group-open:rotate-180 transition-transform">▾</span>
-            </div>
-          </summary>
-          <ul className="px-4 pb-4 space-y-2 border-t border-violet-50 pt-3">
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">🤝</span>
-              <span><strong className="text-slate-800">Digital kommunizieren:</strong> Wo verläuft die Grenze im Gruppen-Chat — zwischen Spaß, Ausgrenzung und Mobbing?</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">🛡️</span>
-              <span><strong className="text-slate-800">Sich schützen:</strong> Wie reagiert man bei Drohungen oder Fake-Nachrichten — und wann holt man Hilfe?</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">🌍</span>
-              <span><strong className="text-slate-800">Folgen einschätzen:</strong> Wer trägt Verantwortung, wenn eine Nachricht weitergeschickt wird — auch wer „es nur weitergeleitet" hat?</span>
-            </li>
-          </ul>
-        </details>
+        <div className="rounded-xl bg-white border border-violet-100 px-4 py-3">
+          <div className="font-semibold text-slate-900 text-sm leading-snug">Folge 2: Chaos im Klassenchat</div>
+          <p className="mt-0.5 text-xs text-slate-500 italic">Was hilft, wenn ein Klassenchat plötzlich völlig eskaliert?</p>
+          <div className="mt-3 space-y-1 divide-y divide-violet-50">
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>🤝 Respektvoll digital kommunizieren und zusammenarbeiten</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Streit, Beleidigungen, Ausschluss und Mitläufer bringen den Klassenchat ordentlich durcheinander. Kinder erleben, warum Netiquette und gemeinsame Regeln wichtig sind und wie man Konflikte auch wieder beruhigen kann.</p>
+            </details>
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>👁️ Situationen aus anderen Blickwinkeln betrachten</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Ein Streit sieht je nach Beteiligtem ziemlich unterschiedlich aus. Kinder wechseln die Perspektive und überlegen, wie Nachrichten, Reaktionen und Ausschluss bei anderen ankommen.</p>
+            </details>
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>🌍 Folgen des eigenen Handelns einschätzen</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Wer heizt einen Streit an und wer hilft, ihn zu lösen? Die Klasse probiert konkrete Lösungen aus, entwickelt Regeln, diskutiert unterschiedliche Meinungen und stimmt gemeinsam darüber ab, wie ihr Chat künftig funktionieren soll.</p>
+            </details>
+          </div>
+        </div>
 
         {/* Folge 3 */}
-        <details className="group rounded-xl bg-white border border-violet-100">
-          <summary className="flex items-start justify-between gap-2 cursor-pointer list-none px-4 py-3">
-            <div>
-              <div className="font-semibold text-slate-900 text-sm leading-snug">Folge 3: Immer online</div>
-              <p className="mt-0.5 text-xs text-slate-500 italic">Bildschirmzeit, Schlaf und die Frage: Wann ist genug genug?</p>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold bg-violet-100 text-violet-700 border border-violet-200">⏱ Bildschirmzeit</span>
-              <span className="text-slate-400 text-xs group-open:rotate-180 transition-transform">▾</span>
-            </div>
-          </summary>
-          <ul className="px-4 pb-4 space-y-2 border-t border-violet-50 pt-3">
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">💪</span>
-              <span><strong className="text-slate-800">Eigenes Verhalten:</strong> Warum fällt es so schwer, das Handy wegzulegen — und wie findet man Grenzen, die sich auch richtig anfühlen?</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">👁️</span>
-              <span><strong className="text-slate-800">Andere Blickwinkel:</strong> Wie beeinflusst ständige Erreichbarkeit Freundschaften, Schlaf und das Wohlbefinden — aus Sicht aller Beteiligten?</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">💡</span>
-              <span><strong className="text-slate-800">Medien verstehen:</strong> Apps sind darauf ausgelegt, uns online zu halten — Kinder lernen, diesen Mechanismus zu durchschauen.</span>
-            </li>
-          </ul>
-        </details>
+        <div className="rounded-xl bg-white border border-violet-100 px-4 py-3">
+          <div className="font-semibold text-slate-900 text-sm leading-snug">Folge 3: Nacht im Netz</div>
+          <p className="mt-0.5 text-xs text-slate-500 italic">Warum ist Aufhören manchmal so schwer, obwohl man es eigentlich längst wollte?</p>
+          <div className="mt-3 space-y-1 divide-y divide-violet-50">
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>💡 Medien kritisch verstehen und reflektieren</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Feeds, Algorithmen, Streaks und limitierte Events sorgen dafür, dass Finn und seine Freunde immer wieder zurückkommen. Kinder entdecken spielerisch, mit welchen Tricks Apps und Games um ihre Aufmerksamkeit kämpfen.</p>
+            </details>
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>💪 Über das eigene Verhalten nachdenken</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Finn merkt irgendwann selbst, dass Games, Chats und Onlinezeit gerade zu viel werden. Kinder beschäftigen sich mit Bildschirmzeit, Schlaf, FOMO und der Frage, wann aus Spaß Stress wird.</p>
+            </details>
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>🛡️ Sich im Netz schützen</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Push Nachrichten ausschalten, Handy weglegen, Offline Zeiten ausprobieren oder sich Unterstützung holen. Kinder lernen einfache Strategien kennen, mit denen sie ihre Medienzeit selbstbestimmter gestalten können.</p>
+            </details>
+          </div>
+        </div>
 
         {/* Folge 4 */}
-        <details className="group rounded-xl bg-white border border-violet-100">
-          <summary className="flex items-start justify-between gap-2 cursor-pointer list-none px-4 py-3">
-            <div>
-              <div className="font-semibold text-slate-900 text-sm leading-snug">Folge 4: Gerüchte am Skatepark</div>
-              <p className="mt-0.5 text-xs text-slate-500 italic">Wie schnell urteile ich, ohne alle Fakten zu kennen?</p>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold bg-violet-100 text-violet-700 border border-violet-200">🤝 Urteilen</span>
-              <span className="text-slate-400 text-xs group-open:rotate-180 transition-transform">▾</span>
-            </div>
-          </summary>
-          <ul className="px-4 pb-4 space-y-2 border-t border-violet-50 pt-3">
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">👁️</span>
-              <span><strong className="text-slate-800">Andere Blickwinkel:</strong> Was passiert, wenn man urteilt, bevor man die ganze Geschichte kennt — und welche Folgen das für den Betroffenen hat?</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">💪</span>
-              <span><strong className="text-slate-800">Eigenes Verhalten:</strong> Wie schnell wird man selbst Teil einer Gerüchtekette — und was kann man dagegen tun?</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">🤝</span>
-              <span><strong className="text-slate-800">Digital kommunizieren:</strong> Gerüchte verbreiten sich online schneller und weiter als offline — und sind schwerer rückgängig zu machen.</span>
-            </li>
-          </ul>
-        </details>
+        <div className="rounded-xl bg-white border border-violet-100 px-4 py-3">
+          <div className="font-semibold text-slate-900 text-sm leading-snug">Folge 4: Stress im Skatepark</div>
+          <p className="mt-0.5 text-xs text-slate-500 italic">Wie schnell entsteht eine Meinung über jemanden, obwohl wichtige Teile der Geschichte fehlen?</p>
+          <div className="mt-3 space-y-1 divide-y divide-violet-50">
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>👁️ Situationen aus anderen Blickwinkeln betrachten</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Amir wird aufgrund einzelner Informationen und seiner Herkunft in eine Schublade gesteckt. Neue Begegnungen zeigen der Klasse nach und nach ganz andere Seiten von ihm.</p>
+            </details>
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>💡 Medien kritisch verstehen und reflektieren</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Ein Foto, ein paar Nachrichten und schon scheint die Sache klar. Kinder erleben, wie aus einzelnen Informationen Vermutungen und scheinbar sichere Urteile entstehen können.</p>
+            </details>
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>🌍 Folgen des eigenen Handelns einschätzen</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Öffentliche Anschuldigungen und Spott treffen einen echten Menschen. Gleichzeitig erleben Kinder, wie viel es bewirken kann, für jemanden einzustehen, ein Urteil zu korrigieren und sich zu entschuldigen.</p>
+            </details>
+          </div>
+        </div>
 
         {/* Folge 5 */}
-        <details className="group rounded-xl bg-white border border-violet-100">
-          <summary className="flex items-start justify-between gap-2 cursor-pointer list-none px-4 py-3">
-            <div>
-              <div className="font-semibold text-slate-900 text-sm leading-snug">Folge 5: Der Fake-Sticker</div>
-              <p className="mt-0.5 text-xs text-slate-500 italic">Was passiert, wenn ein Bild weitergeht, das nie hätte gesendet werden dürfen?</p>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold bg-violet-100 text-violet-700 border border-violet-200">📲 Verantwortung</span>
-              <span className="text-slate-400 text-xs group-open:rotate-180 transition-transform">▾</span>
-            </div>
-          </summary>
-          <ul className="px-4 pb-4 space-y-2 border-t border-violet-50 pt-3">
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">🌍</span>
-              <span><strong className="text-slate-800">Folgen einschätzen:</strong> Was bedeutet es, wenn ein Bild die eigene Kontrolle verlässt — und warum ist das so schwer rückgängig zu machen?</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">🛡️</span>
-              <span><strong className="text-slate-800">Sich schützen:</strong> Was Bildrechte und Privatsphäre im Alltag bedeuten — und wann man Erwachsene einbeziehen sollte.</span>
-            </li>
-            <li className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-              <span className="shrink-0 mt-0.5">💪</span>
-              <span><strong className="text-slate-800">Eigenes Verhalten:</strong> Wie geht man mit einer Situation um, die man nicht rückgängig machen kann — und wie findet man wieder zueinander?</span>
-            </li>
-          </ul>
-        </details>
+        <div className="rounded-xl bg-white border border-violet-100 px-4 py-3">
+          <div className="font-semibold text-slate-900 text-sm leading-snug">Folge 5: Wolf im Chat</div>
+          <p className="mt-0.5 text-xs text-slate-500 italic">Was passiert, wenn KI-Sticker von Mitschülern erstellt und &quot;Beweis&quot;-Fotos veröffentlicht werden?</p>
+          <div className="mt-3 space-y-1 divide-y divide-violet-50">
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>🛡️ Sich im Netz schützen</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Ein KI-Sticker wird aus dem Foto eines Mitschülers erstellt. Kinder beschäftigen sich mit Privatsphäre und dem Umgang mit Bildern.</p>
+            </details>
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>🌍 Folgen des eigenen Handelns einschätzen</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Der Sticker soll nicht weitergeleitet werden und trotzdem verbreitet er sich rasant. Kinder erleben, wie aus vielen kleinen Entscheidungen eine große Wirkung entsteht und wie man reagieren kann.</p>
+            </details>
+            <details className="group pt-1">
+              <summary className="flex items-center justify-between cursor-pointer list-none text-xs font-semibold text-slate-700 py-1 gap-2">
+                <span>🕵️ Quellen bewerten, Fake News und Manipulation erkennen</span>
+                <span className="text-slate-400 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-1 text-xs text-slate-600 leading-snug pb-2">Dann sorgt ein vermeintlicher Wolf für Aufregung. Kinder erleben, warum mehrere Quellen nicht automatisch mehrere Beweise sind, wie Gerüchte glaubwürdiger werden und warum gute Recherche vor dem Veröffentlichen wichtig ist.</p>
+            </details>
+          </div>
+        </div>
 
       </div>
-      <p className="mt-4 text-xs text-slate-600 leading-relaxed">
-        Jede Folge enthält Reflexionsfragen, kurze Wissensmomente und Entscheidungspunkte, die Kinder einladen mitzudenken — ohne Bewertung, ohne Ranking.
-      </p>
-      <p className="mt-2 text-xs text-slate-500 leading-relaxed">
-        Diese Fragen eignen sich auch gut für Gespräche zuhause.
-      </p>
+
+      {/* Mehr als einzelne Medienthemen */}
+      <div className="mt-4 rounded-xl bg-white border border-violet-100 px-4 py-4">
+        <div className="font-semibold text-slate-900 text-sm">Mehr als einzelne Medienthemen</div>
+        <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+          In allen fünf Folgen üben Kinder immer wieder vier Fähigkeiten, die sie durch ihre digitale Lebenswelt begleiten:
+        </p>
+        <ul className="mt-2 space-y-1.5 text-xs text-slate-600">
+          <li><strong className="text-slate-800">Urteilsvermögen</strong> – Informationen hinterfragen und sich eine eigene Meinung bilden</li>
+          <li><strong className="text-slate-800">Perspektivfähigkeit</strong> – verstehen, wie Situationen auf andere wirken</li>
+          <li><strong className="text-slate-800">Selbststeuerung</strong> – das eigene digitale Verhalten bewusst gestalten</li>
+          <li><strong className="text-slate-800">Verantwortungsvolles Handeln</strong> – Folgen mitdenken und fair handeln</li>
+        </ul>
+        <p className="mt-3 text-xs text-slate-600 leading-relaxed">
+          Jede Folge enthält kurze Reflexionsfragen, Wissensmomente und Entscheidungspunkte, die Kinder zum Mitdenken einladen. Ohne Bewertung und ohne Ranking.
+        </p>
+      </div>
     </div>
 
     <Panel
@@ -585,8 +598,8 @@ export default function ForParents() {
 
             {/* Förderung */}
             <section className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 sm:p-6">
-              <div className="text-xs font-semibold text-[var(--color-teal-600)]">Kooperationen & Förderung</div>
-              <h2 className="mt-1 text-base font-semibold text-slate-900">Gefördert &amp; unterstützt von</h2>
+              <div className="text-xs font-semibold text-[var(--color-teal-600)]">{t('cooperation.kicker')}</div>
+              <h2 className="mt-1 text-base font-semibold text-slate-900">{t('cooperation.title')}</h2>
 
               <div className="mt-4 flex flex-col gap-4 pb-4 border-b border-slate-100">
                 <a
@@ -594,37 +607,58 @@ export default function ForParents() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="shrink-0 opacity-80 hover:opacity-100 transition-opacity self-start"
-                  aria-label="Hafven Impact Accelerator"
+                  aria-label={t('cooperation.hafven.ariaLabel')}
                 >
                   <img
                     src={assetUrl('media/ui/HafvenImpactAccelerator_Logo_schwarz.png')}
-                    alt="Hafven Impact Accelerator"
+                    alt={t('cooperation.hafven.imgAlt')}
                     className="h-9 w-auto"
                     loading="lazy"
                   />
                 </a>
                 <p className="text-sm text-slate-700 leading-relaxed">
-                  Amy Surfwing wird vom <strong>Hafven Impact Accelerator</strong> unterstützt — einem Programm für soziale Innovationen und gesellschaftlich wirksame Projekte in Hannover.
+                  <Trans i18nKey="cooperation.hafven.text" t={t} components={{ bold: <strong /> }} />
                 </p>
               </div>
 
-              <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-5 border-b border-slate-100">
                 <a
                   href="https://www.nbank.de"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
-                  aria-label="NBank Gründungsstipendium"
+                  aria-label={t('cooperation.nbank.ariaLabel')}
                 >
                   <img
                     src={assetUrl('media/ui/Siegel_Gründungsstipendium_Start-up_2024.png')}
-                    alt="Gründungsstipendium Start-up 2025/2026 – NBank"
+                    alt={t('cooperation.nbank.imgAlt')}
                     className="h-24 w-auto"
                     loading="lazy"
                   />
                 </a>
                 <p className="text-sm text-slate-700 leading-relaxed">
-                  Amy Surfwing ist Trägerin des <strong>Gründungsstipendiums der NBank</strong> — der Investitions- und Förderbank des Landes Niedersachsen. Das Stipendium fördert innovative Gründungsvorhaben mit besonderem gesellschaftlichem Mehrwert.
+                  <Trans i18nKey="cooperation.nbank.text" t={t} components={{ bold: <strong /> }} />
+                </p>
+              </div>
+
+              {/* WIN Startup Academy Braunschweig */}
+              <div className="mt-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <a
+                  href="https://www.win-bs.de/startup-academy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
+                  aria-label={t('cooperation.win.ariaLabel')}
+                >
+                  <img
+                    src={assetUrl('media/ui/300_WIN_Logo_2022_BS_Unterstuetzung.webp')}
+                    alt={t('cooperation.win.imgAlt')}
+                    className="h-10 w-auto"
+                    loading="lazy"
+                  />
+                </a>
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  <Trans i18nKey="cooperation.win.text" t={t} components={{ bold: <strong /> }} />
                 </p>
               </div>
             </section>

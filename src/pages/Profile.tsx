@@ -23,6 +23,7 @@ import AvatarLookCircle from '../components/AvatarLookCircle';
 import { THEME_META, THEME_ORDER } from '../competencies/themeMeta';
 import ChallengeJournal from '../components/ChallengeJournal';
 import BlockchainCertCard from '../shop/BlockchainCertCard';
+import { useIdentity } from '../identity/useIdentity';
 
 // ✅ typed location state (kein any)
 type ProfileLocationState = {
@@ -43,6 +44,7 @@ export default function Profile() {
   const profiles = loadProfilesIndex();
   const activeProfileId = getActiveProfileId();
   const activeProfile = profiles.find((p) => p.id === activeProfileId);
+
 
   const lp = useLongPress(() => setParentGateOpen(true), 1200);
 
@@ -366,17 +368,9 @@ export default function Profile() {
               </div>
             </Link>
 
-            <Link
-              to="/redeem-voucher"
-              className="rounded-2xl border border-black/5 bg-gradient-to-br from-amber-50 via-white to-yellow-50 p-4 hover:shadow-md transition col-span-2 sm:col-span-1"
-            >
-              <div className="text-3xl">🎟️</div>
-              <div className="mt-2 text-sm font-extrabold text-slate-900 leading-tight">
-                {t('identity.voucher.title')}
-              </div>
-            </Link>
           </div>
         </div>
+
 
 
         {/* Transfer stale warning (only in PWA mode when link is old) */}

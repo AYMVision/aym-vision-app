@@ -30,7 +30,11 @@ export function paymentLinkFor(contentId: string, profileHash: string): string {
 export function extractSessionId(returnUrl: string): string | null {
   try {
     const url = new URL(returnUrl);
-    return url.searchParams.get('session_id');
+    const fromSearch = url.searchParams.get('session_id');
+    if (fromSearch) return fromSearch;
+    // HashRouter: session_id is inside the hash fragment (#/shop/return?session_id=...)
+    const hashQuery = url.hash.split('?')[1] ?? '';
+    return new URLSearchParams(hashQuery).get('session_id');
   } catch {
     return null;
   }

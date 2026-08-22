@@ -35,7 +35,8 @@
   "motivation": {
     "kicker": "Unsere Motivation",
     "title": "Wie alles begann",
-    "copy": "Amy Surfwing ist aus vielen Gesprächen zwischen uns entstanden – über unsere Kinder, das Internet und die Frage, wie sie lernen, damit umzugehen. Uns wurde schnell klar: Es reicht nicht, digitale Risiken nur zu benennen. Unsere Kinder brauchen etwas, das sie wirklich erreicht – ein Format, das neugierig macht und sie Schritt für Schritt stärkt. So entstand die Idee, Situationen im Netz nicht abstrakt zu erklären, sondern erlebbar zu machen."
+    "copy1": "Amy Surfwing ist aus vielen Gesprächen zwischen uns entstanden – über unsere Kinder, das Internet und die Frage, wie sie lernen, damit umzugehen. Uns wurde schnell klar: Es reicht nicht, digitale Risiken nur zu benennen. Unsere Kinder brauchen etwas, das sie wirklich erreicht – ein Format, das neugierig macht und sie Schritt für Schritt stärkt.",
+    "copy2": "Gespräche bleiben der wichtigste Teil. Deshalb richtet sich dieser Blog an die Eltern, die ihren Kindern beim Navigieren durch die digitale Welt zur Seite stehen."
   },
 
   "positioning": {
@@ -173,7 +174,7 @@
       "label": "Allgemein",
       "age": {
         "question": "Für welches Alter ist Amy Surfwing geeignet?",
-        "answer": "Amy Surfwing richtet sich an Kinder ab 9 Jahren. Die Themen und Sprache sind auf diesen Altersbereich abgestimmt — anspruchsvoll genug, um zu fordern, aber nicht überwältigend.",
+        "answer": "Amy Surfwing richtet sich an Kinder ab 9 Jahren. Die Themen und Sprache sind auf diesen Altersbereich abgestimmt.",
         "link": "Mehr für Eltern →"
       },
       "topics": {
@@ -235,7 +236,7 @@
       "label": "Daten & Datenschutz",
       "storage": {
         "question": "Was passiert mit den Daten meines Kindes?",
-        "answer": "Alle Daten — Fortschritt, Sticker, Profileinstellungen — werden ausschließlich lokal auf diesem Gerät gespeichert. Es wird kein Konto benötigt, keine Daten werden in eine Cloud übertragen oder mit Dritten geteilt."
+        "answer": "Alle Daten (Fortschritt, Sticker, Profileinstellungen) werden ausschließlich lokal auf diesem Gerät gespeichert. Es wird kein Konto benötigt, keine Daten werden in eine Cloud übertragen oder mit Dritten geteilt."
       },
       "deviceSwitch": {
         "question": "Was passiert, wenn ich das Gerät wechsle oder den Speicher lösche?",
@@ -243,6 +244,26 @@
         "answer2": "Elternbereich",
         "answer3": "."
       }
+    }
+  },
+
+  "supporters": {
+    "kicker": "Kooperationen & Förderung",
+    "title": "Unterstützt von",
+    "hafven": {
+      "text": "Amy Surfwing wird vom <bold>Hafven Impact Accelerator</bold> unterstützt, einem Programm für soziale Innovationen und gesellschaftlich wirksame Projekte in Hannover.",
+      "ariaLabel": "Hafven Impact Accelerator",
+      "imgAlt": "Hafven Impact Accelerator"
+    },
+    "nbank": {
+      "text": "Amy Surfwing ist Trägerin des <bold>Gründungsstipendiums der NBank</bold> (2025/2026), der Investitions- und Förderbank des Landes Niedersachsen. Das Stipendium fördert innovative Gründungsvorhaben mit besonderem gesellschaftlichem Mehrwert.",
+      "ariaLabel": "NBank Gründungsstipendium",
+      "imgAlt": "Gründungsstipendium Start-up 2025/2026 – NBank"
+    },
+    "win": {
+      "text": "Amy Surfwing wird von der <bold>WIN Startup Academy Braunschweig</bold> unterstützt — einem Programm von Zukunft Braunschweig zur Förderung innovativer Gründungsvorhaben in der Region.",
+      "ariaLabel": "WIN Startup Academy Braunschweig",
+      "imgAlt": "Unterstützt von WIN Startup Academy Braunschweig"
     }
   },
 

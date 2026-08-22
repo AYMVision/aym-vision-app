@@ -125,7 +125,7 @@
   },
   "start": {
     "kicker": "Jetzt starten",
-    "title": "Eine Woche kostenfrei",
+    "title": "Jetzt kostenlos reinschnuppern",
     "label": "Neu für dich",
     "hint": "Keine Anmeldung nötig – einfach loslegen.",
     "cta": "Jetzt starten →"
@@ -188,11 +188,13 @@
   },
   "list": {
     "kicker": "",
-    "title": "Doppelklick",
+    "title": "Staffel 1",
     "description": "Yasmin tippt. Dominik klopft Sprüche. Tom ist mal wieder nicht online - Finn dafür immer. Und ein Sticker, den niemand hätte weiterschicken sollen, hat gerade die halbe Schule erreicht. Was als kleiner Spaß begann, wird für die ganze Klasse zum echten Test — für Freundschaften, für Vertrauen, für das, was wirklich zählt. Du bist mittendrin.",
     "lead": "Ein Klick und du bist mitten im Abenteuer.",
     "searchPlaceholder": "Story suchen…",
-    "seasonBadge": "Doppelklick"
+    "seasonBadge": "Staffel 1",
+    "voucherHint": "Gutschein-Code? Jetzt freischalten",
+    "owned": "Staffel 1 aktiviert · Jeden Tag ein neues Kapitel"
   },
   "trust": {
     "kicker": "Denkraum",
@@ -337,7 +339,11 @@
   "gate": {
     "nextTomorrowTitle": "Für heute bist du fertig ✨",
     "nextTomorrowBody": "Der nächste Amic wartet morgen auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.",
-    "toNewspaper": "Zur Schülerzeitung →"
+    "toNewspaper": "Zur Schülerzeitung →",
+    "paywallCardTitle": "Kapitel 4 wartet auf dich! 🦉",
+    "paywallBody": "Deine Eltern können die nächsten Kapitel für dich freischalten.",
+    "paywallCtaParent": "Eltern-Bereich öffnen →",
+    "paywallCtaBack": "Zur Übersicht"
   },
   "common": {
     "gotIt": "Verstanden",
@@ -450,7 +456,7 @@
   },
   "overview": {
     "back": "Alle Storys",
-    "season": "Doppelklick",
+    "season": "Staffel 1",
     "aiTranslated": "Story mit KI übersetzt · Kann Fehler enthalten",
     "timeLocked": {
       "daily": "Morgen wieder verfügbar"
@@ -468,7 +474,10 @@
   "amicDone": {
     "title": "Amic abgeschlossen ✓",
     "ctaNext": "Nächster Amic →",
-    "ctaOverview": "Zur Übersicht"
+    "ctaOverview": "Zur Übersicht",
+    "installHint": "Du kannst Amy Surfwing als App auf deinem Handy speichern, dann findest du sie morgen direkt auf dem Startbildschirm. Das ist freiwillig, im Browser läuft alles genauso.",
+    "installHintLink": "Wie das geht →",
+    "installHintDismiss": "Hinweis schließen"
   },
   "survey": {
     "amyAsks": "Amy fragt",

@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../common/utils';
 import { getProgress, getCompletedChapterCount } from '../progress/storyProgress';
+import { shouldSkipOnboarding } from '../common/firstRun';
 import { assetUrl } from '../common/assetUrl';
 import SmartImage from '../components/SmartImage';
 
@@ -14,6 +15,8 @@ import { getStoryCards, CONTENT_INDEX } from '../content/contentIndex';
 import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile'; // ✅ NEW
 import { shouldBypassAll } from '../gating/entitlements';
+import { isSeasonOwnedLocally } from '../shop/ownership';
+import { getActiveProfileId } from '../profile/profileStorage';
 import NewAmicBanner from '../components/NewAmicBanner';
 import { loadNextAmicInfo } from '../notifications/amicNotif';
 import { loadSettings } from '../settings/appSettings';
@@ -217,8 +220,6 @@ function InfoBottomSheet({ onClose, children }: { onClose: () => void; children:
   );
 }
 
-const SURVEY_URL =
-  'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__tVBf5hUQlM2V0k0OFdWMEQzNVhaUVhSNzU2STdBSC4u';
 
 export default function Stories() {
   const CardTile = ({
@@ -270,36 +271,6 @@ export default function Stories() {
   });
   const [amicBannerVisible, setAmicBannerVisible] = useState(Boolean(amicBannerInfo));
   const [infoOpen, setInfoOpen] = useState(false);
-
-  // Survey-Banner: erscheint nach ≥3 Kapiteln + ≥3 Tagen, einmal wegklickbar / snooze 7 Tage
-  const [surveyBannerVisible, setSurveyBannerVisible] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    if (localStorage.getItem('surveyDismissed')) return false;
-    const snoozeUntil = localStorage.getItem('surveySnoozeUntil');
-    if (snoozeUntil && new Date(snoozeUntil) > new Date()) return false;
-    // Kapitelzahl über alle Courses
-    const totalCompleted = getStoryCards().reduce(
-      (sum, c) => sum + getCompletedChapterCount(c.id), 0
-    );
-    if (totalCompleted < 3) return false;
-    // Tage seit erstem Start
-    const firstSeenStr = loadStore().meta?.firstSeen ?? '';
-    if (!firstSeenStr) return false;
-    const daysSince = (Date.now() - new Date(firstSeenStr).getTime()) / (1000 * 60 * 60 * 24);
-    return daysSince >= 3;
-  });
-
-  function dismissSurvey() {
-    localStorage.setItem('surveyDismissed', '1');
-    setSurveyBannerVisible(false);
-  }
-
-  function snoozeSurvey() {
-    const until = new Date();
-    until.setDate(until.getDate() + 7);
-    localStorage.setItem('surveySnoozeUntil', until.toISOString().slice(0, 10));
-    setSurveyBannerVisible(false);
-  }
 
   // Beta: Partial-Data Banner nach 7 Tagen für Nicht-Abschließer
   const [betaPartialVisible, setBetaPartialVisible] = useState(() => {
@@ -420,8 +391,6 @@ function isUnlockedByChain(
   );
 }
 
-  
-
   return (
     <Layout>
       <BetaBanner />
@@ -465,6 +434,10 @@ function isUnlockedByChain(
               <button
                 type="button"
                 onClick={() => {
+                  if (!shouldSkipOnboarding()) {
+                    navigate('/start');
+                    return;
+                  }
                   if (currentCard) {
                     navigate(currentCard.storyEngine === 'v2' ? `/stories-v02/${currentCard.id}` : `/stories/${currentCard.id}`);
                   } else {
@@ -473,7 +446,9 @@ function isUnlockedByChain(
                 }}
                 className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
               >
-                {hasStarted
+                {!shouldSkipOnboarding()
+                  ? tStories('hero.ctaPrimary', { defaultValue: 'Jetzt starten →' })
+                  : hasStarted
                   ? tStories('hero.ctaContinue', { defaultValue: 'Weiterlesen →' })
                   : tStories('hero.ctaPrimary', { defaultValue: 'Jetzt starten →' })}
               </button>
@@ -536,6 +511,14 @@ function isUnlockedByChain(
             <p className="text-xs text-slate-500 -mt-1">
               📱 Chat-Serie&nbsp;&nbsp;·&nbsp;&nbsp;{totalEpisodes} Folgen
             </p>
+
+            {/* Ownership-Badge */}
+            {isSeasonOwnedLocally(getActiveProfileId() ?? '', 's1') && (
+              <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-800 bg-teal-50 border border-teal-200 rounded-full px-3 py-1 mt-2">
+                <span>✓</span>
+                <span>{tStories('list.owned', { defaultValue: 'Staffel 1 aktiviert · Jeden Tag ein neues Kapitel' })}</span>
+              </div>
+            )}
 
             {/* Staffel-Beschreibung */}
             <div className="mt-2">
@@ -654,6 +637,19 @@ function isUnlockedByChain(
                     })}
                   </SwipeRow>
                 </div>
+                {cardsForUI.some((card) => {
+                  const playable = playableById[card.id] ?? false;
+                  return !card.released || !playable;
+                }) && (
+                  <div className="mt-4 flex justify-center">
+                    <Link
+                      to="/redeem-voucher"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-amber-50 border border-amber-200 text-sm font-semibold text-amber-800 hover:bg-amber-100 transition-colors shadow-sm"
+                    >
+                      🎟️ {tStories('list.voucherHint', { defaultValue: 'Gutschein-Code? Jetzt freischalten' })}
+                    </Link>
+                  </div>
+                )}
               </>
             )}
           </Panel>
@@ -825,43 +821,6 @@ function isUnlockedByChain(
 
 
 
-        {/* AMY SURVEY BANNER – erscheint nach ≥3 Kapiteln + ≥3 Tagen */}
-        {surveyBannerVisible && (
-          <div className="rounded-2xl border border-violet-100 bg-gradient-to-r from-violet-50 to-white p-4 sm:p-5 flex items-start gap-3">
-            <img
-              src={assetUrl('media/story/characters/amy-256.webp')}
-              alt="Amy"
-              className="w-12 h-12 rounded-full object-cover object-top flex-shrink-0 border-2 border-violet-200"
-            />
-            <div className="flex-1 min-w-0">
-              <div className="text-xs font-semibold text-violet-700 uppercase tracking-wide">{tStories('survey.amyAsks')}</div>
-              <div className="mt-0.5 font-semibold text-slate-900 text-sm">
-                {tStories('survey.question')}
-              </div>
-              <p className="mt-1 text-xs text-slate-500">
-                {tStories('survey.body')}
-              </p>
-              <div className="mt-3 flex items-center gap-3">
-                <a
-                  href={SURVEY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={dismissSurvey}
-                  className="inline-flex items-center justify-center rounded-2xl px-4 py-2 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-xs"
-                >
-                  {tStories('survey.cta')}
-                </a>
-                <button
-                  type="button"
-                  onClick={snoozeSurvey}
-                  className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
-                >
-                  {tStories('survey.snooze')}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* BETA – Partial-Data Banner (7 days, not finished s1e01) */}
         {betaPartialVisible && (
@@ -903,29 +862,6 @@ function isUnlockedByChain(
           </div>
         )}
 
-        {/* SURVEY – Beta-Feedback Banner */}
-        <div className="rounded-2xl border border-teal-100 bg-gradient-to-r from-teal-50 to-white p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
-          <div className="flex-1 min-w-0">
-            <div className="text-xs font-semibold text-teal-700 uppercase tracking-wide">{tStories('survey.betaKicker')}</div>
-            <div className="mt-0.5 font-semibold text-slate-900 text-sm sm:text-base">
-              {tStories('survey.betaQuestion')}
-            </div>
-            <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-snug">
-              {tStories('survey.betaBody')}{' '}
-              <span className="text-slate-400">
-                {tStories('survey.betaDisclaimer')}
-              </span>
-            </p>
-          </div>
-          <a
-            href={SURVEY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-sm"
-          >
-            {tStories('survey.cta')}
-          </a>
-        </div>
 
 
       </div>

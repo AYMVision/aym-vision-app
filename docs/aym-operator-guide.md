@@ -22,7 +22,9 @@ Hake diese Punkte ab, bevor du live gehst:
 - [ ] UVerify-Instanz wählen (selbst-gehostet oder app.uverify.io) und einrichten (Schritt 4)
 - [ ] `aymProfile`- und `aymAnchor`-Templates bei UVerify registrieren (Schritt 4) *(Phase C noch nicht fertig)*
 - [ ] Finale Hosting-URLs für App und Backend festlegen (Schritt 5)
+- [ ] PostgreSQL-Datenbank auf dem Server einrichten (siehe Konfigurationsreferenz)
 - [ ] Alle Env-Variablen auf dem Server setzen (Konfigurationsreferenz)
+- [ ] Stripe-Produkt-ID in `application.yml` eintragen (Zeile `products:`, kein Env-Var)
 
 ---
 
@@ -181,18 +183,44 @@ CORS_ALLOWED_ORIGINS=https://app.aym.vision
 
 ### Backend-Server (`.env` Datei auf dem Server)
 
+#### Datenbank (Pflicht für Produktion)
+
+Der Server muss mit dem `postgres`-Profil gestartet werden. Ohne diese Variablen läuft das Backend mit einer In-Memory-Datenbank (H2), die bei jedem Neustart alle Daten verliert.
+
+| Env-Variable | Geheim | Standard | Bedeutung |
+|---|---|---|---|
+| `SPRING_ACTIVE_PROFILES` | nein | `preprod,h2` | **Für Produktion: `preprod,postgres` setzen** — sonst gehen alle Daten beim Neustart verloren |
+| `DB_URL` | nein | `jdbc:h2:./data/db` | PostgreSQL-URL, z. B. `jdbc:postgresql://localhost:5432/uverify` |
+| `DB_USERNAME` | **ja** | `sa` | Datenbank-Nutzer |
+| `DB_PASSWORD` | **ja** | `password` | Datenbank-Passwort |
+
+#### AYM-Konfiguration
+
 | Env-Variable | Geheim | Standard | Bedeutung |
 |---|---|---|---|
 | `AYM_MASTER_PUBLIC_KEY` | nein | — | Ed25519 Public Key der Master-Wallet (64 Hex-Zeichen), abgeleitet in Schritt 3 |
-| `AYM_ANCHOR_WALLET_MNEMONIC` | **ja** | — | 24-Wort-Mnemonic der Master-Wallet (Schritt 3) — nur via Secret Store injizieren |
-| `AYM_ANCHOR_INTERVAL_MS` | nein | `172800000` | Verankerungs-Intervall in Millisekunden (Standard: 48 h) |
 | `AYM_STRIPE_API_KEY` | **ja** | — | Stripe Restricted Key (Schritt 1) |
-| `AYM_STRIPE_PRODUCTS_S1E01` | nein | — | Stripe Produkt-ID → `s1e01` (ein Eintrag pro Episode) |
 | `AYM_CONTENT_REPO_URL` | nein | — | Basis-URL des privaten GitHub-Repos (Schritt 2) |
 | `AYM_CONTENT_REPO_TOKEN` | **ja** | — | GitHub Fine-Grained PAT (Schritt 2) |
 | `AYM_CONTENT_REPO_CACHE_TTL` | nein | `PT6H` | Cache-Dauer für Kurs-Bundles (ISO-8601, z. B. `PT6H` = 6 Stunden) |
-| `AYM_MPF_DB_PATH` | nein | `./data/mpf` | Pfad zur RocksDB — muss auf einem **persistenten Volume** liegen (kein tmpfs!) |
 | `AYM_UI_BASE_URL` | nein | — | Basis-URL der App (z. B. `https://app.aym.vision`) für Zertifikats-Links |
+| `AYM_ANCHOR_WALLET_MNEMONIC` | **ja** | — | *(kommt mit B6)* 24-Wort-Mnemonic der Master-Wallet — nur via Secret Store injizieren |
+| `AYM_ANCHOR_INTERVAL_MS` | nein | `172800000` | *(kommt mit B6)* Verankerungs-Intervall in Millisekunden (Standard: 48 h) |
+| `AYM_MPF_DB_PATH` | nein | `./data/mpf` | *(kommt mit B5)* Pfad zur RocksDB — muss auf einem persistenten Volume liegen |
+
+#### Stripe-Produkt-Mapping (direkt in `application.yml`, kein Env-Var)
+
+Das Mapping von Stripe-Produkt-ID zu Content-ID wird **nicht** per Env-Variable gesetzt, sondern direkt in `uverify-backend/src/main/resources/application.yml` eingetragen:
+
+```yaml
+aym:
+  stripe:
+    products:
+      "[DEINE_STRIPE_PRODUKT_ID]": s1   # z. B. "[prod_AbCdEf123]": s1
+```
+
+Die Produkt-ID (`prod_...`) findest du im Stripe-Dashboard unter dem jeweiligen Produkt.
+Nach jeder Änderung muss das Backend neu gestartet werden.
 
 ### App-Build (`.env` beim Bauen der App)
 
@@ -287,4 +315,4 @@ Sobald das `aymProfile`-Template fertig und bei UVerify registriert ist:
 
 ---
 
-*Stand: 2026-08-12 — wird mit jeder neuen Phase erweitert.*
+*Stand: 2026-08-21 — wird mit jeder neuen Phase erweitert.*

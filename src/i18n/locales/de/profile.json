@@ -185,12 +185,12 @@
     "buy": {
       "button": "Jetzt kaufen",
       "owned": "Bereits freigeschaltet ✓",
-      "parentRequired": "Kauf erfordert Eltern-Freischaltung"
+      "parentRequired": "Bitte frag eine erwachsene Person. Den Kauf können Eltern im Elternbereich starten (lange auf das App-Logo drücken)."
     },
     "return": {
       "processing": "Kauf wird bestätigt …",
-      "successTitle": "Freigeschaltet! 🎉",
-      "successText": "Dein neuer Inhalt ist jetzt verfügbar.",
+      "successTitle": "Staffel 1 freigeschaltet! 🎉",
+      "successText": "5 Episoden warten auf dich. Jeden Tag ein neues Kapitel.",
       "errorUnpaid": "Zahlung nicht abgeschlossen. Bitte versuche es nochmal.",
       "errorMismatch": "Kaufzuordnung fehlgeschlagen. Bitte wende dich an den Support.",
       "errorOwned": "Dieser Inhalt gehört dir schon.",
@@ -219,8 +219,8 @@
       "confirmText": "Möchtest du diesen Gutschein jetzt einlösen und den Inhalt freischalten?",
       "confirm": "Ja, einlösen",
       "cancel": "Abbrechen",
-      "successTitle": "Freigeschaltet! 🎉",
-      "successText": "Dein neuer Inhalt ist jetzt verfügbar.",
+      "successTitle": "Staffel 1 freigeschaltet! 🎉",
+      "successText": "5 Episoden warten auf dich. Jeden Tag ein neues Kapitel.",
       "alreadyOwned": "Dieser Inhalt gehört dir schon.",
       "notFound": "Gutschein nicht gefunden.",
       "error": "Einlösen fehlgeschlagen. Bitte versuche es nochmal.",
@@ -231,10 +231,10 @@
       "done": "Fertig"
     },
     "backup": {
-      "headline": "Deine Daten gehören dir allein.",
+      "headline": "Sichere deinen Zugang",
       "congrats": "Glückwunsch zur Freischaltung!",
-      "whyTitle": "Dein Fortschritt – gesichert für immer",
-      "whyText": "Damit du immer Zugriff auf das hast, was dir gehört, schreib diese 24 Wörter jetzt auf – und bewahre sie sicher auf. Sie sind dein einziger Schlüssel.",
+      "whyTitle": "Dein Zugang – gesichert für immer",
+      "whyText": "Deine Staffel ist freigeschaltet. Die folgenden 24 Wörter sind dein einziger Schlüssel. Damit kannst du deinen Kauf jederzeit wiederherstellen, auch auf einem neuen Gerät.",
       "writeDownTitle": "Deine 24 Sicherheitswörter",
       "writeDownHint": "Schreib sie auf Papier – nicht als Screenshot.",
       "quizTitle": "Überprüfe deine Sicherung",
@@ -243,12 +243,12 @@
       "quizError": "Das Wort stimmt nicht. Bitte nochmal prüfen.",
       "confirm": "Sicherung bestätigen",
       "skip": "Später",
-      "skipHint": "Tipp: Schreibe deine 24 Wörter auf, damit du deinen Fortschritt nie verlierst.",
+      "skipHint": "Du kannst deine Sicherung jederzeit in deinem Profil nachholen.",
       "done": "Sicherung abgeschlossen ✓"
     },
     "restore": {
       "title": "Identität wiederherstellen",
-      "subtitle": "Gib deine 24 Sicherheitswörter ein, um auf deinen Fortschritt zuzugreifen.",
+      "subtitle": "Gib deine 24 Sicherheitswörter ein, um deine Freischaltungen wiederherzustellen.",
       "warning": "Das ersetzt die aktuelle Identität auf diesem Gerät. Stelle sicher, dass du die richtigen 24 Wörter eingibst.",
       "placeholder": "24 Wörter, durch Leerzeichen getrennt …",
       "confirm": "Wiederherstellen",

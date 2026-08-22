@@ -318,5 +318,25 @@
       "body": "Online-Situationen aus dem Alltag von Kindern.\nFür Eltern, die ihre Kinder durch die digitale Welt begleiten.",
       "cta": "Blog lesen →"
     }
+  },
+
+  "cooperation": {
+    "kicker": "Kooperationen & Förderung",
+    "title": "Gefördert & unterstützt von",
+    "hafven": {
+      "text": "Amy Surfwing wird vom <bold>Hafven Impact Accelerator</bold> unterstützt, einem Programm für soziale Innovationen und gesellschaftlich wirksame Projekte in Hannover.",
+      "ariaLabel": "Hafven Impact Accelerator",
+      "imgAlt": "Hafven Impact Accelerator"
+    },
+    "nbank": {
+      "text": "Amy Surfwing ist Trägerin des <bold>Gründungsstipendiums der NBank</bold> — der Investitions- und Förderbank des Landes Niedersachsen. Das Stipendium fördert innovative Gründungsvorhaben mit besonderem gesellschaftlichem Mehrwert.",
+      "ariaLabel": "NBank Gründungsstipendium",
+      "imgAlt": "Gründungsstipendium Start-up 2025/2026 – NBank"
+    },
+    "win": {
+      "text": "Amy Surfwing wird von der <bold>WIN Startup Academy Braunschweig</bold> unterstützt, einem Programm von Zukunft Braunschweig zur Förderung innovativer Gründungsvorhaben in der Region.",
+      "ariaLabel": "WIN Startup Academy Braunschweig",
+      "imgAlt": "Unterstützt von WIN Startup Academy Braunschweig"
+    }
   }
 }

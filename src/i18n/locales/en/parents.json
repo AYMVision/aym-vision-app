@@ -306,5 +306,25 @@
       "body": "Online situations from children's everyday lives.\nFor parents who want to guide their children through the digital world.",
       "cta": "Read blog →"
     }
+  },
+
+  "cooperation": {
+    "kicker": "Cooperations & Funding",
+    "title": "Funded & supported by",
+    "hafven": {
+      "text": "Amy Surfwing is supported by the <bold>Hafven Impact Accelerator</bold> — a programme for social innovations and projects with societal impact in Hanover, Germany.",
+      "ariaLabel": "Hafven Impact Accelerator",
+      "imgAlt": "Hafven Impact Accelerator"
+    },
+    "nbank": {
+      "text": "Amy Surfwing is a recipient of the <bold>NBank Gründungsstipendium</bold> — the investment and development bank of Lower Saxony. The grant supports innovative start-up projects with exceptional societal value.",
+      "ariaLabel": "NBank Gründungsstipendium",
+      "imgAlt": "Gründungsstipendium Start-up 2025/2026 – NBank"
+    },
+    "win": {
+      "text": "Amy Surfwing is supported by the <bold>WIN Startup Academy Braunschweig</bold> — a programme by Zukunft Braunschweig supporting innovative start-ups in the region.",
+      "ariaLabel": "WIN Startup Academy Braunschweig",
+      "imgAlt": "Supported by WIN Startup Academy Braunschweig"
+    }
   }
 }

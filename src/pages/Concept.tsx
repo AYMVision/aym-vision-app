@@ -235,14 +235,14 @@ export default function Concept() {
         className="absolute inset-0 w-full h-full object-contain scale-100"
         sizes="(min-width: 1024px) 50vw, 100vw"
         avif={[
-          { src: assetUrl('media/ui/concept/hero-concept-2-512.avif'), w: 512 },
-          { src: assetUrl('media/ui/concept/hero-concept-2-1024.avif'), w: 1024 },
+          { src: assetUrl('media/ui/concept/hero-concept-3-512.avif'), w: 512 },
+          { src: assetUrl('media/ui/concept/hero-concept-3-1024.avif'), w: 1024 },
         ]}
         webp={[
-          { src: assetUrl('media/ui/concept/hero-concept-2-512.webp'), w: 512 },
-          { src: assetUrl('media/ui/concept/hero-concept-2-1024.webp'), w: 1024 },
+          { src: assetUrl('media/ui/concept/hero-concept-3-512.webp'), w: 512 },
+          { src: assetUrl('media/ui/concept/hero-concept-3-1024.webp'), w: 1024 },
         ]}
-        fallback={assetUrl('media/ui/concept/hero-concept-2-1024.webp')}
+        fallback={assetUrl('media/ui/concept/hero-concept-3-1024.webp')}
         loading="eager"
         decoding="async"
       />

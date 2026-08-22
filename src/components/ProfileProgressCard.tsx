@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useProfile } from '../profile/useProfile';
 import { getEpisodeMeta, getStoryCards } from '../content/contentIndex';
 import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { shouldBypassAll } from '../gating/entitlements';
+import { shouldSkipOnboarding } from '../common/firstRun';
 import { assetUrl } from '../common/assetUrl';
 
 export default function ProfileProgressCard({
@@ -14,6 +15,7 @@ export default function ProfileProgressCard({
   compact?: boolean;
   noCard?: boolean;
 }) {
+  const navigate = useNavigate();
   const { profile } = useProfile();
   const { t, i18n } = useTranslation(['profile', 'stories']);
   const lang = (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
@@ -60,12 +62,16 @@ export default function ProfileProgressCard({
           </div>
         </div>
         {!compact && (
-          <Link
-            to={firstStoryPath}
+          <button
+            type="button"
+            onClick={() => {
+              if (!shouldSkipOnboarding()) { navigate('/start', { replace: true }); return; }
+              navigate(firstStoryPath);
+            }}
             className="mt-1 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-extrabold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
           >
             {t('profile:progress.startCta', { defaultValue: 'Jetzt starten →' })}
-          </Link>
+          </button>
         )}
       </div>
     );

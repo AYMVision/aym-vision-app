@@ -28,6 +28,7 @@ export default function ParentGateDialog({ open, onClose, onUnlocked }: Props) {
   const [err, setErr] = useState<string | null>(null);
   const [failedAttempts, setFailedAttempts] = useState(0);
 
+  const [legalConfirmed, setLegalConfirmed] = useState(false);
   const [showReset, setShowReset] = useState(false);
   const [resetCode, setResetCode] = useState('');
   const [resetErr, setResetErr] = useState<string | null>(null);
@@ -46,6 +47,7 @@ export default function ParentGateDialog({ open, onClose, onUnlocked }: Props) {
     setErr(null);
     setBusy(false);
     setFailedAttempts(0);
+    setLegalConfirmed(false);
     setShowReset(false);
     setResetCode('');
     setResetErr(null);
@@ -139,6 +141,20 @@ export default function ParentGateDialog({ open, onClose, onUnlocked }: Props) {
               {err && <div className="text-sm text-red-600">{err}</div>}
             </div>
 
+            {!hasPass && (
+              <label className="mt-3 flex items-start gap-3 cursor-pointer rounded-xl border border-slate-200 bg-slate-50 p-3">
+                <input
+                  type="checkbox"
+                  checked={legalConfirmed}
+                  onChange={e => setLegalConfirmed(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-slate-300 accent-teal-600 shrink-0"
+                />
+                <span className="text-xs text-slate-600 leading-snug">
+                  {t('parent.legalConfirm', { defaultValue: 'Ich bin erziehungsberechtigt und richte dieses Gerät für mein Kind ein.' })}
+                </span>
+              </label>
+            )}
+
             <div className="mt-4 flex items-center justify-end gap-2">
               <button
                 className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50"
@@ -150,7 +166,7 @@ export default function ParentGateDialog({ open, onClose, onUnlocked }: Props) {
               <button
                 className="rounded-xl bg-slate-900 px-3 py-2 text-sm text-white hover:bg-slate-800 disabled:opacity-60"
                 onClick={doUnlock}
-                disabled={busy}
+                disabled={busy || (!hasPass && !legalConfirmed)}
               >
                 {hasPass ? t('parent.unlock') : t('parent.setup')}
               </button>
