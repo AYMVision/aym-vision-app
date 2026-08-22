@@ -1,4 +1,57 @@
 {
+  "wizard": {
+    "closeLabel": "Schließen",
+    "next": "Weiter →",
+    "legal": {
+      "title": "App einrichten",
+      "subtitle": "In wenigen Schritten: Eltern-Code festlegen und Zugang aktivieren.",
+      "step1Title": "Eltern-Code festlegen",
+      "step1Body": "Damit nur du die Einstellungen ändern kannst.",
+      "step2Title": "Zugang aktivieren",
+      "step2Body": "Gutschein-Code eingeben oder direkt kaufen.",
+      "tommiNote": "Dieser Bereich ist unser Kinderschutz-Mechanismus. Eltern bestätigen hier, dass sie das Gerät für ihr Kind einrichten. Du kannst einfach auf Weiter klicken."
+    },
+    "code": {
+      "title": "Eltern-Code festlegen",
+      "subtitle": "Damit nur du die Einstellungen ändern kannst."
+    },
+    "voucherSuccess": {
+      "title": "Gutschein eingelöst!",
+      "subtitle": "Staffel 1 ist jetzt freigeschaltet."
+    },
+    "access": {
+      "title": "Staffel 1 freischalten",
+      "voucherLabel": "Gutschein-Code eingeben",
+      "voucherPlaceholder": "z.B. AYM-XXXX-XXXX",
+      "redeem": "Einlösen",
+      "errorInvalid": "Ungültiger Code – bitte prüfen und erneut versuchen.",
+      "errorNoProfile": "Kein aktives Profil gefunden.",
+      "errorNotFound": "Gutschein-Code nicht gefunden. Bitte prüfen.",
+      "errorGeneric": "Ein Fehler ist aufgetreten. Bitte erneut versuchen.",
+      "errorNetwork": "Verbindungsfehler. Bitte Internetverbindung prüfen.",
+      "divider": "oder",
+      "price": "24 €",
+      "priceNote": "einmalig · pro Gerät",
+      "feature1": "✓ 5 Episoden · 49 Spieltage à ca. 5 Min.",
+      "feature2": "✓ Bonus-Welt: Tagebücher, Schülerzeitung, Lexikon",
+      "feature3": "✓ Einmaliger Kauf",
+      "feature4": "✓ Sicher lokal auf dem Gerät, kein Konto nötig",
+      "buyNow": "Jetzt kaufen →",
+      "skip": "Überspringen (später einlösen)"
+    },
+    "choice": {
+      "title": "Alles eingerichtet!",
+      "subtitle": "Was möchtest du als nächstes tun?",
+      "parentArea": "Elternbereich öffnen",
+      "parentAreaSub": "Einstellungen, Übersicht und Sicherung",
+      "continue": "Weiterspielen →",
+      "continueSub": "Zurück zur Story",
+      "onboarding": "Kinderonboarding starten →",
+      "onboardingSub": "Amy Surfwing zum ersten Mal erleben",
+      "stories": "Zur Stories-Übersicht →",
+      "storiesSub": "Alle Episoden im Überblick"
+    }
+  },
   "parent": {
     "titleSetup": "Einstellungen für Eltern einrichten",
     "bodySetup": "Lege einen Eltern-Code fest. Damit kannst nur du später die Einstellungen ändern.",

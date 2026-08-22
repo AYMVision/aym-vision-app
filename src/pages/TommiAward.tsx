@@ -93,7 +93,7 @@ export default function TommiAward() {
             Amy Surfwing
           </h1>
           <p className="mt-3 text-sm sm:text-base text-violet-100 leading-relaxed max-w-2xl">
-            Unterlagen für die Jury: Video-Einreichung und Onepager für Kids-Jury und Fach-Jury.
+            Unterlagen für die Jury & Pressekit
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
             <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white/20 border border-white/30 text-white">

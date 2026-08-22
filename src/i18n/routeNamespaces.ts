@@ -31,6 +31,8 @@ export function namespacesForPath(pathname: string): I18nNamespace[] {
 
   // Adult + Parents/Kids
   if (pathname.startsWith('/adult-settings')) return [...base, 'adult', 'themes', 'stories'];
+  if (pathname.startsWith('/parent-setup')) return [...base, 'adult'];
+  if (pathname.startsWith('/redeem-voucher')) return [...base, 'adult', 'profile'];
   if (pathname.startsWith('/parents')) return [...base, 'parents', 'adult', 'themes'];
   if (pathname.startsWith('/kids')) return [...base, 'welcome'];
   if (pathname.startsWith('/start')) return [...base, 'welcome', 'stories'];

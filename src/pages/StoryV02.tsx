@@ -1964,13 +1964,22 @@ function hasStoryMigrationDone(key: string): boolean {
                   </button>
                 )}
                 {showNextChapterLockedHint && (
-                  <button
-                    type="button"
-                    onClick={() => navigate('/newspaper')}
-                    className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
-                  >
-                    {t('stories:gate.toNewspaper', { defaultValue: 'Zur Schülerzeitung →' })}
-                  </button>
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/redeem-voucher')}
+                      className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-white border border-[var(--color-teal-600)] text-[var(--color-teal-700)] hover:bg-[var(--color-teal-50)] transition-colors"
+                    >
+                      🎟️ Code einlösen
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/newspaper')}
+                      className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+                    >
+                      {t('stories:gate.toNewspaper', { defaultValue: 'Zur Schülerzeitung →' })}
+                    </button>
+                  </>
                 )}
               </div>
 

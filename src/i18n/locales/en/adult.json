@@ -1,4 +1,58 @@
 {
+  "wizard": {
+    "closeLabel": "Close",
+    "next": "Continue →",
+    "legal": {
+      "title": "Set up the app",
+      "subtitle": "In a few steps: set a parent code and activate access.",
+      "step1Title": "Set a parent code",
+      "step1Body": "So only you can change the settings.",
+      "step2Title": "Activate access",
+      "step2Body": "Enter a voucher code or buy directly.",
+      "tommiNote": "Welcome, dear Jury! This section is our child safety mechanism — parents confirm here that they are setting up the device for their child. You can simply click Continue."
+    },
+    "code": {
+      "title": "Set a parent code",
+      "subtitle": "So only you can change the settings."
+    },
+    "voucherSuccess": {
+      "title": "Voucher redeemed!",
+      "subtitle": "Season 1 is now unlocked for your child."
+    },
+    "access": {
+      "title": "Unlock Season 1",
+      "subtitle": "5 episodes · one-time purchase",
+      "voucherLabel": "Enter voucher code",
+      "voucherPlaceholder": "e.g. AYM-XXXX-XXXX",
+      "redeem": "Redeem",
+      "errorInvalid": "Invalid code – please check and try again.",
+      "errorNoProfile": "No active profile found.",
+      "errorNotFound": "Voucher code not found. Please check.",
+      "errorGeneric": "An error occurred. Please try again.",
+      "errorNetwork": "Connection error. Please check your internet connection.",
+      "divider": "or",
+      "price": "24 €",
+      "priceNote": "one-time · per device",
+      "feature1": "✓ 5 episodes · 49 play days of approx. 5 min.",
+      "feature2": "✓ Bonus world: diaries, school newspaper, glossary",
+      "feature3": "✓ One-time purchase",
+      "feature4": "✓ Securely stored on device, no account required",
+      "buyNow": "Buy now →",
+      "skip": "Skip (redeem later)"
+    },
+    "choice": {
+      "title": "All set!",
+      "subtitle": "What would you like to do next?",
+      "parentArea": "Open parent area",
+      "parentAreaSub": "Settings, overview, and backup",
+      "continue": "Continue playing →",
+      "continueSub": "Back to the story",
+      "onboarding": "Start child onboarding →",
+      "onboardingSub": "Experience Amy Surfwing for the first time",
+      "stories": "Go to stories overview →",
+      "storiesSub": "All episodes at a glance"
+    }
+  },
   "parent": {
     "titleSetup": "Set up adult settings",
     "bodySetup": "Set a parent code. Only you will be able to change the settings.",

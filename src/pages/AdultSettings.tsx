@@ -838,7 +838,7 @@ export default function AdultSettings() {
         <div className="w-full max-w-md space-y-5">
           <div className="text-6xl text-center">🎉</div>
           <h2 className="text-2xl font-extrabold text-slate-900 text-center">Gutschein eingelöst!</h2>
-          <p className="text-sm text-slate-500 text-center">Staffel 1 ist jetzt für dein Kind freigeschaltet.</p>
+          <p className="text-sm text-slate-500 text-center">Staffel 1 ist jetztbei  freigeschaltet.</p>
           <button
             type="button"
             onClick={() => {

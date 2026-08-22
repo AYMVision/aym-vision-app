@@ -6,7 +6,7 @@ import PwaTransferBanner from '../components/PwaTransferBanner';
 import { TransferStaleBanner } from '../components/TransferStaleWarning';
 import { assetUrl } from '../common/assetUrl';
 import SmartImage from '../components/SmartImage';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getProgress, getCompletedChapterCount } from '../progress/storyProgress';
 import { getStoryCards } from '../content/contentIndex';
@@ -107,6 +107,9 @@ function EmmaTeaserVideo() {
 
 export default function Welcome() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isTommi = searchParams.get('context') === 'tommi';
+  const [tommiCode, setTommiCode] = useState(searchParams.get('code') ?? '');
 const { t, i18n } = useTranslation(['welcome', 'stories', 'common', 'bonus']);
 const { t: tStories } = useTranslation('stories');
 const { t: tCommon } = useTranslation('common');
@@ -504,6 +507,53 @@ function isUnlockedByChain(
     </div>
   </div>
 </section>
+
+        {/* ── TOMMI JURY WILLKOMMEN ── */}
+        {isTommi && (
+          <div className="mt-6 rounded-2xl border border-violet-200 bg-violet-50 p-5 sm:p-6">
+            <div className="text-xs font-semibold uppercase tracking-wide text-violet-600">TOMMI Award 2026</div>
+            <h2 className="mt-1 text-lg font-extrabold text-slate-900">Herzlich willkommen, liebe Fach-Jury!</h2>
+            <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+              Schön, dass ihr Amy Surfwing testet. Einfach Zugangscode eingeben und auf „App starten" klicken.
+            </p>
+
+            <div className="mt-3 flex gap-2">
+              <input
+                type="text"
+                value={tommiCode}
+                onChange={e => setTommiCode(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && tommiCode.trim())
+                    navigate(`/parent-setup?code=${encodeURIComponent(tommiCode.trim())}&context=tommi`);
+                }}
+                placeholder="Zugangscode eingeben"
+                className="flex-1 border border-violet-200 rounded-xl px-3 py-2.5 text-sm font-mono bg-white focus:outline-none focus:ring-2 focus:ring-violet-300"
+                autoCapitalize="characters"
+              />
+            </div>
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                disabled={!tommiCode.trim()}
+                onClick={() => navigate(`/parent-setup?code=${encodeURIComponent(tommiCode.trim())}&context=tommi`)}
+                className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white bg-violet-600 hover:bg-violet-700 disabled:opacity-40 transition-colors"
+              >
+                🎟️ App starten →
+              </button>
+              <Link
+                to="/tommi-award"
+                className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-violet-700 bg-white border border-violet-200 hover:border-violet-300 transition-colors"
+              >
+                📄 Unterlagen & Videos →
+              </Link>
+            </div>
+
+            <p className="mt-3 text-xs text-slate-400">
+              Wartezeiten sind für euren Test deaktiviert.
+            </p>
+          </div>
+        )}
 
         {/* ── MARKETING VIDEO — nur für Erstbesucher ── */}
         {isFirstTime && <EmmaTeaserVideo />}
