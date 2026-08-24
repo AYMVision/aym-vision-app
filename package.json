@@ -24,6 +24,7 @@
     "@zxing/browser": "^0.2.1",
     "buffer": "^6.0.3",
     "clsx": "^2.1.1",
+    "dom-to-image-more": "^3.10.2",
     "html2canvas": "^1.4.1",
     "i18next": "^25.3.2",
     "i18next-browser-languagedetector": "^8.2.0",

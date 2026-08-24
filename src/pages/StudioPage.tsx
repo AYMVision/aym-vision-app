@@ -683,6 +683,7 @@ function Step4({ story, onBack, onNewStory }: Step4Props) {
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copied, setCopied] = useState(false);
   const [workshopCopied, setWorkshopCopied] = useState(false);
+  const [shareConfirmed, setShareConfirmed] = useState(false);
 
   const encoded = encodeStory(story);
   const shareUrl = buildShareUrl(encoded);
@@ -731,13 +732,13 @@ function Step4({ story, onBack, onNewStory }: Step4Props) {
             {story.title && <p className="text-sm font-bold text-slate-800 truncate">{story.title}</p>}
             <p className="text-xs text-violet-600">{topicLabel}</p>
           </div>
-          <Link
-            to={`/studio/view/${encoded}`}
-            className="text-xs text-teal-600 font-semibold whitespace-nowrap hover:text-teal-700"
-          >
-            Vorschau →
-          </Link>
         </div>
+        <Link
+          to={`/studio/view/${encoded}`}
+          className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold bg-violet-600 text-white hover:bg-violet-700 transition-colors"
+        >
+          👁️ Vorschau ansehen →
+        </Link>
       </div>
 
       {/* QR code */}
@@ -751,12 +752,26 @@ function Step4({ story, onBack, onNewStory }: Step4Props) {
         <p className="text-xs text-slate-400">{t('step4.qrScanHint')}</p>
       </div>
 
+      {/* DSGVO-Bestätigung */}
+      <label className="flex items-start gap-3 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={shareConfirmed}
+          onChange={e => setShareConfirmed(e.target.checked)}
+          className="mt-0.5 h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500 shrink-0"
+        />
+        <span className="text-xs text-slate-600 leading-relaxed">
+          Ich bin Erziehungsberechtigte/r oder Lehrkraft und teile diese Geschichte verantwortungsvoll.
+        </span>
+      </label>
+
       {/* Action buttons */}
       <div className="flex flex-col gap-2">
         <button
           type="button"
           onClick={handleCopy}
-          className="w-full py-3 border border-slate-200 rounded-2xl text-sm font-semibold text-slate-700 hover:bg-slate-50 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+          disabled={!shareConfirmed}
+          className="w-full py-3 border border-slate-200 rounded-2xl text-sm font-semibold text-slate-700 hover:bg-slate-50 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-40 disabled:pointer-events-none"
         >
           {copied ? t('step4.copied') : `🔗 ${t('step4.copyLink')}`}
         </button>
@@ -765,7 +780,8 @@ function Step4({ story, onBack, onNewStory }: Step4Props) {
           <button
             type="button"
             onClick={handleShare}
-            className="w-full py-3 bg-[var(--color-teal-600,#0d9488)] hover:bg-[var(--color-teal-700,#0f766e)] active:scale-[0.98] text-white text-sm font-bold rounded-2xl shadow-md transition-all"
+            disabled={!shareConfirmed}
+            className="w-full py-3 bg-[var(--color-teal-600,#0d9488)] hover:bg-[var(--color-teal-700,#0f766e)] active:scale-[0.98] text-white text-sm font-bold rounded-2xl shadow-md transition-all disabled:opacity-40 disabled:pointer-events-none"
           >
             📤 {t('view.share')}
           </button>
@@ -774,7 +790,8 @@ function Step4({ story, onBack, onNewStory }: Step4Props) {
         <button
           type="button"
           onClick={() => window.print()}
-          className="w-full py-3 border border-teal-200 text-teal-700 rounded-2xl text-sm font-semibold hover:bg-teal-50 active:scale-[0.98] transition-all print:hidden"
+          disabled={!shareConfirmed}
+          className="w-full py-3 border border-teal-200 text-teal-700 rounded-2xl text-sm font-semibold hover:bg-teal-50 active:scale-[0.98] transition-all print:hidden disabled:opacity-40 disabled:pointer-events-none"
         >
           🖨️ {t('step4.print')}
         </button>
@@ -787,7 +804,8 @@ function Step4({ story, onBack, onNewStory }: Step4Props) {
         <button
           type="button"
           onClick={handleWorkshopCopy}
-          className="mt-1 text-xs text-amber-800 underline font-medium self-start"
+          disabled={!shareConfirmed}
+          className="mt-1 text-xs text-amber-800 underline font-medium self-start disabled:opacity-40 disabled:pointer-events-none"
         >
           {workshopCopied ? '✓ Kopiert!' : t('step4.workshopCopy')}
         </button>

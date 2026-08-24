@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode';
-import html2canvas from 'html2canvas';
+import domtoimage from 'dom-to-image-more';
 
 import { assetUrl } from '../common/assetUrl';
 import {
@@ -163,6 +163,7 @@ function ActionBar({ story, chatAreaRef }: ActionBarProps) {
   const [copied, setCopied] = useState(false);
   const [showQr, setShowQr] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
+  const [shareConfirmed, setShareConfirmed] = useState(false);
 
   const encoded = encodeStory(story);
   const shareUrl = buildShareUrl(encoded);
@@ -215,22 +216,19 @@ function ActionBar({ story, chatAreaRef }: ActionBarProps) {
     if (!chatAreaRef.current) return;
     setImageLoading(true);
     try {
-      const canvas = await html2canvas(chatAreaRef.current, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#f8fafc',
-        logging: false,
-        imageTimeout: 15000,
+      const blob = await domtoimage.toBlob(chatAreaRef.current, {
+        bgcolor: '#f8fafc',
+        width: chatAreaRef.current.scrollWidth * 2,
+        height: chatAreaRef.current.scrollHeight * 2,
+        style: {
+          transform: 'scale(2)',
+          transformOrigin: 'top left',
+        },
       });
-      const blob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, 'image/png')
-      );
       if (!blob) {
         alert('Bild konnte nicht erstellt werden. Bitte versuche es erneut.');
         return;
       }
-      // Erst Download versuchen (zuverlässiger als File-Share)
       triggerDownload(blob);
     } catch (err) {
       console.error('Image export error:', err);
@@ -253,12 +251,26 @@ function ActionBar({ story, chatAreaRef }: ActionBarProps) {
 
   return (
     <div className="print:hidden mt-4 border-t border-slate-100 pt-4 pb-8 px-4">
+      {/* DSGVO-Bestätigung */}
+      <label className="flex items-start gap-3 cursor-pointer mb-3">
+        <input
+          type="checkbox"
+          checked={shareConfirmed}
+          onChange={e => setShareConfirmed(e.target.checked)}
+          className="mt-0.5 h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500 shrink-0"
+        />
+        <span className="text-xs text-slate-600 leading-relaxed">
+          Ich bin Erziehungsberechtigte/r oder Lehrkraft und teile diese Geschichte verantwortungsvoll.
+        </span>
+      </label>
+
       {/* Primary action */}
       {'share' in navigator ? (
         <button
           type="button"
           onClick={handleShare}
-          className="w-full py-3 bg-[var(--color-teal-600,#0d9488)] hover:bg-[var(--color-teal-700,#0f766e)] active:scale-[0.98] text-white font-bold rounded-2xl shadow-md mb-3 transition-all"
+          disabled={!shareConfirmed}
+          className="w-full py-3 bg-[var(--color-teal-600,#0d9488)] hover:bg-[var(--color-teal-700,#0f766e)] active:scale-[0.98] text-white font-bold rounded-2xl shadow-md mb-3 transition-all disabled:opacity-40 disabled:pointer-events-none"
         >
           📤 {t('view.share')}
         </button>
@@ -266,7 +278,8 @@ function ActionBar({ story, chatAreaRef }: ActionBarProps) {
         <button
           type="button"
           onClick={handleCopy}
-          className="w-full py-3 bg-[var(--color-teal-600,#0d9488)] hover:bg-[var(--color-teal-700,#0f766e)] active:scale-[0.98] text-white font-bold rounded-2xl shadow-md mb-3 transition-all"
+          disabled={!shareConfirmed}
+          className="w-full py-3 bg-[var(--color-teal-600,#0d9488)] hover:bg-[var(--color-teal-700,#0f766e)] active:scale-[0.98] text-white font-bold rounded-2xl shadow-md mb-3 transition-all disabled:opacity-40 disabled:pointer-events-none"
         >
           {copied ? t('step4.copied') : `🔗 ${t('step4.copyLink')}`}
         </button>
@@ -278,7 +291,8 @@ function ActionBar({ story, chatAreaRef }: ActionBarProps) {
           <button
             type="button"
             onClick={handleCopy}
-            className="text-xs text-slate-400 hover:text-slate-600"
+            disabled={!shareConfirmed}
+            className="text-xs text-slate-400 hover:text-slate-600 disabled:opacity-40 disabled:pointer-events-none"
           >
             🔗 {t('step4.copyLink')}
           </button>
