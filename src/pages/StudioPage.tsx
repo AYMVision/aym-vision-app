@@ -852,6 +852,10 @@ function StudioLanding({
 
   return (
     <div className="flex flex-col px-5 pt-6 pb-5 gap-4">
+      <Link to="/stories" className="self-start text-xs text-slate-400 hover:text-teal-600 transition-colors">
+        ← Zu Amy Surfwing
+      </Link>
+
       {/* Amy speech bubble */}
       <div className="flex items-center gap-3">
         <img

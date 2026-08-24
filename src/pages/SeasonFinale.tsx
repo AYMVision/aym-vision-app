@@ -3,7 +3,7 @@
 // Wird nach dem EpisodeSummaryCard von s1e05 aufgerufen.
 
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { assetUrl } from '../common/assetUrl';
 import { useProfile } from '../profile/useProfile';
@@ -291,6 +291,12 @@ export default function SeasonFinale() {
           >
             {t('seasonFinale.ctaAlbum', { defaultValue: 'Alle Sticker ansehen ✨' })}
           </button>
+          <Link
+            to="/studio"
+            className="w-full rounded-2xl border-2 border-amber-400/70 bg-transparent px-5 py-3 text-sm font-semibold text-amber-200 hover:bg-amber-900/30 active:scale-95 transition-transform text-center"
+          >
+            {t('seasonFinale.ctaStudio', { defaultValue: 'Erfinde deinen Amic-Chat →' })}
+          </Link>
           <button
             type="button"
             onClick={() => navigate('/stories')}
