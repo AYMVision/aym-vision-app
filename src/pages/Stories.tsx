@@ -516,7 +516,7 @@ function isUnlockedByChain(
             {isSeasonOwnedLocally(getActiveProfileId() ?? '', 's1') && (
               <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-800 bg-teal-50 border border-teal-200 rounded-full px-3 py-1 mt-2">
                 <span>✓</span>
-                <span>{tStories('list.owned', { defaultValue: 'Staffel 1 aktiviert · Jeden Tag ein neues Kapitel' })}</span>
+                <span>{tStories('list.owned', { defaultValue: 'Staffel 1 aktiviert · Jeden Tag ein neues Amic' })}</span>
               </div>
             )}
 

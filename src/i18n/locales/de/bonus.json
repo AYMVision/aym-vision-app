@@ -361,7 +361,7 @@
 "amy": {
 "name": "Amy Surfwing",
 "friendbook": {
-"mostly": "Ruhig. Wach. Ein bisschen windzerzaust. Ich glaube nicht an Verbote sondern an Verständnis.\nIch surfe durch Daten genauso wie durchs Meer – mit Balance und Weitblick.",
+"mostly": "Ruhig. Wach. Ein bisschen windzerzaust. Ich glaube nicht an Verbote sondern an Verständnis.\nIch surfe durch Daten genauso wie durchs Meer - mit Balance und Weitblick.",
 "othersLike": [
 "Ich sag nicht alles vor, sondern stelle Fragen, die dich weiterbringen.",
 "Mit mir fühlt sich Lernen nicht nach Druck, sondern nach Entdecken an.",
@@ -393,10 +393,10 @@
 "mostly": "Dynamisch. Begeistert. Immer da, wenn Schüler mich.\nIch liebe Ideen, und neue Projekte.",
 "othersLike": [
 "Ich erkläre Technik so, dass sie plötzlich Sinn ergibt.",
-"Ich nehme Schüler ernst – auch ihre verrückten Ideen."
+"Ich nehme Schüler ernst, auch ihre verrückten Ideen."
 ],
 "annoys": [
-"Ich sage: ‚Das dauert nur zwei Minuten‘ – und dann sind es zwanzig.",
+"Ich sage: ‚Das dauert nur zwei Minuten‘ und dann sind es zwanzig.",
 "Ich überziehe den Unterricht, wenn wir gerade an etwas ganz Interessantem arbeiten.",
 "Ich möchte aus jedem sein ganzes Potenzial herauskitzeln."
 ],
@@ -409,10 +409,10 @@
 "friends": ["Frau Schubert", "Die Schülerzeitung", "Idee für ein kreatives Projekt"],
 "colors": "Türkis. Erinnert mich an Meer, Freiheit und gute Ideen.",
 "happy": "Wenn ein Schüler während eines Schulprojektes entdeckt, was ihn wirklich motiviert.",
-"netRule": "Digitale Medien sind nicht gefährlich – aber man muss verstehen, wie sie ticken.",
-"mistake": "Wenn ich einen Fehler mache, lache ich erst – und erkläre dann, was wir daraus lernen können. Vale?",
-"secret": "Ich glaube fest daran, dass der Schlüssel zum Erfolg Leidenschaft ist. Deshalb gehe ich manchmal ungewöhnliche Wege im Unterricht und darüber hinaus - und da nehme ich Anweisungen und Regeln manchmal nicht so genau.",
-"funFact": "Wenn mein Tablet abstürzt, sage ich dramatisch: „¡Traición!“ – inzwischen ruft die Klasse das im Chor."
+"netRule": "Digitale Medien sind nicht gefährlich, aber man muss verstehen, wie sie ticken.",
+"mistake": "Wenn ich einen Fehler mache, lache ich erst und erkläre dann, was wir daraus lernen können. Vale?",
+"secret": "Ich glaube fest daran, dass der Schlüssel zum Erfolg Leidenschaft ist. Deshalb gehe ich manchmal ungewöhnliche Wege im Unterricht und darüber hinaus und da nehme ich Anweisungen und Regeln manchmal nicht so genau.",
+"funFact": "Wenn mein Tablet abstürzt, sage ich dramatisch: „¡Traición!“ und inzwischen ruft die Klasse das im Chor."
 }
 },
 
@@ -421,7 +421,7 @@
   "friendbook": {
     "mostly": "Strukturiert. Wachsam. Geduldig.\nIch glaube daran, dass Ordnung vieles leichter macht.",
     "othersLike": [
-      "Ich merke, wenn jemand Hilfe braucht – ohne dass man mich fragen muss.",
+      "Ich merke, wenn jemand Hilfe braucht, ohne dass man mich fragen muss.",
       "Ich erkläre Dinge so lange, bis die Schüler sie verstanden haben.",
       "Und ich vergesse fast nichts."
     ],
@@ -482,9 +482,9 @@
         "colors": "Rot. Schwarz. Neon.",
         "happy": "Gewinnen. Applaus.",
         "netRule": "Wenn jemand stopp sagt, ist stopp. Auch wenn’s „nur Spaß“ war.",
-        "mistake": "Ich tu so, als wär’s egal – aber eigentlich muss ich lernen, mich zu entschuldigen, ohne Ausreden.",
+        "mistake": "Ich tu so, als wär’s egal, aber eigentlich muss ich lernen, mich zu entschuldigen, ohne Ausreden.",
         "secret": "Ich kann’s nicht ab, wenn jemand anderes gewinnt.",
-        "funFact": "„War nur Spaß“ ist mein Lieblingssatz – so muss ich mich (gefühlt) nie entschuldigen 😂."
+        "funFact": "„War nur Spaß“ ist mein Lieblingssatz. So muss ich mich (gefühlt) nie entschuldigen 😂."
       }
     },
     "carlos": {
@@ -509,7 +509,7 @@
     "friends": ["Finn", "Chioma"],
     "colors": "Blau. Klar. Funktional.",
     "happy": "Wenn die Technik läuft und plötzlich alles Sinn ergibt.",
-    "netRule": "Frag dich vor dem Posten: Hilft das jemandem – oder macht es nur mehr Chaos?",
+    "netRule": "Frag dich vor dem Posten: Hilft das jemandem oder macht es nur mehr Chaos?",
     "mistake": "Wenn ich einen Fehler mache, versuche ich erst mal herauszufinden, warum er passiert ist. Das erkläre ich dann.",
     "secret": "Dass ich unsicher werde, sobald es weniger um Fakten und mehr um Gefühle geht.",
     "funFact": "Ich habe einmal eine KI gefragt, ob ich lustig bin. Die Antwort war: „Statistisch gesehen: selten.“"
@@ -528,7 +528,7 @@
       "annoys": [
         "Ich erkläre Dinge zu sachlich, wenn andere gerade etwas fühlen wollen.",
         "Ich ziehe mich zurück, statt einen Konflikt auszutragen.",
-        "Ich gehe oft davon aus, dass sich alles logisch lösen lässt – was leider nicht immer stimmt."
+        "Ich gehe oft davon aus, dass sich alles logisch lösen lässt, was leider nicht immer stimmt."
       ],
       "hobbies": [
         "Schach spielen",
@@ -541,7 +541,7 @@
       "happy": "Wenn ein Plan aufgeht oder jemand sagt: „Daran hab ich gar nicht gedacht.“",
       "netRule": "Nur weil etwas oft geteilt wird, heißt das nicht, dass es auch stimmt.",
       "mistake": "Wenn ich einen Fehler mache, analysiere ich erst, wo mein Denkfehler lag. Manchmal vergesse ich dabei, mich einfach zu entschuldigen.",
-      "secret": "Meine Devise lautet: Verstand über Muskeln! – Aber insgeheim wär ich auch gern so sportlich wie Igor.",
+      "secret": "Meine Devise lautet: Verstand über Muskeln! Aber insgeheim wär ich auch gern so sportlich wie Igor.",
       "funFact": "Ich benutze beim Erklären manchmal Schachbegriffe. Nicht absichtlich. Passiert einfach."
     }
 },
@@ -549,7 +549,7 @@
 "lisa": {
   "name": "Lisa",
   "friendbook": {
-    "mostly": "Fröhlich. Neugierig. Gut informiert.\nIch weiß gern, was läuft – und am liebsten ein bisschen mehr als die anderen.",
+    "mostly": "Fröhlich. Neugierig. Gut informiert.\nIch weiß gern, was läuft und am liebsten ein bisschen mehr als die anderen.",
     "othersLike": [
       "Ich bin offen.",
       "Ich interessiere mich für andere.",
@@ -567,7 +567,7 @@
     "netRule": "Nur weil ich etwas weiß, heißt das noch lange nicht, dass ich es online teilen sollte.",
     "mistake": "Ich hasse Fehler. Wenn ich etwas falsch mache, versuche ich schnell drei Sachen gut zu machen, dass sich bloß niemand mehr an meinen Fehler erinnert.",
     "secret": "Ich fürchte mich davor, selbst mal ein Geheimnis zu haben, dass andere im Internet teilen.",
-    "funFact": "Ich sage oft 'Ich hab das nur zufällig gesehen' – und weiß dabei ziemlich genau, dass es kein Zufall war."
+    "funFact": "Ich sage oft 'Ich hab das nur zufällig gesehen' und weiß dabei ziemlich genau, dass es kein Zufall war."
   }
 },
 
@@ -680,7 +680,7 @@
     "netRule": "Immer fair bleiben.",
     "mistake": "Dann bleib ich ruhig und seh zu, wie ich das wieder gerade biegen kann.",
     "secret": "Ich reg mich nicht ständig auf, sondern nehme die Dinge so, wie sie sind. Und versuche, das Beste daraus zu machen.",
-    "funFact": "Ich habe meinem Rollstuhl einen Namen gegeben. Ich nenne ihn Swish — nach einem perfekten Wurf im Basketball, der direkt durchs Netz geht."
+    "funFact": "Ich habe meinem Rollstuhl einen Namen gegeben. Ich nenne ihn Swish, nach einem perfekten Wurf im Basketball, der direkt durchs Netz geht."
   }
 }
 

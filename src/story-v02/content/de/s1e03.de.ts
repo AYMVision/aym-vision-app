@@ -321,7 +321,7 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
     m(ch.yasmin, 'Ich finde nur andere Videos… 😩', '15:31'),
     m(ch.yasmin, 'und dann wieder nur Mode und Make-up.', '15:31'),
     m(ch.yasmin, 'Nicht, dass ich was dagegen hätte 😉', '15:31'),
-    m(ch.yasmin, "Jetzt hab ich's. Ist nur heute viel weiter unten.", '15:32'),
+    m(ch.yasmin, "Jetzt hab ich's.", '15:32'),
     m(emma, 'Yasmin Mode - Noah Basketball.', '15:32'),
     m(emma, 'Ich wette, das ist kein Zufall 🕵️', '15:32'),
     m(ch.mia, '@ Emma: Du immer mit deinen Verschwörungstheorien.', '15:33'),
@@ -399,7 +399,6 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
     privateChat('Aylin', 'Carlos', 'Jonas', 'Chioma'),
     m(ch.chioma, 'Ich hab zum Artikel auch noch ein Weekly aufgenommen. Falls ihr reinhören wollt 🎧', '15:50'),
     bonusLink('chioma-news-david-goliath-audio', 'Chiomas Weekly: David gegen Goliath (Audio)', '/newspaper/chioma-news-david-goliath-audio', 'Anhören →'),
-    m(ch.jonas, 'Oh nice. Direkt liefern. 👌', '15:50', { reactions: [R('🎧')] }),
   ], ['talk-act', 'info-check']),
 
   inp('s1e03c03_input_after_challenge', 'stories:s1e03.c03.input.afterChallenge', {
@@ -601,8 +600,7 @@ const c05 = C('s1e03c05', 4, 'Amic 5', 'Das Handy', [
        sysImg('/media/story/episodes/s1e03/s1e03c05-512.webp', 's1e03c05-img-01'),
     m(ch.igor, 'Genug. Langsam übertreibt ihr.', '09:50'),
     divider('Etwas später'),
-    m(ch.dominik, '@Finn?', '12:55'),
-    m(ch.dominik, 'Hat er sein Phone wieder?', '12:55'),
+    m(ch.dominik, '@Finn? Hat er sein Phone wieder?', '12:55'),
     m(ch.markus, 'Glaub ich nicht.', '12:56'),
     m(ch.mia, 'Vielleicht gar nicht so schlecht für ihn.', '12:56'),
     m(ch.dominik, 'Was bist du denn für eine Freundin?', '12:56'),

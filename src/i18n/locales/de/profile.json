@@ -190,7 +190,7 @@
     "return": {
       "processing": "Kauf wird bestätigt …",
       "successTitle": "Staffel 1 freigeschaltet! 🎉",
-      "successText": "5 Episoden warten auf dich. Jeden Tag ein neues Kapitel.",
+      "successText": "5 Episoden warten auf dich. Jeden Tag ein neues Amic.",
       "errorUnpaid": "Zahlung nicht abgeschlossen. Bitte versuche es nochmal.",
       "errorMismatch": "Kaufzuordnung fehlgeschlagen. Bitte wende dich an den Support.",
       "errorOwned": "Dieser Inhalt gehört dir schon.",
@@ -220,7 +220,7 @@
       "confirm": "Ja, einlösen",
       "cancel": "Abbrechen",
       "successTitle": "Staffel 1 freigeschaltet! 🎉",
-      "successText": "5 Episoden warten auf dich. Jeden Tag ein neues Kapitel.",
+      "successText": "5 Episoden warten auf dich. Jeden Tag ein neues Amic.",
       "alreadyOwned": "Dieser Inhalt gehört dir schon.",
       "notFound": "Gutschein nicht gefunden.",
       "error": "Einlösen fehlgeschlagen. Bitte versuche es nochmal.",

@@ -295,7 +295,7 @@ export default function SeasonFinale() {
             to="/studio"
             className="w-full rounded-2xl border-2 border-amber-400/70 bg-transparent px-5 py-3 text-sm font-semibold text-amber-200 hover:bg-amber-900/30 active:scale-95 transition-transform text-center"
           >
-            {t('seasonFinale.ctaStudio', { defaultValue: 'Erfinde deinen Amic-Chat →' })}
+            {t('seasonFinale.ctaStudio', { defaultValue: 'Erfinde deinen eigenen Amic-Chat →' })}
           </Link>
           <button
             type="button"
