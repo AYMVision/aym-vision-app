@@ -389,6 +389,36 @@ werden nachgetragen.</p>
           </div>
         </Section>
 
+        <Section title="Urheberrecht">
+          <p>© 2025–2026 Amy Surfwing. Alle Rechte vorbehalten.</p>
+          <p className="mt-2">
+            Story-Inhalte, Texte, Dialoge, Charaktere (Amy Surfwing, Yasmin, Carlos u. a.) und
+            Illustrationen stehen unter der Lizenz{' '}
+            <a
+              href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-[var(--color-teal-700)] hover:text-[var(--color-teal-900)]"
+            >
+              Creative Commons BY-NC-ND 4.0
+            </a>
+            {' '}— Teilen erlaubt, keine kommerzielle Nutzung, keine Bearbeitung, Namensnennung erforderlich.
+          </p>
+          <p className="mt-2">Der App-Quellcode ist proprietär. Alle Rechte vorbehalten.</p>
+        </Section>
+
+        <Section title="Nutzergenerierte Inhalte (Amic Creator Studio)">
+          <p>
+            Das Amic Creator Studio ermöglicht Nutzer:innen das eigenständige Erstellen von
+            Geschichten im Amic-Chat-Format. Amy Surfwing prüft diese Inhalte weder vorab noch
+            nachträglich und übernimmt keine Haftung für nutzergenerierte Inhalte. Für die
+            erstellten Inhalte und deren Weitergabe sind ausschließlich die erstellenden Personen
+            verantwortlich. Inhalte, die gegen geltendes Recht oder die guten Sitten verstoßen,
+            sind untersagt. Das Erstellen und Teilen von Inhalten, die Minderjährige gefährden
+            oder diskriminieren, ist verboten.
+          </p>
+        </Section>
+
         <Section title="Datenschutz">
           <p>
             Informationen zum Umgang mit personenbezogenen Daten findest du in unserer{' '}

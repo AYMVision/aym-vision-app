@@ -761,7 +761,7 @@ function Step4({ story, onBack, onNewStory }: Step4Props) {
           className="mt-0.5 h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500 shrink-0"
         />
         <span className="text-xs text-slate-600 leading-relaxed">
-          Ich bin Erziehungsberechtigte/r oder Lehrkraft und teile diese Geschichte verantwortungsvoll.
+          Ich bin Erziehungsberechtigte/r oder Lehrkraft und teile diese Geschichte verantwortungsvoll. Ich habe geprüft, dass keine echten Namen oder persönlichen Informationen enthalten sind.
         </span>
       </label>
 
@@ -906,6 +906,15 @@ function StudioLanding({
         >
           🏫 {t('landing.educatorsCta')}
         </Link>
+      </div>
+
+      <p className="text-[10px] text-slate-400 text-center leading-relaxed px-2">
+        Du trägst die Verantwortung für die Inhalte, die du erstellst und teilst. Keine beleidigenden, diskriminierenden oder unwahren Inhalte.
+      </p>
+      <div className="flex items-center justify-center gap-3 pb-1">
+        <Link to="/impressum" className="text-[10px] text-slate-400 hover:text-slate-600 underline">Impressum</Link>
+        <span className="text-[10px] text-slate-300">·</span>
+        <Link to="/privacy" className="text-[10px] text-slate-400 hover:text-slate-600 underline">Datenschutz</Link>
       </div>
     </div>
   );

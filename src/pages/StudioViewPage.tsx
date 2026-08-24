@@ -260,7 +260,7 @@ function ActionBar({ story, chatAreaRef }: ActionBarProps) {
           className="mt-0.5 h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500 shrink-0"
         />
         <span className="text-xs text-slate-600 leading-relaxed">
-          Ich bin Erziehungsberechtigte/r oder Lehrkraft und teile diese Geschichte verantwortungsvoll.
+          Ich bin Erziehungsberechtigte/r oder Lehrkraft und teile diese Geschichte verantwortungsvoll. Ich habe geprüft, dass keine echten Namen oder persönlichen Informationen enthalten sind.
         </span>
       </label>
 
@@ -400,7 +400,7 @@ export default function StudioViewPage() {
 
           {/* Branding footer inside screenshot area */}
           <div className="flex items-center justify-center gap-1.5 py-3 mt-4 border-t border-slate-100">
-            <span className="text-xs font-bold text-slate-400">Amy Surfwing</span>
+            <span className="text-xs text-slate-400">Nutzer:in-erstellter Inhalt</span>
             <span className="text-xs text-slate-300">·</span>
             <span className="text-xs text-slate-400">amysurfwing.de</span>
           </div>
