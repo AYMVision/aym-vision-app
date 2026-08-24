@@ -72,7 +72,7 @@ export default function VoucherAdmin() {
     setBusy(true);
     try {
       const body = JSON.stringify({ contentId, count, note: note.trim() || null });
-      const res = await aymFetch('/api/v1/aym/voucher/create', {
+      const res = await aymFetch('/api/v1/extension/aym-vision/voucher/create', {
         method: 'POST',
         body,
       });
@@ -113,7 +113,7 @@ export default function VoucherAdmin() {
     setListError('');
     setListBusy(true);
     try {
-      const res = await aymFetch('/api/v1/aym/voucher/list');
+      const res = await aymFetch('/api/v1/extension/aym-vision/voucher/list');
       if (res.status === 403) { setListError('Dieses Gerät ist nicht autorisiert.'); return; }
       if (!res.ok) { setListError(`Fehler ${res.status}`); return; }
       const data = await res.json() as { active: ActiveVoucher[]; redeemed: RedeemedVoucher[] };

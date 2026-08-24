@@ -19,9 +19,9 @@ describe('identity keys', () => {
 
   it('produces deterministic 64-byte signatures', async () => {
     const id = await generateIdentity();
-    const sig = await signPayload(id.mnemonic, 'AYM1|GET|/api/v1/aym/content|abc|d41d8c');
+    const sig = await signPayload(id.mnemonic, 'AYM1|GET|/api/v1/extension/aym-vision/content|abc|d41d8c');
     expect(sig).toMatch(/^[0-9a-f]{128}$/);
-    expect(await signPayload(id.mnemonic, 'AYM1|GET|/api/v1/aym/content|abc|d41d8c')).toBe(sig);
+    expect(await signPayload(id.mnemonic, 'AYM1|GET|/api/v1/extension/aym-vision/content|abc|d41d8c')).toBe(sig);
   });
 
   it('computes a 28-byte blake2b public key hash', async () => {

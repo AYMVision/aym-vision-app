@@ -18,7 +18,7 @@ function readCached(profileId: string): string[] {
 
 export async function refreshOwnership(profileId: string): Promise<string[]> {
   try {
-    const path = `/api/v1/aym/content?profileId=${encodeURIComponent(profileId)}`;
+    const path = `/api/v1/extension/aym-vision/content?profileId=${encodeURIComponent(profileId)}`;
     const res = await aymFetch(path);
     if (res.status === 404) return [];
     if (!res.ok) return readCached(profileId);

@@ -15,7 +15,7 @@ export async function getMaterial(courseId: string, profileId: string): Promise<
   const cached = await get<CourseMaterial>(cacheKey(courseId, profileId));
   if (cached) return cached;
 
-  const path = `/api/v1/aym/material/${encodeURIComponent(courseId)}?profileId=${encodeURIComponent(profileId)}`;
+  const path = `/api/v1/extension/aym-vision/material/${encodeURIComponent(courseId)}?profileId=${encodeURIComponent(profileId)}`;
   try {
     const res = await aymFetch(path);
     if (res.status === 403) return null;
@@ -32,7 +32,7 @@ export async function checkForUpdate(courseId: string, profileId: string): Promi
   const cached = await get<CourseMaterial>(cacheKey(courseId, profileId));
   if (!cached) return false;
 
-  const path = `/api/v1/aym/material/${encodeURIComponent(courseId)}/version?profileId=${encodeURIComponent(profileId)}`;
+  const path = `/api/v1/extension/aym-vision/material/${encodeURIComponent(courseId)}/version?profileId=${encodeURIComponent(profileId)}`;
   try {
     const res = await aymFetch(path);
     if (!res.ok) return false;

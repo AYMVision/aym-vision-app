@@ -34,7 +34,7 @@ export default function StripePurchaseReturn() {
     (async () => {
       try {
         const body = JSON.stringify({ sessionId, profileId });
-        const res = await aymFetch('/api/v1/aym/purchase/stripe', {
+        const res = await aymFetch('/api/v1/extension/aym-vision/purchase/stripe', {
           method: 'POST',
           body,
         });

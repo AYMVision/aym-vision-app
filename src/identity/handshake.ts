@@ -17,7 +17,7 @@ export async function aymFetch(path: string, init: RequestInit = {}): Promise<Re
   const method = (init.method ?? 'GET').toUpperCase();
   const body = init.body as string | undefined;
 
-  const challengeRes = await fetch(`${base}/api/v1/aym/challenge`, {
+  const challengeRes = await fetch(`${base}/api/v1/extension/aym-vision/challenge`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ publicKey: identity.publicKeyHex }),

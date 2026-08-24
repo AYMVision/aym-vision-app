@@ -109,7 +109,7 @@ export default function RedeemVoucher() {
 
     try {
       const body = JSON.stringify({ voucherId, profileId });
-      const res = await aymFetch('/api/v1/aym/voucher/redeem', {
+      const res = await aymFetch('/api/v1/extension/aym-vision/voucher/redeem', {
         method: 'POST',
         body,
       });

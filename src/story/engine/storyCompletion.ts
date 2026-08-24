@@ -113,7 +113,7 @@ export function completeStoryChapter<TProfile>(args: {
   if (episodeBonusAwarded) {
     const profileId = getActiveProfileId();
     if (profileId) {
-      void aymFetch('/api/v1/aym/course-state', {
+      void aymFetch('/api/v1/extension/aym-vision/course-state', {
         method: 'POST',
         body: JSON.stringify({ courseId, status: 'FINISHED', profileId }),
       }).then(async (res) => {

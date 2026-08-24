@@ -5,14 +5,14 @@ describe('canonicalPayload', () => {
   it('builds the correct canonical string', () => {
     const body = JSON.stringify({ voucherId: 'x' });
     const expected =
-      'AYM1|POST|/api/v1/aym/voucher/redeem|n1|b48e8e341e25dd70936fb23d8e4129bf27658ea2bc462ca204547a9a747f043a';
-    expect(canonicalPayload('POST', '/api/v1/aym/voucher/redeem', 'n1', body)).toBe(expected);
+      'AYM1|POST|/api/v1/extension/aym-vision/voucher/redeem|n1|b48e8e341e25dd70936fb23d8e4129bf27658ea2bc462ca204547a9a747f043a';
+    expect(canonicalPayload('POST', '/api/v1/extension/aym-vision/voucher/redeem', 'n1', body)).toBe(expected);
   });
 
   it('uses sha256 of empty string when no body', () => {
     const emptyHash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
-    expect(canonicalPayload('GET', '/api/v1/aym/content', 'n2')).toBe(
-      `AYM1|GET|/api/v1/aym/content|n2|${emptyHash}`
+    expect(canonicalPayload('GET', '/api/v1/extension/aym-vision/content', 'n2')).toBe(
+      `AYM1|GET|/api/v1/extension/aym-vision/content|n2|${emptyHash}`
     );
   });
 });
@@ -50,7 +50,7 @@ describe('aymFetch', () => {
 
     import.meta.env.VITE_AYM_BACKEND_URL = 'http://localhost:9090';
 
-    const res = await aymFetch('/api/v1/aym/content?profileId=p1');
+    const res = await aymFetch('/api/v1/extension/aym-vision/content?profileId=p1');
     expect(res.ok).toBe(true);
     expect(fetchCalls).toHaveLength(2);
     expect(fetchCalls[0].url).toContain('/challenge');

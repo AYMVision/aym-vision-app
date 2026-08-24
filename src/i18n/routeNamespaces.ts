@@ -6,6 +6,7 @@ export function namespacesForPath(pathname: string): I18nNamespace[] {
 
   // Home
   if (pathname === '/') return [...base, 'welcome', 'stories'];
+  if (pathname === '/jury') return [...base, 'welcome', 'stories'];
 
   // Stories
   if (pathname.startsWith('/stories')) return [...base, 'stories', 'amy', 'lexikon', 'bonus'];

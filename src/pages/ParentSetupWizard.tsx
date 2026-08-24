@@ -45,6 +45,7 @@ export default function ParentSetupWizard() {
   const [searchParams] = useSearchParams();
   const prefillCode = searchParams.get('code') ?? '';
   const isTommi = searchParams.get('context') === 'tommi';
+  const stripeAvailable = !!import.meta.env.VITE_STRIPE_LINK_BASE;
   const { needsBackup } = useIdentity();
 
   const returnTo = (location.state as { returnTo?: string } | null)?.returnTo ?? null;
@@ -131,7 +132,7 @@ export default function ParentSetupWizard() {
     setVoucherError('');
     try {
       const body = JSON.stringify({ voucherId: id, profileId });
-      const res = await aymFetch('/api/v1/aym/voucher/redeem', {
+      const res = await aymFetch('/api/v1/extension/aym-vision/voucher/redeem', {
         method: 'POST',
         body,
       });
@@ -351,45 +352,47 @@ export default function ParentSetupWizard() {
             {voucherError && <p className="text-xs text-red-600">{voucherError}</p>}
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="flex-1 h-px bg-slate-200" />
-            <span className="text-xs text-slate-400 font-semibold">{t('wizard.access.divider')}</span>
-            <div className="flex-1 h-px bg-slate-200" />
-          </div>
+          {stripeAvailable && (
+            <>
+              <div className="flex items-center gap-3">
+                <div className="flex-1 h-px bg-slate-200" />
+                <span className="text-xs text-slate-400 font-semibold">{t('wizard.access.divider')}</span>
+                <div className="flex-1 h-px bg-slate-200" />
+              </div>
 
-
-
-          {/* Kaufen */}
-          <div className={`rounded-2xl border border-slate-200 bg-white shadow-sm p-5 space-y-4 ${isTommi ? 'opacity-40 pointer-events-none' : ''}`}>
-            <div>
-              <div className="text-lg font-extrabold text-slate-900">{t('wizard.access.price')}</div>
-              <div className="text-xs text-slate-400">{t('wizard.access.priceNote')}</div>
-            </div>
-            <ul className="space-y-1 text-sm text-slate-700">
-              <li>{t('wizard.access.feature1')}</li>
-              <li>{t('wizard.access.feature2')}</li>
-              <li>{t('wizard.access.feature3')}</li>
-              <li>{t('wizard.access.feature4')}</li>
-            </ul>
-            <button
-              type="button"
-              onClick={() => {
-                const identity = loadIdentity();
-                const profileId = getActiveProfileId();
-                if (!identity || !profileId) return;
-                try {
-                  const hash = computeProfileHash(identity.publicKeyHex, profileId);
-                  const link = paymentLinkFor('s1', hash);
-                  window.open(link, '_blank', 'noopener,noreferrer');
-                } catch {
-                  // no payment link configured
-                }
-              }}
-              className="w-full py-3 rounded-2xl bg-teal-700 text-white font-extrabold text-sm hover:bg-teal-800 transition-colors"
-            >
-              {t('wizard.access.buyNow')}
-            </button>
-          </div>
+              {/* Kaufen */}
+              <div className={`rounded-2xl border border-slate-200 bg-white shadow-sm p-5 space-y-4 ${isTommi ? 'opacity-40 pointer-events-none' : ''}`}>
+                <div>
+                  <div className="text-lg font-extrabold text-slate-900">{t('wizard.access.price')}</div>
+                  <div className="text-xs text-slate-400">{t('wizard.access.priceNote')}</div>
+                </div>
+                <ul className="space-y-1 text-sm text-slate-700">
+                  <li>{t('wizard.access.feature1')}</li>
+                  <li>{t('wizard.access.feature2')}</li>
+                  <li>{t('wizard.access.feature3')}</li>
+                  <li>{t('wizard.access.feature4')}</li>
+                </ul>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const identity = loadIdentity();
+                    const profileId = getActiveProfileId();
+                    if (!identity || !profileId) return;
+                    try {
+                      const hash = computeProfileHash(identity.publicKeyHex, profileId);
+                      const link = paymentLinkFor('s1', hash);
+                      window.open(link, '_blank', 'noopener,noreferrer');
+                    } catch {
+                      // no payment link configured
+                    }
+                  }}
+                  className="w-full py-3 rounded-2xl bg-teal-700 text-white font-extrabold text-sm hover:bg-teal-800 transition-colors"
+                >
+                  {t('wizard.access.buyNow')}
+                </button>
+              </div>
+            </>
+          )}
 
           <button
             type="button"

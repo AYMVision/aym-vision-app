@@ -707,7 +707,7 @@ export default function AdultSettings() {
     setVoucherMsg(null);
     try {
       const body = JSON.stringify({ voucherId: id, profileId });
-      const res = await aymFetch('/api/v1/aym/voucher/redeem', { method: 'POST', body });
+      const res = await aymFetch('/api/v1/extension/aym-vision/voucher/redeem', { method: 'POST', body });
       if (res.status === 409) {
         await refreshOwnership(profileId);
         setVoucherCode('');
@@ -1186,7 +1186,7 @@ export default function AdultSettings() {
                     {t('adult:purchase.price', { defaultValue: '24 €' })}
                   </span>
                   <span className="text-sm text-teal-700">
-                    {t('adult:purchase.priceNote', { defaultValue: 'einmalig · pro Gerät' })}
+                    {t('adult:purchase.priceNote', { defaultValue: 'einmalig · pro Kind' })}
                   </span>
                 </div>
 

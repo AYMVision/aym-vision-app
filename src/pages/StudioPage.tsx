@@ -76,6 +76,13 @@ function buildShareUrl(encoded: string): string {
   return `${window.location.origin}${window.location.pathname}#/studio/view/${encoded}`;
 }
 
+function buildWorkshopUrl(tag: string): string {
+  const base = `${window.location.origin}${window.location.pathname}`;
+  return tag === 'free'
+    ? `${base}#/studio`
+    : `${base}#/studio?tag=${encodeURIComponent(tag)}`;
+}
+
 // --------------- ProgressDots (onboarding style) ---------------
 
 function ProgressDots({ step }: { step: number }) {

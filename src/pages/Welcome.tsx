@@ -6,7 +6,7 @@ import PwaTransferBanner from '../components/PwaTransferBanner';
 import { TransferStaleBanner } from '../components/TransferStaleWarning';
 import { assetUrl } from '../common/assetUrl';
 import SmartImage from '../components/SmartImage';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getProgress, getCompletedChapterCount } from '../progress/storyProgress';
 import { getStoryCards } from '../content/contentIndex';
@@ -108,11 +108,11 @@ function EmmaTeaserVideo() {
 export default function Welcome() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const isTommi = searchParams.get('context') === 'tommi';
+  const location = useLocation();
+  const isTommi = searchParams.get('context') === 'tommi' || location.pathname === '/jury';
   const [tommiCode, setTommiCode] = useState(searchParams.get('code') ?? '');
 const { t, i18n } = useTranslation(['welcome', 'stories', 'common', 'bonus']);
 const { t: tStories } = useTranslation('stories');
-const { t: tCommon } = useTranslation('common');
 const { t: tBonus } = useTranslation('bonus');
   const lang = (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
   const { profile } = useProfile();

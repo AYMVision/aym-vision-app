@@ -91,6 +91,7 @@ function AppRoutes() {
     <Suspense fallback={null}>
       <Routes location={backgroundLocation || location}>
         <Route path="/" element={<Welcome />} />
+        <Route path="/jury" element={<Welcome />} />
         <Route path="/stories" element={<Stories />} />
         <Route path="/stories-v02/:courseId" element={<StoryEpisodeOverview />} />
         <Route path="/stories-v02/:courseId/:chapterId" element={<StoryV02ChapterRoute />} />
