@@ -11,9 +11,12 @@ topicTags: [communication]
 Hey, hier ist Chioma,
 
 Bei uns gehen im Klassenchat gerade total viele Sticker rum.
+
 Bei euch auch?
+
 Wenn ich selbst einen Sticker von mir verschicke, ist das ja meine Wahl.
-Aber ich habe mich gefragt, ob es ok ist, Sticker von andern zu verschicken.
+
+Aber ich habe mich gefragt, ob es ok ist, Sticker von andern zu verschicken. 🤔
 
 ---
 
