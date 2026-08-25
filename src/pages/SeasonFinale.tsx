@@ -276,6 +276,31 @@ export default function SeasonFinale() {
           </p>
         </div>
 
+        {/* Jetzt du! Card */}
+        <div
+          className="w-full rounded-3xl bg-amber-400/15 border border-amber-400/40 px-5 py-5 flex flex-col items-center gap-3"
+          style={{
+            transition: 'opacity 0.6s ease 2.5s',
+            opacity: mounted ? 1 : 0,
+          }}
+        >
+          <span className="text-4xl">✏️</span>
+          <div className="text-center">
+            <p className="text-base font-extrabold text-amber-200">
+              {t('seasonFinale.studioCardTitle', { defaultValue: 'Jetzt du!' })}
+            </p>
+            <p className="text-xs text-amber-300/80 leading-relaxed mt-1">
+              {t('seasonFinale.studioCardText', { defaultValue: 'Du hast fünf Geschichten erlebt — schreib jetzt deine eigene.' })}
+            </p>
+          </div>
+          <Link
+            to="/studio"
+            className="w-full rounded-2xl bg-amber-400 text-amber-900 font-extrabold py-3 text-sm text-center active:scale-95 transition-transform hover:bg-amber-300"
+          >
+            {t('seasonFinale.ctaStudio', { defaultValue: 'Erfinde deinen eigenen Amic-Chat →' })}
+          </Link>
+        </div>
+
         {/* CTAs */}
         <div
           className="flex flex-col gap-3 w-full"
@@ -291,12 +316,6 @@ export default function SeasonFinale() {
           >
             {t('seasonFinale.ctaAlbum', { defaultValue: 'Alle Sticker ansehen ✨' })}
           </button>
-          <Link
-            to="/studio"
-            className="w-full rounded-2xl border-2 border-amber-400/70 bg-transparent px-5 py-3 text-sm font-semibold text-amber-200 hover:bg-amber-900/30 active:scale-95 transition-transform text-center"
-          >
-            {t('seasonFinale.ctaStudio', { defaultValue: 'Erfinde deinen eigenen Amic-Chat →' })}
-          </Link>
           <button
             type="button"
             onClick={() => navigate('/stories')}
