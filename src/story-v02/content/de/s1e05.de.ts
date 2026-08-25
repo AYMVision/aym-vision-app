@@ -1009,8 +1009,8 @@ const c10 = C('s1e05c10', 9, 'Amic 10', 'Hast du den Wolf inzwischen eingefangen
 const c11 = C('s1e05c11', 10, 'Amic 11', 'Das Schaf im Wolfspelz', [
 
   S('s1e05c11_story_schuelerzeitung_korrektur', [
-    sysImg('/media/story/episodes/s1e05/s1e05c11-1-512.webp', 's1e05c11-img-00'),
     classChat(),
+    sysImg('/media/story/episodes/s1e05/s1e05c11-1-512.webp', 's1e05c11-img-00'),
     sysMsg('Die Schülerzeitung hat einen neuen Beitrag veröffentlicht.', '15:52'),
     amyTip('Korrektur: Kein Wolf im Hain vor der Schule\n\nIn unserem Artikel stand, dass ein Wolf hinter der Schule gesehen wurde. Das stimmt nach aktuellem Stand nicht. Das Tier war sehr wahrscheinlich ein Husky.\n\nDas Foto zeigte zwar einen echten Wolf, wurde aber nicht vor unserer Schule aufgenommen.\n\nUnser Fehler: Wir hatten zwei Quellen, aber beide gingen auf dieselbe ursprüngliche Annahme zurück. Deshalb waren es keine zwei unabhängigen Belege, sondern nur einer – den wir nicht ordentlich überprüft haben.\n\nWir hätten gründlicher prüfen müssen.\n\nEs tut uns leid.\n— Die Redaktion'),
   ], ['info-check', 'reflect-understand']),

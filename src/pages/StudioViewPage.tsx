@@ -315,14 +315,15 @@ function ActionBar({ story, chatAreaRef }: ActionBarProps) {
         <button
           type="button"
           onClick={() => setShowQr((v) => !v)}
-          className="text-xs text-slate-400 hover:text-slate-600"
+          disabled={!shareConfirmed}
+          className="text-xs text-slate-400 hover:text-slate-600 disabled:opacity-40 disabled:pointer-events-none"
         >
           📱 QR
         </button>
       </div>
 
       {/* QR code collapsible */}
-      {showQr && qrDataUrl && (
+      {showQr && qrDataUrl && shareConfirmed && (
         <div className="flex flex-col items-center gap-2 py-3 bg-slate-50 rounded-2xl mb-3">
           <img src={qrDataUrl} alt="QR Code" className="w-36 h-36 rounded-xl shadow-sm" />
           <p className="text-xs text-slate-400">{t('step4.qrScanHint')}</p>
