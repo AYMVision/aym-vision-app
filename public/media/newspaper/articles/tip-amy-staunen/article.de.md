@@ -37,7 +37,7 @@ Zum Beispiel:
 [[/gallery]]
 
 Wenn du staunst, passiert etwas Besonderes:  
-Du denkst weniger an dich – und mehr an das, was gerade da ist.
+Du denkst weniger an dich und mehr an das, was gerade da ist.
 
 [[callout kind="tip"]]
 🌿 So funktioniert es

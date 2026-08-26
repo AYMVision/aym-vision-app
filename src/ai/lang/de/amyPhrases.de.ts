@@ -397,7 +397,7 @@ miniTips: {
   example_from_story: [
     'Nimm die Szene aus der Story als Beispiel.',
     'Ein Beispiel aus der Story-Szene reicht.',
-    'Stell dir die Situation aus der Story vor – und bleib bei einem Beispiel.',
+    'Stell dir die Situation aus der Story vor und bleib bei einem Beispiel.',
     'Ein Mini-Beispiel aus der Szene reicht.',
     'Erinner dich an die Story: Was wäre da passend?',
     'Nimm einen Moment aus der Szene – nur einen.',
@@ -407,7 +407,7 @@ miniTips: {
     'Eher gut, komisch oder unsicher – was passt am meisten?',
     'Ganz simpel: Welches Gefühl ist am stärksten?',
     'Ein Gefühl reicht: eher ruhig, traurig, wütend, ängstlich oder okay?',
-    'Nenn ein Gefühl – und einen Grund.',
+    'Nenn ein Gefühl und einen Grund.',
 
   ],
   simple_rephrase: [
@@ -458,8 +458,8 @@ miniTips: {
   // --------------------
   microTask: {
     FEELING: [
-      'Welches Gefühl passt dazu – und warum?',
-      'Was fühlst du dabei am stärksten – und wieso?',
+      'Welches Gefühl passt dazu und warum?',
+      'Was fühlst du dabei am stärksten und wieso?',
       'Welches Gefühl wäre in der Situation am ehesten da?',
     ],
     ACTION: [

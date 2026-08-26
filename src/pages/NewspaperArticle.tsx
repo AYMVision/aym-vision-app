@@ -169,7 +169,7 @@ export default function NewspaperArticle() {
     <img
       src={assetUrl(item.coverImage)}
       alt=""
-      className="w-full h-auto max-h-[280px] object-cover"
+      className="w-full h-auto max-h-[280px] object-cover object-top"
       loading="lazy"
       decoding="async"
     />

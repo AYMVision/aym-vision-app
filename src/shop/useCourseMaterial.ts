@@ -22,7 +22,7 @@ export function useCourseMaterial(courseId: string) {
 
       if (material === null) {
         // 403 — clear local entitlement and resync
-        await refreshOwnership(profileId);
+        await refreshOwnership();
       }
 
       return material;

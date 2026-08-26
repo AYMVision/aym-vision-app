@@ -46,3 +46,14 @@ export function deriveLinkEncryptionKey(mnemonic: string): Uint8Array {
   const entropy = mnemonicToEntropy(mnemonic.trim(), wordlist);
   return hkdf(sha256, entropy, undefined, new TextEncoder().encode('aym-link-encryption'), 32);
 }
+
+export function deriveBackupEncryptionKey(mnemonic: string): Uint8Array {
+  const entropy = mnemonicToEntropy(mnemonic.trim(), wordlist);
+  return hkdf(sha256, entropy, undefined, new TextEncoder().encode('aym-backup-encryption'), 32);
+}
+
+export function deriveBackendProfileId(mnemonic: string): string {
+  const entropy = mnemonicToEntropy(mnemonic.trim(), wordlist);
+  const derived = hkdf(sha256, entropy, undefined, new TextEncoder().encode('aym-backend-profile-id'), 32);
+  return bytesToHex(derived);
+}

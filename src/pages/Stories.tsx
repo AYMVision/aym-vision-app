@@ -944,6 +944,12 @@ function isUnlockedByChain(
                     text={tStories('howto.info.tiles.coins.text', { defaultValue: 'Kapitel spielen → 1 Coin. Episode fertig → +5 Bonus-Coins. 7 Tage am Stück → +2 Extra-Coins ⭐. Mit deinen Coins kannst du im Shop neue Avatar-Looks freischalten.' })}
                   />
                 </div>
+                <div className="snap-start shrink-0 w-[78%] sm:w-[44%]">
+                  <InfoTile colorIdx={3}
+                    title={tStories('howto.info.tiles.profile.title', { defaultValue: 'Dein Profil 👤' })}
+                    text={tStories('howto.info.tiles.profile.text', { defaultValue: 'Jedes Kind hat sein eigenes Profil. Dein Fortschritt, deine Sticker und deine Coins gehören nur dir.' })}
+                  />
+                </div>
               </SwipeRow>
             </div>
           </Panel>
@@ -956,7 +962,7 @@ function isUnlockedByChain(
             <p className="text-sm text-slate-700 leading-relaxed">
               {tStories('trust.body', {
                 defaultValue:
-                  'In Amy Surfwing liest du nicht nur – du denkst mit. Niemand sieht, was du schreibst. Es gibt keine Likes, kein Ranking und keinen Vergleich. Dein Fortschritt bleibt auf deinem Gerät. Hier kannst du in Ruhe überlegen, was du richtig findest – und Schritt für Schritt lernen, selbst gute Entscheidungen zu treffen.',
+                  'In Amy Surfwing liest du nicht nur – du denkst mit. Niemand sieht, was du schreibst. Es gibt keine Likes, kein Ranking und keinen Vergleich. Dein Fortschritt bleibt auf deinem Gerät. Hier kannst du in Ruhe überlegen, was du richtig findest und Schritt für Schritt lernen, selbst gute Entscheidungen zu treffen.',
               })}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">

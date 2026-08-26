@@ -29,11 +29,18 @@ export default function TransferStaleWarning() {
           </div>
           <p className="mt-0.5 text-sm text-amber-800 leading-relaxed">
             {daysAgo === null
-              ? 'Du hast noch keinen Transfer-Link erstellt. Auf iPhone/iPad können Daten nach 7 Tagen Inaktivität gelöscht werden.'
-              : `Dein letzter Transfer-Link ist ${daysAgo} Tage alt. Erstelle einen neuen, um deinen Spielstand zu sichern.`}
+              ? 'Noch kein Spielstand-Link erstellt. iOS kann Daten nach 7 Tagen ohne Nutzung automatisch löschen.'
+              : `Dein letzter Spielstand-Link ist ${daysAgo} Tage alt. Erstelle einen neuen, bevor Daten gelöscht werden.`}
           </p>
           <p className="mt-1 text-xs text-amber-700">
-            Öffne unten "Spielstand sichern & übertragen" und erstelle einen neuen Link.
+            Spielstand: unten einen neuen Link erstellen. Vollständige Sicherung inkl. Chatverläufe:{' '}
+            <Link
+              to="/adult-settings"
+              state={{ openSection: 'protection' }}
+              className="font-semibold underline underline-offset-2"
+            >
+              Elternbereich → Schutz &amp; Sicherung
+            </Link>
           </p>
         </div>
       </div>
@@ -60,7 +67,7 @@ export function TransferStaleBanner() {
             Spielstand sichern —{' '}
           </span>
           <span className="text-sm text-amber-800">
-            {lastExport === null ? 'noch kein Transfer-Link erstellt.' : 'Transfer-Link veraltet.'}
+            {lastExport === null ? 'noch kein Spielstand-Link erstellt.' : 'Spielstand-Link veraltet.'}
           </span>
         </div>
         <Link

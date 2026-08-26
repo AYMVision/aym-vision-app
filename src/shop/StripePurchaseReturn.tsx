@@ -56,7 +56,7 @@ export default function StripePurchaseReturn() {
           return;
         }
 
-        await refreshOwnership(profileId);
+        await refreshOwnership();
         setScreen({ kind: 'success' });
       } catch {
         setScreen({ kind: 'error', messageKey: 'shop.return.errorGeneral' });

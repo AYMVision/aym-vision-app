@@ -257,7 +257,7 @@ export default function AdultSettings() {
   const location = useLocation();
   const navigate = useNavigate();
   const { profile } = useProfile();
-  const { needsBackup, identity } = useIdentity();
+  const { needsBackup } = useIdentity();
 
   const locationState = (location.state as LocationState) ?? null;
   const backTo = locationState?.backTo || '/parents';
@@ -706,10 +706,17 @@ export default function AdultSettings() {
     setVoucherBusy(true);
     setVoucherMsg(null);
     try {
-      const body = JSON.stringify({ voucherId: id, profileId });
+      const { deriveBackendProfileId } = await import('../identity/keys');
+      const currentIdentity = loadIdentity();
+      if (!currentIdentity) {
+        setVoucherMsg({ text: 'Identität nicht verfügbar. Bitte neu laden.', tone: 'error' });
+        return;
+      }
+      const backendProfileId = deriveBackendProfileId(currentIdentity.mnemonic);
+      const body = JSON.stringify({ voucherId: id, profileId: backendProfileId });
       const res = await aymFetch('/api/v1/extension/aym-vision/voucher/redeem', { method: 'POST', body });
       if (res.status === 409) {
-        await refreshOwnership(profileId);
+        await refreshOwnership();
         setVoucherCode('');
         setVoucherSuccess(true);
         return;
@@ -722,7 +729,7 @@ export default function AdultSettings() {
         setVoucherMsg({ text: 'Fehler beim Einlösen. Bitte erneut versuchen.', tone: 'error' });
         return;
       }
-      await refreshOwnership(profileId);
+      await refreshOwnership();
       setVoucherCode('');
       setRefreshTick((v) => v + 1);
       setVoucherSuccess(true);
@@ -910,30 +917,35 @@ export default function AdultSettings() {
                 )}
               </div>
 
-              {/* Identitäts-Status */}
+              {/* Identitäts-Status — zeigt Daten des gewählten Profils */}
               {(() => {
                 const hasPurchase = isSeasonOwnedLocally(wirkungProfileId, 's1');
+                const wirkungIdentityRaw = (() => {
+                  try { return JSON.parse(localStorage.getItem(`aym_p_${wirkungProfileId}__aym_identity`) ?? ''); } catch { return null; }
+                })();
+                const wirkungNeedsBackup = !wirkungIdentityRaw?.backupConfirmedAt;
+                const isActiveProfile = wirkungProfileId === getActiveProfileId();
                 return (
                   <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-sm">
                     <div>
                       <div className="text-sm font-semibold text-slate-900">Identität & Sicherung</div>
                       <div className="text-xs text-slate-400">
-                        {!needsBackup
+                        {!wirkungNeedsBackup
                           ? 'Kauf kann auf neuem Gerät wiederhergestellt werden'
                           : hasPurchase
                           ? 'Kauf noch nicht gesichert'
                           : 'Kann in Schutz & Sicherung nachgeholt werden'}
                       </div>
                     </div>
-                    {!identity ? (
+                    {!wirkungIdentityRaw ? (
                       <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-bold text-red-600">
                         Fehlt
                       </span>
-                    ) : !needsBackup ? (
+                    ) : !wirkungNeedsBackup ? (
                       <span className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">
                         ✓ Gesichert
                       </span>
-                    ) : hasPurchase ? (
+                    ) : hasPurchase && isActiveProfile ? (
                       <button
                         type="button"
                         onClick={() => setShowIdentityBackup(true)}
@@ -1200,15 +1212,23 @@ export default function AdultSettings() {
                       </div>
                     );
                   }
+                  if (!import.meta.env.VITE_ENABLE_STRIPE) {
+                    return (
+                      <div className="mt-4 inline-flex items-center gap-2 rounded-xl bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-400 cursor-not-allowed">
+                        {t('adult:purchase.comingSoon', { defaultValue: 'Bald verfügbar' })}
+                      </div>
+                    );
+                  }
                   return (
                     <button
                       type="button"
-                      onClick={() => {
+                      onClick={async () => {
                         const identity = loadIdentity();
-                        const profileId = getActiveProfileId();
-                        if (!identity || !profileId) return;
+                        if (!identity) return;
                         try {
-                          const hash = computeProfileHash(identity.publicKeyHex, profileId);
+                          const { deriveBackendProfileId } = await import('../identity/keys');
+                          const backendProfileId = deriveBackendProfileId(identity.mnemonic);
+                          const hash = computeProfileHash(identity.publicKeyHex, backendProfileId);
                           const link = paymentLinkFor('s1', hash);
                           window.open(link, '_blank', 'noopener,noreferrer');
                         } catch {
@@ -1720,7 +1740,7 @@ export default function AdultSettings() {
 
           <AccordionSection
             title={t('adult:accordions.protection.title', { defaultValue: 'Schutz & Sicherung' })}
-            subtitle={t('adult:accordions.protection.subtitle', { defaultValue: 'Passcode, Tagebuchschutz und Backup' })}
+            subtitle={t('adult:accordions.protection.subtitle', { defaultValue: 'Passcode, Tagebuchschutz und Sicherungsdatei' })}
             badge={t('adult:accordions.protection.badge', { defaultValue: '3 Bereiche' })}
             open={openSections.protection}
             onToggle={() => toggleSection('protection')}
@@ -1871,9 +1891,9 @@ export default function AdultSettings() {
               </section>
 
               <section className="rounded-2xl border border-slate-200 bg-white p-5">
-                <h3 className="text-lg font-semibold text-slate-900">24 Sicherheitswörter sichern</h3>
+                <h3 className="text-lg font-semibold text-slate-900">24 Sicherungswörter notieren</h3>
                 <p className="mt-1 text-sm text-slate-600">
-                  Deine 24 Wörter sind der einzige Schlüssel zu deinen freigeschalteten Inhalten. Schreib sie auf und bewahre sie sicher auf — damit du deinen Kauf bei einem Gerätewechsel wiederherstellen kannst.
+                  Die 24 Wörter sind der Schlüssel zu deinem Kauf und zur Sicherungsdatei. Einmalig aufschreiben und sicher aufbewahren — damit du alles auf einem neuen Gerät wiederherstellen kannst.
                 </p>
                 <div className="mt-3 flex items-center gap-2">
                   {needsBackup ? (
@@ -1900,57 +1920,63 @@ export default function AdultSettings() {
               </section>
 
               <section className="rounded-2xl border border-slate-200 bg-white p-5">
-                <h3 className="text-lg font-semibold text-slate-900">Identität wiederherstellen</h3>
+                <h3 className="text-lg font-semibold text-slate-900">Kauf wiederherstellen</h3>
                 <p className="mt-1 text-sm text-slate-600">
-                  Falls du das Gerät gewechselt hast oder die App neu installiert wurde: Stell deine Identität mit den 24 Sicherheitswörtern wieder her, damit dein Fortschritt und deine freigeschalteten Inhalte wieder verfügbar sind.
+                  Neues Gerät oder App neu installiert? Gib deine 24 Sicherungswörter ein — dein Kauf ist danach sofort wieder verfügbar.
                 </p>
                 <button
                   type="button"
                   onClick={() => setShowRestoreModal(true)}
                   className="mt-4 rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-100"
                 >
-                  Aus 24 Wörtern wiederherstellen
+                  Aus 24 Sicherungswörtern wiederherstellen
                 </button>
+                <p className="mt-3 text-xs text-slate-500">
+                  Danach Spielstand und Chatverläufe über die Sicherungsdatei unten wiederherstellen.
+                </p>
               </section>
 
               <section className="rounded-2xl border border-slate-200 bg-white p-5">
                 <h3 className="text-lg font-semibold text-slate-900">
-                  {t('adult:backup.title', { defaultValue: 'Backup & Wiederherstellen' })}
+                  {t('adult:backup.title', { defaultValue: 'Alles sichern' })}
                 </h3>
                 <p className="mt-1 text-sm text-slate-600">
                   {t('adult:backup.body', {
                     defaultValue:
-                      'Speichere den Lernfortschritt als Datei auf deinem Gerät und spiele ihn auf einem anderen Gerät wieder ein. Der Eltern-Passcode wird nicht gesichert.',
+                      'Die Sicherungsdatei enthält alle Profildaten, den Spielfortschritt, Sticker, Tagebuch und Chatverläufe. Sie ist mit den 24 Sicherungswörtern verschlüsselt und kann nur damit wieder geöffnet werden. Der Eltern-Passcode wird einmalig neu eingerichtet — du kannst denselben verwenden.',
                   })}
                 </p>
 
                 <div className="mt-5">
                   <div className="text-sm font-semibold text-slate-800">
-                    {t('adult:backup.exportTitle', { defaultValue: 'Backup exportieren' })}
+                    {t('adult:backup.exportTitle', { defaultValue: 'Sicherungsdatei erstellen' })}
                   </div>
                   <p className="mt-0.5 text-xs text-slate-500">
                     {t('adult:backup.exportHint', {
                       defaultValue:
-                        'Lädt eine JSON-Datei mit allen Profil- und Fortschrittsdaten herunter.',
+                        'Lädt eine verschlüsselte Datei herunter. Zum Wiederherstellen werden die 24 Sicherungswörter benötigt.',
                     })}
                   </p>
                   <button
                     type="button"
-                    onClick={() => exportBackup()}
+                    onClick={() => {
+                      const identity = loadIdentity();
+                      if (identity?.mnemonic) exportBackup(identity.mnemonic);
+                    }}
                     className="mt-3 rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-100"
                   >
-                    {t('adult:backup.exportButton', { defaultValue: 'Backup herunterladen' })}
+                    {t('adult:backup.exportButton', { defaultValue: 'Sicherungsdatei herunterladen' })}
                   </button>
                 </div>
 
                 <div className="mt-5 border-t border-slate-100 pt-5">
                   <div className="text-sm font-semibold text-slate-800">
-                    {t('adult:backup.importTitle', { defaultValue: 'Backup einspielen' })}
+                    {t('adult:backup.importTitle', { defaultValue: 'Sicherungsdatei einspielen' })}
                   </div>
                   <p className="mt-0.5 text-xs text-slate-500">
                     {t('adult:backup.importHint', {
                       defaultValue:
-                        'Wähle eine zuvor gespeicherte Backup-Datei aus. Bestehende Daten werden überschrieben.',
+                        'Zuerst die 24 Sicherungswörter wiederherstellen, dann die Datei auswählen. Bestehende Daten werden überschrieben.',
                     })}
                   </p>
 
@@ -1958,7 +1984,7 @@ export default function AdultSettings() {
                     {importBusy
                       ? t('adult:backup.importing', { defaultValue: 'Wird importiert …' })
                       : t('adult:backup.importButton', {
-                          defaultValue: 'Backup-Datei auswählen …',
+                          defaultValue: 'Sicherungsdatei auswählen …',
                         })}
                     <input
                       type="file"

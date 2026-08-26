@@ -1,6 +1,6 @@
 ---
 title: Du denkst, du kennst jemanden?
-description: Ein paar Nachrichten im Chat – und alle haben eine Meinung. Aber was, wenn du gar nicht alles gesehen hast?
+description: Ein paar Nachrichten im Chat und alle haben eine Meinung. Aber was, wenn du gar nicht alles gesehen hast?
 author: Chioma
 date: 2026-06-01
 topicTags: ["reflect", "fair"]

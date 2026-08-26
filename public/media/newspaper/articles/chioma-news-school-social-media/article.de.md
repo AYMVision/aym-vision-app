@@ -7,4 +7,4 @@ date: 2026-04-10
 
 # Social Media unter 16 verboten?
 
-Hör dir Chiomas Gedanken dazu an – und überleg selbst, was du denkst.
+Hör dir Chiomas Gedanken dazu an und überleg selbst, was du denkst.

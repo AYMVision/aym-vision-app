@@ -13,6 +13,7 @@ import {
   type ProfileMeta,
 } from '../profile/profileIndex';
 import { useProfile } from '../profile/useProfile';
+import { initIdentity } from '../identity/useIdentity';
 
 type Phase =
   | 'list'
@@ -51,6 +52,7 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
       setPhase('pin');
     } else {
       switchToProfile(p.id);
+      initIdentity();
       reloadProfile();
       onSwitched();
     }
@@ -66,6 +68,7 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
         const ok = await verifyProfilePin(selectedProfile.id, next);
         if (ok) {
           switchToProfile(selectedProfile.id);
+          initIdentity();
           reloadProfile();
           onSwitched();
         } else {
@@ -83,6 +86,7 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
     if (!name) return;
     const meta = createProfile(name);
     switchToProfile(meta.id);
+    initIdentity();
     setNewCreatedId(meta.id);
     setNewPin('');
     setNewPinFirst('');

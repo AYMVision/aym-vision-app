@@ -16,6 +16,11 @@ export function initIdentity(): Promise<StoredIdentity> {
   });
 }
 
+export function resetIdentityCache(): void {
+  _identity = null;
+  notifyListeners();
+}
+
 export function useIdentity() {
   const [, setTick] = useState(0);
 

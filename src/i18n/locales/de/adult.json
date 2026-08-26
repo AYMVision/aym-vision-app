@@ -114,7 +114,7 @@
   },
 
   "transfer": {
-    "title": "Spielstand übertragen"
+    "title": "Spielstand mitnehmen"
   },
 
   "ai": {
@@ -273,16 +273,16 @@
     "allCancel": "Abbrechen"
   },
   "backup": {
-    "title": "Backup & Wiederherstellen",
-    "body": "Erstelle eine lokale Sicherungskopie aller Kinderdaten oder spiele ein früheres Backup wieder ein.",
-    "exportTitle": "Backup exportieren",
-    "exportHint": "Lädt alle Kinderdaten als JSON-Datei herunter. Passcode-Hashes sind nicht enthalten.",
-    "exportButton": "Backup herunterladen",
-    "importTitle": "Backup einspielen",
-    "importHint": "Wähle eine zuvor exportierte JSON-Datei aus. Bestehende Daten werden überschrieben.",
+    "title": "Alles sichern",
+    "body": "Die Sicherungsdatei enthält alle Profildaten, den Spielfortschritt, Sticker, Tagebuch und Chatverläufe. Sie ist mit den 24 Sicherungswörtern verschlüsselt und kann nur damit wieder geöffnet werden. Der Eltern-Passcode wird einmalig neu eingerichtet — du kannst denselben verwenden.",
+    "exportTitle": "Sicherungsdatei erstellen",
+    "exportHint": "Lädt eine verschlüsselte Datei herunter. Zum Wiederherstellen werden die 24 Sicherungswörter benötigt.",
+    "exportButton": "Sicherungsdatei herunterladen",
+    "importTitle": "Sicherungsdatei einspielen",
+    "importHint": "Zuerst die 24 Sicherungswörter wiederherstellen, dann die Datei auswählen. Bestehende Daten werden überschrieben.",
     "importing": "Wird importiert …",
-    "importButton": "Backup-Datei auswählen …",
-    "importSuccess": "Backup erfolgreich eingespielt."
+    "importButton": "Sicherungsdatei auswählen …",
+    "importSuccess": "Sicherungsdatei erfolgreich eingespielt."
   },
   "diary": {
     "title": "Kinder-Tagebuch",
@@ -364,7 +364,7 @@
     },
     "protection": {
       "title": "Schutz & Sicherung",
-      "subtitle": "Passcode, Tagebuchschutz und Backup",
+      "subtitle": "Passcode, Tagebuchschutz und Sicherungsdatei",
       "badge": "3 Bereiche"
     },
     "danger": {

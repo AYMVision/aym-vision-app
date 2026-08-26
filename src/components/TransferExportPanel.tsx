@@ -55,7 +55,7 @@ export default function TransferExportPanel() {
     try {
       await navigator.share({
         title: 'Amy Surfwing – Spielstand',
-        text: 'Hier ist dein Transfer-Link, um deinen Spielstand zu übertragen:',
+        text: 'Hier ist dein Spielstand-Link:',
         url: link,
       });
       setShareState('done');
@@ -70,15 +70,19 @@ export default function TransferExportPanel() {
       {/* Erklärung */}
       <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm text-slate-700 leading-relaxed">
         <p>
-          Mit dem Transfer-Link kannst du deinen Spielstand auf ein anderes Gerät oder zwischen
-          Browser und App übertragen. Enthalten sind: Kapitel- & Episodenfortschritt, Sticker,
-          Münzen, Avatar, Bonus-Fortschritt, gelesene Artikel und deine Reaktionen darauf.
-          Der Link enthält <strong>keine persönlichen Texte</strong> (Tagebuch, Chat-Namen,
-          Sammelkarte).
+          Der Spielstand-Link überträgt: Kapitel- & Episodenfortschritt, Sticker, Münzen, Avatar,
+          Bonus-Fortschritt und gelesene Artikel. Er enthält <strong>keine Chatverläufe</strong> —
+          die bleiben aus Datenschutzgründen auf dem Gerät.
         </p>
         <p className="mt-2 text-xs text-slate-500">
-          Der Link bleibt solange gültig, bis du einen neuen erstellst. Er ist nur für dich
-          bestimmt und sollte nicht öffentlich geteilt werden.
+          Für eine vollständige Sicherung inkl. Chatverläufe:{' '}
+          <Link
+            to="/adult-settings"
+            state={{ openSection: 'protection' }}
+            className="font-semibold underline underline-offset-2 hover:text-slate-700"
+          >
+            Elternbereich → Schutz &amp; Sicherung → Sicherungsdatei erstellen
+          </Link>
         </p>
       </div>
 
@@ -89,7 +93,7 @@ export default function TransferExportPanel() {
           onClick={handleGenerate}
           className="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
         >
-          🔗 Transfer-Link erstellen
+          🔗 Spielstand-Link erstellen
         </button>
       </div>
 
@@ -169,13 +173,22 @@ export default function TransferExportPanel() {
 
       {/* iOS storage warning */}
       {!standalone && (
-        <div className="rounded-xl border border-amber-100 bg-amber-50 px-3 py-3 text-xs text-amber-800 leading-relaxed">
-          <strong>Hinweis für iPhone/iPad:</strong> iOS löscht Daten installierter Web-Apps nach
-          ca. 7 Tagen Inaktivität. Erstelle regelmäßig einen neuen Transfer-Link und speichere ihn
-          sicher.{' '}
-          <Link to="/install" className="font-semibold underline underline-offset-2 hover:text-amber-900">
-            App installieren →
-          </Link>
+        <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-3 text-xs text-amber-800 leading-relaxed">
+          <p><strong>⚠️ Wichtig für iPhone/iPad:</strong> iOS löscht App-Daten nach ca. 7 Tagen
+          ohne Nutzung automatisch. Ohne Sicherung kann der Spielstand dauerhaft verloren gehen.</p>
+          <p className="mt-1.5">
+            <strong>Spielstand sichern:</strong> Regelmäßig einen neuen Spielstand-Link erstellen (oben).
+          </p>
+          <p className="mt-1">
+            <strong>Vollständige Sicherung</strong> inkl. Chatverläufe:{' '}
+            <Link
+              to="/adult-settings"
+              state={{ openSection: 'protection' }}
+              className="font-semibold underline underline-offset-2 hover:text-amber-900"
+            >
+              Elternbereich → Schutz &amp; Sicherung
+            </Link>
+          </p>
         </div>
       )}
     </div>

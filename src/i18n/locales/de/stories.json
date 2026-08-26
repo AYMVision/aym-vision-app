@@ -181,6 +181,10 @@
         "backup": {
           "title": "Speichern & Backup 💾",
           "text": "Dein Fortschritt wird auf deinem Gerät gespeichert. Wenn du möchtest, kannst du ihn zusätzlich sichern, damit nichts verloren geht."
+        },
+        "profile": {
+          "title": "Dein Profil 👤",
+          "text": "Jedes Kind hat sein eigenes Profil. Dein Fortschritt, deine Sticker und deine Coins gehören nur dir."
         }
       }
     },
@@ -199,7 +203,7 @@
   "trust": {
     "kicker": "Denkraum",
     "title": "Ein sicherer Raum für deine Gedanken",
-    "body": "In Amy Surfwing liest du nicht nur – du denkst mit. Es gibt keine Likes, kein Ranking und keinen Vergleich mit anderen. Dein Fortschritt bleibt auf deinem Gerät. Hier kannst du in Ruhe überlegen, was du richtig findest – und Schritt für Schritt lernen, selbst gute Entscheidungen zu treffen.",
+    "body": "In Amy Surfwing liest du nicht nur – du denkst mit. Es gibt keine Likes, kein Ranking und keinen Vergleich mit anderen. Dein Fortschritt bleibt auf deinem Gerät. Hier kannst du in Ruhe überlegen, was du richtig findest und Schritt für Schritt lernen, selbst gute Entscheidungen zu treffen.",
     "chips": {
       "0": "Privat 🔒",
       "1": "Ohne Ranking 🚫",
@@ -211,7 +215,7 @@
   },
   "aym": {
     "kicker": "Amy Surfwing",
-    "title": "So sieht’s aus – und das kannst du damit machen",
+    "title": "So sieht’s aus und das kannst du damit machen",
     "tags": {
       "experience": "Amic",
       "bonus": "Bonus"

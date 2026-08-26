@@ -131,13 +131,20 @@ export default function ParentSetupWizard() {
     setVoucherBusy(true);
     setVoucherError('');
     try {
-      const body = JSON.stringify({ voucherId: id, profileId });
+      const { deriveBackendProfileId } = await import('../identity/keys');
+      const currentIdentity = loadIdentity();
+      if (!currentIdentity) {
+        setVoucherError(t('wizard.access.errorNoProfile'));
+        return;
+      }
+      const backendProfileId = deriveBackendProfileId(currentIdentity.mnemonic);
+      const body = JSON.stringify({ voucherId: id, profileId: backendProfileId });
       const res = await aymFetch('/api/v1/extension/aym-vision/voucher/redeem', {
         method: 'POST',
         body,
       });
       if (res.status === 409) {
-        await refreshOwnership(profileId);
+        await refreshOwnership();
         setVoucherSuccess(true);
         return;
       }
@@ -151,7 +158,7 @@ export default function ParentSetupWizard() {
       }
       const data = await res.json() as { contentId: string };
       setRedeemedContentId(data.contentId ?? null);
-      await refreshOwnership(profileId);
+      await refreshOwnership();
       setVoucherSuccess(true);
     } catch {
       setVoucherError(t('wizard.access.errorNetwork'));
@@ -352,7 +359,7 @@ export default function ParentSetupWizard() {
             {voucherError && <p className="text-xs text-red-600">{voucherError}</p>}
           </div>
 
-          {stripeAvailable && (
+          {stripeAvailable && !!import.meta.env.VITE_ENABLE_STRIPE && (
             <>
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-px bg-slate-200" />
@@ -374,12 +381,13 @@ export default function ParentSetupWizard() {
                 </ul>
                 <button
                   type="button"
-                  onClick={() => {
+                  onClick={async () => {
                     const identity = loadIdentity();
-                    const profileId = getActiveProfileId();
-                    if (!identity || !profileId) return;
+                    if (!identity) return;
                     try {
-                      const hash = computeProfileHash(identity.publicKeyHex, profileId);
+                      const { deriveBackendProfileId } = await import('../identity/keys');
+                      const backendProfileId = deriveBackendProfileId(identity.mnemonic);
+                      const hash = computeProfileHash(identity.publicKeyHex, backendProfileId);
                       const link = paymentLinkFor('s1', hash);
                       window.open(link, '_blank', 'noopener,noreferrer');
                     } catch {

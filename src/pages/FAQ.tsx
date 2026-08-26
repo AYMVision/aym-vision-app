@@ -55,6 +55,12 @@ export default function FAQ() {
 
           <FaqItem question={t('faq.general.costs.question')}>
             <p>{t('faq.general.costs.answer')}</p>
+            <p>
+              {t('faq.general.costs.contact')}{' '}
+              <a href="mailto:hello@amysurfwing.de" className="font-semibold text-[var(--color-teal-700)] underline underline-offset-2">
+                hello@amysurfwing.de
+              </a>
+            </p>
           </FaqItem>
 
           <FaqItem question={t('faq.general.install.question')}>
@@ -135,10 +141,38 @@ export default function FAQ() {
           <FaqItem question={t('faq.data.deviceSwitch.question')}>
             <p>
               {t('faq.data.deviceSwitch.answer1')}{' '}
-              <Link to="/adult-settings" className="font-semibold text-[var(--color-teal-700)] underline underline-offset-2">
+              <Link to="/adult-settings" state={{ openSection: 'protection' }} className="font-semibold text-[var(--color-teal-700)] underline underline-offset-2">
                 {t('faq.data.deviceSwitch.answer2')}
               </Link>
-              {t('faq.data.deviceSwitch.answer3')}
+              {' '}{t('faq.data.deviceSwitch.answer3')}
+            </p>
+          </FaqItem>
+
+          <FaqItem question={t('faq.data.iosStorage.question')}>
+            <p>{t('faq.data.iosStorage.answer')}</p>
+          </FaqItem>
+
+          <FaqItem question={t('faq.data.purchaseRestore.question')}>
+            <p>
+              {t('faq.data.purchaseRestore.answer1')}{' '}
+              <Link to="/adult-settings" state={{ openSection: 'protection' }} className="font-semibold text-[var(--color-teal-700)] underline underline-offset-2">
+                {t('faq.data.purchaseRestore.answer2')}
+              </Link>
+              {' '}{t('faq.data.purchaseRestore.answer3')}
+            </p>
+          </FaqItem>
+
+          <FaqItem question={t('faq.data.multiProfile.question')}>
+            <p>{t('faq.data.multiProfile.answer')}</p>
+          </FaqItem>
+
+          <FaqItem question={t('faq.data.progressTransfer.question')}>
+            <p>
+              {t('faq.data.progressTransfer.answer1')}{' '}
+              <Link to="/adult-settings" state={{ openSection: 'protection' }} className="font-semibold text-[var(--color-teal-700)] underline underline-offset-2">
+                {t('faq.data.progressTransfer.answer2')}
+              </Link>
+              {' '}{t('faq.data.progressTransfer.answer3')}
             </p>
           </FaqItem>
 

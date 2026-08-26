@@ -191,7 +191,8 @@
       },
       "costs": {
         "question": "What does Amy Surfwing cost?",
-        "answer": "The first week is completely free — no sign-up, no credit card. More information about pricing will follow soon."
+        "answer": "The first three chapters are free to play, no commitment required. Season 1 is available from 15 October as a bundle for €24 (incl. VAT). Packages for siblings, school classes, or groups are available on request.",
+        "contact": "Just write to us at"
       },
       "install": {
         "question": "How do I save Amy Surfwing to my home screen?",
@@ -239,13 +240,33 @@
       "label": "Data & privacy",
       "storage": {
         "question": "What happens to my child's data?",
-        "answer": "All data — progress, stickers, profile settings — is stored exclusively locally on this device. No account is needed, no data is transferred to a cloud or shared with third parties."
+        "answer": "Profiles are created locally on the device — no email or password needed. Game progress, stickers, diary entries, and settings remain exclusively on this device. When purchasing or redeeming a voucher, an anonymous identifier is sent to our server to verify the purchase status. This identifier contains no personal data and cannot be traced back to your child. Data is not shared with third parties."
       },
       "deviceSwitch": {
         "question": "What happens if I switch devices or clear storage?",
-        "answer1": "Since everything is stored locally, progress and settings will be lost when switching devices or clearing browser storage. You can find an export function in the",
+        "answer1": "Everything is stored locally and will be permanently lost without a backup. In the",
+        "answer2": "parent area → Protection & Security",
+        "answer3": "you can create a progress link (transfers progress, stickers, and coins — no chat history) or download a full backup file that also includes chat history. Purchases are restored separately using the 24 security words."
+      },
+      "iosStorage": {
+        "question": "What happens if I don't use the app for a while?",
+        "answer": "On iPhone and iPad, iOS automatically deletes data from installed web apps after approximately 7 days of inactivity. Regularly create a progress link or backup file in the parent area to protect your game progress."
+      },
+      "purchaseRestore": {
+        "question": "How do I restore my purchase on a new device?",
+        "answer1": "In the",
         "answer2": "parent area",
-        "answer3": "."
+        "answer3": "there are 24 security words for each profile. These words are the key to the purchase. On the new device, simply enter these words to automatically restore the purchase. Please write them down once and keep them safe."
+      },
+      "multiProfile": {
+        "question": "What happens if we create multiple profiles as a family?",
+        "answer": "Each child has their own profile with their own security words, their own learning progress, and their own purchase. One purchase applies per profile. Packages for families with multiple children are available on request."
+      },
+      "progressTransfer": {
+        "question": "How do I transfer game progress to another device?",
+        "answer1": "In the",
+        "answer2": "parent area → Protection & Security",
+        "answer3": "there are two options: a progress link for progress, stickers, and coins (no chat history) — or a full backup file including chat history. On the new device, first enter the 24 security words, then import the link or backup file."
       }
     }
   },

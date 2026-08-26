@@ -58,7 +58,7 @@
     "items": {
       "0": "Kinder ernst zu nehmen heißt, Zukunft verantwortungsvoll zu gestalten.",
       "1": "Selbstreflexion und kleine Impulse können große Wirkung entfalten.",
-      "2": "Jede Frage ist erlaubt – und jede Antwort ist ein Ausgangspunkt zum Weiterdenken.",
+      "2": "Jede Frage ist erlaubt und jede Antwort ist ein Ausgangspunkt zum Weiterdenken.",
       "3": "Wir verbinden Empathie, Innovation und Freude am Lernen."
     }
   },
@@ -179,16 +179,17 @@
       },
       "topics": {
         "question": "Welche Themen behandelt Amy Surfwing?",
-        "answer": "Die Themen stammen direkt aus dem digitalen Alltag von Kindern: Cybermobbing, Gruppendruck, Fake News, Künstliche Intelligenz, Datenschutz und manipulierte Bilder — eingebettet in eine fortlaufende Chat-Story.",
+        "answer": "Die Themen stammen direkt aus dem digitalen Alltag von Kindern: Cybermobbing, Gruppendruck, Fake News, Künstliche Intelligenz, Datenschutz und manipulierte Bilder. Diese Themen sind eingebettet in eine fortlaufende Chat-Story.",
         "link": "Alle Themen auf der Eltern-Seite →"
       },
       "social": {
         "question": "Kann mein Kind mit anderen Kindern interagieren?",
-        "answer": "Nein. Amy Surfwing ist bewusst kein soziales Netzwerk. Kinder lesen und erleben die Story-Welt für sich. Inhalte werden nicht öffentlich geteilt, es gibt keine Chats mit anderen Nutzern und keine Profile die sichtbar sind."
+        "answer": "Nein. Amy Surfwing ist bewusst kein soziales Netzwerk. Kinder lesen und erleben die Story-Welt für sich in einem geschützten Denkraum. Inhalte werden nicht öffentlich geteilt, es gibt keine Chats mit anderen Nutzern und keine für andere sichtbare Profile."
       },
       "costs": {
         "question": "Was kostet Amy Surfwing?",
-        "answer": "Die erste Woche ist vollständig kostenlos zugänglich — ohne Anmeldung, ohne Kreditkarte. Weitere Informationen zu Preisen folgen in Kürze."
+        "answer": "Die ersten drei Kapitel sind kostenlos und unverbindlich spielbar. Staffel 1 ist ab dem 15. Oktober als Paket für 24 Euro (inkl. MwSt.) erhältlich. Für Geschwister, Schulklassen oder Gruppen sind Pakete auf Anfrage verfügbar.",
+        "contact": "Einfach schreiben an"
       },
       "install": {
         "question": "Wie speichere ich Amy Surfwing auf dem Homescreen?",
@@ -199,12 +200,12 @@
     "parents": {
       "label": "Elternbereich & Einstellungen",
       "code": {
-        "question": "Wo kann ich meinen Code eingeben, falls ich einen habe?",
-        "answer1": "Freischaltcodes kannst du im",
-        "answer2": "Elternbereich unter Einstellungen",
+        "question": "Wo kann ich meinen Gutscheincode eingeben?",
+        "answer1": "Gutscheincodes kannst du im",
+        "answer2": "Elternbereich",
         "answer3": "eingeben. Öffne den Bereich, scrolle zum Abschnitt",
-        "answer4": "Freischaltcode",
-        "answer5": "und gib deinen Code dort ein."
+        "answer4": "Staffel 1 freischalten",
+        "answer5": "und gib deinen Code unter Gutschein vorhanden? ein."
       },
       "changePasscode": {
         "question": "Wie ändere ich meinen Eltern-Passcode?",
@@ -225,7 +226,7 @@
       "forgot": {
         "question": "Ich habe meinen Eltern-Passcode vergessen.",
         "answer1": "Schreibe uns an",
-        "answer2": "— wir schicken dir einen Reset-Code. Den gibst du dann im",
+        "answer2": "Wir schicken dir einen Reset-Code. Den gibst du dann im",
         "answer3": "Elternbereich",
         "answer4": "unter",
         "answer5": "Passcode vergessen?",
@@ -236,13 +237,33 @@
       "label": "Daten & Datenschutz",
       "storage": {
         "question": "Was passiert mit den Daten meines Kindes?",
-        "answer": "Alle Daten (Fortschritt, Sticker, Profileinstellungen) werden ausschließlich lokal auf diesem Gerät gespeichert. Es wird kein Konto benötigt, keine Daten werden in eine Cloud übertragen oder mit Dritten geteilt."
+        "answer": "Spielprofile werden lokal auf dem Gerät angelegt, keine Registrierung mit E-Mail oder Passwort notwendig. Spielfortschritt, Sticker, Tagebucheinträge und Einstellungen bleiben ausschließlich auf diesem Gerät. Beim Kauf oder beim Einlösen eines Gutscheins wird ein anonymer Identifikator an unseren Server übermittelt, um den Kaufstatus zu prüfen. Dieser Identifikator enthält keine persönlichen Daten und ist nicht auf dein Kind zurückführbar. Daten werden nicht mit Dritten geteilt."
       },
       "deviceSwitch": {
         "question": "Was passiert, wenn ich das Gerät wechsle oder den Speicher lösche?",
-        "answer1": "Da alles lokal gespeichert ist, gehen Fortschritt und Einstellungen beim Gerätewechsel oder beim Löschen des Browser-Speichers verloren. Eine Exportfunktion findest du im",
+        "answer1": "Alles ist lokal gespeichert und geht ohne Sicherung beim Gerätewechsel dauerhaft verloren. Im",
+        "answer2": "Elternbereich → Schutz & Sicherung",
+        "answer3": "erstellst du einen Spielstand-Link (überträgt Fortschritt, Sticker und Münzen — ohne Chatverläufe) oder lädst eine vollständige Sicherungsdatei herunter, die auch Chatverläufe enthält. Käufe werden unabhängig davon über die 24 Sicherungswörter wiederhergestellt."
+      },
+      "iosStorage": {
+        "question": "Was passiert, wenn ich die App längere Zeit nicht nutze?",
+        "answer": "Auf iPhone und iPad löscht iOS die Daten installierter Web-Apps nach ca. 7 Tagen ohne Nutzung automatisch. Erstelle regelmäßig einen Spielstand-Link oder eine Sicherungsdatei im Elternbereich, um deinen Spielstand zu schützen."
+      },
+      "purchaseRestore": {
+        "question": "Wie stelle ich meinen Kauf auf einem neuen Gerät wieder her?",
+        "answer1": "Im",
         "answer2": "Elternbereich",
-        "answer3": "."
+        "answer3": "gibt es unter jedem Profil 24 Sicherungswörter. Diese Wörter sind der Schlüssel zum Kauf. Auf dem neuen Gerät reicht es, diese Wörter einzugeben, um den Kauf automatisch wiederherzustellen. Bitte einmalig sicher notieren."
+      },
+      "multiProfile": {
+        "question": "Was passiert, wenn ich als Familie mehrere Profile anlege?",
+        "answer": "Jedes Kind hat ein eigenes Profil mit eigenen Sicherungswörtern, eigenem Lernfortschritt und einem eigenen Kauf. Ein gekaufter Zugang gilt pro Profil. Für Familien mit mehreren Kindern sind Pakete auf Anfrage verfügbar."
+      },
+      "progressTransfer": {
+        "question": "Wie übertrage ich den Spielfortschritt auf ein anderes Gerät?",
+        "answer1": "Im",
+        "answer2": "Elternbereich → Schutz & Sicherung",
+        "answer3": "gibt es zwei Möglichkeiten: einen Spielstand-Link für Fortschritt, Sticker und Münzen (ohne Chatverläufe) — oder eine vollständige Sicherungsdatei inkl. Chatverläufe. Auf dem neuen Gerät zuerst die 24 Sicherungswörter eingeben, dann Link oder Sicherungsdatei einspielen."
       }
     }
   },

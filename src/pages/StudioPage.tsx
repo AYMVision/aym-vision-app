@@ -952,7 +952,7 @@ function WorkshopIntro({ tag, customLabel, onStart }: { tag: StudioTopicId | nul
           {t('workshop.heading', { defaultValue: 'Heute schreibt ihr eine eigene Amic-Story!' })}
         </h2>
         <p className="text-sm text-slate-500 leading-relaxed">
-          {t('workshop.hint', { defaultValue: 'Ihr wählt Charaktere, schreibt einen Chat – und Amy stellt am Ende eine Frage.' })}
+          {t('workshop.hint', { defaultValue: 'Ihr wählt Charaktere, schreibt einen Chat und Amy stellt am Ende eine Frage.' })}
         </p>
       </div>
 

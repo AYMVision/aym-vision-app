@@ -17,7 +17,7 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     id: 'algorithmus',
     title: 'Algorithmus',
     teaser: 'Eine Schritt-für-Schritt-Anleitung, die einer App sagt, was sie tun soll.',
-    body: 'Ein Algorithmus ist eine genaue Abfolge von Regeln, nach denen ein Programm entscheidet. Bei Social-Media-Apps entscheidet er zum Beispiel, welche Videos du zuerst siehst, basierend auf dem, was du bisher angeschaut, geliked oder länger betrachtet hast. @Frau Schubert: Stell dir vor, eine Person schreibt auf, was du dir täglich anschaust – und zeigt dir danach immer mehr davon. Genau das macht der Algorithmus, nur automatisch und ohne Pause.',
+    body: 'Ein Algorithmus ist eine genaue Abfolge von Regeln, nach denen ein Programm entscheidet. Bei Social-Media-Apps entscheidet er zum Beispiel, welche Videos du zuerst siehst, basierend auf dem, was du bisher angeschaut, geliked oder länger betrachtet hast. @Frau Schubert: Stell dir vor, eine Person schreibt auf, was du dir täglich anschaust und zeigt dir danach immer mehr davon. Genau das macht der Algorithmus, nur automatisch und ohne Pause.',
     didYouKnow: 'Das Wort kommt vom Mathematiker al-Chwarizmi aus dem 9. Jahrhundert. Sein Name wurde später zu "Algorithmus".',
     firstAppearance: 's1e03c03',
   },

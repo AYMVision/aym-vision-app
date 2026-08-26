@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { restoreIdentity } from './keys';
-import { loadIdentity } from './storage';
+import { saveRestoredIdentity } from './storage';
+import { resetIdentityCache } from './useIdentity';
 import { refreshOwnership } from '../shop/ownership';
 
 type Screen = 'input' | 'success';
@@ -19,17 +20,12 @@ export function RestoreIdentityModal({ onDone, onCancel }: { onDone(): void; onC
     setLoading(true);
     try {
       const restored = await restoreIdentity(input.trim());
-      localStorage.setItem(
-        'aym_identity',
-        JSON.stringify({ ...restored, backupConfirmedAt: Date.now(), createdAt: Date.now() })
-      );
-      // Sync ownership for all local profiles after restore
-      const allProfileIds = Object.keys(localStorage)
-        .filter(k => k.startsWith('aym_p_') && k.endsWith('__aym_user_profile'))
-        .map(k => k.replace('__aym_user_profile', '').replace('aym_p_', ''));
-      const results = await Promise.allSettled(allProfileIds.map(id => refreshOwnership(id)));
-      const allOwned = results.flatMap(r => r.status === 'fulfilled' ? r.value : []);
-      setRestoredContent([...new Set(allOwned)]);
+      // Schreibt in pStorage des aktiven Profils (nicht device-weit)
+      saveRestoredIdentity(restored);
+      resetIdentityCache();
+      // Kauf-Check mit backendProfileId (deterministisch aus Mnemonic)
+      const owned = await refreshOwnership();
+      setRestoredContent(owned);
       setScreen('success');
     } catch {
       setError(t('identity.restore.error'));

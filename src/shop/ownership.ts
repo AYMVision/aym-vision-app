@@ -1,5 +1,8 @@
 import { aymFetch } from '../identity/handshake';
 import { unlockEpisodePaywallOnly, setBypassUntil } from '../gating/entitlements';
+import { loadIdentity } from '../identity/storage';
+import { deriveBackendProfileId } from '../identity/keys';
+import { getActiveProfileId } from '../profile/profileStorage';
 
 const OWNED_CONTENT_KEY = 'aym_owned_content';
 
@@ -16,13 +19,18 @@ function readCached(profileId: string): string[] {
   }
 }
 
-export async function refreshOwnership(profileId: string): Promise<string[]> {
+export async function refreshOwnership(): Promise<string[]> {
+  const identity = loadIdentity();
+  const activeProfileId = getActiveProfileId();
+  if (!identity || !activeProfileId) return [];
+
+  const backendProfileId = deriveBackendProfileId(identity.mnemonic);
+
   try {
-    const path = `/api/v1/extension/aym-vision/content?profileId=${encodeURIComponent(profileId)}`;
+    const path = `/api/v1/extension/aym-vision/content?profileId=${encodeURIComponent(backendProfileId)}`;
     const res = await aymFetch(path);
     if (res.status === 404) return [];
-    if (!res.ok) return readCached(profileId);
-    // Backend returns ContentItemDto[]: [{contentId, source, grantedAt}]
+    if (!res.ok) return readCached(activeProfileId);
     const raw = await res.json() as { contentId: string }[];
     const owned = Array.isArray(raw) ? raw.map(item => item.contentId) : [];
     for (const contentId of owned) {
@@ -33,10 +41,10 @@ export async function refreshOwnership(profileId: string): Promise<string[]> {
         unlockEpisodePaywallOnly(contentId);
       }
     }
-    localStorage.setItem(cacheKey(profileId), JSON.stringify(owned));
+    localStorage.setItem(cacheKey(activeProfileId), JSON.stringify(owned));
     return owned;
   } catch {
-    return readCached(profileId);
+    return readCached(activeProfileId);
   }
 }
 

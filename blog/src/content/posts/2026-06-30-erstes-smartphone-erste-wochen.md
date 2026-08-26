@@ -1,6 +1,6 @@
 ---
 title: "Was erleben Kinder in den ersten Wochen mit ihrem ersten Smartphone?"
-description: "Fünf Situationen, die viele Kinder bereits in den ersten Wochen mit ihrem Smartphone erleben können – und wie Familien darüber sprechen können."
+description: "Fünf Situationen, die viele Kinder bereits in den ersten Wochen mit ihrem Smartphone erleben können und wie Familien darüber sprechen können."
 date: 2026-06-30
 author: "Ann-Sofie Höbrink"
 image: "/images/erstes-smartphone-erste-wochen.webp"

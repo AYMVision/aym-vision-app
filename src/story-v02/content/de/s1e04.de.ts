@@ -723,11 +723,11 @@ const c06 = C('s1e04c06', 5, 'Amic 6', 'Der Sportbeutel', [
     'manipulation_recognize',
     [
       optSegs('a', 'Wenn Amir den Beutel hatte, muss er ihn ja geklaut haben.', 0,
-        'Ein einzelner Hinweis zeigt selten alles. Was ist sicher – und was vermutest du nur?',
+        'Ein einzelner Hinweis zeigt selten alles. Was ist sicher und was vermutest du nur?',
         '💡 Solange du nicht sicher sein kannst, halte dich mit Anschuldigungen zurück.',
       ),
       optSegs('b', 'Er wirkt schon verdächtig. Ich würde erst mal davon ausgehen, dass etwas dran ist.', 0,
-        'Du lässt dich vom ersten Eindruck leiten. Das kann aber schnell in die falsche Richtung gehen. Was ist sicher – und was vermutest du nur?',
+        'Du lässt dich vom ersten Eindruck leiten. Das kann aber schnell in die falsche Richtung gehen. Was ist sicher und was vermutest du nur?',
         '💡 Solange du nicht sicher sein kannst, halte dich mit Anschuldigungen zurück.',
       ),
       optSegs('c', 'Ich finde es schwierig. Man weiß nicht genug, um sich sicher zu sein.', 2,

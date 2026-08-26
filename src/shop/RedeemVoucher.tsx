@@ -108,7 +108,10 @@ export default function RedeemVoucher() {
     }
 
     try {
-      const body = JSON.stringify({ voucherId, profileId });
+      const identity = await ensureIdentity();
+      const { deriveBackendProfileId } = await import('../identity/keys');
+      const backendProfileId = deriveBackendProfileId(identity.mnemonic);
+      const body = JSON.stringify({ voucherId, profileId: backendProfileId });
       const res = await aymFetch('/api/v1/extension/aym-vision/voucher/redeem', {
         method: 'POST',
         body,
@@ -129,7 +132,7 @@ export default function RedeemVoucher() {
 
       const data = await res.json() as RedeemResponse;
 
-      await refreshOwnership(profileId);
+      await refreshOwnership();
       setScreen({ kind: 'success', contentId: data.contentId });
     } catch {
       setScreen({ kind: 'error' });

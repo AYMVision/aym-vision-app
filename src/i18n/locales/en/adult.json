@@ -115,7 +115,7 @@
   },
 
   "transfer": {
-    "title": "Transfer progress"
+    "title": "Take progress with you"
   },
 
   "ai": {
@@ -274,16 +274,16 @@
     "allCancel": "Cancel"
   },
   "backup": {
-    "title": "Backup & Restore",
-    "body": "Create a local backup of all child data or restore a previous backup.",
-    "exportTitle": "Export backup",
-    "exportHint": "Downloads all child data as a JSON file. Passcode hashes are not included.",
-    "exportButton": "Download backup",
-    "importTitle": "Import backup",
-    "importHint": "Select a previously exported JSON file. Existing data will be overwritten.",
+    "title": "Save everything",
+    "body": "The backup file contains all profile data, game progress, stickers, diary, and chat history. It is encrypted with the 24 security words and can only be opened with them. The parent passcode will be set up again once — you can use the same one.",
+    "exportTitle": "Create backup file",
+    "exportHint": "Downloads an encrypted file. The 24 security words are required to restore it.",
+    "exportButton": "Download backup file",
+    "importTitle": "Import backup file",
+    "importHint": "First restore the 24 security words, then select the file. Existing data will be overwritten.",
     "importing": "Importing …",
     "importButton": "Select backup file …",
-    "importSuccess": "Backup imported successfully."
+    "importSuccess": "Backup file imported successfully."
   },
   "diary": {
     "title": "Child's Diary",
@@ -365,7 +365,7 @@
     },
     "protection": {
       "title": "Protection & Security",
-      "subtitle": "Passcode, diary protection, and backup",
+      "subtitle": "Passcode, diary protection, and backup file",
       "badge": "3 areas"
     },
     "danger": {

@@ -319,7 +319,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
 
 
 
-  // --- Chioma Weekly #3: Schnell gemacht – aber ist es noch deins? ---
+  // --- Chioma Weekly #3: Schnell gemacht, aber ist es noch deins? ---
   {
     bonusId: 'chioma-news-schnell-gemacht',
     category: 'newspaper',
@@ -435,8 +435,8 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     released: true,
     order: 59,
     mediaType: 'text',
-    coverImage: 'media/newspaper/articles/article-jonas-amir-int/cover-1024.webp',
-    bodySrc: 'media/newspaper/articles/article-jonas-amir-int/article',
+    coverImage: 'media/newspaper/articles/article-jonas-amir-interview/cover-1024.webp',
+    bodySrc: 'media/newspaper/articles/article-jonas-amir-interview/article',
     bodyKind: 'md',
     unlockedBy: { type: 'chapter', id: 's1e04c10' },
   },
@@ -461,6 +461,8 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     released: true,
     order: 11,
     mediaType: 'audio',
+    coverImage: 'media/newspaper/articles/chioma-news-fuer-jemanden-einsetzen/cover-1024.webp',
+    audioSrc: 'media/newspaper/articles/chioma-news-fuer-jemanden-einsetzen/audio.mp3',
     bodySrc: 'media/newspaper/articles/chioma-news-fuer-jemanden-einsetzen/article',
     bodyKind: 'md',
     unlockedBy: { type: 'chapter', id: 's1e05c02' },

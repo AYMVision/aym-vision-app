@@ -1,6 +1,6 @@
 ---
 title: "Mein Kind vergleicht sich ständig mit anderen. Wie kann ich helfen?"
-description: "Warum Klassenchats bei Kindern schnell Unsicherheit und Vergleiche auslösen – und wie Eltern ihr Kind stärken können."
+description: "Warum Klassenchats bei Kindern schnell Unsicherheit und Vergleiche auslösen und wie Eltern ihr Kind stärken können."
 date: 2026-05-27
 author: "Ann-Sofie Höbrink"
 image: "/images/vergleiche-im-klassenchat.webp"

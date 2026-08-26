@@ -334,7 +334,7 @@
     "example_from_story": [
       "Nimm die Szene aus der Story als Beispiel.",
       "Ein Beispiel aus der Story-Szene reicht.",
-      "Stell dir die Situation aus der Story vor – und bleib bei einem Beispiel.",
+      "Stell dir die Situation aus der Story vor und bleib bei einem Beispiel.",
       "Ein Mini-Beispiel aus der Szene reicht.",
       "Erinner dich an die Story: Was wäre da passend?",
       "Nimm einen Moment aus der Szene – nur einen."
@@ -344,7 +344,7 @@
       "Eher gut, komisch oder unsicher – was passt am meisten?",
       "Ganz simpel: Welches Gefühl ist am stärksten?",
       "Ein Gefühl reicht: eher ruhig, traurig, wütend, ängstlich oder okay?",
-      "Nenn ein Gefühl – und einen Grund."
+      "Nenn ein Gefühl und einen Grund."
 
     ],
     "simple_rephrase": [
@@ -376,8 +376,8 @@
   ],
   "microTask": {
     "FEELING": [
-      "Welches Gefühl passt dazu – und warum?",
-      "Was fühlst du dabei am stärksten – und wieso?",
+      "Welches Gefühl passt dazu und warum?",
+      "Was fühlst du dabei am stärksten und wieso?",
       "Welches Gefühl wäre in der Situation am ehesten da?"
     ],
     "ACTION": [
@@ -423,9 +423,9 @@
 
 
     "microTaskFromQuestion": {
-      "feeling": "Nenn ein Gefühl – und kurz warum.",
+      "feeling": "Nenn ein Gefühl und kurz warum.",
       "action": "Was wäre dein erster Schritt?",
-      "personWhy": "Nenn eine Person – und sag kurz warum.",
+      "personWhy": "Nenn eine Person und sag kurz warum.",
       "why": "Sag kurz warum.",
       "idea": "Schreib eine Idee auf – ganz kurz.",
       "rule": "Nenn eine Regel, die helfen würde.",

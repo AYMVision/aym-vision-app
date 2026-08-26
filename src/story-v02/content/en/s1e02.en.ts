@@ -124,7 +124,7 @@ const c02 = C('s1e02c02', 1, 'Amic 2', 'Verantwortung zeigen', [
       optSegs('d', 'Ich sage nichts aus Angst.', 1,
         'Du schützt dich.',
         '👉 Aber es ändert nichts.',
-        '💡 Sicherheit ist wichtig – aber Wirkung auch.',
+        '💡 Sicherheit ist wichtig, aber Wirkung auch.',
       ),
     ],
     ['talk-act'],

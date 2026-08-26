@@ -101,7 +101,7 @@ export function decodeTransferPayload(encoded: string, mnemonic?: string): Decod
       const ciphertext = rawBin.slice(12);
       const resolvedMnemonic = mnemonic ?? (
         (() => {
-          try { return JSON.parse(localStorage.getItem('aym_identity') ?? '').mnemonic as string; } catch { return null; }
+          try { return JSON.parse(pStorage.getItem('aym_identity') ?? '').mnemonic as string; } catch { return null; }
         })()
       );
       if (!resolvedMnemonic) return { ok: false, error: 'Verschlüsselter Link: Bitte zuerst Identität wiederherstellen.' };

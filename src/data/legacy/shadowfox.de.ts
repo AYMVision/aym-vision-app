@@ -527,7 +527,7 @@ const course: Course = {
           type: 'main',
           speaker: characters.amy,
           content:
-            'Frage immer vorher, bevor du ein Foto von jemandem teilst – und sei vorsichtig, was du selbst von dir verschickst.',
+            'Frage immer vorher, bevor du ein Foto von jemandem teilst und sei vorsichtig, was du selbst von dir verschickst.',
           timestamp: '20:04',
         },
       ],
@@ -716,7 +716,7 @@ const course: Course = {
           type: 'main',
           speaker: characters.shadowfox,
           content:
-            'Ich hab den Beweis – und er wird Frau Schubert nicht gefallen.',
+            'Ich hab den Beweis und er wird Frau Schubert nicht gefallen.',
           timestamp: '07:38',
         },
         {

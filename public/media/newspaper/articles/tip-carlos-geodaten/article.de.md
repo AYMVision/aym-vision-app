@@ -1,6 +1,6 @@
 ---
 title: Spuren im Bild – so liest du Fotos richtig
-description: Du postest ein Foto – aber was postet das Foto über dich? Finde heraus, welche versteckten Infos darin stecken.
+description: Du postest ein Foto, aber was postet das Foto über dich? Finde heraus, welche versteckten Infos darin stecken.
 author: Carlos
 date: 2026-01-27
 topicTags: [create, teamTalk, safe]
