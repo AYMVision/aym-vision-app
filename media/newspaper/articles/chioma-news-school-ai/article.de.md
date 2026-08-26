@@ -1,6 +1,6 @@
 ---
 title: KI in der Schule – hilfreich oder unfair?
-description: Aylin schaut darauf, warum gerade so viele über KI bei Hausaufgaben und Referaten sprechen – und was das wirklich bedeutet.
+description: Aylin schaut darauf, warum gerade so viele über KI bei Hausaufgaben und Referaten sprechen und was das wirklich bedeutet.
 author: Aylin
 date: 2026-03-29
 ---
@@ -16,15 +16,15 @@ Manche sagen:
 
 Andere sagen:
 - Manche nutzen KI, ohne selbst nachzudenken
-- Ergebnisse wirken schnell „zu perfekt“
-- Nicht alle Kinder haben dieselben Chancen
+- KI halluziniert = macht Fehler
+- KI kann gefährlich werden
+- KI ist unfair
+- KI macht dumm
+
 
 ## Worum geht es eigentlich?
 
-Die wichtige Frage ist nicht nur:  
-**„Darf man KI benutzen?“**
-
-Sondern eher:
+Wir wollen heute nicht klären, ob ihr KI nutzen dürft, das kommt auf die Regeln bei euch zu Hause und an eurer Schule an. Wir fragen heute:  
 
 **Wie benutzt man KI fair und ehrlich?**
 
@@ -37,7 +37,7 @@ Zum Beispiel:
 - um Ideen zu sammeln
 - um Texte zu verbessern
 
-Schwierig wird es, wenn jemand so tut, als wäre alles komplett selbst gemacht.
+Unfair ist es, wenn jemand so tut, als wäre alles komplett selbst gemacht.
 
 ## Was ich wichtig finde
 
@@ -50,4 +50,4 @@ Schwierig wird es, wenn jemand so tut, als wäre alles komplett selbst gemacht.
 
 ## Meine Frage an dich
 
-Wann ist KI für dich hilfreich – und wann fühlt es sich unfair an?
+Wann ist KI für dich hilfreich und wann fühlt es sich unfair an?

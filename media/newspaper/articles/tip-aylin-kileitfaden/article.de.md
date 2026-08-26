@@ -47,7 +47,7 @@ Die KI ist kein Mensch. Auch wenn sie so schreibt.
 
 [[img src="media/newspaper/articles/tip-aylin-kileitfaden/kileitfaden3" alt="Dein Kopf braucht auch Offline-Zeit.""]]
 
-## 🔒 Das darfst du eingeben – und das niemals
+## 🔒 Das darfst du eingeben und das niemals
 
 [[checklist title="Das ist okay"]]
 - erfundene Namen

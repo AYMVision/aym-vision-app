@@ -1,5 +1,5 @@
 {
-  "article-jonas-amir-int": {
+  "article-jonas-amir-interview": {
     "de": {
       "title": "Im Zweifel gegen den Angeklagten",
       "description": "Vor ein paar Tagen wurde Amir beschuldigt, Sportsachen geklaut zu haben. Viele waren sich schnell sicher. Am Ende kam raus: Es war ganz anders. Jonas hat nachgefragt.",
@@ -65,7 +65,7 @@
   "chioma-news-denkst-du-kennst-jemanden": {
     "de": {
       "title": "Du denkst, du kennst jemanden?",
-      "description": "Ein paar Nachrichten im Chat – und alle haben eine Meinung. Aber was, wenn du gar nicht alles gesehen hast?",
+      "description": "Ein paar Nachrichten im Chat und alle haben eine Meinung. Aber was, wenn du gar nicht alles gesehen hast?",
       "author": "Chioma",
       "date": "2026-06-01",
       "topicTags": [
@@ -74,10 +74,22 @@
       ]
     }
   },
+  "chioma-news-fuer-jemanden-einsetzen": {
+    "de": {
+      "title": "Wie unterstütze ich jemanden im Chat?",
+      "description": "Im Gruppenchat wird jemand unfair behandelt. Was jetzt? Chioma und Carlos sammeln Ideen, wie du helfen kannst, ohne gleich zum Chat Superhelden zu werden. Manchmal reicht schon ein Satz. Oder eine private Nachricht. Und manchmal hilft es, einfach nicht mitzumachen.",
+      "author": "Chioma",
+      "date": "2026-08-26",
+      "topicTags": [
+        "connect",
+        "reflect"
+      ]
+    }
+  },
   "chioma-news-ki-hausaufgaben": {
     "de": {
       "title": "KI bei den Hausaufgaben – Hilfe oder Schummeln?",
-      "description": "Lukas sagt „Ich hab mir nur helfen lassen.\" Chioma fragt „Oder doch geschummelt?\" Wo ist die Grenze – und wann macht KI dich wirklich besser?",
+      "description": "Lukas sagt „Ich hab mir nur helfen lassen.\" Chioma fragt „Oder doch geschummelt?\" Wo ist die Grenze und wann macht KI dich wirklich besser?",
       "author": "Chioma",
       "date": "2026-05-14",
       "topicTags": [
@@ -98,7 +110,7 @@
   },
   "chioma-news-schnell-gemacht": {
     "de": {
-      "title": "Schnell gemacht – aber ist es noch deins?",
+      "title": "Schnell gemacht, aber ist es noch deins?",
       "description": "KI erstellt in Sekunden Bilder und Texte. Doch je einfacher alles wird, desto wichtiger wird eine Frage – was kommt eigentlich noch von dir?",
       "author": "Chioma",
       "date": "2026-05-14",
@@ -122,7 +134,7 @@
   "chioma-news-school-ai": {
     "de": {
       "title": "KI in der Schule – hilfreich oder unfair?",
-      "description": "Aylin schaut darauf, warum gerade so viele über KI bei Hausaufgaben und Referaten sprechen – und was das wirklich bedeutet.",
+      "description": "Aylin schaut darauf, warum gerade so viele über KI bei Hausaufgaben und Referaten sprechen und was das wirklich bedeutet.",
       "author": "Aylin",
       "date": "2026-03-29"
     },
@@ -152,7 +164,7 @@
   "gute-entschuldigung": {
     "de": {
       "title": "Wie funktioniert eigentlich eine gute Entschuldigung?",
-      "description": "Carlos erklärt in 5 Schritten, wie eine echte Entschuldigung aussieht – und was keine ist.",
+      "description": "Carlos erklärt in 5 Schritten, wie eine echte Entschuldigung aussieht und was keine ist.",
       "author": "Carlos",
       "date": "2026-07-20",
       "topicTags": [
@@ -271,7 +283,7 @@
   "tip-carlos-geodaten": {
     "de": {
       "title": "Spuren im Bild – so liest du Fotos richtig",
-      "description": "Du postest ein Foto – aber was postet das Foto über dich? Finde heraus, welche versteckten Infos darin stecken.",
+      "description": "Du postest ein Foto, aber was postet das Foto über dich? Finde heraus, welche versteckten Infos darin stecken.",
       "author": "Carlos",
       "date": "2026-01-27",
       "topicTags": [
@@ -314,7 +326,7 @@
   "urteilen-ueber-andere": {
     "de": {
       "title": "Was steckt wirklich hinter dem ersten Eindruck?",
-      "description": "Unser Gehirn liebt Abkürzungen – aber manchmal liegen wir daneben. Amys Challenge hilft dir, genauer hinzuschauen, bevor du urteilst.",
+      "description": "Unser Gehirn liebt Abkürzungen, aber manchmal liegen wir daneben. Amys Challenge hilft dir, genauer hinzuschauen, bevor du urteilst.",
       "author": "Amy",
       "date": "2026-06-10",
       "topicTags": [
@@ -326,7 +338,7 @@
   "vergleichs-falle": {
     "de": {
       "title": "Raus aus der Vergleichs-Falle",
-      "description": "Unser Gehirn vergleicht ständig – aber sehen wir dabei wirklich die ganze Wahrheit? Amys Mini-Challenge hilft dir, die Vergleichs-Falle zu erkennen und gegenzusteuern.",
+      "description": "Unser Gehirn vergleicht ständig, aber sehen wir dabei wirklich die ganze Wahrheit? Amys Mini-Challenge hilft dir, die Vergleichs-Falle zu erkennen und gegenzusteuern.",
       "author": "Amy",
       "date": "2026-06-01",
       "topicTags": [

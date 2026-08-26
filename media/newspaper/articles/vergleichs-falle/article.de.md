@@ -1,6 +1,6 @@
 ---
 title: Raus aus der Vergleichs-Falle
-description: Unser Gehirn vergleicht ständig – aber sehen wir dabei wirklich die ganze Wahrheit? Amys Mini-Challenge hilft dir, die Vergleichs-Falle zu erkennen und gegenzusteuern.
+description: Unser Gehirn vergleicht ständig, aber sehen wir dabei wirklich die ganze Wahrheit? Amys Mini-Challenge hilft dir, die Vergleichs-Falle zu erkennen und gegenzusteuern.
 author: Amy
 date: 2026-06-01
 topicTags: ["reflect", "fair"]

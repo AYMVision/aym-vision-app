@@ -1,6 +1,6 @@
 ---
 title: Wie funktioniert eigentlich eine gute Entschuldigung?
-description: Carlos erklärt in 5 Schritten, wie eine echte Entschuldigung aussieht – und was keine ist.
+description: Carlos erklärt in 5 Schritten, wie eine echte Entschuldigung aussieht und was keine ist.
 author: Carlos
 date: 2026-07-20
 topicTags: [reflect, fair]

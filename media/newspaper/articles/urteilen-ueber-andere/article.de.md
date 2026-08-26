@@ -1,6 +1,6 @@
 ---
 title: Was steckt wirklich hinter dem ersten Eindruck?
-description: Unser Gehirn liebt Abkürzungen – aber manchmal liegen wir daneben. Amys Challenge hilft dir, genauer hinzuschauen, bevor du urteilst.
+description: Unser Gehirn liebt Abkürzungen, aber manchmal liegen wir daneben. Amys Challenge hilft dir, genauer hinzuschauen, bevor du urteilst.
 author: Amy
 date: 2026-06-10
 topicTags: ["reflect", "fair"]
