@@ -257,7 +257,8 @@
         "intro": "During setup you receive 24 personal words — these are your personal access key. You can copy them or send them to yourself via 'Send to myself by email'. Here's how to restore on a new device:",
         "step1": "Open Amy Surfwing",
         "step2": "Tap 'Restore access' on the start screen",
-        "step3": "Enter the 24 words — access restored instantly ✓"
+        "step3": "Enter the 24 words",
+        "step4": "Set a new parent password — access restored ✓"
       },
       "multiProfile": {
         "question": "What happens if we create multiple profiles as a family?",

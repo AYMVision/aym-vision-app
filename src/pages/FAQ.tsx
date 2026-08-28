@@ -158,6 +158,7 @@ export default function FAQ() {
               <li>{t('faq.data.purchaseRestore.step1')}</li>
               <li>{t('faq.data.purchaseRestore.step2')}</li>
               <li>{t('faq.data.purchaseRestore.step3')}</li>
+              <li>{t('faq.data.purchaseRestore.step4')}</li>
             </ol>
           </FaqItem>
 

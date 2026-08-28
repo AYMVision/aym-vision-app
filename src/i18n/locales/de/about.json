@@ -254,7 +254,8 @@
         "intro": "Beim Einrichten erhältst du 24 persönliche Wörter; das ist dein persönlicher Zugang. Du kannst sie kopieren oder per 'Per E-Mail an mich senden' direkt zusenden. So stellst du ihn auf einem neuen Gerät wieder her:",
         "step1": "Amy Surfwing öffnen",
         "step2": "Auf der Startseite auf 'Zugang wiederherstellen' tippen",
-        "step3": "Die 24 Wörter eingeben — Zugang sofort wiederhergestellt ✓"
+        "step3": "Die 24 Wörter eingeben",
+        "step4": "Neues Elternpasswort setzen — Zugang wiederhergestellt ✓"
       },
       "multiProfile": {
         "question": "Was passiert, wenn ich als Familie mehrere Profile anlege?",

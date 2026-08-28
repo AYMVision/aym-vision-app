@@ -251,7 +251,7 @@
       "juryCopyAll": "Copy all 24 words",
       "juryMailSubject": "Amy Surfwing – Jury Access",
       "juryMailBody": "My 24 security words (please keep safe):",
-      "juryMailRestore": "How to restore access on a new device:\n1. Open Amy Surfwing\n2. Tap 'Restore access' on the start screen\n3. Enter the 24 words — access restored instantly ✓",
+      "juryMailRestore": "How to restore access on a new device:\n1. Open Amy Surfwing\n2. Tap 'Restore access' on the start screen\n3. Enter the 24 words\n4. Set a new parent password — access restored ✓",
       "juryMailLink": "Send to myself by email",
       "juryConfirm": "Saved — continue",
       "jurySkip": "Skip — I'll stay on this device"
