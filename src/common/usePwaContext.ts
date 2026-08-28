@@ -76,13 +76,9 @@ export function usePwaContext(): PwaContext {
     }
   }
 
-  const [dismissed, setDismissed] = useState(() => isPwaTransferHintDismissed());
-
-  const showTransferHint =
-    standalone &&
-    !dismissed &&
-    isPwaFirstLaunch() &&
-    !hasExistingProgress();
+  const [showTransferHint, setShowTransferHint] = useState(() =>
+    standalone && !isPwaTransferHintDismissed() && isPwaFirstLaunch() && !hasExistingProgress()
+  );
 
   useEffect(() => {
     if (standalone) markPwaFirstLaunchSeen();
@@ -90,7 +86,7 @@ export function usePwaContext(): PwaContext {
 
   function dismiss() {
     dismissPwaTransferHint();
-    setDismissed(true);
+    setShowTransferHint(false);
   }
 
   return { isStandalone: standalone, showTransferHint, dismiss };

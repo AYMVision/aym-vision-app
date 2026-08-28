@@ -687,6 +687,15 @@ const c05 = C('s1e03c05', 4, 'Amic 5', 'Das Handy', [
     m(ch.elsa, 'Hast du wirklich gedacht, du stirbst ohne?', '17:15'),
     m(ch.finn, 'halt die klappe', '17:15'),
   ], ['talk-act', 'fairness']),
+
+       S('s1e03c05_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e03c05_challenge_info_check',
+    '👉 Geh raus: Wo bewegt sich die Natur? Blätter im Wind? Ein Vogel am Himmel? Was entdeckst du noch?',
+  ),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────

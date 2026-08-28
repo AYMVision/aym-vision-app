@@ -123,6 +123,14 @@ const c01 = C('s1e02c01', 0, 'Amic 1', 'Alarm im Klassenchat', [
     topics: ['talk-act'],
     promptSpeakerId: 'dominik',
   }),
+    S('s1e02c01_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e02c01_challenge_info_check',
+    '👉 Lass dir nur die Hälfte einer Geschichte erzählen. Rate, wie sie weitergeht.',
+  ),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -309,7 +317,14 @@ const c03 = C('s1e02c03', 2, 'Amic 3', 'Dazugehören', [
 
   AR('s1e02c03_amy_reaction_belonging', 's1e02c03_reflection_belonging'),
 
+    S('s1e02c03_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
 
+  CH('s1e02c03_challenge_info_check',
+    '👉 Was in deinem Leben könnte besser sein? Anstatt zu meckern, ändere selbst einen kleinen ersten Schritt.',
+  ),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -697,7 +712,16 @@ const c08 = C('s1e02c08', 7, 'Amic 8', 'Regeln gelten auch hier', [
   inp('s1e02c08_input_chioma_emojis', 'stories:s1e02.c08.input.chiomaEmojis', {
     topics: ['reflect-understand'], promptSpeakerId: 'chioma',
   }),
-]);
+
+    S('s1e02c08_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e02c08_challenge_info_check',
+    '👉 Spiele mit jemandem 2 Minuten ein bekanntes Spiel, aber ohne Regeln. Was passiert?',
+  ),
+  ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CHAPTER 9 — Die Lösung mit dem Platzhalter

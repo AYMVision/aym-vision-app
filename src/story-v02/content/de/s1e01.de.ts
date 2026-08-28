@@ -349,14 +349,19 @@ const c03 = C('s1e01c03', 2, 'Amic 3', 'Der Plan mit dem Foto', [
 
   AF('s1e01c03_amy_feedback_judgement_posts', 's1e01c03_item_judgement_posts'),
 
-  S('s1e01c03_story_amy_wrapup', [
-    m(ch.amy, 'Mal sehen, wie Yasmin sich entscheidet und auf welche Idee sie plötzlich kommt.'),
-  ], ['reflect-understand']),
-
   S('s1e01c03_story_lukas_friendbook', [
     privateChat('Du', 'Yasmin'),
     m(ch.yasmin, 'Übrigens... Ich hab Lukas auch gefragt, ob er dir ins Freundebuch schreibt. Er hat schon angefangen...', '14:21'),
   ], ['talk-act']),
+
+    S('s1e01c02_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e01c02_challenge_video',
+    '👉 Mache etwas, das du noch nie gemacht hast.',
+  ),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -451,6 +456,15 @@ const c04 = C('s1e01c04', 3, 'Amic 4', 'Am Wasserfall', [
     m(ch.yasmin, 'Warte… Ich habe ´ne Idee. Vielleicht kannst du mir kurz helfen. Du kennst dich doch gut mit [[ki]] aus.', '15:37'),
     m(ch.yasmin, 'Aylin? Bist du online?', '15:37'),
   ], ['reflect-understand', 'talk-act']),
+
+      S('s1e01c02_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e01c02_challenge_video',
+    '👉 Schaue dir draußen etwas von Nahem an, dass du sonst nur von Weitem siehst.',
+  ),
 
 ]);
 

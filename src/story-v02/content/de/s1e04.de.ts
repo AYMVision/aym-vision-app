@@ -510,6 +510,15 @@ const c04 = C('s1e04c04', 3, 'Amic 4', 'Für die Schülerzeitung', [
     m(ch.jonas, 'Hat heute eigentlich jemand Amir gesehen?', '16:35'),
   ], ['fairness']),
 
+         S('s1e04c04_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e04c04_challenge_info_check',
+    '👉 Mache so ein Foto von einem Gegenstand, dass man den Gegenstand nicht erkennen kann.',
+  ),
+
 ]);
 
 // ── Kapitel 5 — Amic 5 ───────────────────────────────────────────────────────
@@ -755,6 +764,15 @@ const c06 = C('s1e04c06', 5, 'Amic 6', 'Der Sportbeutel', [
     ),
   ], ['reflect-understand']),
 
+          S('s1e04c06_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e04c06_challenge_info_check',
+    '👉 Nimm unterwegs einfach mal einen anderen Weg als sonst.',
+  ),
+
 ]);
 
 // ── Kapitel 7 — Amic 7 (Tag 4, Abend) ───────────────────────────────────────
@@ -932,6 +950,15 @@ const c08 = C('s1e04c08', 7, 'Amic 8', 'Im Probenraum', [
     privateChat('Jonas', 'Amir'),
     m(ch.jonas, 'Also morgen im Probenraum?', '16:32'),
   ], ['talk-act']),
+
+            S('s1e04c08_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e01c07_challenge_info_check',
+    '👉 Mach einfach mal selbst Musik. Mit deiner Stimme, einem Instrument oder irgendetwas anderem.',
+  ),
 
 ]);
 

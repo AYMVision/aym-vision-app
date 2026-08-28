@@ -746,7 +746,7 @@ const c07 = C('s1e01c07', 6, 'Amic 7', 'Relief and Doubt', [
 
   AF('s1e01c07_amy_feedback_outdated_tip', 's1e01c07_item_outdated_tip'),
 
-  S('s1e01c07_story_amy_challenge_intro', [
+  S('s1e04c08_story_amy_challenge_intro', [
     privateChat('Amy'),
     m(ch.amy, 'Ready for a little challenge?'),
   ], ['problem-solving']),

@@ -244,7 +244,15 @@
       "confirm": "Sicherung bestätigen",
       "skip": "Später",
       "skipHint": "Du kannst deine Sicherung jederzeit in deinem Profil nachholen.",
-      "done": "Sicherung abgeschlossen ✓"
+      "done": "Sicherung abgeschlossen ✓",
+      "juryHeadline": "Zugang sichern",
+      "juryWhyText": "Einmal speichern — dann jederzeit auf jedem Gerät zugänglich. Diese 24 Wörter sind dein persönlicher Jury-Zugang.",
+      "juryCopyAll": "Alle 24 Wörter kopieren",
+      "juryMailSubject": "Amy Surfwing – Jury-Zugang",
+      "juryMailBody": "Meine 24 Sicherungswörter (bitte sicher aufbewahren):",
+      "juryMailLink": "Per E-Mail an mich senden",
+      "juryConfirm": "Gespeichert — weiter",
+      "jurySkip": "Überspringen — ich bleibe auf diesem Gerät"
     },
     "restore": {
       "title": "Identität wiederherstellen",

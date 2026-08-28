@@ -431,7 +431,7 @@
       "rule": "Nenn eine Regel, die helfen würde.",
       "fallback": {
         "CHALLENGE": "Schreib eine Idee auf. Ein Beispiel reicht.",
-        "ACTION": "Was machst du als Erstes – ganz kurz?",
+        "ACTION": "Was machst du als Erstes?",
         "FEELING": "Welches Gefühl passt am besten?",
         "PERSPECTIVE": "Was ist für dich der wichtigste Punkt?",
         "KNOWLEDGE": "Was sollte man dazu wissen?",

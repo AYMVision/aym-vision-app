@@ -114,6 +114,16 @@ const c01 = C('s1e05c01', 0, 'Amic 1', 'Nur ein Sticker', [
     ),
   ], ['safe-online']),
 
+
+            S('s1e05c01_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e05c01_challenge_info_check',
+    '👉 Gehe draußen eine Runde umher und versuche 10 verschiedene Geräusche zu entdecken.',
+  ),
+
 ]);
 
 // ── Kapitel 2 — Amic 2 · Mittwoch Nachmittag ─────────────────────────────────
@@ -580,6 +590,17 @@ const c06 = C('s1e05c06', 5, 'Amic 6', 'Jetzt sind sie schon hier', [
     m(ch.elsa, 'Aber echt!', '7:58'),
     m(ch.lisa, 'Ist gut, ich schick\'s.', '7:59'),
   ], ['info-check']),
+
+
+
+            S('s1e05c06_story_amy_challenge_intro', [
+    privateChat('Amy'),
+    m(ch.amy, 'Hast du Lust auf eine kleine Challenge?'),
+  ], ['problem-solving']),
+
+  CH('s1e05c06_challenge_info_check',
+    '👉 Geh eine Runde und versuche, unterwegs drei richtig gute Verstecke zu entdecken.',
+  ),
 
 ]);
 

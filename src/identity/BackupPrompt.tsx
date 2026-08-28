@@ -6,7 +6,7 @@ import { pickQuizIndices, checkQuizAnswers } from './backupQuiz';
 
 type Screen = 'congrats' | 'why' | 'words' | 'quiz';
 
-export function BackupPrompt({ onDone, onCancel }: { onDone(): void; onCancel(): void }) {
+export function BackupPrompt({ onDone, onCancel, mode }: { onDone(): void; onCancel(): void; mode?: 'jury' }) {
   if (import.meta.env.VITE_SKIP_BACKUP_GATE === 'true') {
     markBackupConfirmed();
     onDone();
@@ -18,7 +18,7 @@ export function BackupPrompt({ onDone, onCancel }: { onDone(): void; onCancel():
   const mnemonic = identity?.mnemonic ?? '';
   const words = mnemonic.trim().split(/\s+/);
 
-  const [screen, setScreen] = useState<Screen>('congrats');
+  const [screen, setScreen] = useState<Screen>(() => mode === 'jury' ? 'words' : 'congrats');
   const [quizIndices] = useState(() => pickQuizIndices(Math.random));
   const [answers, setAnswers] = useState<string[]>(['', '', '']);
   const [quizError, setQuizError] = useState(false);
@@ -61,10 +61,19 @@ export function BackupPrompt({ onDone, onCancel }: { onDone(): void; onCancel():
   }
 
   if (screen === 'words') {
+    const mailtoHref = `mailto:?subject=${encodeURIComponent(t('identity.backup.juryMailSubject'))}&body=${encodeURIComponent(t('identity.backup.juryMailBody') + '\n\n' + mnemonic)}`;
+
     return (
       <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 px-4 pb-4 sm:items-center">
         <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
-          <div className="text-lg font-bold text-slate-900">{t('identity.backup.writeDownTitle')}</div>
+          {mode === 'jury' ? (
+            <>
+              <div className="text-lg font-bold text-slate-900">{t('identity.backup.juryHeadline')}</div>
+              <p className="text-sm text-slate-600 leading-relaxed">{t('identity.backup.juryWhyText')}</p>
+            </>
+          ) : (
+            <div className="text-lg font-bold text-slate-900">{t('identity.backup.writeDownTitle')}</div>
+          )}
           <div className="grid grid-cols-3 gap-2">
             {words.map((word, i) => (
               <div key={i} className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 text-center">
@@ -86,17 +95,25 @@ export function BackupPrompt({ onDone, onCancel }: { onDone(): void; onCancel():
                 : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
             }`}
           >
-            {copied ? 'Kopiert ✓' : 'Wörter kopieren'}
+            {copied ? 'Kopiert ✓' : mode === 'jury' ? t('identity.backup.juryCopyAll') : 'Wörter kopieren'}
           </button>
+          {mode === 'jury' && (
+            <a
+              href={mailtoHref}
+              className="block w-full text-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
+            >
+              {t('identity.backup.juryMailLink')}
+            </a>
+          )}
           <button
             type="button"
             onClick={() => { markBackupConfirmed(); onDone(); }}
             className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800"
           >
-            Ich habe sie gesichert →
+            {mode === 'jury' ? t('identity.backup.juryConfirm') : 'Ich habe sie gesichert →'}
           </button>
           <button type="button" onClick={onCancel} className="w-full text-center text-sm text-slate-500 hover:text-slate-700">
-            {t('identity.backup.skip')}
+            {mode === 'jury' ? t('identity.backup.jurySkip') : t('identity.backup.skip')}
           </button>
         </div>
       </div>

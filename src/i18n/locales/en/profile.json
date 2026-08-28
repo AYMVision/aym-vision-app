@@ -245,7 +245,15 @@
       "confirm": "Confirm backup",
       "skip": "Later",
       "skipHint": "You can complete your backup anytime in your profile.",
-      "done": "Backup confirmed ✓"
+      "done": "Backup confirmed ✓",
+      "juryHeadline": "Save your access",
+      "juryWhyText": "Save once — access anytime, on any device. These 24 words are your personal jury access.",
+      "juryCopyAll": "Copy all 24 words",
+      "juryMailSubject": "Amy Surfwing – Jury Access",
+      "juryMailBody": "My 24 security words (please keep safe):",
+      "juryMailLink": "Send to myself by email",
+      "juryConfirm": "Saved — continue",
+      "jurySkip": "Skip — I'll stay on this device"
     },
     "restore": {
       "title": "Restore identity",

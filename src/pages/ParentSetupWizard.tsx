@@ -295,6 +295,7 @@ export default function ParentSetupWizard() {
       if (showBackup) {
         return (
           <BackupPrompt
+            mode={isTommi ? 'jury' : undefined}
             onDone={() => goToNext()}
             onCancel={() => goToNext()}
           />
@@ -311,7 +312,7 @@ export default function ParentSetupWizard() {
             <button
               type="button"
               onClick={() => {
-                if (needsBackup && redeemedContentId !== 's1-full') {
+                if (needsBackup && (redeemedContentId !== 's1-full' || isTommi)) {
                   setShowBackup(true);
                 } else {
                   goToNext();
