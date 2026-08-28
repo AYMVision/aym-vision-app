@@ -167,14 +167,19 @@ function getCharacterOrder(characterId: CharacterId): number {
 
 /**
  * Charakterkarten automatisch generieren:
- * - released: true für alle (damit du ein echtes Sammelalbum siehst)
- * - unlockedBy: nur wenn gemappt => sonst bleibt es locked
+ * - released: true für alle mit Amic-Verbindung in S1
+ * - released: false für Charaktere ohne S1-Freundebuch-Eintrag → unsichtbar bis S2
  *
  * Locked funktioniert, weil isBonusUnlocked auf progress.seenChapterIds prüft.
  * Für "noch nicht gemappt" setzen wir unlockedBy auf ein unmögliches Kapitel,
  * damit sie NICHT frei werden.
  */
 const NEVER_CHAPTER: BonusUnlockRef = { type: 'chapter', id: '__never__' };
+
+// Charaktere ohne Freundebuch-Eintrag in Staffel 1 — für Staffel 2 reserviert
+const S2_RESERVED: Set<CharacterId> = new Set([
+  'dominik', 'aylin', 'mia', 'tom', 'markus', 'elsa', 'igor', 'emma', 'farida',
+]);
 
 const CHARACTER_CARDS: BonusItem[] = ALL_CHARACTER_IDS
   .map((characterId) => {
@@ -185,7 +190,7 @@ const CHARACTER_CARDS: BonusItem[] = ALL_CHARACTER_IDS
       category: 'characters',
       mediaType: 'profile',
       characterId,
-      released: true,
+      released: !S2_RESERVED.has(characterId),
       unlockedBy: unlockRef ?? NEVER_CHAPTER,
       order: getCharacterOrder(characterId),
     } satisfies BonusItem;

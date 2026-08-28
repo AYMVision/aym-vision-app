@@ -288,7 +288,7 @@ function openBonus(bonusId: string) {
 }
 
 const items = useMemo(() => {
-  const base = sortBonus(BONUS_INDEX.filter((i) => i.category === 'characters'));
+  const base = sortBonus(BONUS_INDEX.filter((i) => i.category === 'characters' && i.released));
 
   const myCardItem: BonusItem = {
     bonusId: 'my-card',
