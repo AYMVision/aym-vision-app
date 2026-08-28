@@ -53,7 +53,7 @@
     }
   },
   "parent": {
-    "titleSetup": "Einstellungen für Eltern einrichten",
+    "titleSetup": "Einstellungen für Eltern",
     "bodySetup": "Lege einen Eltern-Code fest. Damit kannst nur du später die Einstellungen ändern.",
     "titleUnlock": "Bereich für Eltern",
     "bodyUnlock": "Gib deinen Eltern-Code ein, um die Einstellungen zu öffnen.",
@@ -83,7 +83,7 @@
     "ctaSetup": "Weiter",
     "ctaCancel": "Abbrechen",
     "errorSetup": "Das stimmt leider nicht. Bitte nochmal.",
-    "legalConfirm": "Ich bin erziehungsberechtigt und richte dieses Gerät für mein Kind ein.",
+    "legalConfirm": "Ich bin volljährig (18+) und richte diesen Bereich verantwortungsvoll ein.",
     "forgotLink": "Eltern-Code vergessen?",
     "resetHint": "Gib den Master-Reset-Code ein. Bei Fragen wende dich an: hello@amysurfwing.de",
     "resetPlaceholder": "Reset-Code",

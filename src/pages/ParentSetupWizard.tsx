@@ -312,7 +312,7 @@ export default function ParentSetupWizard() {
             <button
               type="button"
               onClick={() => {
-                if (needsBackup && (redeemedContentId !== 's1-full' || isTommi)) {
+                if (needsBackup) {
                   setShowBackup(true);
                 } else {
                   goToNext();

@@ -1,10 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useIdentity } from './useIdentity';
 import { markBackupConfirmed } from './storage';
-import { pickQuizIndices, checkQuizAnswers } from './backupQuiz';
 
-type Screen = 'congrats' | 'why' | 'words' | 'quiz';
+type Screen = 'congrats' | 'why' | 'words';
 
 export function BackupPrompt({ onDone, onCancel, mode }: { onDone(): void; onCancel(): void; mode?: 'jury' }) {
   if (import.meta.env.VITE_SKIP_BACKUP_GATE === 'true') {
@@ -19,24 +18,7 @@ export function BackupPrompt({ onDone, onCancel, mode }: { onDone(): void; onCan
   const words = mnemonic.trim().split(/\s+/);
 
   const [screen, setScreen] = useState<Screen>(() => mode === 'jury' ? 'words' : 'congrats');
-  const [quizIndices] = useState(() => pickQuizIndices(Math.random));
-  const [answers, setAnswers] = useState<string[]>(['', '', '']);
-  const [quizError, setQuizError] = useState(false);
   const [copied, setCopied] = useState(false);
-
-  const handleAnswer = useCallback((i: number, value: string) => {
-    setAnswers(prev => { const next = [...prev]; next[i] = value; return next; });
-    setQuizError(false);
-  }, []);
-
-  function handleConfirm() {
-    if (!checkQuizAnswers(mnemonic, quizIndices, answers)) {
-      setQuizError(true);
-      return;
-    }
-    markBackupConfirmed();
-    onDone();
-  }
 
   if (screen === 'congrats' || screen === 'why') {
     return (
@@ -120,39 +102,5 @@ export function BackupPrompt({ onDone, onCancel, mode }: { onDone(): void; onCan
     );
   }
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl space-y-4">
-        <div className="text-lg font-bold text-slate-900">{t('identity.backup.quizTitle')}</div>
-        {quizIndices.map((wordIdx, i) => (
-          <div key={wordIdx} className="space-y-1">
-            <label className="text-sm text-slate-600">
-              {t('identity.backup.quizPrompt', { number: wordIdx + 1 })}
-            </label>
-            <input
-              type="text"
-              value={answers[i]}
-              onChange={e => handleAnswer(i, e.target.value)}
-              placeholder={t('identity.backup.quizPlaceholder')}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm font-mono focus:border-slate-500 focus:outline-none"
-            />
-          </div>
-        ))}
-        {quizError && (
-          <p className="text-sm text-red-600">{t('identity.backup.quizError')}</p>
-        )}
-        <button
-          type="button"
-          onClick={handleConfirm}
-          className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800"
-        >
-          {t('identity.backup.confirm')}
-        </button>
-        <button type="button" onClick={onCancel} className="w-full text-center text-sm text-slate-500 hover:text-slate-700">
-          {t('identity.backup.skip')}
-        </button>
-        <p className="text-xs text-slate-400 text-center">{t('identity.backup.skipHint')}</p>
-      </div>
-    </div>
-  );
+  return null;
 }
