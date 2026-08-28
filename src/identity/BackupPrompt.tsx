@@ -43,7 +43,7 @@ export function BackupPrompt({ onDone, onCancel, mode }: { onDone(): void; onCan
   }
 
   if (screen === 'words') {
-    const mailtoHref = `mailto:?subject=${encodeURIComponent(t('identity.backup.juryMailSubject'))}&body=${encodeURIComponent(t('identity.backup.juryMailBody') + '\n\n' + mnemonic)}`;
+    const mailtoHref = `mailto:?subject=${encodeURIComponent(t('identity.backup.juryMailSubject'))}&body=${encodeURIComponent(t('identity.backup.juryMailBody') + '\n\n' + mnemonic + '\n\n' + t('identity.backup.juryMailRestore'))}`;
 
     return (
       <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 px-4 pb-4 sm:items-center">
