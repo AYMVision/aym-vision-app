@@ -15,7 +15,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function DeviceCard({ icon, title, steps }: { icon: string; title: string; steps: string[] }) {
+function DeviceCard({ icon, title, steps, mobileHint }: { icon: string; title: string; steps: string[]; mobileHint?: boolean }) {
   return (
     <details className="group rounded-xl border border-slate-100 bg-slate-50">
       <summary className="flex items-center justify-between gap-2 px-4 py-3 cursor-pointer list-none select-none">
@@ -25,16 +25,23 @@ function DeviceCard({ icon, title, steps }: { icon: string; title: string; steps
         </div>
         <span className="text-slate-400 text-xs transition-transform group-open:rotate-180">▼</span>
       </summary>
-      <ol className="px-4 pb-4 space-y-1.5">
-        {steps.map((step, i) => (
-          <li key={i} className="flex gap-2 text-xs text-slate-600 leading-relaxed">
-            <span className="shrink-0 w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-[10px] font-bold flex items-center justify-center mt-0.5">
-              {i + 1}
-            </span>
-            <span>{step}</span>
-          </li>
-        ))}
-      </ol>
+      <div className="px-4 pb-4 space-y-2">
+        {mobileHint && (
+          <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-800 leading-relaxed">
+            <strong>Wichtig:</strong> Erst als App installieren, dann öffnen und Code eingeben.
+          </div>
+        )}
+        <ol className="space-y-1.5">
+          {steps.map((step, i) => (
+            <li key={i} className="flex gap-2 text-xs text-slate-600 leading-relaxed">
+              <span className="shrink-0 w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-[10px] font-bold flex items-center justify-center mt-0.5">
+                {i + 1}
+              </span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
     </details>
   );
 }
@@ -157,72 +164,62 @@ export default function TommiAward() {
             <SectionLabel>Installation</SectionLabel>
             <h2 className="text-base sm:text-lg font-semibold text-slate-900">So wird AMY SURFWING genutzt</h2>
             <p className="mt-1 text-sm text-slate-600 leading-relaxed">
-              AMY SURFWING läuft direkt im Browser — kein App Store nötig. Für das beste Erlebnis als App installieren.
+              AMY SURFWING läuft im Browser und als App — kein App Store nötig. Einfach die passende Option ausklappen.
             </p>
-          </div>
-
-          {/* Primär: Browser */}
-          <a
-            href="/jury"
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center justify-center gap-2 rounded-xl bg-violet-600 hover:bg-violet-700 px-5 py-4 text-sm font-bold text-white transition-colors text-center"
-          >
-            🌐 Im Browser öffnen (einfachste Option)
-          </a>
-
-          {/* Optional: Als App installieren */}
-          <div>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Oder als App installieren (empfohlen)</p>
-            <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-xs text-amber-800 leading-relaxed mb-3">
-              <strong>Wichtig:</strong> Erst als App installieren (Anleitung ausklappen), dann Amy Surfwing öffnen und Code eingeben — nicht umgekehrt.
-            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <DeviceCard
-              icon="🍎"
-              title="iPhone – Safari"
+              icon="🌐"
+              title="Im Browser (ohne Installation)"
               steps={[
-                'Den oben aufgeführten Link in Safari öffnen.',
-                'Unten auf das Drei-Punkte-Menü tippen, dann auf das Teilen-Symbol tippen.',
+                'Den Link direkt im Browser öffnen.',
+                'Unten auf der Startseite den Freischaltungscode eingeben — fertig.',
+              ]}
+            />
+            <DeviceCard
+              icon="🍎"
+              title="iPhone / iOS"
+              mobileHint
+              steps={[
+                'Den Link in Safari öffnen.',
+                'Unten auf das Teilen-Symbol tippen.',
                 'Nach unten scrollen und „Zum Home-Bildschirm" auswählen.',
-                'Auf „Hinzufügen" tippen.',
+                'Auf „Hinzufügen" tippen — App ist installiert.',
+                'App öffnen und Freischaltungscode eingeben.',
               ]}
             />
             <DeviceCard
               icon="🤖"
-              title="Android – Chrome"
+              title="Android"
+              mobileHint
               steps={[
                 'Den Link in Chrome öffnen.',
                 'Oben rechts auf das Drei-Punkte-Menü tippen.',
-                '„Zum Startbildschirm hinzufügen" bzw. „App installieren" auswählen.',
+                '„App installieren" oder „Zum Startbildschirm hinzufügen" auswählen.',
+                'App öffnen und Freischaltungscode eingeben.',
               ]}
             />
             <DeviceCard
               icon="🖥️"
-              title="Mac – Safari"
+              title="Mac"
               steps={[
                 'Den Link in Safari öffnen.',
-                'Oben in der Menüleiste auf „Ablage" klicken.',
-                '„Zum Dock hinzufügen…" auswählen (alternativ: Teilen-Symbol in der Adressleiste).',
-                'Namen bestätigen und auf „Hinzufügen" klicken.',
+                'Oben in der Menüleiste „Ablage" → „Zum Dock hinzufügen…" klicken.',
+                'Namen bestätigen und „Hinzufügen" klicken.',
+                'App öffnen und Freischaltungscode eingeben.',
               ]}
             />
             <DeviceCard
               icon="💻"
-              title="PC – Chrome"
+              title="Windows / PC"
               steps={[
                 'Den Link in Chrome öffnen.',
                 'Rechts in der Adressleiste auf das Installieren-Symbol klicken.',
                 'Falls nicht sichtbar: Drei-Punkte-Menü → „Diese Seite als App installieren".',
-                'Mit „Installieren" bestätigen.',
+                'Mit „Installieren" bestätigen, App öffnen und Code eingeben.',
               ]}
             />
-          </div>
-
-          <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800 leading-relaxed">
-            <strong>Erster Start:</strong> Nach der Installation die App öffnen und den Freischaltungscode eingeben (ganz unten auf der Startseite beim Jury-Feld).
           </div>
         </div>
 
