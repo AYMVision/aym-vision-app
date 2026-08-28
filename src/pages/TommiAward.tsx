@@ -17,12 +17,15 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function DeviceCard({ icon, title, steps }: { icon: string; title: string; steps: string[] }) {
   return (
-    <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-lg">{icon}</span>
-        <span className="text-sm font-semibold text-slate-800">{title}</span>
-      </div>
-      <ol className="space-y-1.5">
+    <details className="group rounded-xl border border-slate-100 bg-slate-50">
+      <summary className="flex items-center justify-between gap-2 px-4 py-3 cursor-pointer list-none select-none">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">{icon}</span>
+          <span className="text-sm font-semibold text-slate-800">{title}</span>
+        </div>
+        <span className="text-slate-400 text-xs transition-transform group-open:rotate-180">▼</span>
+      </summary>
+      <ol className="px-4 pb-4 space-y-1.5">
         {steps.map((step, i) => (
           <li key={i} className="flex gap-2 text-xs text-slate-600 leading-relaxed">
             <span className="shrink-0 w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-[10px] font-bold flex items-center justify-center mt-0.5">
@@ -32,7 +35,7 @@ function DeviceCard({ icon, title, steps }: { icon: string; title: string; steps
           </li>
         ))}
       </ol>
-    </div>
+    </details>
   );
 }
 
@@ -152,10 +155,28 @@ export default function TommiAward() {
         <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-5">
           <div>
             <SectionLabel>Installation</SectionLabel>
-            <h2 className="text-base sm:text-lg font-semibold text-slate-900">So wird AMY SURFWING installiert</h2>
+            <h2 className="text-base sm:text-lg font-semibold text-slate-900">So wird AMY SURFWING genutzt</h2>
             <p className="mt-1 text-sm text-slate-600 leading-relaxed">
-              AMY SURFWING ist eine Progressive Web App (PWA). Ein Download aus dem App Store ist nicht erforderlich.
+              AMY SURFWING läuft direkt im Browser — kein App Store nötig. Für das beste Erlebnis als App installieren.
             </p>
+          </div>
+
+          {/* Primär: Browser */}
+          <a
+            href="/jury"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center justify-center gap-2 rounded-xl bg-violet-600 hover:bg-violet-700 px-5 py-4 text-sm font-bold text-white transition-colors text-center"
+          >
+            🌐 Im Browser öffnen (einfachste Option)
+          </a>
+
+          {/* Optional: Als App installieren */}
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Oder als App installieren (empfohlen)</p>
+            <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-xs text-amber-800 leading-relaxed mb-3">
+              <strong>Wichtig:</strong> Erst als App installieren (Anleitung ausklappen), dann Amy Surfwing öffnen und Code eingeben — nicht umgekehrt.
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -201,7 +222,7 @@ export default function TommiAward() {
           </div>
 
           <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800 leading-relaxed">
-            <strong>Erster Start:</strong> Beim ersten Öffnen bitte den Freischaltungscode eingeben (ganz unten auf der Startseite oder beim Jury-Feld).
+            <strong>Erster Start:</strong> Nach der Installation die App öffnen und den Freischaltungscode eingeben (ganz unten auf der Startseite beim Jury-Feld).
           </div>
         </div>
 
