@@ -31,7 +31,7 @@ export function BackupPrompt({ onDone, onCancel, mode }: { onDone(): void; onCan
             onClick={() => setScreen('words')}
             className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800"
           >
-            Wörter anzeigen →
+            Meine 24 Wörter ansehen →
           </button>
           <button type="button" onClick={onCancel} className="w-full text-center text-sm text-slate-500 hover:text-slate-700">
             {t('identity.backup.skip')}
@@ -77,7 +77,7 @@ export function BackupPrompt({ onDone, onCancel, mode }: { onDone(): void; onCan
                 : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
             }`}
           >
-            {copied ? 'Kopiert ✓' : mode === 'jury' ? t('identity.backup.juryCopyAll') : 'Wörter kopieren'}
+            {copied ? 'Kopiert ✓' : mode === 'jury' ? t('identity.backup.juryCopyAll') : 'Alle 24 Wörter kopieren'}
           </button>
           {mode === 'jury' && (
             <a
@@ -92,7 +92,7 @@ export function BackupPrompt({ onDone, onCancel, mode }: { onDone(): void; onCan
             onClick={() => { markBackupConfirmed(); onDone(); }}
             className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800"
           >
-            {mode === 'jury' ? t('identity.backup.juryConfirm') : 'Ich habe sie gesichert →'}
+            {mode === 'jury' ? t('identity.backup.juryConfirm') : 'Gespeichert — weiter'}
           </button>
           <button type="button" onClick={onCancel} className="w-full text-center text-sm text-slate-500 hover:text-slate-700">
             {mode === 'jury' ? t('identity.backup.jurySkip') : t('identity.backup.skip')}

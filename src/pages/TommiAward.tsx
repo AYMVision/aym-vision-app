@@ -5,76 +5,31 @@ const KIDSJURY_VIDEO = '/media/ui/Tommi/amy-surfwing-kidsjury.mp4';
 const FACHJURY_PDF = '/media/ui/Tommi/AmySurfwing_TOMMI_Onepager.pdf';
 const KIDSJURY_PDF = '/media/ui/Tommi/AmySurfwing_TOMMI_Onepager_KIDS.pdf';
 
-function JurySection({
-  label,
-  title,
-  intro,
-  videoSrc,
-  pdfHref,
-  pdfLabel,
-  color,
-}: {
-  label: string;
-  title: string;
-  intro: string;
-  videoSrc: string;
-  pdfHref: string;
-  pdfLabel: string;
-  color: 'violet' | 'teal';
-}) {
-  const accent =
-    color === 'violet'
-      ? {
-          kicker: 'text-violet-600',
-          border: 'border-violet-100',
-          bg: 'bg-violet-50',
-          btn: 'bg-violet-600 hover:bg-violet-700',
-          tag: 'bg-violet-100 text-violet-700 border-violet-200',
-        }
-      : {
-          kicker: 'text-teal-600',
-          border: 'border-teal-100',
-          bg: 'bg-teal-50',
-          btn: 'bg-teal-600 hover:bg-teal-700',
-          tag: 'bg-teal-100 text-teal-700 border-teal-200',
-        };
-
+function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`rounded-2xl border ${accent.border} ${accent.bg} p-5 sm:p-6`}>
-      <div className={`text-xs font-semibold uppercase tracking-wide ${accent.kicker}`}>{label}</div>
-      <h2 className="mt-1 text-base sm:text-lg font-semibold text-slate-900">{title}</h2>
-      <p className="mt-2 text-sm text-slate-600 leading-relaxed">{intro}</p>
+    <div className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
+      {children}
+    </div>
+  );
+}
 
-      <div className="mt-4 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
-        <video
-          controls
-          className="w-full h-auto block"
-          preload="metadata"
-        >
-          <source src={videoSrc} type="video/mp4" />
-          Dein Browser unterstützt keine Videowiedergabe.
-        </video>
+function DeviceCard({ icon, title, steps }: { icon: string; title: string; steps: string[] }) {
+  return (
+    <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
+      <div className="flex items-center gap-2 mb-3">
+        <span className="text-lg">{icon}</span>
+        <span className="text-sm font-semibold text-slate-800">{title}</span>
       </div>
-
-      <div className="mt-4 flex flex-wrap gap-2">
-        <a
-          href={pdfHref}
-          target="_blank"
-          rel="noreferrer"
-          className={`inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-colors ${accent.btn}`}
-        >
-          <span>📄</span>
-          {pdfLabel}
-        </a>
-        <a
-          href={pdfHref}
-          download
-          className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold bg-white border border-slate-200 text-slate-700 hover:border-slate-300 transition-colors"
-        >
-          <span>⬇️</span>
-          Herunterladen
-        </a>
-      </div>
+      <ol className="space-y-1.5">
+        {steps.map((step, i) => (
+          <li key={i} className="flex gap-2 text-xs text-slate-600 leading-relaxed">
+            <span className="shrink-0 w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-[10px] font-bold flex items-center justify-center mt-0.5">
+              {i + 1}
+            </span>
+            <span>{step}</span>
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }
@@ -108,33 +63,178 @@ export default function TommiAward() {
           </div>
         </div>
 
-        {/* KIDS-JURY */}
-        <JurySection
-          label="Kids-Jury"
-          title="Video und Onepager für die Kids-Jury"
-          intro="AMY SURFWING für euch erklärt: Was erwartet euch? Wie funktioniert’s? Und was könnt ihr erleben?"
-          videoSrc={KIDSJURY_VIDEO}
-          pdfHref={KIDSJURY_PDF}
-          pdfLabel="Onepager Kids-Jury ansehen"
-          color="violet"
-        />
+{/* KIDS-JURY */}
+        <div className="rounded-2xl border border-violet-100 bg-violet-50 p-5 sm:p-6 space-y-5">
+          <div>
+            <SectionLabel>Kids-Jury</SectionLabel>
+            <h2 className="text-base sm:text-lg font-semibold text-slate-900">
+              Video und Onepager für die Kids-Jury
+            </h2>
+            <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+              AMY SURFWING für euch erklärt: Was erwartet euch? Wie funktioniert's? Und was könnt ihr erleben?
+            </p>
+          </div>
+
+          {/* Onepager prominent */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <a
+              href={KIDSJURY_PDF}
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-violet-600 hover:bg-violet-700 px-5 py-4 text-sm font-bold text-white transition-colors text-center"
+            >
+              <span className="text-lg">📄</span>
+              Onepager Kids-Jury ansehen
+            </a>
+            <a
+              href={KIDSJURY_PDF}
+              download
+              className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm font-semibold text-slate-700 hover:border-slate-300 transition-colors"
+            >
+              <span>⬇️</span> Herunterladen
+            </a>
+          </div>
+
+          {/* Video */}
+          <div className="rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <video controls className="w-full h-auto block" preload="metadata">
+              <source src={KIDSJURY_VIDEO} type="video/mp4" />
+              Dein Browser unterstützt keine Videowiedergabe.
+            </video>
+          </div>
+        </div>
 
         {/* FACH-JURY */}
-        <JurySection
-          label="Fach-Jury"
-          title="Video und Onepager für die Fach-Jury"
-          intro="AMY SURFWING für die Fachjury erklärt: Wie funktioniert die App, was ist die Idee dahinter und was können Kinder dabei lernen?"
-          videoSrc={FACHJURY_VIDEO}
-          pdfHref={FACHJURY_PDF}
-          pdfLabel="Onepager Fach-Jury ansehen"
-          color="teal"
-        />
+        <div className="rounded-2xl border border-teal-100 bg-teal-50 p-5 sm:p-6 space-y-5">
+          <div>
+            <SectionLabel>Fach-Jury</SectionLabel>
+            <h2 className="text-base sm:text-lg font-semibold text-slate-900">
+              Video und Onepager für die Fach-Jury
+            </h2>
+            <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+              AMY SURFWING für die Fachjury erklärt: Wie funktioniert die App, was ist die Idee dahinter und was können Kinder dabei lernen?
+            </p>
+          </div>
+
+          {/* Onepager prominent */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <a
+              href={FACHJURY_PDF}
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-700 px-5 py-4 text-sm font-bold text-white transition-colors text-center"
+            >
+              <span className="text-lg">📄</span>
+              Onepager Fach-Jury ansehen
+            </a>
+            <a
+              href={FACHJURY_PDF}
+              download
+              className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-4 text-sm font-semibold text-slate-700 hover:border-slate-300 transition-colors"
+            >
+              <span>⬇️</span> Herunterladen
+            </a>
+          </div>
+
+          {/* Video */}
+          <div className="rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <video controls className="w-full h-auto block" preload="metadata">
+              <source src={FACHJURY_VIDEO} type="video/mp4" />
+              Dein Browser unterstützt keine Videowiedergabe.
+            </video>
+          </div>
+        </div>
+
+        {/* INSTALLATION */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-5">
+          <div>
+            <SectionLabel>Installation</SectionLabel>
+            <h2 className="text-base sm:text-lg font-semibold text-slate-900">So wird AMY SURFWING installiert</h2>
+            <p className="mt-1 text-sm text-slate-600 leading-relaxed">
+              AMY SURFWING ist eine Progressive Web App (PWA). Ein Download aus dem App Store ist nicht erforderlich.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <DeviceCard
+              icon="🍎"
+              title="iPhone – Safari"
+              steps={[
+                'Den oben aufgeführten Link in Safari öffnen.',
+                'Unten auf das Drei-Punkte-Menü tippen, dann auf das Teilen-Symbol tippen.',
+                'Nach unten scrollen und „Zum Home-Bildschirm" auswählen.',
+                'Auf „Hinzufügen" tippen.',
+              ]}
+            />
+            <DeviceCard
+              icon="🤖"
+              title="Android – Chrome"
+              steps={[
+                'Den Link in Chrome öffnen.',
+                'Oben rechts auf das Drei-Punkte-Menü tippen.',
+                '„Zum Startbildschirm hinzufügen" bzw. „App installieren" auswählen.',
+              ]}
+            />
+            <DeviceCard
+              icon="🖥️"
+              title="Mac – Safari"
+              steps={[
+                'Den Link in Safari öffnen.',
+                'Oben in der Menüleiste auf „Ablage" klicken.',
+                '„Zum Dock hinzufügen…" auswählen (alternativ: Teilen-Symbol in der Adressleiste).',
+                'Namen bestätigen und auf „Hinzufügen" klicken.',
+              ]}
+            />
+            <DeviceCard
+              icon="💻"
+              title="PC – Chrome"
+              steps={[
+                'Den Link in Chrome öffnen.',
+                'Rechts in der Adressleiste auf das Installieren-Symbol klicken.',
+                'Falls nicht sichtbar: Drei-Punkte-Menü → „Diese Seite als App installieren".',
+                'Mit „Installieren" bestätigen.',
+              ]}
+            />
+          </div>
+
+          <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800 leading-relaxed">
+            <strong>Erster Start:</strong> Beim ersten Öffnen bitte den Freischaltungscode eingeben (ganz unten auf der Startseite oder beim Jury-Feld).
+          </div>
+        </div>
+
+        {/* HINWEISE ZUM TESTEN */}
+        <div className="rounded-2xl border border-orange-100 bg-orange-50 p-5 sm:p-6">
+          <SectionLabel>Hinweise zum Testen</SectionLabel>
+          <ul className="space-y-3">
+            <li className="flex gap-3 text-sm text-slate-700 leading-relaxed">
+              <span className="shrink-0 text-base">⚠️</span>
+              <span>Durch die vollständige Tommi-Jury-Freischaltung kann es beim Weiterspielen Button zu einem Sprung ans Ende der Story kommen. In diesem Fall bitte über AMY SURFWING das gewünschte Kapitel auswählen.</span>
+            </li>
+            <li className="flex gap-3 text-sm text-slate-700 leading-relaxed">
+              <span className="shrink-0 text-base">💡</span>
+              <span><strong>Unsere Empfehlung:</strong> Startet mit dem Kinder-Onboarding, spielt zunächst einige Kapitel und stöbert anschließend gerne durch die gesamte Staffel und die Bonuswelt.</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* DATENSCHUTZ */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+          <SectionLabel>Datenschutz</SectionLabel>
+          <div className="space-y-3 text-sm text-slate-700 leading-relaxed">
+            <p>
+              Amy Surfwing speichert keine Daten in der Cloud, das ist eine bewusste Entscheidung für maximalen Datenschutz, besonders mit Blick auf unsere junge Zielgruppe. Alles bleibt auf eurem Gerät.
+            </p>
+            <p>
+              Damit ihr flexibel testen könnt, auch auf einem anderen Gerät oder nach einer Pause, erhaltet ihr beim Einrichten persönliche Wörter. Das ist euer Zugang. Einmal kopieren oder z. B. per E-Mail an euch senden und ihr könnt auf jedem Gerät nach Eingabe der Wörter weiter testen.
+            </p>
+          </div>
+        </div>
 
         {/* PRESSE UND MEDIEN */}
         <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Presse und Medien</div>
-          <h2 className="mt-1 text-base sm:text-lg font-semibold text-slate-900">Pressebereich</h2>
-          <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+          <SectionLabel>Presse und Medien</SectionLabel>
+          <h2 className="text-base sm:text-lg font-semibold text-slate-900">Pressebereich</h2>
+          <p className="mt-1 text-sm text-slate-600 leading-relaxed">
             Bilder und Logos zur Verwendung in Presseberichten und Medien.
           </p>
 
@@ -160,8 +260,7 @@ export default function TommiAward() {
               </a>
             </div>
 
-
-{/* Logo für hellen Hintergrund */}
+            {/* Logo hell */}
             <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 flex flex-col items-center gap-3">
               <img
                 src="/media/ui/Tommi/Logo%20Amy%20Surfwing%20mit%20Eule.png"
@@ -181,7 +280,7 @@ export default function TommiAward() {
               </a>
             </div>
 
-            {/* Logo für dunklen Hintergrund */}
+            {/* Logo dunkel */}
             <div className="rounded-xl border border-slate-700 bg-slate-900 p-4 flex flex-col items-center gap-3">
               <img
                 src="/media/ui/Tommi/Logo%20Amy%20Surfwing%20mit%20wei%C3%9Fer%20Eule.png"
@@ -204,10 +303,11 @@ export default function TommiAward() {
           </div>
         </div>
 
-        {/* FOOTER NOTE */}
+        {/* FOOTER */}
         <p className="text-center text-xs text-slate-400">
           Amy Surfwing · AYM Vision · TOMMI Award 2026
         </p>
+
       </div>
     </Layout>
   );

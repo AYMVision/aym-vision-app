@@ -232,11 +232,11 @@
       "done": "Done"
     },
     "backup": {
-      "headline": "Secure your access",
+      "headline": "Save your access",
       "congrats": "Congratulations on your unlock!",
       "whyTitle": "Your access — secured forever",
-      "whyText": "Your season is now unlocked. These 24 words are your only key — use them to restore your purchase at any time, even on a new device. Your game progress is backed up separately via the Transfer function.",
-      "writeDownTitle": "Your 24 security words",
+      "whyText": "Your access is unlocked. Please save now — only this way your access is preserved after switching devices.",
+      "writeDownTitle": "Your personal access",
       "writeDownHint": "Write them on paper — not as a screenshot.",
       "quizTitle": "Verify your backup",
       "quizPrompt": "What word is at position {{number}}?",

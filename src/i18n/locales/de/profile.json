@@ -231,11 +231,11 @@
       "done": "Fertig"
     },
     "backup": {
-      "headline": "Sichere deinen Zugang",
+      "headline": "Zugang sichern",
       "congrats": "Glückwunsch zur Freischaltung!",
       "whyTitle": "Dein Zugang – gesichert für immer",
-      "whyText": "Deine Staffel ist freigeschaltet. Die folgenden 24 Wörter sind dein einziger Schlüssel. Damit kannst du deinen Kauf jederzeit wiederherstellen, auch auf einem neuen Gerät.",
-      "writeDownTitle": "Deine 24 Sicherheitswörter",
+      "whyText": "Dein Zugang ist freigeschaltet. Bitte jetzt sichern, nur so bleibt dein Zugang auch nach einem Gerätewechsel erhalten.",
+      "writeDownTitle": "Dein persönlicher Zugang",
       "writeDownHint": "Schreib sie auf Papier – nicht als Screenshot.",
       "quizTitle": "Überprüfe deine Sicherung",
       "quizPrompt": "Welches Wort steht an Stelle {{number}}?",
