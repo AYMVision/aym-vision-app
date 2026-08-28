@@ -19,6 +19,7 @@ import { getActiveProfileId } from '../profile/profileStorage';
 import ProfileSwitcherModal from '../components/ProfileSwitcherModal';
 import { loadStore } from '../analytics/analyticsStore';
 import { BONUS_INDEX } from '../bonus/bonusIndex';
+import { RestoreIdentityModal } from '../identity/RestoreIdentityModal';
 import { loadSeenBonusIds } from '../bonus/bonusSeen';
 import { isBonusUnlocked, isCharacterUnlockedByProgress } from '../bonus/bonusUnlock';
 import type { BonusProgressSnapshot } from '../bonus/bonusUnlock';
@@ -197,6 +198,7 @@ function isUnlockedByChain(
     () => loadProfilesIndex().length > 0 && !getActiveProfileId()
   );
   const [quickVoucher, setQuickVoucher] = useState('');
+  const [showRestore, setShowRestore] = useState(false);
 
   // Personalisierte Begrüßung
   const greeting = (() => {
@@ -552,6 +554,13 @@ function isUnlockedByChain(
             <p className="mt-3 text-xs text-slate-400">
               Wartezeiten sind für euren Test deaktiviert.
             </p>
+            <button
+              type="button"
+              onClick={() => setShowRestore(true)}
+              className="mt-2 text-xs text-violet-500 hover:text-violet-700 underline underline-offset-2"
+            >
+              Bereits eingerichtet? Zugang wiederherstellen →
+            </button>
           </div>
         )}
 
@@ -844,6 +853,13 @@ function isUnlockedByChain(
         <ProfileSwitcherModal
           onClose={() => {}}
           onSwitched={() => setShowLockSwitcher(false)}
+        />
+      )}
+
+      {showRestore && (
+        <RestoreIdentityModal
+          onDone={() => setShowRestore(false)}
+          onCancel={() => setShowRestore(false)}
         />
       )}
     </Layout>

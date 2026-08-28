@@ -11,6 +11,7 @@ import { paymentLinkFor, computeProfileHash } from '../shop/stripe';
 import { loadIdentity } from '../identity/storage';
 import { useIdentity } from '../identity/useIdentity';
 import { BackupPrompt } from '../identity/BackupPrompt';
+import { RestoreIdentityModal } from '../identity/RestoreIdentityModal';
 import { getActiveProfileId } from '../profile/profileStorage';
 import { aymFetch } from '../identity/handshake';
 import { parseVoucherInput } from '../shop/qrScanner';
@@ -78,6 +79,7 @@ export default function ParentSetupWizard() {
   const [voucherSuccess, setVoucherSuccess] = useState(false);
   const [redeemedContentId, setRedeemedContentId] = useState<string | null>(null);
   const [showBackup, setShowBackup] = useState(false);
+  const [showRestore, setShowRestore] = useState(false);
 
   function advanceToCode() {
     markParentSetupDone();
@@ -401,8 +403,23 @@ export default function ParentSetupWizard() {
           >
             {t('wizard.access.skip')}
           </button>
+
+          <button
+            type="button"
+            onClick={() => setShowRestore(true)}
+            className="w-full py-1.5 text-sm text-slate-400 hover:text-slate-600"
+          >
+            {t('wizard.access.restore', { defaultValue: 'Bereits einen Zugang? → Wiederherstellen' })}
+          </button>
         </div>
       </div>
+
+      {showRestore && (
+        <RestoreIdentityModal
+          onDone={() => { setShowRestore(false); goToNext(); }}
+          onCancel={() => setShowRestore(false)}
+        />
+      )}
     );
   }
 

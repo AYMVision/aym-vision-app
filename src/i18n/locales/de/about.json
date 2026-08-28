@@ -253,11 +253,8 @@
         "question": "Wie stelle ich meinen Zugang auf einem neuen Gerät wieder her?",
         "intro": "Beim Einrichten erhältst du 24 persönliche Wörter; das ist dein persönlicher Zugang. Du kannst sie kopieren oder per 'Per E-Mail an mich senden' direkt zusenden. So stellst du ihn auf einem neuen Gerät wieder her:",
         "step1": "Amy Surfwing öffnen",
-        "step2": "Unten auf 'Für Eltern' tippen",
-        "step3": "Auf 'App Einstellungen' tippen",
-        "step4": "Nach unten scrollen und 'Kauf wiederherstellen' wählen",
-        "step5": "'Aus 24 Sicherungswörtern wiederherstellen' tippen",
-        "step6": "Die 24 Wörter eingeben — Zugang sofort wiederhergestellt ✓"
+        "step2": "Auf der Startseite auf 'Zugang wiederherstellen' tippen",
+        "step3": "Die 24 Wörter eingeben — Zugang sofort wiederhergestellt ✓"
       },
       "multiProfile": {
         "question": "Was passiert, wenn ich als Familie mehrere Profile anlege?",

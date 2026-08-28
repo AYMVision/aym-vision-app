@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import Layout from '../components/Layout';
+import { RestoreIdentityModal } from '../identity/RestoreIdentityModal';
 
 const FACHJURY_VIDEO = '/media/ui/Tommi/amy-surfwing-fachjury.mp4';
 const KIDSJURY_VIDEO = '/media/ui/Tommi/amy-surfwing-kidsjury.mp4';
@@ -35,6 +37,7 @@ function DeviceCard({ icon, title, steps }: { icon: string; title: string; steps
 }
 
 export default function TommiAward() {
+  const [showRestore, setShowRestore] = useState(false);
   return (
     <Layout>
       <div className="w-full max-w-4xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8">
@@ -68,7 +71,7 @@ export default function TommiAward() {
           <div>
             <SectionLabel>Kids-Jury</SectionLabel>
             <h2 className="text-base sm:text-lg font-semibold text-slate-900">
-              Video und Onepager für die Kids-Jury
+              Onepager und Video für die Kids-Jury
             </h2>
             <p className="mt-1 text-sm text-slate-600 leading-relaxed">
               AMY SURFWING für euch erklärt: Was erwartet euch? Wie funktioniert's? Und was könnt ihr erleben?
@@ -109,7 +112,7 @@ export default function TommiAward() {
           <div>
             <SectionLabel>Fach-Jury</SectionLabel>
             <h2 className="text-base sm:text-lg font-semibold text-slate-900">
-              Video und Onepager für die Fach-Jury
+              Onepager und Video für die Fach-Jury
             </h2>
             <p className="mt-1 text-sm text-slate-600 leading-relaxed">
               AMY SURFWING für die Fachjury erklärt: Wie funktioniert die App, was ist die Idee dahinter und was können Kinder dabei lernen?
@@ -225,19 +228,27 @@ export default function TommiAward() {
               AMY SURFWING speichert keine Daten in der Cloud, das ist eine bewusste Entscheidung für maximalen Datenschutz, besonders mit Blick auf unsere junge Zielgruppe. Alles bleibt auf eurem Gerät.
             </p>
             <p>
-              Damit ihr flexibel testen könnt, auch auf einem anderen Gerät oder nach einer Pause, erhaltet ihr beim Einrichten 24 persönliche Wörter. Das ist euer persönlicher Zugang. Einmal kopieren oder direkt per <strong>„Per E-Mail an mich senden"</strong> sichern. So könnt ihr auf jedem Gerät nach Eingabe der Wörter weitertesten.
+              Damit ihr flexibel testen könnt, auch auf einem anderen Gerät oder nach einer Pause, erhaltet ihr beim Einrichten 24 persönliche Wörter. Das ist euer persönlicher Zugang. Einmal kopieren oder direkt per <strong>„Per E-Mail an mich senden"</strong> sichern.
             </p>
-            <p className="font-semibold text-slate-800 mt-3">Zugang auf einem neuen Gerät wiederherstellen:</p>
-            <ol className="list-decimal list-inside space-y-1 mt-1">
-              <li>AMY SURFWING öffnen</li>
-              <li>Unten auf <strong>„Für Eltern"</strong> tippen</li>
-              <li>Auf <strong>„App Einstellungen"</strong> tippen</li>
-              <li>Nach unten scrollen → <strong>„Kauf wiederherstellen"</strong> wählen</li>
-              <li><strong>„Aus 24 Sicherungswörtern wiederherstellen"</strong> tippen</li>
-              <li>Die 24 Wörter eingeben — Zugang sofort wiederhergestellt ✓</li>
-            </ol>
+            <p>
+              Auf neuem Gerät: Amy Surfwing öffnen und unten auf „Zugang wiederherstellen" tippen — oder direkt hier:
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowRestore(true)}
+              className="mt-1 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
+            >
+              🔑 Zugang wiederherstellen
+            </button>
           </div>
         </div>
+
+        {showRestore && (
+          <RestoreIdentityModal
+            onDone={() => setShowRestore(false)}
+            onCancel={() => setShowRestore(false)}
+          />
+        )}
 
         {/* PRESSE UND MEDIEN */}
         <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
