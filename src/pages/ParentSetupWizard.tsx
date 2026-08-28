@@ -58,7 +58,7 @@ export default function ParentSetupWizard() {
   }
 
   const [step, setStep] = useState<Step>(getStartStep);
-  const [legalChecked, setLegalChecked] = useState(isTommi);
+  const [legalChecked, setLegalChecked] = useState(false);
 
   // Wenn bereits fertig eingerichtet (z.B. direkt per URL) → zu Eltern-Einstellungen
   useEffect(() => {
@@ -200,26 +200,17 @@ export default function ParentSetupWizard() {
             </div>
           </div>
 
-          <label className={`flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 ${isTommi ? 'opacity-60 cursor-default' : 'cursor-pointer'}`}>
+          <label className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 cursor-pointer">
             <input
               type="checkbox"
               checked={legalChecked}
-              onChange={isTommi ? undefined : e => setLegalChecked(e.target.checked)}
-              disabled={isTommi}
+              onChange={e => setLegalChecked(e.target.checked)}
               className="mt-0.5 h-4 w-4 rounded border-slate-300 accent-teal-600 shrink-0"
             />
             <span className="text-sm text-slate-700 leading-snug">
               {t('parent.legalConfirm')}
             </span>
           </label>
-
-          {isTommi && (
-            <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4">
-              <p className="text-sm text-violet-800 leading-relaxed">
-                ℹ️ {t('wizard.legal.tommiNote')}
-              </p>
-            </div>
-          )}
 
           <button
             type="button"
@@ -345,7 +336,7 @@ export default function ParentSetupWizard() {
                 value={voucherInput}
                 onChange={e => { setVoucherInput(e.target.value); setVoucherError(''); }}
                 placeholder={t('wizard.access.voucherPlaceholder')}
-                className="flex-1 border border-slate-300 rounded-xl px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-300"
+                className="flex-1 border border-slate-300 rounded-xl px-3 py-2.5 text-[16px] font-mono focus:outline-none focus:ring-2 focus:ring-teal-300"
                 autoCapitalize="characters"
               />
               <button

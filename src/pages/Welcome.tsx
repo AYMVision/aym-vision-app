@@ -512,7 +512,7 @@ function isUnlockedByChain(
         {isTommi && (
           <div className="mt-6 rounded-2xl border border-violet-200 bg-violet-50 p-5 sm:p-6">
             <div className="text-xs font-semibold uppercase tracking-wide text-violet-600">TOMMI Award 2026</div>
-            <h2 className="mt-1 text-lg font-extrabold text-slate-900">Herzlich willkommen, liebe Fach-Jury!</h2>
+            <h2 className="mt-1 text-lg font-extrabold text-slate-900">Herzlich willkommen, liebe Tommi-Jury!</h2>
             <p className="mt-2 text-sm text-slate-600 leading-relaxed">
               Schön, dass ihr Amy Surfwing testet. Einfach Zugangscode eingeben und auf „App starten" klicken.
             </p>
