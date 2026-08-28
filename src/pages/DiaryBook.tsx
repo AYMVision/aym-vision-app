@@ -8,6 +8,7 @@ import {
   verifyDiaryPin,
   getDiaryPinHint,
 } from '../diary/diaryPin';
+import { shouldBypassAll } from '../gating/entitlements';
 
 import Layout from '../components/Layout';
 import AvatarStage from '../components/AvatarStage';
@@ -99,6 +100,7 @@ function normalizeChapterIdMaybe(id: string): string[] {
 
 // ✅ unlocked = chapter done OR story marker set (unlockBonusById) OR clicked (bonusSeen)
 function isEntryUnlocked(entry: DiaryEntry, progress: BonusProgressSnapshot): boolean {
+  if (shouldBypassAll()) return true;
   const ids = normalizeChapterIdMaybe(entry.unlock.afterChapterId);
   const byChapter = ids.some((id) => progress.seenChapterIds.includes(id));
   return byChapter || isBonusMarkerUnlocked(entry.bonusId) || isBonusSeen(entry.bonusId);
