@@ -243,16 +243,16 @@
       "quizError": "Das Wort stimmt nicht. Bitte nochmal prüfen.",
       "confirm": "Sicherung bestätigen",
       "skip": "Später",
-      "skipHint": "Du kannst deine Sicherung jederzeit in deinem Profil nachholen.",
+      "skipHint": "Du kannst deinen Zugang jederzeit im Elternbereich sichern.",
       "done": "Sicherung abgeschlossen ✓",
       "juryHeadline": "Zugang sichern",
-      "juryWhyText": "Einmal speichern — dann jederzeit auf jedem Gerät zugänglich. Diese 24 Wörter sind dein persönlicher Jury-Zugang.",
+      "juryWhyText": "Einmal speichern und dann jederzeit auf jedem Gerät zugänglich. Diese 24 Wörter sind dein persönlicher Jury-Zugang.",
       "juryCopyAll": "Alle 24 Wörter kopieren",
       "juryMailSubject": "Amy Surfwing – Jury-Zugang",
       "juryMailBody": "Meine 24 Sicherungswörter (bitte sicher aufbewahren):",
       "juryMailLink": "Per E-Mail an mich senden",
-      "juryConfirm": "Gespeichert — weiter",
-      "jurySkip": "Überspringen — ich bleibe auf diesem Gerät"
+      "juryConfirm": "Gespeichert & weiter",
+      "jurySkip": "Überspringen. Ich bleibe auf diesem Gerät"
     },
     "restore": {
       "title": "Identität wiederherstellen",

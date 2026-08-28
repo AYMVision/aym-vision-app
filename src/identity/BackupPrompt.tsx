@@ -92,7 +92,7 @@ export function BackupPrompt({ onDone, onCancel, mode }: { onDone(): void; onCan
             onClick={() => { markBackupConfirmed(); onDone(); }}
             className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800"
           >
-            {mode === 'jury' ? t('identity.backup.juryConfirm') : 'Gespeichert — weiter'}
+            {mode === 'jury' ? t('identity.backup.juryConfirm') : 'Gespeichert & weiter'}
           </button>
           <button type="button" onClick={onCancel} className="w-full text-center text-sm text-slate-500 hover:text-slate-700">
             {mode === 'jury' ? t('identity.backup.jurySkip') : t('identity.backup.skip')}

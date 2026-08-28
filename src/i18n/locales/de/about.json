@@ -193,7 +193,7 @@
       },
       "install": {
         "question": "Wie speichere ich Amy Surfwing auf dem Homescreen?",
-        "answer": "Amy Surfwing kann wie eine echte App auf dem Homescreen gespeichert werden — ganz ohne App Store. Auf dem iPhone in Safari: Teilen-Symbol antippen → \"Zum Home-Bildschirm\". Auf Android in Chrome: Menü → \"App installieren\".",
+        "answer": "Amy Surfwing kann wie eine echte App auf dem Homescreen gespeichert werden. Auf dem iPhone in Safari: Teilen-Symbol antippen → \"Zum Home-Bildschirm\". Auf Android in Chrome: Menü → \"App installieren\".",
         "link": "Schritt-für-Schritt-Anleitung →"
       }
     },
@@ -250,10 +250,14 @@
         "answer": "Auf iPhone und iPad löscht iOS die Daten installierter Web-Apps nach ca. 7 Tagen ohne Nutzung automatisch. Erstelle regelmäßig einen Spielstand-Link oder eine Sicherungsdatei im Elternbereich, um deinen Spielstand zu schützen."
       },
       "purchaseRestore": {
-        "question": "Wie stelle ich meinen Kauf auf einem neuen Gerät wieder her?",
-        "answer1": "Im",
-        "answer2": "Elternbereich",
-        "answer3": "gibt es unter jedem Profil 24 Sicherungswörter. Diese Wörter sind der Schlüssel zum Kauf. Auf dem neuen Gerät reicht es, diese Wörter einzugeben, um den Kauf automatisch wiederherzustellen. Bitte einmalig sicher notieren."
+        "question": "Wie stelle ich meinen Zugang auf einem neuen Gerät wieder her?",
+        "intro": "Beim Einrichten erhältst du 24 persönliche Wörter; das ist dein persönlicher Zugang. Du kannst sie kopieren oder per 'Per E-Mail an mich senden' direkt zusenden. So stellst du ihn auf einem neuen Gerät wieder her:",
+        "step1": "Amy Surfwing öffnen",
+        "step2": "Unten auf 'Für Eltern' tippen",
+        "step3": "Auf 'App Einstellungen' tippen",
+        "step4": "Nach unten scrollen und 'Kauf wiederherstellen' wählen",
+        "step5": "'Aus 24 Sicherungswörtern wiederherstellen' tippen",
+        "step6": "Die 24 Wörter eingeben — Zugang sofort wiederhergestellt ✓"
       },
       "multiProfile": {
         "question": "Was passiert, wenn ich als Familie mehrere Profile anlege?",
@@ -263,7 +267,7 @@
         "question": "Wie übertrage ich den Spielfortschritt auf ein anderes Gerät?",
         "answer1": "Im",
         "answer2": "Elternbereich → Schutz & Sicherung",
-        "answer3": "gibt es zwei Möglichkeiten: einen Spielstand-Link für Fortschritt, Sticker und Münzen (ohne Chatverläufe) — oder eine vollständige Sicherungsdatei inkl. Chatverläufe. Auf dem neuen Gerät zuerst die 24 Sicherungswörter eingeben, dann Link oder Sicherungsdatei einspielen."
+        "answer3": "gibt es zwei Möglichkeiten: einen Spielstand-Link für Fortschritt, Sticker und Münzen (ohne Chatverläufe) oder eine vollständige Sicherungsdatei inkl. Chatverläufe. Auf dem neuen Gerät zuerst die 24 Sicherungswörter eingeben, dann Link oder Sicherungsdatei einspielen."
       }
     }
   },

@@ -153,13 +153,15 @@ export default function FAQ() {
           </FaqItem>
 
           <FaqItem question={t('faq.data.purchaseRestore.question')}>
-            <p>
-              {t('faq.data.purchaseRestore.answer1')}{' '}
-              <Link to="/adult-settings" state={{ openSection: 'protection' }} className="font-semibold text-[var(--color-teal-700)] underline underline-offset-2">
-                {t('faq.data.purchaseRestore.answer2')}
-              </Link>
-              {' '}{t('faq.data.purchaseRestore.answer3')}
-            </p>
+            <p className="mb-2">{t('faq.data.purchaseRestore.intro')}</p>
+            <ol className="list-decimal list-inside space-y-1 text-slate-700">
+              <li>{t('faq.data.purchaseRestore.step1')}</li>
+              <li>{t('faq.data.purchaseRestore.step2')}</li>
+              <li>{t('faq.data.purchaseRestore.step3')}</li>
+              <li>{t('faq.data.purchaseRestore.step4')}</li>
+              <li>{t('faq.data.purchaseRestore.step5')}</li>
+              <li>{t('faq.data.purchaseRestore.step6')}</li>
+            </ol>
           </FaqItem>
 
           <FaqItem question={t('faq.data.multiProfile.question')}>

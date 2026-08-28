@@ -68,7 +68,8 @@ const { t: tCommon } = useTranslation('common');
     !location.pathname.startsWith('/about') &&
     !location.pathname.startsWith('/privacy') &&
     !location.pathname.startsWith('/faq') &&
-    !location.pathname.startsWith('/adult-settings');
+    !location.pathname.startsWith('/adult-settings') &&
+    !location.pathname.startsWith('/tommi-award');
 
   // Footer nur in Story-Spielrouten (mit ID) verstecken, nicht auf der Übersichtsseite
   const isStoryPlayerRoute =

@@ -253,10 +253,14 @@
         "answer": "On iPhone and iPad, iOS automatically deletes data from installed web apps after approximately 7 days of inactivity. Regularly create a progress link or backup file in the parent area to protect your game progress."
       },
       "purchaseRestore": {
-        "question": "How do I restore my purchase on a new device?",
-        "answer1": "In the",
-        "answer2": "parent area",
-        "answer3": "there are 24 security words for each profile. These words are the key to the purchase. On the new device, simply enter these words to automatically restore the purchase. Please write them down once and keep them safe."
+        "question": "How do I restore my access on a new device?",
+        "intro": "During setup you receive 24 personal words — these are your personal access key. You can copy them or send them to yourself via 'Send to myself by email'. Here's how to restore on a new device:",
+        "step1": "Open Amy Surfwing",
+        "step2": "Tap 'For Parents' at the bottom",
+        "step3": "Tap 'App Settings'",
+        "step4": "Scroll down and select 'Restore purchase'",
+        "step5": "Tap 'Restore from 24 security words'",
+        "step6": "Enter the 24 words — access restored instantly ✓"
       },
       "multiProfile": {
         "question": "What happens if we create multiple profiles as a family?",

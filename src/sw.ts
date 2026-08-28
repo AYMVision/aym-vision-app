@@ -23,7 +23,7 @@ registerRoute(
   new CacheFirst({
     cacheName: 'aym-assets-v1',
     plugins: [
-      new ExpirationPlugin({ maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 60 }),
+      new ExpirationPlugin({ maxEntries: 450, maxAgeSeconds: 60 * 60 * 24 * 60 }),
     ],
   })
 )

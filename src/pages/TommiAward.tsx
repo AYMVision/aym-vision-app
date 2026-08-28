@@ -212,7 +212,7 @@ export default function TommiAward() {
             </li>
             <li className="flex gap-3 text-sm text-slate-700 leading-relaxed">
               <span className="shrink-0 text-base">💡</span>
-              <span><strong>Unsere Empfehlung:</strong> Startet mit dem Kinder-Onboarding, spielt zunächst einige Kapitel und stöbert anschließend gerne durch die gesamte Staffel und die Bonuswelt.</span>
+              <span><strong>Unsere Empfehlung:</strong> Startet mit dem Kinder-Onboarding, spielt zunächst einige Kapitel der Reihe nach und stöbert anschließend gerne durch die gesamte Staffel und die Bonuswelt.</span>
             </li>
           </ul>
         </div>
@@ -222,11 +222,20 @@ export default function TommiAward() {
           <SectionLabel>Datenschutz</SectionLabel>
           <div className="space-y-3 text-sm text-slate-700 leading-relaxed">
             <p>
-              Amy Surfwing speichert keine Daten in der Cloud, das ist eine bewusste Entscheidung für maximalen Datenschutz, besonders mit Blick auf unsere junge Zielgruppe. Alles bleibt auf eurem Gerät.
+              AMY SURFWING speichert keine Daten in der Cloud, das ist eine bewusste Entscheidung für maximalen Datenschutz, besonders mit Blick auf unsere junge Zielgruppe. Alles bleibt auf eurem Gerät.
             </p>
             <p>
-              Damit ihr flexibel testen könnt, auch auf einem anderen Gerät oder nach einer Pause, erhaltet ihr beim Einrichten persönliche Wörter. Das ist euer Zugang. Einmal kopieren oder z. B. per E-Mail an euch senden und ihr könnt auf jedem Gerät nach Eingabe der Wörter weiter testen.
+              Damit ihr flexibel testen könnt, auch auf einem anderen Gerät oder nach einer Pause, erhaltet ihr beim Einrichten 24 persönliche Wörter. Das ist euer persönlicher Zugang. Einmal kopieren oder direkt per <strong>„Per E-Mail an mich senden"</strong> sichern. So könnt ihr auf jedem Gerät nach Eingabe der Wörter weitertesten.
             </p>
+            <p className="font-semibold text-slate-800 mt-3">Zugang auf einem neuen Gerät wiederherstellen:</p>
+            <ol className="list-decimal list-inside space-y-1 mt-1">
+              <li>AMY SURFWING öffnen</li>
+              <li>Unten auf <strong>„Für Eltern"</strong> tippen</li>
+              <li>Auf <strong>„App Einstellungen"</strong> tippen</li>
+              <li>Nach unten scrollen → <strong>„Kauf wiederherstellen"</strong> wählen</li>
+              <li><strong>„Aus 24 Sicherungswörtern wiederherstellen"</strong> tippen</li>
+              <li>Die 24 Wörter eingeben — Zugang sofort wiederhergestellt ✓</li>
+            </ol>
           </div>
         </div>
 

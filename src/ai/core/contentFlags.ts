@@ -120,6 +120,10 @@ const HATE_PATTERNS: RegExp[] = [
   // DE (minimal)
   /\b(du|ihr|die)\b[\s\S]{0,10}\b(bist|seid|sind)\b[\s\S]{0,10}\b(dumm|wertlos|eklig)\b/i,
   /\b(hasse)\b[\s\S]{0,20}\b(alle|die)\b/i,
+  /\b(spast|spasti)\b/i,
+  /\bmongo\b/i,
+  /\b(schlampe)\b/i,
+  /\b(hure|nutte)\b/i,
 
   // EN (minimal)
   /\b(you|they)\b[\s\S]{0,10}\b(are)\b[\s\S]{0,10}\b(stupid|worthless|disgusting)\b/i,
@@ -130,11 +134,22 @@ const HATE_PATTERNS: RegExp[] = [
 // Kein Block, nur ein freundlicher Nudge; nach einem Retry wird durchgelassen.
 const LANGUAGE_WARNING_PATTERNS: RegExp[] = [
   // DE
-  /\bschei(ss|ss)\w*/i,
+  /\bschei(ss|ß)\w*/i,
   /\bfick\w*\b/i,
   /\b(wichser|arschloch|hurensohn|vollidiot|depp)\b/i,
   /\bidiot(in)?\b/i,
   /\bverpisss?\b/i,
+  /\barsch\b/i,
+  /\b(kacke|kaka)\b/i,
+  /\b(blödmann|blödmanns)\b/i,
+  /\bvollpfosten\b/i,
+  /\btrottel\b/i,
+  /\bpenner(in)?\b/i,
+  /\b(bescheuert)\b/i,
+  /\b(bekloppt)\b/i,
+  /\b(pisser|pisse)\b/i,
+  /\bloser\b/i,
+  /\bnoob\b/i,
   // EN
   /\b(fuck|shit|asshole|bitch|bastard|crap|damn)\b/i,
 ];
