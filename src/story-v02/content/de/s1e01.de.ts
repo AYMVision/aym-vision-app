@@ -846,7 +846,7 @@ const c08 = C('s1e01c08', 7, 'Amic 8', 'Nächster Tag', [
 
   S('s1e01c08_story_outro_private', [
     privateChat('Du', 'Aylin'),
-    m(ch.aylin, '{{chatName}}, wenn du mal ausprobieren möchtest, ein Bild mit KI zu generieren, kannst du das gern tun.'),
+    m(ch.aylin, '{{chatName}}, wenn du mal ausprobieren möchtest, wie man ein Bild mit KI generiert, kannst du das gemeinsam mit deinen Eltern tun.'),
     m(ch.aylin, 'Aber es gibt einige Dinge, die du beachten solltest. Ich habe dazu einen Artikel geschrieben. Guck doch mal rein:'),
     bonusLink('tip-aylin-kileitfaden', 'Artikel: KI-Leitfaden', '/newspaper/tip-aylin-kileitfaden', 'Artikel öffnen →'),
   ]),

@@ -13,8 +13,7 @@ topicTags: [reflect]
 Viele KI-Programme haben Altersregeln.  
 👉 Und das ist gut so. Sie sind nur zu deinem Schutz da.
 
-Nutze KI nur mit Erlaubnis deiner Eltern.  
-Am besten: starte zusammen mit einem Erwachsenen.
+Schau deshalb zusammen mit deinen Eltern, welches du schon nutzen darfst.
 
 [[img src="media/newspaper/articles/tip-aylin-kileitfaden/kileitfaden1" alt="Dein Kopf braucht auch Offline-Zeit."]]
 
@@ -30,7 +29,7 @@ Am besten: starte zusammen mit einem Erwachsenen.
 
 ## 💬 So sprichst du mit KI
 
-Du schreibst mit einer KI wie in einem Chat.
+Mit vielen KI-Programmen kannst du wie in einem Chat schreiben.
 
 So klappt es gut:
 - Schreib freundlich
@@ -61,7 +60,7 @@ Gib niemals ein:
 - deinen echten Namen  
 - Adresse, Schule oder Klasse  
 - Telefonnummer oder Passwörter  
-- Fotos von dir oder anderen  
+- persönliche Fotos von dir oder anderen  
 - Geheimnisse  
 [[/callout]]
 
@@ -102,7 +101,7 @@ Du kannst auch fragen:
 
 ## 📚 KI für die Schule
 
-KI darf dir helfen:
+KI darf euch helfen:
 - Dinge erklären ✔️  
 - beim Lernen unterstützen ✔️  
 - Ideen sammeln ✔️  
@@ -111,14 +110,14 @@ KI darf nicht:
 - Hausaufgaben für dich machen ❌  
 - Texte einfach für dich schreiben ❌  
 
-👉 Wenn KI dir geholfen hat, schreib dazu:  
+👉 Wenn KI geholfen hat, schreib dazu:  
 „Mit Hilfe von KI erstellt.“
 
 
 
 ## ⚖️ KI-Bilder & Texte: ehrlich bleiben
 
-KI kann Bilder und Texte erstellen, die sehr echt aussehen.
+KI kann Bilder erstellen, die sehr echt aussehen.
 
 Das kann:
 - andere erschrecken  
@@ -126,18 +125,17 @@ Das kann:
 - oder traurig machen  
 
 👉 Deshalb gilt:  
-Wenn du etwas mit KI erstellst und teilst, schreibe es immer dazu.
+Wenn ihr etwas mit KI erstellt und teilt, schreibt es immer dazu.
 
 [[img src="media/newspaper/articles/tip-aylin-kileitfaden/kileitfaden6" alt="Mit Hilfe von KI erstellt."]]
 
 ## ⏸️ Wie viel KI ist okay?
 
-KI ist spannend aber kein Dauer-Spiel.
+KI ist spannend, aber kein Dauer-Werkzeug.
 
-- Mach regelmäßig Pausen  
 - Benutze sie nicht ständig
 - Halte dich an die Regeln deiner Eltern  
 
-👉 Dein Kopf braucht auch Offline-Zeit.
+👉 Dein Kopf braucht auch Offline-Zeit. 
 
 [[img src="media/newspaper/articles/tip-aylin-kileitfaden/kileitfaden7" alt="Dein Kopf braucht auch Offline-Zeit.""]]
