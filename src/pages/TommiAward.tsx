@@ -339,7 +339,36 @@ export default function TommiAward() {
             </div>
 
           </div>
+
+          {/* Screenshots */}
+          <div className="mt-6">
+            <div className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">App-Screenshots</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[1, 2, 3, 4, 5].map((n) => (
+                <div key={n} className="rounded-xl border border-slate-100 bg-slate-50 p-4 flex flex-col items-center gap-3">
+                  <img
+                    src={`/media/ui/Tommi/AmySurfwing${n}.png`}
+                    alt={`Amy Surfwing Screenshot ${n}`}
+                    className="w-full object-contain rounded-lg"
+                  />
+                  <div className="text-center">
+                    <div className="text-xs font-semibold text-slate-800">Screenshot {n}</div>
+                    <div className="text-xs text-slate-500 mt-0.5">PNG</div>
+                  </div>
+                  <a
+                    href={`/media/ui/Tommi/AmySurfwing${n}.png`}
+                    download
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold bg-slate-800 text-white hover:bg-slate-900 transition-colors"
+                  >
+                    <span>⬇️</span> Herunterladen
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
+
 
         {/* FOOTER */}
         <p className="text-center text-xs text-slate-400">
