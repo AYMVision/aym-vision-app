@@ -169,6 +169,20 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"2026-08-31-darf-mein-kind-chatgpt-nutzen.md": {
+	id: "2026-08-31-darf-mein-kind-chatgpt-nutzen.md";
+  slug: "2026-08-31-darf-mein-kind-chatgpt-nutzen";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"2026-10-05-kann-ki-gefaehrlich-werden.md": {
+	id: "2026-10-05-kann-ki-gefaehrlich-werden.md";
+  slug: "2026-10-05-kann-ki-gefaehrlich-werden";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 };
 
 	};
