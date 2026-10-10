@@ -5,6 +5,7 @@ import type { TipRelationV2 } from './tipRelationMap';
 import type { ContentFlags } from '../core/contentFlags';
 import type { AmyDecisionResult } from '../core/amyDecision';
 import { joinClean } from '../core/textUtils';
+import { EATING_DISORDER_MESSAGE } from '../core/safetyMessages';
 
 function hashToIndex(seed: string, mod: number) {
   let h = 2166136261;
@@ -83,9 +84,13 @@ export function buildAmyReplyV2(input: {
   const qt = String(decision.questionType) as string;
 
   // Safety
+  if (decision.action === 'ADULT_GATE' && contentFlags.eatingDisorder) {
+    return EATING_DISORDER_MESSAGE;
+  }
+
   if (
     decision.action === 'ADULT_GATE' &&
-    (contentFlags.selfHarm || contentFlags.sexualContent || contentFlags.violenceThreat)
+    (contentFlags.selfHarm || contentFlags.sexualContent || contentFlags.violenceThreat || contentFlags.abuseByAdult)
   ) {
     return clamp(pickSeed(seedBase + ':safety', phr.safety), 220);
   }

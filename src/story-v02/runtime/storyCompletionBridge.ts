@@ -15,6 +15,7 @@ export function completeStoryV02Chapter<TProfile>(args: {
   updateProfile: ProfileUpdater<TProfile>;
   wasAlreadyCompletedBeforeAnswer: boolean;
   isEpilogue?: boolean;
+  skipDailyRecord?: boolean;
   enableDebug?: boolean;
 }): ChapterCompletionResult {
   return completeStoryChapter({
@@ -29,6 +30,7 @@ export function completeStoryV02Chapter<TProfile>(args: {
     updateProfile: args.updateProfile,
     wasAlreadyCompletedBeforeAnswer: args.wasAlreadyCompletedBeforeAnswer,
     skipCoin: args.isEpilogue ?? false,
+    skipDailyRecord: args.skipDailyRecord ?? false,
     enableDebug: args.enableDebug,
   });
 }

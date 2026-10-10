@@ -364,11 +364,10 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
 
   S('s1e03c03_story_switch_to_amy', [
     amyChat(),
-    m(ch.amy, 'Jetzt hast du gesehen, wie Apps auswählen, was du zuerst siehst.'),
   ], ['info-check', 'reflect-understand']),
 
   MIT('s1e03c03_item_algorithm_influence',
-    'Woran merkst du bei dir selbst, dass dich das beeinflusst?',
+    'Woran merkst du bei dir selbst, dass dich beeinflusst?',
     'judgement',
     'information_classify',
     [
@@ -377,7 +376,7 @@ const c03 = C('s1e03c03', 2, 'Amic 3', 'Algorithmus', [
       opt('c', 'Ich schaue oft länger weiter, als ich eigentlich wollte, weil es so viel gibt.', 1),
       opt('d', 'Mir werden Sachen vorgeschlagen, die ziemlich gut zu mir passen.', 1),
       opt('e', 'Ich weiß manchmal gar nicht, warum mir etwas angezeigt wird.', 1),
-      opt('f', 'Das ist mir noch nicht aufgefallen.', 0),
+      opt('f', 'Das ist mir noch nicht aufgefallen.', 1),
     ],
     {
       minSelections: 1,

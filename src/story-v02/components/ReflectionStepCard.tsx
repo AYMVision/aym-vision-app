@@ -13,6 +13,9 @@ import { trackReflectionStep } from '../../analytics/analyticsEvents';
 import {
   CRISIS_MESSAGE,
   CRISIS_AMY_REPLY,
+  ABUSE_MESSAGE,
+  EATING_DISORDER_MESSAGE,
+  PERSONAL_DATA_MESSAGE,
   NORM_VIOLATION_MESSAGE,
   LANGUAGE_WARNING_MESSAGE,
 } from '../../ai/core/safetyMessages';
@@ -45,6 +48,7 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
   const [text, setText] = useState('');
   const [phase, setPhase] = useState<Phase>('idle');
   const [amyReply, setAmyReply] = useState('');
+  const [crisisText, setCrisisText] = useState(CRISIS_MESSAGE);
   const [attemptCount, setAttemptCount] = useState(0);
   const [lastSubmitted, setLastSubmitted] = useState('');
 
@@ -55,8 +59,25 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
     // --- Safety gate (runs before everything else, no AI needed) ---
     const flags = detectContentFlags(trimmed);
 
+    if (flags.abuseByAdult) {
+      setLastSubmitted(trimmed);
+      setCrisisText(ABUSE_MESSAGE);
+      setPhase('crisis');
+      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'crisis', topicIds: step.topicIds, attemptCount });
+      return;
+    }
+
+    if (flags.eatingDisorder) {
+      setLastSubmitted(trimmed);
+      setCrisisText(EATING_DISORDER_MESSAGE);
+      setPhase('crisis');
+      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'crisis', topicIds: step.topicIds, attemptCount });
+      return;
+    }
+
     if (isCriticalSafety(flags)) {
       setLastSubmitted(trimmed);
+      setCrisisText(CRISIS_MESSAGE);
       setPhase('crisis');
       trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'crisis', topicIds: step.topicIds, attemptCount });
       return;
@@ -68,6 +89,15 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       setText('');
       setPhase('retry');
       trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'norm_violation', topicIds: step.topicIds, attemptCount: 1 });
+      return;
+    }
+
+    if (flags.personalData && attemptCount === 0) {
+      setAmyReply(PERSONAL_DATA_MESSAGE);
+      setAttemptCount(1);
+      setText('');
+      setPhase('retry');
+      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'personal_data', topicIds: step.topicIds, attemptCount: 1 });
       return;
     }
 
@@ -192,16 +222,13 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
             />
           )}
           <ChatMessage
-            message={{ id: `${step.id}-crisis-msg`, type: 'main', speaker: characters.amy, content: CRISIS_MESSAGE, timestamp: '' }}
+            message={{ id: `${step.id}-crisis-msg`, type: 'main', speaker: characters.amy, content: crisisText, timestamp: '' }}
           />
           <div className="mx-auto mt-2 mb-3 max-w-[560px] flex justify-end">
             <button
               type="button"
               onClick={() => {
-                // Krisentext bleibt als Amy-Bubble sichtbar (via retry + amyReply).
-                // Textarea öffnet sich wieder → User beantwortet die Frage noch.
-                // Beim nächsten Submit läuft der normale Bypass-Pfad → fixedAmyReply + Tipp.
-                setAmyReply(CRISIS_MESSAGE);
+                setAmyReply(crisisText);
                 setText('');
                 setPhase('retry');
               }}

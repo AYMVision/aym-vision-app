@@ -103,6 +103,8 @@ export type ItemStep = StoryStepBase & {
   maxSelections?: number;
   /** Multi-select: helper text shown below the prompt (e.g. "Du kannst mehrere auswählen.") */
   helperText?: string;
+  /** Multi-select: if false, no right/wrong scoring is shown (for personal/reflective questions) */
+  scored?: boolean;
 };
 
 export type AmyFeedbackStep = StoryStepBase & {

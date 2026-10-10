@@ -904,7 +904,7 @@ export default function AdultSettings() {
               <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-sm">
                 <div>
                   <div className="text-sm font-semibold text-slate-900">Staffel 1</div>
-                  <div className="text-xs text-slate-400">5 Episoden · 5 min pro Tag</div>
+                  <div className="text-xs text-slate-400">5 Episoden · 49 Amics · pro Spieltag eine Freischaltung</div>
                 </div>
                 {isSeasonOwnedLocally(wirkungProfileId, 's1') ? (
                   <span className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">
@@ -1192,6 +1192,17 @@ export default function AdultSettings() {
                   <li>✓ {t('adult:purchase.feature3', { defaultValue: 'einmaliger Kauf' })}</li>
                   <li>✓ {t('adult:purchase.feature4', { defaultValue: 'Sicher lokal auf dem Gerät, kein Konto nötig' })}</li>
                 </ul>
+
+                <details className="mt-3 text-sm text-teal-800">
+                  <summary className="cursor-pointer font-semibold text-teal-700 hover:text-teal-900">Was sind Amics und Spieltage?</summary>
+                  <p className="mt-2 leading-relaxed text-teal-800">
+                    Staffel 1 enthält 5 Episoden mit insgesamt 49 Amics — das sind die einzelnen Kapitel der Geschichte.
+                    Nach dem Abschluss eines Amics schaltet sich das nächste am folgenden Tag frei.
+                    Tage können ausgelassen werden — das nächste Amic wartet einfach.
+                    Nach 49 Spieltagen sind alle neuen Inhalte der Staffel durchgespielt.
+                    Bereits abgeschlossene Amics können jederzeit wieder eingesehen werden.
+                  </p>
+                </details>
 
                 <div className="mt-4 flex items-baseline gap-1.5">
                   <span className="text-2xl font-bold text-teal-900">

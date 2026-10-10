@@ -25,6 +25,7 @@ function optionText(option: ItemOption, t: (key: string, opts?: any) => string):
 export default function MultiSelectItemCard({ step, onSubmit }: Props) {
   const { t } = useTranslation('stories');
 
+  const scored = step.scored !== false;
   const minSel = step.minSelections ?? 1;
   const maxSel = step.maxSelections ?? step.options.length;
 
@@ -99,9 +100,11 @@ export default function MultiSelectItemCard({ step, onSubmit }: Props) {
                 ? ' border-rose-400 bg-rose-100'
                 : ' border-rose-200 bg-white hover:bg-rose-50';
             } else if (isSelected) {
-              itemCls += isCorrect
+              itemCls += scored && isCorrect
                 ? ' border-emerald-400 bg-emerald-50'
-                : ' border-red-300 bg-red-50';
+                : scored && !isCorrect
+                  ? ' border-red-300 bg-red-50'
+                  : ' border-rose-400 bg-rose-100';
             } else {
               itemCls += ' border-rose-100 bg-white opacity-60';
             }
@@ -119,12 +122,12 @@ export default function MultiSelectItemCard({ step, onSubmit }: Props) {
                   style={{
                     borderColor: submitted
                       ? isSelected
-                        ? isCorrect ? '#10b981' : '#ef4444'
+                        ? scored ? (isCorrect ? '#10b981' : '#ef4444') : '#e11d48'
                         : '#e2e8f0'
                       : isSelected ? '#e11d48' : '#fda4af',
                     background: isSelected
                       ? submitted
-                        ? isCorrect ? '#d1fae5' : '#fee2e2'
+                        ? scored ? (isCorrect ? '#d1fae5' : '#fee2e2') : '#fda4af'
                         : '#fda4af'
                       : 'white',
                   }}
@@ -134,23 +137,28 @@ export default function MultiSelectItemCard({ step, onSubmit }: Props) {
                       <path d="M10 3L5 8.5 2 5.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
                     </svg>
                   )}
-                  {isSelected && submitted && isCorrect && (
+                  {isSelected && submitted && scored && isCorrect && (
                     <svg className="h-3 w-3 text-emerald-700" viewBox="0 0 12 12" fill="currentColor">
                       <path d="M10 3L5 8.5 2 5.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
                     </svg>
                   )}
-                  {isSelected && submitted && !isCorrect && (
+                  {isSelected && submitted && scored && !isCorrect && (
                     <svg className="h-3 w-3 text-red-600" viewBox="0 0 12 12" fill="currentColor">
                       <path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+                    </svg>
+                  )}
+                  {isSelected && submitted && !scored && (
+                    <svg className="h-3 w-3 text-rose-700" viewBox="0 0 12 12" fill="currentColor">
+                      <path d="M10 3L5 8.5 2 5.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
                     </svg>
                   )}
                 </span>
 
                 <span className="flex-1">{optionText(option, t)}</span>
 
-                {submitted && isSelected && (
-                  <span className={`ml-1 flex-shrink-0 text-xs font-semibold ${isCorrect ? 'text-emerald-700' : 'text-red-600'}`}>
-                    {isCorrect ? 'Richtig' : 'Nicht ganz'}
+                {submitted && isSelected && scored && isCorrect && (
+                  <span className="ml-1 flex-shrink-0 text-xs font-semibold text-emerald-700">
+                    Richtig
                   </span>
                 )}
               </button>

@@ -523,9 +523,9 @@ const valueAccents = [
               </div>
 
               {/* WIN Startup Academy Braunschweig */}
-              <div className="mt-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="mt-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-5 border-b border-slate-100">
                 <a
-                  href="https://www.win-bs.de/startup-academy"
+                  href="https://www.braunschweig.de/wirtschaft_wissenschaft/innovationsfoerderung/win_startup_akademie_fuer_wachstum_und_innovation.php"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
@@ -541,6 +541,32 @@ const valueAccents = [
                 <p className="text-sm text-slate-700 leading-relaxed">
                   <Trans i18nKey="supporters.win.text" t={t} components={{ bold: <strong /> }} />
                 </p>
+              </div>
+
+              {/* TOMMI Games Award 2026 */}
+              <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <a
+                  href="https://tommi.kids/magazin/die-tomminierten-2026/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 opacity-80 hover:opacity-100 transition-opacity"
+                  aria-label={t('supporters.tommi.ariaLabel')}
+                >
+                  <img
+                    src={assetUrl('media/ui/Tommi_award_nominierung_2026.png')}
+                    alt={t('supporters.tommi.imgAlt')}
+                    className="h-24 w-auto"
+                    loading="lazy"
+                  />
+                </a>
+                <div>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    <Trans i18nKey="supporters.tommi.text" t={t} components={{ bold: <strong /> }} />
+                  </p>
+                  <p className="mt-2 text-xs text-slate-500 italic">
+                    {t('supporters.tommi.quote')}
+                  </p>
+                </div>
               </div>
             </section>
           </div>

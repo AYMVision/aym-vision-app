@@ -28,7 +28,8 @@ function chapterStatus(
   chapter: StoryChapterV02,
   courseId: string,
   highestPlayable: number,
-  timeGateAllowed: boolean
+  timeGateAllowed: boolean,
+  bypass = false,
 ): ChapterStatus {
   const done = hasCompletedChapter(courseId, chapter.chapterIndex0);
   if (done) return 'completed';
@@ -38,7 +39,7 @@ function chapterStatus(
     }
     return 'available';
   }
-  return 'locked';
+  return bypass ? 'available' : 'locked';
 }
 
 function StatusIcon({ status }: { status: ChapterStatus }) {
@@ -125,7 +126,7 @@ setChapters(ep?.chapters ?? []);
     });
   }, [courseId, lang]);
 
-  if (!shouldSkipOnboarding()) {
+  if (!shouldSkipOnboarding() && !episodeMeta?.isFreeSpecial) {
     navigate('/start', { replace: true });
     return null;
   }
@@ -140,10 +141,11 @@ setChapters(ep?.chapters ?? []);
 
   const bypass = shouldBypassAll(courseId);
   const highestPlayable = bypass
-    ? (chapters?.length ?? 0) - 1
+    ? getCompletedChapterCount(courseId)
     : getHighestPlayableChapterIndex0(courseId);
 
-  const timeGate = bypass
+  const freeSpecial = episodeMeta?.isFreeSpecial ?? false;
+  const timeGate = (bypass || freeSpecial)
     ? { allowed: true as const, reason: 'ok' as const, mode: 'bypass' as const }
     : canStartNextNewChapterToday();
   const timeGateAllowed = timeGate.allowed;
@@ -153,15 +155,15 @@ setChapters(ep?.chapters ?? []);
 
   // Aktueller / nächster Amic für den Haupt-CTA
   const currentChapter = chapters?.find(
-    (c) => chapterStatus(c, courseId, highestPlayable, timeGateAllowed) === 'current'
+    (c) => chapterStatus(c, courseId, highestPlayable, timeGateAllowed, bypass) === 'current'
   ) ?? null;
 
   const allDone = completedCount >= totalCount;
 
   function handleAmicClick(chapter: StoryChapterV02) {
-    const s = chapterStatus(chapter, courseId!, highestPlayable, timeGateAllowed);
+    const s = chapterStatus(chapter, courseId!, highestPlayable, timeGateAllowed, bypass);
     if (s === 'locked' || s === 'time-locked') return;
-    if (!shouldSkipOnboarding()) { navigate('/start'); return; }
+    if (!shouldSkipOnboarding() && !episodeMeta?.isFreeSpecial) { navigate('/start'); return; }
     navigate(`/stories-v02/${courseId}/${chapter.id}`);
   }
 
@@ -230,7 +232,7 @@ setChapters(ep?.chapters ?? []);
               <button
                 type="button"
                 onClick={() => {
-                  if (!shouldSkipOnboarding()) { navigate('/start'); return; }
+                  if (!shouldSkipOnboarding() && !episodeMeta?.isFreeSpecial) { navigate('/start'); return; }
                   navigate(`/stories-v02/${courseId}/${currentChapter.id}`);
                 }}
                 className="shrink-0 inline-flex items-center gap-1.5 rounded-2xl px-4 py-2.5 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors text-sm"
@@ -249,6 +251,13 @@ setChapters(ep?.chapters ?? []);
             <h2 className="text-sm font-semibold text-[var(--color-teal-900)]">
               {t('overview.listTitle', { defaultValue: 'Deine Amics' })}
             </h2>
+            {completedCount === 0 && !bypass && (
+              <p className="mt-1 text-xs text-slate-400 leading-snug">
+                {freeSpecial
+                  ? t('overview.amicHintSpecial', { defaultValue: '🎃 Ein Amic ist ein interaktives Kapitel. Lies mit, denk mit, triff Entscheidungen. Schließe jeden Amic ab, um das nächste Kapitel freizuschalten.' })
+                  : t('overview.amicHint', { defaultValue: 'Die Amics bauen aufeinander auf – schließe jedes ab, um das nächste freizuschalten.' })}
+              </p>
+            )}
           </div>
 
           {chapters === null ? (
@@ -262,7 +271,7 @@ setChapters(ep?.chapters ?? []);
             </div>
           ) : (
             chapters.map((chapter) => {
-              const status = chapterStatus(chapter, courseId, highestPlayable, timeGateAllowed);
+              const status = chapterStatus(chapter, courseId, highestPlayable, timeGateAllowed, bypass);
               const isClickable = status !== 'locked' && status !== 'time-locked';
               const isCurrent = status === 'current';
               const isTimeLocked = status === 'time-locked';

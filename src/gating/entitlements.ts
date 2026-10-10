@@ -9,6 +9,9 @@ export type Entitlements = {
   paywallOnlyEpisodes?: string[];   // bypasses paywall only for specific episodes, daily pacing stays
 };
 
+// Specials that bypass all gates for every user — no purchase needed.
+const FREE_COURSES = new Set<string>();
+
 const ENTITLEMENTS_KEY = 'aym-entitlements';
 
 function todayKeyLocal(): string {
@@ -87,6 +90,7 @@ export function setUnlockAllEpisodes(active: boolean) {
 /** Full bypass — paywall AND daily gate */
 export function shouldBypassAll(courseId?: string): boolean {
   return (
+    FREE_COURSES.has(courseId ?? '') ||
     isBypassAllActive() ||
     isBypassUntilActive() ||
     isEpisodeUnlockedByEntitlement(courseId) ||

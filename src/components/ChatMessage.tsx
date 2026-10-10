@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Message, Reaction, BubbleTheme } from '../common/types';
 import { useProfile } from '../profile/useProfile';
 import { useTranslation } from 'react-i18next';
@@ -59,6 +59,49 @@ function buildMsgCandidates(rawSrc: string) {
 
   const fallback = `${base}-1024.webp`;
   return { avif, webp, fallback };
+}
+
+function PollCard({ poll }: { poll: NonNullable<Message['poll']> }) {
+  const total = poll.options.reduce((s, o) => s + o.votes, 0);
+  const maxVotes = Math.max(...poll.options.map((o) => o.votes));
+  const sorted = [...poll.options].sort((a, b) => b.votes - a.votes);
+
+  return (
+    <div className="min-w-[200px] w-full">
+      <div className="flex items-center gap-1.5 mb-2 text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
+        <span aria-hidden>📊</span>
+        <span>Umfrage · Abgeschlossen</span>
+      </div>
+      {poll.question && (
+        <p className="text-sm font-semibold text-slate-800 mb-3 leading-snug">{poll.question}</p>
+      )}
+      <div className="flex flex-col gap-2.5">
+        {sorted.map((opt, i) => {
+          const pct = total > 0 ? Math.round((opt.votes / total) * 100) : 0;
+          const isWinner = opt.votes === maxVotes;
+          return (
+            <div key={i}>
+              <div className="flex justify-between items-baseline mb-0.5">
+                <span className={`text-sm font-medium ${isWinner ? 'text-emerald-700' : 'text-slate-600'}`}>
+                  {isWinner && <span className="mr-1">✓</span>}{opt.text}
+                </span>
+                <span className="text-xs text-slate-400 ml-2">
+                  {opt.votes} {opt.votes === 1 ? 'Stimme' : 'Stimmen'}
+                </span>
+              </div>
+              <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+                <div
+                  className={`h-full rounded-full ${isWinner ? 'bg-emerald-400' : 'bg-slate-300'}`}
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="mt-2.5 text-[11px] text-slate-400">{total} Stimmen insgesamt</div>
+    </div>
+  );
 }
 
 function MessageImage({ src }: { src?: string }) {
@@ -368,6 +411,43 @@ function MessageBody({
 
 
 
+function GhostLinkButton({ label }: { label: string }) {
+  const [state, setState] = useState<'idle' | 'loading' | 'done'>('idle');
+
+  function handleClick() {
+    if (state !== 'idle') return;
+    setState('loading');
+    setTimeout(() => setState('done'), 1800);
+  }
+
+  return (
+    <div className="flex justify-center my-2">
+      <div className="max-w-[92%] rounded-2xl px-3 py-3 bg-zinc-900 border border-zinc-700 text-center">
+        <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Link</div>
+        <button
+          type="button"
+          onClick={handleClick}
+          disabled={state === 'loading'}
+          className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2 text-xs font-extrabold tracking-wide transition-all
+            bg-orange-500 text-white hover:bg-orange-400 active:scale-95 disabled:opacity-60
+            shadow-[0_0_14px_rgba(249,115,22,0.5)]"
+        >
+          {state === 'loading' ? (
+            <>
+              <span className="animate-spin">👁️</span>
+              <span>Verbinde …</span>
+            </>
+          ) : state === 'done' ? (
+            <>👁️ Verbunden</>
+          ) : (
+            <>👁️ {label}</>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function ChatMessage({ message, onOpenBonusLink, onOpenLexikonTerm }: ChatMessageProps) {
   const { profile } = useProfile();
   const { t, i18n } = useTranslation('stories');
@@ -431,6 +511,10 @@ if (message.kind === 'chapter-divider') {
     </div>
   );
 }
+
+    if (message.kind === 'ghost-link') {
+      return <GhostLinkButton label={message.content ?? 'DAS AUGE ÖFFNEN'} />;
+    }
 
     // ✅ NEU: bonus-link (klickbar)
     if (message.kind === 'bonus-link') {
@@ -652,14 +736,17 @@ onClick={() => {
 
         <BubbleMeta msg={message} isMain={isMain} />
         <MessageImage src={imgSrc} />
-        <MessageBody
-          message={message}
-          isMain={isMain}
-          mainTextClass={mainTheme.text}
-          chatName={profile.chatName}
-          onOpenLexikonTerm={onOpenLexikonTerm}
-          lang={lang}
-        />
+        {message.poll
+          ? <PollCard poll={message.poll} />
+          : <MessageBody
+              message={message}
+              isMain={isMain}
+              mainTextClass={mainTheme.text}
+              chatName={profile.chatName}
+              onOpenLexikonTerm={onOpenLexikonTerm}
+              lang={lang}
+            />
+        }
 
         <TimeStamp value={message.timestamp} align="start" />
         <ReactionPills reactions={message.reactions} />

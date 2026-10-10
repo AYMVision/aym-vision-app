@@ -419,6 +419,22 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     didYouKnow: 'Eine Nachricht, die jeder nur an zwei Freunde weiterleitet, kennen nach 10 Schritten schon über 1.000 Menschen. Das nennt man den Schneeballeffekt.',
     firstAppearance: 's1e05c01',
   },
+  {
+    id: 'voice-clone',
+    title: 'Voice-Clone',
+    teaser: 'Eine mit KI nachgemachte Stimme, die täuschend echt klingt.',
+    body: 'Ein Voice Clone ist eine mit KI nachgemachte Stimme. Die KI lernt aus Sprachaufnahmen, wie eine Person klingt, und kann anschließend neue Sätze mit einer Stimme erzeugen, die ihr sehr ähnlich klingt.\n\nDarf man fremde Stimmen einfach klonen? Nicht einfach so. Eine Stimme kann eine Person eindeutig erkennbar machen. Besonders problematisch wird es, wenn du ohne Erlaubnis eine echte Person imitierst und andere glauben lässt, sie würde wirklich sprechen.\n\nMerke: Keine fremde Stimme ohne Erlaubnis klonen. Und KI-Stimmen nie als echt ausgeben.',
+    didYouKnow: 'Manchmal reichen wenige Sekunden Sprachaufnahme aus, damit eine KI eine Stimme nachbauen kann.',
+    firstAppearance: 'sp0e01c03',
+  },
+  {
+    id: 'augmented-reality',
+    title: 'Augmented Reality (AR)',
+    teaser: 'Die echte Welt, erweitert um digitale Dinge, zum Beispiel einen Geist.',
+    body: 'Augmented Reality bedeutet „erweiterte Realität". Dabei siehst du deine echte Umgebung weiter, zum Beispiel durch die Handykamera. Zusätzlich werden digitale Dinge eingeblendet, etwa Figuren, Pfeile oder ein Geist.\n\nKurz gesagt: AR ergänzt die echte Welt um digitale Elemente. Was du auf dem Bildschirm siehst, ist also eine Mischung aus echt und digital.\n\nAR funktioniert oft ganz ohne App, manchmal reicht ein Link, der die Kamera öffnet und eine vorbereitete Szene zeigt.',
+    didYouKnow: 'AR wird schon in vielen Bereichen eingesetzt: in Spielen, beim Einkaufen (z.B. um zu sehen, wie ein Möbelstück im Zimmer aussehen würde) und sogar in der Medizin. Manche Apps lassen virtuelle Tiere in deinem Zimmer erscheinen.',
+    firstAppearance: 'sp0e01c04',
+  },
 ];
 
 export function getLexikonEntry(id: string, lang?: string): LexikonEntry | undefined {

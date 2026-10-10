@@ -9,7 +9,7 @@ import SmartImage from '../components/SmartImage';
 import { Link, useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getProgress, getCompletedChapterCount } from '../progress/storyProgress';
-import { getStoryCards } from '../content/contentIndex';
+import { getStoryCards, getAllSpecials } from '../content/contentIndex';
 import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile';
 import { shouldBypassAll } from '../gating/entitlements';
@@ -24,6 +24,7 @@ import { loadSeenBonusIds } from '../bonus/bonusSeen';
 import { isBonusUnlocked, isCharacterUnlockedByProgress } from '../bonus/bonusUnlock';
 import type { BonusProgressSnapshot } from '../bonus/bonusUnlock';
 import { CHARACTERS } from '../content/characters';
+import type { CharacterEx } from '../content/characters';
 
 function Badge({ children }: { children: React.ReactNode }) {
   return (
@@ -270,13 +271,14 @@ function isUnlockedByChain(
       .filter((item) => item.category === 'characters')
       .map((item) => {
         const charId = item.characterId as keyof typeof CHARACTERS | undefined;
-        const char = charId ? CHARACTERS[charId] : undefined;
-        if (!char?.card?.portrait) return null;
+        const char = (charId ? CHARACTERS[charId] : undefined) as CharacterEx | undefined;
+        const portrait = char?.card?.portrait;
+        if (!portrait) return null;
         const unlocked = isCharacterUnlockedByProgress(item, completedChapterProgress);
         return {
           bonusId: item.bonusId,
-          name: char.name,
-          portrait: char.card.portrait,
+          name: char!.name,
+          portrait,
           isNew: unlocked && !seenIds.has(item.bonusId),
           unlocked,
         };
@@ -350,11 +352,12 @@ function isUnlockedByChain(
       )[0];
     if (newChar) {
       const charId = newChar.characterId as keyof typeof CHARACTERS | undefined;
-      const char = charId ? CHARACTERS[charId] : undefined;
-      if (char?.card?.portrait) {
+      const char = (charId ? CHARACTERS[charId] : undefined) as CharacterEx | undefined;
+      const portrait = char?.card?.portrait;
+      if (portrait) {
         candidates.push({
           path: `/cards/${newChar.bonusId}`,
-          portrait: char.card.portrait,
+          portrait,
           label: `${char.name} · Sammelkarte`,
           title: `${char.name}s Karte ist neu freigeschaltet!`,
           accent: 'bg-amber-400',
@@ -389,7 +392,7 @@ function isUnlockedByChain(
 
   <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch">
     {/* TEXT */}
-<div className="lg:col-span-7 p-6 pb-2 sm:p-10 lg:pr-10 flex flex-col justify-center">
+<div className="lg:col-span-7 p-6 pb-2 sm:p-10 lg:pr-10 flex flex-col justify-center relative z-10">
       {/* Personalisierte Begrüßung */}
       <div className="flex items-center gap-2 mb-3">
         <img
@@ -468,28 +471,25 @@ function isUnlockedByChain(
         )}
       </div>
 
-      <p className="mt10 text-xs text-slate-500">
-      </p>
     </div>
 
     {/* MEDIA */}
-<div className="lg:col-span-5 relative -mt-6 sm:mt-0 min-h-[380px] sm:min-h-[440px] lg:min-h-[420px] overflow-hidden">
+<div className="lg:col-span-5 relative -mt-6 sm:mt-0 min-h-[380px] sm:min-h-[440px] lg:min-h-[420px] overflow-hidden z-0">
       <video
-         className="absolute inset-0 w-full h-full object-contain scale-85"
+        className="absolute inset-4 w-[calc(100%-2rem)] h-[calc(100%-2rem)] object-contain object-top"
         autoPlay
         muted
         loop
         playsInline
         preload="metadata"
-        poster="/media/ui/Kids_surfen_smart-poster.jpg"
       >
-        <source src="/media/ui/Kids_surfen_smart.mp4" type="video/mp4" />
+        <source src={assetUrl('media/ui/welcome/Amy_animiert.mp4')} type="video/mp4" />
       </video>
 
       {/* sanfter Übergang zur Textseite */}
 
-      {/* NBank Siegel — rechts unten im Hero */}
-      <div className="absolute bottom-4 right-4 z-10">
+      {/* Siegel — links und rechts unten im Hero */}
+      <div className="absolute bottom-4 left-4 z-10">
         <a
           href="https://www.nbank.de"
           target="_blank"
@@ -505,10 +505,50 @@ function isUnlockedByChain(
           />
         </a>
       </div>
+      <div className="absolute bottom-4 right-4 z-10">
+        <img
+          src="/media/ui/Tommi_award_nominierung_2026.png"
+          alt="Nominiert für den TOMMI Games Award 2026 – Kategorie App und Bildung"
+          className="h-28 w-auto opacity-90"
+          loading="lazy"
+        />
+      </div>
 
     </div>
   </div>
 </section>
+
+        {/* ── HALLOWEEN SPECIAL ── */}
+        {getAllSpecials().filter(ep => ep.released).map(ep => (
+          <section key={ep.courseId} className="mt-6 relative overflow-hidden bg-zinc-100 rounded-2xl border border-zinc-200 shadow-2xl">
+            <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
+              <div className="flex flex-wrap gap-x-[10px] gap-y-[8px] p-2 opacity-[0.12] text-6xl leading-none">
+                {Array.from({ length: 30 }).map((_, i) => <span key={i}>👻</span>)}
+              </div>
+            </div>
+            <div className="relative flex gap-4 items-center p-5 sm:p-6">
+              <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border border-zinc-200 bg-zinc-200">
+                <img
+                  src={assetUrl(ep.coverImage)}
+                  alt={t('special.imgAlt')}
+                  className="w-full h-full object-cover opacity-90"
+                  loading="eager"
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[10px] font-bold text-orange-500 uppercase tracking-[0.12em]">{t('special.kicker')}</div>
+                <div className="mt-0.5 text-base font-bold text-zinc-900 leading-snug">{tStories(ep.titleKey)}</div>
+                <div className="mt-0.5 text-xs text-zinc-600 leading-snug line-clamp-1">{tStories(ep.descriptionKey)}</div>
+                <Link
+                  to={`/stories-v02/${ep.courseId}`}
+                  className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold bg-orange-500 hover:bg-orange-400 active:scale-95 text-white rounded-full px-4 py-1.5 transition-all shadow-[0_0_16px_rgba(249,115,22,0.45)]"
+                >
+                  {t('special.cta')}
+                </Link>
+              </div>
+            </div>
+          </section>
+        ))}
 
         {/* ── TOMMI JURY WILLKOMMEN ── */}
         {isTommi && (

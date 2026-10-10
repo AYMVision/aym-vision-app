@@ -5,6 +5,7 @@ import { autoCollectCharacterCardsForChapter } from '../../bonus/bonusAutoCollec
 import { applyChapterReward } from '../../progress/progressEngine';
 import { aymFetch } from '../../identity/handshake';
 import { getActiveProfileId } from '../../profile/profileStorage';
+import { syncChapterProgress } from '../../progress/backendProgressSync';
 
 type EpisodeMetaLike = {
   seasonId: string;
@@ -39,6 +40,7 @@ export function completeStoryChapter<TProfile>(args: {
   updateProfile: ProfileUpdater<TProfile>;
   wasAlreadyCompletedBeforeAnswer: boolean;
   skipCoin?: boolean;
+  skipDailyRecord?: boolean;
   getProfileResult?: (nextProfile: TProfile) => void;
   enableDebug?: boolean;
 }): ChapterCompletionResult {
@@ -50,6 +52,7 @@ export function completeStoryChapter<TProfile>(args: {
     updateProfile,
     wasAlreadyCompletedBeforeAnswer,
     skipCoin = false,
+    skipDailyRecord = false,
     getProfileResult,
     enableDebug = false,
   } = args;
@@ -58,11 +61,14 @@ export function completeStoryChapter<TProfile>(args: {
 
   markChapterCompleted(courseId, chapterIndex0, isLast);
 
-  if (!wasAlreadyCompletedBeforeAnswer) {
+  if (!wasAlreadyCompletedBeforeAnswer && !skipDailyRecord) {
     recordNewChapterCompletion({
       episodeId: courseId,
       chapterIndex0,
     });
+    void syncChapterProgress(courseId, chapterIndex0);
+  } else if (!wasAlreadyCompletedBeforeAnswer && skipDailyRecord) {
+    void syncChapterProgress(courseId, chapterIndex0);
   }
 
   const chapterId = `${courseId}c${String(chapterIndex0 + 1).padStart(2, '0')}`;

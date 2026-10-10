@@ -4,20 +4,22 @@ import type { ItemOption } from '../types/storyTypes';
 type Props = {
   selectedOptionIds: string[];
   allOptions: ItemOption[];
+  scored?: boolean;
 };
 
 export default function CompletedMultiSelectItemCard({
   selectedOptionIds,
   allOptions,
+  scored = true,
 }: Props) {
   const { t } = useTranslation();
 
   const selectedSet = new Set(selectedOptionIds);
 
   const selectedOptions = allOptions.filter((opt) => selectedSet.has(opt.id));
-  const missedCorrectOptions = allOptions.filter(
-    (opt) => !selectedSet.has(opt.id) && opt.score > 0,
-  );
+  const missedCorrectOptions = scored
+    ? allOptions.filter((opt) => !selectedSet.has(opt.id) && opt.score > 0)
+    : [];
 
   return (
     <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-emerald-200 bg-emerald-50 p-4 shadow-sm">
@@ -33,28 +35,21 @@ export default function CompletedMultiSelectItemCard({
             <div
               key={opt.id}
               className={`flex items-start gap-2 rounded-lg px-3 py-2 text-sm ${
-                isCorrect
-                  ? 'bg-emerald-100 text-emerald-950'
-                  : 'bg-amber-50 text-amber-900'
+                scored && !isCorrect
+                  ? 'bg-amber-50 text-amber-900'
+                  : 'bg-emerald-100 text-emerald-950'
               }`}
             >
               <span
                 className={`mt-0.5 flex-shrink-0 ${
-                  isCorrect ? 'text-emerald-600' : 'text-amber-600'
+                  scored && !isCorrect ? 'text-amber-600' : 'text-emerald-600'
                 }`}
                 aria-hidden="true"
               >
-                {isCorrect ? '✓' : '🤔'}
+                {scored && !isCorrect ? '✗' : '✓'}
               </span>
 
-              <span>
-                {opt.text}
-                {!isCorrect && (
-                  <span className="mt-0.5 block text-xs text-amber-700">
-                    {t('stories:multiSelect.completed.incorrectLabel')}
-                  </span>
-                )}
-              </span>
+              <span>{opt.text}</span>
             </div>
           );
         })}

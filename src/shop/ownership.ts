@@ -1,5 +1,5 @@
 import { aymFetch } from '../identity/handshake';
-import { unlockEpisodePaywallOnly, setBypassUntil } from '../gating/entitlements';
+import { unlockEpisodePaywallOnly, setBypassUntil, setBypassAll } from '../gating/entitlements';
 import { loadIdentity } from '../identity/storage';
 import { deriveBackendProfileId } from '../identity/keys';
 import { getActiveProfileId } from '../profile/profileStorage';
@@ -34,7 +34,11 @@ export async function refreshOwnership(): Promise<string[]> {
     const raw = await res.json() as { contentId: string }[];
     const owned = Array.isArray(raw) ? raw.map(item => item.contentId) : [];
     for (const contentId of owned) {
-      if (contentId === 's1-full') {
+      if (contentId === 's1-educator') {
+        // Educator/institutional license — all gates bypassed permanently
+        setBypassAll(true);
+      } else if (contentId === 's1-full') {
+        // Jury/test access — time-limited bypass
         unlockEpisodePaywallOnly('s1');
         setBypassUntil('2026-10-31');
       } else {

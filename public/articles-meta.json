@@ -1,4 +1,22 @@
 {
+  "chioma-news-stimmen-im-netz": {
+    "de": {
+      "title": "Kannst du einer Stimme noch trauen?",
+      "description": "Chioma berichtet über KI-Stimmen, die täuschend echt klingen – und was das bedeutet.",
+      "author": "Chioma",
+      "date": "2026-10-31",
+      "topicTags": ["infoCheck", "safeOnline"]
+    }
+  },
+  "ar-halloween-special": {
+    "de": {
+      "title": "Augmented Reality: Wenn plötzlich ein Geist neben dir steht 👻",
+      "description": "Was steckt hinter der AR-Technik? Carlos erklärt, wie Aylin beim Halloween-Spezial einen Geist neben einem Grabstein erscheinen lassen konnte.",
+      "author": "Carlos",
+      "date": "2026-10-31",
+      "topicTags": ["infoCheck"]
+    }
+  },
   "article-jonas-amir-int": {},
   "article-jonas-amir-interview": {
     "de": {

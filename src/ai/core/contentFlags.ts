@@ -17,6 +17,8 @@ export type ContentFlags = {
   selfHarm: boolean;
   sexualContent: boolean;
   violenceThreat: boolean;
+  abuseByAdult: boolean;     // Misshandlung / Gewalt durch Bezugsperson
+  eatingDisorder: boolean;   // Essstörung / Körperbild
 
   bullyingApproval: boolean;
   hateOrDegrading: boolean;
@@ -24,6 +26,7 @@ export type ContentFlags = {
 
   illegalHarmIntent: boolean; // optional später (v2: konservativ false)
   languageWarning: boolean;   // Schimpfwörter / Beleidigungen (Stufe 3, kein Block)
+  personalData: boolean;      // Telefonnummer / Adresse (Stufe 1, kein Block)
 };
 
 // --- Self-harm / Suicide (sehr konservativ, DE/EN) ---
@@ -104,8 +107,8 @@ const VIOLENCE_PATTERNS: RegExp[] = [
 
 // --- Bullying approval / intent (Mobbing gut / ich mach ihn fertig) ---
 const BULLYING_APPROVAL_PATTERNS: RegExp[] = [
-  // DE
-  /\bmobbing\b[\s\S]{0,10}\b(ist|waere|wär|wäre)\b[\s\S]{0,10}\b(gut|cool|ok|okay|lustig|richtig)\b/i,
+  // DE (normalisiert: ä→a — deshalb ware/waere statt wär/wäre)
+  /\bmobbing\b[\s\S]{0,10}\b(ist|ware|waere)\b[\s\S]{0,10}\b(gut|cool|ok|okay|lustig|richtig)\b/i,
   /\bich\b[\s\S]{0,20}\b(mach|mache|mach\'?|werd|werde)\b[\s\S]{0,20}\b(ihn|sie|den|die)\b[\s\S]{0,20}\b(fertig|runter|kaputt)\b/i,
   /\b(jemanden|wen)\b[\s\S]{0,10}\b(auslach\w*|beleidig\w*|arger\w*|ärger\w*|schikanier\w*)\b/i,
   /\b(auslachen|beleidigen|runtermachen)\b[\s\S]{0,10}\b(macht|ist)\b[\s\S]{0,10}\b(spass|spaß|cool|gut)\b/i,
@@ -115,19 +118,85 @@ const BULLYING_APPROVAL_PATTERNS: RegExp[] = [
   /\bi\b[\s\S]{0,20}\b(will|gonna)\b[\s\S]{0,20}\b(ruin|destroy)\b[\s\S]{0,20}\b(him|her|them)\b/i,
 ];
 
-// --- Hate / degrading speech (konservativ, minimal) ---
-const HATE_PATTERNS: RegExp[] = [
-  // DE (minimal)
-  /\b(du|ihr|die)\b[\s\S]{0,10}\b(bist|seid|sind)\b[\s\S]{0,10}\b(dumm|wertlos|eklig)\b/i,
-  /\b(hasse)\b[\s\S]{0,20}\b(alle|die)\b/i,
+// --- Hate / degrading speech — Stufe A: Slurs (wortbasiert, kein Satzkontext nötig) ---
+// Hinweis: Muster gegen normalisierten Text (Umlaute bereits entfernt: ü→u, ä→a, ö→o)
+const SLUR_PATTERNS: RegExp[] = [
+  // Ableistisch (DE)
   /\b(spast|spasti)\b/i,
   /\bmongo\b/i,
-  /\b(schlampe)\b/i,
-  /\b(hure|nutte)\b/i,
+  /\bkruppel\b/i,                   // krüppel normalisiert
 
-  // EN (minimal)
+  // Ableistisch (EN)
+  /\bretard(ed)?\b/i,
+  /\bcripple\b/i,
+
+  // Homophob / transphob (DE)
+  /\bschwuchtel\b/i,
+  /\btunte\b/i,
+
+  // Homophob (EN)
+  /\b(faggot|fag)\b/i,
+  /\bdyke\b/i,
+
+  // Rassistisch (DE)
+  /\bschlitzauge\w*/i,
+  /\bkanake\w*/i,
+  /\bn[e3]gg?[ae3]r\w*/i,           // N-Wort DE-Form, inkl. Zahlersatz
+
+  // Rassistisch (EN)
+  /\bn[i1]gg[ae3]r\w*/i,            // N-Wort EN-Form
+  /\b(spic|chink|kike)\b/i,
+
+  // Antisemitisch (DE)
+  /\bjudensau\b/i,
+  /\bjudenschwein\b/i,
+
+  // Sexistisch (abwertend gegenüber Frauen)
+  /\b(schlampe|hure|nutte)\b/i,
+];
+
+// --- Hate / degrading speech — Stufe B: Gruppenbasierter Hass (Satzmuster) ---
+const GROUP_HATE_PATTERNS: RegExp[] = [
+  // DE: "X raus" — Hassparolen (normalisiert: ä→a, ü→u)
+  /\b(auslander|juden?|muslime?|fluchtlinge?|migranten?)\s*(raus|weg)\b/i,
+
+  // DE: Vernichtungsrhetorik
+  /\b(gehoren|sollten)\s*(vergast|vernichtet|ausgerottet|erschossen|abgeschoben)\b/i,
+
+  // DE: "alle X sind [negativ]" (normalisiert: ä→a, ö→o)
+  /\balle\b[\s\S]{0,20}\b(sind|seid)\b[\s\S]{0,20}\b(kriminell|gefahrlich|wertlos|schlecht|bose|doof|blod|dumm|hasslich)\b/i,
+
+  // DE: Gruppe + sind/ist + abwertend (auch ohne "alle")
+  /\b(juden?|muslime?|christen?|auslander|schwarze?|fluchtlinge?|migranten?|araber?|asiaten?|turken?)\b[\s\S]{0,25}\b(sind|ist|seid)\b[\s\S]{0,25}\b(doof|blod|dumm|wertlos|schlecht|bose|eklig|kriminell|gefahrlich|hasslich)\b/i,
+
+  // DE: "hasse alle / die"
+  /\bhasse\b[\s\S]{0,20}\b(alle|die)\b/i,
+
+  // DE: persönlich abwertend
+  /\b(du|ihr|die)\b[\s\S]{0,10}\b(bist|seid|sind)\b[\s\S]{0,10}\b(dumm|wertlos|eklig)\b/i,
+
+  // EN: Gruppe + are + abwertend
+  /\b(jews?|muslims?|christians?|blacks?|foreigners?|migrants?|arabs?|asians?|turks?)\b[\s\S]{0,25}\b(are|is)\b[\s\S]{0,25}\b(stupid|dumb|worthless|bad|evil|disgusting|criminal|dangerous|ugly)\b/i,
+
+  // EN
   /\b(you|they)\b[\s\S]{0,10}\b(are)\b[\s\S]{0,10}\b(stupid|worthless|disgusting)\b/i,
-  /\b(i)\b[\s\S]{0,10}\b(hate)\b[\s\S]{0,20}\b(all|them)\b/i,
+  /\b(i)\b[\s\S]{0,10}\b(hate)\b[\s\S]{0,20}\b(all|every(one|body)?)\b/i,
+];
+
+// --- Persönliche Daten (Stufe 1 — freundlicher Hinweis, kein Block) ---
+// Telefonnummern: deutsche Formate (0xxx, +49 via normalisiert als 49xxx)
+// Adressen: Straßentyp + Hausnummer (normalisiert: ß→ss, ä→a)
+const PERSONAL_DATA_PATTERNS: RegExp[] = [
+  // Telefon: beginnt mit 0 + mind. 7 weitere Ziffern (mit opt. Leerzeichen)
+  /\b0\d[\d\s]{6,13}\d\b/,
+
+  // Telefon: +49-Format (+ durch Normalisierung entfernt → beginnt mit 49)
+  /\b49\s?\d[\d\s]{6,12}\d\b/,
+
+  // Adresse: Straßenname + Hausnummer (normalisiert: strasse, str, weg, platz, etc.)
+  /\b\w{3,}(strasse|gasse|allee|ring|pfad)\b\s+\d+[a-z]?\b/i,
+  /\b\w{2,}str\b\s+\d+[a-z]?\b/i,
+  /\b\w{3,}(weg|platz)\b\s+\d+[a-z]?\b/i,
 ];
 
 // --- Language Warning — Schimpfwörter / einfache Beleidigungen (Stufe 3) ---
@@ -152,6 +221,80 @@ const LANGUAGE_WARNING_PATTERNS: RegExp[] = [
   /\bnoob\b/i,
   // EN
   /\b(fuck|shit|asshole|bitch|bastard|crap|damn)\b/i,
+];
+
+// --- Misshandlung / Gewalt durch Erwachsene / Bezugsperson ---
+// Hinweis: konservativ — bei Kindern lieber einmal zu viel flaggen.
+// Reaktion: ABUSE_MESSAGE (nicht CRISIS_MESSAGE) — kein "Hol Erwachsene", da Täter Elternteil sein könnte.
+// Muster gegen normalisierten Text (Umlaute entfernt: ä→a, ü→u, ö→o)
+const ABUSE_PATTERNS: RegExp[] = [
+  // DE: Bezugsperson + Gewalt gegen Kind
+  /\b(vater|mutter|eltern|stiefvater|stiefmutter|opa|oma|onkel|tante|bruder|schwester)\b[\s\S]{0,40}\b(schlagt|haut|tritt|verletzt|geschlagen)\b[\s\S]{0,15}\b(mich|mir)\b/i,
+
+  // DE: Passiv — "ich werde/wurde geschlagen/misshandelt"
+  /\bich\b[\s\S]{0,20}\b(werde|wurde|bin|war)\b[\s\S]{0,20}\b(geschlagen|gehauen|getreten|verletzt|misshandelt)\b/i,
+
+  // DE: "er/sie schlägt mich"
+  /\b(er|sie)\b[\s\S]{0,15}\b(schlagt|haut|tritt|verletzt)\b[\s\S]{0,10}\b(mich|mir)\b/i,
+
+  // DE: Angst zuhause / vor Familie
+  /\bich\b[\s\S]{0,20}\b(hab|habe)\b[\s\S]{0,10}\bangst\b[\s\S]{0,30}\b(zuhause|nach hause|vor meinem?|vor dem|vor der)\b/i,
+
+  // DE: "zuhause passieren schlimme Dinge" (normalisiert: ä→a)
+  /\b(zuhause|bei uns|bei mir)\b[\s\S]{0,25}\b(passiert|passieren|ist es)\b[\s\S]{0,25}\b(schlimm\w*|nicht gut|furchtbar|schrecklich|gefahrlich)\b/i,
+
+  // DE: Schweige-Gebot durch Täter (normalisiert: ä→a)
+  /\bich\b[\s\S]{0,20}\b(darf|soll)\b[\s\S]{0,20}\b(niemandem?|keinem|niemand)\b[\s\S]{0,20}\b(sagen|erzahlen|verraten)\b/i,
+
+  // EN: Bezugsperson + Gewalt
+  /\b(dad|mom|father|mother|parents?|stepdad|stepmom|uncle|aunt|grandpa|grandma)\b[\s\S]{0,40}\b(hits?|beats?|hurts?|kicks?|abuses?|hit|beat|hurt|kicked|abused)\b[\s\S]{0,10}\bme\b/i,
+
+  // EN: Passiv
+  /\bi\b[\s\S]{0,20}\b(get|got|am|was|have been)\b[\s\S]{0,20}\b(hit|beaten|hurt|abused|kicked)\b/i,
+
+  // EN: Angst zuhause
+  /\b(scared|afraid|frightened)\b[\s\S]{0,30}\b(go|going|come|coming)\b[\s\S]{0,20}\b(home|house)\b/i,
+
+  // EN: schlimme Dinge zuhause
+  /\b(bad|terrible|scary|awful|horrible)\s+things?\b[\s\S]{0,20}\b(home|house)\b/i,
+];
+
+// --- Essstörung / Körperbild ---
+// Hinweis: Erste-Person-Muster reduzieren Fehlalarme durch Story-Beschreibungen.
+// Reaktion: EATING_DISORDER_MESSAGE — kein Kommentar zu Gewicht/Aussehen, nur Empathie + Ressource.
+// Muster gegen normalisierten Text (ü→u, ä→a, ö→o)
+const EATING_DISORDER_PATTERNS: RegExp[] = [
+  // DE: Nahrungsrestriktion mit Zeitangabe oder Verstärkung
+  /\bich\b[\s\S]{0,15}\besse\b[\s\S]{0,20}\b(kaum|nichts|nicht|fast nichts)\b/i,
+  /\bich\b[\s\S]{0,20}\b(hab|habe)\b[\s\S]{0,20}\bnicht\b[\s\S]{0,10}\bgegessen\b/i,
+  /\bich\b[\s\S]{0,15}\besse\b[\s\S]{0,10}\b(seit|schon)\b[\s\S]{0,15}\b(tagen?|wochen?)\b/i,
+
+  // DE: Extremes Abnehmziel (normalisiert: ü→u)
+  /\bich\b[\s\S]{0,15}\b(will|muss|mochte)\b[\s\S]{0,15}\babnehmen\b[\s\S]{0,20}\b(egal|unbedingt|koste)\b/i,
+  /\bich\b[\s\S]{0,15}\b(muss|will)\b[\s\S]{0,15}\b(dunner|schlanker)\b/i,
+
+  // DE: Körperhass / negatives Körperbild (normalisiert: ö→o, ü→u, ä→a)
+  /\bich\b[\s\S]{0,15}\bbin\b[\s\S]{0,10}\b(zu fett|zu dick|zu hasslich|so fett|so dick)\b/i,
+  /\bich\b[\s\S]{0,15}\bhasse\b[\s\S]{0,20}\b(meinen? korper|mein aussehen)\b/i,
+  /\bich\b[\s\S]{0,15}\b(finde|fuhle)\b[\s\S]{0,15}\bmich\b[\s\S]{0,15}\b(zu fett|zu dick|hasslich|eklig)\b/i,
+
+  // DE: Purging / Erbrechen nach Essen (normalisiert: ü→u)
+  /\b(erbreche|erbrochen|ubergebe|ubergeben)\b[\s\S]{0,20}\b(essen|gegessen)\b/i,
+  /\b(kotze|kotzen)\b[\s\S]{0,20}\b(essen|gegessen|nach dem)\b/i,
+
+  // EN: food restriction
+  /\bi\b[\s\S]{0,15}\beat\b[\s\S]{0,10}\b(nothing|barely|almost nothing)\b/i,
+  /\bi\b[\s\S]{0,20}\b(days?|weeks?)\b[\s\S]{0,10}\bwithout\b[\s\S]{0,10}\beating\b/i,
+
+  // EN: extreme weight loss intent
+  /\bi\b[\s\S]{0,15}\b(need|want|have)\b[\s\S]{0,10}\bto\b[\s\S]{0,10}\blose weight\b/i,
+
+  // EN: body image
+  /\bi\b[\s\S]{0,10}\b(am|feel)\b[\s\S]{0,10}\btoo\b[\s\S]{0,10}\b(fat|ugly|gross)\b/i,
+  /\bi\b[\s\S]{0,10}\bhate\b[\s\S]{0,15}\b(my body|myself)\b/i,
+
+  // EN: purging
+  /\b(throw|threw|throwing|vomit)\b[\s\S]{0,20}\b(food|eating|after)\b/i,
 ];
 
 // --- Misinformation intent (Fake News absichtlich verbreiten) ---
@@ -180,30 +323,39 @@ export function detectContentFlags(
 
   const sexualContent = t ? SEXUAL_PATTERNS.some((r) => r.test(t)) : false;
   const violenceThreat = t ? VIOLENCE_PATTERNS.some((r) => r.test(t)) : false;
+  const abuseByAdult = t ? ABUSE_PATTERNS.some((r) => r.test(t)) : false;
+  const eatingDisorder = t ? EATING_DISORDER_PATTERNS.some((r) => r.test(t)) : false;
 
   const bullyingApproval = t ? BULLYING_APPROVAL_PATTERNS.some((r) => r.test(t)) : false;
-  const hateOrDegrading = t ? HATE_PATTERNS.some((r) => r.test(t)) : false;
+  const hateOrDegrading = t ? (
+    SLUR_PATTERNS.some((r) => r.test(t)) ||
+    GROUP_HATE_PATTERNS.some((r) => r.test(t))
+  ) : false;
   const misinformationIntent = t ? MISINFO_PATTERNS.some((r) => r.test(t)) : false;
 
   // optional später
   const illegalHarmIntent = false;
 
   const languageWarning = t ? LANGUAGE_WARNING_PATTERNS.some((r) => r.test(t)) : false;
+  const personalData = t ? PERSONAL_DATA_PATTERNS.some((r) => r.test(t)) : false;
 
   return {
     selfHarm,
     sexualContent,
     violenceThreat,
+    abuseByAdult,
+    eatingDisorder,
     bullyingApproval,
     hateOrDegrading,
     misinformationIntent,
     illegalHarmIntent,
     languageWarning,
+    personalData,
   };
 }
 
 export function isCriticalSafety(flags: ContentFlags) {
-  return flags.selfHarm || flags.sexualContent || flags.violenceThreat;
+  return flags.selfHarm || flags.sexualContent || flags.violenceThreat || flags.abuseByAdult || flags.eatingDisorder;
 }
 
 export function isNormViolation(flags: ContentFlags) {

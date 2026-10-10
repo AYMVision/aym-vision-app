@@ -9,7 +9,6 @@
       "Ich greif das auf und geh einen Schritt weiter.",
       "Lass uns daran anknüpfen.",
       "Ich bleib noch bei dem, was du gesagt hast.",
-      "Daran kann man gut ansetzen.",
       "Von hier aus können wir kurz weiterdenken.",
       "Ein Gedanke, der das abrundet:",
       "Ich geb dir dazu noch einen Gedanken mit.",
@@ -365,9 +364,9 @@
     "Bitte hol dir kurz einen Erwachsenen dazu – dann könnt ihr zusammen weitermachen."
   ],
   "safety": [
-    "Das klingt sehr schwer. Du musst da nicht allein durch. Bitte hol dir jetzt Unterstützung bei einer erwachsenen Person.",
+    "Das klingt sehr schwer. Du musst da nicht allein durch. Bitte hol dir jetzt Unterstützung bei einer erwachsenen Person, der du vertraust.",
     "Das wirkt gerade sehr belastend. Bitte sprich jetzt mit einer erwachsenen Person, der du vertraust.",
-    "Das ist ein Moment, wo Hilfe wichtig ist. Bitte sprich jetzt mit einer erwachsenen Person."
+    "Das ist ein Moment, wo Hilfe wichtig ist. Bitte sprich jetzt mit einer erwachsenen Person, der du vertraust."
   ],
   "normStop": [
     "Warte kurz – das könnte anderen wehtun. Lass uns das neu sortieren.",
@@ -431,7 +430,7 @@
       "rule": "Nenn eine Regel, die helfen würde.",
       "fallback": {
         "CHALLENGE": "Schreib eine Idee auf. Ein Beispiel reicht.",
-        "ACTION": "Was machst du als Erstes?",
+        "ACTION": "Was könntest du machen?",
         "FEELING": "Welches Gefühl passt am besten?",
         "PERSPECTIVE": "Was ist für dich der wichtigste Punkt?",
         "KNOWLEDGE": "Was sollte man dazu wissen?",

@@ -5,6 +5,7 @@ import { saveRestoredIdentity } from './storage';
 import { resetIdentityCache } from './useIdentity';
 import { refreshOwnership } from '../shop/ownership';
 import { hasParentPasscode, setParentPasscode, setParentUnlockedForMinutes } from '../settings/parentLock';
+import { restoreProgressFromBackend } from '../progress/backendProgressSync';
 
 type Screen = 'input' | 'success' | 'setup';
 
@@ -31,6 +32,8 @@ export function RestoreIdentityModal({ onDone, onCancel }: { onDone(): void; onC
       // Kauf-Check mit backendProfileId (deterministisch aus Mnemonic)
       const owned = await refreshOwnership();
       setRestoredContent(owned);
+      // Spielfortschritt vom Backend wiederherstellen
+      await restoreProgressFromBackend();
       setScreen(hasParentPasscode() ? 'success' : 'setup');
     } catch {
       setError(t('identity.restore.error'));

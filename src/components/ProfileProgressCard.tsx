@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useProfile } from '../profile/useProfile';
-import { getEpisodeMeta, getStoryCards } from '../content/contentIndex';
+import { CONTENT_INDEX, getEpisodeMeta, getStoryCards } from '../content/contentIndex';
 import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { shouldBypassAll } from '../gating/entitlements';
 import { shouldSkipOnboarding } from '../common/firstRun';
@@ -27,7 +27,36 @@ export default function ProfileProgressCard({
     return first.storyEngine === 'v2' ? `/stories-v02/${first.id}` : `/stories/${first.id}`;
   }, [lang]);
 
-  const cur = profile.progress?.current;
+  const rawCur = profile.progress?.current;
+
+  // Sonderfolgen (seasonId 'sp') nicht im Fortschritt-Widget anzeigen —
+  // stattdessen letzten Staffel-1-Stand aus completedChapters rekonstruieren
+  const cur = useMemo(() => {
+    const isSpecial = rawCur && !CONTENT_INDEX.some((s) =>
+      s.episodes.some((e) => e.episodeId === rawCur.episodeId)
+    );
+    if (!isSpecial) return rawCur ?? null;
+
+    const completed = profile.progress?.completedChapters ?? {};
+    let bestEpisodeId: string | null = null;
+    let bestSeasonId = 's1';
+    let bestChapterCount = 0;
+
+    for (const key of Object.keys(completed)) {
+      const parts = key.split(':');
+      if (parts.length < 3 || parts[0] !== 's1') continue;
+      const epId = parts[1];
+      const chapNum = parseInt(parts[2].replace('c', ''), 10);
+      if (!bestEpisodeId || epId > bestEpisodeId || (epId === bestEpisodeId && chapNum > bestChapterCount)) {
+        bestEpisodeId = epId;
+        bestSeasonId = parts[0];
+        bestChapterCount = chapNum;
+      }
+    }
+
+    if (!bestEpisodeId) return null;
+    return { seasonId: bestSeasonId, episodeId: bestEpisodeId, courseId: bestEpisodeId, chapterIndex: bestChapterCount + 1, updatedAt: rawCur.updatedAt };
+  }, [rawCur, profile.progress?.completedChapters]);
 
   const outerClass = noCard ? '' : compact ? '' : 'mt-6';
   const cardClass = noCard

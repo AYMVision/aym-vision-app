@@ -391,6 +391,15 @@ const [episode, setEpisode] = useState<StoryEpisodeV02 | null>(null);
     milestoneStickerIds: string[];
     starterStickerAwarded: boolean;
     weeklyBadgeAwarded: boolean;
+    episodeEnd?: {
+      summaryId: string;
+      bonusCoins: number;
+      stickerAwarded: boolean;
+      soundEnabled: boolean;
+      episodeStickerIds: string[];
+      staticStickers: Array<{ image: string; title: string }>;
+      coins: number;
+    };
   } | null>(null);
 
   // Nach Amic-Abschluss: ID des nächsten Amics (wenn verfügbar), oder null = letzter Amic
@@ -597,7 +606,33 @@ function hasStoryMigrationDone(key: string): boolean {
       const amicSnap = loadAmicSession(courseId, routeChapterId);
 
       if (amicSnap) {
-        restoredAsFinishedRef.current = amicSnap.phase === 'chapter_finished';
+        if (amicSnap.phase === 'chapter_finished') {
+          // Restore finished state — show chat + replay option instead of silent restart
+          restoredAsFinishedRef.current = true;
+          dispatch({ type: 'RESTORE_SNAPSHOT', payload: amicSnap });
+          const gs = getNextChapterGateState({
+            courseId,
+            course: { script: episode.chapters },
+            currentChapterIndex0: amicSnap.chapterIndex0,
+            bypassAll: shouldBypassAll(courseId) || (episodeMeta?.isFreeSpecial ?? false),
+          });
+          if (!gs.hasNext) {
+            setAmicDoneNextChapterId(null);
+          } else if (gs.isPaywallGated) {
+            setShowPaywallCard(true);
+            setAmicDoneNextChapterId(null);
+          } else if (gs.structuralAllowed && gs.timeAllowed) {
+            setAmicDoneNextChapterId(episode.chapters[gs.nextChapterIndex0]?.id ?? null);
+          } else if (!gs.timeAllowed && gs.shouldShowLockedHint) {
+            setShowNextChapterLockedHint(true);
+            setAmicDoneNextChapterId(null);
+          } else {
+            setAmicDoneNextChapterId(null);
+          }
+          return;
+        }
+
+        restoredAsFinishedRef.current = false;
 
         // Re-unlock bonus-link markers that may have been cleared
         if (amicSnap.completedStepIds.length > 0) {
@@ -632,7 +667,7 @@ function hasStoryMigrationDone(key: string): boolean {
             courseId,
             course: { script: episode.chapters },
             currentChapterIndex0: amicSnap.chapterIndex0,
-            bypassAll: false,
+            bypassAll: shouldBypassAll(courseId) || (episodeMeta?.isFreeSpecial ?? false),
           });
           if (!gateState.hasNext) {
             // Last chapter — no card needed (episode summary handled elsewhere)
@@ -659,8 +694,8 @@ function hasStoryMigrationDone(key: string): boolean {
       // No amic session yet — check time gate before starting fresh
       const isAlreadyCompleted = hasCompletedChapter(courseId, targetChapter.chapterIndex0);
       if (isAlreadyCompleted) {
-        // Session was lost (storage cleared, new device, migration) — redirect instead of restarting
-        navigate(`/stories-v02/${courseId}`, { replace: true });
+        // Chapter completed on another device or session was cleared — replay from scratch
+        dispatch({ type: 'START_CHAPTER', payload: { courseId, chapter: targetChapter } });
         return;
       }
       if (isPaywallChapter(courseId, targetChapter.chapterIndex0) && !shouldBypassPaywall(courseId)) {
@@ -668,7 +703,7 @@ function hasStoryMigrationDone(key: string): boolean {
         setAmicDoneNextChapterId(null);
         return;
       }
-      if (!shouldBypassAll(courseId)) {
+      if (!shouldBypassAll(courseId) && !(episodeMeta?.isFreeSpecial ?? false)) {
         const timeGate = canStartNextNewChapterToday();
         if (!timeGate.allowed) {
           setShowNextChapterLockedHint(true);
@@ -723,7 +758,7 @@ function hasStoryMigrationDone(key: string): boolean {
           courseId,
           course: { script: episode.chapters },
           currentChapterIndex0: snap.chapterIndex0,
-          bypassAll: false,
+          bypassAll: shouldBypassAll(courseId) || (episodeMeta?.isFreeSpecial ?? false),
         });
 
         if (gateState.hasNext && gateState.structuralAllowed && gateState.timeAllowed) {
@@ -901,29 +936,40 @@ function hasStoryMigrationDone(key: string): boolean {
   // IntersectionObserver: Reward-Toast zeigen wenn der letzte Chapter-Eintrag sichtbar wird
   useEffect(() => {
     if (!pendingChapterRewards) return;
-    const { lastEntryId, coinAwarded, themeStickerIds, milestoneStickerIds, starterStickerAwarded, weeklyBadgeAwarded } = pendingChapterRewards;
+    const { lastEntryId, coinAwarded, themeStickerIds, milestoneStickerIds, starterStickerAwarded, weeklyBadgeAwarded, episodeEnd } = pendingChapterRewards;
 
     const scrollEl = scrollRef.current;
     if (!scrollEl) return;
 
     const targetEl = scrollEl.querySelector(`[data-story-entry-id="${CSS.escape(lastEntryId)}"]`);
-    if (!targetEl) {
-      // Element nicht im DOM (sollte nicht vorkommen) — direkt auslösen
-      const staticStickers: Array<{ image: string; title: string }> = [];
-      if (starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
-      if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 von 7 Tagen! 🔥' });
-      setTimeout(() => fireRewardToast({ stickerIds: [...themeStickerIds, ...milestoneStickerIds], staticStickers, coins: coinAwarded ? 1 : 0 }), 1200);
-      setPendingChapterRewards(null);
-      return;
-    }
 
     const fire = () => {
       const staticStickers: Array<{ image: string; title: string }> = [];
       if (starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
       if (weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 von 7 Tagen! 🔥' });
-      setTimeout(() => fireRewardToast({ stickerIds: [...themeStickerIds, ...milestoneStickerIds], staticStickers, coins: coinAwarded ? 1 : 0 }), 1200);
+      if (coinAwarded || themeStickerIds.length > 0 || milestoneStickerIds.length > 0 || starterStickerAwarded || weeklyBadgeAwarded) {
+        setTimeout(() => fireRewardToast({ stickerIds: [...themeStickerIds, ...milestoneStickerIds], staticStickers, coins: coinAwarded ? 1 : 0 }), 1200);
+      }
+      if (episodeEnd) {
+        const { summaryId, bonusCoins, stickerAwarded, soundEnabled, episodeStickerIds, staticStickers: epStickers, coins: epCoins } = episodeEnd;
+        setTimeout(() => {
+          dispatch({ type: 'ADD_EPISODE_SUMMARY', payload: { id: summaryId, courseId, bonusCoins, stickerAwarded } });
+        }, 400);
+        setTimeout(() => {
+          playEpisodeSound(soundEnabled);
+        }, 1800);
+        if (episodeStickerIds.length > 0 || epStickers.length > 0 || epCoins > 0) {
+          setTimeout(() => fireRewardToast({ stickerIds: episodeStickerIds, staticStickers: epStickers, coins: epCoins }), 3500);
+        }
+      }
       setPendingChapterRewards(null);
     };
+
+    if (!targetEl) {
+      // Element nicht im DOM (sollte nicht vorkommen) — direkt auslösen
+      fire();
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -1064,6 +1110,7 @@ function hasStoryMigrationDone(key: string): boolean {
       updateProfile,
       wasAlreadyCompletedBeforeAnswer,
       isEpilogue: chapter.isEpilogue ?? false,
+      skipDailyRecord: episodeMeta?.isFreeSpecial ?? false,
       enableDebug: import.meta.env.DEV,
     });
 
@@ -1096,44 +1143,38 @@ function hasStoryMigrationDone(key: string): boolean {
           }
         : null,
       currentChapterIndex0: chapter.chapterIndex0,
-      bypassAll: false,
+      bypassAll: shouldBypassAll(courseId) || (episodeMeta?.isFreeSpecial ?? false),
     });
 
     if (!gateState.hasNext) {
       setShowNextChapterLockedHint(false);
 
-      if (!wasAlreadyCompletedBeforeAnswer) {
-        // Reward-Toast: Episodensticker + Coins + Sondersticker
-        {
-          const stickerIds = [...result.newMilestoneStickerIds];
-          const staticStickers: Array<{ image: string; title: string }> = [];
-          if (result.stickerAwarded && episodeMeta.stickerImage) {
-            staticStickers.push({ image: episodeMeta.stickerImage, title: 'Episode abgeschlossen' });
-          }
-          if (result.starterStickerAwarded) staticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
-          if (result.weeklyBadgeAwarded) staticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 von 7 Tagen! 🔥' });
-          const coins = result.episodeBonusAwarded ? 5 : 0;
-          if (stickerIds.length > 0 || staticStickers.length > 0 || coins > 0) {
-            setTimeout(() => fireRewardToast({ stickerIds, staticStickers, coins }), 5000);
-          }
+      if (!wasAlreadyCompletedBeforeAnswer && lastVisibleEntryId) {
+        const episodeStickerIds = [...result.newMilestoneStickerIds];
+        const epStaticStickers: Array<{ image: string; title: string }> = [];
+        if (result.stickerAwarded && episodeMeta.stickerImage) {
+          epStaticStickers.push({ image: episodeMeta.stickerImage, title: 'Episode abgeschlossen' });
         }
-
-        // Abschluss-Karte direkt im Messenger erscheint nach dem Toast
+        if (result.starterStickerAwarded) epStaticStickers.push({ image: 'media/stickers/milestones/starter-first-5-512.webp', title: '5 Kapitel geschafft!' });
+        if (result.weeklyBadgeAwarded) epStaticStickers.push({ image: 'media/stickers/streaks/streak-5-512.webp', title: '5 von 7 Tagen! 🔥' });
         const summaryId = `episode-summary-${courseId}`;
-        setTimeout(() => {
-          dispatch({
-            type: 'ADD_EPISODE_SUMMARY',
-            payload: {
-              id: summaryId,
-              courseId,
-              bonusCoins: result.episodeBonusAwarded ? 5 : 0,
-              stickerAwarded: result.stickerAwarded,
-            },
-          });
-        }, 1400);
-        setTimeout(() => {
-          playEpisodeSound(profile.soundEnabled !== false);
-        }, 3500);
+        setPendingChapterRewards({
+          lastEntryId: lastVisibleEntryId,
+          coinAwarded: false,
+          themeStickerIds: [],
+          milestoneStickerIds: [],
+          starterStickerAwarded: false,
+          weeklyBadgeAwarded: false,
+          episodeEnd: {
+            summaryId,
+            bonusCoins: result.episodeBonusAwarded ? 5 : 0,
+            stickerAwarded: result.stickerAwarded,
+            soundEnabled: profile.soundEnabled !== false,
+            episodeStickerIds,
+            staticStickers: epStaticStickers,
+            coins: result.episodeBonusAwarded ? 5 : 0,
+          },
+        });
       }
       return;
     }
@@ -1412,6 +1453,7 @@ function hasStoryMigrationDone(key: string): boolean {
             <CompletedMultiSelectItemCard
               selectedOptionIds={entry.selectedOptionIds}
               allOptions={sourceStep.options}
+              scored={sourceStep.scored !== false}
             />
           </div>
         );
@@ -1980,6 +2022,20 @@ function hasStoryMigrationDone(key: string): boolean {
                       {t('stories:gate.toNewspaper', { defaultValue: 'Zur Schülerzeitung →' })}
                     </button>
                   </>
+                )}
+                {!showPaywallCard && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!courseId || !chapter) return;
+                      clearAmicSession(courseId, chapter.id);
+                      dispatch({ type: 'START_CHAPTER', payload: { courseId, chapter } });
+                      setAmicDoneNextChapterId(undefined);
+                    }}
+                    className="inline-flex items-center justify-center rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors"
+                  >
+                    Nochmals spielen ↺
+                  </button>
                 )}
               </div>
 

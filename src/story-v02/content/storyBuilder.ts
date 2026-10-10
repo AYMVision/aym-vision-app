@@ -49,7 +49,9 @@ type Raw =
   | { _t: 'divider'; content: string }
   | { _t: 'amytip'; content: string }
   | { _t: 'bonus'; bonusId: string; content: string; linkTo: string; linkLabel?: string }
-  | { _t: 'scene'; tone: 'private' | 'class'; names: string[]; title?: string };
+  | { _t: 'ghostlink'; label?: string }
+  | { _t: 'scene'; tone: 'private' | 'class'; names: string[]; title?: string }
+  | { _t: 'poll'; speaker: Character; question?: string; options: { text: string; votes: number }[]; ts: string };
  
 
 // ─── MESSAGE FACTORIES ───────────────────────────────────────────────────────
@@ -82,6 +84,10 @@ export const divider = (content: string): Raw => ({ _t: 'divider', content });
 /** Amy-Tipp-Karte (system) */
 export const amyTip = (content: string): Raw => ({ _t: 'amytip', content });
 
+/** Gefakter Link-Button im Chat — sieht aus wie ein Link, navigiert nirgendwo */
+export const ghostLink = (label = 'DAS AUGE ÖFFNEN'): Raw =>
+  ({ _t: 'ghostlink', label });
+
 /** Bonus-Link-Karte (Karte, Tagebuch, Artikel, …) */
 export const bonusLink = (
   bonusId: string,
@@ -102,6 +108,14 @@ export const classChat = (title = 'Klasse 7b'): Raw =>
 
 /** Switch in den Amy-Chat (Du + Amy) */
 export const amyChat = (): Raw => privateChat('Du', 'Amy');
+
+/** WhatsApp-style Umfrageergebnis (abgeschlossen) */
+export const poll = (
+  speaker: Character,
+  question: string,
+  options: { text: string; votes: number }[],
+  ts = '',
+): Raw => ({ _t: 'poll', speaker, question, options, ts });
 
 // ─── MESSAGE COMPILER ────────────────────────────────────────────────────────
 
@@ -169,6 +183,17 @@ function compileMsg(stepId: string, i: number, raw: Raw): Message {
         linkLabel: raw.linkLabel,
         bonusId: raw.bonusId,
         timestamp: '',
+      };
+    case 'ghostlink':
+      return { id, type: 'system', kind: 'ghost-link', content: raw.label ?? 'DAS AUGE ÖFFNEN', timestamp: '' };
+    case 'poll':
+      return {
+        id,
+        type: raw.speaker.id === 'amy' ? 'main' : 'other',
+        speaker: raw.speaker,
+        timestamp: raw.ts,
+        kind: 'poll-result',
+        poll: { question: raw.question, options: raw.options },
       };
     case 'scene': {
       const tone = raw.tone;
@@ -283,6 +308,7 @@ export function MIT(
     maxSelections?: number;
     helperText?: string;
     topics?: ThemeId[];
+    scored?: boolean;
   } = {},
 ): ItemStep {
   return {
@@ -297,6 +323,7 @@ export function MIT(
     maxSelections: opts.maxSelections,
     helperText: opts.helperText,
     topicIds: opts.topics ?? [],
+    scored: opts.scored,
   };
 }
 

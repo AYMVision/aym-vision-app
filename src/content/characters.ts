@@ -371,7 +371,11 @@ amir: {
   bioKey: 'characters.amir.bio',
 },
 
-
+digitalghost7b: {
+  id: 'digitalghost7b',
+  name: 'digitalghost7b',
+  avatar: 'geist',
+},
 
 } as const satisfies Record<string, CharacterEx>;
 
@@ -400,4 +404,5 @@ export const STORY_CHARACTERS: Record<string, Character> = {
   noah: CHARACTERS.noah,
   farida: CHARACTERS.farida,
   amir: CHARACTERS.amir,
+  digitalghost7b: CHARACTERS.digitalghost7b,
 };

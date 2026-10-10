@@ -15,7 +15,6 @@ export const AMY_PHRASES_DE = {
       'Ich greif das auf und geh einen Schritt weiter.',
      'Lass uns daran anknüpfen.',
      'Ich bleib noch bei dem, was du gesagt hast.',
-      'Daran kann man gut ansetzen.',
       'Von hier aus können wir kurz weiterdenken.',
       'Ein Gedanke, der das abrundet:',
       'Ich geb dir dazu noch einen Gedanken mit.',
@@ -439,9 +438,9 @@ miniTips: {
 
 
   safety: [
-    'Das klingt sehr schwer. Du musst da nicht allein durch. Bitte hol dir jetzt Unterstützung bei einer erwachsenen Person.',
+    'Das klingt sehr schwer. Du musst da nicht allein durch. Bitte hol dir jetzt Unterstützung bei einer erwachsenen Person, der du vertraust.',
     'Das wirkt gerade sehr belastend. Bitte sprich jetzt mit einer erwachsenen Person, der du vertraust.',
-    'Das ist ein Moment, wo Hilfe wichtig ist. Bitte sprich jetzt mit einer erwachsenen Person.',
+    'Das ist ein Moment, wo Hilfe wichtig ist. Bitte sprich jetzt mit einer erwachsenen Person, der du vertraust.',
   ],
 
   // --------------------

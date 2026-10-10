@@ -296,7 +296,24 @@
     "s1e10": {
       "title": "E10",
       "description": "..."
+    },
+    "sp0e01": {
+      "title": "Voices in the Net",
+      "description": "An unknown number, a familiar voice and secrets nobody should know. When it becomes too much for Lisa, Carlos and Aylin, the hunt for the digital ghost begins."
     }
+  },
+  "sp0e01": {
+    "c01": {
+      "input": {
+        "halloween": "How about you?"
+      }
+    }
+  },
+  "special": {
+    "kicker": "🎃 Halloween Special · Free · 5 Amics · ~5 min each",
+    "moreBtn": "Read more ↓",
+    "lessBtn": "Show less ↑",
+    "cta": "Play now →"
   },
   "chatSwitch": {
     "participants": "Participants:",
@@ -453,6 +470,8 @@
     "ctaContinue": "Continue →",
     "ctaStart": "Start →",
     "listTitle": "Your Amics",
+    "amicHint": "The Amics build on each other – complete each one to unlock the next.",
+    "amicHintSpecial": "🎃 An Amic is an interactive chapter of the Halloween chat story — read along, think along, make decisions. Complete each Amic to unlock the next chapter.",
     "loading": "Loading Amics…",
     "noChapters": "No Amics found.",
     "currentLabel": "Current",

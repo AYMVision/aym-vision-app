@@ -29,6 +29,9 @@ export type EpisodeMeta = {
   comingSoon?: boolean;
   order?: number;
 
+  /** true = no paywall, no daily gate, accessible without purchase */
+  isFreeSpecial?: boolean;
+
   /** 'v2' = StoryV02 engine (/stories-v02/:courseId), default 'v1' = legacy */
   storyEngine?: 'v1' | 'v2';
 
@@ -256,8 +259,45 @@ export function badgeUrl(season: SeasonMeta) {
   return season.badgeImage ? assetUrl(season.badgeImage) : null;
 }
 
+export const SPECIALS_INDEX: SeasonMeta[] = [
+  {
+    seasonId: 'sp',
+    seasonTitle: 'Specials',
+    episodes: [
+      {
+        seasonId: 'sp',
+        episodeId: 'sp0e01',
+        courseId: 'sp0e01',
+
+        titleKey: 'stories:episodes.sp0e01.title',
+        descriptionKey: 'stories:episodes.sp0e01.description',
+
+        coverImage: '/media/story/episodes/sp0e01/cover_sp0e01-512.webp',
+        stickerImage: '/media/stickers/episodes/sp0e01-512.webp',
+
+        chapterCount: 5,
+        released: true,
+        order: 1,
+        storyEngine: 'v2',
+        isFreeSpecial: true,
+
+        topicTags: [
+          'info-check',
+          'reflect-understand',
+          'safe-online',
+          'fairness',
+        ],
+      },
+    ],
+  },
+];
+
 export function getAllSeasons(): SeasonMeta[] {
   return CONTENT_INDEX;
+}
+
+export function getAllSpecials(): EpisodeMeta[] {
+  return SPECIALS_INDEX.flatMap((s) => s.episodes);
 }
 
 export function getAllEpisodes(): EpisodeMeta[] {
@@ -271,7 +311,7 @@ export function getEpisodesBySeason(seasonId: string): EpisodeMeta[] {
 }
 
 export function getEpisodeMeta(episodeId: string): EpisodeMeta | null {
-  for (const s of CONTENT_INDEX) {
+  for (const s of [...CONTENT_INDEX, ...SPECIALS_INDEX]) {
     const e = s.episodes.find((ep) => ep.episodeId === episodeId);
     if (e) return e;
   }
@@ -279,7 +319,7 @@ export function getEpisodeMeta(episodeId: string): EpisodeMeta | null {
 }
 
 export function getEpisodeMetaByCourseId(courseId: string): EpisodeMeta | null {
-  for (const s of CONTENT_INDEX) {
+  for (const s of [...CONTENT_INDEX, ...SPECIALS_INDEX]) {
     const e = s.episodes.find((ep) => ep.courseId === courseId);
     if (e) return e;
   }

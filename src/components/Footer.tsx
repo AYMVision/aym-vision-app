@@ -83,7 +83,7 @@ const Footer: React.FC = () => {
             />
           </a>
           <a
-            href="https://www.win-bs.de/startup-academy"
+            href="https://www.braunschweig.de/wirtschaft_wissenschaft/innovationsfoerderung/win_startup_akademie_fuer_wachstum_und_innovation.php"
             target="_blank"
             rel="noopener noreferrer"
             className="opacity-60 hover:opacity-90 transition-opacity"
@@ -92,6 +92,20 @@ const Footer: React.FC = () => {
             <img
               src={assetUrl('media/ui/300_WIN_Logo_2022_BS_Unterstuetzung.webp')}
               alt="Unterstützt von WIN Startup Academy Braunschweig"
+              className="h-12 w-auto"
+              loading="lazy"
+            />
+          </a>
+          <a
+            href="https://tommi.kids/magazin/die-tomminierten-2026/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="opacity-75 hover:opacity-100 transition-opacity"
+            aria-label="TOMMI Games Award 2026 – nominiert in Kategorie App und Bildung"
+          >
+            <img
+              src={assetUrl('media/ui/Tommi_award_nominierung_2026.png')}
+              alt="TOMMI Games Award 2026 – nominiert"
               className="h-12 w-auto"
               loading="lazy"
             />

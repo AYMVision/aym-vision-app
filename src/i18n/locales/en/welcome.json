@@ -1,4 +1,9 @@
 {
+  "special": {
+    "kicker": "🎃 Halloween Special · Free",
+    "cta": "Play now →",
+    "imgAlt": "Halloween Special Cover"
+  },
   "hero": {
     "kicker": "Welcome to Amy Surfwing",
     "title": "Between class chat, fake news & AI",

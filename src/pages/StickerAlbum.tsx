@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { TFunction } from 'i18next';
 import Layout from '../components/Layout';
 import { useProfile } from '../profile/useProfile';
-import { CONTENT_INDEX } from '../content/contentIndex';
+import { CONTENT_INDEX, SPECIALS_INDEX } from '../content/contentIndex';
 import { loadSeenStickers, markStickerSeen } from '../progress/stickerSeen';
 import { assetUrl } from '../common/assetUrl';
 import { useTranslation } from 'react-i18next';
@@ -367,14 +367,14 @@ export default function StickerAlbum() {
   }, []);
 
   const seasons = useMemo(() =>
-    CONTENT_INDEX.map((s) => ({
+    [...CONTENT_INDEX, ...SPECIALS_INDEX].map((s) => ({
       seasonId: s.seasonId,
       title: s.seasonTitle,
       img: s.badgeImage ?? '',
     })), []);
 
   const allEpisodes = useMemo(() => {
-    return CONTENT_INDEX.flatMap((s) =>
+    return [...CONTENT_INDEX, ...SPECIALS_INDEX].flatMap((s) =>
       s.episodes.map((e) => ({
         seasonId: e.seasonId,
         episodeId: e.episodeId,
@@ -390,7 +390,7 @@ export default function StickerAlbum() {
   }, [seasonId, seasons]);
 
   const seasonEpisodes = useMemo(() => {
-    const season = CONTENT_INDEX.find((s) => s.seasonId === seasonId);
+    const season = [...CONTENT_INDEX, ...SPECIALS_INDEX].find((s) => s.seasonId === seasonId);
     if (!season) return [];
     return season.episodes.map((e) => ({
       seasonId: e.seasonId,
@@ -424,6 +424,15 @@ export default function StickerAlbum() {
           / seasonEpisodes.length) * 100
       )
     : 0;
+
+  const unseenSeasonIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const e of allEpisodes) {
+      const k = episodeKey(e.seasonId, e.episodeId);
+      if (earnedStickers[k] && !seen[k]) ids.add(e.seasonId);
+    }
+    return ids;
+  }, [allEpisodes, earnedStickers, seen]);
 
   return (
     <Layout hideFooter backPath={backTo}>
@@ -476,13 +485,16 @@ export default function StickerAlbum() {
                 type="button"
                 onClick={() => setSeasonId(s.seasonId)}
                 className={[
-                  'px-3 py-1.5 rounded-xl text-xs font-semibold border transition',
+                  'relative px-3 py-1.5 rounded-xl text-xs font-semibold border transition',
                   s.seasonId === seasonId
                     ? 'bg-slate-900 text-white border-slate-900'
                     : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300',
                 ].join(' ')}
               >
                 {s.title}
+                {unseenSeasonIds.has(s.seasonId) && (
+                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-white" />
+                )}
               </button>
             ))}
           </div>

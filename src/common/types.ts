@@ -59,10 +59,12 @@ export type MessageKind =
   | 'safety-self-harm'
   | 'chat-switch'
   | 'bonus-link'
+  | 'ghost-link'
   | 'diary-unlock'
   | 'article-unlock'
   | 'typing-indicator'
-  | 'chapter-divider';
+  | 'chapter-divider'
+  | 'poll-result';
 
 // -----------------------------
 // Chat-Gruppen / Szenen
@@ -141,6 +143,12 @@ export type Message = {
   audioSrc?: string;         // "media/story/episodes/s1e01/xxx.mp3"
   audioDurationSec?: number; // optional (falls du sie kennst)
   audioLabel?: string;       // z.B. "Sprachnachricht"
+
+  /** ✅ WhatsApp-style Umfrageergebnis */
+  poll?: {
+    question?: string;
+    options: { text: string; votes: number }[];
+  };
 
   /** ✅ WhatsApp-style "Weitergeleitet" */
   forwarded?: {

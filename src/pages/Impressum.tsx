@@ -30,7 +30,7 @@ function DisclaimerSection() {
               Amy Surfwing ist ein pädagogisches Lernangebot zur Förderung von Medienkompetenz bei Kindern.
             </p>
             <p>
-              Die Inhalte richten sich an Kinder im Alter von 10 bis 12 Jahren und sollten idealerweise von Eltern begleitet werden.
+              Die Inhalte richten sich an Kinder im Alter von 09 bis 12 Jahren und sollten idealerweise von Eltern begleitet werden.
             </p>
             <p>
               Die Inhalte von Amy Surfwing dienen ausschließlich der Information und Bildung. Sie stellen keine Rechtsberatung dar.
@@ -261,16 +261,13 @@ export default function Impressum() {
           {/* ✏️ PLATZHALTER: Vollständiger Name der verantwortlichen Person oder des Unternehmens */}
           <p className="font-semibold">AYM-Vision – ein Bildungsprojekt zur Förderung von Medienkompetenz bei Kindern
 und Jugendlichen</p>
-<p>Rechtsform: Gesellschaft bürgerlichen Rechts (GbR) – Übergangsphase
-(Gründung einer UG / GmbH geplant)</p>
+<p>Rechtsform: AYM VISION GmbH i.G.
+</p>
 <p className="font-semibold">Gesetzliche Vertreter:</p>
-<p>Ann-Sofie Höbrink, Co-Founderin</p>
+<p>Ann-Sofie Höbrink, Co-Founderin & Geschäftsführerin</p>
 <p>Melina Wiegers, Co-Founderin</p>
-          {/* ✏️ PLATZHALTER: Straße und Hausnummer */}
-          <p>Beerbüsche 8</p>
-          {/* ✏️ PLATZHALTER: Postleitzahl und Stadt */}
+          <p>Schmiedeberg 15</p>
           <p>38551 Ribbesbüttel</p>
-          {/* ✏️ PLATZHALTER: Land (wenn relevant) */}
           <p>Deutschland</p>
         </Section>
 

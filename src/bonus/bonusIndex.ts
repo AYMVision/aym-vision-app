@@ -250,6 +250,31 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
 //_________________________________________________________
 
   {
+    bonusId: 'chioma-news-stimmen-im-netz',
+    category: 'newspaper',
+    released: true,
+    order: 1,
+    mediaType: 'audio',
+    coverImage: 'media/newspaper/articles/ar-halloween-special/cover-1024.webp',
+    audioSrc: 'media/newspaper/articles/chioma-news-stimmen-im-netz/audio.mp3',
+    bodySrc: 'media/newspaper/articles/chioma-news-stimmen-im-netz/article',
+    bodyKind: 'md',
+    freeForAll: true,
+  },
+
+  {
+    bonusId: 'ar-halloween-special',
+    category: 'newspaper',
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/ar-halloween-special/article',
+    coverImage: 'media/newspaper/articles/ar-halloween-special/Halloween_Artikel_AR1-1024.webp',
+    released: true,
+    freeForAll: true,
+    order: 2,
+  },
+
+  {
     bonusId: 'tip-amy-staunen',
     category: 'newspaper',
     mediaType: 'text',

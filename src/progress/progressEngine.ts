@@ -197,8 +197,10 @@ export function applyChapterReward(profile: UserProfile, meta: ChapterMeta) {
   }
 
   // ✅ Starter-Sondersticker nach den ersten 5 abgeschlossenen Chaptern insgesamt
+  // Spezial-Episoden (Präfix 'sp:') zählen nicht für Meilensteine
   let starterStickerAwarded = false;
-  const totalCompletedChaptersOverall = Object.keys(next.progress.completedChapters ?? {}).length;
+  const totalCompletedChaptersOverall = Object.keys(next.progress.completedChapters ?? {})
+    .filter((k) => !k.startsWith('sp:')).length;
 
   if (
     totalCompletedChaptersOverall >= 5 &&
@@ -226,7 +228,8 @@ export function applyChapterReward(profile: UserProfile, meta: ChapterMeta) {
 
   // ✅ Weitere Milestones
   const earnedStickerIds = Object.keys(next.progress.earnedStickers ?? {});
-  const totalCompletedEpisodesOverall = Object.keys(next.progress.completedEpisodes ?? {}).length;
+  const totalCompletedEpisodesOverall = Object.keys(next.progress.completedEpisodes ?? {})
+    .filter((k) => !k.startsWith('sp:')).length;
 
   // 10 Kapitel
   if (totalCompletedChaptersOverall >= 10) {

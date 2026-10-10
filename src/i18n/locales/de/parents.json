@@ -337,6 +337,12 @@
       "text": "Amy Surfwing wird von der <bold>WIN Startup Academy Braunschweig</bold> unterstützt, einem Programm von Zukunft Braunschweig zur Förderung innovativer Gründungsvorhaben in der Region.",
       "ariaLabel": "WIN Startup Academy Braunschweig",
       "imgAlt": "Unterstützt von WIN Startup Academy Braunschweig"
+    },
+    "tommi": {
+      "text": "Amy Surfwing ist in der Kategorie <bold>App und Bildung</bold> für den TOMMI Games Award 2026 nominiert – Deutschlands größten Kinder-Medienpreis, vergeben von einer Kinderjury in rund 40 Bibliotheken bundesweit.",
+      "quote": "„Vermittelt Medienkompetenz in einer interaktiven Chat-Story, die sich an der Lebensrealität von Kindern orientiert – kombiniert ansprechendes Spieldesign und sensibilisiert Kinder spielerisch für einen reflektierten Umgang mit digitalen Medien.”",
+      "ariaLabel": "TOMMI Games Award 2026 – nominiert in Kategorie App und Bildung",
+      "imgAlt": "TOMMI Games Award 2026 – nominiert"
     }
   }
 }

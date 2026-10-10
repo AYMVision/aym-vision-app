@@ -11,7 +11,7 @@ import { shouldSkipOnboarding } from '../common/firstRun';
 import { assetUrl } from '../common/assetUrl';
 import SmartImage from '../components/SmartImage';
 
-import { getStoryCards, CONTENT_INDEX } from '../content/contentIndex';
+import { getStoryCards, CONTENT_INDEX, getAllSpecials } from '../content/contentIndex';
 import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile'; // ✅ NEW
 import { shouldBypassAll } from '../gating/entitlements';
@@ -289,6 +289,7 @@ export default function Stories() {
   });
   const [betaPartialSendState, setBetaPartialSendState] = useState<'idle' | 'loading' | 'success'>('idle');
   const [descExpanded, setDescExpanded] = useState(false);
+  const [specialDescExpanded, setSpecialDescExpanded] = useState(false);
 
   async function handleBetaPartialSend() {
     setBetaPartialSendState('loading');
@@ -483,6 +484,55 @@ function isUnlockedByChain(
           </div>
         </div>
       </section>
+
+      {/* HALLOWEEN SPECIAL */}
+      {getAllSpecials().filter(ep => ep.released).map(ep => (
+        <section key={ep.courseId} className="relative overflow-hidden bg-zinc-100 rounded-2xl border border-zinc-200 shadow-2xl">
+          {/* Geister-Muster */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
+            <div className="flex flex-wrap gap-x-[10px] gap-y-[8px] p-2 opacity-[0.12] text-6xl leading-none">
+              {Array.from({ length: 30 }).map((_, i) => (
+                <span key={i}>👻</span>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative flex gap-4 items-center p-5 sm:p-6">
+            <div className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden border border-zinc-200 bg-zinc-200">
+              <img
+                src={assetUrl(ep.coverImage)}
+                alt={tStories(`episodes.${ep.courseId}.title`, { defaultValue: 'Halloween Special' })}
+                className="w-full h-full object-cover opacity-90"
+                loading="eager"
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] font-bold text-orange-500 uppercase tracking-[0.12em]">{tStories('special.kicker', { defaultValue: '🎃 Halloween-Spezial · Kostenlos · 5 Amics · je ~5 Min.' })}</div>
+              <div className="mt-1 text-base sm:text-lg font-bold text-zinc-900 leading-snug">
+                {tStories(`episodes.${ep.courseId}.title`, { defaultValue: 'Stimmen im Netz' })}
+              </div>
+              <div className="mt-1">
+                <p className={cn('text-xs text-zinc-600 leading-snug', !specialDescExpanded && 'line-clamp-2')}>
+                  {tStories(`episodes.${ep.courseId}.description`, { defaultValue: '' })}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setSpecialDescExpanded((v) => !v)}
+                  className="mt-1 text-xs font-semibold text-orange-500 hover:text-orange-700 transition-colors"
+                >
+                  {specialDescExpanded ? tStories('special.lessBtn', { defaultValue: 'Weniger ↑' }) : tStories('special.moreBtn', { defaultValue: 'Mehr lesen ↓' })}
+                </button>
+              </div>
+              <Link
+                to={`/stories-v02/${ep.courseId}`}
+                className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold bg-orange-500 hover:bg-orange-400 active:scale-95 text-white rounded-full px-4 py-1.5 transition-all shadow-[0_0_16px_rgba(249,115,22,0.45)]"
+              >
+                {tStories('special.cta', { defaultValue: 'Jetzt spielen →' })}
+              </Link>
+            </div>
+          </div>
+        </section>
+      ))}
 
       {/* STORY CARDS – direkt unter Hero */}
       {(() => {

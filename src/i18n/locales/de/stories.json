@@ -306,7 +306,24 @@
     "s1e05": {
       "title": "Wolf im Chat",
       "description": "Aus einem kleinen Spaß wird großes Durcheinander. Freundschaften werden auf die Probe gestellt – haben sie noch eine Chance?"
+    },
+    "sp0e01": {
+      "title": "Stimmen im Netz",
+      "description": "Eine fremde Nummer, eine vertraute Stimme und Geheimnisse, die niemand kennen dürfte. Als es Lisa, Carlos und Aylin zu viel wird, beginnt die Jagd nach dem digitalen Geist."
     }
+  },
+  "sp0e01": {
+    "c01": {
+      "input": {
+        "halloween": "Wie ist das bei dir?"
+      }
+    }
+  },
+  "special": {
+    "kicker": "🎃 Halloween-Spezial · Kostenlos · 5 Amics · je ~5 Min.",
+    "moreBtn": "Mehr lesen ↓",
+    "lessBtn": "Weniger ↑",
+    "cta": "Jetzt spielen →"
   },
   "chatSwitch": {
     "participants": "Teilnehmer:",
@@ -334,7 +351,7 @@
     "newUnlockedSub": "Tippe, um sie anzusehen."
   },
   "adultHint": {
-    "title": "Sprich kurz mit einer erwachsenen Person",
+    "title": "Sprich kurz mit einer erwachsenen Person, der du vertraust.",
     "body": "Manche Dinge besprichst du am besten offline mit einer erwachsenen Person, der du vertraust (z. B. Eltern, Lehrkraft, Schulsozialarbeit)."
   },
   "safety": {
@@ -470,6 +487,8 @@
     "ctaContinue": "Weiterlesen →",
     "ctaStart": "Starten →",
     "listTitle": "Deine Amics",
+    "amicHint": "Die Amics bauen aufeinander auf. Schließe jedes ab, um das nächste freizuschalten.",
+    "amicHintSpecial": "🎃 Ein Amic ist ein interaktives Kapitel. Lies mit, denk mit, triff Entscheidungen. Schließe jeden Amic ab, um das nächste Kapitel freizuschalten.",
     "loading": "Lade Amics…",
     "noChapters": "Keine Amics gefunden.",
     "currentLabel": "Aktuell",
