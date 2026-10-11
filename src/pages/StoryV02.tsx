@@ -1097,6 +1097,10 @@ function hasStoryMigrationDone(key: string): boolean {
     if (completionHandledRef.current[completionKey]) return;
     completionHandledRef.current[completionKey] = true;
 
+    // Stilles Matomo-Tracking: welches Kapitel wurde abgeschlossen
+    const _paq = (window as any)._paq;
+    if (_paq) _paq.push(['trackEvent', 'Chapter Completed', courseId, chapter.id]);
+
     const wasAlreadyCompletedBeforeAnswer = hasCompletedChapter(
       courseId,
       chapter.chapterIndex0
@@ -1143,7 +1147,7 @@ function hasStoryMigrationDone(key: string): boolean {
           }
         : null,
       currentChapterIndex0: chapter.chapterIndex0,
-      bypassAll: shouldBypassAll(courseId) || (episodeMeta?.isFreeSpecial ?? false),
+      bypassAll: shouldBypassAll(courseId) || (episodeMeta?.isFreeSpecial ?? getEpisodeMetaByCourseId(courseId ?? '')?.isFreeSpecial ?? false),
     });
 
     if (!gateState.hasNext) {
@@ -1541,9 +1545,10 @@ function hasStoryMigrationDone(key: string): boolean {
               chatName={profile.chatName ?? undefined}
               characterImg="media/story/characters/yasmin-256.webp"
               characterSays="Danke, dass du dabei warst."
+              courseId={courseId}
               betaMode={shouldShowBetaOnContinue}
               continueLabel={isSeasonFinale ? t('common:seasonFinale.continueButtonLabel', { defaultValue: 'Zum großen Finale →' }) : undefined}
-              onViewSticker={() => navigate('/album')}
+              onViewSticker={() => navigate('/album', { state: { backTo: location.pathname } })}
               onContinue={() => {
                 if (shouldShowBetaOnContinue) {
                   setShowBetaCompletionModal(true);
@@ -2011,13 +2016,15 @@ function hasStoryMigrationDone(key: string): boolean {
                 )}
                 {showNextChapterLockedHint && (
                   <>
-                    <button
-                      type="button"
-                      onClick={() => navigate('/redeem-voucher')}
-                      className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-white border border-[var(--color-teal-600)] text-[var(--color-teal-700)] hover:bg-[var(--color-teal-50)] transition-colors"
-                    >
-                      🎟️ Code einlösen
-                    </button>
+                    {!(episodeMeta?.isFreeSpecial) && (
+                      <button
+                        type="button"
+                        onClick={() => navigate('/redeem-voucher')}
+                        className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-white border border-[var(--color-teal-600)] text-[var(--color-teal-700)] hover:bg-[var(--color-teal-50)] transition-colors"
+                      >
+                        🎟️ Code einlösen
+                      </button>
+                    )}
                     <button
                       type="button"
                       onClick={() => navigate('/newspaper')}

@@ -81,6 +81,54 @@ function StoryV02ChapterRoute() {
   return <StoryV02Page key={`${courseId}/${chapterId}`} />;
 }
 
+const COURSE_NAMES: Record<string, string> = {
+  's1e01': 'Episode 1',
+  's1e02': 'Episode 2',
+  's1e03': 'Episode 3',
+  's1e04': 'Episode 4',
+  's1e05': 'Episode 5',
+  'sp0e01': 'Halloween Story',
+};
+
+function getMatomoPageInfo(pathname: string): { title: string; url: string } {
+  const base = 'Amy Surfwing';
+  const origin = window.location.origin;
+
+  if (pathname === '/' || pathname === '/jury') return { title: `${base} – Start`, url: `${origin}/` };
+  if (pathname === '/stories') return { title: `${base} – Story-Übersicht`, url: `${origin}/stories` };
+  if (pathname === '/about') return { title: `${base} – Über uns`, url: `${origin}/about` };
+  if (pathname === '/profile') return { title: `${base} – Profil`, url: `${origin}/profile` };
+  if (pathname === '/avatar') return { title: `${base} – Avatar`, url: `${origin}/avatar` };
+  if (pathname === '/album') return { title: `${base} – Sticker-Album`, url: `${origin}/album` };
+  if (pathname === '/parents') return { title: `${base} – Für Eltern`, url: `${origin}/parents` };
+  if (pathname === '/parent-setup') return { title: `${base} – Eltern-Einrichtung`, url: `${origin}/parent-setup` };
+  if (pathname === '/privacy') return { title: `${base} – Datenschutz`, url: `${origin}/privacy` };
+  if (pathname === '/impressum') return { title: `${base} – Impressum`, url: `${origin}/impressum` };
+  if (pathname === '/faq') return { title: `${base} – FAQ`, url: `${origin}/faq` };
+  if (pathname === '/concept') return { title: `${base} – Konzept`, url: `${origin}/concept` };
+  if (pathname === '/cards') return { title: `${base} – Freundebuch`, url: `${origin}/cards` };
+  if (pathname === '/lexikon') return { title: `${base} – Lexikon`, url: `${origin}/lexikon` };
+  if (pathname === '/newspaper') return { title: `${base} – Zeitung`, url: `${origin}/newspaper` };
+  if (pathname === '/season-finale/s1') return { title: `${base} – Staffel-Finale`, url: `${origin}/season-finale/s1` };
+  if (pathname === '/tommi-award') return { title: `${base} – Tommi Award`, url: `${origin}/tommi-award` };
+  if (pathname === '/start') return { title: `${base} – Onboarding`, url: `${origin}/start` };
+
+  if (pathname.startsWith('/stories-v02/')) {
+    const parts = pathname.replace('/stories-v02/', '').split('/');
+    const courseId = parts[0] ?? '';
+    const chapterId = parts[1] ?? '';
+    const courseName = COURSE_NAMES[courseId] ?? courseId;
+    if (chapterId) return { title: `${base} – ${courseName} / ${chapterId}`, url: `${origin}/stories-v02/${courseId}/${chapterId}` };
+    return { title: `${base} – ${courseName}`, url: `${origin}/stories-v02/${courseId}` };
+  }
+  if (pathname.startsWith('/newspaper/')) return { title: `${base} – Artikel`, url: `${origin}${pathname}` };
+  if (pathname.startsWith('/cards/')) return { title: `${base} – Freundebucheintrag`, url: `${origin}${pathname}` };
+  if (pathname.startsWith('/diaries/')) return { title: `${base} – Tagebuch`, url: `${origin}${pathname}` };
+  if (pathname.startsWith('/studio')) return { title: `${base} – Studio`, url: `${origin}${pathname}` };
+
+  return { title: `${base} – ${pathname}`, url: `${origin}${pathname}` };
+}
+
 function AppRoutes() {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location } | null;
@@ -89,8 +137,10 @@ function AppRoutes() {
   useEffect(() => {
     const _paq = (window as any)._paq;
     if (!_paq) return;
-    _paq.push(['setCustomUrl', window.location.href]);
-    _paq.push(['setDocumentTitle', document.title]);
+    const { title, url } = getMatomoPageInfo(location.pathname);
+    document.title = title;
+    _paq.push(['setCustomUrl', url]);
+    _paq.push(['setDocumentTitle', title]);
     _paq.push(['trackPageView']);
   }, [location.pathname]);
 

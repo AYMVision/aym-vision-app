@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { Message, Reaction, BubbleTheme } from '../common/types';
 import { useProfile } from '../profile/useProfile';
 import { useTranslation } from 'react-i18next';
@@ -141,7 +142,7 @@ function MessageImage({ src }: { src?: string }) {
   return (
     <>
       {imageEl}
-      {lightboxOpen && (
+      {lightboxOpen && createPortal(
         <div
           className="fixed inset-0 z-[300] flex items-center justify-center bg-black/85"
           onClick={() => setLightboxOpen(false)}
@@ -160,7 +161,8 @@ function MessageImage({ src }: { src?: string }) {
           >
             ✕
           </button>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

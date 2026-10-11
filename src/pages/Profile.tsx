@@ -25,6 +25,54 @@ import ChallengeJournal from '../components/ChallengeJournal';
 import BlockchainCertCard from '../shop/BlockchainCertCard';
 import { useIdentity } from '../identity/useIdentity';
 
+function AppRatingCard({ source }: { source: string }) {
+  const [rating, setRating] = useState<number | null>(null);
+  const [done, setDone] = useState(false);
+  const [hovered, setHovered] = useState<number | null>(null);
+
+  function handleRating(stars: number) {
+    setRating(stars);
+    setDone(true);
+    localStorage.setItem('app_rating_general', String(stars));
+    const _paq = (window as any)._paq;
+    if (_paq) _paq.push(['trackEvent', 'App Rating', source, String(stars)]);
+  }
+
+  return (
+    <div className="mt-4 p-4 rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 to-white shadow-sm">
+      <div className="flex items-center gap-2 mb-3">
+        <img src={assetUrl('media/story/characters/amy-256.webp')} alt="Amy"
+          className="w-7 h-7 rounded-full object-cover object-top border-2 border-violet-200 flex-shrink-0" />
+        <span className="text-sm font-extrabold text-violet-900">Amy fragt:</span>
+      </div>
+      {done ? (
+        <p className="text-sm text-violet-800 font-semibold text-center">
+          {(rating ?? 0) >= 4 ? '⭐ Danke! Das freut uns sehr!' : '💬 Danke für deine ehrliche Meinung!'}
+        </p>
+      ) : (
+        <>
+          <p className="text-sm text-violet-800 font-semibold mb-3">Wie gefällt dir Amy Surfwing?</p>
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                onMouseEnter={() => setHovered(star)}
+                onMouseLeave={() => setHovered(null)}
+                onClick={() => handleRating(star)}
+                className="text-3xl transition-transform active:scale-90 hover:scale-110"
+                aria-label={`${star} Sterne`}
+              >
+                {star <= (hovered ?? rating ?? 0) ? '⭐' : '☆'}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 // ✅ typed location state (kein any)
 type ProfileLocationState = {
   backTo?: string;
@@ -203,6 +251,16 @@ export default function Profile() {
           </div>
 
         </div>
+
+        {/* Amy Surfwing Bewertung — erscheint ab 2 abgeschlossenen Kapiteln, einmalig */}
+        {(() => {
+          const amicsRead = Object.keys(profile.progress?.completedChapters ?? {}).length;
+          const alreadyRated = !!localStorage.getItem('app_rating_general');
+          if (amicsRead < 2 || alreadyRated) return null;
+          return (
+            <AppRatingCard source="profile" />
+          );
+        })()}
 
         {/* Stats-Kachel */}
         {(() => {

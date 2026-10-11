@@ -55,12 +55,20 @@ type Props = {
   chatName?: string;
   characterImg?: string;
   characterSays?: string;
+  courseId?: string;
   onViewSticker: () => void;
   onContinue: () => void;
   onProfile?: () => void;
   betaMode?: boolean;
   continueLabel?: string;
 };
+
+type FeedbackReaction = 'begeistert' | 'ok' | 'neutral';
+
+function trackFeedback(courseId: string, reaction: FeedbackReaction) {
+  const _paq = (window as any)._paq;
+  if (_paq) _paq.push(['trackEvent', 'Story Feedback', courseId, reaction]);
+}
 
 export default function EpisodeSummaryCard({
   episodeTitle,
@@ -69,6 +77,7 @@ export default function EpisodeSummaryCard({
   chatName,
   characterImg,
   characterSays,
+  courseId,
   onViewSticker,
   onContinue,
   onProfile,
@@ -78,6 +87,35 @@ export default function EpisodeSummaryCard({
   const { t } = useTranslation('common');
   const name = chatName?.trim();
   const [mounted, setMounted] = useState(false);
+
+  const feedbackKey = courseId ? `story_feedback_${courseId}` : null;
+  const alreadyGiven = feedbackKey ? !!localStorage.getItem(feedbackKey) : true;
+  const [reaction, setReaction] = useState<FeedbackReaction | null>(null);
+  const [feedbackDone, setFeedbackDone] = useState(alreadyGiven);
+
+  // Zweiter Schritt: allgemeine Amy Surfwing Bewertung (nur für sp0e01)
+  const isSpecial = courseId === 'sp0e01';
+  const appRatingKey = 'app_rating_general';
+  const appRatingAlreadyGiven = !!localStorage.getItem(appRatingKey);
+  const [appRating, setAppRating] = useState<number | null>(null);
+  const [appRatingDone, setAppRatingDone] = useState(appRatingAlreadyGiven);
+  const [showAppRating, setShowAppRating] = useState(false);
+
+  function handleReaction(r: FeedbackReaction) {
+    setReaction(r);
+    setFeedbackDone(true);
+    if (feedbackKey) localStorage.setItem(feedbackKey, r);
+    if (courseId) trackFeedback(courseId, r);
+    if (isSpecial && !appRatingAlreadyGiven) setShowAppRating(true);
+  }
+
+  function handleAppRating(stars: number) {
+    setAppRating(stars);
+    setAppRatingDone(true);
+    localStorage.setItem(appRatingKey, String(stars));
+    const _paq = (window as any)._paq;
+    if (_paq) _paq.push(['trackEvent', 'App Rating', 'sp0e01', String(stars)]);
+  }
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);
@@ -158,6 +196,64 @@ export default function EpisodeSummaryCard({
                   „{characterSays}"
                 </p>
               </div>
+            </div>
+          )}
+
+          {/* Story Feedback */}
+          {!betaMode && courseId && (
+            <div className="w-full rounded-2xl bg-white/10 border border-white/20 px-4 py-3 text-center">
+              {feedbackDone ? (
+                <p className="text-sm font-semibold text-violet-100">
+                  {reaction === 'begeistert' ? '🎉 Danke! Das freut uns sehr!' :
+                   reaction === 'ok' ? '😊 Danke für dein Feedback!' :
+                   '💬 Danke! Deine Meinung hilft uns.'}
+                </p>
+              ) : (
+                <>
+                  <p className="text-xs font-semibold text-violet-300 mb-2">Wie hat dir die Story gefallen?</p>
+                  <div className="flex justify-center gap-4">
+                    {(['begeistert', 'ok', 'neutral'] as FeedbackReaction[]).map((r) => (
+                      <button
+                        key={r}
+                        type="button"
+                        onClick={() => handleReaction(r)}
+                        className="text-3xl active:scale-90 transition-transform hover:scale-110"
+                        aria-label={r}
+                      >
+                        {r === 'begeistert' ? '😍' : r === 'ok' ? '🙂' : '😐'}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* Schritt 2: Amy Surfwing Gesamt-Bewertung (nur sp0e01, nach Emoji-Antwort) */}
+          {!betaMode && isSpecial && showAppRating && (
+            <div className="w-full rounded-2xl bg-white/10 border border-white/20 px-4 py-3 text-center">
+              {appRatingDone ? (
+                <p className="text-sm font-semibold text-violet-100">
+                  {(appRating ?? 0) >= 4 ? '⭐ Super, danke! Das bedeutet uns viel.' : '💬 Danke für deine ehrliche Meinung!'}
+                </p>
+              ) : (
+                <>
+                  <p className="text-xs font-semibold text-violet-300 mb-2">Und wie gefällt dir Amy Surfwing insgesamt?</p>
+                  <div className="flex justify-center gap-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => handleAppRating(star)}
+                        className="text-3xl active:scale-90 transition-transform hover:scale-110"
+                        aria-label={`${star} Sterne`}
+                      >
+                        ⭐
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           )}
 

@@ -12,4 +12,4 @@ KI malt Bilder in Sekunden. Praktisch, oder? Aber wenn die KI alles macht. Haben
 
 ## Und bei dir?
 
-Wann benutzt du KI und wann willst du lieber selbst? Gibt es Dinge, bei denen du bewusst sagst: Das mach ich ohne Hilfe?
+Wann benutzt du KI und wann machst du es lieber selbst? Gibt es Dinge, bei denen du bewusst sagst: Das mach ich ohne Hilfe?
