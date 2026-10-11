@@ -608,7 +608,7 @@ const valueAccents = [
                     degreeLabel={t('team.labels.degree')}
                     furtherEdLabel={t('team.labels.furtherEd')}
                     experienceLabel={t('team.labels.experience')}
-                    imgKey="annsofie"
+                    imgKey="annSofie"
                     imgAlt={t('team.people.1.imageAlt')}
                     linkedIn="https://www.linkedin.com/in/ann-sofie-h%C3%B6brink-318aa72a2/"
                   />

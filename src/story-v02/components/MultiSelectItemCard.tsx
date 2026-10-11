@@ -156,11 +156,6 @@ export default function MultiSelectItemCard({ step, onSubmit }: Props) {
 
                 <span className="flex-1">{optionText(option, t)}</span>
 
-                {submitted && isSelected && scored && isCorrect && (
-                  <span className="ml-1 flex-shrink-0 text-xs font-semibold text-emerald-700">
-                    Richtig
-                  </span>
-                )}
               </button>
             );
           })}

@@ -126,7 +126,7 @@ const c02 = C('sp0e01c02', 1, 'Amic 2', 'Geisterstimmen', [
 
   S('sp0e01c02_klassenchat_ghost_posts', [
     classChat('Klasse 7b'),
-    img(ch.digitalghost7b, B('Halloween_2-512.webp'), '15:30', { content: 'ICH BIN ZU SCHNELL FÜR DICH.' }),
+    img(ch.digitalghost7b, B('Halloween_2-512.webp'), '15:30', { content: 'ICH HAB DOCH GESAGT, DU SOLLST DICH UMDREHEN. DU WARST NICHT SCHNELL GENUG.' }),
     img(ch.digitalghost7b, B('Halloween_3-512.webp'), '15:30', { content: 'TOO LATE.' }),
     img(ch.digitalghost7b, B('Halloween_4-512.webp'), '15:31', { content: 'DU MUSST DICH SCHNELLER UMDREHEN.' }),
     m(ch.aylin, 'Mach keinen Quatsch! War jetzt gruselig genug.', '15:31'),
@@ -283,7 +283,7 @@ const c03 = C('sp0e01c03', 2, 'Amic 3', 'Auf der Spur', [
 
     S('sp0e01c03_group_investigation', [
     privateChat('Lisa', 'Chioma', 'Carlos', 'Aylin'),
-    m(ch.carlos, 'Hat dein Geheimnis etwas mit diesem Hugo zu tun?', '16:30'),
+    m(ch.carlos, '@Aylin: Hat dein Geheimnis etwas mit diesem Hugo zu tun?', '16:30'),
     m(ch.aylin, 'Na schön. Ja, Hugo ist mein uraltes Kuscheltier. Ein Hund. Er schläft unter meinem Bett, um mich zu beschützen.', '16:30'),
     m(ch.carlos, 'Wie süß.', '16:31'),
     m(ch.aylin, 'Sei bloß vorsichtig 💪!', '16:31'),
@@ -387,17 +387,17 @@ const c04 = C('sp0e01c04', 3, 'Amic 4', 'Meine Stimme', [
   ]),
 
   S('sp0e01c03_markus_ghost_private', [
-    privateChat('Markus', 'digitalghost7b'),
-    audio(ch.digitalghost7b, A('VoiceMessage_11.m4a'), '18:20', 'Sprachnachricht'),
+    privateChat('Markus', 'digitalghosts7b'),
+    audio(ch.digitalghosts7b, A('VoiceMessage_11.m4a'), '18:20', 'Sprachnachricht'),
     m(ch.markus, 'Chioma?', '18:21'),
-    audio(ch.digitalghost7b, A('VoiceMessage_12.m4a'), '18:21', 'Sprachnachricht'),
+    audio(ch.digitalghosts7b, A('VoiceMessage_12.m4a'), '18:21', 'Sprachnachricht'),
     m(ch.markus, 'Hey, was soll das?!', '18:21'),
-    m(ch.digitalghost7b, 'Du wagst es, Streiche in meinem Namen zu spielen?', '17:21'),
+    m(ch.digitalghosts7b, 'Du wagst es, Streiche in meinem Namen zu spielen?', '17:21'),
   ]),
 
   S('sp0e01c03_markus_confesses', [
     classChat('Klasse 7b'),
-    img(ch.digitalghost7b, B('Halloween_8-512.webp'), '18:22', { content: '' }),
+    img(ch.digitalghosts7b, B('Halloween_8-512.webp'), '18:22', { content: '' }),
     m(ch.markus, 'Was geht hier ab? 😱', '18:22'),
     m(ch.aylin, 'Jetzt tu nicht so.', '18:22'),
     m(ch.aylin, 'Markus, du Verräter. Postest private Fotos von mir.', '18:22'),
@@ -406,11 +406,11 @@ const c04 = C('sp0e01c04', 3, 'Amic 4', 'Meine Stimme', [
     m(ch.markus, 'Okay, ich war\'s.', '18:23'),
     m(ch.markus, 'War doch nur ein Spaß.', '18:23'),
     m(ch.chioma, 'Du hast meine Stimme geklont!', '18:23'),
-    audio(ch.digitalghost7b, A('VoiceMessage_13.m4a'), '18:23', 'Sprachnachricht'),
+    audio(ch.digitalghosts7b, A('VoiceMessage_13.m4a'), '18:23', 'Sprachnachricht'),
     m(ch.chioma, 'Hör jetzt gefälligst damit auf.', '18:24'),
     m(ch.markus, 'Das bin ich nicht mehr.', '18:24'),
     m(ch.chioma, 'Das kannst du deiner Großmutter erzählen.', '18:25'),
-    audio(ch.digitalghost7b, A('VoiceMessage_14.m4a'), '18:25', 'Sprachnachricht'),
+    audio(ch.digitalghosts7b, A('VoiceMessage_14.m4a'), '18:25', 'Sprachnachricht'),
     m(ch.markus, 'Lasst mich in Ruhe. Es ist doch schon dunkel.', '18:26'),
     m(ch.dominik, 'Du Armer. Musst du um diese Zeit nicht schon zu Hause sein? 😂', '18:26'),
   ]),
@@ -486,15 +486,15 @@ const c05 = C('sp0e01c05', 4, 'Amic 5', 'Wer zuletzt lacht', [
     m(ch.aylin, 'Kein Witz. Er hat mich richtig weggejagt. Wir sollen nach Einbruch der Dunkelheit heute nicht mehr aufs Schulgelände. Man könne nie wissen.', '18:55'),
     m(ch.lisa, 'Meint er das wirklich ernst?', '18:55'),
     divider('später'),
-    m(ch.digitalghost7b, 'DIE TOTEN VERGESSEN NICHT.\nJAHRHUNDERTE HABEN WIR GEWARTET.\nJETZT SOLL DIE WAHRHEIT ANS LICHT.\nEINE VON EUCH HOLE ICH MIR ALS PFAND.', '18:55'),
+    m(ch.digitalghosts7b, 'DIE TOTEN VERGESSEN NICHT.\nJAHRHUNDERTE HABEN WIR GEWARTET.\nJETZT SOLL DIE WAHRHEIT ANS LICHT.\nEINE VON EUCH HOLE ICH MIR ALS PFAND.', '18:55'),
     m(ch.dominik, 'Bitte lass es Chioma sein, die nervt eh immer 😂', '18:55'),
     m(ch.chioma, 'Das hättest du wohl gern.', '18:56'),
     m(ch.aylin, 'Da war ein Knacken hinter mir. Ich glaube da ist jemand hinter mir her.', '18:56'),
     m(ch.lisa, 'Wollen wir nicht alle lieber nach Hause gehen?', '18:56'),
     audio(ch.aylin, A('VoiceMessage_15.m4a'), '18:56', 'Sprachnachricht'),
-    img(ch.digitalghost7b, B('Halloween_9-512.webp'), '18:58', { content: '' }),
-    m(ch.digitalghost7b, 'WOLLT IHR SIE ZURÜCK? DANN FINDET DAS GRAB, DAS KEINEN NAMEN TRÄGT.', '18:58'),
-    img(ch.digitalghost7b, B('Halloween_10-512.webp'), '18:58', { content: '' }),
+    img(ch.digitalghosts7b, B('Halloween_9-512.webp'), '18:58', { content: '' }),
+    m(ch.digitalghosts7b, 'WOLLT IHR SIE ZURÜCK? DANN FINDET DAS GRAB, DAS KEINEN NAMEN TRÄGT.', '18:58'),
+    img(ch.digitalghosts7b, B('Halloween_10-512.webp'), '18:58', { content: '' }),
     m(ch.carlos, 'Ob das alles Fake ist?', '18:58'),
     m(ch.carlos, 'Die Stimme könnte wieder geklont und das Bild KI sein.', '18:58'),
     m(ch.chioma, 'Das glaube ich nicht. Sie wollte doch längst hier sein.', '18:58'),
@@ -518,7 +518,7 @@ const c05 = C('sp0e01c05', 4, 'Amic 5', 'Wer zuletzt lacht', [
   AR('sp0e01c04_amy_reaction', 'sp0e01c04_reflection_pressure'),
 
   S('sp0e01c04_amy_tip_pressure', [
-    m(ch.amy, 'Wer dich absichtlich hetzt oder verängstigt, will oft verhindern, dass du nachdenkst. Gerade dann lohnt sich innezuhalten und ruhig zu bleiben.'),
+    m(ch.amy, 'Wer dich absichtlich hetzt oder verängstigt, will oft verhindern, dass du nachdenkst. Gerade dann lohnt sich, innezuhalten und ruhig zu bleiben.'),
   ]),
 
   S('sp0e01c04_private_investigation', [
@@ -534,7 +534,7 @@ const c05 = C('sp0e01c05', 4, 'Amic 5', 'Wer zuletzt lacht', [
     m(ch.carlos, 'Wann?', '19:01'),
     m(ch.lukas, 'Letztes Jahr. Du warst dabei.', '19:01'),
     m(ch.carlos, 'Du erinnerst dich an einen Stein aus dem letzten Jahr?', '19:01'),
-    m(ch.dominik, 'Natürlich tust du das.', '19:01'),
+    m(ch.dominik, 'Natürlich tut er das.', '19:01'),
     m(ch.lukas, 'Hinter der Schule. Am Graben.', '19:02'),
     m(ch.carlos, 'Wo seid ihr? Wartet auf mich.', '19:02'),
     divider('später'),
@@ -543,10 +543,10 @@ const c05 = C('sp0e01c05', 4, 'Amic 5', 'Wer zuletzt lacht', [
   S('sp0e01c04_ar_moment', [
     classChat('Klasse 7b'),
      m(ch.carlos, 'Gefunden.', '19:08'),
-    m(ch.lisa, 'Sicher? Wo bleibt Lukas?', '19:08'),
+    m(ch.lisa, 'Sicher?', '19:08'),
     m(ch.carlos, 'Mit Efeu und Moos bewachsen. Die Eicheln. Das ist der Stein.', '19:09'),
     m(ch.chioma, 'Und jetzt?', '19:09'),
-    m(ch.digitalghost7b, 'MANCHES SIEHT MAN ERST, WENN MAN DURCH DAS RICHTIGE AUGE SCHAUT. 👁️', '19:10'),
+    m(ch.digitalghosts7b, 'MANCHES SIEHT MAN ERST, WENN MAN DURCH DAS RICHTIGE AUGE SCHAUT. 👁️', '19:10'),
     ghostLink('DAS AUGE ÖFFNEN'),
     m(ch.carlos, '„Das richtige Auge"?', '19:11'),
     m(ch.lukas, 'Die Kamera, du Genie.', '19:11'),
@@ -555,6 +555,7 @@ const c05 = C('sp0e01c05', 4, 'Amic 5', 'Wer zuletzt lacht', [
     m(ch.lisa, 'Stell dich nicht so an. Drück drauf.', '19:12'),
     m(ch.carlos, 'Es will Zugriff auf meine Kamera.', '19:12'),
     m(ch.lisa, 'Dann ist das Auge wohl deine Kamera.', '19:12'),
+    m(ch.lukas, 'Die Kamera allein reicht nicht. Du musst sie auf den Stein richten. Deshalb sollten wir ihn finden. Der Stein ist quasi die Schlüsselfigur. Also: Zeig mit der Kamera drauf. Und? Was siehst du?', '19:11'),
     m(ch.carlos, 'Äh … Leute? Da steht jemand.', '19:13'),
     m(ch.lisa, 'Wo?', '19:13'),
     m(ch.carlos, 'Man sieht\'s nur durch die Kamera.', '19:13'),

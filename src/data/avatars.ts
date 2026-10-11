@@ -1,9 +1,11 @@
 export type AvatarBase = {
   id: string;
   label: string;
+  tag?: string;
 };
 
 export const AVATAR_BASES = [
+  { id: 'geist_2', label: 'Geist', tag: 'halloween' },
   { id: 'kid_01', label: 'Avatar 1' },
   { id: 'kid_02', label: 'Avatar 2' },
   { id: 'kid_03', label: 'Avatar 3' },
@@ -33,6 +35,6 @@ export const AVATAR_BASES = [
   { id: 'kid_27', label: 'Avatar 27' },
   { id: 'kid_28', label: 'Avatar 28' },
   { id: 'kid_29', label: 'Avatar 29' },
-  // kid_30 noch ohne Bilddateien → erst eintragen wenn kid_30-384/768.avif+webp in /public/media/avatars/full/ liegen
-  // später einfach erweitern
+  { id: 'kid_30', label: 'Avatar 30' },
+  { id: 'kid_31', label: 'Avatar 31' },
 ];

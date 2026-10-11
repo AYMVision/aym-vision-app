@@ -166,7 +166,10 @@ function ShopItemChip({
       onFocus={onPreviewStart}
       onBlur={onPreviewEnd}
     >
-      <div className="rounded-2xl bg-white border border-slate-100 shadow-sm p-2">
+      <div className="relative rounded-2xl bg-white border border-slate-100 shadow-sm p-2">
+        {item.tag === 'halloween' && (
+          <span className="absolute top-1 right-1 text-sm leading-none z-10">🎃</span>
+        )}
         <div className="h-[72px] flex items-center justify-center overflow-hidden">
           <img
             src={resolveItem(item.slot, item.id)}
@@ -225,6 +228,7 @@ export default function AvatarPicker() {
   const coins = profile.wallet?.coins ?? 0;
   const [confirmingItem, setConfirmingItem] = useState<(ItemDef & { shopPrice: number }) | null>(null);
   const [showPurchaseToast, setShowPurchaseToast] = useState(false);
+  const [halloweenOpen, setHalloweenOpen] = useState(true);
 
   const previewEquipment: Equipment = previewItem
     ? {
@@ -233,11 +237,13 @@ export default function AvatarPicker() {
       }
     : profile.equipment;
 
+  const halloweenItems = useMemo(() => ITEMS.filter((item) => item.tag === 'halloween'), []);
+
   const itemsBySlot = useMemo(() => {
     return {
-      featured: ITEMS.filter((item) => item.slot === 'featured'),
-      background: ITEMS.filter((item) => item.slot === 'background'),
-      effect: ITEMS.filter((item) => item.slot === 'effect'),
+      featured: ITEMS.filter((item) => item.slot === 'featured' && item.tag !== 'halloween'),
+      background: ITEMS.filter((item) => item.slot === 'background' && item.tag !== 'halloween'),
+      effect: ITEMS.filter((item) => item.slot === 'effect' && item.tag !== 'halloween'),
     } as Record<ItemSlot, ItemDef[]>;
   }, []);
 
@@ -361,12 +367,16 @@ export default function AvatarPicker() {
               {AVATAR_BASES.map((a) => {
                 const selected = profile.avatarBaseId === a.id;
                 return (
-                  <AvatarThumb
-                    key={a.id}
-                    avatarBaseId={a.id}
-                    selected={selected}
-                    onClick={() => selectAvatar(a.id)}
-                  />
+                  <div key={a.id} className="relative shrink-0">
+                    <AvatarThumb
+                      avatarBaseId={a.id}
+                      selected={selected}
+                      onClick={() => selectAvatar(a.id)}
+                    />
+                    {a.tag === 'halloween' && (
+                      <span className="absolute top-1 right-1 text-sm leading-none z-10">🎃</span>
+                    )}
+                  </div>
                 );
               })}
             </div>
@@ -457,6 +467,51 @@ export default function AvatarPicker() {
         </div>
       </div>
     </div>
+    {/* 🎃 Halloween Special */}
+    {halloweenItems.length > 0 && (
+      <div className="rounded-2xl border border-orange-300 bg-orange-50 overflow-hidden shadow-sm">
+        <button
+          type="button"
+          className="w-full flex items-center justify-between px-4 py-3 text-left"
+          onClick={() => setHalloweenOpen((v) => !v)}
+        >
+          <span className="text-sm font-extrabold text-orange-800">
+            🎃 Halloween Special
+          </span>
+          <span className="text-orange-600 text-base font-bold transition-transform duration-200"
+            style={{ display: 'inline-block', transform: halloweenOpen ? 'rotate(0deg)' : 'rotate(-90deg)' }}>
+            ▾
+          </span>
+        </button>
+        {halloweenOpen && (
+          <div className="px-4 pb-4">
+            <div className="flex gap-3 overflow-x-auto pb-2">
+              {halloweenItems.map((item) => {
+                const owned = (profile.inventory[item.slot] ?? []).includes(item.id);
+                const affordable =
+                  typeof item.shopPrice === 'number' && coins >= item.shopPrice;
+                return (
+                  <ShopItemChip
+                    key={item.id}
+                    item={item}
+                    owned={owned}
+                    affordable={affordable}
+                    onBuy={
+                      typeof item.shopPrice === 'number'
+                        ? () => setConfirmingItem(item as ItemDef & { shopPrice: number })
+                        : undefined
+                    }
+                    onPreviewStart={() => setPreviewItem({ slot: item.slot, id: item.id })}
+                    onPreviewEnd={() => setPreviewItem(null)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    )}
+
             {SLOT_SECTIONS.map(({ slot, icon, labelKey, defaultValue }) => {
               const slotItems = itemsBySlot[slot];
               if (slotItems.length === 0) return null;

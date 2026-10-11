@@ -1930,7 +1930,11 @@ function hasStoryMigrationDone(key: string): boolean {
                         <>
                           <span className="opacity-50">·</span>
                           <span className="font-normal">
-                            {group.title ? group.title : group.participants.join(', ')}
+                            {group.title
+                              ? group.title
+                              : group.participants.length > 2
+                                ? `${group.participants.slice(0, 2).join(', ')} +${group.participants.length - 2}`
+                                : group.participants.join(', ')}
                           </span>
                         </>
                       )}

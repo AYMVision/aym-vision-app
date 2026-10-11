@@ -6,6 +6,7 @@ export type ItemDef = {
   starter?: boolean;
   shopPrice?: number;
   labelKey?: string;
+  tag?: string;
 };
 
 export const ITEMS: ItemDef[] = [
@@ -161,6 +162,29 @@ export const ITEMS: ItemDef[] = [
     labelKey: 'items.violin',
   },
 
+  // 🎃 Halloween Special
+  {
+    id: 'item_halloween',
+    slot: 'featured',
+    shopPrice: 4,
+    labelKey: 'items.halloween',
+    tag: 'halloween',
+  },
+  {
+    id: 'item_pumpkin',
+    slot: 'featured',
+    shopPrice: 4,
+    labelKey: 'items.pumpkin',
+    tag: 'halloween',
+  },
+  {
+    id: 'item_black-cat',
+    slot: 'featured',
+    shopPrice: 4,
+    labelKey: 'items.blackCat',
+    tag: 'halloween',
+  },
+
   // 🖼 Hintergründe
   {
     id: 'baumhaus_1',
@@ -228,6 +252,20 @@ export const ITEMS: ItemDef[] = [
     shopPrice: 7,
     labelKey: 'items.tennis1',
   },
+  {
+    id: 'halloween_1',
+    slot: 'background',
+    shopPrice: 4,
+    labelKey: 'items.halloween1',
+    tag: 'halloween',
+  },
+  {
+    id: 'halloween_2',
+    slot: 'background',
+    shopPrice: 4,
+    labelKey: 'items.halloween2',
+    tag: 'halloween',
+  },
 
   // ✨ Effekte
   {
@@ -247,6 +285,13 @@ export const ITEMS: ItemDef[] = [
     slot: 'effect',
     shopPrice: 6,
     labelKey: 'items.sparkling1',
+  },
+  {
+    id: 'halloween_bad',
+    slot: 'effect',
+    shopPrice: 4,
+    labelKey: 'items.halloweenBad',
+    tag: 'halloween',
   },
 ];
 
@@ -273,12 +318,23 @@ export const ITEM_STYLE: Partial<Record<string, string>> = {
 
   // ✨ Effekt Feuerwerk 1
   'effect:firework_1':
-    'transform scale-[1.00] translate-x-[0%] translate-y-[-5%]',
+    'transform scale-[0.00] translate-x-[0%] translate-y-[-5%]',
+
+
+  // 🎃 Halloween
+  'featured:item_halloween':
+    'transform scale-[0.38] translate-x-[-25%] translate-y-[35%]',
+
+  'featured:item_pumpkin':
+    'transform scale-[0.35] translate-x-[-24%] translate-y-[32%]',
+
+  'featured:item_black-cat':
+    'transform scale-[0.40] translate-x-[-24%] translate-y-[28%]',
 
 
   // 🎒 Rucksäcke
   'featured:item_backpack_amy':
-    'transform scale-[0.50] translate-x-[-26%] translate-y-[33%]',
+    'transform scale-[0.30] translate-x-[-26%] translate-y-[33%]',
 
   'featured:item_backpack':
     'transform scale-[0.52] translate-x-[-28%] translate-y-[30%]',
@@ -353,6 +409,7 @@ export const ITEM_STYLE: Partial<Record<string, string>> = {
   'featured:item_ballet-pointe-shoes':
     'transform scale-[0.34] translate-x-[-20%] translate-y-[30%]',
 
+
   // ⛸ WINTER
   'featured:item_ice-scates_white':
     'transform scale-[0.35] translate-x-[-24%] translate-y-[30%]',
@@ -388,4 +445,7 @@ export const ITEM_STYLE: Partial<Record<string, string>> = {
 
   'effect:sparkling_1':
     'transform scale-[1.10] translate-y-[-5%] opacity-80',
+
+  'effect:halloween_bad':
+    'transform scale-[1.13] translate-y-[-21%] opacity-85',
 };

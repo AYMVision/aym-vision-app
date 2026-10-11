@@ -25,10 +25,20 @@
       }
     }
   },
+  "challenge": {
+    "label": "Challenge",
+    "question": "Are you up for the challenge?",
+    "skip": "Maybe later",
+    "accept": "🌱 I'll give it a try!",
+    "reactionAccept": "🌱 Great! You'll find it in your profile anytime.",
+    "reactionSkip": "😊 No problem! You'll find it in your profile when you feel like it."
+  },
   "multiSelect": {
     "completed": {
       "selectedTitle": "Your selection",
       "missedCorrectTitle": "This also fits 👍",
+      "missedCorrectNone": "This would have worked 👆",
+      "missedCorrectSome": "These would also have worked 👍",
       "incorrectLabel": "This doesn’t fit so well here 🤔"
     }
   },

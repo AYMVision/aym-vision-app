@@ -205,7 +205,7 @@ const c02 = C('s1e04c02', 1, 'Amic 2', 'Kommt Finn noch?', [
   ], ['reflect-understand']),
 
   CH('s1e04c02_challenge_comparison',
-    '👉 Wenn du dich mit jemandem vergleichst: Sage eine Sache, die du an dir magst. Nimmst du die Herausforderung an?',
+    '👉 Wenn du dich mit jemandem vergleichst: Sage eine Sache, die du an dir magst.',
   ),
 
   S('s1e04c02_story_bonus_article', [

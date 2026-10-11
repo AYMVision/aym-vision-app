@@ -377,6 +377,12 @@ digitalghost7b: {
   avatar: 'geist',
 },
 
+digitalghosts7b: {
+  id: 'digitalghosts7b',
+  name: 'digitalghosts7b',
+  avatar: 'geist_2',
+},
+
 } as const satisfies Record<string, CharacterEx>;
 
 
@@ -405,4 +411,5 @@ export const STORY_CHARACTERS: Record<string, Character> = {
   farida: CHARACTERS.farida,
   amir: CHARACTERS.amir,
   digitalghost7b: CHARACTERS.digitalghost7b,
+  digitalghosts7b: CHARACTERS.digitalghosts7b,
 };

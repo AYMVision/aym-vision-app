@@ -177,7 +177,9 @@ export default function Phone({
                       {sceneTitle
                         ? sceneTitle
                         : sceneParticipants.length > 0
-                        ? sceneParticipants.join(', ')
+                        ? sceneParticipants.length > 2
+                          ? `${sceneParticipants.slice(0, 2).join(', ')} +${sceneParticipants.length - 2}`
+                          : sceneParticipants.join(', ')
                         : (headerSubtitle ?? '')}
                     </span>
                   </div>

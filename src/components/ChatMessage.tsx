@@ -150,19 +150,24 @@ function BubbleMeta({ msg, isMain }: { msg: Message; isMain: boolean }) {
   return (
     <div className="mb-2 space-y-2">
       {fwd ? (
-        <div
-  className={[
-    'text-[11px] font-bold leading-tight',
-    isMain ? 'text-white/90' : 'text-slate-700',
-  ].join(' ')}
->
-
-          Weitergeleitet
-          {fwd.fromName ? (
-            <span className="font-bold text-slate-600"> · von {fwd.fromName}</span>
-          ) : null}
-          {fwd.fromChatLabel ? (
-            <span className="font-normal text-slate-500"> ({fwd.fromChatLabel})</span>
+        <div>
+          <div className={[
+            'flex items-center gap-1 text-[11px] font-semibold leading-tight',
+            isMain ? 'text-white/75' : 'text-slate-500',
+          ].join(' ')}>
+            <span aria-hidden>↪</span>
+            <span>Weitergeleitet</span>
+          </div>
+          {(fwd.fromName || fwd.fromChatLabel) ? (
+            <div className={[
+              'text-[11px] leading-tight mt-0.5 pl-3.5',
+              isMain ? 'text-white/60' : 'text-slate-400',
+            ].join(' ')}>
+              {[
+                fwd.fromName ? `von ${fwd.fromName}` : null,
+                fwd.fromChatLabel ?? null,
+              ].filter(Boolean).join(' · ')}
+            </div>
           ) : null}
         </div>
       ) : null}

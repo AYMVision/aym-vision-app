@@ -54,10 +54,20 @@
       }
     }
   },
+  "challenge": {
+    "label": "Challenge",
+    "question": "Nimmst du die Challenge an?",
+    "skip": "Vielleicht später",
+    "accept": "🌱 Ich probiere es!",
+    "reactionAccept": "🌱 Super! Du findest sie jederzeit in deinem Profil.",
+    "reactionSkip": "😊 Kein Problem! Du findest sie in deinem Profil, wenn du Lust bekommst."
+  },
   "multiSelect": {
     "completed": {
       "selectedTitle": "Deine Auswahl",
       "missedCorrectTitle": "Das passt auch 👍",
+      "missedCorrectNone": "Das hätte gepasst 👆",
+      "missedCorrectSome": "Hätte auch noch gepasst 👍",
       "incorrectLabel": "Das passt hier nicht so gut 🤔"
     }
   },

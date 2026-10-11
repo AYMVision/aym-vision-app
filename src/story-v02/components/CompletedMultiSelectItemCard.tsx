@@ -21,6 +21,13 @@ export default function CompletedMultiSelectItemCard({
     ? allOptions.filter((opt) => !selectedSet.has(opt.id) && opt.score > 0)
     : [];
 
+  const correctlySelected = scored
+    ? selectedOptions.filter((opt) => opt.score > 0).length
+    : 0;
+  const missedCorrectTitle = correctlySelected === 0
+    ? t('stories:multiSelect.completed.missedCorrectNone')
+    : t('stories:multiSelect.completed.missedCorrectSome');
+
   return (
     <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-emerald-200 bg-emerald-50 p-4 shadow-sm">
       <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-emerald-700">
@@ -58,7 +65,7 @@ export default function CompletedMultiSelectItemCard({
       {missedCorrectOptions.length > 0 && (
         <>
           <div className="mb-2 mt-4 text-xs font-semibold uppercase tracking-wide text-emerald-700">
-            {t('stories:multiSelect.completed.missedCorrectTitle')}
+            {missedCorrectTitle}
           </div>
 
           <div className="flex flex-col gap-1.5">

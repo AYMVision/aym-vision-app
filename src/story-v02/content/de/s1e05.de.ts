@@ -268,7 +268,7 @@ const c03 = C('s1e05c03', 2, 'Amic 3', 'Nur an einen', [
   ]),
 
   CH('s1e05c03_challenge_weiterleiten',
-    '👉 Bevor du etwas weiterleitest: Warte einen Moment und frage dich: Ist es für alle fair, wenn ich das weiterleite?\nNimmst du die Herausforderung an?',
+    '👉 Bevor du etwas weiterleitest: Warte einen Moment und frage dich: Ist es für alle fair, wenn ich das weiterleite?',
   ),
 
   S('s1e05c03_story_jonas_lukas', [
@@ -838,7 +838,7 @@ const c09 = C('s1e05c09', 8, 'Amic 9', 'Chioma', [
   ]),
 
   CH('s1e05c09_challenge_quellen',
-    '👉 Wenn dir jemand etwas erzählt, das unglaublich klingt, stelle eine zusätzliche Frage, bevor du es glaubst.\nZum Beispiel:\nWoher weißt du das?\nWer hat das gesehen?\nGibt es noch eine andere Erklärung?\nNimmst du die Herausforderung an?',
+    '👉 Wenn dir jemand etwas erzählt, das unglaublich klingt, stelle eine zusätzliche Frage, bevor du es glaubst.\nZum Beispiel:\nWoher weißt du das?\nWer hat das gesehen?\nGibt es noch eine andere Erklärung?',
   ),
 
   S('s1e05c09_story_chioma_jonas_alvarez', [
@@ -971,7 +971,7 @@ const c10 = C('s1e05c10', 9, 'Amic 10', 'Hast du den Wolf inzwischen eingefangen
   ]),
 
   CH('s1e05c10_challenge_mitfreuen',
-    '👉 Freu dich einmal bewusst für jemanden.\nSag dann auch:\n„Super." oder „Da freue ich mich für dich."\nDas macht den anderen glücklicher.\nUnd meistens sogar dich selbst. 😊\nNimmst du die Challenge an?',
+    '👉 Freu dich einmal bewusst für jemanden.\nSag dann auch:\n„Super." oder „Da freue ich mich für dich."\nDas macht den anderen glücklicher.\nUnd meistens sogar dich selbst. 😊',
   ),
 
   S('s1e05c10_story_lisa_schluss', [
@@ -1041,7 +1041,7 @@ const c11 = C('s1e05c11', 10, 'Amic 11', 'Das Schaf im Wolfspelz', [
   ]),
 
   CH('s1e05c11_challenge_wolf_moment',
-    '👉 Es gibt immer irgendwo einen „Wolf".\nEtwas, das erst völlig eindeutig wahr aussieht ...\n... und sich später als etwas ganz anderes herausstellt.\nWenn dir so ein Wolf-Moment begegnet, schreibe ihn in dein Tagebuch.\nDas kann eine Nachricht, ein Streit, ein Foto, ein Gerücht oder auch nur ein Missverständnis sein.\nNimmst du die Herausforderung an?',
+    '👉 Es gibt immer irgendwo einen „Wolf".\nEtwas, das erst völlig eindeutig wahr aussieht ...\n... und sich später als etwas ganz anderes herausstellt.\nWenn dir so ein Wolf-Moment begegnet, schreibe ihn in dein Tagebuch.\nDas kann eine Nachricht, ein Streit, ein Foto, ein Gerücht oder auch nur ein Missverständnis sein.',
   ),
 
   S('s1e05c11_story_klassenchat_epilog', [
