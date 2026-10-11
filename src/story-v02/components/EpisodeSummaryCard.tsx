@@ -1,7 +1,4 @@
 // src/story-v02/components/EpisodeSummaryCard.tsx
-// Abschluss-Karte die direkt im Messenger-Feed erscheint (kein Fullscreen-Modal).
-// Gleicher Look wie die ehemalige EpisodeCelebrationModal, aber als Inline-Karte.
-
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -46,17 +43,27 @@ function StickerReveal({ src }: { src?: string }) {
 }
 
 // ---------------------------------------------------------------------------
-// Feedback Push-up (Bottom Sheet)
+// Feedback Push-up (Bottom Sheet) — Schritt 1: Emoji, Schritt 2: Sterne
 // ---------------------------------------------------------------------------
 
 type FeedbackReaction = 'neutral' | 'ok' | 'loved';
+type SheetStep = 'emoji' | 'stars' | 'done';
+
+const EMOJIS: { value: FeedbackReaction; emoji: string; label: string }[] = [
+  { value: 'neutral', emoji: '😐', label: 'War okay' },
+  { value: 'ok',     emoji: '🙂', label: 'Hat mir gefallen' },
+  { value: 'loved',  emoji: '😍', label: 'Ich liebe es' },
+];
 
 function FeedbackSheet({ courseId }: { courseId: string }) {
   const feedbackKey = `story_feedback_${courseId}`;
-  const alreadyGiven = !!localStorage.getItem(feedbackKey);
+  const appRatingKey = 'app_rating_general';
+  const alreadyGiven  = !!localStorage.getItem(feedbackKey);
+  const alreadyRated  = !!localStorage.getItem(appRatingKey);
+  const showStarsStep = courseId === 'sp0e01' && !alreadyRated;
 
-  const [visible, setVisible] = useState(false);
-  const [done, setDone] = useState(false);
+  const [visible,  setVisible]  = useState(false);
+  const [step,     setStep]     = useState<SheetStep>('emoji');
   const [selected, setSelected] = useState<FeedbackReaction | null>(null);
 
   useEffect(() => {
@@ -67,26 +74,29 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
 
   if (alreadyGiven) return null;
 
-  function handleSelect(r: FeedbackReaction) {
+  function handleEmoji(r: FeedbackReaction) {
     setSelected(r);
-    setDone(true);
     localStorage.setItem(feedbackKey, r);
     const _paq = (window as any)._paq;
     if (_paq) _paq.push(['trackEvent', 'Story Feedback', courseId, r]);
+    if (showStarsStep) {
+      setStep('stars');
+    } else {
+      setStep('done');
+      setTimeout(() => setVisible(false), 1400);
+    }
+  }
+
+  function handleStars(stars: number) {
+    localStorage.setItem(appRatingKey, String(stars));
+    const _paq = (window as any)._paq;
+    if (_paq) _paq.push(['trackEvent', 'App Rating', courseId, String(stars), stars]);
+    setStep('done');
     setTimeout(() => setVisible(false), 1400);
   }
 
-  const EMOJIS: { value: FeedbackReaction; emoji: string; label: string }[] = [
-    { value: 'neutral', emoji: '😐', label: 'War okay' },
-    { value: 'ok',     emoji: '🙂', label: 'Hat mir gefallen' },
-    { value: 'loved',  emoji: '😍', label: 'Ich liebe es' },
-  ];
-
   return createPortal(
-    <div
-      className="fixed inset-x-0 bottom-0 z-[400] pointer-events-none"
-      aria-live="polite"
-    >
+    <div className="fixed inset-x-0 bottom-0 z-[400] pointer-events-none" aria-live="polite">
       <div
         className={[
           'pointer-events-auto transition-transform duration-500 ease-out',
@@ -96,15 +106,17 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
         <div className="bg-white rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.18)] px-6 pt-4 pb-10">
           <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-slate-200" />
 
-          {done ? (
+          {step === 'done' && (
             <div className="text-center py-3">
               <p className="text-base font-bold text-slate-800">
-                {selected === 'loved'   ? '🎉 Danke! Das freut uns sehr!' :
-                 selected === 'ok'      ? '😊 Danke für dein Feedback!' :
-                                          '💬 Danke! Deine Meinung hilft uns.'}
+                {selected === 'loved' ? '🎉 Danke! Das freut uns sehr!' :
+                 selected === 'ok'    ? '😊 Danke für dein Feedback!'  :
+                                        '💬 Danke! Deine Meinung hilft uns.'}
               </p>
             </div>
-          ) : (
+          )}
+
+          {step === 'emoji' && (
             <>
               <p className="text-center text-sm font-semibold text-slate-500 mb-5">
                 Wie hat dir die Story gefallen?
@@ -114,12 +126,34 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
                   <button
                     key={value}
                     type="button"
-                    onClick={() => handleSelect(value)}
+                    onClick={() => handleEmoji(value)}
                     className="flex flex-col items-center gap-1.5 active:scale-90 transition-transform hover:scale-110"
                     aria-label={label}
                   >
                     <span className="text-5xl leading-none select-none">{emoji}</span>
                     <span className="text-[11px] font-medium text-slate-500">{label}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+
+          {step === 'stars' && (
+            <>
+              <p className="text-center text-sm font-semibold text-slate-500 mb-1">
+                Und wie gefällt dir Amy Surfwing insgesamt?
+              </p>
+              <p className="text-center text-xs text-slate-400 mb-5">Tippe auf einen Stern</p>
+              <div className="flex justify-around pb-1">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => handleStars(star)}
+                    className="text-4xl active:scale-90 transition-transform hover:scale-110 select-none"
+                    aria-label={`${star} Sterne`}
+                  >
+                    ⭐
                   </button>
                 ))}
               </div>
@@ -147,6 +181,7 @@ type Props = {
   onViewSticker: () => void;
   onContinue: () => void;
   onProfile?: () => void;
+  onReplay?: () => void;
   betaMode?: boolean;
   continueLabel?: string;
 };
@@ -162,6 +197,7 @@ export default function EpisodeSummaryCard({
   onViewSticker,
   onContinue,
   onProfile,
+  onReplay,
   betaMode = false,
   continueLabel,
 }: Props) {
@@ -187,7 +223,6 @@ export default function EpisodeSummaryCard({
           background: 'linear-gradient(160deg, #1e1b4b 0%, #312e81 45%, #4c1d95 100%)',
         }}
       >
-        {/* Konfetti-Dekoration */}
         <div className="relative overflow-hidden px-5 pt-6 pb-5">
           {/* Hintergrund-Sterne */}
           <div
@@ -210,7 +245,6 @@ export default function EpisodeSummaryCard({
           </div>
 
           <div className="relative flex flex-col items-center gap-4 text-center">
-            {/* Amy — Übergabe-Moment, zentriert und prominent */}
             <img
               src={assetUrl('media/story/characters/amy-256.webp')}
               alt="Amy"
@@ -222,21 +256,17 @@ export default function EpisodeSummaryCard({
                 : t('reward.episodeDoneNoName')}
             </p>
 
-            {/* Stars */}
             <div className="text-2xl select-none tracking-widest">⭐ ⭐ ⭐ ⭐ ⭐</div>
 
-            {/* Sticker mit Übergabe-Label */}
             <div className="text-xs font-semibold text-violet-300 uppercase tracking-wide -mb-2">
               Dein Sticker:
             </div>
             <StickerReveal src={stickerSrc} />
 
-            {/* Title */}
             <div className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
               {episodeTitle ? `${episodeTitle} geschafft!` : 'Episode abgeschlossen!'}
             </div>
 
-            {/* Charakter-Moment */}
             {characterImg && characterSays && (
               <div className="flex items-center gap-2.5 w-full">
                 <img
@@ -252,7 +282,6 @@ export default function EpisodeSummaryCard({
               </div>
             )}
 
-            {/* Bonus Coins Badge */}
             {bonusCoins > 0 && (
               <div className="flex items-center gap-1.5 rounded-2xl bg-amber-400/20 border border-amber-400/40 px-4 py-2">
                 <img
@@ -266,7 +295,6 @@ export default function EpisodeSummaryCard({
               </div>
             )}
 
-            {/* Buttons */}
             <div className="flex flex-col gap-2.5 w-full mt-1">
               {betaMode ? (
                 <button
@@ -301,6 +329,15 @@ export default function EpisodeSummaryCard({
                       Profil &amp; Story-Welt →
                     </button>
                   )}
+                  {onReplay && (
+                    <button
+                      type="button"
+                      onClick={onReplay}
+                      className="mx-auto px-3 py-1.5 text-xs font-semibold text-violet-400/70 hover:text-violet-200 transition-colors"
+                    >
+                      Nochmals spielen ↺
+                    </button>
+                  )}
                 </>
               )}
             </div>
@@ -308,7 +345,6 @@ export default function EpisodeSummaryCard({
         </div>
       </div>
 
-      {/* Feedback Push-up — erscheint 1,5 Sek. nach der Karte */}
       {!betaMode && courseId && <FeedbackSheet courseId={courseId} />}
     </>
   );

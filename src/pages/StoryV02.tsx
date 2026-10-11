@@ -1559,6 +1559,11 @@ function hasStoryMigrationDone(key: string): boolean {
                 }
               }}
               onProfile={() => navigate('/profile')}
+              onReplay={chapter ? () => {
+                clearAmicSession(courseId, chapter.id);
+                dispatch({ type: 'START_CHAPTER', payload: { courseId, chapter } });
+                setAmicDoneNextChapterId(undefined);
+              } : undefined}
             />
           </div>
         );
