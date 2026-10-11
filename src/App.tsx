@@ -86,6 +86,14 @@ function AppRoutes() {
   const state = location.state as { backgroundLocation?: Location } | null;
   const backgroundLocation = state?.backgroundLocation;
 
+  useEffect(() => {
+    const _paq = (window as any)._paq;
+    if (!_paq) return;
+    _paq.push(['setCustomUrl', window.location.href]);
+    _paq.push(['setDocumentTitle', document.title]);
+    _paq.push(['trackPageView']);
+  }, [location.pathname]);
+
   return (
     <BackgroundLocationContext.Provider value={backgroundLocation ?? null}>
     <Suspense fallback={null}>

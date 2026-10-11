@@ -105,12 +105,16 @@ function PollCard({ poll }: { poll: NonNullable<Message['poll']> }) {
 }
 
 function MessageImage({ src }: { src?: string }) {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+
   if (!src) return null;
 
   const cand = buildMsgCandidates(src);
+  const isExternal = /^(https?:\/\/|data:)/.test(src ?? '');
+  const fullSrc = isExternal ? (src ?? '') : assetUrl(src ?? '');
 
-  if (cand) {
-    return (
+  const imageEl = cand ? (
+    <div className="cursor-zoom-in" onClick={() => setLightboxOpen(true)}>
       <SmartImage
         alt=""
         className="w-full rounded-lg mb-1 max-h-96 object-contain"
@@ -122,21 +126,43 @@ function MessageImage({ src }: { src?: string }) {
         loading="lazy"
         decoding="async"
       />
-    );
-  }
-
-
-  // Fallback: no candidates (e.g. png or not resized)
-  const isExternal = /^(https?:\/\/|data:)/.test(src ?? '');
-  const resolved = isExternal ? (src ?? '') : assetUrl(src ?? '');
-  return (
+    </div>
+  ) : (
     <img
       alt=""
-      src={resolved}
-      className="w-full rounded-lg mb-1 max-h-96 object-contain"
+      src={fullSrc}
+      className="w-full rounded-lg mb-1 max-h-96 object-contain cursor-zoom-in"
       loading="lazy"
       decoding="async"
+      onClick={() => setLightboxOpen(true)}
     />
+  );
+
+  return (
+    <>
+      {imageEl}
+      {lightboxOpen && (
+        <div
+          className="fixed inset-0 z-[300] flex items-center justify-center bg-black/85"
+          onClick={() => setLightboxOpen(false)}
+        >
+          <img
+            alt=""
+            src={fullSrc}
+            className="max-w-[95vw] max-h-[90vh] rounded-xl object-contain shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            type="button"
+            aria-label="Schließen"
+            className="absolute top-4 right-4 text-white/80 hover:text-white bg-black/40 rounded-full w-9 h-9 flex items-center justify-center text-xl"
+            onClick={() => setLightboxOpen(false)}
+          >
+            ✕
+          </button>
+        </div>
+      )}
+    </>
   );
 }
 
