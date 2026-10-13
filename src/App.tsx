@@ -62,6 +62,7 @@ const RedeemVoucher         = lazy(() => import('./shop/RedeemVoucher'));
 const StripePurchaseReturn  = lazy(() => import('./shop/StripePurchaseReturn'));
 const VoucherAdmin          = lazy(() => import('./pages/VoucherAdmin'));
 const TommiAward            = lazy(() => import('./pages/TommiAward'));
+const Presse                = lazy(() => import('./pages/Presse'));
 const TestSettings   = import.meta.env.DEV ? lazy(() => import('./pages/TestSettings')) : null;
 const DevLab         = import.meta.env.DEV ? lazy(() => import('./pages/DevLab')) : null;
 
@@ -111,6 +112,7 @@ function getMatomoPageInfo(pathname: string): { title: string; url: string } {
   if (pathname === '/newspaper') return { title: `${base} – Zeitung`, url: `${origin}/newspaper` };
   if (pathname === '/season-finale/s1') return { title: `${base} – Staffel-Finale`, url: `${origin}/season-finale/s1` };
   if (pathname === '/tommi-award') return { title: `${base} – Tommi Award`, url: `${origin}/tommi-award` };
+  if (pathname === '/presse') return { title: `${base} – Presse`, url: `${origin}/presse` };
   if (pathname === '/start') return { title: `${base} – Onboarding`, url: `${origin}/start` };
 
   if (pathname.startsWith('/stories-v02/')) {
@@ -192,6 +194,7 @@ function AppRoutes() {
         <Route path="/shop/return" element={<StripePurchaseReturn />} />
         <Route path="/voucher-admin" element={<VoucherAdmin />} />
         <Route path="/tommi-award" element={<TommiAward />} />
+        <Route path="/presse" element={<Presse />} />
 
         {import.meta.env.DEV && TestSettings && (
           <Route path="/test-settings" element={<TestSettings />} />

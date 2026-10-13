@@ -40,6 +40,7 @@ import { getActiveProfileId } from '../profile/profileStorage';
 import { loadProfileForId } from '../profile/storage';
 import { exportBackup, importBackup } from '../common/backupRestore';
 import TransferExportPanel from '../components/TransferExportPanel';
+import TransferImportPanel from '../components/TransferImportPanel';
 import { RestoreIdentityModal } from '../identity/RestoreIdentityModal';
 import { hasDiaryPin, resetDiaryPin } from '../diary/diaryPin';
 import { getConsentStatus, setConsent } from '../analytics/consent';
@@ -1891,6 +1892,15 @@ export default function AdultSettings() {
                 <div className="mt-5">
                   <TransferExportPanel />
                 </div>
+
+                <div className="mt-5">
+                  <div className="text-sm font-semibold text-slate-700 mb-2">📋 Link einlösen</div>
+                  <p className="text-xs text-slate-500 mb-3 leading-relaxed">
+                    Spielstand-Link aus dem Browser oder einem anderen Gerät hier einfügen:
+                  </p>
+                  <TransferImportPanel />
+                </div>
+
                 <div className="mt-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-600 leading-relaxed">
                   📲{' '}
                   <strong>App noch nicht installiert?</strong>{' '}

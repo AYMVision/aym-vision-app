@@ -100,7 +100,7 @@ export default function PwaTransferBanner() {
       const isMnemonicError = result.error.includes('Identität');
       setError(
         isMnemonicError
-          ? 'Der Link ist verschlüsselt und kann nur auf dem Gerät geöffnet werden, auf dem er erstellt wurde. Tipp: Öffne den Link direkt im Browser-Tab (nicht in der App).'
+          ? 'Dieser Link ist veraltet. Bitte erstelle im Elternbereich → Spielstand übertragen einen neuen Link — der funktioniert überall, auch in der installierten App.'
           : `Ungültiger Link: ${result.error}`,
       );
       setStep('error');

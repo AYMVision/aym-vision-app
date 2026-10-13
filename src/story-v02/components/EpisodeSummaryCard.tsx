@@ -58,9 +58,11 @@ const EMOJIS: { value: FeedbackReaction; emoji: string; label: string }[] = [
 function FeedbackSheet({ courseId }: { courseId: string }) {
   const feedbackKey = `story_feedback_${courseId}`;
   const appRatingKey = 'app_rating_general';
-  const alreadyGiven  = !!localStorage.getItem(feedbackKey);
-  const alreadyRated  = !!localStorage.getItem(appRatingKey);
-  const showStarsStep = courseId === 'sp0e01' && !alreadyRated;
+
+  // Einmal beim Mount lesen — verhindert dass localStorage.setItem in handleEmoji sofort null-Return auslöst.
+  const [alreadyGiven] = useState(() => !!localStorage.getItem(feedbackKey));
+  const [alreadyRated] = useState(() => !!localStorage.getItem(appRatingKey));
+  const showStarsStep  = courseId === 'sp0e01' && !alreadyRated;
 
   const [visible,  setVisible]  = useState(false);
   const [step,     setStep]     = useState<SheetStep>('emoji');

@@ -2,9 +2,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import QRCode from 'qrcode';
-import { buildTransferLink } from '../common/transferLink';
+import { buildTransferPayload, encodeTransferPayload } from '../common/transferLink';
 import { isStandalonePwa } from '../common/usePwaContext';
-import { loadIdentity } from '../identity/storage';
 
 type CopyState = 'idle' | 'copied' | 'error';
 type ShareState = 'idle' | 'sharing' | 'done' | 'error';
@@ -20,9 +19,10 @@ export default function TransferExportPanel() {
   const canShare = typeof navigator.share === 'function';
 
   function handleGenerate() {
-    const identity = loadIdentity();
-    if (!identity) return;
-    const generated = buildTransferLink(identity.mnemonic);
+    const payload = buildTransferPayload();
+    const encoded = encodeTransferPayload(payload);
+    const base = window.location.origin + window.location.pathname;
+    const generated = `${base}#/transfer/${encoded}`;
     setLink(generated);
     setCopyState('idle');
     setShareState('idle');
@@ -71,7 +71,8 @@ export default function TransferExportPanel() {
       <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm text-slate-700 leading-relaxed">
         <p>
           Der Spielstand-Link überträgt: Kapitel- & Episodenfortschritt, Sticker, Münzen, Avatar,
-          Bonus-Fortschritt und gelesene Artikel. Er enthält <strong>keine Chatverläufe</strong> —
+          Bonus-Fortschritt und gelesene Artikel. Er funktioniert auf <strong>allen Geräten und in der
+          installierten App-Kachel</strong>. Er enthält <strong>keine Chatverläufe</strong> —
           die bleiben aus Datenschutzgründen auf dem Gerät.
         </p>
         <p className="mt-2 text-xs text-slate-500">

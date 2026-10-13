@@ -884,13 +884,21 @@ function isUnlockedByChain(
               </div>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={() => setShowRestore(true)}
-            className="mt-2 w-full text-center text-xs text-slate-400 hover:text-slate-600"
-          >
-            Bereits einen Zugang? → Wiederherstellen
-          </button>
+          <div className="mt-2 flex flex-col gap-1">
+            <button
+              type="button"
+              onClick={() => setShowRestore(true)}
+              className="w-full text-center text-xs text-slate-400 hover:text-slate-600"
+            >
+              Bereits einen Zugang? → Wiederherstellen
+            </button>
+            <Link
+              to="/adult-settings"
+              className="w-full text-center text-xs text-slate-400 hover:text-slate-600"
+            >
+              Spielstand-Link einlösen → Elternbereich
+            </Link>
+          </div>
         </div>
 
       </div>
