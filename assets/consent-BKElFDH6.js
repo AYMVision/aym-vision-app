@@ -1,0 +1,1 @@
+import{T as e}from"./index-CHgKH1-u.js";function r(){try{const t=localStorage.getItem(e);if(t==="granted")return"granted";if(t==="denied")return"denied"}catch{}return"unknown"}function a(t){try{localStorage.setItem(e,t?"granted":"denied")}catch{}}export{r as g,a as s};
