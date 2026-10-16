@@ -51,8 +51,8 @@ type SheetStep = 'emoji' | 'stars' | 'done';
 
 const EMOJIS: { value: FeedbackReaction; emoji: string; label: string }[] = [
   { value: 'neutral', emoji: '😐', label: 'War okay' },
-  { value: 'ok',     emoji: '🙂', label: 'Hat mir gefallen' },
-  { value: 'loved',  emoji: '😍', label: 'Ich liebe es' },
+  { value: 'ok',     emoji: '🙂', label: 'Gut!' },
+  { value: 'loved',  emoji: '🤩', label: 'Sehr gut!' },
 ];
 
 function FeedbackSheet({ courseId }: { courseId: string }) {
@@ -80,7 +80,8 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
     setSelected(r);
     localStorage.setItem(feedbackKey, r);
     const _paq = (window as any)._paq;
-    if (_paq) _paq.push(['trackEvent', 'Story Feedback', courseId, r]);
+    const matomoLabel = r === 'neutral' ? 'okay' : r === 'ok' ? 'gut' : 'sehr_gut';
+    if (_paq) _paq.push(['trackEvent', 'Story Feedback', courseId, matomoLabel]);
     if (showStarsStep) {
       setStep('stars');
     } else {

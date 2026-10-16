@@ -32,6 +32,9 @@ export type EpisodeMeta = {
   /** true = no paywall, no daily gate, accessible without purchase */
   isFreeSpecial?: boolean;
 
+  /** Minimum recommended age in years — shown in episode overview */
+  minAge?: number;
+
   /** 'v2' = StoryV02 engine (/stories-v02/:courseId), default 'v1' = legacy */
   storyEngine?: 'v1' | 'v2';
 
@@ -67,6 +70,7 @@ export const CONTENT_INDEX: SeasonMeta[] = [
         released: true,
         order: 1,
         storyEngine: 'v2',
+        minAge: 9,
 
         topicTags: [
           'talk-act',
@@ -105,6 +109,7 @@ export const CONTENT_INDEX: SeasonMeta[] = [
         released: true,
         order: 2,
         storyEngine: 'v2',
+        minAge: 9,
 
         topicTags: [
           'talk-act',
@@ -144,6 +149,7 @@ export const CONTENT_INDEX: SeasonMeta[] = [
   released: true,
   order: 3,
   storyEngine: 'v2',
+  minAge: 9,
 
         topicTags: [
           'talk-act',
@@ -181,6 +187,7 @@ export const CONTENT_INDEX: SeasonMeta[] = [
         released: true,
         order: 4,
         storyEngine: 'v2',
+        minAge: 9,
 
         topicTags: [
           'talk-act',
@@ -218,6 +225,7 @@ export const CONTENT_INDEX: SeasonMeta[] = [
         released: true,
         order: 5,
         storyEngine: 'v2',
+        minAge: 9,
 
         topicTags: [
           'talk-act',
@@ -280,6 +288,7 @@ export const SPECIALS_INDEX: SeasonMeta[] = [
         order: 1,
         storyEngine: 'v2',
         isFreeSpecial: true,
+        minAge: 9,
 
         topicTags: [
           'info-check',
