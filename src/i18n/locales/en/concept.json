@@ -7,7 +7,7 @@
       "0": "Story-based",
       "1": "Reflection-driven",
       "2": "Everyday relevance",
-      "3": "For children aged 10 to 12"
+      "3": "For children aged 9 and up"
     },
     "ctaPrimary": "For parents →",
     "ctaSecondary": "Explore stories →"
@@ -167,9 +167,9 @@
   },
   "target": {
     "kicker": "Target group",
-    "title": "Focus on children aged 10 to 12",
-    "body": "The current focus is on children aged 10 to 12. At this stage, many begin to navigate the digital world independently: first experiences, more responsibility, uncertainties, and new dynamics in class chats, gaming, social media, and trends.",
-    "body2": "Amy Surfwing supports children exactly in this transition phase: preparing, guiding, and staying close to everyday life.",
+    "title": "Focus on children aged 9 to 12",
+    "body": "The current focus is on children aged 9 to 12. At this stage, many begin to navigate the digital world independently: first experiences, more responsibility, uncertainties, and new dynamics in class chats, gaming, social media, and trends.",
+    "body2": "Amy Surfwing supports children exactly in this transition phase: preparing, guiding, and staying close to everyday life. The model may be expanded in the future — but the current focus is deliberately on the first years of digital independence.",
     "note": "Additional age groups are planned for the future."
   },
   "frameworks": {
@@ -194,7 +194,7 @@
         "logicLabel": "In short",
         "logicValue": "Digital life → Story and reflection → Digital skills → Core dimensions → Digital literacy",
         "targetLabel": "Target group",
-        "targetValue": "Current focus: children aged 10 to 12.",
+        "targetValue": "Current focus: children aged 9 to 12.",
         "frameworkLabel": "Context",
         "frameworkValue": "The model draws on DigComp (EU), MIL (UNESCO), and the Media Competence Framework NRW."
       },

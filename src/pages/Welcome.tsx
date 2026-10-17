@@ -505,7 +505,7 @@ function isUnlockedByChain(
           />
         </a>
       </div>
-      <div className="absolute bottom-4 right-4 z-10">
+      <div className="absolute bottom-4 right-0 z-10">
         <img
           src="/media/ui/Tommi_award_nominierung_2026.png"
           alt="Nominiert für den TOMMI Games Award 2026 – Kategorie App und Bildung"

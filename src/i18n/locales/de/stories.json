@@ -294,12 +294,20 @@
     "title_optionB": "📝 Umfrage: Deine Meinung zählt!",
     "description_optionB": "Sag uns, wie dir die Story gefallen hat – die Umfrage ist anonym und dauert nur wenige Minuten.",
     "title": "📝 Kurze Umfrage",
-    "description": "Sag uns, wie dir die Story gefallen hat – anonym und in wenigen Minuten."
+    "description": "Sag uns, wie dir die Story gefallen hat – anonym und in wenigen Minuten.",
+    "amyAsks": "Amy fragt",
+    "question": "Ich habe eine Frage an dich — was denkst du bisher?",
+    "body": "3 Minuten, anonym. Deine Meinung hilft uns, Amy Surfwing besser zu machen.",
+    "snooze": "Nicht jetzt",
+    "betaKicker": "Beta-Feedback",
+    "betaQuestion": "📝 Was denkst du über Amy Surfwing?",
+    "betaBody": "3 Minuten, anonym.",
+    "betaDisclaimer": "Du wirst zu Microsoft Forms weitergeleitet – deine Antworten werden anonym gespeichert, wir erhalten keine persönlichen Daten. Teilnahme freiwillig."
   },
   "episodes": {
     "s1e01": {
       "title": "Wirbel am Wasserfall",
-      "description": "Ein ruhiger Ferien-Samstag eskaliert: Likes, FOMO, KI, ein Wasserfall - und plötzlich zählt jede Entscheidung."
+      "description": "Ein ruhiger Ferien-Samstag eskaliert: Likes, FOMO, KI, ein Wasserfall und plötzlich zählt jede Entscheidung."
     },
     "s1e02": {
       "title": "Alarm im Klassenchat",
@@ -488,6 +496,7 @@
   "overview": {
     "back": "Alle Storys",
     "season": "Staffel 1",
+    "seasonSpecial": "🎃 Halloween-Spezial",
     "aiTranslated": "Story mit KI übersetzt · Kann Fehler enthalten",
     "timeLocked": {
       "daily": "Morgen wieder verfügbar"
@@ -498,7 +507,7 @@
     "ctaStart": "Starten →",
     "listTitle": "Deine Amics",
     "amicHint": "Die Amics bauen aufeinander auf. Schließe jedes ab, um das nächste freizuschalten.",
-    "amicHintSpecial": "🎃 Ein Amic ist ein interaktives Kapitel. Lies mit, denk mit, triff Entscheidungen. Schließe jeden Amic ab, um das nächste Kapitel freizuschalten.",
+    "amicHintSpecial": "🎃 Ein Amic ist ein interaktives Kapitel. Lies mit, denk mit, triff Entscheidungen. Schließe einen Amic ab, um den nächsten freizuschalten.",
     "loading": "Lade Amics…",
     "noChapters": "Keine Amics gefunden.",
     "currentLabel": "Aktuell",
@@ -511,17 +520,6 @@
     "installHint": "Du kannst Amy Surfwing als App auf deinem Handy speichern, dann findest du sie morgen direkt auf dem Startbildschirm. Das ist freiwillig, im Browser läuft alles genauso.",
     "installHintLink": "Wie das geht →",
     "installHintDismiss": "Hinweis schließen"
-  },
-  "survey": {
-    "amyAsks": "Amy fragt",
-    "question": "Ich habe eine Frage an dich — was denkst du bisher?",
-    "body": "3 Minuten, anonym. Deine Meinung hilft uns, Amy Surfwing besser zu machen.",
-    "cta": "Zur Umfrage →",
-    "snooze": "Nicht jetzt",
-    "betaKicker": "Beta-Feedback",
-    "betaQuestion": "📝 Was denkst du über Amy Surfwing?",
-    "betaBody": "3 Minuten, anonym.",
-    "betaDisclaimer": "Du wirst zu Microsoft Forms weitergeleitet – deine Antworten werden anonym gespeichert, wir erhalten keine persönlichen Daten. Teilnahme freiwillig."
   },
   "beta": {
     "welcome": {
