@@ -183,6 +183,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"2026-10-19-roboter-fasst-16-jaehrige-an.md": {
+	id: "2026-10-19-roboter-fasst-16-jaehrige-an.md";
+  slug: "2026-10-19-roboter-fasst-16-jaehrige-an";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 };
 
 	};
