@@ -26,16 +26,16 @@ import BlockchainCertCard from '../shop/BlockchainCertCard';
 import { useIdentity } from '../identity/useIdentity';
 
 function AppRatingCard({ source }: { source: string }) {
-  const [rating, setRating] = useState<number | null>(null);
-  const [done, setDone] = useState(false);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [submitted, setSubmitted] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
 
-  function handleRating(stars: number) {
-    setRating(stars);
-    setDone(true);
-    localStorage.setItem('app_rating_general', String(stars));
+  function handleSubmit() {
+    if (selected === null) return;
+    setSubmitted(true);
+    localStorage.setItem('app_rating_general', String(selected));
     const _paq = (window as any)._paq;
-    if (_paq) _paq.push(['trackEvent', 'App Rating', source, String(stars)]);
+    if (_paq) _paq.push(['trackEvent', 'App Rating', source, String(selected)]);
   }
 
   return (
@@ -45,28 +45,37 @@ function AppRatingCard({ source }: { source: string }) {
           className="w-7 h-7 rounded-full object-cover object-top border-2 border-violet-200 flex-shrink-0" />
         <span className="text-sm font-extrabold text-violet-900">Amy fragt:</span>
       </div>
-      {done ? (
+      {submitted ? (
         <p className="text-sm text-violet-800 font-semibold text-center">
-          {(rating ?? 0) >= 4 ? '⭐ Danke! Das freut uns sehr!' : '💬 Danke für deine ehrliche Meinung!'}
+          {(selected ?? 0) >= 4 ? '⭐ Danke! Das freut uns sehr!' : '💬 Danke für deine ehrliche Meinung!'}
         </p>
       ) : (
         <>
           <p className="text-sm text-violet-800 font-semibold mb-3">Wie gefällt dir Amy Surfwing?</p>
-          <div className="flex gap-1">
+          <div className="flex gap-1 mb-3">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 key={star}
                 type="button"
                 onMouseEnter={() => setHovered(star)}
                 onMouseLeave={() => setHovered(null)}
-                onClick={() => handleRating(star)}
+                onClick={() => setSelected(star)}
                 className="text-3xl transition-transform active:scale-90 hover:scale-110"
                 aria-label={`${star} Sterne`}
               >
-                {star <= (hovered ?? rating ?? 0) ? '⭐' : '☆'}
+                {star <= (hovered ?? selected ?? 0) ? '⭐' : '☆'}
               </button>
             ))}
           </div>
+          {selected !== null && (
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="w-full rounded-xl bg-violet-600 hover:bg-violet-700 active:scale-[0.98] text-white text-sm font-bold py-2 transition-all"
+            >
+              Bewertung absenden
+            </button>
+          )}
         </>
       )}
     </div>

@@ -64,9 +64,10 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
   const [alreadyRated] = useState(() => !!localStorage.getItem(appRatingKey));
   const showStarsStep  = courseId === 'sp0e01' && !alreadyRated;
 
-  const [visible,  setVisible]  = useState(false);
-  const [step,     setStep]     = useState<SheetStep>('emoji');
-  const [selected, setSelected] = useState<FeedbackReaction | null>(null);
+  const [visible,      setVisible]      = useState(false);
+  const [step,         setStep]         = useState<SheetStep>('emoji');
+  const [selected,     setSelected]     = useState<FeedbackReaction | null>(null);
+  const [starSelected, setStarSelected] = useState<number | null>(null);
 
   useEffect(() => {
     if (alreadyGiven) return;
@@ -146,20 +147,29 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
               <p className="text-center text-sm font-semibold text-slate-500 mb-1">
                 Und wie gefällt dir Amy Surfwing insgesamt?
               </p>
-              <p className="text-center text-xs text-slate-400 mb-5">Tippe auf einen Stern</p>
-              <div className="flex justify-around pb-1">
+              <p className="text-center text-xs text-slate-400 mb-4">Wähle deine Bewertung</p>
+              <div className="flex justify-around pb-1 mb-4">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
                     type="button"
-                    onClick={() => handleStars(star)}
+                    onClick={() => setStarSelected(star)}
                     className="text-4xl active:scale-90 transition-transform hover:scale-110 select-none"
                     aria-label={`${star} Sterne`}
                   >
-                    ⭐
+                    {star <= (starSelected ?? 0) ? '⭐' : '☆'}
                   </button>
                 ))}
               </div>
+              {starSelected !== null && (
+                <button
+                  type="button"
+                  onClick={() => handleStars(starSelected)}
+                  className="w-full rounded-xl bg-violet-600 hover:bg-violet-700 active:scale-[0.98] text-white text-sm font-bold py-2.5 transition-all"
+                >
+                  Bewertung absenden
+                </button>
+              )}
             </>
           )}
         </div>
