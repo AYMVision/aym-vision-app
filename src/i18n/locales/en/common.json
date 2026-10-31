@@ -29,6 +29,21 @@
     "title": "Please rotate your device",
     "hint": "Amy Surfwing is designed for portrait mode."
   },
+  "storyFeedback": {
+    "question": "What did you think of the story?",
+    "neutral": "It was okay",
+    "ok": "Good!",
+    "loved": "Really good!",
+    "thankNeutral": "💬 Thanks! Your opinion helps us.",
+    "thankOk": "😊 Thanks for your feedback!",
+    "thankLoved": "🎉 Thanks so much! That makes us very happy."
+  },
+  "appRating": {
+    "question": "How do you like Amy Surfwing overall?",
+    "hint": "Choose your rating",
+    "starsAria": "{{count}} stars",
+    "submit": "Submit rating"
+  },
   "close": "Close",
   "remove": "Remove",
   "add": "Add",

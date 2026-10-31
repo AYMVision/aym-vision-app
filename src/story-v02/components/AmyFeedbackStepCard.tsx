@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { STORY_CHARACTERS as characters } from '../../content/characters';
 import ChatMessage from '../../components/ChatMessage';
 
@@ -7,6 +8,7 @@ type Props = {
 };
 
 export default function AmyFeedbackStepCard({ lines, onContinue }: Props) {
+  const { t } = useTranslation('stories');
   return (
     <div className="w-full">
       {lines.map((line, index) => (
@@ -29,7 +31,7 @@ export default function AmyFeedbackStepCard({ lines, onContinue }: Props) {
             onClick={onContinue}
             className="rounded-xl bg-rose-600 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-500"
           >
-            Weiter
+            {t('common.continue')}
           </button>
         </div>
       ) : null}

@@ -40,7 +40,8 @@ export interface BonusItem {
 
   // Assets in /public/media/...
   coverImage?: string; // z.B. media/bonus/diaries/mia-entry1-512.webp
-  audioSrc?: string;   // z.B. media/newspaper/audio/chatrules-chioma-dominik-01.mp3
+  audioSrc?: string;    // z.B. media/newspaper/audio/chatrules-chioma-dominik-01.mp3
+  audioSrcEn?: string;  // Englische Audio-Variante — Fallback auf audioSrc wenn nicht gesetzt
   linkHref?: string;   // für “Online Blog” später (kann auch internal sein)
 
   // Artikeltext/PDF (datenarm in /public)
@@ -257,6 +258,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     mediaType: 'audio',
     coverImage: 'media/newspaper/articles/ar-halloween-special/cover-1024.webp',
     audioSrc: 'media/newspaper/articles/chioma-news-stimmen-im-netz/audio.mp3',
+    audioSrcEn: 'media/newspaper/articles/chioma-news-stimmen-im-netz/audio.en.mp3',
     bodySrc: 'media/newspaper/articles/chioma-news-stimmen-im-netz/article',
     bodyKind: 'md',
     freeForAll: true,

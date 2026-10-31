@@ -49,13 +49,8 @@ function StickerReveal({ src }: { src?: string }) {
 type FeedbackReaction = 'neutral' | 'ok' | 'loved';
 type SheetStep = 'emoji' | 'stars' | 'done';
 
-const EMOJIS: { value: FeedbackReaction; emoji: string; label: string }[] = [
-  { value: 'neutral', emoji: '😐', label: 'War okay' },
-  { value: 'ok',     emoji: '🙂', label: 'Gut!' },
-  { value: 'loved',  emoji: '🤩', label: 'Sehr gut!' },
-];
-
 function FeedbackSheet({ courseId }: { courseId: string }) {
+  const { t } = useTranslation('common');
   const feedbackKey = `story_feedback_${courseId}`;
   const appRatingKey = 'app_rating_general';
 
@@ -71,8 +66,8 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
 
   useEffect(() => {
     if (alreadyGiven) return;
-    const t = setTimeout(() => setVisible(true), 1500);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setVisible(true), 1500);
+    return () => clearTimeout(timer);
   }, [alreadyGiven]);
 
   if (alreadyGiven) return null;
@@ -113,9 +108,9 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
           {step === 'done' && (
             <div className="text-center py-3">
               <p className="text-base font-bold text-slate-800">
-                {selected === 'loved' ? '🎉 Danke! Das freut uns sehr!' :
-                 selected === 'ok'    ? '😊 Danke für dein Feedback!'  :
-                                        '💬 Danke! Deine Meinung hilft uns.'}
+                {selected === 'loved' ? t('storyFeedback.thankLoved') :
+                 selected === 'ok'    ? t('storyFeedback.thankOk')    :
+                                        t('storyFeedback.thankNeutral')}
               </p>
             </div>
           )}
@@ -123,21 +118,25 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
           {step === 'emoji' && (
             <>
               <p className="text-center text-sm font-semibold text-slate-500 mb-5">
-                Wie hat dir die Story gefallen?
+                {t('storyFeedback.question')}
               </p>
               <div className="flex justify-around items-end pb-1">
-                {EMOJIS.map(({ value, emoji, label }) => (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => handleEmoji(value)}
-                    className="flex flex-col items-center gap-1.5 active:scale-90 transition-transform hover:scale-110"
-                    aria-label={label}
-                  >
-                    <span className="text-5xl leading-none select-none">{emoji}</span>
-                    <span className="text-[11px] font-medium text-slate-500">{label}</span>
-                  </button>
-                ))}
+                {(['neutral', 'ok', 'loved'] as const).map((value) => {
+                  const emoji = value === 'neutral' ? '😐' : value === 'ok' ? '🙂' : '🤩';
+                  const label = t(`storyFeedback.${value}`);
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => handleEmoji(value)}
+                      className="flex flex-col items-center gap-1.5 active:scale-90 transition-transform hover:scale-110"
+                      aria-label={label}
+                    >
+                      <span className="text-5xl leading-none select-none">{emoji}</span>
+                      <span className="text-[11px] font-medium text-slate-500">{label}</span>
+                    </button>
+                  );
+                })}
               </div>
             </>
           )}
@@ -145,9 +144,9 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
           {step === 'stars' && (
             <>
               <p className="text-center text-sm font-semibold text-slate-500 mb-1">
-                Und wie gefällt dir Amy Surfwing insgesamt?
+                {t('appRating.question')}
               </p>
-              <p className="text-center text-xs text-slate-400 mb-4">Wähle deine Bewertung</p>
+              <p className="text-center text-xs text-slate-400 mb-4">{t('appRating.hint')}</p>
               <div className="flex justify-around pb-1 mb-4">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
@@ -155,7 +154,7 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
                     type="button"
                     onClick={() => setStarSelected(star)}
                     className="text-4xl active:scale-90 transition-transform hover:scale-110 select-none"
-                    aria-label={`${star} Sterne`}
+                    aria-label={t('appRating.starsAria', { count: star })}
                   >
                     {star <= (starSelected ?? 0) ? '⭐' : '☆'}
                   </button>
@@ -167,7 +166,7 @@ function FeedbackSheet({ courseId }: { courseId: string }) {
                   onClick={() => handleStars(starSelected)}
                   className="w-full rounded-xl bg-violet-600 hover:bg-violet-700 active:scale-[0.98] text-white text-sm font-bold py-2.5 transition-all"
                 >
-                  Bewertung absenden
+                  {t('appRating.submit')}
                 </button>
               )}
             </>

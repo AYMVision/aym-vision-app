@@ -29,6 +29,21 @@
     "title": "Bitte dreh dein Gerät",
     "hint": "Amy Surfwing ist für das Hochformat gemacht."
   },
+  "storyFeedback": {
+    "question": "Wie hat dir die Story gefallen?",
+    "neutral": "War okay",
+    "ok": "Gut!",
+    "loved": "Sehr gut!",
+    "thankNeutral": "💬 Danke! Deine Meinung hilft uns.",
+    "thankOk": "😊 Danke für dein Feedback!",
+    "thankLoved": "🎉 Danke! Das freut uns sehr!"
+  },
+  "appRating": {
+    "question": "Und wie gefällt dir Amy Surfwing insgesamt?",
+    "hint": "Wähle deine Bewertung",
+    "starsAria": "{{count}} Sterne",
+    "submit": "Bewertung absenden"
+  },
   "close": "Schließen",
   "remove": "Entfernen",
   "add": "Hinzufügen",

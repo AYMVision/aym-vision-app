@@ -57,7 +57,7 @@ export default function InputStepCard({ step, onSubmit }: Props) {
             onClick={() => onSubmit({ text: capturedText || undefined })}
             className="rounded-xl bg-violet-700 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-600 active:scale-95 transition-transform"
           >
-            Ich hab's gelesen →
+            {t('input.crisisRead', { defaultValue: "Ich hab's gelesen →" })}
           </button>
         </div>
       </div>
@@ -91,12 +91,13 @@ export default function InputStepCard({ step, onSubmit }: Props) {
               placeholder={
                 step.placeholderKey
                   ? t(step.placeholderKey, {
-                      defaultValue:
-                        step.id === 's1e01c01_input_chat_name' ? 'Dein Chatname' : 'Möchtest du etwas schreiben…',
+                      defaultValue: step.id === 's1e01c01_input_chat_name'
+                        ? t('input.placeholderChatName', { defaultValue: 'Dein Chatname' })
+                        : t('input.placeholder', { defaultValue: 'Möchtest du etwas schreiben…' }),
                     })
                   : step.id === 's1e01c01_input_chat_name'
-                  ? 'Dein Chatname'
-                  : 'Möchtest du etwas schreiben…'
+                  ? t('input.placeholderChatName', { defaultValue: 'Dein Chatname' })
+                  : t('input.placeholder', { defaultValue: 'Möchtest du etwas schreiben…' })
               }
               className="w-full min-h-[96px] rounded-xl border border-slate-200 px-3 py-2 text-base text-slate-900 outline-none focus:border-slate-400"
             />
@@ -140,7 +141,7 @@ export default function InputStepCard({ step, onSubmit }: Props) {
                 }}
                 className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
               >
-                Weiter
+                {t('common.continue')}
               </button>
             </div>
           </>

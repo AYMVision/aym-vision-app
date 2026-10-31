@@ -176,19 +176,24 @@ export default function NewspaperArticle() {
   </div>
 ) : null}
 {/* AUDIO PLAYER */}
-{unlocked && item.audioSrc ? (
-  <div className="mb-5 rounded-[28px] border border-slate-200 bg-white shadow-sm p-4">
-    <div className="flex items-center justify-between mb-3">
-      <div className="text-xs font-extrabold text-slate-500">🎧 {t('newspaper.audioListen')}</div>
-      {lang === 'en' && (
-        <div className="inline-flex items-center gap-1 text-xs text-slate-400 bg-slate-100 rounded-full px-2.5 py-0.5">
-          🇩🇪 {t('newspaper.audioDeOnly', { defaultValue: 'Audio in German only' })}
-        </div>
-      )}
+{unlocked && item.audioSrc ? (() => {
+  const audioHref = (lang === 'en' && item.audioSrcEn)
+    ? assetUrl(item.audioSrcEn)
+    : assetUrl(item.audioSrc!);
+  return (
+    <div className="mb-5 rounded-[28px] border border-slate-200 bg-white shadow-sm p-4">
+      <div className="flex items-center justify-between mb-3">
+        <div className="text-xs font-extrabold text-slate-500">🎧 {t('newspaper.audioListen')}</div>
+        {lang === 'en' && !item.audioSrcEn && (
+          <div className="inline-flex items-center gap-1 text-xs text-slate-400 bg-slate-100 rounded-full px-2.5 py-0.5">
+            🇩🇪 {t('newspaper.audioDeOnly', { defaultValue: 'Audio in German only' })}
+          </div>
+        )}
+      </div>
+      <MiniAudioPlayer key={audioHref} src={audioHref} />
     </div>
-    <MiniAudioPlayer src={assetUrl(item.audioSrc)} />
-  </div>
-) : null}
+  );
+})() : null}
 
 {/* ARTICLE BODY — nur wenn bodySrc vorhanden und kein Ladefehler */}
 {unlocked && item.bodySrc && !bodyError && (

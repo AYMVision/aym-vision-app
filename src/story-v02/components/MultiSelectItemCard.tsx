@@ -67,7 +67,7 @@ export default function MultiSelectItemCard({ step, onSubmit }: Props) {
   }
 
   const prompt = step.prompt ?? t(step.promptKey ?? '', { defaultValue: '' });
-  const helper = step.helperText ?? t('item.multiHint', { defaultValue: 'Du kannst mehrere Antwortoptionen auswählen.' });
+  const helper = step.helperText ?? t('item.multiHint');
   const canSubmit = selected.size >= minSel;
 
   return (
@@ -165,7 +165,7 @@ export default function MultiSelectItemCard({ step, onSubmit }: Props) {
           <div className="mt-3 flex items-center justify-between">
             {maxSel > 1 && (
               <span className="text-xs text-slate-400">
-                {selected.size} von max. {maxSel} ausgewählt
+                {t('item.selectionCount', { count: selected.size, max: maxSel })}
               </span>
             )}
             <button
@@ -174,7 +174,7 @@ export default function MultiSelectItemCard({ step, onSubmit }: Props) {
               disabled={!canSubmit}
               className="ml-auto rounded-xl bg-rose-600 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-500 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              Abschicken
+              {t('item.submit')}
             </button>
           </div>
         ) : (
@@ -184,7 +184,7 @@ export default function MultiSelectItemCard({ step, onSubmit }: Props) {
               onClick={handleContinue}
               className="rounded-xl bg-rose-600 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-500"
             >
-              Weiter
+              {t('common.continue')}
             </button>
           </div>
         )}

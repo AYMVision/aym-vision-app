@@ -384,6 +384,17 @@
     "paywallCtaParent": "Eltern-Bereich öffnen →",
     "paywallCtaBack": "Zur Übersicht"
   },
+  "item": {
+    "singleHint": "Wähle eine Antwort aus.",
+    "multiHint": "Du kannst mehrere Antwortoptionen auswählen.",
+    "submit": "Abschicken",
+    "selectionCount": "{{count}} von max. {{max}} ausgewählt"
+  },
+  "input": {
+    "placeholder": "Möchtest du etwas schreiben…",
+    "placeholderChatName": "Dein Chatname",
+    "crisisRead": "Ich hab's gelesen →"
+  },
   "common": {
     "gotIt": "Verstanden",
     "continue": "Weiter",

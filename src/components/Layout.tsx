@@ -354,13 +354,13 @@ const isActive = (to: string) => {
 {!hideHeader && (
   <div
     className={cn(
-      'fixed top-0 right-0 h-full w-full bg-white shadow-lg z-50 transform transition-transform duration-300',
+      'fixed top-0 right-0 h-full w-full bg-white shadow-lg z-50 transform transition-transform duration-300 flex flex-col',
       isMenuOpen ? 'translate-x-0' : 'translate-x-full'
     )}
     role="dialog"
     aria-modal="true"
     aria-label={tLayout('drawerTitle')}
-  > 
+  >
         <div className="flex items-center justify-end p-4 bg-[var(--color-teal-500)] shadow-sm h-16 sm:h-20">
           <div className="flex-1" />
 
@@ -402,7 +402,7 @@ const isActive = (to: string) => {
           </button>
         </div>
 
-        <nav className="flex flex-col p-4">
+        <nav className="flex flex-col p-4 flex-1 overflow-y-auto">
           <div className="text-xs font-semibold text-slate-400 px-4 mb-2">
             {tNav('kids', { defaultValue: 'Für Kinder' })}
           </div>

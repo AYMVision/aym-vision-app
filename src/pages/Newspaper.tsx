@@ -400,7 +400,7 @@ function CurrentNewsCard({
   metaById: Record<string, ArticleMetaLite>;
   compact?: boolean;
 }) {
-  const { t } = useTranslation('bonus');
+  const { t, i18n } = useTranslation('bonus');
   const location = useLocation();
   const [imgFailed, setImgFailed] = useState(false);
 
@@ -408,7 +408,10 @@ function CurrentNewsCard({
   const coverSrc = item.coverImage ? assetUrl(item.coverImage) : '';
   const fallback = pickFallbackEmoji(item, metaById);
   const isAudio = item.mediaType === 'audio';
-  const audioHref = item.audioSrc ? assetUrl(item.audioSrc) : '';
+  const lang = normalizeLang(i18n.resolvedLanguage ?? i18n.language);
+  const audioHref = (lang === 'en' && item.audioSrcEn)
+    ? assetUrl(item.audioSrcEn)
+    : item.audioSrc ? assetUrl(item.audioSrc) : '';
   const kwNum = metaById[item.bonusId]?.date ? isoWeek(metaById[item.bonusId].date!) : null;
   const hasContent = !!metaById[item.bonusId];
 
@@ -510,7 +513,10 @@ function CurrentNewsCard({
       {isAudio && audioHref ? (
         <div className="px-4 pb-4">
           <div className="max-w-xs rounded-2xl border border-slate-200 bg-white p-3">
-            <MiniAudioPlayer src={audioHref} />
+            <MiniAudioPlayer key={audioHref} src={audioHref} />
+            {lang === 'en' && !item.audioSrcEn && (
+              <p className="mt-1.5 text-[10px] text-slate-400">{t('audioDeOnly', { defaultValue: 'Audio in German only' })}</p>
+            )}
           </div>
         </div>
       ) : null}
@@ -529,7 +535,7 @@ function FeedCard({
   seen: boolean;
   metaById: Record<string, ArticleMetaLite>;
 }) {
-  const { t } = useTranslation('bonus');
+  const { t, i18n } = useTranslation('bonus');
   const location = useLocation();
   const [imgFailed, setImgFailed] = useState(false);
 
@@ -538,7 +544,10 @@ function FeedCard({
 
   const coverSrc = item.coverImage ? assetUrl(item.coverImage) : '';
   const fallback = pickFallbackEmoji(item, metaById);
-  const audioHref = item.audioSrc ? assetUrl(item.audioSrc) : '';
+  const lang = normalizeLang(i18n.resolvedLanguage ?? i18n.language);
+  const audioHref = (lang === 'en' && item.audioSrcEn)
+    ? assetUrl(item.audioSrcEn)
+    : item.audioSrc ? assetUrl(item.audioSrc) : '';
   const topicTags = resolveTopicTags(item, metaById);
   const hasContent = !!metaById[item.bonusId];
   const canOpen = unlocked && (hasContent || !!item.freeForAll || shouldBypassAll());
@@ -627,7 +636,12 @@ function FeedCard({
 
           <div className="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-3">
             {item.mediaType === 'audio' && audioHref && unlocked ? (
-              <MiniAudioPlayer src={audioHref} />
+              <>
+                <MiniAudioPlayer key={audioHref} src={audioHref} />
+                {lang === 'en' && !item.audioSrcEn && (
+                  <p className="mt-1.5 text-[10px] text-slate-400">{t('audioDeOnly', { defaultValue: 'Audio in German only' })}</p>
+                )}
+              </>
             ) : unlocked ? (
               <div className="text-sm font-extrabold text-slate-900">
                 {t('newspaper.readMore', { defaultValue: 'Weiterlesen →' })}

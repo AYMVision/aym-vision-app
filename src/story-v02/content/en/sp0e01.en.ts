@@ -60,7 +60,7 @@ const c01 = C('sp0e01c01', 0, 'Amic 1', 'Digital Ghost', [
 
   S('sp0e01c01_lisa_ghost_private', [
     privateChat('Lisa', 'digitalghost7b'),
-    audio(ch.digitalghost7b, A('VoiceMessage_1.m4a'), '15:00', 'Voice message'),
+    audio(ch.digitalghost7b, A('VoiceMessage_1_en.m4a'), '15:00', 'Voice message'),
     m(ch.lisa, 'Chioma?', '15:00'),
     m(ch.lisa, 'Why are you calling yourself digitalghost?', '15:01'),
     m(ch.lisa, 'Hey, Chioma!?', '15:01'),
@@ -136,7 +136,7 @@ const c02 = C('sp0e01c02', 1, 'Amic 2', 'Ghost Voices', [
 
   S('sp0e01c02_aylin_ghost_private', [
     privateChat('Aylin', 'digitalghost7b'),
-    audio(ch.digitalghost7b, A('VoiceMessage_2.m4a'), '15:33', 'Voice call'),
+    audio(ch.digitalghost7b, A('VoiceMessage_2_en.m4a'), '15:33', 'Voice call'),
     m(ch.aylin, 'Hey, why did you just hang up?', '15:34'),
     m(ch.aylin, 'How do you know about Hugo?', '15:35'),
     m(ch.digitalghost7b, 'I know everything.', '15:35'),
@@ -145,19 +145,19 @@ const c02 = C('sp0e01c02', 1, 'Amic 2', 'Ghost Voices', [
 
   S('sp0e01c02_carlos_ghost_private', [
     privateChat('Carlos', 'digitalghost7b'),
-    audio(ch.digitalghost7b, A('VoiceMessage_5.m4a'), '15:36', 'Voice call'),
+    audio(ch.digitalghost7b, A('VoiceMessage_5_en.m4a'), '15:36', 'Voice call'),
     m(ch.carlos, 'You know…', '15:40'),
     m(ch.carlos, 'How do you know my costume?!', '15:40'),
   ]),
 
   S('sp0e01c02_lisa_ghost_private2', [
     privateChat('Lisa', 'digitalghost7b'),
-    audio(ch.digitalghost7b, A('VoiceMessage_9.m4a'), '15:38', 'Voice call'),
+    audio(ch.digitalghost7b, A('VoiceMessage_9_en.m4a'), '15:38', 'Voice call'),
     m(ch.lisa, 'Chioma, that is your voice.', '15:40'),
     m(ch.digitalghost7b, 'I guess it is then.', '15:40'),
     m(ch.digitalghost7b, '🤡', '15:41'),
     m(ch.lisa, '😱', '15:41'),
-    audio(ch.digitalghost7b, A('VoiceMessage_10.m4a'), '15:40', 'Voice message'),
+    audio(ch.digitalghost7b, A('VoiceMessage_10_en.m4a'), '15:40', 'Voice message'),
     m(ch.digitalghost7b, 'Did I scare you? Oops, that wasn\'t my intention.', '15:41'),
   ]),
 
@@ -386,9 +386,9 @@ const c04 = C('sp0e01c04', 3, 'Amic 4', 'My Voice', [
 
   S('sp0e01c03_markus_ghost_private', [
     privateChat('Markus', 'digitalghosts7b'),
-    audio(ch.digitalghosts7b, A('VoiceMessage_11.m4a'), '18:20', 'Voice message'),
+    audio(ch.digitalghosts7b, A('VoiceMessage_11_en.m4a'), '18:20', 'Voice message'),
     m(ch.markus, 'Chioma?', '18:21'),
-    audio(ch.digitalghosts7b, A('VoiceMessage_12.m4a'), '18:21', 'Voice message'),
+    audio(ch.digitalghosts7b, A('VoiceMessage_12_en.m4a'), '18:21', 'Voice message'),
     m(ch.markus, 'Hey, what is this?!', '18:21'),
     m(ch.digitalghosts7b, "How dare you pull pranks in my name?", '17:21'),
   ]),
@@ -404,11 +404,11 @@ const c04 = C('sp0e01c04', 3, 'Amic 4', 'My Voice', [
     m(ch.markus, "Okay, it was me.", '18:23'),
     m(ch.markus, 'It was just a joke.', '18:23'),
     m(ch.chioma, 'You cloned my voice!', '18:23'),
-    audio(ch.digitalghosts7b, A('VoiceMessage_13.m4a'), '18:23', 'Voice message'),
+    audio(ch.digitalghosts7b, A('VoiceMessage_13_en.m4a'), '18:23', 'Voice message'),
     m(ch.chioma, 'Stop it right now.', '18:24'),
     m(ch.markus, "That's not me any more.", '18:24'),
     m(ch.chioma, "Tell that to someone who believes you.", '18:25'),
-    audio(ch.digitalghosts7b, A('VoiceMessage_14.m4a'), '18:25', 'Voice message'),
+    audio(ch.digitalghosts7b, A('VoiceMessage_14_en.m4a'), '18:25', 'Voice message'),
     m(ch.markus, "Leave me alone. It's already dark.", '18:26'),
     m(ch.dominik, "Poor thing. Don't you have to be home by now? 😂", '18:26'),
   ]),
@@ -487,7 +487,7 @@ const c05 = C('sp0e01c05', 4, 'Amic 5', 'Who Laughs Last', [
     m(ch.chioma, "You wish.", '18:56'),
     m(ch.aylin, "There was a cracking sound behind me. I think someone is following me.", '18:56'),
     m(ch.lisa, "Shouldn't we all just go home?", '18:56'),
-    audio(ch.aylin, A('VoiceMessage_15.m4a'), '18:56', 'Voice message'),
+    audio(ch.aylin, A('VoiceMessage_15_en.m4a'), '18:56', 'Voice message'),
     img(ch.digitalghosts7b, B('Halloween_9-512.webp'), '18:58', { content: '' }),
     m(ch.digitalghosts7b, "WANT HER BACK? THEN FIND THE GRAVE WITH NO NAME.", '18:58'),
     img(ch.digitalghosts7b, B('Halloween_10-512.webp'), '18:58', { content: '' }),

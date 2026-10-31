@@ -42,6 +42,17 @@
       "incorrectLabel": "This doesn’t fit so well here 🤔"
     }
   },
+  "item": {
+    "singleHint": "Select one answer.",
+    "multiHint": "Multiple answers can be correct.",
+    "submit": "Submit",
+    "selectionCount": "{{count}} of {{max}} selected"
+  },
+  "input": {
+    "placeholder": "What would you like to write…",
+    "placeholderChatName": "Your chat name",
+    "crisisRead": "I've read it →"
+  },
   "common": {
     "gotIt": "Got it",
     "continue": "Continue",
