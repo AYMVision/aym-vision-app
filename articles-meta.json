@@ -5,6 +5,12 @@
       "description": "Was steckt hinter Augmented Reality – und wie kommt ein digitaler Geist auf deinen Bildschirm?",
       "author": "Carlos",
       "date": "2026-10-31"
+    },
+    "en": {
+      "title": "Augmented Reality: When a Ghost Suddenly Appears Next to You",
+      "description": "What is augmented reality – and how does a digital ghost end up on your screen?",
+      "author": "Carlos",
+      "date": "2026-10-31"
     }
   },
   "article-jonas-amir-int": {},
@@ -174,6 +180,12 @@
     "de": {
       "title": "Kannst du einer Stimme noch trauen?",
       "description": "Chioma berichtet über KI-Stimmen, die täuschend echt klingen – und was das mit uns macht.",
+      "author": "Chioma",
+      "date": "2026-10-31"
+    },
+    "en": {
+      "title": "Can You Still Trust a Voice?",
+      "description": "Chioma reports on AI voices that sound deceptively real – and what that does to us.",
       "author": "Chioma",
       "date": "2026-10-31"
     }
