@@ -896,7 +896,7 @@ function isUnlockedByChain(
               to="/adult-settings"
               className="w-full text-center text-xs text-slate-400 hover:text-slate-600"
             >
-              Spielstand-Link einlösen → Elternbereich
+              Spielstand-Link einlösen → Verwaltungsbereich
             </Link>
           </div>
         </div>

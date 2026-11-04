@@ -101,7 +101,7 @@
   },
 
   "adult": {
-    "hiddenAria": "Bereich für Eltern öffnen",
+    "hiddenAria": "Verwaltungsbereich öffnen",
     "hiddenVersion": "Version {{version}}",
     "footerHint": "Für Erwachsene: lange drücken"
   },
@@ -185,7 +185,7 @@
     "buy": {
       "button": "Jetzt kaufen",
       "owned": "Bereits freigeschaltet ✓",
-      "parentRequired": "Bitte frag eine erwachsene Person. Den Kauf können Eltern im Elternbereich starten (lange auf das App-Logo drücken)."
+      "parentRequired": "Bitte frag eine erwachsene Person. Den Kauf kann im Verwaltungsbereich gestartet werden (lange auf das App-Logo drücken)."
     },
     "return": {
       "processing": "Kauf wird bestätigt …",
@@ -243,14 +243,14 @@
       "quizError": "Das Wort stimmt nicht. Bitte nochmal prüfen.",
       "confirm": "Sicherung bestätigen",
       "skip": "Später",
-      "skipHint": "Du kannst deinen Zugang jederzeit im Elternbereich sichern.",
+      "skipHint": "Du kannst deinen Zugang jederzeit im Verwaltungsbereich sichern.",
       "done": "Sicherung abgeschlossen ✓",
       "juryHeadline": "Zugang sichern",
       "juryWhyText": "Einmal speichern und dann jederzeit auf jedem Gerät zugänglich. Diese 24 Wörter sind dein persönlicher Jury-Zugang.",
       "juryCopyAll": "Alle 24 Wörter kopieren",
       "juryMailSubject": "Amy Surfwing – Jury-Zugang",
       "juryMailBody": "Meine 24 Sicherungswörter (bitte sicher aufbewahren):",
-      "juryMailRestore": "So stelle ich den Zugang auf einem neuen Gerät wieder her:\n1. Amy Surfwing öffnen\n2. Auf der Startseite auf 'Zugang wiederherstellen' tippen\n3. Die 24 Wörter eingeben\n4. Neues Elternpasswort setzen — Zugang wiederhergestellt ✓",
+      "juryMailRestore": "So stelle ich den Zugang auf einem neuen Gerät wieder her:\n1. Amy Surfwing öffnen\n2. Auf der Startseite auf 'Zugang wiederherstellen' tippen\n3. Die 24 Wörter eingeben\n4. Neues Verwaltungspasswort setzen — Zugang wiederhergestellt ✓",
       "juryMailLink": "Per E-Mail an mich senden",
       "juryConfirm": "Gespeichert & weiter",
       "jurySkip": "Überspringen. Ich bleibe auf diesem Gerät"

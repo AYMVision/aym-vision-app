@@ -1,5 +1,5 @@
 import './polyfills';
-import { createContext, lazy, Suspense, useEffect, useRef } from 'react';
+import { createContext, lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HashRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import type { Location } from 'react-router-dom';
@@ -21,6 +21,7 @@ import RouteI18nLoader from './i18n/RouteI18nLoader';
 import ScrollToHash from './common/utils.ts';
 import ModalShell from './components/ModalShell';
 import LandscapeOverlay from './components/LandscapeOverlay';
+import PwaUpdateBanner from './components/PwaUpdateBanner';
 import { clearAmicBadge } from './notifications/reminderService';
 
 // Eager — always needed immediately
@@ -266,6 +267,7 @@ initIdentity();
 
 function App() {
   const updateSWRef = useRef<((reloadPage?: boolean) => Promise<void>) | null>(null);
+  const [needRefresh, setNeedRefresh] = useState(false);
 
   // Badge beim App-Öffnen löschen
   useEffect(() => { clearAmicBadge() }, [])
@@ -273,8 +275,7 @@ function App() {
   useEffect(() => {
     updateSWRef.current = registerSW({
       onNeedRefresh() {
-        // Neue Version sofort anwenden — kein Banner, kein User-Klick nötig.
-        updateSWRef.current?.(true);
+        setNeedRefresh(true);
       },
       onOfflineReady() {
         console.info('[PWA] App ist jetzt offline verfügbar.');
@@ -285,6 +286,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <LandscapeOverlay />
+      {needRefresh && (
+        <PwaUpdateBanner
+          onUpdate={() => { updateSWRef.current?.(true); setNeedRefresh(false); }}
+          onDismiss={() => setNeedRefresh(false)}
+        />
+      )}
       <ProfileProvider>
         <RewardFxProvider>
           <Router>

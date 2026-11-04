@@ -39,7 +39,7 @@ export default function TransferStaleWarning() {
               state={{ openSection: 'protection' }}
               className="font-semibold underline underline-offset-2"
             >
-              Elternbereich → Schutz &amp; Sicherung
+              Verwaltungsbereich → Schutz &amp; Sicherung
             </Link>
           </p>
         </div>

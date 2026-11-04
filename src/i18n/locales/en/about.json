@@ -201,36 +201,36 @@
       }
     },
     "parents": {
-      "label": "Parent area & settings",
+      "label": "Admin area & settings",
       "code": {
         "question": "Where can I enter my code if I have one?",
         "answer1": "You can enter unlock codes in the",
-        "answer2": "parent area under settings",
+        "answer2": "admin area under settings",
         "answer3": ". Open the area, scroll to the",
         "answer4": "\"Unlock code\"",
         "answer5": "section and enter your code there."
       },
       "changePasscode": {
-        "question": "How do I change my parent passcode?",
+        "question": "How do I change my admin passcode?",
         "answer1": "In the",
-        "answer2": "parent area",
+        "answer2": "admin area",
         "answer3": "you'll find the",
         "answer4": "\"Change passcode\"",
         "answer5": "section. Enter your current passcode and the new one twice (at least 6 characters)."
       },
       "duration": {
-        "question": "How long does the parent area stay unlocked?",
+        "question": "How long does the admin area stay unlocked?",
         "answer1": "After entering the correct passcode, the",
-        "answer2": "parent area",
+        "answer2": "admin area",
         "answer3": "stays open for 10 minutes. After that it locks automatically. You can also close it manually via",
-        "answer4": "\"Lock parent area\"",
+        "answer4": "\"Lock admin area\"",
         "answer5": "."
       },
       "forgot": {
-        "question": "I forgot my parent passcode.",
+        "question": "I forgot my admin passcode.",
         "answer1": "Write to us at",
         "answer2": "— we'll send you a reset code. Enter it in the",
-        "answer3": "parent area",
+        "answer3": "admin area",
         "answer4": "under",
         "answer5": "\"Forgot passcode?\"",
         "answer6": ". All learning progress and profile settings remain intact."
@@ -245,12 +245,12 @@
       "deviceSwitch": {
         "question": "What happens if I switch devices or clear storage?",
         "answer1": "Everything is stored locally and will be permanently lost without a backup. In the",
-        "answer2": "parent area → Protection & Security",
+        "answer2": "admin area → Protection & Security",
         "answer3": "you can create a progress link (transfers progress, stickers, and coins — no chat history) or download a full backup file that also includes chat history. Purchases are restored separately using the 24 security words."
       },
       "iosStorage": {
         "question": "What happens if I don't use the app for a while?",
-        "answer": "On iPhone and iPad, iOS automatically deletes data from installed web apps after approximately 7 days of inactivity. Regularly create a progress link or backup file in the parent area to protect your game progress."
+        "answer": "On iPhone and iPad, iOS automatically deletes data from installed web apps after approximately 7 days of inactivity. Regularly create a progress link or backup file in the admin area to protect your game progress."
       },
       "purchaseRestore": {
         "question": "How do I restore my access on a new device?",
@@ -258,7 +258,7 @@
         "step1": "Open Amy Surfwing",
         "step2": "Tap 'Restore access' on the start screen",
         "step3": "Enter the 24 words",
-        "step4": "Set a new parent password — access restored ✓"
+        "step4": "Set a new admin password — access restored ✓"
       },
       "multiProfile": {
         "question": "What happens if we create multiple profiles as a family?",
@@ -267,7 +267,7 @@
       "progressTransfer": {
         "question": "How do I transfer game progress to another device?",
         "answer1": "In the",
-        "answer2": "parent area → Protection & Security",
+        "answer2": "admin area → Protection & Security",
         "answer3": "there are two options: a progress link for progress, stickers, and coins (no chat history) — or a full backup file including chat history. On the new device, first enter the 24 security words, then import the link or backup file."
       }
     }

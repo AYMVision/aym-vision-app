@@ -1708,7 +1708,7 @@ export default function AdultSettings() {
                     }),
                   },
                   {
-                    label: t('adult:privacy.items.passcode', { defaultValue: 'Eltern-Passcode' }),
+                    label: t('adult:privacy.items.passcode', { defaultValue: 'Verwaltungs-Passcode' }),
                     detail: t('adult:privacy.items.passcodeDetail', {
                       defaultValue: 'Als SHA-256-Hash – nicht lesbar, nur lokal',
                     }),
@@ -1964,7 +1964,7 @@ export default function AdultSettings() {
                 <p className="mt-1 text-sm text-slate-600">
                   {t('adult:backup.body', {
                     defaultValue:
-                      'Die Sicherungsdatei enthält alle Profildaten, den Spielfortschritt, Sticker, Tagebuch und Chatverläufe. Sie ist mit den 24 Sicherungswörtern verschlüsselt und kann nur damit wieder geöffnet werden. Der Eltern-Passcode wird einmalig neu eingerichtet — du kannst denselben verwenden.',
+                      'Die Sicherungsdatei enthält alle Profildaten, den Spielfortschritt, Sticker, Tagebuch und Chatverläufe. Sie ist mit den 24 Sicherungswörtern verschlüsselt und kann nur damit wieder geöffnet werden. Das Verwaltungspasswort wird einmalig neu eingerichtet — du kannst dasselbe verwenden.',
                   })}
                 </p>
 
@@ -2057,7 +2057,7 @@ export default function AdultSettings() {
                 <p className="mt-1 text-sm text-slate-600">
                   {t('adult:reset.profileBody', {
                     defaultValue:
-                      'Löscht alle Lernfortschritte, Sticker, Münzen und Entwicklungsbereiche des Kindes. Der Eltern-Passcode und die App-Einstellungen bleiben erhalten.',
+                      'Löscht alle Lernfortschritte, Sticker, Münzen und Entwicklungsbereiche des Kindes. Der Verwaltungs-Passcode und die App-Einstellungen bleiben erhalten.',
                   })}
                 </p>
 
@@ -2112,7 +2112,7 @@ export default function AdultSettings() {
                 <p className="mt-1 text-sm text-slate-600">
                   {t('adult:reset.allBody', {
                     defaultValue:
-                      'Löscht sämtliche auf diesem Gerät gespeicherten App-Daten – inklusive Kinderprofil, Eltern-Passcode und App-Einstellungen. Entspricht einer vollständigen Datenlöschung gemäß DSGVO.',
+                      'Löscht sämtliche auf diesem Gerät gespeicherten App-Daten – inklusive Kinderprofil, Verwaltungs-Passcode und App-Einstellungen. Entspricht einer vollständigen Datenlöschung gemäß DSGVO.',
                   })}
                 </p>
 

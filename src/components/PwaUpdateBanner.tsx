@@ -15,7 +15,7 @@ export default function PwaUpdateBanner({ onUpdate, onDismiss }: Props) {
                     flex items-center gap-3">
       <div className="flex-1 min-w-0">
         <div className="text-sm font-semibold text-slate-900 leading-snug">
-          Neue Version verfügbar
+          Neue Version verfügbar ✨
         </div>
         <div className="text-xs text-slate-500 mt-0.5">
           Jetzt aktualisieren für die neuesten Inhalte.

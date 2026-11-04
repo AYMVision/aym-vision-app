@@ -674,7 +674,7 @@ function MyDiaryWithPin() {
           </div>
 
           <p className="mt-4 text-xs text-slate-400">
-            {t('diaries.pin.parentNote', { defaultValue: 'Vergessen? Eltern können den PIN im Elternbereich zurücksetzen – deine Einträge bleiben dabei erhalten.' })}
+            {t('diaries.pin.parentNote', { defaultValue: 'Vergessen? Im Verwaltungsbereich kann der PIN zurückgesetzt werden – deine Einträge bleiben dabei erhalten.' })}
           </p>
         </div>
       </div>
@@ -742,7 +742,7 @@ function MyDiaryWithPin() {
                 </>
               ) : null}
               <span className="mt-1 block">
-                {t('diaries.pin.forgotHint', { defaultValue: 'Vergessen? Bitte deine Eltern, den PIN im Elternbereich zurückzusetzen. Deine Einträge bleiben erhalten.' })}
+                {t('diaries.pin.forgotHint', { defaultValue: 'Vergessen? Im Verwaltungsbereich kann der PIN zurückgesetzt werden. Deine Einträge bleiben erhalten.' })}
               </span>
             </div>
           )}

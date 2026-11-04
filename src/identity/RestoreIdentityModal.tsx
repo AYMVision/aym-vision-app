@@ -91,11 +91,11 @@ export function RestoreIdentityModal({ onDone, onCancel }: { onDone(): void; onC
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
         <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl space-y-4">
           <div className="text-lg font-bold text-slate-900">
-            {t('identity.restore.setupTitle', { defaultValue: 'Elternbereich einrichten' })}
+            {t('identity.restore.setupTitle', { defaultValue: 'Verwaltungsbereich einrichten' })}
           </div>
           <RestoredContentBlock />
           <p className="text-sm text-slate-600 leading-relaxed">
-            {t('identity.restore.setupBody', { defaultValue: 'Bitte richte jetzt ein Elternpasswort ein, um den Elternbereich zu schützen.' })}
+            {t('identity.restore.setupBody', { defaultValue: 'Bitte richte jetzt ein Verwaltungspasswort ein, um den Verwaltungsbereich zu schützen.' })}
           </p>
           <div className="space-y-2">
             <input

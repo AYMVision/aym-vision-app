@@ -198,36 +198,36 @@
       }
     },
     "parents": {
-      "label": "Elternbereich & Einstellungen",
+      "label": "Verwaltungsbereich & Einstellungen",
       "code": {
         "question": "Wo kann ich meinen Gutscheincode eingeben?",
         "answer1": "Gutscheincodes kannst du im",
-        "answer2": "Elternbereich",
+        "answer2": "Verwaltungsbereich",
         "answer3": "eingeben. Öffne den Bereich, scrolle zum Abschnitt",
         "answer4": "Staffel 1 freischalten",
         "answer5": "und gib deinen Code unter Gutschein vorhanden? ein."
       },
       "changePasscode": {
-        "question": "Wie ändere ich meinen Eltern-Passcode?",
+        "question": "Wie ändere ich meinen Verwaltungs-Passcode?",
         "answer1": "Im",
-        "answer2": "Elternbereich",
+        "answer2": "Verwaltungsbereich",
         "answer3": "findest du den Abschnitt",
         "answer4": "Passcode ändern",
         "answer5": ". Gib dort deinen aktuellen Passcode sowie zweimal den neuen ein (mindestens 6 Zeichen)."
       },
       "duration": {
-        "question": "Wie lange bleibt der Elternbereich entsperrt?",
+        "question": "Wie lange bleibt der Verwaltungsbereich entsperrt?",
         "answer1": "Nach der Eingabe des richtigen Passcodes bleibt der",
-        "answer2": "Elternbereich",
+        "answer2": "Verwaltungsbereich",
         "answer3": "10 Minuten geöffnet. Danach wird er automatisch gesperrt. Du kannst ihn auch manuell über",
-        "answer4": "Elternbereich sperren",
+        "answer4": "Verwaltungsbereich sperren",
         "answer5": "schließen."
       },
       "forgot": {
-        "question": "Ich habe meinen Eltern-Passcode vergessen.",
+        "question": "Ich habe meinen Verwaltungs-Passcode vergessen.",
         "answer1": "Schreibe uns an",
         "answer2": "Wir schicken dir einen Reset-Code. Den gibst du dann im",
-        "answer3": "Elternbereich",
+        "answer3": "Verwaltungsbereich",
         "answer4": "unter",
         "answer5": "Passcode vergessen?",
         "answer6": "ein. Alle Lernfortschritte und Profileinstellungen des Kindes bleiben erhalten."
@@ -242,12 +242,12 @@
       "deviceSwitch": {
         "question": "Was passiert, wenn ich das Gerät wechsle oder den Speicher lösche?",
         "answer1": "Alles ist lokal gespeichert und geht ohne Sicherung beim Gerätewechsel dauerhaft verloren. Im",
-        "answer2": "Elternbereich → Schutz & Sicherung",
+        "answer2": "Verwaltungsbereich → Schutz & Sicherung",
         "answer3": "erstellst du einen Spielstand-Link (überträgt Fortschritt, Sticker und Münzen — ohne Chatverläufe) oder lädst eine vollständige Sicherungsdatei herunter, die auch Chatverläufe enthält. Käufe werden unabhängig davon über die 24 Sicherungswörter wiederhergestellt."
       },
       "iosStorage": {
         "question": "Was passiert, wenn ich die App längere Zeit nicht nutze?",
-        "answer": "Auf iPhone und iPad löscht iOS die Daten installierter Web-Apps nach ca. 7 Tagen ohne Nutzung automatisch. Erstelle regelmäßig einen Spielstand-Link oder eine Sicherungsdatei im Elternbereich, um deinen Spielstand zu schützen."
+        "answer": "Auf iPhone und iPad löscht iOS die Daten installierter Web-Apps nach ca. 7 Tagen ohne Nutzung automatisch. Erstelle regelmäßig einen Spielstand-Link oder eine Sicherungsdatei im Verwaltungsbereich, um deinen Spielstand zu schützen."
       },
       "purchaseRestore": {
         "question": "Wie stelle ich meinen Zugang auf einem neuen Gerät wieder her?",
@@ -255,7 +255,7 @@
         "step1": "Amy Surfwing öffnen",
         "step2": "Auf der Startseite auf 'Zugang wiederherstellen' tippen",
         "step3": "Die 24 Wörter eingeben",
-        "step4": "Neues Elternpasswort setzen — Zugang wiederhergestellt ✓"
+        "step4": "Neues Verwaltungspasswort setzen — Zugang wiederhergestellt ✓"
       },
       "multiProfile": {
         "question": "Was passiert, wenn ich als Familie mehrere Profile anlege?",
@@ -264,7 +264,7 @@
       "progressTransfer": {
         "question": "Wie übertrage ich den Spielfortschritt auf ein anderes Gerät?",
         "answer1": "Im",
-        "answer2": "Elternbereich → Schutz & Sicherung",
+        "answer2": "Verwaltungsbereich → Schutz & Sicherung",
         "answer3": "gibt es zwei Möglichkeiten: einen Spielstand-Link für Fortschritt, Sticker und Münzen (ohne Chatverläufe) oder eine vollständige Sicherungsdatei inkl. Chatverläufe. Auf dem neuen Gerät zuerst die 24 Sicherungswörter eingeben, dann Link oder Sicherungsdatei einspielen."
       }
     }

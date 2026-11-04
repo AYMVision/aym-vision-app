@@ -100,7 +100,7 @@ export default function PwaTransferBanner() {
       const isMnemonicError = result.error.includes('Identität');
       setError(
         isMnemonicError
-          ? 'Dieser Link ist veraltet. Bitte erstelle im Elternbereich → Spielstand übertragen einen neuen Link — der funktioniert überall, auch in der installierten App.'
+          ? 'Dieser Link ist veraltet. Bitte erstelle im Verwaltungsbereich → Spielstand übertragen einen neuen Link — der funktioniert überall, auch in der installierten App.'
           : `Ungültiger Link: ${result.error}`,
       );
       setStep('error');
@@ -280,7 +280,7 @@ export default function PwaTransferBanner() {
           />
         </div>
         <p className="text-xs text-sky-700 mt-2 text-center leading-snug">
-          Halte die Kamera auf den QR-Code aus dem Elternbereich des alten Geräts.
+          Halte die Kamera auf den QR-Code aus dem Verwaltungsbereich des alten Geräts.
         </p>
       </div>
     );

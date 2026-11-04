@@ -82,7 +82,7 @@ export default function TransferExportPanel() {
             state={{ openSection: 'protection' }}
             className="font-semibold underline underline-offset-2 hover:text-slate-700"
           >
-            Elternbereich → Schutz &amp; Sicherung → Sicherungsdatei erstellen
+            Verwaltungsbereich → Schutz &amp; Sicherung → Sicherungsdatei erstellen
           </Link>
         </p>
       </div>
@@ -187,7 +187,7 @@ export default function TransferExportPanel() {
               state={{ openSection: 'protection' }}
               className="font-semibold underline underline-offset-2 hover:text-amber-900"
             >
-              Elternbereich → Schutz &amp; Sicherung
+              Verwaltungsbereich → Schutz &amp; Sicherung
             </Link>
           </p>
         </div>
