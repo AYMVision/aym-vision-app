@@ -1,0 +1,1 @@
+const o="Amy Surfwing",n="Check was online wirklich abgeht ✨",t="App-Logo",e="Amy Surfwing",c="Shop öffnen",l="Sperren",r={brandTitle:o,brandTagline:n,logoAlt:t,drawerTitle:e,openShop:c,lockNow:l};export{n as brandTagline,o as brandTitle,r as default,e as drawerTitle,l as lockNow,t as logoAlt,c as openShop};
