@@ -7,7 +7,6 @@ import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { hasParentPasscode, setParentPasscode, setParentUnlockedForMinutes } from '../settings/parentLock';
 import { isParentSetupDone, markParentSetupDone, shouldSkipOnboarding } from '../common/firstRun';
 import { isSeasonOwnedLocally, refreshOwnership } from '../shop/ownership';
-import { paymentLinkFor, computeProfileHash } from '../shop/stripe';
 import { loadIdentity } from '../identity/storage';
 import { useIdentity } from '../identity/useIdentity';
 import { BackupPrompt } from '../identity/BackupPrompt';
@@ -376,19 +375,7 @@ export default function ParentSetupWizard() {
                 </ul>
                 <button
                   type="button"
-                  onClick={async () => {
-                    const identity = loadIdentity();
-                    if (!identity) return;
-                    try {
-                      const { deriveBackendProfileId } = await import('../identity/keys');
-                      const backendProfileId = deriveBackendProfileId(identity.mnemonic);
-                      const hash = computeProfileHash(identity.publicKeyHex, backendProfileId);
-                      const link = paymentLinkFor('s1', hash);
-                      window.open(link, '_blank', 'noopener,noreferrer');
-                    } catch {
-                      // no payment link configured
-                    }
-                  }}
+                  onClick={() => navigate('/checkout/staffel-1')}
                   className="w-full py-3 rounded-2xl bg-teal-700 text-white font-extrabold text-sm hover:bg-teal-800 transition-colors"
                 >
                   {t('wizard.access.buyNow')}

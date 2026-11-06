@@ -583,6 +583,13 @@ export default function ForParents() {
                   {t('sections.ai.ctaImpressum')}
                 </Link>
               </div>
+
+              <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-600">
+                Wenn Ihr Kind Unterstützung braucht:{' '}
+                <Link to="/hilfe" className="font-semibold text-[var(--color-teal-700)] underline hover:text-[var(--color-teal-900)]">
+                  Hilfe &amp; Notfallkontakte →
+                </Link>
+              </div>
             </Accordion>
             </div>
 

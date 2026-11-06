@@ -452,6 +452,21 @@ const [episode, setEpisode] = useState<StoryEpisodeV02 | null>(null);
 
     let tries = 0;
     const maxTries = 160;
+    let abortListenerAttached = false;
+
+    const onUserTouch = () => {
+      // User touched — stop overriding their scroll gesture immediately
+      pendingReturnScrollRef.current = null;
+      if (restoreScrollTimerRef.current != null) {
+        clearInterval(restoreScrollTimerRef.current);
+        restoreScrollTimerRef.current = null;
+      }
+      const el = scrollRef.current;
+      if (el) {
+        el.removeEventListener('touchstart', onUserTouch);
+        el.removeEventListener('pointerdown', onUserTouch);
+      }
+    };
 
     const apply = () => {
       tries += 1;
@@ -479,6 +494,12 @@ const [episode, setEpisode] = useState<StoryEpisodeV02 | null>(null);
         return;
       }
 
+      if (!abortListenerAttached) {
+        abortListenerAttached = true;
+        el.addEventListener('touchstart', onUserTouch, { passive: true });
+        el.addEventListener('pointerdown', onUserTouch, { passive: true });
+      }
+
       const maxScrollable = Math.max(0, el.scrollHeight - el.clientHeight);
       const clamped = Math.min(wanted, maxScrollable);
 
@@ -500,6 +521,8 @@ const [episode, setEpisode] = useState<StoryEpisodeV02 | null>(null);
           clearInterval(restoreScrollTimerRef.current);
           restoreScrollTimerRef.current = null;
         }
+        el.removeEventListener('touchstart', onUserTouch);
+        el.removeEventListener('pointerdown', onUserTouch);
       }
     };
 

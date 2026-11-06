@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useTranslation, Trans } from 'react-i18next';
+import { useNavigate, Link } from 'react-router-dom';
 import { aymFetch } from '../identity/handshake';
 import { getActiveProfileId, setActiveProfileId } from '../profile/profileStorage';
 import { loadProfilesIndex, createProfile } from '../profile/profileIndex';
@@ -38,6 +38,8 @@ export default function RedeemVoucher() {
   const [inputValue, setInputValue] = useState('');
   const [inputError, setInputError] = useState('');
   const [scanning, setScanning] = useState(false);
+  const [agbAccepted, setAgbAccepted] = useState(false);
+  const [agbError, setAgbError] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -88,6 +90,10 @@ export default function RedeemVoucher() {
   }
 
   async function handleConfirm(voucherId: string) {
+    if (!agbAccepted) {
+      setAgbError(true);
+      return;
+    }
     setScreen({ kind: 'loading' });
 
     // Identität (Schlüsselpaar) automatisch erstellen falls noch nicht vorhanden
@@ -230,6 +236,29 @@ export default function RedeemVoucher() {
             <h2 className="text-xl font-extrabold text-slate-900">{t('identity.voucher.confirmTitle')}</h2>
             <p className="text-slate-600">{t('identity.voucher.confirmText')}</p>
             <p className="text-xs font-mono text-slate-400 break-all">{screen.voucherId}</p>
+
+            <label className="flex items-start gap-3 cursor-pointer text-left">
+              <input
+                type="checkbox"
+                checked={agbAccepted}
+                onChange={e => { setAgbAccepted(e.target.checked); setAgbError(false); }}
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-teal-600 focus:ring-teal-300"
+              />
+              <span className="text-xs text-slate-600 leading-relaxed">
+                <Trans
+                  t={t}
+                  i18nKey="identity.voucher.agbAccept"
+                  components={[
+                    <span />,
+                    <Link to="/agb" className="underline text-teal-600" onClick={e => e.stopPropagation()} />,
+                  ]}
+                />
+              </span>
+            </label>
+            {agbError && (
+              <p className="text-xs text-red-600 -mt-1">{t('identity.voucher.agbRequired')}</p>
+            )}
+
             <div className="space-y-3">
               <button
                 type="button"

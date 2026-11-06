@@ -24,7 +24,6 @@ import {
 import { getEntitlements } from '../gating/entitlements';
 import { applyUnlockCode } from '../gating/unlockCodes';
 import { isSeasonOwnedLocally, refreshOwnership } from '../shop/ownership';
-import { paymentLinkFor, computeProfileHash } from '../shop/stripe';
 import { aymFetch } from '../identity/handshake';
 import { parseVoucherInput } from '../shop/qrScanner';
 import { loadIdentity } from '../identity/storage';
@@ -845,7 +844,7 @@ export default function AdultSettings() {
       <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-white flex flex-col items-center justify-start px-4 py-10">
         <div className="w-full max-w-md space-y-5">
           <div className="text-6xl text-center">🎉</div>
-          <h2 className="text-2xl font-extrabold text-slate-900 text-center">Gutschein eingelöst!</h2>
+          <h2 className="text-2xl font-extrabold text-slate-900 text-center">Staffel-Code eingelöst!</h2>
           <p className="text-sm text-slate-500 text-center">Staffel 1 ist jetztbei  freigeschaltet.</p>
           <button
             type="button"
@@ -1234,19 +1233,7 @@ export default function AdultSettings() {
                   return (
                     <button
                       type="button"
-                      onClick={async () => {
-                        const identity = loadIdentity();
-                        if (!identity) return;
-                        try {
-                          const { deriveBackendProfileId } = await import('../identity/keys');
-                          const backendProfileId = deriveBackendProfileId(identity.mnemonic);
-                          const hash = computeProfileHash(identity.publicKeyHex, backendProfileId);
-                          const link = paymentLinkFor('s1', hash);
-                          window.open(link, '_blank', 'noopener,noreferrer');
-                        } catch {
-                          // no payment link configured
-                        }
-                      }}
+                      onClick={() => navigate('/checkout/staffel-1')}
                       className="mt-4 rounded-xl bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-800 transition-colors"
                     >
                       {t('adult:purchase.cta', { defaultValue: 'Jetzt kaufen →' })}
@@ -1258,14 +1245,14 @@ export default function AdultSettings() {
               {/* Gutschein einlösen */}
               <section className="rounded-2xl border border-slate-200 bg-white p-5 space-y-3">
                 <h3 className="text-base font-semibold text-slate-900">
-                  {t('adult:purchase.voucherTitle', { defaultValue: 'Gutschein vorhanden?' })}
+                  {t('adult:purchase.voucherTitle', { defaultValue: 'Staffel-Code vorhanden?' })}
                 </h3>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={voucherCode}
                     onChange={e => { setVoucherCode(e.target.value); setVoucherMsg(null); }}
-                    placeholder="Gutschein-Code eingeben"
+                    placeholder="Staffel-Code eingeben"
                     className="flex-1 rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-300"
                     autoCapitalize="characters"
                     onKeyDown={e => { if (e.key === 'Enter') handleVoucherRedeem(); }}
@@ -1322,7 +1309,7 @@ export default function AdultSettings() {
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="text-lg font-semibold text-slate-900">
-                      {t('adult:ai.title', { defaultValue: 'AI / Owl Mode' })}
+                      {t('adult:ai.title', { defaultValue: 'Reflexionsfunktionen' })}
                     </h3>
                     <div className="mt-1 text-sm text-slate-600">{t('adult:ai.owlMode.help')}</div>
                     <div className="mt-1 text-xs text-slate-400">{t('adult:ai.owlMode.scope', { defaultValue: 'Gilt nur für Reflexionsfragen — nicht für freie Eingaben oder den Chat.' })}</div>
@@ -1500,7 +1487,7 @@ export default function AdultSettings() {
 
               <section className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5">
                 <h3 className="text-base font-semibold text-slate-800">
-                  Gutschein-Codes
+                  Staffel-Codes
                 </h3>
                 <p className="mt-1 text-sm text-slate-600">
                   Codes erstellen und verwalten (nur auf dem Master-Gerät möglich).

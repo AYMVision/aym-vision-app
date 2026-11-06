@@ -15,9 +15,11 @@ import { assetUrl } from '../common/assetUrl';
 import Footer from './Footer';
 import { LanguageSelector } from './LanguageSelector';
 import AvatarLookCircle from '../components/AvatarLookCircle';
+import ProfileSwitcherModal from './ProfileSwitcherModal';
 
 import { useProfile } from '../profile/useProfile';
 import { useRewardFx } from '../progress/rewardFx';
+import { loadProfilesIndex } from '../profile/profileIndex';
 import SmartImage from './SmartImage';
 import BottomNav from './BottomNav';
 
@@ -49,6 +51,9 @@ const { t: tCommon } = useTranslation('common');
 
   // UI state: Mobile Navigation Drawer
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showLockSwitcher, setShowLockSwitcher] = useState(false);
+
+  const isMultiProfile = useMemo(() => loadProfilesIndex().length >= 2, []);
 
 
 
@@ -69,7 +74,10 @@ const { t: tCommon } = useTranslation('common');
     !location.pathname.startsWith('/privacy') &&
     !location.pathname.startsWith('/faq') &&
     !location.pathname.startsWith('/adult-settings') &&
-    !location.pathname.startsWith('/tommi-award');
+    !location.pathname.startsWith('/tommi-award') &&
+    !location.pathname.startsWith('/fuer-schulen') &&
+    !location.pathname.startsWith('/fuer-organisationen') &&
+    !location.pathname.startsWith('/anfrage');
 
   // Footer nur in Story-Spielrouten (mit ID) verstecken, nicht auf der Übersichtsseite
   const isStoryPlayerRoute =
@@ -194,7 +202,7 @@ const isActive = (to: string) => {
               </Link>
             </div>
 
-            {/* Right: Coins, Avatar, Menu */}
+            {/* Right: Coins, Avatar, Sperren, Menu */}
             <div className="flex items-center gap-2 shrink-0">
               <Link
                 to="/avatar"
@@ -232,6 +240,17 @@ const isActive = (to: string) => {
                   />
                 </div>
               </Link>
+
+              {isMultiProfile && (
+                <button
+                  type="button"
+                  onClick={() => setShowLockSwitcher(true)}
+                  className="px-2.5 py-1 rounded-xl text-xs font-semibold bg-[var(--color-teal-100)] text-[var(--color-teal-800)] hover:bg-[var(--color-teal-200)] transition-colors"
+                  aria-label={tLayout('lockNow')}
+                >
+                  🔒 {tLayout('lockNow')}
+                </button>
+              )}
 
               <button
                 type="button"
@@ -342,6 +361,17 @@ const isActive = (to: string) => {
 />
               </div>
             </Link>
+
+            {isMultiProfile && (
+              <button
+                type="button"
+                onClick={() => setShowLockSwitcher(true)}
+                className="px-3 py-1.5 rounded-xl text-sm font-semibold bg-[var(--color-teal-100)] text-[var(--color-teal-800)] hover:bg-[var(--color-teal-200)] transition-colors"
+                aria-label={tLayout('lockNow')}
+              >
+                🔒 {tLayout('lockNow')}
+              </button>
+            )}
 
             <LanguageSelector />
           </div>
@@ -478,6 +508,13 @@ const isActive = (to: string) => {
           FOOTER
          ========================= */}
       {!shouldHideFooter && <Footer />}
+
+      {showLockSwitcher && (
+        <ProfileSwitcherModal
+          onClose={() => setShowLockSwitcher(false)}
+          onSwitched={() => setShowLockSwitcher(false)}
+        />
+      )}
     </div>
   );
 }

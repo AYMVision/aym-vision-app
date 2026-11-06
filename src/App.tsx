@@ -64,6 +64,14 @@ const StripePurchaseReturn  = lazy(() => import('./shop/StripePurchaseReturn'));
 const VoucherAdmin          = lazy(() => import('./pages/VoucherAdmin'));
 const TommiAward            = lazy(() => import('./pages/TommiAward'));
 const Presse                = lazy(() => import('./pages/Presse'));
+const Agb                   = lazy(() => import('./pages/Agb'));
+const Widerruf              = lazy(() => import('./pages/Widerruf'));
+const Systemvoraussetzungen = lazy(() => import('./pages/Systemvoraussetzungen'));
+const Hilfe                 = lazy(() => import('./pages/Hilfe'));
+const CheckoutStaffel1      = lazy(() => import('./pages/CheckoutStaffel1'));
+const FuerSchulen           = lazy(() => import('./pages/FuerSchulen'));
+const FuerOrganisationen    = lazy(() => import('./pages/FuerOrganisationen'));
+const Anfrage               = lazy(() => import('./pages/Anfrage'));
 const TestSettings   = import.meta.env.DEV ? lazy(() => import('./pages/TestSettings')) : null;
 const DevLab         = import.meta.env.DEV ? lazy(() => import('./pages/DevLab')) : null;
 
@@ -114,6 +122,14 @@ function getMatomoPageInfo(pathname: string): { title: string; url: string } {
   if (pathname === '/season-finale/s1') return { title: `${base} – Staffel-Finale`, url: `${origin}/season-finale/s1` };
   if (pathname === '/tommi-award') return { title: `${base} – Tommi Award`, url: `${origin}/tommi-award` };
   if (pathname === '/presse') return { title: `${base} – Presse`, url: `${origin}/presse` };
+  if (pathname === '/agb') return { title: `${base} – Nutzungsbedingungen`, url: `${origin}/agb` };
+  if (pathname === '/widerruf') return { title: `${base} – Widerruf`, url: `${origin}/widerruf` };
+  if (pathname === '/systemvoraussetzungen') return { title: `${base} – Systemvoraussetzungen`, url: `${origin}/systemvoraussetzungen` };
+  if (pathname === '/hilfe') return { title: `${base} – Hilfe & Notfallkontakte`, url: `${origin}/hilfe` };
+  if (pathname === '/checkout/staffel-1') return { title: `${base} – Checkout Staffel 1`, url: `${origin}/checkout/staffel-1` };
+  if (pathname === '/fuer-schulen') return { title: `${base} – Für Schulen`, url: `${origin}/fuer-schulen` };
+  if (pathname === '/fuer-organisationen') return { title: `${base} – Für Organisationen`, url: `${origin}/fuer-organisationen` };
+  if (pathname === '/anfrage') return { title: `${base} – Anfrage`, url: `${origin}/anfrage` };
   if (pathname === '/start') return { title: `${base} – Onboarding`, url: `${origin}/start` };
 
   if (pathname.startsWith('/stories-v02/')) {
@@ -196,6 +212,14 @@ function AppRoutes() {
         <Route path="/voucher-admin" element={<VoucherAdmin />} />
         <Route path="/tommi-award" element={<TommiAward />} />
         <Route path="/presse" element={<Presse />} />
+        <Route path="/agb" element={<Agb />} />
+        <Route path="/widerruf" element={<Widerruf />} />
+        <Route path="/systemvoraussetzungen" element={<Systemvoraussetzungen />} />
+        <Route path="/hilfe" element={<Hilfe />} />
+        <Route path="/checkout/staffel-1" element={<CheckoutStaffel1 />} />
+        <Route path="/fuer-schulen" element={<FuerSchulen />} />
+        <Route path="/fuer-organisationen" element={<FuerOrganisationen />} />
+        <Route path="/anfrage" element={<Anfrage />} />
 
         {import.meta.env.DEV && TestSettings && (
           <Route path="/test-settings" element={<TestSettings />} />

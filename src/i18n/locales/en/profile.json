@@ -211,25 +211,27 @@
 
   "identity": {
     "voucher": {
-      "title": "Redeem voucher",
+      "title": "Redeem Season Code",
       "inputLabel": "Enter code",
       "inputPlaceholder": "36-character code …",
       "scanButton": "Scan QR code",
       "invalidCode": "Invalid code. Please check the 36-character code.",
-      "confirmTitle": "Redeem voucher?",
-      "confirmText": "Do you want to redeem this voucher and unlock the content now?",
+      "confirmTitle": "Redeem Season Code?",
+      "confirmText": "Do you want to redeem this Season Code and unlock the content now?",
       "confirm": "Yes, redeem",
       "cancel": "Cancel",
       "successTitle": "Season 1 unlocked! 🎉",
       "successText": "5 episodes are waiting for you. A new chapter every day.",
       "alreadyOwned": "You already own this content.",
-      "notFound": "Voucher not found.",
+      "notFound": "Season Code not found.",
       "error": "Redemption failed. Please try again.",
       "certCardTitle": "Your blockchain certificate",
       "certCopy": "Copy link",
       "certCopied": "Copied ✓",
       "back": "Back",
-      "done": "Done"
+      "done": "Done",
+      "agbAccept": "I have read and accept the <1>Terms and Conditions</1>.",
+      "agbRequired": "Please confirm the Terms and Conditions to continue."
     },
     "backup": {
       "headline": "Save your access",

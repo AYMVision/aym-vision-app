@@ -210,25 +210,27 @@
 
   "identity": {
     "voucher": {
-      "title": "Gutschein einlösen",
+      "title": "Staffel-Code einlösen",
       "inputLabel": "Code eingeben",
       "inputPlaceholder": "36-stelliger Code …",
       "scanButton": "QR-Code scannen",
       "invalidCode": "Ungültiger Code. Bitte prüfe den 36-stelligen Code.",
-      "confirmTitle": "Gutschein einlösen?",
-      "confirmText": "Möchtest du diesen Gutschein jetzt einlösen und den Inhalt freischalten?",
+      "confirmTitle": "Staffel-Code einlösen?",
+      "confirmText": "Möchtest du diesen Staffel-Code jetzt einlösen und den Inhalt freischalten?",
       "confirm": "Ja, einlösen",
       "cancel": "Abbrechen",
       "successTitle": "Staffel 1 freigeschaltet! 🎉",
       "successText": "5 Episoden warten auf dich. Jeden Tag ein neues Amic.",
       "alreadyOwned": "Dieser Inhalt gehört dir schon.",
-      "notFound": "Gutschein nicht gefunden.",
+      "notFound": "Staffel-Code nicht gefunden.",
       "error": "Einlösen fehlgeschlagen. Bitte versuche es nochmal.",
       "certCardTitle": "Dein Blockchain-Zertifikat",
       "certCopy": "Link kopieren",
       "certCopied": "Kopiert ✓",
       "back": "Zurück",
-      "done": "Fertig"
+      "done": "Fertig",
+      "agbAccept": "Ich habe die <1>Allgemeinen Geschäftsbedingungen</1> gelesen und akzeptiere sie.",
+      "agbRequired": "Bitte bestätige die AGB, um fortzufahren."
     },
     "backup": {
       "headline": "Zugang sichern",

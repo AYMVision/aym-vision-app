@@ -41,6 +41,12 @@ export function namespacesForPath(pathname: string): I18nNamespace[] {
   // Studio
   if (pathname.startsWith('/studio')) return [...base, 'studio', 'bonus'];
 
+  // B2B marketing pages
+  if (pathname.startsWith('/fuer-schulen')) return [...base, 'marketing'];
+  if (pathname.startsWith('/fuer-organisationen')) return [...base, 'marketing'];
+  if (pathname.startsWith('/anfrage')) return [...base, 'marketing'];
+  if (pathname.startsWith('/checkout')) return [...base, 'marketing'];
+
   // Season Finale
   if (pathname.startsWith('/season-finale')) return [...base];
 

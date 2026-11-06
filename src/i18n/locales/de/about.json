@@ -200,12 +200,12 @@
     "parents": {
       "label": "Verwaltungsbereich & Einstellungen",
       "code": {
-        "question": "Wo kann ich meinen Gutscheincode eingeben?",
-        "answer1": "Gutscheincodes kannst du im",
+        "question": "Wo kann ich meinen Staffel-Code eingeben?",
+        "answer1": "Staffel-Codes kannst du im",
         "answer2": "Verwaltungsbereich",
         "answer3": "eingeben. Öffne den Bereich, scrolle zum Abschnitt",
         "answer4": "Staffel 1 freischalten",
-        "answer5": "und gib deinen Code unter Gutschein vorhanden? ein."
+        "answer5": "und gib deinen Staffel-Code unter Staffel-Code vorhanden? ein."
       },
       "changePasscode": {
         "question": "Wie ändere ich meinen Verwaltungs-Passcode?",
@@ -237,7 +237,7 @@
       "label": "Daten & Datenschutz",
       "storage": {
         "question": "Was passiert mit den Daten meines Kindes?",
-        "answer": "Spielprofile werden lokal auf dem Gerät angelegt, keine Registrierung mit E-Mail oder Passwort notwendig. Spielfortschritt, Sticker, Tagebucheinträge und Einstellungen bleiben ausschließlich auf diesem Gerät. Beim Kauf oder beim Einlösen eines Gutscheins wird ein anonymer Identifikator an unseren Server übermittelt, um den Kaufstatus zu prüfen. Dieser Identifikator enthält keine persönlichen Daten und ist nicht auf dein Kind zurückführbar. Daten werden nicht mit Dritten geteilt."
+        "answer": "Spielprofile werden lokal auf dem Gerät angelegt, keine Registrierung mit E-Mail oder Passwort notwendig. Spielfortschritt, Sticker, Tagebucheinträge und Einstellungen bleiben ausschließlich auf diesem Gerät. Beim Kauf oder beim Einlösen eines Staffel-Codes wird ein anonymer Identifikator an unseren Server übermittelt, um den Kaufstatus zu prüfen. Dieser Identifikator enthält keine persönlichen Daten und ist nicht auf dein Kind zurückführbar. Daten werden nicht mit Dritten geteilt."
       },
       "deviceSwitch": {
         "question": "Was passiert, wenn ich das Gerät wechsle oder den Speicher lösche?",

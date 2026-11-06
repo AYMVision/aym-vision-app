@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { assetUrl } from '../common/assetUrl';
 
+const isStandalone =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  (window.navigator as unknown as { standalone?: boolean }).standalone === true;
 
 const Footer: React.FC = () => {
   return (
@@ -11,25 +14,56 @@ const Footer: React.FC = () => {
         {/* Left: Copyright */}
         <span>© {new Date().getFullYear()} AYM Vision</span>
 
-        {/* Center: Interne Seiten */}
+        {/* Center: Interne Seiten + B2B (nur im Browser) */}
         <div className="flex flex-wrap gap-4 justify-center">
-
           <Link
             to="/faq"
             className="hover:text-[var(--color-teal-500)] transition-colors"
           >
             FAQ
           </Link>
+          {!isStandalone && (
+            <>
+              <Link
+                to="/fuer-schulen"
+                className="hover:text-[var(--color-teal-500)] transition-colors"
+              >
+                Für Schulen
+              </Link>
+              <Link
+                to="/fuer-organisationen"
+                className="hover:text-[var(--color-teal-500)] transition-colors"
+              >
+                Für Organisationen
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Right: Rechtliches */}
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 justify-end">
           <a
             href="mailto:hello@amysurfwing.de"
             className="hover:underline"
           >
             Kontakt
           </a>
+
+          <Link to="/agb" className="hover:underline">
+            AGB
+          </Link>
+
+          <Link to="/widerruf" className="hover:underline">
+            Vertrag widerrufen
+          </Link>
+
+          <Link to="/hilfe" className="hover:underline">
+            Hilfe &amp; Notfall
+          </Link>
+
+          <Link to="/systemvoraussetzungen" className="hover:underline">
+            Systemvoraussetzungen
+          </Link>
 
           <Link
             to="/impressum"

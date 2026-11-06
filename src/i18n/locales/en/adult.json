@@ -8,7 +8,7 @@
       "step1Title": "Set an admin code",
       "step1Body": "So only you can change the settings.",
       "step2Title": "Activate access",
-      "step2Body": "Enter a voucher code or buy directly.",
+      "step2Body": "Enter a Season Code or buy directly.",
       "tommiNote": "Welcome, dear Jury! This section is our child safety mechanism — parents confirm here that they are setting up the device for their child. You can simply click Continue."
     },
     "code": {
@@ -16,18 +16,18 @@
       "subtitle": "So only you can change the settings."
     },
     "voucherSuccess": {
-      "title": "Voucher redeemed!",
+      "title": "Season Code redeemed!",
       "subtitle": "Season 1 is now unlocked for your child."
     },
     "access": {
       "title": "Unlock Season 1",
       "subtitle": "5 episodes · one-time purchase",
-      "voucherLabel": "Enter voucher code",
+      "voucherLabel": "Enter Season Code",
       "voucherPlaceholder": "e.g. AYM-XXXX-XXXX",
       "redeem": "Redeem",
       "errorInvalid": "Invalid code – please check and try again.",
       "errorNoProfile": "No active profile found.",
-      "errorNotFound": "Voucher code not found. Please check.",
+      "errorNotFound": "Season Code not found. Please check.",
       "errorGeneric": "An error occurred. Please try again.",
       "errorNetwork": "Connection error. Please check your internet connection.",
       "divider": "or",
@@ -119,7 +119,7 @@
   },
 
   "ai": {
-    "title": "AI settings",
+    "title": "Reflection features",
     "moreInfo": "More info for parents →",
     "note": "Changes are saved automatically.",
     "modeIntro": "You can find the AI mode in the adult settings.",
@@ -153,8 +153,8 @@
     "body": "Please talk to a trusted adult for a moment and then try again."
   },
   "unlock": {
-    "title": "Unlock code",
-    "description": "If you have received an unlock code, you can enter it here.",
+    "title": "Season Code",
+    "description": "If you have received a Season Code, you can enter it here.",
     "inputPlaceholder": "Enter code",
     "apply": "Apply code",
     "statusTitle": "Active unlocks",

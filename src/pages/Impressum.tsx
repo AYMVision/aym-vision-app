@@ -258,27 +258,17 @@ export default function Impressum() {
          */}
 
         <Section title="Angaben gemäß § 5 TMG">
-          {/* ✏️ PLATZHALTER: Vollständiger Name der verantwortlichen Person oder des Unternehmens */}
-          <p className="font-semibold">AYM-Vision – ein Bildungsprojekt zur Förderung von Medienkompetenz bei Kindern
-und Jugendlichen</p>
-<p>Rechtsform: AYM VISION GmbH i.G.
-</p>
-<p className="font-semibold">Gesetzliche Vertreter:</p>
-<p>Ann-Sofie Höbrink, Co-Founderin & Geschäftsführerin</p>
-<p>Melina Wiegers, Co-Founderin</p>
+          <p className="font-semibold">AYM VISION GmbH</p>
           <p>Schmiedeberg 15</p>
           <p>38551 Ribbesbüttel</p>
           <p>Deutschland</p>
+          <p className="pt-2 font-semibold">Geschäftsführerin:</p>
+          <p>Ann-Sofie Höbrink</p>
         </Section>
 
-        <Section title="Eintrag im Handelsregister*">
-          {/* ✏️ PLATZHALTER: Telefonnummer (optional, aber üblich) */}
-          <p>Aktuell: Nicht erforderlich</p>
-          {/* ✏️ PLATZHALTER: E-Mail-Adresse */}
-          <p>Registergericht:</p>
-          <p>Registernummer:</p>
-          <p>* Die Eintragung ins Handelsregister befindet sich in Vorbereitung. Registergericht und Registernummer
-werden nachgetragen.</p>
+        <Section title="Eintrag im Handelsregister">
+          <p>Registergericht: Amtsgericht Hildesheim</p>
+          <p>Registernummer: HRB 211029</p>
         </Section>
 
                 <Section title="Kontakt">
@@ -289,9 +279,8 @@ werden nachgetragen.</p>
         </Section>
 
         <Section title="Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV">
-          {/* ✏️ PLATZHALTER: Vollständiger Name + Anschrift der inhaltlich verantwortlichen Person */}
-          <p>Ann-Sofie Höbrink, Beerbüsche 8, 38551 Ribbelbüttel</p>
-          <p>Melina Wiegers, Vis Hermann Hesse 11,6926 Montagnola, TI, Schweiz</p>
+          <p>Ann-Sofie Höbrink, Beerbüsche 8, 38551 Ribbesbüttel</p>
+          <p>Melina Wiegers, Vis Hermann Hesse 11, 6926 Montagnola, TI, Schweiz</p>
         </Section>
 
                 <Section title="Hinweis gemäß § 36 VSBG:">
@@ -332,11 +321,12 @@ werden nachgetragen.</p>
             Die Illustrationen und Bilder in der App wurden mit Unterstützung von ChatGPT (OpenAI) erstellt.
             Sie sind kein Werk einzelner Personen und werden als KI-generierte Inhalte verwendet.
           </p>
-          <p className="mt-2 font-semibold">Reflexionsbegleitung</p>
+          <p className="mt-2 font-semibold">Reflexionsfunktion</p>
           <p>
-            In den Storys begleitet die Figur Amy Reflexionsmomente mithilfe eines lokalen KI-Modells
-            (@xenova/transformers, läuft direkt auf dem Gerät). Das Modell klassifiziert Antworten
-            und gibt passende Rückmeldungen — ohne Cloudanbindung, ohne Datenweitergabe.
+            Die App enthält ein lokal auf dem Gerät laufendes Klassifikationsmodul (MiniLM via @xenova/transformers).
+            Es ordnet Texteingaben im Hintergrund einer vordefinierten Kategorie zu.
+            Das Modul erzeugt keine eigenen Inhalte — angezeigte Rückmeldungen sind vorab verfasste Texte.
+            Es findet keine Datenübertragung statt.
           </p>
           <p className="mt-2">
             Ausführliche Informationen findest du auf der Seite{' '}
@@ -432,7 +422,7 @@ werden nachgetragen.</p>
         </Section>
 
         <p className="text-xs text-slate-400 pt-2">
-          Stand: April 2026
+          Stand: November 2026
         </p>
 
       </div>

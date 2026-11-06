@@ -203,11 +203,11 @@
     "parents": {
       "label": "Admin area & settings",
       "code": {
-        "question": "Where can I enter my code if I have one?",
-        "answer1": "You can enter unlock codes in the",
+        "question": "Where can I enter my Season Code?",
+        "answer1": "You can enter your Season Code in the",
         "answer2": "admin area under settings",
         "answer3": ". Open the area, scroll to the",
-        "answer4": "\"Unlock code\"",
+        "answer4": "\"Season Code\"",
         "answer5": "section and enter your code there."
       },
       "changePasscode": {
@@ -240,7 +240,7 @@
       "label": "Data & privacy",
       "storage": {
         "question": "What happens to my child's data?",
-        "answer": "Profiles are created locally on the device — no email or password needed. Game progress, stickers, diary entries, and settings remain exclusively on this device. When purchasing or redeeming a voucher, an anonymous identifier is sent to our server to verify the purchase status. This identifier contains no personal data and cannot be traced back to your child. Data is not shared with third parties."
+        "answer": "Profiles are created locally on the device — no email or password needed. Game progress, stickers, diary entries, and settings remain exclusively on this device. When purchasing or redeeming a Season Code, an anonymous identifier is sent to our server to verify the purchase status. This identifier contains no personal data and cannot be traced back to your child. Data is not shared with third parties."
       },
       "deviceSwitch": {
         "question": "What happens if I switch devices or clear storage?",
