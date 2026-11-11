@@ -17,14 +17,26 @@
     "badgeTime": "5 min täglich",
     "badgeAmy": "Chat-Story & mehr",
     "badgeBeta": "Beta",
-    "ctaStart": "Story starten →",
+    "ctaStart": "Staffel 1 starten →",
     "ctaContinue": "Weiterlesen →",
     "parentHint": "Elternteil?",
     "parentHintLink": "Hier informieren & App einrichten →",
-    "introCta": "Amy Surfwing ausprobieren →",
+    "introCta": "Story starten →",
+    "discoverCta": "Mehr entdecken →",
     "introKicker": "Dein Einstieg",
     "introLabel": "Deine erste Story",
-    "introHint": "Keine Anmeldung nötig – einfach loslegen."
+    "introHint": "Keine Anmeldung nötig – einfach loslegen.",
+    "onlineHint": "🌐 Direkt online",
+    "noDownloadHint": "📲 Kein Download",
+    "freeTasteHint": "✅ Kostenlos reinschnuppern",
+    "freeTasteCta": "Kostenlos reinschnuppern →"
+  },
+
+  "specials": {
+    "title": "Adventskalender",
+    "subtitle": "Kostenlos · 5 Amics · je ca. 5 Min.",
+    "advent": "🕯️ Jeden Adventssonntag eine neue Geschichte!",
+    "playCta": "Spielen →"
   },
 
   "about": {

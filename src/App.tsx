@@ -63,6 +63,7 @@ const RedeemVoucher         = lazy(() => import('./shop/RedeemVoucher'));
 const StripePurchaseReturn  = lazy(() => import('./shop/StripePurchaseReturn'));
 const VoucherAdmin          = lazy(() => import('./pages/VoucherAdmin'));
 const TommiAward            = lazy(() => import('./pages/TommiAward'));
+const Weihnachten           = lazy(() => import('./pages/Weihnachten'));
 const Presse                = lazy(() => import('./pages/Presse'));
 const Agb                   = lazy(() => import('./pages/Agb'));
 const Widerruf              = lazy(() => import('./pages/Widerruf'));
@@ -211,6 +212,7 @@ function AppRoutes() {
         <Route path="/shop/return" element={<StripePurchaseReturn />} />
         <Route path="/voucher-admin" element={<VoucherAdmin />} />
         <Route path="/tommi-award" element={<TommiAward />} />
+        <Route path="/weihnachten" element={<Weihnachten />} />
         <Route path="/presse" element={<Presse />} />
         <Route path="/agb" element={<Agb />} />
         <Route path="/widerruf" element={<Widerruf />} />

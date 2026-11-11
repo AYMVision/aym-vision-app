@@ -37,8 +37,7 @@ export default function FuerOrganisationen() {
 
         {/* ── HERO ── */}
         <section className="relative overflow-hidden rounded-3xl border border-white/50 shadow-lg bg-white">
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-white to-white" />
-          <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-amber-200/30 blur-2xl" />
+          <div className="absolute inset-0 bg-white" />
           <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch">
             <div className="lg:col-span-6 p-6 sm:p-10 lg:pr-6 flex flex-col justify-center">
               <div className="text-xs sm:text-sm font-semibold text-[var(--color-teal-700)]">{t('orgs.kicker')}</div>
@@ -60,7 +59,7 @@ export default function FuerOrganisationen() {
                 </Link>
               </div>
             </div>
-            <div className="lg:col-span-6 relative min-h-[260px] sm:min-h-[340px] lg:min-h-[420px] bg-amber-50">
+            <div className="lg:col-span-6 relative min-h-[260px] sm:min-h-[340px] lg:min-h-[420px] bg-white">
               <video
                 className="absolute inset-0 w-full h-full object-contain object-center mix-blend-multiply"
                 autoPlay muted loop playsInline preload="metadata"

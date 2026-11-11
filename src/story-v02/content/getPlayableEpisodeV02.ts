@@ -6,7 +6,7 @@ import { getMaterial } from '../../shop/materialCache';
 type Lang = 'de' | 'en';
 
 const AVAILABLE: Record<Lang, readonly string[]> = {
-  de: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05', 'sp0e01'],
+  de: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05', 'sp0e01', 'sp0e02'],
   en: ['s1e01', 's1e02', 's1e03', 's1e04', 's1e05', 'sp0e01'],
 };
 
@@ -49,6 +49,7 @@ export async function getPlayableEpisodeV02(
         case 's1e04': return (await import('./de/s1e04.de')).default;
         case 's1e05': return (await import('./de/s1e05.de')).default;
         case 'sp0e01': return (await import('./de/sp0e01.de')).default;
+        case 'sp0e02': return (await import('./de/sp0e02.de')).default;
         default: return null;
       }
     }

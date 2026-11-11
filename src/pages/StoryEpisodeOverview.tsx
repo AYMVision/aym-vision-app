@@ -197,7 +197,7 @@ setChapters(ep?.chapters ?? []);
             <div className="absolute bottom-0 left-0 p-4">
               <div className="text-xs font-semibold text-white/80 mb-0.5">
                 {freeSpecial
-                  ? t('overview.seasonSpecial', { defaultValue: '🎃 Halloween-Spezial' })
+                  ? t(`episodes.${episodeMeta?.courseId}.kicker`, { defaultValue: t('overview.seasonSpecial', { defaultValue: '🎃 Halloween-Spezial' }) })
                   : t('overview.season', { defaultValue: 'Doppelklick' })}
               </div>
               <h1 className="text-lg sm:text-xl font-extrabold text-white leading-snug">

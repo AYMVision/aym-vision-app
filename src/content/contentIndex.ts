@@ -39,6 +39,12 @@ export type EpisodeMeta = {
   storyEngine?: 'v1' | 'v2';
 
   previewMessages?: Record<Lang, Message[]>;
+
+  /** Adventssonntag (1–4), ab dem die Kachel freigeschaltet wird. Direktlink funktioniert immer. */
+  adventUnlock?: 1 | 2 | 3 | 4;
+
+  /** Emoji-Dekoration im Hintergrund der Special-Kachel (z.B. '👻' oder '❄️') */
+  decorEmoji?: string;
 };
 
 export type SeasonMeta = {
@@ -289,12 +295,118 @@ export const SPECIALS_INDEX: SeasonMeta[] = [
         storyEngine: 'v2',
         isFreeSpecial: true,
         minAge: 9,
+        decorEmoji: '👻',
 
         topicTags: [
           'info-check',
           'reflect-understand',
           'safe-online',
           'fairness',
+        ],
+      },
+      {
+        seasonId: 'sp',
+        episodeId: 'sp0e02',
+        courseId: 'sp0e02',
+
+        titleKey: 'stories:episodes.sp0e02.title',
+        descriptionKey: 'stories:episodes.sp0e02.description',
+
+        coverImage: '/media/story/episodes/sp0e02/Cover_sp0e02-512.webp',
+        stickerImage: '/media/stickers/episodes/sp0e02-512.webp',
+
+        chapterCount: 5,
+        released: true,
+        order: 2,
+        storyEngine: 'v2',
+        isFreeSpecial: true,
+        minAge: 9,
+        adventUnlock: 1,
+        decorEmoji: '❄️',
+
+        topicTags: [
+          'talk-act',
+          'reflect-understand',
+          'fairness',
+          'problem-solving',
+        ],
+      },
+      {
+        seasonId: 'sp',
+        episodeId: 'sp0e03',
+        courseId: 'sp0e03',
+
+        titleKey: 'stories:episodes.sp0e03.title',
+        descriptionKey: 'stories:episodes.sp0e03.description',
+
+        coverImage: '/media/story/episodes/sp0e03/Cover_sp0e03-512.webp',
+        stickerImage: '/media/stickers/episodes/sp0e03-512.webp',
+
+        chapterCount: 5,
+        released: true,
+        order: 3,
+        storyEngine: 'v2',
+        isFreeSpecial: true,
+        minAge: 9,
+        adventUnlock: 2,
+        decorEmoji: '🤝',
+
+        topicTags: [
+          'reflect-understand',
+          'fairness',
+          'talk-act',
+        ],
+      },
+      {
+        seasonId: 'sp',
+        episodeId: 'sp0e04',
+        courseId: 'sp0e04',
+
+        titleKey: 'stories:episodes.sp0e04.title',
+        descriptionKey: 'stories:episodes.sp0e04.description',
+
+        coverImage: '/media/story/episodes/sp0e04/Cover_sp0e04-512.webp',
+        stickerImage: '/media/stickers/episodes/sp0e04-512.webp',
+
+        chapterCount: 5,
+        released: true,
+        order: 4,
+        storyEngine: 'v2',
+        isFreeSpecial: true,
+        minAge: 9,
+        adventUnlock: 3,
+        decorEmoji: '🎭',
+
+        topicTags: [
+          'reflect-understand',
+          'problem-solving',
+          'talk-act',
+        ],
+      },
+      {
+        seasonId: 'sp',
+        episodeId: 'sp0e05',
+        courseId: 'sp0e05',
+
+        titleKey: 'stories:episodes.sp0e05.title',
+        descriptionKey: 'stories:episodes.sp0e05.description',
+
+        coverImage: '/media/story/episodes/sp0e05/cover_sp0e05-512.webp',
+        stickerImage: '/media/stickers/episodes/sp0e05-512.webp',
+
+        chapterCount: 5,
+        released: true,
+        order: 5,
+        storyEngine: 'v2',
+        isFreeSpecial: true,
+        minAge: 9,
+        adventUnlock: 4,
+        decorEmoji: '💬',
+
+        topicTags: [
+          'reflect-understand',
+          'safe-online',
+          'talk-act',
         ],
       },
     ],

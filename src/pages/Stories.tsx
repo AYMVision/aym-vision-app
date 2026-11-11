@@ -12,6 +12,7 @@ import { assetUrl } from '../common/assetUrl';
 import SmartImage from '../components/SmartImage';
 
 import { getStoryCards, CONTENT_INDEX, getAllSpecials } from '../content/contentIndex';
+import { isAdventUnlocked, formatAdventUnlockDate } from '../common/adventDates';
 import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile'; // ✅ NEW
 import { shouldBypassAll } from '../gating/entitlements';
@@ -261,7 +262,8 @@ export default function Stories() {
 );
   const navigate = useNavigate();
   const { t: tStories, i18n } = useTranslation('stories');
-    const { t: tCommon } = useTranslation('common'); // ✅ swipeHint stabil
+    const { t: tCommon } = useTranslation('common');
+    const { t: tWelcome } = useTranslation('welcome');
     const lang = (i18n.resolvedLanguage ?? i18n.language).startsWith('en') ? 'en' : 'de';
   const { profile } = useProfile(); // ✅ NEW
 
@@ -289,7 +291,6 @@ export default function Stories() {
   });
   const [betaPartialSendState, setBetaPartialSendState] = useState<'idle' | 'loading' | 'success'>('idle');
   const [descExpanded, setDescExpanded] = useState(false);
-  const [specialDescExpanded, setSpecialDescExpanded] = useState(false);
 
   async function handleBetaPartialSend() {
     setBetaPartialSendState('loading');
@@ -485,54 +486,95 @@ function isUnlockedByChain(
         </div>
       </section>
 
-      {/* HALLOWEEN SPECIAL */}
-      {getAllSpecials().filter(ep => ep.released).map(ep => (
-        <section key={ep.courseId} className="relative overflow-hidden bg-zinc-100 rounded-2xl border border-zinc-200 shadow-2xl">
-          {/* Geister-Muster */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
-            <div className="flex flex-wrap gap-x-[10px] gap-y-[8px] p-2 opacity-[0.12] text-6xl leading-none">
-              {Array.from({ length: 30 }).map((_, i) => (
-                <span key={i}>👻</span>
-              ))}
+      {/* SPECIALS */}
+      {getAllSpecials().filter(ep => ep.released).length > 0 && (() => {
+        const specials = getAllSpecials().filter(ep => ep.released);
+        return (
+          <div className="rounded-2xl overflow-hidden relative shadow-lg" style={{ background: 'linear-gradient(135deg, #166534 0%, #16a34a 40%, #15803d 70%, #047857 100%)' }}>
+            <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden>
+              <span className="absolute top-1 left-4 text-2xl opacity-[0.18]">❄️</span>
+              <span className="absolute top-0 left-[18%] text-xl opacity-[0.14]">⭐</span>
+              <span className="absolute top-2 left-[32%] text-2xl opacity-[0.16]">❄️</span>
+              <span className="absolute top-0 left-[46%] text-lg opacity-[0.14]">⭐</span>
+              <span className="absolute top-1 left-[60%] text-2xl opacity-[0.16]">❄️</span>
+              <span className="absolute top-0 left-[74%] text-xl opacity-[0.14]">⭐</span>
+              <span className="absolute top-2 right-4 text-2xl opacity-[0.16]">❄️</span>
+              <span className="absolute bottom-5 right-10 text-2xl opacity-[0.10]">🎄</span>
+              <span className="absolute bottom-3 left-[55%] text-lg opacity-[0.09]">❄️</span>
             </div>
-          </div>
+            <div className="relative z-10 pt-4 pb-2 px-4">
+              <div className="text-sm font-bold text-white uppercase tracking-widest drop-shadow">{tWelcome('specials.title')}</div>
+              <div className="text-xs text-green-200/90 mt-0.5">{tWelcome('specials.subtitle')}</div>
+              <div className="text-xs text-yellow-200/90 mt-1 font-medium">{tWelcome('specials.advent')}</div>
+            </div>
+            <div
+              className="relative z-10 px-4 flex gap-3 overflow-x-auto snap-x snap-mandatory pb-4 pt-2 items-stretch [&::-webkit-scrollbar]:hidden"
+              style={{ scrollbarWidth: 'none' } as React.CSSProperties}
+            >
+              {[...specials]
+                .sort((a, b) => (a.adventUnlock ?? 99) - (b.adventUnlock ?? 99))
+                .map(ep => {
+                  const locked = ep.adventUnlock != null && !isAdventUnlocked(ep.adventUnlock);
+                  const unlockDate = ep.adventUnlock != null ? formatAdventUnlockDate(ep.adventUnlock) : '';
+                  const kicker = tStories(`episodes.${ep.courseId}.kicker`, { defaultValue: '' });
+                  const tag = kicker.split('·')[0]?.trim();
+                  const description = tStories(`episodes.${ep.courseId}.description`, { defaultValue: '' });
+                  const isAdvent = ep.adventUnlock != null;
 
-          <div className="relative flex gap-4 items-center p-5 sm:p-6">
-            <div className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden border border-zinc-200 bg-zinc-200">
-              <img
-                src={assetUrl(ep.coverImage)}
-                alt={tStories(`episodes.${ep.courseId}.title`, { defaultValue: 'Halloween Special' })}
-                className="w-full h-full object-cover opacity-90"
-                loading="eager"
-              />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-[10px] font-bold text-orange-500 uppercase tracking-[0.12em]">{tStories('special.kicker', { defaultValue: '🎃 Halloween-Spezial · Kostenlos · 5 Amics · je ~5 Min.' })}</div>
-              <div className="mt-1 text-base sm:text-lg font-bold text-zinc-900 leading-snug">
-                {tStories(`episodes.${ep.courseId}.title`, { defaultValue: 'Stimmen im Netz' })}
-              </div>
-              <div className="mt-1">
-                <p className={cn('text-xs text-zinc-600 leading-snug', !specialDescExpanded && 'line-clamp-2')}>
-                  {tStories(`episodes.${ep.courseId}.description`, { defaultValue: '' })}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSpecialDescExpanded((v) => !v)}
-                  className="mt-1 text-xs font-semibold text-orange-500 hover:text-orange-700 transition-colors"
-                >
-                  {specialDescExpanded ? tStories('special.lessBtn', { defaultValue: 'Weniger ↑' }) : tStories('special.moreBtn', { defaultValue: 'Mehr lesen ↓' })}
-                </button>
-              </div>
-              <Link
-                to={`/stories-v02/${ep.courseId}`}
-                className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold bg-orange-500 hover:bg-orange-400 active:scale-95 text-white rounded-full px-4 py-1.5 transition-all shadow-[0_0_16px_rgba(249,115,22,0.45)]"
-              >
-                {tStories('special.cta', { defaultValue: 'Jetzt spielen →' })}
-              </Link>
+                  const card = (
+                    <div className={`flex flex-col gap-2.5 p-3 rounded-2xl border shadow-sm transition-all h-full ${
+                      locked
+                        ? 'border-green-200/60 bg-white/80'
+                        : isAdvent
+                          ? 'border-green-100 bg-white hover:shadow-md'
+                          : 'border-orange-200 bg-white hover:shadow-md'
+                    }`}>
+                      <div className="flex items-start gap-2.5">
+                        <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-slate-100 shrink-0 shadow-sm">
+                          <img
+                            src={assetUrl(ep.coverImage)}
+                            alt={tStories(`episodes.${ep.courseId}.title`, { defaultValue: ep.episodeId })}
+                            className={`w-full h-full object-cover ${locked ? 'opacity-60' : ''}`}
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0 pt-0.5">
+                          {tag && (
+                            <div className={`text-[10px] font-bold leading-tight truncate ${locked ? 'text-slate-400' : isAdvent ? 'text-green-700' : 'text-orange-500'}`}>
+                              {tag}
+                            </div>
+                          )}
+                          <p className={`text-sm font-bold leading-snug line-clamp-2 mt-0.5 ${locked ? 'text-slate-500' : 'text-slate-800'}`}>
+                            {tStories(`episodes.${ep.courseId}.title`, { defaultValue: ep.episodeId })}
+                          </p>
+                          {locked ? (
+                            <div className="mt-1 text-xs font-semibold text-slate-400">🔒 {unlockDate}</div>
+                          ) : (
+                            <div className={`mt-1 text-xs font-semibold ${isAdvent ? 'text-green-700' : 'text-orange-600'}`}>{tWelcome('specials.playCta')}</div>
+                          )}
+                        </div>
+                      </div>
+                      {description && (
+                        <p className={`text-xs leading-relaxed line-clamp-2 ${locked ? 'text-slate-400' : 'text-slate-500'}`}>
+                          {description}
+                        </p>
+                      )}
+                    </div>
+                  );
+
+                  return locked ? (
+                    <div key={ep.courseId} className="shrink-0 w-52 sm:w-56">{card}</div>
+                  ) : (
+                    <Link key={ep.courseId} to={`/stories-v02/${ep.courseId}`} className="shrink-0 w-52 sm:w-56 block">
+                      {card}
+                    </Link>
+                  );
+                })}
+              <div className="shrink-0 w-1" aria-hidden />
             </div>
           </div>
-        </section>
-      ))}
+        );
+      })()}
 
       {/* STORY CARDS – direkt unter Hero */}
       {(() => {

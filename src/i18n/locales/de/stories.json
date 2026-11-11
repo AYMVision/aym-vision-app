@@ -135,7 +135,7 @@
   },
   "start": {
     "kicker": "Jetzt starten",
-    "title": "Jetzt kostenlos reinschnuppern",
+    "title": "Staffel 1 - Schritt für Schritt Medienreife entwickeln",
     "label": "Neu für dich",
     "hint": "Keine Anmeldung nötig – einfach loslegen.",
     "cta": "Jetzt starten →"
@@ -327,7 +327,32 @@
     },
     "sp0e01": {
       "title": "Stimmen im Netz",
-      "description": "Eine fremde Nummer, eine vertraute Stimme und Geheimnisse, die niemand kennen dürfte. Als es Lisa, Carlos und Aylin zu viel wird, beginnt die Jagd nach dem digitalen Geist."
+      "description": "Eine fremde Nummer, eine vertraute Stimme und Geheimnisse, die niemand kennen dürfte. Als es Lisa, Carlos und Aylin zu viel wird, beginnt die Jagd nach dem digitalen Geist.",
+      "kicker": "🎃 Halloween-Spezial · Kostenlos · 5 Amics · je ~5 Min."
+    },
+    "sp0e02": {
+      "title": "Anstoß im Weihnachtslicht",
+      "description": "Markus hat seiner Klasse einen Weihnachtskick versprochen. Doch ausgerechnet an diesem Nachmittag braucht ihn sein Team beim Onlineturnier. Schafft er es rechtzeitig zum Anpfiff?",
+      "kicker": "🎄 Weihnachts-Spezial · Kostenlos · 5 Amics · je ~5 Min.",
+      "adventLocked": "Ab 1. Advent"
+    },
+    "sp0e03": {
+      "title": "Freundschaft auf Probe",
+      "description": "Yasmin fühlt sich in der Advents-Challenge ausgeschlossen. Kann sie trotzdem dazugehören?",
+      "kicker": "🎄 Weihnachts-Spezial · Kostenlos · 5 Amics · je ~5 Min.",
+      "adventLocked": "Ab 2. Advent"
+    },
+    "sp0e04": {
+      "title": "Weihnachten kann man nicht planen",
+      "description": "Die 7b steckt mitten in der Vorbereitung für die Klassenfeier. Kann KI die Feier retten?",
+      "kicker": "🎄 Weihnachts-Spezial · Kostenlos · 5 Amics · je ~5 Min.",
+      "adventLocked": "Ab 3. Advent"
+    },
+    "sp0e05": {
+      "title": "KI, Küsse & Kevin",
+      "description": "Emma vertraut sich einem KI-Chatbot an — und fragt sich, ob er sie wirklich besser versteht als ihre Freunde.",
+      "kicker": "🎄 Weihnachts-Spezial · Kostenlos · 5 Amics · je ~5 Min.",
+      "adventLocked": "Ab 4. Advent"
     }
   },
   "sp0e01": {
@@ -337,11 +362,32 @@
       }
     }
   },
+  "sp0e02": {
+    "c01": {
+      "input": {
+        "spiel": "Was macht für dich ein richtig gutes Spiel aus – egal ob online oder draußen?"
+      }
+    },
+    "c02": {
+      "input": {
+        "bock": "Du bist auch dabei, oder? Du kannst spielen, anfeuern oder beim Punsch helfen. Worauf hättest du Bock?"
+      }
+    },
+    "c03": {
+      "input": {
+        "nachricht": "Du kannst Markus eine kurze Nachricht schreiben."
+      },
+      "reflection": {
+        "markusRatenPlaceholder": "Was möchtest du schreiben?"
+      }
+    }
+  },
   "special": {
     "kicker": "🎃 Halloween-Spezial · Kostenlos · 5 Amics · je ~5 Min.",
     "moreBtn": "Mehr lesen ↓",
     "lessBtn": "Weniger ↑",
-    "cta": "Jetzt spielen →"
+    "cta": "Jetzt spielen →",
+    "adventLockedCta": "Ab {date} verfügbar"
   },
   "chatSwitch": {
     "participants": "Teilnehmer:",
@@ -518,7 +564,7 @@
     "ctaStart": "Starten →",
     "listTitle": "Deine Amics",
     "amicHint": "Die Amics bauen aufeinander auf. Schließe jedes ab, um das nächste freizuschalten.",
-    "amicHintSpecial": "🎃 Ein Amic ist ein interaktives Kapitel. Lies mit, denk mit, triff Entscheidungen. Schließe einen Amic ab, um den nächsten freizuschalten.",
+    "amicHintSpecial": "Ein Amic ist ein interaktives Kapitel. Lies mit, denk mit, triff Entscheidungen. Schließe einen Amic ab, um den nächsten freizuschalten.",
     "loading": "Lade Amics…",
     "noChapters": "Keine Amics gefunden.",
     "currentLabel": "Aktuell",

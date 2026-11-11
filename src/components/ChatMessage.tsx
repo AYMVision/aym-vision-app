@@ -105,7 +105,7 @@ function PollCard({ poll }: { poll: NonNullable<Message['poll']> }) {
   );
 }
 
-function MessageImage({ src }: { src?: string }) {
+function MessageImage({ src, bleed }: { src?: string; bleed?: boolean }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   if (!src) return null;
@@ -114,11 +114,15 @@ function MessageImage({ src }: { src?: string }) {
   const isExternal = /^(https?:\/\/|data:)/.test(src ?? '');
   const fullSrc = isExternal ? (src ?? '') : assetUrl(src ?? '');
 
+  const imgClass = bleed
+    ? 'w-full max-h-80 object-cover cursor-zoom-in block'
+    : 'w-full rounded-lg mb-1 max-h-96 object-contain cursor-zoom-in';
+
   const imageEl = cand ? (
-    <div className="cursor-zoom-in" onClick={() => setLightboxOpen(true)}>
+    <div className={bleed ? 'cursor-zoom-in' : 'cursor-zoom-in'} onClick={() => setLightboxOpen(true)}>
       <SmartImage
         alt=""
-        className="w-full rounded-lg mb-1 max-h-96 object-contain"
+        className={imgClass}
         sizes="(min-width: 768px) 420px, 80vw"
         avif={cand.avif}
         webp={cand.webp}
@@ -132,7 +136,7 @@ function MessageImage({ src }: { src?: string }) {
     <img
       alt=""
       src={fullSrc}
-      className="w-full rounded-lg mb-1 max-h-96 object-contain cursor-zoom-in"
+      className={imgClass}
       loading="lazy"
       decoding="async"
       onClick={() => setLightboxOpen(true)}
@@ -746,6 +750,7 @@ onClick={() => {
   // -----------------------------
   // Main (left) + Other (left)
   // -----------------------------
+  const imageOnly = !!imgSrc && !message.content && !message.poll;
   return (
     <div className="w-full flex items-end gap-2 justify-start my-2.5">
       <CharacterAvatar
@@ -756,19 +761,20 @@ onClick={() => {
 
       <div
         className={[
-          'relative min-w-0 max-w-[82%] break-words rounded-2xl rounded-bl-md p-2 shadow-sm border',
+          'relative min-w-0 max-w-[86%] break-words rounded-2xl rounded-bl-md shadow-sm border',
+          imageOnly ? 'p-0 overflow-hidden' : 'p-2',
           bubbleBottomPad,
           isMain ? `${mainTheme.bg} ${mainTheme.border}` : 'bg-white border-gray-200',
         ].join(' ')}
       >
         {message.speaker?.name && (
-          <p className="text-sm font-semibold text-anthracite-600 mb-0.5 text-left">
+          <p className={`text-sm font-semibold text-anthracite-600 mb-0.5 text-left ${imageOnly ? 'px-2 pt-2' : ''}`}>
             {message.speaker.name}
           </p>
         )}
 
         <BubbleMeta msg={message} isMain={isMain} />
-        <MessageImage src={imgSrc} />
+        <MessageImage src={imgSrc} bleed={imageOnly} />
         {message.poll
           ? <PollCard poll={message.poll} />
           : <MessageBody
@@ -781,7 +787,9 @@ onClick={() => {
             />
         }
 
-        <TimeStamp value={message.timestamp} align="start" />
+        <div className={imageOnly ? 'px-2 pb-1' : ''}>
+          <TimeStamp value={message.timestamp} align="start" />
+        </div>
         <ReactionPills reactions={message.reactions} />
       </div>
     </div>

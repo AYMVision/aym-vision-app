@@ -10,6 +10,7 @@ import { Link, useNavigate, useSearchParams, useLocation } from 'react-router-do
 import { useTranslation } from 'react-i18next';
 import { getProgress, getCompletedChapterCount } from '../progress/storyProgress';
 import { getStoryCards, getAllSpecials } from '../content/contentIndex';
+import { isAdventUnlocked, formatAdventUnlockDate } from '../common/adventDates';
 import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile';
 import { shouldBypassAll } from '../gating/entitlements';
@@ -425,7 +426,7 @@ function isUnlockedByChain(
 
       <div className="mt-6 flex flex-wrap gap-3">
         {isFirstTime ? (
-          /* Erstbesuch: primärer Button + Eltern-Link */
+          /* Erstbesuch: primärer Button + kostenlos reinschnuppern + Eltern-Link */
           <>
             <Link
               to="/start"
@@ -434,8 +435,14 @@ function isUnlockedByChain(
               {t('hero.introCta')}
             </Link>
             <Link
-              to="/parents"
+              to="/stories"
               className="inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-semibold bg-white border border-slate-200 text-slate-800 hover:border-slate-300 transition-colors"
+            >
+              {t('hero.discoverCta')}
+            </Link>
+            <Link
+              to="/parents"
+              className="text-xs font-semibold text-slate-500 hover:text-slate-700 transition-colors self-center"
             >
               {t('hero.ctaSecondary')}
             </Link>
@@ -518,37 +525,269 @@ function isUnlockedByChain(
   </div>
 </section>
 
-        {/* ── HALLOWEEN SPECIAL ── */}
-        {getAllSpecials().filter(ep => ep.released).map(ep => (
-          <section key={ep.courseId} className="mt-6 relative overflow-hidden bg-zinc-100 rounded-2xl border border-zinc-200 shadow-2xl">
-            <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
-              <div className="flex flex-wrap gap-x-[10px] gap-y-[8px] p-2 opacity-[0.12] text-6xl leading-none">
-                {Array.from({ length: 30 }).map((_, i) => <span key={i}>👻</span>)}
+        {/* ── CONTINUE / START ── */}
+        <div className="mt-6 sm:mt-8">
+          {noAvailableStories ? (
+            <Panel
+              kicker={tStories('comingSoon.kicker', { defaultValue: "Bald geht's los" })}
+              title={tStories('comingSoon.title', { defaultValue: 'Neue Stories kommen bald ✨' })}
+            >
+              <p className="text-sm text-slate-700">
+                {tStories('comingSoon.text', {
+                  defaultValue: 'Im Moment ist noch keine Story freigeschaltet. Schau bald wieder vorbei!',
+                })}
+              </p>
+            </Panel>
+          ) : isFirstTime ? (
+            <Panel kicker={t('hero.introKicker')} title={t('episodes.s1e01.title', { ns: 'stories', defaultValue: 'Wirbel am Wasserfall' })}>
+              <div className="mt-2 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+                <div className="lg:col-span-4">
+                  <div className="aspect-[16/10] max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
+                    <SmartImage
+                      fallback={assetUrl('media/story/episodes/s1e01/s1e01-512.webp')}
+                      alt={t('episodes.s1e01.title', { ns: 'stories', defaultValue: 'Wirbel am Wasserfall' })}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                <div className="lg:col-span-8 flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div>
+                    <div className="text-sm font-semibold text-slate-500">{t('hero.introLabel')}</div>
+                    <div className="mt-1 text-lg font-extrabold text-slate-900 leading-snug">
+                      {t('episodes.s1e01.title', { ns: 'stories', defaultValue: 'Wirbel am Wasserfall' })}
+                    </div>
+                    <div className="mt-1 text-sm text-slate-600">
+                      {t('episodes.s1e01.description', { ns: 'stories', defaultValue: '' })}
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <div className="flex items-center gap-3 text-[10px] text-slate-400 mb-2">
+                      <span>{t('hero.onlineHint')}</span>
+                      <span>·</span>
+                      <span>{t('hero.noDownloadHint')}</span>
+                    </div>
+                    <Link
+                      to="/start"
+                      className="mt-1 w-full inline-flex items-center justify-center gap-2.5 rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+                    >
+                      <img
+                        src={assetUrl('media/story/characters/yasmin-256.webp')}
+                        alt=""
+                        className="w-6 h-6 rounded-full object-cover object-top border border-white/40"
+                      />
+                      {t('hero.freeTasteCta')}
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </Panel>
+          ) : currentCard ? (
+            <Panel
+              kicker={
+                hasStarted
+                  ? tStories('continue.kicker', { defaultValue: 'Weiterlesen' })
+                  : tStories('start.kicker', { defaultValue: 'Jetzt starten' })
+              }
+              title={
+                hasStarted
+                  ? tStories('continue.title', { defaultValue: 'Mach da weiter, wo du aufgehört hast' })
+                  : tStories('start.title', { defaultValue: 'Eine Woche kostenfrei' })
+              }
+            >
+              <div className="mt-2 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+                <div className="lg:col-span-4">
+                  <div className="aspect-[16/10] max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
+                    <SmartImage
+                      fallback={assetUrl(currentCard.cover?.trim() ? currentCard.cover : 'media/ui/locked-1024.webp')}
+                      alt={tStories('continue.imageAlt', { defaultValue: 'Aktuelle Story' })}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                <div className="lg:col-span-8 flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div>
+                    <div className="text-sm font-semibold text-slate-500">
+                      {hasStarted
+                        ? tStories('continue.label', { defaultValue: 'Aktuell' })
+                        : tStories('start.label', { defaultValue: 'Neu für dich' })}
+                    </div>
+                    <div className="mt-1 text-lg font-extrabold text-slate-900 leading-snug">
+                      {t(currentCard.titleKey, { ns: 'stories', defaultValue: currentCard.titleKey })}
+                    </div>
+                    <div className="mt-1 text-sm text-slate-600">
+                      {t(currentCard.descriptionKey, { ns: 'stories', defaultValue: currentCard.descriptionKey })}
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    {hasStarted ? (
+                      <>
+                        <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1">
+                          <span>{tStories('continue.progress', { defaultValue: 'Fortschritt' })}</span>
+                          <span>{currentPct}%</span>
+                        </div>
+                        <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
+                          <div className="h-2 rounded-full bg-[#0084ff]" style={{ width: `${currentPct}%` }} />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex items-center gap-3 text-[10px] text-slate-400">
+                        <span>{t('hero.onlineHint')}</span>
+                        <span>·</span>
+                        <span>{t('hero.freeTasteHint')}</span>
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => navigate(currentCard.storyEngine === 'v2' ? `/stories-v02/${currentCard.id}` : `/stories/${currentCard.id}`)}
+                      className="mt-4 w-full inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
+                    >
+                      {hasStarted
+                        ? tStories('continue.cta', { defaultValue: 'Weiterlesen →' })
+                        : tStories('start.cta', { defaultValue: 'Jetzt starten →' })}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Panel>
+          ) : null}
+        </div>
+
+        {/* ── SPECIALS ── */}
+        {getAllSpecials().filter(ep => ep.released).length > 0 && (() => {
+          const specials = getAllSpecials().filter(ep => ep.released);
+          return (
+            <div className="mt-6 rounded-2xl overflow-hidden relative shadow-lg" style={{ background: 'linear-gradient(135deg, #166534 0%, #16a34a 40%, #15803d 70%, #047857 100%)' }}>
+              {/* Weihnachtliche Hintergrund-Deko */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden>
+                {/* Obere Reihe — ❄️ ⭐ verteilt */}
+                <span className="absolute top-1 left-4 text-2xl opacity-[0.18]">❄️</span>
+                <span className="absolute top-0 left-[18%] text-xl opacity-[0.14]">⭐</span>
+                <span className="absolute top-2 left-[32%] text-2xl opacity-[0.16]">❄️</span>
+                <span className="absolute top-0 left-[46%] text-lg opacity-[0.14]">⭐</span>
+                <span className="absolute top-1 left-[60%] text-2xl opacity-[0.16]">❄️</span>
+                <span className="absolute top-0 left-[74%] text-xl opacity-[0.14]">⭐</span>
+                <span className="absolute top-2 right-4 text-2xl opacity-[0.16]">❄️</span>
+                {/* Untere Akzente */}
+                <span className="absolute bottom-5 right-10 text-2xl opacity-[0.10]">🎄</span>
+                <span className="absolute bottom-3 left-[55%] text-lg opacity-[0.09]">❄️</span>
+              </div>
+              <div className="relative z-10 pt-4 pb-2 px-4">
+                <div className="text-sm font-bold text-white uppercase tracking-widest drop-shadow">{t('specials.title')}</div>
+                <div className="text-xs text-green-200/90 mt-0.5">{t('specials.subtitle')}</div>
+                <div className="text-xs text-yellow-200/90 mt-1 font-medium">{t('specials.advent')}</div>
+              </div>
+              <div
+                className="relative z-10 px-4 flex gap-3 overflow-x-auto snap-x snap-mandatory pb-4 pt-2 items-stretch [&::-webkit-scrollbar]:hidden"
+                style={{ scrollbarWidth: 'none' } as React.CSSProperties}
+              >
+                {[...specials]
+                  .sort((a, b) => {
+                    const aA = a.adventUnlock ?? 99;
+                    const bA = b.adventUnlock ?? 99;
+                    return aA - bA;
+                  })
+                  .map(ep => {
+                  const locked = ep.adventUnlock != null && !isAdventUnlocked(ep.adventUnlock);
+                  const unlockDate = ep.adventUnlock != null ? formatAdventUnlockDate(ep.adventUnlock) : '';
+                  const kicker = tStories(`episodes.${ep.courseId}.kicker`, { defaultValue: '' });
+                  const tag = kicker.split('·')[0]?.trim();
+                  const description = tStories(ep.descriptionKey, { defaultValue: '' });
+                  const isAdvent = ep.adventUnlock != null;
+
+                  const card = (
+                    <div className={`flex flex-col gap-2.5 p-3 rounded-2xl border shadow-sm transition-all h-full ${
+                      locked
+                        ? 'border-green-200/60 bg-white/80'
+                        : isAdvent
+                          ? 'border-green-100 bg-white hover:shadow-md'
+                          : 'border-orange-200 bg-white hover:shadow-md'
+                    }`}>
+                      {/* Cover + Tag nebeneinander */}
+                      <div className="flex items-start gap-2.5">
+                        <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-slate-100 shrink-0 shadow-sm">
+                          <img
+                            src={assetUrl(ep.coverImage)}
+                            alt={tStories(ep.titleKey)}
+                            className={`w-full h-full object-cover ${locked ? 'opacity-60' : ''}`}
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0 pt-0.5">
+                          {tag && (
+                            <div className={`text-[10px] font-bold leading-tight truncate ${locked ? 'text-slate-400' : isAdvent ? 'text-green-700' : 'text-orange-500'}`}>
+                              {tag}
+                            </div>
+                          )}
+                          <p className={`text-sm font-bold leading-snug line-clamp-2 mt-0.5 ${locked ? 'text-slate-500' : 'text-slate-800'}`}>
+                            {tStories(ep.titleKey)}
+                          </p>
+                          {locked ? (
+                            <div className="mt-1 text-xs font-semibold text-slate-400">🔒 {unlockDate}</div>
+                          ) : (
+                            <div className={`mt-1 text-xs font-semibold ${isAdvent ? 'text-green-700' : 'text-orange-600'}`}>{t('specials.playCta')}</div>
+                          )}
+                        </div>
+                      </div>
+                      {/* Beschreibung */}
+                      {description && (
+                        <p className={`text-xs leading-relaxed line-clamp-2 ${locked ? 'text-slate-400' : 'text-slate-500'}`}>
+                          {description}
+                        </p>
+                      )}
+                    </div>
+                  );
+
+                  return locked ? (
+                    <div key={ep.courseId} className="shrink-0 w-52 sm:w-56">{card}</div>
+                  ) : (
+                    <Link key={ep.courseId} to={`/stories-v02/${ep.courseId}`} className="shrink-0 w-52 sm:w-56 block">
+                      {card}
+                    </Link>
+                  );
+                })}
+                <div className="shrink-0 w-1" aria-hidden />
               </div>
             </div>
-            <div className="relative flex gap-4 items-center p-5 sm:p-6">
-              <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border border-zinc-200 bg-zinc-200">
-                <img
-                  src={assetUrl(ep.coverImage)}
-                  alt={t('special.imgAlt')}
-                  className="w-full h-full object-cover opacity-90"
-                  loading="eager"
-                />
-              </div>
+          );
+        })()}
+
+        {/* ── VERANSTALTUNGEN ── */}
+        <div className="mt-4 rounded-2xl overflow-hidden relative shadow-lg" style={{ background: 'linear-gradient(135deg, #7f1d1d 0%, #b91c1c 40%, #991b1b 70%, #7f1d1d 100%)' }}>
+          {/* Deko-Hintergrund */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden>
+            <span className="absolute top-1 left-4 text-2xl opacity-[0.15]">⭐</span>
+            <span className="absolute top-0 left-[30%] text-xl opacity-[0.12]">❄️</span>
+            <span className="absolute top-1 left-[58%] text-2xl opacity-[0.13]">⭐</span>
+            <span className="absolute top-0 right-6 text-xl opacity-[0.12]">❄️</span>
+            <span className="absolute bottom-4 right-8 text-2xl opacity-[0.09]">🎄</span>
+          </div>
+          <div className="relative z-10 p-4">
+            <div className="flex items-start gap-3">
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-bold text-orange-500 uppercase tracking-[0.12em]">{t('special.kicker')}</div>
-                <div className="mt-0.5 text-base font-bold text-zinc-900 leading-snug">{tStories(ep.titleKey)}</div>
-                <div className="mt-0.5 text-xs text-zinc-600 leading-snug line-clamp-1">{tStories(ep.descriptionKey)}</div>
-                <Link
-                  to={`/stories-v02/${ep.courseId}`}
-                  className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold bg-orange-500 hover:bg-orange-400 active:scale-95 text-white rounded-full px-4 py-1.5 transition-all shadow-[0_0_16px_rgba(249,115,22,0.45)]"
-                >
-                  {t('special.cta')}
-                </Link>
+                <div className="text-sm font-bold text-white uppercase tracking-widest drop-shadow">Amy Surfwing live erleben</div>
+                <div className="text-xs text-red-200/90 mt-0.5 leading-relaxed">
+                  4 Workshop-Nachmittage im Dezember in Gifhorn — kostenlos, für Kinder der 4.–6. Klasse.
+                </div>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold bg-white/15 border border-white/20 text-white">📍 Gifhorn</span>
+                  <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold bg-white/15 border border-white/20 text-white">🎟️ Eintritt frei</span>
+                  <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold bg-white/15 border border-white/20 text-white">🍪 Kekse inklusive</span>
+                </div>
               </div>
             </div>
-          </section>
-        ))}
+            <div className="mt-3 pt-3 border-t border-white/15 flex items-center justify-between gap-2">
+              <p className="text-xs text-red-200/80">Auch in deiner Stadt? Wir kommen gern!</p>
+              <Link
+                to="/weihnachten"
+                className="shrink-0 inline-flex items-center gap-1 rounded-xl bg-white text-red-800 text-xs font-bold px-3 py-1.5 hover:bg-red-50 transition-colors shadow-sm"
+              >
+                Alle Termine →
+              </Link>
+            </div>
+          </div>
+        </div>
 
         {/* ── TOMMI JURY WILLKOMMEN ── */}
         {isTommi && (
@@ -640,137 +879,6 @@ function isUnlockedByChain(
             </Panel>
           </div>
         )}
-
-        {/* CONTINUE / START */}
-        <div className="mt-6 sm:mt-8">
-          {noAvailableStories ? (
-            <Panel
-              kicker={tStories('comingSoon.kicker', { defaultValue: "Bald geht's los" })}
-              title={tStories('comingSoon.title', { defaultValue: 'Neue Stories kommen bald ✨' })}
-            >
-              <p className="text-sm text-slate-700">
-                {tStories('comingSoon.text', {
-                  defaultValue: 'Im Moment ist noch keine Story freigeschaltet. Schau bald wieder vorbei!',
-                })}
-              </p>
-            </Panel>
-          ) : isFirstTime ? (
-            <Panel kicker={t('hero.introKicker')} title={t('episodes.s1e01.title', { ns: 'stories', defaultValue: 'Wirbel am Wasserfall' })}>
-              <div className="mt-2 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
-                <div className="lg:col-span-4">
-                  <div className="aspect-[16/10] max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
-                    <SmartImage
-                      fallback={assetUrl('media/story/episodes/s1e01/s1e01-512.webp')}
-                      alt={t('episodes.s1e01.title', { ns: 'stories', defaultValue: 'Wirbel am Wasserfall' })}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-                <div className="lg:col-span-8 flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                  <div>
-                    <div className="text-sm font-semibold text-slate-500">{t('hero.introLabel')}</div>
-                    <div className="mt-1 text-lg font-extrabold text-slate-900 leading-snug">
-                      {t('episodes.s1e01.title', { ns: 'stories', defaultValue: 'Wirbel am Wasserfall' })}
-                    </div>
-                    <div className="mt-1 text-sm text-slate-600">
-                      {t('episodes.s1e01.description', { ns: 'stories', defaultValue: '' })}
-                    </div>
-                  </div>
-                  <div className="mt-4">
-                    <div className="text-xs font-semibold text-slate-500">{t('hero.introHint')}</div>
-                    <Link
-                      to="/start"
-                      className="mt-3 w-full inline-flex items-center justify-center gap-2.5 rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
-                    >
-                      <img
-                        src={assetUrl('media/story/characters/yasmin-256.webp')}
-                        alt=""
-                        className="w-6 h-6 rounded-full object-cover object-top border border-white/40"
-                      />
-                      Los geht's →
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </Panel>
-          ) : currentCard ? (
-            <Panel
-              kicker={
-                hasStarted
-                  ? tStories('continue.kicker', { defaultValue: 'Weiterlesen' })
-                  : tStories('start.kicker', { defaultValue: 'Jetzt starten' })
-              }
-              title={
-                hasStarted
-                  ? tStories('continue.title', { defaultValue: 'Mach da weiter, wo du aufgehört hast' })
-                  : tStories('start.title', { defaultValue: 'Eine Woche kostenfrei' })
-              }
-            >
-              <div className="mt-2 grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
-                <div className="lg:col-span-4">
-                  <div className="aspect-[16/10] max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
-                    <SmartImage
-                      fallback={assetUrl(currentCard.cover?.trim() ? currentCard.cover : 'media/ui/locked-1024.webp')}
-                      alt={tStories('continue.imageAlt', { defaultValue: 'Aktuelle Story' })}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-
-                <div className="lg:col-span-8 flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                  <div>
-                    <div className="text-sm font-semibold text-slate-500">
-                      {hasStarted
-                        ? tStories('continue.label', { defaultValue: 'Aktuell' })
-                        : tStories('start.label', { defaultValue: 'Neu für dich' })}
-                    </div>
-
-<div className="mt-1 text-lg font-extrabold text-slate-900 leading-snug">
-  {t(currentCard.titleKey, { ns: 'stories', defaultValue: currentCard.titleKey })}
-</div>
-
-<div className="mt-1 text-sm text-slate-600">
-  {t(currentCard.descriptionKey, { ns: 'stories', defaultValue: currentCard.descriptionKey })}
-</div>
-                  </div>
-
-                  <div className="mt-4">
-                    {hasStarted ? (
-                      <>
-                        <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1">
-                          <span>{tStories('continue.progress', { defaultValue: 'Fortschritt' })}</span>
-                          <span>{currentPct}%</span>
-                        </div>
-                        <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
-                          <div
-                            className="h-2 rounded-full bg-[#0084ff]"
-                            style={{ width: `${currentPct}%` }}
-                          />
-                        </div>
-                      </>
-                    ) : (
-                      <div className="text-xs font-semibold text-slate-500">
-                        {tStories('start.hint', { defaultValue: 'Keine Anmeldung nötig – einfach loslegen.' })}
-                      </div>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={() => navigate(currentCard.storyEngine === 'v2' ? `/stories-v02/${currentCard.id}` : `/stories/${currentCard.id}`)}
-                      className="mt-4 w-full inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
-                    >
-                      {hasStarted
-                        ? tStories('continue.cta', { defaultValue: 'Weiterlesen →' })
-                        : tStories('start.cta', { defaultValue: 'Jetzt starten →' })}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </Panel>
-          ) : null}
-        </div>
 
         {/* Story-Circles: alle Charaktere, gesperrte gedimmt */}
         {charCircles.length > 0 && (
