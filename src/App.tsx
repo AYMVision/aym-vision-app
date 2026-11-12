@@ -147,6 +147,8 @@ function getMatomoPageInfo(pathname: string): { title: string; url: string } {
   if (pathname.startsWith('/studio/view/')) return { title: `${base} – Studio Vorschau`, url: `${origin}/studio/view/[geteilt]` };
   if (pathname.startsWith('/studio')) return { title: `${base} – Studio`, url: `${origin}/studio` };
   if (pathname.startsWith('/beta/')) return { title: `${base} – Beta-Zugang`, url: `${origin}/beta/[code]` };
+  if (pathname.startsWith('/transfer/')) return { title: `${base} – Spielstand übertragen`, url: `${origin}/transfer/[daten]` };
+  if (pathname.startsWith('/shop/')) return { title: `${base} – Shop`, url: `${origin}/shop` };
 
   return { title: `${base} – ${pathname}`, url: `${origin}${pathname}` };
 }
