@@ -141,10 +141,12 @@ function getMatomoPageInfo(pathname: string): { title: string; url: string } {
     if (chapterId) return { title: `${base} – ${courseName} / ${chapterId}`, url: `${origin}/stories-v02/${courseId}/${chapterId}` };
     return { title: `${base} – ${courseName}`, url: `${origin}/stories-v02/${courseId}` };
   }
-  if (pathname.startsWith('/newspaper/')) return { title: `${base} – Artikel`, url: `${origin}${pathname}` };
-  if (pathname.startsWith('/cards/')) return { title: `${base} – Freundebucheintrag`, url: `${origin}${pathname}` };
-  if (pathname.startsWith('/diaries/')) return { title: `${base} – Tagebuch`, url: `${origin}${pathname}` };
-  if (pathname.startsWith('/studio')) return { title: `${base} – Studio`, url: `${origin}${pathname}` };
+  if (pathname.startsWith('/newspaper/')) return { title: `${base} – Artikel`, url: `${origin}/newspaper/[artikel]` };
+  if (pathname.startsWith('/cards/')) return { title: `${base} – Freundebucheintrag`, url: `${origin}/cards/[eintrag]` };
+  if (pathname.startsWith('/diaries/')) return { title: `${base} – Tagebuch`, url: `${origin}/diaries/[eintrag]` };
+  if (pathname.startsWith('/studio/view/')) return { title: `${base} – Studio Vorschau`, url: `${origin}/studio/view/[geteilt]` };
+  if (pathname.startsWith('/studio')) return { title: `${base} – Studio`, url: `${origin}/studio` };
+  if (pathname.startsWith('/beta/')) return { title: `${base} – Beta-Zugang`, url: `${origin}/beta/[code]` };
 
   return { title: `${base} – ${pathname}`, url: `${origin}${pathname}` };
 }
