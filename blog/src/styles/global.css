@@ -1,5 +1,21 @@
 /* Amy Surfwing Blog — Global Styles */
 
+@font-face {
+  font-family: 'BalooBhaijaan2';
+  src: url('/media/fonts/BalooBhaijaan2-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BalooBhaijaan2';
+  src: url('/media/fonts/BalooBhaijaan2-Bold.ttf') format('truetype');
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --teal-50:  #f0fdfa;
   --teal-100: #ccfbf1;
@@ -19,7 +35,7 @@
   --slate-800: #1e293b;
   --slate-900: #0f172a;
 
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'BalooBhaijaan2', system-ui, -apple-system, sans-serif;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
 }
