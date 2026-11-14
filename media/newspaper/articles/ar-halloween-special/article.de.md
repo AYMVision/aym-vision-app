@@ -3,6 +3,7 @@ title: Augmented Reality: Wenn plötzlich ein Geist neben dir steht
 description: Was steckt hinter Augmented Reality – und wie kommt ein digitaler Geist auf deinen Bildschirm?
 author: Carlos
 date: 2026-10-31
+topicTags: [infoCheck]
 ---
 
 # Augmented Reality: Wenn plötzlich ein Geist neben dir steht 👻

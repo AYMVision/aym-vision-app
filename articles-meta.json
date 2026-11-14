@@ -1,10 +1,24 @@
 {
+  "anstoss-weihnachtskick": {
+    "de": {
+      "title": "Weihnachtskick – Ein alter Ball bringt alle zusammen",
+      "description": "Markus hatte die Idee. Sein Opa die Geschichte. Und am Ende kamen sogar Gäste, mit denen keiner gerechnet hatte.",
+      "author": "Chioma",
+      "date": "2026-12-07",
+      "topicTags": [
+        "teamTalk"
+      ]
+    }
+  },
   "ar-halloween-special": {
     "de": {
       "title": "Augmented Reality: Wenn plötzlich ein Geist neben dir steht",
       "description": "Was steckt hinter Augmented Reality – und wie kommt ein digitaler Geist auf deinen Bildschirm?",
       "author": "Carlos",
-      "date": "2026-10-31"
+      "date": "2026-10-31",
+      "topicTags": [
+        "infoCheck"
+      ]
     },
     "en": {
       "title": "Augmented Reality: When a Ghost Suddenly Appears Next to You",
@@ -33,7 +47,7 @@
       "author": "Jonas",
       "date": "2026-05-11",
       "topicTags": [
-        "self-control"
+        "solve"
       ]
     },
     "en": {
@@ -42,7 +56,7 @@
       "author": "Jonas",
       "date": "2026-05-11",
       "topicTags": [
-        "self-control"
+        "solve"
       ],
       "aiTranslated": "true"
     }
@@ -52,7 +66,10 @@
       "title": "Regeln im Klassenchat",
       "description": "\"Heute geht es um eine Frage, die fast jede Klasse kennt: Brauchen wir Regeln im Klassenchat oder nerven die nur? Dazu habe ich mit Dominik diskutiert...\"",
       "author": "\"chioma\"",
-      "date": "\"2026-01-29\""
+      "date": "\"2026-01-29\"",
+      "topicTags": [
+        "teamTalk"
+      ]
     },
     "en": {
       "title": "Rules in the class chat",
@@ -67,7 +84,11 @@
       "title": "Du gegen dein Handy: Wer gewinnt?",
       "description": "Du wolltest nur kurz ein Video schauen und plötzlich ist eine halbe Stunde weg 😅 Hier erfährst du, warum dein Feed so stark ist … und wie du ihn austricksen kannst.",
       "author": "Chioma",
-      "date": "2026-04-17"
+      "date": "2026-04-17",
+      "topicTags": [
+        "solve",
+        "reflect"
+      ]
     },
     "en": {
       "title": "You vs. your phone: Who wins?",
@@ -96,7 +117,7 @@
       "author": "Chioma",
       "date": "2026-08-26",
       "topicTags": [
-        "connect",
+        "fair",
         "reflect"
       ]
     }
@@ -151,7 +172,11 @@
       "title": "KI in der Schule – hilfreich oder unfair?",
       "description": "Aylin schaut darauf, warum gerade so viele über KI bei Hausaufgaben und Referaten sprechen und was das wirklich bedeutet.",
       "author": "Aylin",
-      "date": "2026-03-29"
+      "date": "2026-03-29",
+      "topicTags": [
+        "reflect",
+        "fair"
+      ]
     },
     "en": {
       "title": "AI at school – helpful or unfair?",
@@ -166,7 +191,11 @@
       "title": "Zu jung für Social Media?",
       "description": "Einige Länder wollen Social Media für Kinder verbieten. Chioma und Lukas diskutieren darüber.",
       "author": "Chioma",
-      "date": "2026-04-10"
+      "date": "2026-04-10",
+      "topicTags": [
+        "reflect",
+        "fair"
+      ]
     },
     "en": {
       "title": "Too young for social media?",

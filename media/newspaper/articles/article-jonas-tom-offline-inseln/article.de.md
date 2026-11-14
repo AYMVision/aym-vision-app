@@ -3,7 +3,7 @@ title: Immer online? Tom zeigt, wie's auch anders geht
 description: Finn hängt nur noch am Handy und verpasst Treffen mit seinen Freunden. Tom macht's anders. Jonas fragt nach: Wie schafft er das?
 author: Jonas
 date: 2026-05-11
-topicTags: [self-control]
+topicTags: [solve]
 ---
 
 
