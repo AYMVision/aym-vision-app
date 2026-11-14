@@ -3,6 +3,7 @@ title: KI in der Schule – hilfreich oder unfair?
 description: Aylin schaut darauf, warum gerade so viele über KI bei Hausaufgaben und Referaten sprechen und was das wirklich bedeutet.
 author: Aylin
 date: 2026-03-29
+topicTags: [reflect, fair]
 ---
 
 # KI in der Schule – hilfreich oder unfair?

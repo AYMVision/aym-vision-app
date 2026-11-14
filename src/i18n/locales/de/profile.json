@@ -200,12 +200,43 @@
   },
 
   "blockchain": {
-    "certCardTitle": "Mein Blockchain-Zertifikat",
-    "certCardSubtitle": "Dein digitaler Nachweis — verifizierbar auf der Cardano-Blockchain.",
+    "certCardTitle": "Mein Abschlusszertifikat",
+    "certCardSubtitle": "Dein digitaler Nachweis für Staffel 1.",
     "certCopy": "Link kopieren",
     "certCopied": "Kopiert ✓",
     "anchorPending": "⏳ Verankerung ausstehend — bis zu 48 Stunden",
-    "anchorDone": "✓ Auf der Blockchain gesichert"
+    "anchorDone": "✓ Auf der Blockchain gesichert",
+    "viewCert": "Zertifikat anzeigen →"
+  },
+
+  "cert": {
+    "heading": "Abschlusszertifikat",
+    "completedLabel": "hat erfolgreich abgeschlossen",
+    "seasonLabel": "Staffel 1",
+    "seasonSubtitle": "Check was online wirklich abgeht · 5 Episoden",
+    "completedOn": "Abgeschlossen am",
+    "issuedBy": "Ausgestellt von AYM Vision GmbH",
+    "proof": "Dieser Nachweis bestätigt die erfolgreiche Teilnahme.",
+    "printBtn": "Drucken / Als PDF speichern",
+    "backBtn": "← Zurück zum Profil",
+    "noCert": "Noch kein Zertifikat vorhanden.",
+    "skillsTitle": "In Staffel 1 geübt:",
+    "skills": [
+      { "name": "Urteilsvermögen", "detail": "Fake News erkennen · KI-Bilder einordnen · Quellen prüfen" },
+      { "name": "Perspektivfähigkeit", "detail": "Konflikte aus verschiedenen Sichten · Vorurteile hinterfragen" },
+      { "name": "Selbststeuerung", "detail": "FOMO & Entscheidungen · Bildschirmzeit · eigene Grenzen setzen" },
+      { "name": "Verantwortungsvolles Handeln", "detail": "Sticker & Privatsphäre · im Chat Verantwortung übernehmen" }
+    ],
+    "themesTitle": "Medienkompetenz-Themen, die du entdeckt hast:",
+    "themes": [
+      { "emoji": "🕵️", "name": "Infos clever checken" },
+      { "emoji": "🤝", "name": "Gemeinsam reden & handeln" },
+      { "emoji": "🎨", "name": "Selbst kreativ werden" },
+      { "emoji": "🛡️", "name": "Sicher im Netz" },
+      { "emoji": "🧩", "name": "Schlau Lösungen finden" },
+      { "emoji": "🔍", "name": "Nachdenken & verstehen" },
+      { "emoji": "⚖️", "name": "Fair sein & Haltung zeigen" }
+    ]
   },
 
   "identity": {

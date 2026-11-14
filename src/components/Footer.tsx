@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
 
       {/* ── Zone 1: Copyright + Navigation ── */}
       <div className="max-w-4xl mx-auto px-4 pt-6 pb-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-slate-600">
-        <span className="font-medium text-slate-500">© {new Date().getFullYear()} AYM Vision</span>
+        <span className="font-medium text-slate-500">© {new Date().getFullYear()} AYM Vision GmbH</span>
         <span className="hidden sm:inline text-slate-200">|</span>
         <Link to="/faq" className="hover:text-[var(--color-teal-600)] transition-colors">FAQ</Link>
         {!isStandalone && (

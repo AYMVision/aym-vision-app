@@ -3,7 +3,7 @@ title: Always online? Tom shows there's another way
 description: Finn is always on his phone and keeps missing meetups with friends. Tom does things differently. Jonas asks him: how does he manage it?
 author: Jonas
 date: 2026-05-11
-topicTags: [self-control]
+topicTags: [solve]
 aiTranslated: true
 ---
 

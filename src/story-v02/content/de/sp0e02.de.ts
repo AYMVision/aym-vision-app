@@ -7,7 +7,7 @@ import type { StoryEpisodeV02 } from '../../types/storyTypes';
 import {
   m, img, sysImg, typing, divider, bonusLink,
   privateChat, classChat, amyChat,
-  GR, OR, AR, MIT, AF,
+  GR, OR, AR, MIT, AF, CH,
   rc, inp, opt,
   S, C,
 } from '../storyBuilder';
@@ -25,6 +25,7 @@ const c01 = C('sp0e02c01', 0, 'Amic 1', 'Ein ziemlich schlechter Ball', [
   S('sp0e02c01_klassenchat_start', [
     classChat('Klasse 7b'),
     divider('Freitag, 27. November'),
+    sysImg(B('sp0e02c01_0-512.webp'), ''),
     m(ch.markus, 'Hab im Testspiel den letzten Elfer gehalten. Und trotzdem muss ich am Sonntag wieder auf die Ersatzbank. Echt jetzt?!', '18:42'),
     m(ch.dominik, 'Du hast dir den Stammplatz gesichert. Ganz links neben der Trinkflasche.', '18:42', { reactions: [R('😂')] }),
     m(ch.markus, '😂', '18:43'),
@@ -42,7 +43,6 @@ const c01 = C('sp0e02c01', 0, 'Amic 1', 'Ein ziemlich schlechter Ball', [
 
   S('sp0e02c01_privat_opa', [
     privateChat('Markus', 'Opa'),
-    divider('18:54'),
     m(ch.markus, 'Opa, ich hab ´ne Frage für die Schule. Was habt ihr früher an Weihnachten gemacht? Etwas Spannendes, in der Vorweihnachtszeit.', '18:54'),
     m(ch.opa, 'Hm… Am zweiten Adventssonntag haben wir immer ein Fußball-Spiel organisiert. Warte, ich suche schnell etwas.', '18:55'),
     m(ch.markus, 'Aber beeil dich. Mein Spiel lädt ein Update, noch 11 Minuten. Dann muss in unbedingt wieder los.', '18:55'),
@@ -55,7 +55,7 @@ const c01 = C('sp0e02c01', 0, 'Amic 1', 'Ein ziemlich schlechter Ball', [
     m(ch.opa, 'Der hervorragende Torwart rechts.', '18:58'),
     m(ch.markus, 'Mein Weihnachtswunsch ist ein Stammplatz in der ersten Mannschaft. Im Tor. Nicht auf der Bank.', '18:59'),
     m(ch.opa, 'Das wünsche ich dir auch, mein Junge. Du hältst inzwischen Bälle, bei denen ich mich vorsichtshalber geduckt hätte.', '18:59'),
-    m(ch.opa, 'Meine Schwester war im bei uns im Angriff. Sie war gut. Bloß wollte sie sonst niemand in seiner Mannschaft haben.', '19:00'),
+    m(ch.opa, 'Meine Schwester war bei uns im Angriff. Sie war gut. Bloß wollte sie sonst niemand in seiner Mannschaft haben.', '19:00'),
     m(ch.markus, 'Warum?', '19:00'),
     m(ch.opa, 'Weil die anderen meinten, Mädchen könnten das nicht. So war das damals leider öfter. Aber nicht beim Weihnachtskick. Da durfte jeder mitspielen.', '19:01'),
     m(ch.markus, 'Auch Leute, die gar nichts konnten?', '19:01'),
@@ -95,8 +95,7 @@ const c02 = C('sp0e02c02', 1, 'Amic 2', 'Die Idee', [
 
   S('sp0e02c02_klassenchat_idee', [
     classChat('Klasse 7b'),
-    divider('19:02'),
-    m(ch.markus, 'Ich hab mal ´ne andere Idee zu Weihnachten, als Artikel für die Schülerzeitung: Wir schreiben nicht nur über früher. Wir machen es noch mal. Was haltet ihr von einem Weihnachtskick auf dem großen Platz hinter der Kirche? 🎄 ⚽', '19:02'),
+    m(ch.markus, 'Hey Leute, ich hab mal ´ne andere Idee zu Weihnachten, als Artikel für die Schülerzeitung: Wir schreiben nicht nur über früher. Wir machen es noch mal. Was haltet ihr von einem Weihnachtskick auf dem großen Platz hinter der Kirche? 🎄 ⚽', '19:02'),
     m(ch.chioma, 'Und wer kann teilnehmen?', '19:03'),
     m(ch.markus, 'Alle. Auch Kleinere, Eltern, Großeltern.', '19:03'),
     m(ch.tom, 'Cool. Ich bin dabei.', '19:03'),
@@ -139,7 +138,6 @@ const c02 = C('sp0e02c02', 1, 'Amic 2', 'Die Idee', [
 
   S('sp0e02c02_privat_falke_konflikt', [
     privateChat('Markus', 'Falke27'),
-    divider('15:43'),
     m(ch.falke27, 'Winterpokal ist angekündigt! Unsere Punkte von nächster Woche zählen. Am Nikolaus-Tag können wir uns für die Finalrunde qualifizieren.', '15:43'),
     m(ch.falke27, 'Wer dann genug Punkte hat, darf in der Finalrunde spielen.', '15:43'),
     m(ch.markus, 'Das Ding holen wir! 🔥', '15:44'),
@@ -165,7 +163,7 @@ const c02 = C('sp0e02c02', 1, 'Amic 2', 'Die Idee', [
         'Du hältst deine Zusage für den Weihnachtskick ein. Weil du früh Bescheid sagst, kann dein Team nach Ersatz suchen.',
       ),
       rc('d', '„Ich würde etwas anderes schreiben: …"',
-        'Du weißt am besten, was dir wichtig ist. Prüfe aber deine Nachricht immer bevor du sie abschickst: Bleibst du höflich? Versteht Falke, dass du bereits verabredet bist? Weiß er, wann du mitspielen kannst?',
+        'Du weißt am besten, was dir wichtig ist. Prüfe deine Nachricht immer bevor du sie abschickst: Bleibst du höflich? Versteht Falke, dass du bereits verabredet bist? Weiß er, wann du mitspielen kannst?',
       ),
     ],
     { topics: ['talk-act', 'reflect-understand'] },
@@ -183,12 +181,12 @@ const c02 = C('sp0e02c02', 1, 'Amic 2', 'Die Idee', [
     m(ch.markus, 'Weihnachtskick steht! Sonntag 14 bis 16 Uhr hinter der Kirche. Die Mamas und Papas kümmern sich um Würstchen und Getränke.', '16:05', { reactions: [R('👍')] }),
     m(ch.tom, 'Ich kann die Mannschaften zusammenstellen.', '16:05', { reactions: [R('🙏')] }),
     m(ch.markus, 'Das wär super.', '16:06'),
-    m(ch.tom, 'Dann schicke mir später eine Liste mit den Namen von denen, die bei dir schon zugesagt haben und noch zusagen.', '16:06'),
+    m(ch.tom, 'Dann schicke mir später eine Liste mit den Namen derer, die bei dir schon zugesagt haben.', '16:06'),
     m(ch.markus, 'Klar, mach ich dann.', '16:07'),
     m(ch.tom, 'Bitte vor 18:30 Uhr, danach kann ich nicht mehr.', '16:07'),
     m(ch.markus, '👍', '16:07'),
     m(ch.chioma, 'Für die Schülerzeitung brauch ich noch Fotos von früher. Wenn jemand eins beisteuern kann: Bitte erst fragen, ob ihr es weitergeben dürft.', '16:08'),
-    m(ch.markus, 'Mein Opa erzählt bestimmt gern von den ersten Weihnachtskicks für die Zeitung. Das alte Foto bleibt aber privat. Ich kann dafür den uralten Ball fotografieren.', '16:08'),
+    m(ch.markus, 'Mein Opa erzählt bestimmt gern von den ersten Weihnachtskicks für die Zeitung. Das alte Foto bleibt aber privat.', '16:08'),
     m(ch.dominik, 'Die alte Kartoffel muss ich sehen. 😂', '16:09'),
     m(ch.markus, 'Hab ihn noch nicht abgeholt.', '16:09', { reactions: [R('🙄')] }),
     m(ch.dominik, 'Mit so einem schweren Lederteil will eh keiner spielen.', '16:10'),
@@ -198,14 +196,12 @@ const c02 = C('sp0e02c02', 1, 'Amic 2', 'Die Idee', [
 
   S('sp0e02c02_privat_falke_abend', [
     privateChat('Markus', 'Falke27'),
-    divider('16:38'),
     m(ch.markus, 'Eine Runde. Muss danach noch was für Sonntag vorbereiten.', '16:38'),
     m(ch.falke27, 'Passt.', '16:39'),
     m(ch.markus, 'Ich schwöre, heute lasse ich keinen rein.', '16:39', { reactions: [R('💪')] }),
   ]),
 
   S('sp0e02c02_privat_falke_sieg', [
-    divider('17:53'),
     m(ch.falke27, 'Drei gehalten!! Du bist eine Wand.', '17:53'),
     m(ch.falke27, 'Noch ein Sieg bis zur nächsten Stufe.', '17:53'),
     m(ch.markus, 'Okay. Aber dann ist wirklich Schluss.', '17:54'),
@@ -220,7 +216,6 @@ const c03 = C('sp0e02c03', 2, 'Amic 3', 'Gleich nach diesem Spiel', [
 
   S('sp0e02c03_klassenchat_namen', [
     classChat('Klasse 7b'),
-    divider('18:39'),
     m(ch.tom, 'Du wolltest mir doch die Namen der Teilnehmer schicken?', '18:39'),
     m(ch.markus, 'Namen?', '18:39'),
     m(ch.tom, 'Weihnachtskick 🙄', '18:40'),
@@ -238,10 +233,10 @@ const c03 = C('sp0e02c03', 2, 'Amic 3', 'Gleich nach diesem Spiel', [
 
   S('sp0e02c03_privat_tom_training', [
     privateChat('Markus', 'Tom'),
-    divider('19:06'),
     m(ch.tom, 'Wo warst du heute beim Training?', '19:06'),
     m(ch.markus, 'Hä? Ich war doch im Tor.', '19:07'),
     m(ch.tom, 'Aber mit dem Kopf warst du ganz wo anders. Nach jedem Schuss hast du auf die Uhr geguckt.', '19:07'),
+    sysImg(B('sp0e02c03_1-512.webp'), ''),
     m(ch.markus, 'Gar nicht.', '19:08'),
     m(ch.tom, 'Klar. Warst du mit Falke verabredet?', '19:08'),
     m(ch.markus, 'Ja. Ich wollte halt nicht zu spät kommen.', '19:08'),
@@ -260,7 +255,6 @@ const c03 = C('sp0e02c03', 2, 'Amic 3', 'Gleich nach diesem Spiel', [
 
   S('sp0e02c03_privat_opa_mittwoch', [
     privateChat('Markus', 'Opa'),
-    divider('18:18'),
     m(ch.opa, 'Du wolltest heute kommen. Ist etwas dazwischengekommen?', '18:18'),
     m(ch.markus, 'Sorry. Ist gerade ein bisschen viel. Morgen?', '18:19'),
     m(ch.opa, 'Dann morgen.', '18:19'),
@@ -303,30 +297,27 @@ const c03 = C('sp0e02c03', 2, 'Amic 3', 'Gleich nach diesem Spiel', [
 
   S('sp0e02c03_privat_carlos_stumm', [
     privateChat('Markus', 'Carlos'),
-    divider('19:15'),
     m(ch.markus, 'Wie mache ich aus, dass auf meinem Handy dauernd Nachrichten aufploppen?', '19:15'),
     m(ch.carlos, 'Welche willst du ausschalten? Alle oder bestimmte?', '19:16'),
     m(ch.markus, 'Dauernd der Klassenchat und die ganzen Anmeldungen für den Weihnachtskick. Das nervt.', '19:16'),
+    m(ch.carlos, 'Du kannst [[gruppen-stummschalten]]. Das ist sehr nützlich.', '19:17'),
     sysImg(B('Carlos_Gruppe_stummschalten-512.webp')),
-    m(ch.carlos, 'Du kannst Gruppen stummschalten. Das ist sehr nützlich.', '19:17'),
-    bonusLink('tip-carlos-gruppen-stumm', 'So schaltest du Gruppen stumm', '/lexikon/gruppen-stummschalten', 'Öffnen →'),
     m(ch.carlos, 'Aber die Anmeldungen musst du dann irgendwann trotzdem lesen.', '19:17'),
     m(ch.markus, 'Danke. Ja ja, ich weiß.', '19:18'),
     m(ch.carlos, 'Aber ich glaub, du solltest auch einen kurzen Blick in meinen Artikel werfen.', '19:18'),
-    bonusLink('tip-carlos-weiterspiel', 'Carlos\' Artikel: Weiterspiel-Anreize', '/newspaper/weiterspiel-anreize', 'Artikel öffnen →'),
+    bonusLink('tip-carlos-game-tricks', 'Carlos checkt: Die Tricks der Online-Spiele', '/newspaper/tip-carlos-game-tricks', 'Artikel öffnen →'),
     m(ch.markus, 'Der war doch schon neulich in der Schülerzeitung. Ich kenn die Überschrift.', '19:19'),
     m(ch.carlos, 'Gelesen hast du ihn nicht?', '19:19'),
     m(ch.markus, 'Noch nicht. Lese ich später.', '19:20'),
     m(ch.carlos, 'Ich mach mein Handy jetzt aus. Aber noch schnell ein Tipp...', '19:20'),
     m(ch.markus, 'Du klingst langsam wie Chioma!', '19:21'),
-    m(ch.carlos, 'Du kannst mal nachgucken, ob sich der automatische Rundenstart ausschalten lässt. Das ist je nach Spiel verschieden. Dann geht nicht immer von allein das nächste Spiel los.', '19:21'),
+    m(ch.carlos, 'Du kannst mal nachgucken, ob sich der [[automatischer-rundenstart]] ausschalten lässt. Das ist je nach Spiel verschieden. Dann geht nicht immer von allein das nächste Spiel los.', '19:21'),
     m(ch.markus, 'Schaue ich morgen.', '19:22'),
     m(ch.carlos, 'Dein Lieblingsdatum.', '19:22'),
   ]),
 
   S('sp0e02c03_privat_tom_aerger', [
     privateChat('Markus', 'Tom'),
-    divider('20:03'),
     m(ch.tom, 'Wir wollten doch zusammen den Weihnachtskick organisieren. 😒', '20:03'),
     m(ch.markus, 'Ich weiß. Sorry.', '20:04'),
     m(ch.markus, 'Echt ätzend, dass das Online-Turnier mit Falke auch ausgerechnet jetzt sein muss.', '20:04'),
@@ -350,16 +341,12 @@ const c03 = C('sp0e02c03', 2, 'Amic 3', 'Gleich nach diesem Spiel', [
   inp('sp0e02c03_input_nachricht', 'stories:sp0e02.c03.input.nachricht', {
     topics: ['talk-act'],
     promptSpeakerId: 'amy',
+    maxLength: 300,
   }),
 
   S('sp0e02c03_privat_tom_entschuldigung', [
     privateChat('Markus', 'Tom'),
-    divider('22:19'),
     m(ch.markus, 'Hi Tom. Ich weiß, du bist jetzt nicht mehr online. Treffen morgen nach der Schule? Ich nehme mir die Zeit dafür, ich versprech´s. Ich suche vorher alles raus.', '22:19'),
-  ]),
-
-  S('sp0e02c03_klassenchat_freitag', [
-    classChat('Klasse 7b'),
     divider('Freitag, 4. Dezember'),
     m(ch.tom, 'Das ist alles? Du hast mir vier Namen geschickt. Die hatte ich schon. Und die anderen?', '16:42'),
     m(ch.markus, 'Muss in den Chats suchen.', '16:43'),
@@ -369,7 +356,6 @@ const c03 = C('sp0e02c03', 2, 'Amic 3', 'Gleich nach diesem Spiel', [
 
   S('sp0e02c03_privat_opa_ball_kommt', [
     privateChat('Markus', 'Opa'),
-    divider('18:06'),
     m(ch.opa, 'Ich bringe den Ball morgen zu euch. Auf dein „Morgen" können wir nicht mehr warten.', '18:06'),
     m(ch.markus, 'Musst du nicht. Ich komme noch.', '18:07'),
     m(ch.opa, 'Ich bin sowieso in der Nähe. Dann können wir auch ein bisschen zusammensitzen.', '18:07'),
@@ -398,9 +384,9 @@ const c03 = C('sp0e02c03', 2, 'Amic 3', 'Gleich nach diesem Spiel', [
 
     AF('sp0e02c03_amy_feedback_wenn_dann', 'sp0e02c03_item_wenn_dann'),
 
-  S('sp0e02c03_amy_tipp_wenn_dann', [
-    m(ch.amy, 'Amy Tipp: Schreibe dir deinen eigenen Wenn..., dann... Satz mit einem Stift auf ein Blatt Papier.'),
-  ]),
+  CH('sp0e02c03_challenge_wenn_dann',
+    '👉 Schreibe dir deinen eigenen Wenn..., dann... Satz auf ein Blatt Papier. Was würde bei dir funktionieren?',
+  ),
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -424,26 +410,20 @@ const c04 = C('sp0e02c04', 3, 'Amic 4', 'Alle warten auf Markus', [
   ]),
 
   S('sp0e02c04_privat_opa_ball_da', [
-    privateChat('Markus', 'Opa'),
-    divider('14:09'),
     m(ch.opa, 'War vorhin mit dem Ball bei euch. Habe dich wohl verpasst. Er liegt bei euch im Flur.', '14:09'),
     m(ch.markus, 'Warst du schon da?', '14:10'),
     m(ch.opa, 'Vor einer guten halben Stunde. Deine Mutter hat dich gerufen. Du warst wohl beschäftigt.', '14:10'),
     m(ch.markus, 'Ja. Warte, ich melde mich gleich.', '14:11'),
     m(ch.opa, 'Bis morgen dann.', '14:11'),
-  ]),
-
-  S('sp0e02c04_privat_opa_ehrlich', [
-    divider('14:45'),
+    sysImg(B('sp0e02c04-512.webp')),
     m(ch.markus, 'Du hast sogar meine alten Torwarthandschuhe gefunden! Wie toll! 😁', '14:45'),
     m(ch.markus, 'Und den Ball hast du aber gut aufgepumpt.', '14:45'),
-    m(ch.opa, 'Ja?', '14:46'),
     m(ch.markus, 'Opa?', '14:46'),
     m(ch.opa, 'Ja?', '14:46'),
     m(ch.markus, 'Ich habe dich nicht verpasst. Also doch. Aber nicht richtig.', '14:47'),
     m(ch.opa, 'Wie denn?', '14:47'),
     m(ch.markus, 'Mama hat mich gerufen. Ich wollte nur schnell die Runde fertig spielen. Aber es hat etwas länger gedauert. Ich dachte, du wartest noch.', '14:48'),
-    m(ch.opa, 'Ich habe ein bisschen gewartet.', '14:48'),
+    m(ch.opa, 'Ich habe gewartet.', '14:48'),
     m(ch.markus, 'Tut mir leid.', '14:49'),
     m(ch.opa, 'Ich hatte mich darauf gefreut, ein bisschen mit dir zu sitzen.', '14:49'),
     m(ch.markus, 'Ich wollte dich wirklich sehen.', '14:49'),
@@ -462,7 +442,6 @@ const c04 = C('sp0e02c04', 3, 'Amic 4', 'Alle warten auf Markus', [
 
   S('sp0e02c04_klassenchat_liste', [
     classChat('Klasse 7b'),
-    divider('15:13'),
     m(ch.markus, 'Hallo Leute, ich habe die Anmeldungen durcheinandergebracht. Mein Fehler. Ich habe jetzt versucht, es in Ordnung zu bringen. Prüft bitte kurz die Liste, die ich euch gleich schicke, ob ihr korrekt als Teilnehmer drin steht.', '15:13'),
     m(ch.lisa, 'Lea fragt seit heute Morgen, ob sie wirklich mitspielen darf. Ich habe ihr Ja gesagt. Das stimmt doch?', '15:14'),
     m(ch.dominik, 'Für das Hauptspiel nehmen wir richtige Spieler. Die Kleine kann vielleicht danach ein bisschen kicken.', '15:14'),
@@ -478,8 +457,7 @@ const c04 = C('sp0e02c04', 3, 'Amic 4', 'Alle warten auf Markus', [
 
   S('sp0e02c04_privat_tom_liste_fertig', [
     privateChat('Markus', 'Tom'),
-    divider('15:22'),
-    m(ch.markus, 'Die Liste ist fertig. Bei allen, die vielleicht geschrieben haben, habe ich noch mal nachgefragt. Und die Erwachsenenanzahl an Mama weitergegeben.', '15:22'),
+    m(ch.markus, 'Die Liste ist fertig. Bei allen, die "vielleicht" geschrieben haben, habe ich noch mal nachgefragt. Und die Erwachsenenanzahl an Mama weitergegeben.', '15:22'),
     m(ch.tom, 'Passt jetzt. Papa bringt Leibchen und zwei Bälle.', '15:23'),
     m(ch.markus, 'Danke, dass du nicht abgesprungen bist. Das vergesse ich dir nie.', '15:23'),
     m(ch.tom, 'Ich war kurz davor. 💪', '15:24'),
@@ -490,18 +468,16 @@ const c04 = C('sp0e02c04', 3, 'Amic 4', 'Alle warten auf Markus', [
 
   S('sp0e02c04_privat_carlos_aufhoer', [
     privateChat('Markus', 'Carlos'),
-    divider('15:41'),
     m(ch.markus, 'Morgen muss bei mir um halb zwei Schluss sein. Wie mache ich das so, dass ich es nicht wieder vergesse?', '15:41'),
     m(ch.carlos, 'Nicht erst halb zwei darüber nachdenken.', '15:42'),
     m(ch.markus, 'Ich merke, dein Lexikon hat schlechte Laune.', '15:42'),
-    m(ch.carlos, 'Ich zitiere: „Carlos\' Onlinelexikon: Aufhörplan. Bestimme vorher, wann du fertig sein willst. Plane das Spiel so früh ein, dass es rechtzeitig zu Ende ist. Sag den Mitspielern vorher rechtzeitig Bescheid. Ein Wecker kann dich erinnern."', '15:43'),
+    m(ch.carlos, 'Ich zitiere: „Carlos\' Onlinelexikon: [[aufhoerplan]]. Bestimme vorher, wann du fertig sein willst. Plane das Spiel so früh ein, dass es rechtzeitig zu Ende ist. Sag den Mitspielern vorher rechtzeitig Bescheid. Ein Wecker kann dich erinnern."', '15:43'),
     m(ch.markus, 'Klingt zu simpel.', '15:43'),
     m(ch.carlos, 'Probiere es halt mal.', '15:44'),
   ]),
 
   S('sp0e02c04_privat_falke_plan', [
     privateChat('Markus', 'Falke27'),
-    divider('16:02'),
     m(ch.markus, 'Morgen muss ich um 13:30 offline sein. Echt. Organisiere mit meiner Klasse einen Weihnachtskick.', '16:02'),
     m(ch.falke27, 'Ach, deshalb warst du diese Woche so durch.', '16:03'),
     m(ch.markus, 'Können wir um zwölf anfangen? Und die letzte Runde spätestens um Viertel nach eins starten? Dauert meistens acht Minuten, dann haben wir noch Luft.', '16:03'),
@@ -520,7 +496,6 @@ const c04 = C('sp0e02c04', 3, 'Amic 4', 'Alle warten auf Markus', [
 
   S('sp0e02c04_privat_tom_abholung', [
     privateChat('Markus', 'Tom'),
-    divider('16:14'),
     m(ch.markus, 'Kannst du mich morgen von zu Hause abholen?', '16:14'),
     m(ch.tom, 'Ich schmeiß mich weg! Brauchst du Begleitung zum Kirchplatz? Lässt dich deine Mami noch nicht allein raus? 😂 😂', '16:14'),
     m(ch.markus, 'Du bist meine Versicherung, dass ich nicht die Zeit verpasse.', '16:15'),
@@ -532,7 +507,6 @@ const c04 = C('sp0e02c04', 3, 'Amic 4', 'Alle warten auf Markus', [
 
   S('sp0e02c04_privat_opa_morgen', [
     privateChat('Markus', 'Opa'),
-    divider('17:05'),
     m(ch.markus, 'Morgen treffen wir uns um zehn vor zwei am Platz? Du kommst mit Mama?', '17:05'),
     m(ch.opa, 'Ja. Und mit einer warmen Decke.', '17:05'),
     m(ch.markus, 'Der alte Ball liegt schon neben meinen Sachen.', '17:06'),
@@ -581,7 +555,6 @@ const c05 = C('sp0e02c05', 4, 'Amic 5', 'Anpfiff ohne Markus?', [
     m(ch.markus, 'Vielleicht reicht unser Punktestand schon.', '13:15'),
     m(ch.falke27, 'Im Moment ja. Aber die hinter uns können noch aufholen.', '13:16'),
     m(ch.markus, 'Dann halten wir jetzt die Bude sauber. 💪', '13:16'),
-    divider('13:25'),
     m(ch.falke27, 'GEHALTEN! Wie hast du den noch rausgefischt?!', '13:25'),
     m(ch.falke27, 'Wir sind wieder drüber! Ein Sieg mehr wäre sicherer. Noch eine?', '13:25'),
     m(ch.markus, 'Ich …', '13:26'),
@@ -591,18 +564,14 @@ const c05 = C('sp0e02c05', 4, 'Amic 5', 'Anpfiff ohne Markus?', [
 
   S('sp0e02c05_privat_tom_abholung', [
     privateChat('Markus', 'Tom'),
-    divider('13:27'),
     m(ch.tom, 'Bin gleich da. Hast du die Jacke schon an?', '13:27'),
-    divider('13:30'),
     m(ch.tom, 'Deine Mutter hat mich reingelassen. Bin unten.', '13:30'),
     m(ch.markus, 'Spiel ist aus. Ziehe mich an. Stollen steht in der Küche.', '13:31'),
-    m(ch.tom, 'Dann hast du noch genau ein Stück Zeit. 😋', '13:31'),
-    divider('13:36'),
+    m(ch.tom, 'Dann hast du noch genau ein Stück KUCHEN Zeit. 😋', '13:31'),
     m(ch.tom, 'Hab gleich den ganzen Stollen verdrückt. Wo bleibst du?', '13:36'),
     m(ch.markus, 'Muss kurz weg. Erklär ich dir gleich.', '13:37'),
     m(ch.markus, 'Wir treffen uns am alten Kirchentor.', '13:37'),
     m(ch.tom, 'Willst du mich verarschen? Du spielst doch schon wieder. 😠', '13:37'),
-    divider('13:44'),
     m(ch.tom, 'Ich bin jetzt da. Wie der letzte Trottel. Hab kein Bock mehr auf deine Ausreden! Geh spielen!', '13:44'),
     m(ch.markus, 'Warte. Bin fast da, meine Großtante ist nicht mehr so schnell.', '13:44'),
     m(ch.tom, 'Großtante? Verarschen kann ich mich alleine.', '13:45'),
@@ -610,7 +579,6 @@ const c05 = C('sp0e02c05', 4, 'Amic 5', 'Anpfiff ohne Markus?', [
 
   S('sp0e02c05_klassenchat_anpfiff', [
     classChat('Klasse 7b'),
-    divider('13:44'),
     m(ch.lisa, 'Fahren jetzt los. Fehlt noch was?', '13:44'),
     m(ch.tom, 'Ein Torwart. 😠', '13:44'),
     m(ch.lisa, 'Markus?', '13:45'),
@@ -624,7 +592,6 @@ const c05 = C('sp0e02c05', 4, 'Amic 5', 'Anpfiff ohne Markus?', [
 
   S('sp0e02c05_privat_opa_warten', [
     privateChat('Markus', 'Opa'),
-    divider('13:48'),
     m(ch.opa, 'Wir sind da.', '13:48'),
     m(ch.opa, 'Markus?', '13:49'),
     m(ch.opa, 'Nicht wieder „gleich". Bitte.', '13:50'),
@@ -632,7 +599,6 @@ const c05 = C('sp0e02c05', 4, 'Amic 5', 'Anpfiff ohne Markus?', [
 
   S('sp0e02c05_klassenchat_markus_da', [
     classChat('Klasse 7b'),
-    divider('13:53'),
     m(ch.lisa, 'Stehen noch an der Ampel. Habt ihr schon angefangen?', '13:53'),
     m(ch.chioma, 'Noch nicht.', '13:53'),
     m(ch.chioma, 'Markus ist gerade gekommen. Mit seiner Tante.', '13:54'),
@@ -646,7 +612,7 @@ const c05 = C('sp0e02c05', 4, 'Amic 5', 'Anpfiff ohne Markus?', [
 
   S('sp0e02c05_klassenchat_nachher', [
     classChat('Klasse 7b'),
-    divider('17:08'),
+    m(ch.lisa, 'Das war ein super Nachmittag!', '17:08'),
     m(ch.lisa, 'Lea schläft mit ihren roten Stiefeln auf dem Sofa.', '17:08'),
     m(ch.finn, 'Starker Einsatz.', '17:09'),
     m(ch.dominik, 'Ich habe vier Tore geschossen.', '17:09'),
@@ -666,9 +632,8 @@ const c05 = C('sp0e02c05', 4, 'Amic 5', 'Anpfiff ohne Markus?', [
   ]),
 
   S('sp0e02c05_klassenchat_artikel', [
-    divider('18:10'),
     m(ch.chioma, 'Mein Artikel für die Schülerzeitung ist fertig. ⚽🎄', '18:10'),
-    bonusLink('article-anstoss-weihnachtskick', 'Schülerzeitung 7b – Ein alter Ball bringt alle zusammen', '/newspaper/anstoss-weihnachtskick', 'Artikel öffnen →'),
+    bonusLink('anstoss-weihnachtskick', 'Schülerzeitung 7b – Ein alter Ball bringt alle zusammen', '/newspaper/anstoss-weihnachtskick', 'Artikel öffnen →'),
   ]),
 
   S('sp0e02c05_switch_amy_vertrauen', [
@@ -701,7 +666,6 @@ const c05 = C('sp0e02c05', 4, 'Amic 5', 'Anpfiff ohne Markus?', [
 
   S('sp0e02c05_privat_falke_naechste', [
     privateChat('Markus', 'Falke27'),
-    divider('19:02'),
     m(ch.falke27, 'Ben fragt, ob ihr das wieder macht.', '19:02'),
     m(ch.markus, 'Klar! Nächstes Weihnachten.', '19:03'),
     m(ch.falke27, 'Der meint nächste Woche 😂', '19:03'),
@@ -712,18 +676,14 @@ const c05 = C('sp0e02c05', 4, 'Amic 5', 'Anpfiff ohne Markus?', [
     m(ch.falke27, 'Passt. Ben kommt auch dazu, will diesmal vorne spielen.', '19:05'),
   ]),
 
-  S('sp0e02c05_sysimg_bank', [
-    sysImg(B('sp0e02c04_4b-512.webp')),
-  ]),
-
   S('sp0e02c05_privat_opa_abschluss', [
     privateChat('Markus', 'Opa'),
-    divider('19:16'),
     m(ch.markus, 'Das war lustig. Viel besser als immer nur auf der Bank zu sitzen.', '19:16'),
     m(ch.opa, 'Da saßt du heute doch auch.', '19:17'),
     m(ch.markus, '?', '19:17'),
     m(ch.opa, 'Neben mir und Tante Hanne.', '19:17'),
     m(ch.markus, '😂 Ach ja! Mit euch sitz ich gern auf der Bank.', '19:18'),
+    sysImg(B('sp0e02c04_4b-512.webp')),
     m(ch.markus, 'Übrigens: Der Trainer hat zugeguckt. Er hat mein Team-Play gelobt. 😊 Er sagt, das macht eine Mannschaft aus und möchte mich jetzt häufiger aufstellen.', '19:18'),
     m(ch.opa, 'Da freue ich mich für dich.', '19:19'),
     m(ch.opa, 'Du hast deine Handschuhe vergessen. Habe sie eingesteckt. Liegen jetzt bei mir.', '19:19'),

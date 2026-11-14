@@ -257,7 +257,7 @@ export default function Impressum() {
          * ─────────────────────────────────────────────────────
          */}
 
-        <Section title="Angaben gemäß § 5 TMG">
+        <Section title="Angaben gemäß § 5 DDG">
           <p className="font-semibold">AYM VISION GmbH</p>
           <p>Schmiedeberg 15</p>
           <p>38551 Ribbesbüttel</p>

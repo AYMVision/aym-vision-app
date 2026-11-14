@@ -274,7 +274,7 @@
     "title_optionA": "📝 Short survey",
     "description_optionA": "Tell us how you liked the story – anonymously and in just a few minutes.",
     "noticeTitle": "Note",
-    "noticeBody": "You will be redirected to an external form (Microsoft Forms). The provider’s privacy policy applies.",
+    "noticeBody": "You will be redirected to an external form. The provider’s privacy policy applies.",
     "cta": "Go to survey →",
     "title_optionB": "📝 Survey: Your opinion matters!",
     "description_optionB": "Tell us how you liked the story – the survey is anonymous and only takes a few minutes.",
@@ -516,7 +516,7 @@
     "betaKicker": "Beta Feedback",
     "betaQuestion": "📝 What do you think of Amy Surfwing?",
     "betaBody": "3 minutes, anonymous.",
-    "betaDisclaimer": "You'll be redirected to Microsoft Forms – your answers are stored anonymously, we receive no personal data. Participation is voluntary."
+    "betaDisclaimer": "You'll be redirected to an external form – your answers are stored anonymously, we receive no personal data. Participation is voluntary."
   },
   "beta": {
     "welcome": {

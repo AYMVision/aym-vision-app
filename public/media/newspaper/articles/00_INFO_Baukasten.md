@@ -4,6 +4,24 @@ So schreibst du neue Artikel für die Schülerzeitung.
 
 ---
 
+## 🏷️ Die 7 erlaubten topicTags
+
+Nur diese 7 Tags dürfen in `topicTags` verwendet werden:
+
+| Tag | Emoji | Bedeutung |
+|---|---|---|
+| `infoCheck` | 🕵️ | Infos clever checken |
+| `teamTalk` | 🤝 | Gemeinsam reden & handeln |
+| `create` | 🎨 | Selbst kreativ werden |
+| `safe` | 🛡️ | Sicher im Netz |
+| `solve` | 🧩 | Schlau Lösungen finden |
+| `reflect` | 🔍 | Nachdenken & verstehen |
+| `fair` | ⚖️ | Fair sein & Haltung zeigen |
+
+Andere Tags (z.B. `communication`, `self-control`, `connect`, `talk-act`) sind **nicht erlaubt** — sie werden mit 📰 angezeigt.
+
+---
+
 ## 🧠 Grundregel
 
 👉 **Normaler Text bleibt normal.**

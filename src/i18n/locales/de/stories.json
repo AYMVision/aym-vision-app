@@ -289,7 +289,7 @@
     "title_optionA": "📝 Kurze Umfrage",
     "description_optionA": "Sag uns, wie dir die Story gefallen hat – anonym und in wenigen Minuten.",
     "noticeTitle": "Hinweis",
-    "noticeBody": "Du wirst zu einem externen Formular (Microsoft Forms) weitergeleitet. Es gelten die Datenschutzbestimmungen des Anbieters.",
+    "noticeBody": "Du wirst zu einem externen Formular weitergeleitet. Es gelten die Datenschutzbestimmungen des Anbieters.",
     "cta": "Zur Umfrage →",
     "title_optionB": "📝 Umfrage: Deine Meinung zählt!",
     "description_optionB": "Sag uns, wie dir die Story gefallen hat – die Umfrage ist anonym und dauert nur wenige Minuten.",
@@ -302,7 +302,7 @@
     "betaKicker": "Beta-Feedback",
     "betaQuestion": "📝 Was denkst du über Amy Surfwing?",
     "betaBody": "3 Minuten, anonym.",
-    "betaDisclaimer": "Du wirst zu Microsoft Forms weitergeleitet – deine Antworten werden anonym gespeichert, wir erhalten keine persönlichen Daten. Teilnahme freiwillig."
+    "betaDisclaimer": "Du wirst zu einem externen Formular weitergeleitet – deine Antworten werden anonym gespeichert, wir erhalten keine persönlichen Daten. Teilnahme freiwillig."
   },
   "episodes": {
     "s1e01": {

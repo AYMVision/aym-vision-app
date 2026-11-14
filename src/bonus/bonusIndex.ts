@@ -251,6 +251,18 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
 //_________________________________________________________
 
   {
+    bonusId: 'anstoss-weihnachtskick',
+    category: 'newspaper',
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/anstoss-weihnachtskick/article',
+    coverImage: 'media/newspaper/articles/anstoss-weihnachtskick/cover-1024.webp',
+    released: true,
+    unlockedBy: { type: 'marker', id: 'anstoss-weihnachtskick' },
+    order: 3,
+  },
+
+  {
     bonusId: 'chioma-news-stimmen-im-netz',
     category: 'newspaper',
     released: true,
@@ -429,7 +441,7 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     bodySrc: 'media/newspaper/articles/tip-carlos-game-tricks/article',
     coverImage: 'media/newspaper/articles/tip-carlos-game-tricks/cover-1024.webp',
     released: true,
-    unlockedBy: { type: 'chapter', id: 's1e03c07' },
+    unlockedBy: { type: 'marker', id: 'tip-carlos-game-tricks' },
     order: 57,
   },
 
