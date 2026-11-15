@@ -7,6 +7,8 @@ tags: ["KI", "Medienkompetenz", "Für Eltern", "Spielzeug"]
 image: "/images/Joyful-Teddy-Bear-Reunion.png"
 ---
 
+*Bild: KI-generierte Illustration. Der dargestellte Teddy ist kein reales Produkt.*
+
 ## Wieso plötzlich KI in Plüsch?
 
 Meta hat einen mächtigen KI-Agenten entwickelt und gibt ihm ausgerechnet eine niedliche, plüschige Figur. Was für eine schöne Idee für Kinder!
@@ -20,7 +22,7 @@ Mein Kind erzählt von der Mathearbeit und davon, dass Paul heute in der Pause g
 
 Toll, einen Freund zu haben, der immer für einen da ist. Oder?
 
-Zur Erinnerung: Wir sprechen hier nicht von einem Freund, sondern von einer KI. Einer KI extra für Kinder, speziell in einem süßen Kuscheltier verpackt. Muse möchte Kinder in Zukunft gemeinsam mit KI Geschichten und eigene Figuren erschaffen lassen. Faszinierend. Sie nennen ihre sprechenden Plüschtiere „Muse Friends".
+Zur Erinnerung: Wir sprechen hier nicht von einem Freund, sondern von einer KI. Einer KI extra für Kinder, speziell in einem süßen Kuscheltier verpackt. Mit "Muse Friends" möchte Muse Publishing Kinder in Zukunft gemeinsam mit KI Geschichten und eigene Figuren erschaffen lassen. Faszinierend. Sie nennen ihre sprechenden Plüschtiere „Muse Friends".
 
 Was passiert, wenn ein Spielzeug nicht passiv bleibt, sondern zuhört, sich erinnert und sich wie ein Freund verhält? (Naja, wie ein Freund ohne eigenen Willen.)
 

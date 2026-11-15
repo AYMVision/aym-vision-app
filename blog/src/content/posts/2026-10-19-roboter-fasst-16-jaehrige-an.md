@@ -7,6 +7,8 @@ image: "/images/uebergriffige-roboter.png"
 tags: ["Medienkompetenz", "Jugendschutz", "KI", "Für Eltern"]
 ---
 
+*Bild: KI-generierte Illustration.*
+
 Wenn Technik Grenzen überschreitet: Wie schützen wir unsere Kinder?
 
 Ein Roboter fasst einer 16-Jährigen an den Po. Der Übergriff landet live im Internet. Willkommen in der Welt von heute.

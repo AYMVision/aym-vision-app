@@ -7,7 +7,9 @@ image: "/images/vergleiche-im-klassenchat.webp"
 tags: ["Klassenchat", "Psychologie", "Medienkompetenz", "Für Eltern"]
 ---
 
-„Ne, was soll schon sein?“
+*Bild: KI-generierte Illustration.*
+
+„Ne, was soll schon sein?”
 
 Yasmin schaut auf die Nachrichten im Klassenchat.
 

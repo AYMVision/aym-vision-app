@@ -7,6 +7,8 @@ image: "/images/digitale-reize-kinder.webp"
 tags: ["Selbststeuerung", "Bildschirmzeit", "Für Eltern", "Dopamin"]
 ---
 
+*Bild: KI-generierte Illustration.*
+
 Mitten in der Nacht steht die zwölfjährige Leonie plötzlich neben dem Bett ihrer Mutter.
 Sie weint.
 Heimlich hat sie das iPad ihres Vaters geholt, um Videogames zu spielen. Leonie selbst ist verzweifelt, sagt, dass sie das nie wieder machen wolle.

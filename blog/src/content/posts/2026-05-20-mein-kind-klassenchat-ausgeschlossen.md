@@ -7,7 +7,9 @@ image: "/images/kind-ausgeschlossen-klassenchat.webp"
 tags: ["Klassenchat", "Medienkompetenz", "Für Eltern"]
 ---
 
-„Du bist raus.“ 
+*Bild: KI-generierte Illustration.*
+
+„Du bist raus.” 
 
 So ein Satz fällt leider schnell. Und auch wenn dein Kind danach vielleicht gar nicht mehr im Chat ist, bleibt das Gefühl. Das allein ist schon schlimm genug, aber jetzt muss das Kind auch noch entscheiden, wie es reagiert. Sowas ist natürlich belastend und das merkst du wahrscheinlich.
 

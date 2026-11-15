@@ -7,6 +7,8 @@ image: "/images/erstes-smartphone-erste-wochen.webp"
 tags: ["Erstes Smartphone", "Medienkompetenz", "Für Eltern", "Klassenchat"]
 ---
 
+*Bild: KI-generierte Illustration.*
+
 Für viele Kinder ist das erste Smartphone ein großer Moment. Oft wird lange darüber gesprochen, welches Modell es werden soll, welche Apps erlaubt sind und welche Regeln gelten.
 
 Viel seltener sprechen Familien darüber, was nach dem Einschalten eigentlich passieren kann.

@@ -7,6 +7,8 @@ image: "/images/kann-ki-gefaehrlich-werden.png"
 tags: ["KI", "Künstliche Intelligenz", "Medienkompetenz", "Für Eltern"]
 ---
 
+*Bild: KI-generierte Illustration.*
+
 „Wir wetten mit unserem Leben." „KI könnte uns alle töten." „Wir dürfen die Kontrolle nicht verlieren."
 
 Wer in den vergangenen Wochen die Diskussion über Künstliche Intelligenz verfolgt hat, konnte meinen, er stecke in einem Science-Fiction-Blockbuster. Und solche Warnungen kommen nicht nur von Menschen, die KI grundsätzlich ablehnen. Einige kommen direkt aus den Unternehmen, die an den leistungsfähigsten KI-Systemen der Welt arbeiten.

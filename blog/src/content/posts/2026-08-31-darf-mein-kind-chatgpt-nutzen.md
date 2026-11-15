@@ -7,6 +7,7 @@ image: "/images/darf-mein-kind-chatgpt-nutzen.webp"
 tags: ["KI", "ChatGPT", "Medienkompetenz", "Für Eltern"]
 ---
 
+*Bild: KI-generierte Illustration.*
 
 Künstliche Intelligenz begegnet uns plötzlich überall. Das gilt für Erwachsene wie für Kinder. Viele Eltern fragen sich deshalb: Sind ChatGPT und Co. für Kinder geeignet?
 
