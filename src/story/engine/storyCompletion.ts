@@ -5,6 +5,9 @@ import { autoCollectCharacterCardsForChapter } from '../../bonus/bonusAutoCollec
 import { applyChapterReward } from '../../progress/progressEngine';
 import { aymFetch } from '../../identity/handshake';
 import { getActiveProfileId } from '../../profile/profileStorage';
+import { loadProfile } from '../../profile/storage';
+import { loadIdentity } from '../../identity/storage';
+import { deriveBackendProfileId } from '../../identity/keys';
 import { syncChapterProgress } from '../../progress/backendProgressSync';
 
 type EpisodeMetaLike = {
@@ -118,17 +121,26 @@ export function completeStoryChapter<TProfile>(args: {
 
   if (episodeBonusAwarded) {
     const profileId = getActiveProfileId();
-    if (profileId) {
+    const identity = loadIdentity();
+    if (profileId && identity) {
+      const backendProfileId = deriveBackendProfileId(identity.mnemonic);
+      const profile = loadProfile();
       void aymFetch('/api/v1/extension/aym-vision/course-state', {
         method: 'POST',
-        body: JSON.stringify({ courseId, status: 'FINISHED', profileId }),
+        body: JSON.stringify({ courseId, status: 'FINISHED', profileId: backendProfileId }),
       }).then(async (res) => {
         if (!res.ok) return;
         const data = await res.json().catch(() => null) as { completionCertificate?: { hash: string; verifyUrl: string } } | null;
         if (data?.completionCertificate) {
           localStorage.setItem(
             `aym_p_${profileId}__aym_completion_cert`,
-            JSON.stringify(data.completionCertificate),
+            JSON.stringify({
+              ...data.completionCertificate,
+              courseId,
+              completionDate: new Date().toISOString(),
+              chatName: profile.chatName ?? '',
+              avatarBaseId: profile.avatarBaseId ?? 'kid_01',
+            }),
           );
         }
       }).catch(() => {});

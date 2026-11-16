@@ -122,6 +122,14 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     didYouKnow: 'Studien zeigen, dass FOMO besonders stark auf Handys wirkt, weil Benachrichtigungen uns ständig daran erinnern, was wir gerade verpassen könnten.',
   },
   {
+    id: 'freundschaftsquiz',
+    title: 'Freundschaftsquiz',
+    teaser: 'Ein Quiz, das zeigt, wie gut man eine Person kennt.',
+    body: 'Ein Freundschaftsquiz ist ein kleiner Test, bei dem eine Person Fragen über sich selbst beantwortet und die Antworten dann an Freunde schickt. Die sollen raten, was die Person geantwortet hat – und bekommen Punkte für richtige Antworten.\n\nDas klingt nach Spaß. Aber manchmal erzeugt es auch Druck: Wer hat mehr Punkte? Bin ich eine schlechtere Freundin, weil ich weniger gewusst hab?\n\nDie Punkte zeigen nur, welche Antworten übereinstimmen – nicht, wie gut oder wichtig eine Freundschaft ist.',
+    didYouKnow: 'Freundschaftsquizze gibt es schon sehr lange als Papierformulare. Im Internet wurden sie vor allem durch Apps wie Snapchat und TikTok wieder popular.',
+    firstAppearance: 'sp0e03c01',
+  },
+  {
     id: 'gamer',
     title: 'Gamer',
     teaser: 'Eine Person, die regelmäßig Videospiele spielt.',

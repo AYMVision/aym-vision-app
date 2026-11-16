@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getActiveProfileId } from '../profile/profileStorage';
@@ -13,6 +14,8 @@ type CertData = {
   avatarBaseId?: string;
 };
 
+const CERT_NAME_KEY = (profileId: string) => `aym_p_${profileId}__aym_cert_name_v1`;
+
 function loadCert(): CertData | null {
   const profileId = getActiveProfileId();
   if (!profileId) return null;
@@ -22,6 +25,22 @@ function loadCert(): CertData | null {
   } catch {
     return null;
   }
+}
+
+export function loadCertName(profileId: string): string | null {
+  try {
+    return localStorage.getItem(CERT_NAME_KEY(profileId));
+  } catch {
+    return null;
+  }
+}
+
+export function saveCertName(profileId: string, name: string): void {
+  localStorage.setItem(CERT_NAME_KEY(profileId), name);
+}
+
+export function deleteCertName(profileId: string): void {
+  localStorage.removeItem(CERT_NAME_KEY(profileId));
 }
 
 function formatDate(iso: string): string {
@@ -38,6 +57,12 @@ export default function Zertifikat() {
   const { t } = useTranslation('profile');
   const navigate = useNavigate();
   const cert = loadCert();
+  const profileId = getActiveProfileId();
+
+  const [certName, setCertName] = useState<string | null>(() =>
+    profileId ? loadCertName(profileId) : null
+  );
+  const [nameInput, setNameInput] = useState('');
 
   if (!cert) {
     return (
@@ -52,7 +77,47 @@ export default function Zertifikat() {
     );
   }
 
-  const name = cert.chatName?.trim() || '—';
+  if (certName === null) {
+    const handleSave = (name: string) => {
+      const trimmed = name.trim();
+      if (profileId) saveCertName(profileId, trimmed);
+      setCertName(trimmed);
+    };
+
+    return (
+      <Layout>
+        <div className="flex flex-col items-center justify-center min-h-[60vh] gap-5 p-8 max-w-sm mx-auto">
+          <div className="text-2xl">🏆</div>
+          <div className="text-lg font-bold text-slate-900 text-center">{t('cert.nameInputTitle')}</div>
+          <p className="text-sm text-slate-500 text-center leading-relaxed">{t('cert.nameInputBody')}</p>
+          <input
+            type="text"
+            value={nameInput}
+            onChange={e => setNameInput(e.target.value)}
+            placeholder={t('cert.nameInputPlaceholder')}
+            className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-teal-500 focus:outline-none"
+            maxLength={60}
+            autoFocus
+          />
+          <button
+            onClick={() => handleSave(nameInput)}
+            disabled={!nameInput.trim()}
+            className="w-full rounded-xl bg-teal-600 px-4 py-3 text-sm font-bold text-white hover:bg-teal-700 disabled:opacity-40 transition-colors"
+          >
+            {t('cert.nameInputSave')}
+          </button>
+          <button
+            onClick={() => handleSave('')}
+            className="text-sm text-slate-400 hover:text-slate-600"
+          >
+            {t('cert.nameInputSkip')}
+          </button>
+        </div>
+      </Layout>
+    );
+  }
+
+  const name = certName?.trim() || cert.chatName?.trim() || '—';
   const date = cert.completionDate ? formatDate(cert.completionDate) : null;
   const skills = t('cert.skills', { returnObjects: true }) as { name: string; detail: string }[];
   const themes = t('cert.themes', { returnObjects: true }) as { emoji: string; name: string }[];

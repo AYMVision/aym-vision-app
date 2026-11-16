@@ -38,27 +38,35 @@ function ArticleImage({
 
   return (
     <figure className="rounded-[28px] overflow-hidden border border-slate-200 bg-white shadow-sm">
-      <picture>
-        {c.avif1024 ? (
+      <div className="relative leading-none block overflow-hidden">
+        <picture>
+          {c.avif1024 ? (
+            <source
+              type="image/avif"
+              srcSet={`${assetUrl(c.avif512)} 512w, ${assetUrl(c.avif1024)} 1024w`}
+              sizes="(max-width: 768px) 92vw, 700px"
+            />
+          ) : null}
           <source
-            type="image/avif"
-            srcSet={`${assetUrl(c.avif512)} 512w, ${assetUrl(c.avif1024)} 1024w`}
+            type="image/webp"
+            srcSet={`${assetUrl(c.webp512)} 512w, ${assetUrl(c.webp1024)} 1024w`}
             sizes="(max-width: 768px) 92vw, 700px"
           />
-        ) : null}
-        <source
-          type="image/webp"
-          srcSet={`${assetUrl(c.webp512)} 512w, ${assetUrl(c.webp1024)} 1024w`}
-          sizes="(max-width: 768px) 92vw, 700px"
-        />
+          <img
+            src={assetUrl(c.webp1024)}
+            alt={alt ?? ''}
+            className="w-full max-h-[360px] object-contain bg-[var(--color-teal-50)]"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
         <img
-          src={assetUrl(c.webp1024)}
-          alt={alt ?? ''}
-          className="w-full max-h-[360px] object-contain bg-[var(--color-teal-50)]"
-          loading="lazy"
-          decoding="async"
+          src={assetUrl('media/ui/LABEL_AI_black_transparent.png')}
+          alt=""
+          aria-hidden
+          className="absolute bottom-1.5 right-1.5 w-8 opacity-35 pointer-events-none select-none" style={{ filter: 'drop-shadow(0 0 3px white)' }}
         />
-      </picture>
+      </div>
 
       {caption ? (
         <figcaption className="px-4 py-3 text-xs sm:text-sm text-slate-600 bg-white">

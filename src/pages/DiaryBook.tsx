@@ -7,6 +7,8 @@ import {
   setDiaryPin,
   verifyDiaryPin,
   getDiaryPinHint,
+  isDiaryPinRequired,
+  clearDiaryPinRequired,
 } from '../diary/diaryPin';
 import { shouldBypassAll } from '../gating/entitlements';
 
@@ -346,13 +348,16 @@ const unlockedEntries = useMemo(() => {
                       defaultValue: 'Neue Seiten werden in der Story freigeschaltet – du kannst sie hier jederzeit nachlesen.',
                     })}
               </div>
+              {diaryId !== 'diary_me' && (
+                <p className="mt-2 text-[11px] text-slate-400 italic">{t('fictional', { ns: 'common' })}</p>
+              )}
 
               <div className="mt-3 flex flex-wrap gap-2">
                 <span className={['inline-flex items-center rounded-full px-3 py-1 text-xs font-extrabold', style.chip].join(' ')}>
                   📖 {t('diaries.bookTag', { defaultValue: 'Tagebuch' })}
                 </span>
                 <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white border border-black/5 text-slate-700">
-                  ✨ {t('diaries.bookTag2', { defaultValue: 'privat & sicher auf deinem Gerät' })}
+                  ✨ {t('diaries.bookTag2', { defaultValue: 'nur auf deinem Gerät – wir sehen es nicht' })}
                 </span>
               </div>
             </div>
@@ -542,7 +547,8 @@ function MyDiaryWithPin() {
 
   const [hasPin, setHasPin] = useState(() => hasDiaryPin());
   const [unlocked, setUnlocked] = useState(false);
-  const [showPinSetup, setShowPinSetup] = useState(false);
+  const [pinRequired] = useState(() => isDiaryPinRequired());
+  const [showPinSetup, setShowPinSetup] = useState(() => isDiaryPinRequired());
 
   // setup
   const [setupPin, setSetupPin] = useState('');
@@ -573,7 +579,7 @@ function MyDiaryWithPin() {
     setSetupError('');
     const ok = await setDiaryPin(p1, setupHint);
     setSetupBusy(false);
-    if (ok) { setHasPin(true); setShowPinSetup(false); }
+    if (ok) { clearDiaryPinRequired(); setHasPin(true); setShowPinSetup(false); }
   }, [setupPin, setupPinRepeat, setupHint, t]);
 
   const handleUnlock = useCallback(async () => {
@@ -591,7 +597,7 @@ function MyDiaryWithPin() {
     }
   }, [pinInput, t]);
 
-  // Optional PIN setup (user chose to protect diary from inside)
+  // PIN setup — either forced after parent reset, or voluntary
   if (!hasPin && showPinSetup) {
     return (
       <div className="mt-6 rounded-[28px] border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-purple-50 shadow-sm overflow-hidden">
@@ -600,10 +606,14 @@ function MyDiaryWithPin() {
             <span className="text-3xl shrink-0">🔒</span>
             <div>
               <div className="text-base font-extrabold text-slate-900">
-                {t('diaries.pin.setupTitle', { defaultValue: 'Tagebuch schützen' })}
+                {pinRequired
+                  ? t('diaries.pin.resetSetupTitle', { defaultValue: 'Neuen PIN festlegen' })
+                  : t('diaries.pin.setupTitle', { defaultValue: 'Tagebuch schützen' })}
               </div>
               <p className="mt-1 text-sm text-slate-600">
-                {t('diaries.pin.setupBody', { defaultValue: 'Leg einen PIN fest, damit nur du dein Tagebuch lesen kannst.' })}
+                {pinRequired
+                  ? t('diaries.pin.resetSetupBody', { defaultValue: 'Deine Erziehungsberechtigten haben den PIN zurückgesetzt. Lege jetzt einen neuen PIN fest, um dein Tagebuch zu schützen.' })
+                  : t('diaries.pin.setupBody', { defaultValue: 'Leg einen PIN fest, damit nur du dein Tagebuch lesen kannst.' })}
               </p>
             </div>
           </div>
@@ -635,18 +645,6 @@ function MyDiaryWithPin() {
                 className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-[16px] outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
               />
             </div>
-            <div>
-              <label className="text-xs font-semibold text-slate-500">
-                {t('diaries.pin.hintLabel', { defaultValue: 'Hinweis (optional, falls du ihn vergisst)' })}
-              </label>
-              <input
-                type="text"
-                value={setupHint}
-                onChange={(e) => setSetupHint(e.target.value)}
-                placeholder={t('diaries.pin.hintPlaceholder', { defaultValue: 'z.B. mein Lieblingstier' })}
-                className="mt-1 w-full rounded-xl border border-violet-200 px-4 py-3 text-[16px] outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 bg-white"
-              />
-            </div>
           </div>
 
           {setupError && (
@@ -664,18 +662,22 @@ function MyDiaryWithPin() {
             >
               {t('diaries.pin.setupButton', { defaultValue: 'PIN festlegen →' })}
             </button>
-            <button
-              type="button"
-              onClick={() => setShowPinSetup(false)}
-              className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-            >
-              {t('diaries.pin.skipButton', { defaultValue: 'Jetzt ohne PIN weiter' })}
-            </button>
+            {!pinRequired && (
+              <button
+                type="button"
+                onClick={() => setShowPinSetup(false)}
+                className="rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              >
+                {t('diaries.pin.skipButton', { defaultValue: 'Jetzt ohne PIN weiter' })}
+              </button>
+            )}
           </div>
 
-          <p className="mt-4 text-xs text-slate-400">
-            {t('diaries.pin.parentNote', { defaultValue: 'Vergessen? Im Verwaltungsbereich kann der PIN zurückgesetzt werden – deine Einträge bleiben dabei erhalten.' })}
-          </p>
+          {!pinRequired && (
+            <p className="mt-4 text-xs text-slate-400">
+              {t('diaries.pin.parentNote', { defaultValue: 'Vergessen? Im Verwaltungsbereich kann der PIN zurückgesetzt werden – deine Einträge bleiben dabei erhalten.' })}
+            </p>
+          )}
         </div>
       </div>
     );

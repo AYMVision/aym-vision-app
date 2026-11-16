@@ -209,6 +209,41 @@
     "anchorDone": "✓ Secured on the blockchain"
   },
 
+  "cert": {
+    "heading": "Certificate of Completion",
+    "completedLabel": "has successfully completed",
+    "seasonLabel": "Season 1",
+    "seasonSubtitle": "Check what's really going on online · 5 Episodes",
+    "completedOn": "Completed on",
+    "issuedBy": "Issued by AYM Vision GmbH",
+    "proof": "This certificate confirms successful participation.",
+    "printBtn": "Print / Save as PDF",
+    "backBtn": "← Back to profile",
+    "noCert": "No certificate available yet.",
+    "nameInputTitle": "Name for the Certificate",
+    "nameInputBody": "Which name should appear on the certificate? It will be stored exclusively on this device and never transmitted.",
+    "nameInputPlaceholder": "e.g. First name or full name",
+    "nameInputSave": "Save & view certificate",
+    "nameInputSkip": "Continue without name",
+    "skillsTitle": "Practised in Season 1:",
+    "skills": [
+      { "name": "Judgement", "detail": "Spotting fake news · Reading AI images · Checking sources" },
+      { "name": "Perspective", "detail": "Conflicts from different views · Questioning stereotypes" },
+      { "name": "Self-regulation", "detail": "FOMO & decisions · Screen time · Setting own limits" },
+      { "name": "Responsible action", "detail": "Stickers & privacy · Taking responsibility in chats" }
+    ],
+    "themesTitle": "Media literacy themes you explored:",
+    "themes": [
+      { "emoji": "🕵️", "name": "Checking info smartly" },
+      { "emoji": "🤝", "name": "Talking & acting together" },
+      { "emoji": "🎨", "name": "Getting creative" },
+      { "emoji": "🛡️", "name": "Staying safe online" },
+      { "emoji": "🧩", "name": "Finding smart solutions" },
+      { "emoji": "🔍", "name": "Thinking & understanding" },
+      { "emoji": "⚖️", "name": "Being fair & standing up" }
+    ]
+  },
+
   "identity": {
     "voucher": {
       "title": "Redeem Season Code",

@@ -194,6 +194,13 @@ setChapters(ep?.chapters ?? []);
               loading="eager"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+            <img
+              src={assetUrl('media/ui/LABEL_AI_black_transparent.png')}
+              alt=""
+              aria-hidden
+              className="absolute bottom-2 right-2 w-8 opacity-35 pointer-events-none select-none"
+              style={{ filter: 'drop-shadow(0 0 3px white)' }}
+            />
             <div className="absolute bottom-0 left-0 p-4">
               <div className="text-xs font-semibold text-white/80 mb-0.5">
                 {freeSpecial
@@ -247,6 +254,9 @@ setChapters(ep?.chapters ?? []);
                   : t('overview.ctaStart', { defaultValue: 'Starten →' })}
               </button>
             )}
+          </div>
+          <div className="px-4 pb-3">
+            <p className="text-[11px] text-slate-400 italic">{t('fictional', { ns: 'common' })}</p>
           </div>
         </section>
 

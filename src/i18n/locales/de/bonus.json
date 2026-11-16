@@ -122,7 +122,7 @@
 
     "bookSubtitle": "Neue Seiten werden in der Story freigeschaltet – du kannst sie hier jederzeit nachlesen.",
     "bookTag": "Tagebuch",
-    "bookTag2": "privat & sicher auf deinem Gerät",
+    "bookTag2": "nur auf deinem Gerät – wir sehen es nicht",
 
 
 
@@ -147,7 +147,7 @@
     },
     "pin": {
       "setupTitle": "Tagebuch schützen",
-      "setupBody": "Du kannst dein Tagebuch mit einem PIN schützen, damit nur du es lesen kannst.",
+      "setupBody": "Du kannst dein Tagebuch mit einem PIN schützen, damit andere Kinder auf diesem Gerät es nicht öffnen können.",
       "setupButton": "PIN festlegen & Tagebuch öffnen",
       "skipButton": "Jetzt ohne PIN öffnen",
       "pinLabel": "Dein PIN (mind. 4 Zeichen)",
@@ -162,10 +162,12 @@
       "unlockButton": "Öffnen",
       "forgotLink": "PIN vergessen?",
       "hintTitle": "Dein Hinweis:",
-      "forgotHint": "Frag eine erwachsene Person, dir beim Zurücksetzen zu helfen.",
-      "parentNote": "Im Verwaltungsbereich kann der PIN zurückgesetzt werden.",
+      "forgotHint": "Deine Erziehungsberechtigten können den PIN im Verwaltungsbereich zurücksetzen. Sie haben danach Zugriff auf deine Einträge.",
+      "parentNote": "Deine Erziehungsberechtigten können den PIN im Verwaltungsbereich zurücksetzen. Sie haben danach Zugriff auf deine Einträge.",
+      "resetSetupTitle": "Neuen PIN festlegen",
+      "resetSetupBody": "Deine Erziehungsberechtigten haben den PIN zurückgesetzt und können deine Einträge lesen. Lege einen neuen PIN fest, um dein Tagebuch vor anderen Kindern auf diesem Gerät zu schützen.",
       "bannerTitle": "Tagebuch schützen?",
-      "bannerBody": "Andere Personen, die dieses Gerät nutzen, könnten deine Einträge lesen. Mit einem PIN gehört dein Tagebuch wirklich nur dir.",
+      "bannerBody": "Andere Kinder auf diesem Gerät könnten deine Einträge lesen. Mit einem PIN können sie dein Tagebuch nicht mehr öffnen.",
       "bannerYes": "Ja, PIN festlegen →",
       "bannerSkip": "Später"
     },
@@ -188,6 +190,22 @@
   "s1e05c10_0004": {
     "date": "Freitag",
     "body": "Dumme Ziege.\nIch soll mich nicht für sie freuen? Hat Lisa den Verstand verloren?\nIch freu mich doch immer für sie!\nWenn sie…\nOder wenn sie…\nNaja, wenn sie… mal was nicht weiß.\nOder…, wenn sie im Schlabber-Look fotografiert wird.\n\nUps."
+  },
+  "sp0e03c01_0005": {
+    "date": "Mittwoch",
+    "body": "Ich war gar nicht weg. Ich saß vor dem Musikraum und hab auf sie gewartet. Die fünf Sterne hab ICH gefaltet. Das hat ewig gedauert. Hätte ich Lisa die vier anderen bloß nicht schon vorher gegeben!\nMeinen hab ich noch. Sieht schön aus im Licht der Lampe. Sieht nur keiner."
+  },
+  "sp0e03c02_0006": {
+    "date": "Mittwoch",
+    "body": "Jetzt hab ich echt ein schlechtes Gewissen. Es wurden immer mehr Challenges. Mama hat mich dreimal zum Backen gerufen. Immer wieder musste ich für eine Challenge unterbrechen. Ich hab behauptet, die Challenge wäre für die Schule.\nOkay, mein Bart-Foto war pünktlich, aber die Plätzchen sind schwarz und dann habe ich auch noch die Verabredung mit Chioma vergessen. Sie ist jetzt voll sauer. Dabei wollte ich doch so gerne backen und basteln.\nUnd mein Foto hat auch nur 4 Herzen. 😪\nUnd keins davon von Igor."
+  },
+  "sp0e03c03_0007": {
+    "date": "Freitag",
+    "body": "Wieso hab ich das nur geschrieben? Am schlimmsten ist, dass es stimmt.\nUnd alle haben es gelesen. Igor bestimmt auch. 🙈 Das sollte niemand wissen. Ich hätte es nicht mal in die Weihnachts-Gruppe schreiben sollen! 😭"
+  },
+  "sp0e03c05_0008": {
+    "date": "Samstagabend",
+    "body": "Lukas kam mit einer Tanne im Arm. Einer ganzen Tanne! Klein genug für unsere Terrasse, aber zu groß für Lukas. 😂\nSchön. Aber völlig ungeschmückt. (Die Tanne meine ich, nicht Lukas.)\nDann machte Lisa eine Schachtel auf: Da waren sie, die vier Sterne. Für meinen hielt mir Lisa einen Zweig hin und wir haben alle gleichzeitig unsere Sterne angehängt. ✵ ✯ 🌟\nIch glaub, Markus hat sich echt gefreut. Und ich mich erst!\n\nUnd Carlos hat uns tatsächlich gebacken! Auch an Markus hat er gedacht. Die Lebkuchenfiguren waren vielleicht nicht so ordentlich wie die von KI, aber tausendmal leckerer!"
   }
     },
     "mia": {

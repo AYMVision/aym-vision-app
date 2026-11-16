@@ -537,6 +537,13 @@ function isUnlockedByChain(
                             className={`w-full h-full object-cover ${locked ? 'opacity-60' : ''}`}
                             loading="lazy"
                           />
+                          <img
+                            src={assetUrl('media/ui/LABEL_AI_black_transparent.png')}
+                            alt=""
+                            aria-hidden
+                            className="absolute bottom-1 right-1 w-6 opacity-35 pointer-events-none select-none"
+                            style={{ filter: 'drop-shadow(0 0 3px white)' }}
+                          />
                         </div>
                         <div className="flex-1 min-w-0 pt-0.5">
                           {tag && (

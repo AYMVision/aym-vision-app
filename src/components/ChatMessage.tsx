@@ -145,7 +145,15 @@ function MessageImage({ src, bleed }: { src?: string; bleed?: boolean }) {
 
   return (
     <>
-      {imageEl}
+      <div className="relative leading-none block overflow-hidden">
+        {imageEl}
+        <img
+          src={assetUrl('media/ui/LABEL_AI_black_transparent.png')}
+          alt=""
+          aria-hidden
+          className="absolute bottom-1.5 right-1.5 w-8 opacity-35 pointer-events-none select-none" style={{ filter: 'drop-shadow(0 0 3px white)' }}
+        />
+      </div>
       {lightboxOpen && createPortal(
         <div
           className="fixed inset-0 z-[300] flex items-center justify-center bg-black/85"
@@ -520,12 +528,18 @@ export default function ChatMessage({ message, onOpenBonusLink, onOpenLexikonTer
 
     if (message.type === 'system' && message.image) {
   return (
-    <div className="my-3 w-full">
+    <div className="my-3 w-full relative overflow-hidden leading-none">
       <img
         src={assetUrl(message.image)}
         alt=""
         className="block w-full h-auto object-contain"
         loading="lazy"
+      />
+      <img
+        src={assetUrl('media/ui/LABEL_AI_black_transparent.png')}
+        alt=""
+        aria-hidden
+        className="absolute bottom-1.5 right-1.5 w-8 opacity-35 pointer-events-none select-none" style={{ filter: 'drop-shadow(0 0 3px white)' }}
       />
     </div>
   );

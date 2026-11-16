@@ -382,6 +382,20 @@
       }
     }
   },
+  "sp0e03": {
+    "c01": {
+      "input": {
+        "quiz": "Kennst du solche Freundschaftsquizze?",
+        "quiz2": "Ist das dumm?",
+        "figur": "Was wärst du gern auf einem fiktiven Weihnachts-Gruppenbild?"
+      }
+    },
+    "c05": {
+      "input": {
+        "wunsch": "Welchen Wunsch würdest du mit deinem Stern verbinden?"
+      }
+    }
+  },
   "special": {
     "kicker": "🎃 Halloween-Spezial · Kostenlos · 5 Amics · je ~5 Min.",
     "moreBtn": "Mehr lesen ↓",

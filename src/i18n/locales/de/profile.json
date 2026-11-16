@@ -220,6 +220,11 @@
     "printBtn": "Drucken / Als PDF speichern",
     "backBtn": "← Zurück zum Profil",
     "noCert": "Noch kein Zertifikat vorhanden.",
+    "nameInputTitle": "Name für die Urkunde",
+    "nameInputBody": "Welcher Name soll auf der Urkunde erscheinen? Er wird ausschließlich lokal auf diesem Gerät gespeichert und nicht übertragen.",
+    "nameInputPlaceholder": "z. B. Vorname oder vollständiger Name",
+    "nameInputSave": "Speichern & Urkunde anzeigen",
+    "nameInputSkip": "Ohne Namen fortfahren",
     "skillsTitle": "In Staffel 1 geübt:",
     "skills": [
       { "name": "Urteilsvermögen", "detail": "Fake News erkennen · KI-Bilder einordnen · Quellen prüfen" },

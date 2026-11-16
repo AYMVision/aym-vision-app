@@ -289,8 +289,8 @@
     "title": "Child's Diary",
     "body": "The child's personal diary can be protected with a PIN. You can reset the PIN here – diary entries are preserved.",
     "noPin": "No PIN set.",
-    "resetDone": "PIN has been reset.",
-    "resetWarning": "The child will need to set a new PIN or open without one.",
+    "resetDone": "PIN has been reset. The child must set a new PIN the next time they open the diary.",
+    "resetWarning": "The child must set a new PIN before they can open the diary.",
     "resetButton": "Reset diary PIN"
   },
   "learningTrace": {

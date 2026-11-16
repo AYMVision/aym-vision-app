@@ -288,8 +288,8 @@
     "title": "Kinder-Tagebuch",
     "body": "Das eigene Tagebuch des Kindes kann mit einem PIN geschützt werden. Du kannst den PIN hier zurücksetzen – die Einträge bleiben erhalten.",
     "noPin": "Kein PIN gesetzt.",
-    "resetDone": "PIN wurde zurückgesetzt.",
-    "resetWarning": "Das Kind muss danach einen neuen PIN festlegen oder ohne PIN öffnen.",
+    "resetDone": "PIN wurde zurückgesetzt. Das Kind muss beim nächsten Öffnen einen neuen PIN festlegen.",
+    "resetWarning": "Das Kind muss danach einen neuen PIN festlegen.",
     "resetButton": "Tagebuch-PIN zurücksetzen"
   },
   "learningTrace": {
@@ -304,17 +304,17 @@
     "deleteConfirm": "Alle gespeicherten Entwicklungsbereiche wurden gelöscht.",
     "deleteWarning": "Das Löschen entfernt alle bisher erfassten Entwicklungsbeobachtungen unwiderruflich. Der Lernfortschritt in der Story (gespielte Kapitel, Entscheidungen) bleibt erhalten – nur die Auswertung der Entwicklungsbereiche wird zurückgesetzt.",
     "levels": {
-      "frequent": "schon häufiger sichtbar",
-      "visible": "entwickelt sich weiter",
-      "growing": "aktuell im Aufbau"
+      "frequent": "häufiger sichtbar",
+      "visible": "entwickelt sich",
+      "growing": "im Aufbau"
     },
     "levelExplanation": {
       "toggle": "Was bedeuten diese Einstufungen?",
       "intro": "Die Einstufungen zeigen, wie häufig Ihr Kind in der Story Verhaltensweisen gezeigt hat, die einem Entwicklungsbereich zugeordnet werden können – keine Bewertung, sondern eine Beobachtung.",
       "items": {
-        "growing":  { "label": "Aktuell im Aufbau",          "description": "Erste Reaktionen sind sichtbar. Ihr Kind setzt sich gerade zum ersten Mal damit auseinander." },
-        "visible":  { "label": "Entwickelt sich weiter",     "description": "Das Verhalten taucht regelmäßig auf. Ihr Kind zeigt wachsendes Bewusstsein in diesem Bereich." },
-        "frequent": { "label": "Schon häufiger sichtbar",    "description": "Dieser Bereich ist gut ausgeprägt. Ihr Kind reagiert in verschiedenen Situationen konsistent." }
+        "growing":  { "label": "Im Aufbau",          "description": "Erste Reaktionen sind sichtbar. Ihr Kind setzt sich damit auseinander." },
+        "visible":  { "label": "Entwickelt sich",     "description": "Das Verhalten taucht regelmäßig auf. Ihr Kind zeigt wachsendes Bewusstsein in diesem Bereich." },
+        "frequent": { "label": "Häufiger sichtbar",    "description": "Dieser Bereich ist ausgeprägt. Ihr Kind reagiert in verschiedenen Situationen konsistent." }
       },
       "disclaimer": "Alle Einstufungen basieren ausschließlich auf dem Verhalten in der Story und sind keine psychologische oder diagnostische Aussage."
     }

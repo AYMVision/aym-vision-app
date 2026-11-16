@@ -58,6 +58,7 @@ const StudioViewPage      = lazy(() => import('./pages/StudioViewPage'));
 const StudioStoriesPage   = lazy(() => import('./pages/StudioStoriesPage'));
 const StudioEducatorsPage = lazy(() => import('./pages/StudioEducatorsPage'));
 const SeasonFinale        = lazy(() => import('./pages/SeasonFinale'));
+const Zertifikat          = lazy(() => import('./pages/Zertifikat'));
 const ParentSetupWizard     = lazy(() => import('./pages/ParentSetupWizard'));
 const RedeemVoucher         = lazy(() => import('./shop/RedeemVoucher'));
 const StripePurchaseReturn  = lazy(() => import('./shop/StripePurchaseReturn'));
@@ -212,6 +213,7 @@ function AppRoutes() {
         <Route path="/studio/stories" element={<StudioStoriesPage />} />
 
         <Route path="/season-finale/s1" element={<SeasonFinale />} />
+        <Route path="/zertifikat" element={<Zertifikat />} />
         <Route path="/redeem-voucher" element={<RedeemVoucher />} />
         <Route path="/shop/return" element={<StripePurchaseReturn />} />
         <Route path="/voucher-admin" element={<VoucherAdmin />} />

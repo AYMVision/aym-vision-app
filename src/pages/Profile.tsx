@@ -355,7 +355,7 @@ export default function Profile() {
         )}
 
         {/* Blockchain-Zertifikat-Karte */}
-        <BlockchainCertCard chatName={profile.chatName ?? undefined} />
+        <BlockchainCertCard />
 
         {/* Challenge-Journal */}
         <ChallengeJournal />

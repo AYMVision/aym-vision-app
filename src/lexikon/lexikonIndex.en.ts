@@ -113,6 +113,14 @@ export const LEXIKON_ENTRIES_EN: LexikonEntry[] = [
     didYouKnow: 'Studies show that FOMO is especially strong on phones — because notifications constantly remind you of what you might be missing.',
   },
   {
+    id: 'freundschaftsquiz',
+    title: 'Friendship Quiz',
+    teaser: 'A quiz that shows how well you know a person.',
+    body: 'A friendship quiz is a small test where one person answers questions about themselves and sends the answers to their friends. The friends try to guess the answers — and get points for each correct one.\n\nIt sounds fun. But it can also create pressure: Who got more points? Am I a worse friend because I knew less?\n\nThe points only show which answers matched — not how good or important a friendship is.',
+    didYouKnow: 'Friendship quizzes have existed as paper forms for a long time. Online, they became popular again through apps like Snapchat and TikTok.',
+    firstAppearance: 'sp0e03c01',
+  },
+  {
     id: 'gamer',
     title: 'Gamer',
     teaser: 'A person who regularly plays video games.',

@@ -3,6 +3,7 @@ import { pStorage } from '../profile/profileStorage';
 
 const KEY_HASH = 'aym_diary_pin_hash_v1';
 const KEY_HINT = 'aym_diary_pin_hint_v1';
+const KEY_REQUIRED = 'aym_diary_pin_required_v1';
 
 function bufToHex(buf: ArrayBuffer) {
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
@@ -44,8 +45,17 @@ export function getDiaryPinHint(): string | null {
   return pStorage.getItem(KEY_HINT);
 }
 
+export function isDiaryPinRequired(): boolean {
+  return pStorage.getItem(KEY_REQUIRED) === 'true';
+}
+
+export function clearDiaryPinRequired(): void {
+  pStorage.removeItem(KEY_REQUIRED);
+}
+
 /** Wird vom Elternbereich aufgerufen – löscht PIN + Hint, Einträge bleiben erhalten. */
 export function resetDiaryPin(): void {
   pStorage.removeItem(KEY_HASH);
   pStorage.removeItem(KEY_HINT);
+  pStorage.setItem(KEY_REQUIRED, 'true');
 }
