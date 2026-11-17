@@ -191,6 +191,7 @@ setChapters(ep?.chapters ?? []);
               src={assetUrl(episodeMeta.coverImage)}
               alt={t(episodeMeta.titleKey)}
               className="w-full h-full object-cover"
+              style={episodeMeta.coverObjectPosition ? { objectPosition: episodeMeta.coverObjectPosition } : undefined}
               loading="eager"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />

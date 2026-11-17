@@ -45,6 +45,9 @@ export type EpisodeMeta = {
 
   /** Emoji-Dekoration im Hintergrund der Special-Kachel (z.B. '👻' oder '❄️') */
   decorEmoji?: string;
+
+  /** CSS object-position für das Cover-Bild in der Episoden-Übersicht (Standard: 'center') */
+  coverObjectPosition?: string;
 };
 
 export type SeasonMeta = {
@@ -392,6 +395,7 @@ export const SPECIALS_INDEX: SeasonMeta[] = [
         descriptionKey: 'stories:episodes.sp0e05.description',
 
         coverImage: '/media/story/episodes/sp0e05/cover_sp0e05-512.webp',
+        coverObjectPosition: 'top',
         stickerImage: '/media/stickers/episodes/sp0e05-512.webp',
 
         chapterCount: 5,
