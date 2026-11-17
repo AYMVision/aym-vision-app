@@ -45,14 +45,14 @@ const c01 = C('sp0e03c01', 0, 'Amic 1', 'Der fünfte Stern', [
     m(ch.lisa, '[[freundschaftsquiz]]: Wie gut kennst du mich?', '15:30'),
     img(ch.lisa, B('sp0e03c01_02-512.webp'), '15:30'),
     m(ch.yasmin, '9 von 10', '15:35', { reactions: [] }),
-    m(ch.dominik, 'Lisas [[challenge]] Fanclub kennt natürlich alles.', '15:36'),
+    m(ch.dominik, 'Lisas Fanclub kennt natürlich alles.', '15:36'),
     m(ch.markus, 'Autogramm schon abgeholt?', '15:36'),
     m(ch.yasmin, '@Markus: Damit, wie man jemandem in den A.... kriecht, kennst du dich doch am besten aus.', '15:37'),
   ]),
 
   S('sp0e03c01_privat_yasmin_user_quiz', [
     privateChat('Yasmin', 'Du'),
-    m(ch.yasmin, 'Hi, kennst du solche Freundschaftsquizze?'),
+    m(ch.yasmin, 'Hi {{chatName}}, kennst du solche Freundschaftsquizze?'),
   ]),
 
   inp('sp0e03c01_input_quiz', 'stories:sp0e03.c01.input.quiz', {
@@ -87,6 +87,7 @@ const c01 = C('sp0e03c01', 0, 'Amic 1', 'Der fünfte Stern', [
     m(ch.lisa, 'Welche Idee?', '15:53'),
     m(ch.lisa, 'Warte, ich hab euch in eine private Gruppe eingeladen, dann stören wir die anderen nicht mit unseren Nachrichten.', '15:54'),
     typing('Markus schreibt'),
+    typing('Markus löscht'),
     m(ch.dominik, 'Besser so. Macht eure Kuschel-Challenge lieber woanders.', '15:55'),
     m(ch.carlos, 'Du bist ja nur neidisch.', '15:55'),
     typing('Markus schreibt'),

@@ -538,6 +538,32 @@ const OTHER_BONUS_ITEMS: BonusItem[] = [
     order: 65,
   },
 
+  // --- sp0e05c03: Aylin – Noch eine Frage … und noch eine! ---
+  {
+    bonusId: 'article-aylin-ki-noch-eine-frage',
+    category: 'newspaper',
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/article-aylin-ki-noch-eine-frage/article',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 'sp0e05c03' },
+    topicTags: ['reflect', 'infoCheck'],
+    order: 66,
+  },
+
+  // --- sp0e05c05: Jonas – Weihnachtschaos in New York ---
+  {
+    bonusId: 'article-jonas-weihnachtschaos',
+    category: 'newspaper',
+    mediaType: 'text',
+    bodyKind: 'md',
+    bodySrc: 'media/newspaper/articles/article-jonas-weihnachtschaos/article',
+    released: true,
+    unlockedBy: { type: 'chapter', id: 'sp0e05c05' },
+    topicTags: ['reflect', 'teamTalk'],
+    order: 67,
+  },
+
 //_________________________________________________________
 // TAGEBUCH-EINTRÄGE HIER EINTRAGEN
 //_________________________________________________________
