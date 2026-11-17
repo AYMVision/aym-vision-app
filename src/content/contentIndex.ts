@@ -395,7 +395,7 @@ export const SPECIALS_INDEX: SeasonMeta[] = [
         descriptionKey: 'stories:episodes.sp0e05.description',
 
         coverImage: '/media/story/episodes/sp0e05/cover_sp0e05-512.webp',
-        coverObjectPosition: 'top',
+        coverObjectPosition: 'center 20%',
         stickerImage: '/media/stickers/episodes/sp0e05-512.webp',
 
         chapterCount: 5,
