@@ -27,6 +27,18 @@
       "date": "2026-10-31"
     }
   },
+  "article-aylin-ki-noch-eine-frage": {
+    "de": {
+      "title": "Noch eine Frage … und noch eine!",
+      "description": "Ein Chat, der nicht aufhört. Aylin erklärt, warum KI-Chatbots immer weiterfragen – und wie man einfach aufhört.",
+      "author": "Aylin",
+      "date": "2026-12-01",
+      "topicTags": [
+        "reflect",
+        "infoCheck"
+      ]
+    }
+  },
   "article-jonas-amir-int": {},
   "article-jonas-amir-interview": {
     "de": {
@@ -59,6 +71,18 @@
         "solve"
       ],
       "aiTranslated": "true"
+    }
+  },
+  "article-jonas-weihnachtschaos": {
+    "de": {
+      "title": "Weihnachtschaos in New York – Manchmal braucht es ein Gespräch",
+      "description": "Fliegende Weihnachtskugeln, ein übereifrige Hotelgast und ein Moment, der wirklich nachhallt. Jonas berichtet von unserer Weihnachtsaufführung.",
+      "author": "Jonas",
+      "date": "2026-12-01",
+      "topicTags": [
+        "reflect",
+        "teamTalk"
+      ]
     }
   },
   "chatrules-chioma-dominik": {
