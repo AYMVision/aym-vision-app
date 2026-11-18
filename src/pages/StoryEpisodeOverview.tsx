@@ -238,7 +238,9 @@ setChapters(ep?.chapters ?? []);
 
             {!allDone && !timeGateAllowed && !currentChapter && (
               <div className="shrink-0 text-[11px] font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-2 py-1 text-right leading-snug">
-                {t('overview.timeLocked.daily', { defaultValue: 'Morgen wieder verfügbar' })}
+                {timeGate.allowed === false && timeGate.reason === 'weekly_limit'
+                  ? t('overview.timeLocked.weekly', { defaultValue: 'Diese Woche fertig ✨' })
+                  : t('overview.timeLocked.daily', { defaultValue: 'Morgen wieder verfügbar' })}
               </div>
             )}
             {currentChapter && !allDone && (
@@ -326,7 +328,9 @@ setChapters(ep?.chapters ?? []);
                     )}
                     {isTimeLocked && (
                       <div className="text-xs text-amber-600 font-medium mt-0.5">
-                        {t('overview.timeLocked.daily', { defaultValue: 'Morgen wieder verfügbar' })}
+                        {timeGate.allowed === false && timeGate.reason === 'weekly_limit'
+                          ? t('overview.timeLocked.weekly', { defaultValue: 'Diese Woche fertig ✨' })
+                          : t('overview.timeLocked.daily', { defaultValue: 'Morgen wieder verfügbar' })}
                       </div>
                     )}
                   </div>

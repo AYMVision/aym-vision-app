@@ -522,10 +522,10 @@ export default function ForParents() {
                 <ul className="list-disc pl-5 space-y-1">
                   <li>Texteingaben oder Antworten deines Kindes</li>
                   <li>Name, Alter oder persönliche Angaben</li>
-                  <li>Standort, IP-Adresse oder Gerätedaten</li>
+                  <li>Standort oder Gerätedaten</li>
                 </ul>
                 <p className="mt-2 text-xs text-slate-500">
-                  Alle Daten bleiben lokal auf diesem Gerät. Du kannst sie in den Eltern-Einstellungen
+                  Diese Analysedaten bleiben lokal auf diesem Gerät. Du kannst sie in den Eltern-Einstellungen
                   einsehen, herunterladen oder jederzeit löschen.
                 </p>
                 <Link

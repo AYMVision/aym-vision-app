@@ -612,7 +612,7 @@ function MyDiaryWithPin() {
               </div>
               <p className="mt-1 text-sm text-slate-600">
                 {pinRequired
-                  ? t('diaries.pin.resetSetupBody', { defaultValue: 'Deine Erziehungsberechtigten haben den PIN zurückgesetzt. Lege jetzt einen neuen PIN fest, um dein Tagebuch zu schützen.' })
+                  ? t('diaries.pin.resetSetupBody', { defaultValue: 'Deine Sorgeberechtigten haben den PIN zurückgesetzt. Lege jetzt einen neuen PIN fest, um dein Tagebuch zu schützen.' })
                   : t('diaries.pin.setupBody', { defaultValue: 'Leg einen PIN fest, damit nur du dein Tagebuch lesen kannst.' })}
               </p>
             </div>

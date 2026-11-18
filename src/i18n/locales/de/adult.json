@@ -1,4 +1,26 @@
 {
+  "schoolWizard": {
+    "legal": {
+      "title": "Einrichtung für Bildungseinrichtungen",
+      "subtitle": "Verwaltungs-Code festlegen und Sammelcode eingeben. Dauert nur wenige Minuten.",
+      "step1Title": "Verwaltungs-Code festlegen",
+      "step1Body": "Gleichen Code auf allen Geräten der Klasse verwenden — so hast du immer Zugang.",
+      "step2Title": "Sammelcode eingeben",
+      "step2Body": "Den Staffel-Code, den du von AYM Vision erhalten hast.",
+      "legalConfirm": "Ich richte dieses Gerät im Auftrag einer Bildungseinrichtung ein und bestätige, dass ein gültiger Sammelcode vorliegt."
+    },
+    "done": {
+      "title": "Gerät eingerichtet ✓",
+      "subtitle": "Bildungseinrichtungsmodus ist aktiv. Kinder können ihre Profile jetzt selbst anlegen oder du richtest sie über den Verwaltungsbereich ein."
+    },
+    "settings": {
+      "title": "Bildungseinrichtungsmodus",
+      "subtitle": "Aktiv — Kaufflow und Tracking sind deaktiviert.",
+      "unlockPerWeek": "Freischaltungen pro Woche",
+      "dailyLock": "Tageslimit (1 pro Tag)",
+      "dailyLockHint": "Im Bildungseinrichtungsmodus ist das Tageslimit standardmäßig deaktiviert — die Lehrkraft steuert das Tempo."
+    }
+  },
   "wizard": {
     "closeLabel": "Schließen",
     "next": "Weiter →",
@@ -9,7 +31,7 @@
       "step1Body": "Damit nur du die Einstellungen ändern kannst.",
       "step2Title": "Zugang aktivieren",
       "step2Body": "Staffel-Code eingeben oder direkt kaufen.",
-      "tommiNote": "Dieser Bereich ist unser Kinderschutz-Mechanismus. Eltern bestätigen hier, dass sie das Gerät für ihr Kind einrichten. Du kannst einfach auf Weiter klicken."
+      "tommiNote": "Dieser Bereich ist unser Kinderschutz-Mechanismus. Sorgeberechtigte bestätigen hier, dass sie das Gerät für ein Kind einrichten. Du kannst einfach auf Weiter klicken."
     },
     "code": {
       "title": "Verwaltungs-Code festlegen",
@@ -83,7 +105,7 @@
     "ctaSetup": "Weiter",
     "ctaCancel": "Abbrechen",
     "errorSetup": "Das stimmt leider nicht. Bitte nochmal.",
-    "legalConfirm": "Ich bin volljährig (18+) und richte diesen Bereich verantwortungsvoll ein.",
+    "legalConfirm": "Ich bin sorgeberechtigt und richte diesen Bereich für ein Kind ein.",
     "forgotLink": "Verwaltungs-Code vergessen?",
     "resetHint": "Gib den Master-Reset-Code ein. Bei Fragen wende dich an: hello@amysurfwing.de",
     "resetPlaceholder": "Reset-Code",
@@ -121,7 +143,7 @@
     "title": "Reflexionsfunktionen",
     "moreInfo": "Mehr Infos für Eltern →",
     "note": "Änderungen werden automatisch gespeichert.",
-    "modeIntro": "Den KI-Modus finden Sie in den Eltern-Einstellungen.",
+    "modeIntro": "Den KI-Modus finden Sie im Verwaltungsbereich.",
     "owlMode": {
       "help": "Lege fest, wie Amy in der App arbeiten soll.",
       "label": "Amy-Modus",
@@ -239,7 +261,7 @@
   },
   "privacy": {
     "title": "Datenschutz & gespeicherte Daten",
-    "intro": "Diese App speichert alle Daten ausschließlich lokal auf diesem Gerät. Es werden keine Daten an externe Server übertragen.",
+    "intro": "Antworten und Spielinhalte bleiben lokal. Abgeschlossene Kapitel werden pseudonymisiert für die Gerätewiederherstellung gesichert. Anonyme Seitenaufrufe laufen über Matomo (cookiefrei, selbst gehostet).",
     "items": {
       "profile": "Kinderprofil",
       "profileDetail": "Name, Avatar, Alter – lokal gespeichert.",

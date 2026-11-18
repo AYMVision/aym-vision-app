@@ -111,7 +111,7 @@ const c01 = C('sp0e03c01', 0, 'Amic 1', 'Der fünfte Stern', [
 
   S('sp0e03c01_privat_yasmin_user_figur', [
     privateChat('Yasmin', 'Du'),
-    m(ch.yasmin, 'Was hat Carlos vor? Doch vielleicht Magie? 😂'),
+    m(ch.yasmin, 'Was hat Carlos vor? Vielleicht doch Magie? 😂'),
   ]),
 
   S('sp0e03c01_amy_challenge_figur', [
@@ -135,7 +135,7 @@ const c01 = C('sp0e03c01', 0, 'Amic 1', 'Der fünfte Stern', [
     m(ch.yasmin, 'Wow, das könnte ich nie! Das essen wir aber nicht!', '16:22'),
     m(ch.carlos, 'Natürlich nicht. 😂 Ist KI.', '16:22'),
     m(ch.lisa, 'Was meinst du?', '16:22'),
-    m(ch.carlos, 'Ich hab der KI beschrieben, wie wir als Lebkuchenfiguren aussehen sollen.', '16:23'),
+    m(ch.carlos, 'Ich hab der [[ki]] beschrieben, wie wir als Lebkuchenfiguren aussehen sollen.', '16:23'),
     m(ch.lisa, 'Echt jetzt? 😕', '16:23'),
     m(ch.yasmin, 'Also ich find´s super! Wir alle 5 zusammen.', '16:23'),
     m(ch.tom, 'Hatte mich schon auf den Lebkuchen gefreut.', '16:24'),
@@ -188,7 +188,7 @@ const c02 = C('sp0e03c02', 1, 'Amic 2', 'Nur du fehlst noch', [
     m(ch.lukas, 'Wir brauchen einfach künftig feste Regeln. Wer zweimal zu spät postet, fliegt raus?', '16:46', { reactions: [R('👍')] }),
     m(ch.yasmin, "Sonst kann man's ja gleich lassen.", '16:46'),
     m(ch.tom, 'Das meint ihr doch nicht ernst? Ist doch nur ein Spiel.', '16:50'),
-    m(ch.lisa, 'Markus macht ständig Andeutungen. Ich glaub, er würde auch gern mitmachen.', '16:51'),
+    m(ch.lisa, 'Übrigens, Markus macht ständig Andeutungen. Ich glaub, er würde auch gern mitmachen.', '16:51'),
     m(ch.yasmin, 'Markus?', '16:52'),
     m(ch.yasmin, 'Aber wir sind doch schon 5.', '16:52'),
     m(ch.tom, 'Dann wären wir halt 6.', '16:52'),
@@ -214,7 +214,7 @@ const c02 = C('sp0e03c02', 1, 'Amic 2', 'Nur du fehlst noch', [
   S('sp0e03c02_gruppe_bart_challenge', [
     divider('später'),
     m(ch.tom, 'Mein Bruder hat sich beim Zähneputzen einen Weihnachtsmannbart gemacht 😂 Schafft ihr das auch?', '17:30'),
-    m(ch.lukas, 'Bonus-Challenge! Zehn Minuten. Postet euer Foto im Status.', '17:31'),
+    m(ch.lukas, 'Ok. Das ist eine Bonus-Challenge! Zehn Minuten. Postet euer Foto im Status.', '17:31'),
   ]),
 
   S('sp0e03c02_klassenchat_falscher_chat', [
@@ -346,7 +346,7 @@ const c04 = C('sp0e03c04', 3, 'Amic 4', 'Bleib da', [
 
   S('sp0e03c04_gruppe_finale_unterwegs', [
     privateChat('Gruppe', 'Weihnachtscrew'),
-    m(ch.carlos, 'Lukas und ich waren auch vorhin beim Hügel, Mission erfüllt.', '17:10'),
+    m(ch.carlos, 'Lukas und ich waren vorhin schon beim Hügel, Mission erfüllt.', '17:10'),
     m(ch.lukas, 'Achtung, es war ganz schön glatt.', '17:11'),
     m(ch.tom, 'Ich auch und auf dem Weg hab ich Lisa getroffen. 4 Sterne hängen.', '17:12', { replyTo: { text: 'Lukas und ich waren auch vorhin beim Hügel, Mission erfüllt.', speakerName: 'Carlos' } }),
     m(ch.lisa, 'Dieselben 4 wie am Fenster in der Schule. ⭐', '17:13'),
@@ -456,21 +456,6 @@ const c04 = C('sp0e03c04', 3, 'Amic 4', 'Bleib da', [
     m(ch.yasmin, 'Kennst du solche Situationen auch, in denen du dich ausgeschlossen fühlst?'),
   ]),
 
-  S('sp0e03c04_switch_amy_ausgeschlossen', [
-    amyChat(),
-  ]),
-
-  OR('sp0e03c04_or_ausgeschlossen',
-    'Kennst du solche Situationen auch, in denen du dich ausgeschlossen fühlst?',
-    {
-      topics: ['reflect-understand'],
-      category: 'PERSPECTIVE',
-      bypassAi: true,
-      fixedAmyReply: 'Danke, dass du das teilst. Solche Gefühle sind ganz normal – und manchmal hilft es schon, sie jemandem zu sagen.',
-    },
-  ),
-
-  AR('sp0e03c04_ar_ausgeschlossen', 'sp0e03c04_or_ausgeschlossen'),
 
 ]);
 
@@ -529,15 +514,9 @@ const c05 = C('sp0e03c05', 4, 'Amic 5', 'Für deinen ist Platz', [
     promptSpeakerId: 'yasmin',
   }),
 
-  S('sp0e03c05_amy_challenge_wunsch', [
-    amyChat(),
-    m(ch.amy, 'Wenn du einen Stern dazuhängen könntest, welchen Wunsch würdest du damit verbinden? Kann auch was ganz Kleines sein.'),
-  ]),
-
-  inp('sp0e03c05_input_wunsch_amy', 'stories:sp0e03.c05.input.wunsch', {
-    topics: ['reflect-understand'],
-    promptSpeakerId: 'amy',
-  }),
+  CH('sp0e03c05_challenge_stern',
+    '⭐ Häng einen echten Stern auf — für das, was dir wirklich wichtig ist.',
+  ),
 
   S('sp0e03c05_diary_entry4', [
     bonusLink('diary-yasmin-entry8', 'Yasmins Tagebuch', '/diaries/diary_yasmin?entry=sp0e03c05_0008', 'Eintrag lesen →'),

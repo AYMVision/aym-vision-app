@@ -122,7 +122,7 @@ export function RestoreIdentityModal({ onDone, onCancel }: { onDone(): void; onC
               className="mt-0.5 h-4 w-4 rounded border-slate-300 accent-teal-600 shrink-0"
             />
             <span className="text-xs text-slate-600 leading-snug">
-              {t('parent.legalConfirm', { defaultValue: 'Ich bin erziehungsberechtigt und richte dieses Gerät für mein Kind ein.' })}
+              {t('parent.legalConfirm', { defaultValue: 'Ich bin sorgeberechtigt und richte dieses Gerät für ein Kind ein.' })}
             </span>
           </label>
           <button

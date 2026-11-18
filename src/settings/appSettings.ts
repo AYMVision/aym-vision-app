@@ -5,6 +5,9 @@ export type AppSettings = {
   owlMode: OwlMode;
   devToolsEnabled: boolean;
   remindersEnabled: boolean;
+  educationMode: boolean;
+  unlockPerWeek: number;
+  dailyLockEnabled: boolean;
 };
 
 const KEY = 'aym_settings_v1';
@@ -13,6 +16,9 @@ const DEFAULTS: AppSettings = {
   owlMode: 'auto',
   devToolsEnabled: Boolean(import.meta.env.DEV),
   remindersEnabled: false,
+  educationMode: false,
+  unlockPerWeek: 0,
+  dailyLockEnabled: true,
 };
 
 export function loadSettings(): AppSettings {
@@ -37,6 +43,21 @@ export function loadSettings(): AppSettings {
         typeof parsed.remindersEnabled === 'boolean'
           ? parsed.remindersEnabled
           : DEFAULTS.remindersEnabled,
+
+      educationMode:
+        typeof parsed.educationMode === 'boolean'
+          ? parsed.educationMode
+          : DEFAULTS.educationMode,
+
+      unlockPerWeek:
+        typeof parsed.unlockPerWeek === 'number' && parsed.unlockPerWeek >= 0
+          ? parsed.unlockPerWeek
+          : DEFAULTS.unlockPerWeek,
+
+      dailyLockEnabled:
+        typeof parsed.dailyLockEnabled === 'boolean'
+          ? parsed.dailyLockEnabled
+          : DEFAULTS.dailyLockEnabled,
     };
   } catch {
     return { ...DEFAULTS };
@@ -58,4 +79,8 @@ export function saveSettings(patch: Partial<AppSettings>) {
 
 export function getSettingsSync(): AppSettings {
   return loadSettings();
+}
+
+export function isEducationMode(): boolean {
+  return loadSettings().educationMode === true;
 }

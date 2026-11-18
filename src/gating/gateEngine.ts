@@ -1,10 +1,12 @@
 // src/gating/gateEngine.ts
 import { pStorage } from '../profile/profileStorage';
+import { loadSettings } from '../settings/appSettings';
 
 type GateReason =
   | 'ok'
   | 'need_previous'
-  | 'daily_limit';
+  | 'daily_limit'
+  | 'weekly_limit';
 
 type GateMode = 'play' | 'rewatch' | 'blocked' | 'bypass';
 
@@ -137,9 +139,41 @@ export function recordNewChapterCompletion(args?: {
   void args;
   try {
     pStorage.setItem(DAILY_KEY, String(Date.now()));
+    incrementWeeklyCounter();
   } catch {
     // ignore storage errors
   }
+}
+
+const WEEKLY_KEY = 'aym-gate-weekly';
+
+function getISOWeekKey(): string {
+  const now = new Date();
+  const temp = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+  const dow = temp.getUTCDay() || 7;
+  temp.setUTCDate(temp.getUTCDate() + 4 - dow);
+  const yearStart = new Date(Date.UTC(temp.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil(((temp.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+  return `${temp.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+}
+
+function getWeeklyCompletionCount(): number {
+  try {
+    const raw = pStorage.getItem(WEEKLY_KEY);
+    if (!raw) return 0;
+    const parsed = JSON.parse(raw) as { weekKey: string; count: number };
+    return parsed.weekKey === getISOWeekKey() ? (parsed.count ?? 0) : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function incrementWeeklyCounter(): void {
+  try {
+    const thisWeek = getISOWeekKey();
+    const current = getWeeklyCompletionCount();
+    pStorage.setItem(WEEKLY_KEY, JSON.stringify({ weekKey: thisWeek, count: current + 1 }));
+  } catch {}
 }
 
 export function canStartNextNewChapterToday(opts?: {
@@ -155,17 +189,15 @@ export function canStartNextNewChapterToday(opts?: {
     };
   }
 
-  if (hasCompletedNewChapterToday()) {
-    return {
-      allowed: false,
-      reason: 'daily_limit',
-      mode: 'blocked',
-    };
+  const { dailyLockEnabled, unlockPerWeek } = loadSettings();
+
+  if (dailyLockEnabled !== false && hasCompletedNewChapterToday()) {
+    return { allowed: false, reason: 'daily_limit', mode: 'blocked' };
   }
 
-  return {
-    allowed: true,
-    reason: 'ok',
-    mode: 'play',
-  };
+  if (unlockPerWeek > 0 && getWeeklyCompletionCount() >= unlockPerWeek) {
+    return { allowed: false, reason: 'weekly_limit', mode: 'blocked' };
+  }
+
+  return { allowed: true, reason: 'ok', mode: 'play' };
 }

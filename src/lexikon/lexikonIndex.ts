@@ -181,8 +181,8 @@ export const LEXIKON_ENTRIES: LexikonEntry[] = [
     firstAppearance: 's1e03c03',
   },
   {
-    id: 'ki-bilder',
-    title: 'KI-Bilder',
+    id: 'ki-bild',
+    title: 'KI-Bild',
     teaser: 'Bilder, die kein Mensch gemacht hat, sondern ein Computerprogramm.',
     body: 'KI-Bilder sind Bilder, die nicht von einer Kamera gemacht werden und auch nicht von einem Menschen gezeichnet sind, sondern von einem Computerprogramm erzeugt werden. Sie können sehr echt aussehen. Das macht es schwerer zu erkennen, was wirklich passiert ist und was erfunden wurde. Manche KI-Bilder zeigen Personen, Orte oder Ereignisse, die es nie gegeben hat, aber täuschend echt wirken.',
     didYouKnow: 'Manche KI-Bilder sind so realistisch, dass selbst Experten sie kaum von echten Fotos unterscheiden können. Deshalb ist die Rückwärtssuche so wichtig.',

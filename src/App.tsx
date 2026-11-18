@@ -72,6 +72,7 @@ const Systemvoraussetzungen = lazy(() => import('./pages/Systemvoraussetzungen')
 const Hilfe                 = lazy(() => import('./pages/Hilfe'));
 const CheckoutStaffel1      = lazy(() => import('./pages/CheckoutStaffel1'));
 const FuerSchulen           = lazy(() => import('./pages/FuerSchulen'));
+const SchoolSetupWizard     = lazy(() => import('./pages/SchoolSetupWizard'));
 const FuerOrganisationen    = lazy(() => import('./pages/FuerOrganisationen'));
 const Anfrage               = lazy(() => import('./pages/Anfrage'));
 const TestSettings   = import.meta.env.DEV ? lazy(() => import('./pages/TestSettings')) : null;
@@ -113,7 +114,8 @@ function getMatomoPageInfo(pathname: string): { title: string; url: string } {
   if (pathname === '/avatar') return { title: `${base} – Avatar`, url: `${origin}/avatar` };
   if (pathname === '/album') return { title: `${base} – Sticker-Album`, url: `${origin}/album` };
   if (pathname === '/parents') return { title: `${base} – Für Eltern`, url: `${origin}/parents` };
-  if (pathname === '/parent-setup') return { title: `${base} – Eltern-Einrichtung`, url: `${origin}/parent-setup` };
+  if (pathname === '/parent-setup') return { title: `${base} – Verwaltungsbereich einrichten`, url: `${origin}/parent-setup` };
+  if (pathname === '/schule-einrichten') return { title: `${base} – Einrichtung für Schulen`, url: `${origin}/schule-einrichten` };
   if (pathname === '/privacy') return { title: `${base} – Datenschutz`, url: `${origin}/privacy` };
   if (pathname === '/impressum') return { title: `${base} – Impressum`, url: `${origin}/impressum` };
   if (pathname === '/faq') return { title: `${base} – FAQ`, url: `${origin}/faq` };
@@ -226,6 +228,7 @@ function AppRoutes() {
         <Route path="/hilfe" element={<Hilfe />} />
         <Route path="/checkout/staffel-1" element={<CheckoutStaffel1 />} />
         <Route path="/fuer-schulen" element={<FuerSchulen />} />
+        <Route path="/schule-einrichten" element={<SchoolSetupWizard />} />
         <Route path="/fuer-organisationen" element={<FuerOrganisationen />} />
         <Route path="/anfrage" element={<Anfrage />} />
 

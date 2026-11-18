@@ -390,6 +390,11 @@
         "figur": "Was wärst du gern auf einem fiktiven Weihnachts-Gruppenbild?"
       }
     },
+    "c04": {
+      "input": {
+        "ausgeschlossen": "Kennst du solche Situationen auch, in denen du dich ausgeschlossen fühlst?"
+      }
+    },
     "c05": {
       "input": {
         "wunsch": "Welchen Wunsch würdest du mit deinem Stern verbinden?"
@@ -440,8 +445,8 @@
     "nextTomorrowBody": "Der nächste Amic wartet morgen auf dich. Bis dahin kannst du in der Schülerzeitung stöbern.",
     "toNewspaper": "Zur Schülerzeitung →",
     "paywallCardTitle": "Kapitel 4 wartet auf dich! 🦉",
-    "paywallBody": "Deine Eltern können die nächsten Kapitel für dich freischalten.",
-    "paywallCtaParent": "Eltern-Bereich öffnen →",
+    "paywallBody": "Eine sorgeberechtigte Person kann die nächsten Kapitel für dich freischalten.",
+    "paywallCtaParent": "Verwaltungsbereich öffnen →",
     "paywallCtaBack": "Zur Übersicht"
   },
   "item": {
@@ -460,7 +465,8 @@
     "continue": "Weiter",
     "send": "Senden",
     "amyThinking": "Amy denkt nach…",
-    "replyVague": "Schreib einfach, was dir gerade durch den Kopf geht. 🦉"
+    "replyVague": "Schreib einfach, was dir gerade durch den Kopf geht. 🦉",
+    "replyPlaceholder": "Möchtest du etwas schreiben…"
   },
   "measurement": {
     "dimensions": {
@@ -570,7 +576,8 @@
     "seasonSpecial": "🎃 Halloween-Spezial",
     "aiTranslated": "Story mit KI übersetzt · Kann Fehler enthalten",
     "timeLocked": {
-      "daily": "Morgen wieder verfügbar"
+      "daily": "Morgen wieder verfügbar",
+      "weekly": "Diese Woche fertig ✨"
     },
     "progress": "{{completed}} von {{total}} Amics",
     "allDone": "Alle Amics abgeschlossen ✓",

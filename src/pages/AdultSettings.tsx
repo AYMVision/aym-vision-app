@@ -8,7 +8,7 @@ import { BackupPrompt } from '../identity/BackupPrompt';
 
 import Layout from '../components/Layout';
 
-import { loadSettings, saveSettings, type OwlMode } from '../settings/appSettings';
+import { loadSettings, saveSettings, isEducationMode, type OwlMode } from '../settings/appSettings';
 import { enableReminders, disableReminders, getReminderCapability, getReminderHint } from '../notifications/reminderService';
 import {
   hasParentPasscode,
@@ -266,6 +266,9 @@ export default function AdultSettings() {
 
   const [owlMode, setOwlMode] = useState<OwlMode>(() => loadSettings().owlMode);
   const [remindersEnabled, setRemindersEnabled] = useState(() => loadSettings().remindersEnabled);
+  const [unlockPerWeek, setUnlockPerWeek] = useState(() => loadSettings().unlockPerWeek);
+  const [dailyLockEnabled, setDailyLockEnabled] = useState(() => loadSettings().dailyLockEnabled);
+  const eduMode = isEducationMode();
   const [notifPermission, setNotifPermission] = useState<NotificationPermission | 'unsupported'>(() => {
     if (typeof Notification === 'undefined') return 'unsupported';
     return Notification.permission;
@@ -353,6 +356,14 @@ export default function AdultSettings() {
   useEffect(() => {
     saveSettings({ remindersEnabled });
   }, [remindersEnabled]);
+
+  useEffect(() => {
+    saveSettings({ unlockPerWeek });
+  }, [unlockPerWeek]);
+
+  useEffect(() => {
+    saveSettings({ dailyLockEnabled });
+  }, [dailyLockEnabled]);
 
   async function handleToggleReminders() {
     if (remindersEnabled) {
@@ -470,7 +481,7 @@ export default function AdultSettings() {
           <h1 className="text-xl font-bold">
             {needsSetup
               ? t('adult:parent.titleSetup', {
-                  defaultValue: 'Eltern-Einstellungen einrichten',
+                  defaultValue: 'Verwaltungsbereich einrichten',
                 })
               : t('adult:parent.titleUnlock', {
                   defaultValue: 'Erwachsenenbereich',
@@ -485,7 +496,7 @@ export default function AdultSettings() {
                 })
               : t('adult:parent.bodyUnlock', {
                   defaultValue:
-                    'Gib den Passcode ein, um die Eltern-Einstellungen zu öffnen.',
+                    'Gib den Passcode ein, um den Verwaltungsbereich zu öffnen.',
                 })}
           </p>
 
@@ -531,7 +542,7 @@ export default function AdultSettings() {
                   className="mt-0.5 h-4 w-4 rounded border-slate-300 accent-teal-600 shrink-0"
                 />
                 <span className="text-xs text-slate-600 leading-snug">
-                  {t('adult:parent.legalConfirm', { defaultValue: 'Ich bin erziehungsberechtigt und richte dieses Gerät für mein Kind ein.' })}
+                  {t('adult:parent.legalConfirm', { defaultValue: 'Ich bin sorgeberechtigt und richte dieses Gerät für ein Kind ein.' })}
                 </span>
               </label>
             )}
@@ -1484,6 +1495,75 @@ export default function AdultSettings() {
                   </div>
                 ) : null}
               </section>
+
+              {eduMode && (
+                <section className="rounded-2xl border border-[var(--color-teal-200)] bg-[var(--color-teal-50)] p-5 space-y-4">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-semibold text-[var(--color-teal-900)]">
+                        {t('adult:schoolWizard.settings.title')}
+                      </h3>
+                      <span className="rounded-full bg-[var(--color-teal-600)] text-white text-[11px] font-semibold px-2 py-0.5">Aktiv</span>
+                    </div>
+                    <p className="mt-1 text-sm text-[var(--color-teal-700)]">
+                      {t('adult:schoolWizard.settings.subtitle')}
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-semibold text-slate-600">
+                      {t('adult:schoolWizard.settings.unlockPerWeek')}
+                    </label>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {[1, 2, 3, 5, 7, 10].map(n => (
+                        <button
+                          key={n}
+                          type="button"
+                          onClick={() => setUnlockPerWeek(n)}
+                          className={[
+                            'rounded-xl px-3 py-1.5 text-sm font-semibold border transition-colors',
+                            unlockPerWeek === n
+                              ? 'bg-[var(--color-teal-600)] text-white border-[var(--color-teal-600)]'
+                              : 'bg-white text-slate-700 border-slate-200 hover:border-teal-300',
+                          ].join(' ')}
+                        >
+                          {n}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <button
+                      type="button"
+                      role="switch"
+                      aria-checked={dailyLockEnabled}
+                      onClick={() => setDailyLockEnabled(v => !v)}
+                      className={[
+                        'relative shrink-0 mt-0.5 h-6 w-11 rounded-full border-2 transition-colors',
+                        dailyLockEnabled
+                          ? 'bg-[var(--color-teal-600)] border-[var(--color-teal-600)]'
+                          : 'bg-slate-200 border-slate-300',
+                      ].join(' ')}
+                    >
+                      <span
+                        className={[
+                          'block h-4 w-4 rounded-full bg-white shadow transition-transform',
+                          dailyLockEnabled ? 'translate-x-5' : 'translate-x-0.5',
+                        ].join(' ')}
+                      />
+                    </button>
+                    <div>
+                      <div className="text-sm font-semibold text-slate-800">
+                        {t('adult:schoolWizard.settings.dailyLock')}
+                      </div>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        {t('adult:schoolWizard.settings.dailyLockHint')}
+                      </p>
+                    </div>
+                  </div>
+                </section>
+              )}
 
               <section className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5">
                 <h3 className="text-base font-semibold text-slate-800">

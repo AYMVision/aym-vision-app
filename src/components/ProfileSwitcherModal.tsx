@@ -291,7 +291,7 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
             <div>
               <div className="font-bold text-slate-900">Möchtest du einen PIN?</div>
               <div className="text-sm text-slate-500 mt-1">Damit kommt niemand anderes in dein Profil.</div>
-              <div className="text-xs text-slate-400 mt-1">Deine Eltern können deinen PIN jederzeit einsehen und anpassen.</div>
+              <div className="text-xs text-slate-400 mt-1">Sorgeberechtigte können deinen PIN jederzeit einsehen und anpassen.</div>
             </div>
             <button
               type="button"

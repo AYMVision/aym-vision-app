@@ -22,8 +22,8 @@
     "how3": "Nutzung auf Schulgeräten oder eigenen Tablets",
     "how4": "Integration in den Schulunterricht",
     "dsgvoTitle": "Datenschutz",
-    "dsgvo1": "Alle Spielstanddaten bleiben ausschließlich auf dem Gerät.",
-    "dsgvo2": "Kein Konto, keine Cloud, keine Daten an AYM Vision.",
+    "dsgvo1": "Antworten und Spielinhalte der Kinder bleiben auf dem Gerät.",
+    "dsgvo2": "Kein Konto, kein Passwort — keine persönlichen Daten der Kinder.",
     "dsgvo3": "Keine Installation — läuft direkt im Browser.",
     "pilotTitle": "Pilotprojekt: Grundschule Ribbesbüttel",
     "pilotSub": "Pilot startet: Dezember 2026",
@@ -34,7 +34,10 @@
     "fact3": "Keine Installation nötig",
     "fact4": "Einmaliger Kauf pro Schüler",
     "privatHint": "Privatkauf für die Familie?",
-    "privatLink": "Hier entlang →"
+    "privatLink": "Hier entlang →",
+    "setupKicker": "Codes bereits erhalten?",
+    "setupText": "Jetzt Schul-Tablets einrichten — für jedes Gerät dauert es nur wenige Minuten.",
+    "setupCta": "Gerät einrichten →"
   },
   "orgs": {
     "kicker": "Amy Surfwing für Organisationen",

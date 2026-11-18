@@ -152,6 +152,20 @@ export default function FuerSchulen() {
           </div>
         </div>
 
+        {/* ── GERÄT EINRICHTEN ── */}
+        <div className="rounded-2xl border border-[var(--color-teal-200)] bg-[var(--color-teal-50)] p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+          <div className="flex-1">
+            <div className="text-xs font-semibold text-[var(--color-teal-700)] uppercase tracking-wide">{t('schools.setupKicker')}</div>
+            <p className="mt-1 text-base font-semibold text-[var(--color-teal-900)]">{t('schools.setupText')}</p>
+          </div>
+          <Link
+            to="/schule-einrichten"
+            className="shrink-0 inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-bold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors shadow-sm"
+          >
+            {t('schools.setupCta')}
+          </Link>
+        </div>
+
         {/* ── ÜBER AYM VISION ── */}
         <section className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 sm:p-8">
           <div className="text-xs font-semibold text-[var(--color-teal-600)] uppercase tracking-wide">{t('about.kicker')}</div>

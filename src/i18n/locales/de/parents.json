@@ -254,7 +254,7 @@
     "privacy": {
       "title": "Daten & Privatsphäre",
       "items": {
-        "0": "Fortschritt und Einstellungen werden lokal auf dem Gerät gespeichert – nicht in einer Cloud.",
+        "0": "Antworten und Einstellungen bleiben lokal — kein öffentliches Profil, kein Account.",
         "1": "Wenn das Gerät gewechselt, zurückgesetzt oder verloren wird, kann der Fortschritt weg sein.",
         "2": "Das ist bewusst so: Wir verzichten auf Konten und sammeln keine persönlichen Nutzerdaten.",
         "3": "Die Bilder in der App werden mit Unterstützung von KI erstellt."
@@ -310,7 +310,7 @@
     },
     "transparency": {
       "kicker": "Ein sicherer Raum",
-      "body": "Amy Surfwing ist bewusst kein soziales Netzwerk. Inhalte werden nicht öffentlich geteilt. Fortschritt bleibt lokal auf dem Gerät."
+      "body": "Amy Surfwing ist bewusst kein soziales Netzwerk. Inhalte werden nicht öffentlich geteilt. Antworten und persönliche Inhalte bleiben lokal."
     },
     "blog": {
       "kicker": "Amy Surfwing Blog",

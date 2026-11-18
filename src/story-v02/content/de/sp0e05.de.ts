@@ -12,7 +12,7 @@ import {
   S, C,
 } from '../storyBuilder';
 
-const kiki: Character = { id: 'kiki', name: 'KIKI' };
+const kiki: Character = { id: 'kiki', name: 'KIKI', avatar: 'kiki' };
 const R = (emoji: string, type?: string): Reaction => ({ emoji, type });
 const B = (n: string) => `/media/story/episodes/sp0e05/${n}`;
 
@@ -130,7 +130,7 @@ const c02 = C('sp0e05c02', 1, 'Amic 2', 'Du verstehst mich wenigstens', [
     m(ch.dominik, 'ICH BIN BEREIT'),
     m(ch.carlos, 'Das macht mir Angst.'),
     m(ch.aylin, 'Ich bringe die neuen Kulissen mit 😍'),
-    m(ch.carlos, '@Aylin, mir ist gerade noch ein Fehler im [[ki-bilder]] aufgefallen.'),
+    m(ch.carlos, '@Aylin, mir ist gerade noch ein Fehler im [[ki-bild]] aufgefallen.'),
     m(ch.aylin, 'Welcher?'),
     m(ch.carlos, 'Auf dem Hotel steht NEW YROK statt NEW YORK  😂'),
     m(ch.aylin, 'Oh Mann 🙈'),

@@ -72,7 +72,7 @@ import { getLexikonEntry } from '../lexikon/lexikonIndex';
 import { LexikonTermModal } from './Lexikon';
 import { saveNextAmicInfo } from '../notifications/amicNotif';
 import { setAmicBadge } from '../notifications/reminderService';
-import { loadSettings } from '../settings/appSettings';
+import { loadSettings, isEducationMode } from '../settings/appSettings';
 import { BETA_ACTIVE, isBetaTester, isBetaCompletionShown } from '../beta/betaConfig';
 import BetaCompletionModal from '../beta/BetaCompletionModal';
 
@@ -355,6 +355,8 @@ const [episode, setEpisode] = useState<StoryEpisodeV02 | null>(null);
 
   const [showNextChapterLockedHint, setShowNextChapterLockedHint] = useState(false);
   const [showPaywallCard, setShowPaywallCard] = useState(false);
+  const eduMode = isEducationMode();
+  const effectiveShowPaywallCard = showPaywallCard && !eduMode;
 
   // Wenn Kauf in neuem Tab abgeschlossen wird, aktualisiert sich localStorage in diesem Tab
   // automatisch via storage-Event — Paywall dann sofort ausblenden.
@@ -1987,21 +1989,21 @@ function hasStoryMigrationDone(key: string): boolean {
           )}
 
           {/* Amic-Abschluss-Karte */}
-          {(amicDoneNextChapterId !== undefined || showPaywallCard) && state.phase === 'chapter_finished' ? (
+          {(amicDoneNextChapterId !== undefined || effectiveShowPaywallCard) && state.phase === 'chapter_finished' ? (
             <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-[var(--color-teal-200)] bg-[var(--color-teal-50)] p-4 shadow-sm">
               <div className="font-semibold text-sm text-[var(--color-teal-900)] mb-1">
-                {showPaywallCard
+                {effectiveShowPaywallCard
                   ? t('stories:gate.paywallCardTitle', { defaultValue: 'Kapitel 4 wartet auf dich! 🦉' })
                   : t('stories:amicDone.title', { defaultValue: 'Amic abgeschlossen ✓' })}
               </div>
-              {showPaywallCard && (
+              {effectiveShowPaywallCard && (
                 <div className="mt-0.5 mb-3 text-xs text-[var(--color-teal-800)]">
-                  {t('stories:gate.paywallBody', { defaultValue: 'Deine Eltern können die nächsten Kapitel für dich freischalten.' })}
+                  {t('stories:gate.paywallBody', { defaultValue: 'Eine sorgeberechtigte Person kann die nächsten Kapitel für dich freischalten.' })}
                 </div>
               )}
 
               {/* Zeit-Sperre: "Für heute bist du fertig" */}
-              {!showPaywallCard && showNextChapterLockedHint ? (
+              {!effectiveShowPaywallCard && showNextChapterLockedHint ? (
                 <div className="mt-2 mb-3">
                   <div className="text-sm font-semibold text-[var(--color-teal-900)]">
                     {t('stories:gate.nextTomorrowTitle', { defaultValue: 'Für heute bist du fertig ✨' })}
@@ -2012,17 +2014,17 @@ function hasStoryMigrationDone(key: string): boolean {
                     })}
                   </div>
                 </div>
-              ) : !showPaywallCard && <div className="mb-3" />}
+              ) : !effectiveShowPaywallCard && <div className="mb-3" />}
 
               <div className="flex flex-wrap gap-2">
-                {showPaywallCard && (
+                {effectiveShowPaywallCard && (
                   <>
                     <button
                       type="button"
                       onClick={() => navigate('/parent-setup')}
                       className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)] transition-colors"
                     >
-                      {t('stories:gate.paywallCtaParent', { defaultValue: 'Eltern-Bereich öffnen →' })}
+                      {t('stories:gate.paywallCtaParent', { defaultValue: 'Verwaltungsbereich öffnen →' })}
                     </button>
                     <button
                       type="button"
@@ -2033,7 +2035,7 @@ function hasStoryMigrationDone(key: string): boolean {
                     </button>
                   </>
                 )}
-                {amicDoneNextChapterId && !showNextChapterLockedHint && !showPaywallCard && (
+                {amicDoneNextChapterId && !showNextChapterLockedHint && !effectiveShowPaywallCard && (
                   <button
                     type="button"
                     onClick={() => navigate(`/stories-v02/${courseId}/${amicDoneNextChapterId}`)}
@@ -2062,7 +2064,7 @@ function hasStoryMigrationDone(key: string): boolean {
                     </button>
                   </>
                 )}
-                {!showPaywallCard && (
+                {!effectiveShowPaywallCard && (
                   <button
                     type="button"
                     onClick={() => {

@@ -157,7 +157,7 @@
   "pinSetup": {
     "askTitle": "Möchtest du einen PIN?",
     "askSubtitle": "Damit kommt niemand anderes in dein Profil.",
-    "askHint": "Deine Eltern können deinen PIN jederzeit einsehen und anpassen.",
+    "askHint": "Sorgeberechtigte können deinen PIN jederzeit einsehen und anpassen.",
     "ctaSet": "PIN setzen",
     "ctaSkip": "Jetzt nicht",
     "enterTitle": "Wähle deinen PIN",

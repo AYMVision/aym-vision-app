@@ -1022,7 +1022,7 @@ function isUnlockedByChain(
                 <div className="snap-start shrink-0 w-[78%] sm:w-[44%]">
                   <InfoTile colorIdx={2}
                     title={tStories('howto.info.tiles.retryLock.title', { defaultValue: 'Wenn es nicht passt 🔁' })}
-                    text={tStories('howto.info.tiles.retryLock.text', { defaultValue: 'Wenn deine Antwort zu kurz ist oder nicht zur Frage passt, fragt Amy nochmal. Nach 3 Versuchen ist kurz Pause – dann am besten mit Eltern anschauen.' })}
+                    text={tStories('howto.info.tiles.retryLock.text', { defaultValue: 'Wenn deine Antwort zu kurz ist oder nicht zur Frage passt, fragt Amy nochmal. Nach 3 Versuchen ist kurz Pause – dann am besten mit einer sorgeberechtigten Person anschauen.' })}
                   />
                 </div>
                 <div className="snap-start shrink-0 w-[78%] sm:w-[44%]">

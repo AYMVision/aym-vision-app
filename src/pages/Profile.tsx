@@ -24,6 +24,7 @@ import { THEME_META, THEME_ORDER } from '../competencies/themeMeta';
 import ChallengeJournal from '../components/ChallengeJournal';
 import BlockchainCertCard from '../shop/BlockchainCertCard';
 import { useIdentity } from '../identity/useIdentity';
+import { isEducationMode } from '../settings/appSettings';
 
 function AppRatingCard({ source }: { source: string }) {
   const [selected, setSelected] = useState<number | null>(null);
@@ -261,11 +262,11 @@ export default function Profile() {
 
         </div>
 
-        {/* Amy Surfwing Bewertung — erscheint ab 2 abgeschlossenen Kapiteln, einmalig */}
+        {/* Amy Surfwing Bewertung — erscheint ab 2 abgeschlossenen Kapiteln, einmalig; nicht im Bildungseinrichtungsmodus */}
         {(() => {
           const amicsRead = Object.keys(profile.progress?.completedChapters ?? {}).length;
           const alreadyRated = !!localStorage.getItem('app_rating_general');
-          if (amicsRead < 2 || alreadyRated) return null;
+          if (amicsRead < 2 || alreadyRated || isEducationMode()) return null;
           return (
             <AppRatingCard source="profile" />
           );
