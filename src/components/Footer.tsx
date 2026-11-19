@@ -31,6 +31,7 @@ const Footer: React.FC = () => {
         <Link to="/hilfe" className="hover:underline">Hilfe &amp; Notfall</Link>
         <Link to="/systemvoraussetzungen" className="hover:underline">Systemvoraussetzungen</Link>
         <Link to="/impressum" className="hover:underline">Impressum</Link>
+        <Link to="/quellen" className="hover:underline">Quellen & Lizenzen</Link>
         <a href={assetUrl('datenschutz-web.pdf')} target="_blank" rel="noopener noreferrer" className="hover:underline">Datenschutz</a>
       </div>
 

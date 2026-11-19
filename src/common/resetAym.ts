@@ -9,7 +9,7 @@ import { pStorage } from '../profile/profileStorage';
 import { deleteProfile } from '../profile/profileIndex';
 
 /** Löscht alle Kinderdaten des AKTIVEN Profils.
- *  Andere Profile und Eltern-Passcode bleiben erhalten. */
+ *  Andere Profile und das Verwaltungspasswort bleiben erhalten. */
 export function resetChildData(): void {
   // Alle profil-gebundenen Keys des aktiven Profils löschen
   for (const k of pStorage.allScopedKeys()) {
@@ -38,7 +38,7 @@ export function resetProfileById(profileId: string): void {
   deleteProfile(profileId);
 }
 
-/** Löscht alle lokal gespeicherten Daten der App (inkl. Eltern-Passcode, Einstellungen).
+/** Löscht alle lokal gespeicherten Daten der App (inkl. Verwaltungspasswort, Einstellungen).
  *  Entspricht einer vollständigen DSGVO-Löschung auf diesem Gerät. */
 export function deleteAllData(): void {
   resetParentPasscode();

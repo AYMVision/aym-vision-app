@@ -302,6 +302,13 @@ export default function SchoolSetupWizard() {
         </div>
         <button
           type="button"
+          onClick={() => navigate('/stories', { state: { showProfileSwitcher: true } })}
+          className="w-full py-3 rounded-2xl bg-teal-600 text-white font-semibold text-sm hover:bg-teal-700 transition-colors"
+        >
+          Profile einrichten →
+        </button>
+        <button
+          type="button"
           onClick={() => navigate('/adult-settings')}
           className="w-full py-3 rounded-2xl bg-white border border-slate-200 text-slate-800 font-semibold text-sm hover:bg-slate-50 transition-colors"
         >
@@ -310,9 +317,9 @@ export default function SchoolSetupWizard() {
         <button
           type="button"
           onClick={() => navigate('/stories')}
-          className="w-full py-3 rounded-2xl bg-teal-600 text-white font-semibold text-sm hover:bg-teal-700 transition-colors"
+          className="w-full py-2 text-sm text-slate-400 hover:text-slate-600 transition-colors"
         >
-          App starten →
+          Jetzt überspringen
         </button>
       </div>
     </div>

@@ -41,6 +41,7 @@ const ForParents     = lazy(() => import('./pages/ForParents'));
 const Concept        = lazy(() => import('./pages/Concept'));
 const Privacy        = lazy(() => import('./pages/Privacy'));
 const Impressum      = lazy(() => import('./pages/Impressum'));
+const Lizenzen       = lazy(() => import('./pages/Lizenzen'));
 const FAQ            = lazy(() => import('./pages/FAQ'));
 const Cards          = lazy(() => import('./pages/Cards'));
 const CardDetail     = lazy(() => import('./pages/CardDetail'));
@@ -118,6 +119,7 @@ function getMatomoPageInfo(pathname: string): { title: string; url: string } {
   if (pathname === '/schule-einrichten') return { title: `${base} – Einrichtung für Schulen`, url: `${origin}/schule-einrichten` };
   if (pathname === '/privacy') return { title: `${base} – Datenschutz`, url: `${origin}/privacy` };
   if (pathname === '/impressum') return { title: `${base} – Impressum`, url: `${origin}/impressum` };
+  if (pathname === '/quellen') return { title: `${base} – Quellen & Lizenzen`, url: `${origin}/quellen` };
   if (pathname === '/faq') return { title: `${base} – FAQ`, url: `${origin}/faq` };
   if (pathname === '/concept') return { title: `${base} – Konzept`, url: `${origin}/concept` };
   if (pathname === '/cards') return { title: `${base} – Freundebuch`, url: `${origin}/cards` };
@@ -140,9 +142,20 @@ function getMatomoPageInfo(pathname: string): { title: string; url: string } {
     const parts = pathname.replace('/stories-v02/', '').split('/');
     const courseId = parts[0] ?? '';
     const chapterId = parts[1] ?? '';
-    const courseName = COURSE_NAMES[courseId] ?? courseId;
-    if (chapterId) return { title: `${base} – ${courseName} / ${chapterId}`, url: `${origin}/stories-v02/${courseId}/${chapterId}` };
-    return { title: `${base} – ${courseName}`, url: `${origin}/stories-v02/${courseId}` };
+    const specialMatch = courseId.match(/^sp\d+e(\d+)/);
+    const episodeMatch = courseId.match(/^s\d+e(\d+)/);
+    const episodeLabel = specialMatch
+      ? `Special ${parseInt(specialMatch[1], 10)}`
+      : episodeMatch
+      ? `Episode ${parseInt(episodeMatch[1], 10)}`
+      : 'Episode';
+    const chapterMatch = chapterId.match(/^c(\d+)/);
+    const chapterLabel = chapterMatch ? `Kapitel ${parseInt(chapterMatch[1], 10)}` : null;
+    const urlEpisode = episodeLabel.toLowerCase().replace(' ', '-');
+    if (chapterLabel) {
+      return { title: `${base} – ${episodeLabel} / ${chapterLabel}`, url: `${origin}/stories-v02/${urlEpisode}/${chapterLabel.toLowerCase().replace(' ', '-')}` };
+    }
+    return { title: `${base} – ${episodeLabel}`, url: `${origin}/stories-v02/${urlEpisode}` };
   }
   if (pathname.startsWith('/newspaper/')) return { title: `${base} – Artikel`, url: `${origin}/newspaper/[artikel]` };
   if (pathname.startsWith('/cards/')) return { title: `${base} – Freundebucheintrag`, url: `${origin}/cards/[eintrag]` };
@@ -153,7 +166,7 @@ function getMatomoPageInfo(pathname: string): { title: string; url: string } {
   if (pathname.startsWith('/transfer/')) return { title: `${base} – Spielstand übertragen`, url: `${origin}/transfer/[daten]` };
   if (pathname.startsWith('/shop/')) return { title: `${base} – Shop`, url: `${origin}/shop` };
 
-  return { title: `${base} – ${pathname}`, url: `${origin}${pathname}` };
+  return { title: base, url: `${origin}/` };
 }
 
 function AppRoutes() {
@@ -192,6 +205,7 @@ function AppRoutes() {
         <Route path="/concept" element={<Concept />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/impressum" element={<Impressum />} />
+        <Route path="/quellen" element={<Lizenzen />} />
         <Route path="/faq" element={<FAQ />} />
 
         <Route path="/cards" element={<Cards />} />

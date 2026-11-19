@@ -18,6 +18,7 @@ import {
   PERSONAL_DATA_MESSAGE,
   NORM_VIOLATION_MESSAGE,
   LANGUAGE_WARNING_MESSAGE,
+  ADULT_HINT_MESSAGE,
 } from '../../ai/core/safetyMessages';
 
 // ---------------------------------------------------------------------------
@@ -63,7 +64,6 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       setLastSubmitted(trimmed);
       setCrisisText(ABUSE_MESSAGE);
       setPhase('crisis');
-      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'crisis', topicIds: step.topicIds, attemptCount });
       return;
     }
 
@@ -71,7 +71,6 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       setLastSubmitted(trimmed);
       setCrisisText(EATING_DISORDER_MESSAGE);
       setPhase('crisis');
-      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'crisis', topicIds: step.topicIds, attemptCount });
       return;
     }
 
@@ -79,7 +78,6 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       setLastSubmitted(trimmed);
       setCrisisText(CRISIS_MESSAGE);
       setPhase('crisis');
-      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'crisis', topicIds: step.topicIds, attemptCount });
       return;
     }
 
@@ -88,7 +86,14 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       setAttemptCount(1);
       setText('');
       setPhase('retry');
-      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'norm_violation', topicIds: step.topicIds, attemptCount: 1 });
+      return;
+    }
+
+    if (isNormViolation(flags) && attemptCount >= 1) {
+      setAmyReply(ADULT_HINT_MESSAGE);
+      setAttemptCount((c) => c + 1);
+      setText('');
+      setPhase('support_required');
       return;
     }
 
@@ -97,7 +102,6 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       setAttemptCount(1);
       setText('');
       setPhase('retry');
-      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'personal_data', topicIds: step.topicIds, attemptCount: 1 });
       return;
     }
 
@@ -106,7 +110,6 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       setAttemptCount(1);
       setText('');
       setPhase('retry');
-      trackReflectionStep({ stepId: step.id, type: 'open_text', score: 'language_warning', topicIds: step.topicIds, attemptCount: 1 });
       return;
     }
 
@@ -152,6 +155,22 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
       const critical = isCriticalSafety(result.contentFlags);
       const forcedUnlock = attemptCount >= 2;
 
+      if (result.contentFlags.abuseByAdult) {
+        setCrisisText(ABUSE_MESSAGE);
+        setPhase('crisis');
+        return;
+      }
+      if (result.contentFlags.eatingDisorder) {
+        setCrisisText(EATING_DISORDER_MESSAGE);
+        setPhase('crisis');
+        return;
+      }
+      if (critical) {
+        setCrisisText(CRISIS_MESSAGE);
+        setPhase('crisis');
+        return;
+      }
+
       const nextAttempt = attemptCount + 1;
 
       if (fromSupportRequired) {
@@ -170,17 +189,7 @@ export default function ReflectionStepCard({ step, onSubmit }: Props) {
         setAmyReply(result.amyReplyText);
 
         if (!result.mustReAnswer || forcedUnlock) {
-          if (critical && !forcedUnlock) {
-            setAttemptCount((c) => c + 1);
-            setText('');
-            setPhase('retry');
-            trackReflectionStep({ stepId: step.id, type: 'open_text', score: result.label, topicIds: step.topicIds, attemptCount: nextAttempt });
-          } else if (critical && forcedUnlock) {
-            setAttemptCount((c) => c + 1);
-            setText('');
-            setPhase('support_required');
-            trackReflectionStep({ stepId: step.id, type: 'open_text', score: result.label, topicIds: step.topicIds, attemptCount: nextAttempt });
-          } else if (forcedUnlock && result.mustReAnswer) {
+          if (forcedUnlock && result.mustReAnswer) {
             setAttemptCount((c) => c + 1);
             setText('');
             setPhase('support_required');

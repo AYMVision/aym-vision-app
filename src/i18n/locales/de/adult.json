@@ -2,8 +2,8 @@
   "schoolWizard": {
     "legal": {
       "title": "Einrichtung für Bildungseinrichtungen",
-      "subtitle": "Verwaltungs-Code festlegen und Sammelcode eingeben. Dauert nur wenige Minuten.",
-      "step1Title": "Verwaltungs-Code festlegen",
+      "subtitle": "Verwaltungspasswort festlegen und Sammelcode eingeben. Dauert nur wenige Minuten.",
+      "step1Title": "Verwaltungspasswort festlegen",
       "step1Body": "Gleichen Code auf allen Geräten der Klasse verwenden — so hast du immer Zugang.",
       "step2Title": "Sammelcode eingeben",
       "step2Body": "Den Staffel-Code, den du von AYM Vision erhalten hast.",
@@ -11,7 +11,7 @@
     },
     "done": {
       "title": "Gerät eingerichtet ✓",
-      "subtitle": "Bildungseinrichtungsmodus ist aktiv. Kinder können ihre Profile jetzt selbst anlegen oder du richtest sie über den Verwaltungsbereich ein."
+      "subtitle": "Kinder können nun ein Profil anlegen oder du richtest die Profile direkt für sie ein."
     },
     "settings": {
       "title": "Bildungseinrichtungsmodus",
@@ -26,15 +26,15 @@
     "next": "Weiter →",
     "legal": {
       "title": "App einrichten",
-      "subtitle": "In wenigen Schritten: Verwaltungs-Code festlegen und Zugang aktivieren.",
-      "step1Title": "Verwaltungs-Code festlegen",
+      "subtitle": "In wenigen Schritten: Verwaltungspasswort festlegen und Zugang aktivieren.",
+      "step1Title": "Verwaltungspasswort festlegen",
       "step1Body": "Damit nur du die Einstellungen ändern kannst.",
       "step2Title": "Zugang aktivieren",
       "step2Body": "Staffel-Code eingeben oder direkt kaufen.",
       "tommiNote": "Dieser Bereich ist unser Kinderschutz-Mechanismus. Sorgeberechtigte bestätigen hier, dass sie das Gerät für ein Kind einrichten. Du kannst einfach auf Weiter klicken."
     },
     "code": {
-      "title": "Verwaltungs-Code festlegen",
+      "title": "Verwaltungspasswort festlegen",
       "subtitle": "Damit nur du die Einstellungen ändern kannst."
     },
     "voucherSuccess": {
@@ -76,19 +76,19 @@
   },
   "parent": {
     "titleSetup": "Verwaltungsbereich einrichten",
-    "bodySetup": "Lege einen Verwaltungs-Code fest. Damit kannst nur du später die Einstellungen ändern.",
+    "bodySetup": "Lege ein Verwaltungspasswort fest. Damit kannst nur du später die Einstellungen ändern.",
     "titleUnlock": "Verwaltungsbereich",
-    "bodyUnlock": "Gib deinen Verwaltungs-Code ein, um den Verwaltungsbereich zu öffnen.",
-    "passLabel": "Verwaltungs-Code",
+    "bodyUnlock": "Gib dein Verwaltungspasswort ein, um den Verwaltungsbereich zu öffnen.",
+    "passLabel": "Verwaltungspasswort",
     "passPlaceholder": "mind. 6 Zeichen",
-    "passLabel2": "Verwaltungs-Code wiederholen",
+    "passLabel2": "Verwaltungspasswort wiederholen",
     "passPlaceholder2": "nochmal eingeben",
     "cancel": "Abbrechen",
     "setup": "Einrichten",
     "unlock": "Öffnen",
     "errorTooShort": "Bitte mindestens 6 Zeichen.",
-    "errorMismatch": "Die Verwaltungs-Codes stimmen nicht überein.",
-    "errorWrong": "Verwaltungs-Code stimmt nicht.",
+    "errorMismatch": "Die Passwörter stimmen nicht überein.",
+    "errorWrong": "Verwaltungspasswort stimmt nicht.",
     "hiddenAria": "Verwaltungsbereich öffnen",
     "hiddenVersion": "Version {{version}}",
     "footerHint": "Für Erwachsene: gedrückt halten",
@@ -106,19 +106,19 @@
     "ctaCancel": "Abbrechen",
     "errorSetup": "Das stimmt leider nicht. Bitte nochmal.",
     "legalConfirm": "Ich bin sorgeberechtigt und richte diesen Bereich für ein Kind ein.",
-    "forgotLink": "Verwaltungs-Code vergessen?",
+    "forgotLink": "Verwaltungspasswort vergessen?",
     "resetHint": "Gib den Master-Reset-Code ein. Bei Fragen wende dich an: hello@amysurfwing.de",
     "resetPlaceholder": "Reset-Code",
     "resetConfirm": "Zurücksetzen",
     "resetCancel": "Abbrechen",
     "resetError": "Falscher Reset-Code.",
-    "changeTitle": "Verwaltungs-Code ändern",
-    "changeHint": "Gib zuerst den aktuellen Verwaltungs-Code ein, dann den neuen.",
-    "changeCurrent": "Aktueller Verwaltungs-Code",
-    "changeNew": "Neuer Verwaltungs-Code (mind. 6 Zeichen)",
-    "changeRepeat": "Neuen Verwaltungs-Code wiederholen",
-    "changeSave": "Verwaltungs-Code ändern",
-    "changeSuccess": "Verwaltungs-Code wurde erfolgreich geändert."
+    "changeTitle": "Verwaltungspasswort ändern",
+    "changeHint": "Gib zuerst das aktuelle Verwaltungspasswort ein, dann das neue.",
+    "changeCurrent": "Aktuelles Verwaltungspasswort",
+    "changeNew": "Neues Verwaltungspasswort (mind. 6 Zeichen)",
+    "changeRepeat": "Neues Verwaltungspasswort wiederholen",
+    "changeSave": "Verwaltungspasswort ändern",
+    "changeSuccess": "Verwaltungspasswort wurde erfolgreich geändert."
   },
   "adult": {
     "title": "Einstellungen",
@@ -269,7 +269,7 @@
       "progressDetail": "Gespielte Kapitel und Entscheidungen – lokal gespeichert.",
       "traces": "Wirkung",
       "tracesDetail": "Aggregierte Beobachtungen zu Medienkompetenz-Bereichen – lokal gespeichert.",
-      "passcode": "Verwaltungs-Passcode",
+      "passcode": "Verwaltungspasswort",
       "passcodeDetail": "Als Hash gespeichert – nicht lesbar, nicht übertragbar.",
       "diary": "Tagebuch & Freundebuch",
       "diaryDetail": "Alle Einträge bleiben lokal auf diesem Gerät und werden nicht ausgewertet.",
@@ -280,16 +280,16 @@
   },
   "reset": {
     "profileTitle": "Kinderprofil zurücksetzen",
-    "profileBody": "Löscht das Kinderprofil, den Lernfortschritt, Sticker, Wirkung und das Tagebuch. Der Verwaltungs-Passcode bleibt erhalten.",
+    "profileBody": "Löscht das Kinderprofil, den Lernfortschritt, Sticker, Wirkung und das Tagebuch. Das Verwaltungspasswort bleibt erhalten.",
     "profileWarning": "Diese Aktion kann nicht rückgängig gemacht werden.",
     "profileDone": "Das Kinderprofil wurde zurückgesetzt.",
     "profileCheckbox": "Ich verstehe, dass diese Aktion nicht rückgängig gemacht werden kann.",
     "profileButton": "Kinderprofil jetzt zurücksetzen",
     "allTitle": "Alle lokalen Daten löschen",
-    "allBody": "Löscht alle gespeicherten Daten dieser App auf diesem Gerät – inklusive Verwaltungs-Passcode, Einstellungen und Kinderprofil. Entspricht einer vollständigen DSGVO-Löschung.",
+    "allBody": "Löscht alle gespeicherten Daten dieser App auf diesem Gerät – inklusive Verwaltungspasswort, Einstellungen und Kinderprofil. Entspricht einer vollständigen DSGVO-Löschung.",
     "allButton": "Alle Daten löschen …",
     "allConfirmTitle": "Wirklich alle Daten löschen?",
-    "allConfirmBody": "Das löscht alle Daten auf diesem Gerät unwiderruflich. Auch der Verwaltungs-Passcode wird entfernt.",
+    "allConfirmBody": "Das löscht alle Daten auf diesem Gerät unwiderruflich. Auch das Verwaltungspasswort wird entfernt.",
     "allCheckbox": "Ich verstehe, dass alle Daten dauerhaft gelöscht werden.",
     "allConfirmButton": "Jetzt alles löschen",
     "allCancel": "Abbrechen"
@@ -386,7 +386,7 @@
     },
     "protection": {
       "title": "Schutz & Sicherung",
-      "subtitle": "Passcode, Tagebuchschutz und Sicherungsdatei",
+      "subtitle": "Verwaltungspasswort, Tagebuchschutz und Sicherungsdatei",
       "badge": "3 Bereiche"
     },
     "danger": {

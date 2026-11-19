@@ -484,7 +484,7 @@ export default function AdultSettings() {
                   defaultValue: 'Verwaltungsbereich einrichten',
                 })
               : t('adult:parent.titleUnlock', {
-                  defaultValue: 'Erwachsenenbereich',
+                  defaultValue: 'Verwaltungsbereich',
                 })}
           </h1>
 
@@ -503,7 +503,7 @@ export default function AdultSettings() {
           <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <div>
               <label className="text-xs text-slate-500">
-                {t('adult:parent.passLabel', { defaultValue: 'Passcode' })}
+                {t('adult:parent.passLabel', { defaultValue: 'Verwaltungspasswort' })}
               </label>
               <input
                 type="password"
@@ -1775,7 +1775,7 @@ export default function AdultSettings() {
                     }),
                   },
                   {
-                    label: t('adult:privacy.items.passcode', { defaultValue: 'Verwaltungs-Passcode' }),
+                    label: t('adult:privacy.items.passcode', { defaultValue: 'Verwaltungspasswort' }),
                     detail: t('adult:privacy.items.passcodeDetail', {
                       defaultValue: 'Als SHA-256-Hash – nicht lesbar, nur lokal',
                     }),
@@ -2124,7 +2124,7 @@ export default function AdultSettings() {
                 <p className="mt-1 text-sm text-slate-600">
                   {t('adult:reset.profileBody', {
                     defaultValue:
-                      'Löscht alle Lernfortschritte, Sticker, Münzen und Entwicklungsbereiche des Kindes. Der Verwaltungs-Passcode und die App-Einstellungen bleiben erhalten.',
+                      'Löscht alle Lernfortschritte, Sticker, Münzen und Entwicklungsbereiche des Kindes. Das Verwaltungspasswort und die App-Einstellungen bleiben erhalten.',
                   })}
                 </p>
 
@@ -2179,7 +2179,7 @@ export default function AdultSettings() {
                 <p className="mt-1 text-sm text-slate-600">
                   {t('adult:reset.allBody', {
                     defaultValue:
-                      'Löscht sämtliche auf diesem Gerät gespeicherten App-Daten – inklusive Kinderprofil, Verwaltungs-Passcode und App-Einstellungen. Entspricht einer vollständigen Datenlöschung gemäß DSGVO.',
+                      'Löscht sämtliche auf diesem Gerät gespeicherten App-Daten – inklusive Kinderprofil, Verwaltungspasswort und App-Einstellungen. Entspricht einer vollständigen Datenlöschung gemäß DSGVO.',
                   })}
                 </p>
 

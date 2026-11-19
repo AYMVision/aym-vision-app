@@ -9,7 +9,7 @@ import {
   privateChat, classChat, amyChat,
   GR, MIT, AF, AR,
   rc, opt,
-  S, C,
+  S, C, CH,
 } from '../storyBuilder';
 
 const kiki: Character = { id: 'kiki', name: 'KIKI', avatar: 'kiki' };
@@ -362,6 +362,10 @@ const c03 = C('sp0e05c03', 2, 'Amic 3', 'Ich wusste es!', [
     m(ch.emma, 'Sie wollten meine Szene kürzen. Ich hab\'s doch gewusst. Morgen geh ich nicht mehr hin.'),
   ]),
 
+  CH('sp0e05c03_challenge_zerknuell',
+    '📝 Schreib alles auf, was dich gerade beschäftigt — und zerknüll den Zettel danach.',
+  ),
+
 ]);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -655,6 +659,10 @@ const c05 = C('sp0e05c05', 4, 'Amic 5', 'Weihnachten in New York', [
   S('sp0e05c05_amy_tipp_ki_lernen', [
     m(ch.amy, '💡 KI kann ein tolles Werkzeug sein – zum Fragenstellen und Ideenfinden. Wichtig ist, dass du selbst mitdenkst, auf deine Privatsphäre achtest und echte Menschen nicht aus dem Blick verlierst.'),
   ]),
+
+  CH('sp0e05c05_challenge_sag_jemandem',
+    '💜 Sag jemandem, was du an ihm oder ihr gut findest.',
+  ),
 
   S('sp0e05c05_carlos_artikel', [
     privateChat('Carlos', 'Du'),

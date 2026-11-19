@@ -6,6 +6,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout';
 import { getEpisodeMetaByCourseId } from '../content/contentIndex';
+import { formatAvailableUntil } from '../common/adventDates';
 import { getPlayableEpisodeV02 } from '../story-v02/content/getPlayableEpisodeV02';
 import { hasCompletedChapter, getCompletedChapterCount } from '../progress/storyProgress';
 import { getHighestPlayableChapterIndex0 } from '../gating/storyGateHelpers';
@@ -211,6 +212,11 @@ setChapters(ep?.chapters ?? []);
               <h1 className="text-lg sm:text-xl font-extrabold text-white leading-snug">
                 {t(episodeMeta.titleKey)}
               </h1>
+              {episodeMeta.availableUntil && (
+                <div className="mt-1 inline-block text-[10px] font-semibold text-white/80 bg-black/30 rounded-full px-2 py-0.5">
+                  Verfügbar bis {formatAvailableUntil(episodeMeta.availableUntil)}
+                </div>
+              )}
             </div>
           </div>
 

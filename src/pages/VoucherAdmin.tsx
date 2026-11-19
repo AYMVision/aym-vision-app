@@ -137,7 +137,7 @@ export default function VoucherAdmin() {
       <Layout backPath="/adult-settings" hideFooter>
         <div className="mx-auto max-w-xl px-4 py-10">
           <h1 className="text-xl font-bold text-slate-900">
-            {needsSetup ? 'Erwachsenenbereich einrichten' : 'Erwachsenenbereich'}
+            {needsSetup ? 'Verwaltungsbereich einrichten' : 'Verwaltungsbereich'}
           </h1>
           <p className="mt-2 text-slate-600">
             {needsSetup

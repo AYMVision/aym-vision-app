@@ -22,3 +22,6 @@ export const PERSONAL_DATA_MESSAGE =
 
 export const LANGUAGE_WARNING_MESSAGE =
   'Das klingt nicht so nett. Hast du andere Worte dafür?';
+
+export const ADULT_HINT_MESSAGE =
+  'Hol bitte kurz eine erwachsene Person dazu, der du vertraust. 🦉';

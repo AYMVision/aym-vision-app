@@ -12,7 +12,7 @@ import { assetUrl } from '../common/assetUrl';
 import SmartImage from '../components/SmartImage';
 
 import { getStoryCards, CONTENT_INDEX, getAllSpecials } from '../content/contentIndex';
-import { isAdventUnlocked, formatAdventUnlockDate } from '../common/adventDates';
+import { isAdventUnlocked, formatAdventUnlockDate, formatAvailableUntil } from '../common/adventDates';
 import { isEpisodeAvailable } from '../story-v02/content/getPlayableEpisodeV02';
 import { useProfile } from '../profile/useProfile'; // ✅ NEW
 import { shouldBypassAll } from '../gating/entitlements';
@@ -558,6 +558,9 @@ function isUnlockedByChain(
                             <div className="mt-1 text-xs font-semibold text-slate-400">🔒 {unlockDate}</div>
                           ) : (
                             <div className={`mt-1 text-xs font-semibold ${isAdvent ? 'text-green-700' : 'text-orange-600'}`}>{tWelcome('specials.playCta')}</div>
+                          )}
+                          {!locked && ep.availableUntil && (
+                            <div className="mt-0.5 text-[10px] text-slate-400">Bis {formatAvailableUntil(ep.availableUntil)}</div>
                           )}
                         </div>
                       </div>

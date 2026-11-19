@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import type { InputStep } from '../types/storyTypes';
 import { STORY_CHARACTERS as characters } from '../../content/characters';
 import ChatMessage from '../../components/ChatMessage';
-import { detectContentFlags, isCriticalSafety } from '../../ai/core/contentFlags';
-import { CRISIS_MESSAGE, CRISIS_AMY_REPLY, ABUSE_MESSAGE, EATING_DISORDER_MESSAGE, PERSONAL_DATA_MESSAGE } from '../../ai/core/safetyMessages';
+import { detectContentFlags, isCriticalSafety, isNormViolation } from '../../ai/core/contentFlags';
+import { CRISIS_MESSAGE, CRISIS_AMY_REPLY, ABUSE_MESSAGE, EATING_DISORDER_MESSAGE, PERSONAL_DATA_MESSAGE, NORM_VIOLATION_MESSAGE, ADULT_HINT_MESSAGE } from '../../ai/core/safetyMessages';
 
 type Props = {
   step: InputStep;
@@ -20,6 +20,7 @@ export default function InputStepCard({ step, onSubmit }: Props) {
   const [crisisMsg, setCrisisMsg] = useState(CRISIS_MESSAGE);
   const [capturedText, setCapturedText] = useState('');
   const [pdWarned, setPdWarned] = useState(false);
+  const [normWarnMsg, setNormWarnMsg] = useState<string | null>(null);
 
   const shouldShowPromptBubble = step.showPromptBubble !== false;
 
@@ -54,7 +55,7 @@ export default function InputStepCard({ step, onSubmit }: Props) {
         <div className="mx-auto mt-2 mb-3 max-w-[560px] flex justify-end">
           <button
             type="button"
-            onClick={() => onSubmit({ text: capturedText || undefined })}
+            onClick={() => onSubmit({})}
             className="rounded-xl bg-violet-700 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-600 active:scale-95 transition-transform"
           >
             {t('input.crisisRead', { defaultValue: "Ich hab's gelesen →" })}
@@ -81,6 +82,9 @@ export default function InputStepCard({ step, onSubmit }: Props) {
       <div className="mx-auto my-3 max-w-[560px] rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
         {step.mode === 'open_text' ? (
           <>
+            {normWarnMsg && (
+              <p className="mb-2 text-xs text-amber-700 leading-relaxed">{normWarnMsg}</p>
+            )}
             {pdWarned && (
               <p className="mb-2 text-xs text-amber-700 leading-relaxed">{PERSONAL_DATA_MESSAGE}</p>
             )}
@@ -112,11 +116,6 @@ export default function InputStepCard({ step, onSubmit }: Props) {
 
                   if (trimmed) {
                     const flags = detectContentFlags(trimmed);
-                    if (flags.personalData && !pdWarned) {
-                      setPdWarned(true);
-                      setText('');
-                      return;
-                    }
                     if (flags.abuseByAdult) {
                       setCapturedText(trimmed);
                       setCrisisMsg(ABUSE_MESSAGE);
@@ -133,6 +132,16 @@ export default function InputStepCard({ step, onSubmit }: Props) {
                       setCapturedText(trimmed);
                       setCrisisMsg(CRISIS_MESSAGE);
                       setCrisis(true);
+                      return;
+                    }
+                    if (isNormViolation(flags)) {
+                      setNormWarnMsg(normWarnMsg ? ADULT_HINT_MESSAGE : NORM_VIOLATION_MESSAGE);
+                      setText('');
+                      return;
+                    }
+                    if (flags.personalData && !pdWarned) {
+                      setPdWarned(true);
+                      setText('');
                       return;
                     }
                   }

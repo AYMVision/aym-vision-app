@@ -525,7 +525,7 @@ export default function ForParents() {
                   <li>Standort oder Gerätedaten</li>
                 </ul>
                 <p className="mt-2 text-xs text-slate-500">
-                  Diese Analysedaten bleiben lokal auf diesem Gerät. Du kannst sie in den Eltern-Einstellungen
+                  Diese Analysedaten bleiben lokal auf diesem Gerät. Du kannst sie im Verwaltungsbereich
                   einsehen, herunterladen oder jederzeit löschen.
                 </p>
                 <Link

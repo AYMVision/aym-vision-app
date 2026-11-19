@@ -208,28 +208,28 @@
         "answer5": "und gib deinen Staffel-Code unter Staffel-Code vorhanden? ein."
       },
       "changePasscode": {
-        "question": "Wie ändere ich meinen Verwaltungs-Passcode?",
+        "question": "Wie ändere ich mein Verwaltungspasswort?",
         "answer1": "Im",
         "answer2": "Verwaltungsbereich",
         "answer3": "findest du den Abschnitt",
-        "answer4": "Passcode ändern",
-        "answer5": ". Gib dort deinen aktuellen Passcode sowie zweimal den neuen ein (mindestens 6 Zeichen)."
+        "answer4": "Verwaltungspasswort ändern",
+        "answer5": ". Gib dort dein aktuelles Verwaltungspasswort sowie zweimal das neue ein (mindestens 6 Zeichen)."
       },
       "duration": {
         "question": "Wie lange bleibt der Verwaltungsbereich entsperrt?",
-        "answer1": "Nach der Eingabe des richtigen Passcodes bleibt der",
+        "answer1": "Nach der Eingabe des richtigen Verwaltungspassworts bleibt der",
         "answer2": "Verwaltungsbereich",
         "answer3": "10 Minuten geöffnet. Danach wird er automatisch gesperrt. Du kannst ihn auch manuell über",
         "answer4": "Verwaltungsbereich sperren",
         "answer5": "schließen."
       },
       "forgot": {
-        "question": "Ich habe meinen Verwaltungs-Passcode vergessen.",
+        "question": "Ich habe mein Verwaltungspasswort vergessen.",
         "answer1": "Schreibe uns an",
         "answer2": "Wir schicken dir einen Reset-Code. Den gibst du dann im",
         "answer3": "Verwaltungsbereich",
         "answer4": "unter",
-        "answer5": "Passcode vergessen?",
+        "answer5": "Verwaltungspasswort vergessen?",
         "answer6": "ein. Alle Lernfortschritte und Profileinstellungen des Kindes bleiben erhalten."
       }
     },

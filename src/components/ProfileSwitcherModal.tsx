@@ -261,7 +261,7 @@ export default function ProfileSwitcherModal({ onClose, onSwitched }: Props) {
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleConfirmName()}
-              placeholder="Dein Name"
+              placeholder="Dein Chatname"
               maxLength={20}
               autoFocus
               className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-base text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-400"

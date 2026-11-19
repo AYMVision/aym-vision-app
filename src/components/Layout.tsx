@@ -53,6 +53,13 @@ const { t: tCommon } = useTranslation('common');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLockSwitcher, setShowLockSwitcher] = useState(false);
 
+  useEffect(() => {
+    if ((location.state as { showProfileSwitcher?: boolean } | null)?.showProfileSwitcher) {
+      setShowLockSwitcher(true);
+      window.history.replaceState({}, '');
+    }
+  }, [location.state]);
+
   const isMultiProfile = useMemo(() => loadProfilesIndex().length >= 2, []);
 
 

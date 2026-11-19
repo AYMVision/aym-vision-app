@@ -48,6 +48,9 @@ export type EpisodeMeta = {
 
   /** CSS object-position für das Cover-Bild in der Episoden-Übersicht (Standard: 'center') */
   coverObjectPosition?: string;
+
+  /** ISO-Datum (YYYY-MM-DD) bis wann die Episode verfügbar ist — für zeitlich begrenzte Aktionen */
+  availableUntil?: string;
 };
 
 export type SeasonMeta = {
@@ -299,6 +302,7 @@ export const SPECIALS_INDEX: SeasonMeta[] = [
         isFreeSpecial: true,
         minAge: 9,
         decorEmoji: '👻',
+        availableUntil: '2026-11-30',
 
         topicTags: [
           'info-check',
@@ -326,6 +330,7 @@ export const SPECIALS_INDEX: SeasonMeta[] = [
         minAge: 9,
         adventUnlock: 1,
         decorEmoji: '❄️',
+        availableUntil: '2027-01-06',
 
         topicTags: [
           'talk-act',
@@ -353,6 +358,7 @@ export const SPECIALS_INDEX: SeasonMeta[] = [
         minAge: 9,
         adventUnlock: 2,
         decorEmoji: '🤝',
+        availableUntil: '2027-01-06',
 
         topicTags: [
           'reflect-understand',
@@ -379,6 +385,7 @@ export const SPECIALS_INDEX: SeasonMeta[] = [
         minAge: 9,
         adventUnlock: 3,
         decorEmoji: '🎭',
+        availableUntil: '2027-01-06',
 
         topicTags: [
           'reflect-understand',
@@ -406,6 +413,7 @@ export const SPECIALS_INDEX: SeasonMeta[] = [
         minAge: 9,
         adventUnlock: 4,
         decorEmoji: '💬',
+        availableUntil: '2027-01-06',
 
         topicTags: [
           'reflect-understand',

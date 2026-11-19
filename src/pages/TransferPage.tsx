@@ -122,7 +122,7 @@ export default function TransferPage() {
           </div>
 
           <div className="mt-4 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3 text-xs text-amber-800 leading-relaxed">
-            <strong>Nicht enthalten:</strong> persönliche Texte (Tagebuch, Chat-Namen, Sammelkarte), KI-Antworten und Eltern-Einstellungen – diese bleiben auf dem Quell-Gerät.
+            <strong>Nicht enthalten:</strong> persönliche Texte (Tagebuch, Chat-Namen, Sammelkarte), KI-Antworten und Verwaltungsbereich-Einstellungen – diese bleiben auf dem Quell-Gerät.
           </div>
         </div>
 

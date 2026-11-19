@@ -22,6 +22,16 @@ export function isAdventUnlocked(advent: 1 | 2 | 3 | 4): boolean {
   return todayMidnight >= unlockMidnight;
 }
 
+/** Formatiert ein ISO-Datum (YYYY-MM-DD) für die Anzeige (z. B. "30. November"). */
+export function formatAvailableUntil(dateStr: string, lang: 'de' | 'en' = 'de'): string {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const d = new Date(year, month - 1, day);
+  return d.toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-GB', {
+    day: 'numeric',
+    month: 'long',
+  });
+}
+
 /** Formatiert das Freischaltdatum für die Anzeige (z. B. "30. November"). */
 export function formatAdventUnlockDate(advent: 1 | 2 | 3 | 4, lang: 'de' | 'en' = 'de'): string {
   const now = new Date();

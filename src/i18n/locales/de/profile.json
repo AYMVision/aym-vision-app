@@ -5,7 +5,7 @@
   "backAria": "Zurück zur vorherigen Seite",
 
   "name": {
-    "label": "Dein Name",
+    "label": "Dein Chatname",
     "placeholder": "Wie soll ich dich nennen?"
   },
 
@@ -146,8 +146,8 @@
     "back": "← Zurück",
     "newProfile": {
       "title": "Neues Profil",
-      "subtitle": "Wie heißt du?",
-      "placeholder": "Dein Name",
+      "subtitle": "Wie lautet dein Chatname?",
+      "placeholder": "Dein Chatname",
       "cta": "Weiter →"
     },
     "addProfile": "+ Neues Profil",
