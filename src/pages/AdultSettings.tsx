@@ -1236,8 +1236,16 @@ export default function AdultSettings() {
                   }
                   if (!import.meta.env.VITE_ENABLE_STRIPE) {
                     return (
-                      <div className="mt-4 inline-flex items-center gap-2 rounded-xl bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-400 cursor-not-allowed">
-                        {t('adult:purchase.comingSoon', { defaultValue: 'Bald verfügbar' })}
+                      <div className="mt-4 space-y-2">
+                        <a
+                          href="mailto:hello@amysurfwing.de?subject=Staffel%201%20kaufen"
+                          className="inline-flex items-center gap-1 rounded-xl bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-800 transition-colors"
+                        >
+                          {t('adult:purchase.contactBuyCta', { defaultValue: 'Jetzt per E-Mail anfragen →' })}
+                        </a>
+                        <p className="text-xs text-slate-500">
+                          {t('adult:purchase.contactBuyNote', { defaultValue: 'Automatischer Kaufweg wird in Kürze freigeschaltet.' })}
+                        </p>
                       </div>
                     );
                   }

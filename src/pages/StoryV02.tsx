@@ -1999,6 +1999,9 @@ function hasStoryMigrationDone(key: string): boolean {
               {effectiveShowPaywallCard && (
                 <div className="mt-0.5 mb-3 text-xs text-[var(--color-teal-800)]">
                   {t('stories:gate.paywallBody', { defaultValue: 'Eine sorgeberechtigte Person kann die nächsten Kapitel für dich freischalten.' })}
+                  <span className="block mt-1 text-[var(--color-teal-700)]">
+                    {t('stories:gate.paywallAvailable', { defaultValue: 'Staffel 1 ist bereits erhältlich.' })}
+                  </span>
                 </div>
               )}
 

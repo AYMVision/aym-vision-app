@@ -162,6 +162,15 @@ export const ITEMS: ItemDef[] = [
     labelKey: 'items.violin',
   },
 
+  // 🎄 Weihnachten Special
+  {
+    id: 'item_weihnachtsbaum',
+    slot: 'featured',
+    shopPrice: 4,
+    labelKey: 'items.weihnachtsbaum',
+    tag: 'weihnachten',
+  },
+
   // 🎃 Halloween Special
   {
     id: 'item_halloween',

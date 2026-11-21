@@ -37,4 +37,6 @@ export const AVATAR_BASES = [
   { id: 'kid_29', label: 'Avatar 29' },
   { id: 'kid_30', label: 'Avatar 30' },
   { id: 'kid_31', label: 'Avatar 31' },
+  { id: 'kid_32', label: 'Weihnachts-Avatar 1', tag: 'weihnachten' },
+  { id: 'kid_33', label: 'Weihnachts-Avatar 2', tag: 'weihnachten' },
 ];
